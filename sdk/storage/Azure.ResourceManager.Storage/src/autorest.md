@@ -6,10 +6,13 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 csharp: true
 namespace: Azure.ResourceManager.Storage
-tag: package-2021-09
 require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/4124b7c2773a714303299f0cfd742b0d26d3bb5d/specification/storage/resource-manager/readme.md
+tag: package-2021-09
+output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
+modelerfour:
+  flatten-payloads: false
 
 list-exception:
 - /subscriptions/{subscriptionId}/providers/Microsoft.Storage/locations/{location}/deletedAccounts/{deletedAccountName}
@@ -19,6 +22,13 @@ override-operation-name:
 
 request-path-to-singleton-resource:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/managementPolicies/{managementPolicyName}: managementPolicies/default
+
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'etag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
 
 rename-rules:
   CPU: Cpu
@@ -83,6 +93,11 @@ directive:
               $.properties[key] = property;
           }
       }
+  - from: swagger-document
+    where: $.definitions
+    transform: >
+      $.StorageAccountCheckNameAvailabilityParameters["x-ms-client-name"] = "StorageAccountNameAvailabilityContent";
+      $.StorageAccountCheckNameAvailabilityParameters.properties.type["x-ms-format"] = "resource-type";
   - from: swagger-document
     where: $.definitions.Encryption
     transform: $.required = undefined; # this is a fix for swagger issue, and it should be resolved in azure-rest-api-specs/pull/19357 

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<int> retentionDays = default;
             Optional<DiffBackupIntervalInHours> diffBackupIntervalInHours = default;
             foreach (var property in element.EnumerateObject())
@@ -60,6 +60,11 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -96,7 +101,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new BackupShortTermRetentionPolicyData(id, name, type, systemData, Optional.ToNullable(retentionDays), Optional.ToNullable(diffBackupIntervalInHours));
+            return new BackupShortTermRetentionPolicyData(id, name, type, systemData.Value, Optional.ToNullable(retentionDays), Optional.ToNullable(diffBackupIntervalInHours));
         }
     }
 }

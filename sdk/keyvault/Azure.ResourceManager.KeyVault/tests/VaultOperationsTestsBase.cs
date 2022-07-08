@@ -97,14 +97,14 @@ namespace Azure.ResourceManager.KeyVault.Tests
 
             IdentityAccessPermissions permissions = new IdentityAccessPermissions
             {
-                Keys = { new KeyPermission("all") },
-                Secrets = { new SecretPermission("all") },
-                Certificates = { new CertificatePermission("all") },
-                Storage = { new StoragePermission("all") },
+                Keys = { new IdentityAccessKeyPermission("all") },
+                Secrets = { new IdentityAccessSecretPermission("all") },
+                Certificates = { new IdentityAccessCertificatePermission("all") },
+                Storage = { new IdentityAccessStoragePermission("all") },
             };
             AccessPolicy = new VaultAccessPolicy(TenantIdGuid, ObjectId, permissions);
 
-            VaultProperties = new VaultProperties(TenantIdGuid, new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard));
+            VaultProperties = new VaultProperties(TenantIdGuid, new VaultSku(VaultSkuFamily.A, VaultSkuName.Standard));
 
             VaultProperties.EnabledForDeployment = true;
             VaultProperties.EnabledForDiskEncryption = true;
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 Bypass = "AzureServices",
                 DefaultAction = "Deny" //Property properties.networkAcls.ipRules is not supported currently and must be set to null.
             };
-            ManagedHsmProperties.PublicNetworkAccess = PublicNetworkAccess.Disabled;
+            ManagedHsmProperties.PublicNetworkAccess = ManagedHsmPublicNetworkAccess.Disabled;
             ManagedHsmProperties.TenantId = TenantIdGuid;
         }
 

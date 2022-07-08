@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> functionAppResourceId = default;
             Optional<string> functionAppRegion = default;
             Optional<DateTimeOffset> createdOn = default;
@@ -72,6 +72,11 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -108,7 +113,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new StaticSiteUserProvidedFunctionAppARMResourceData(id, name, type, systemData, kind.Value, functionAppResourceId.Value, functionAppRegion.Value, Optional.ToNullable(createdOn));
+            return new StaticSiteUserProvidedFunctionAppARMResourceData(id, name, type, systemData.Value, functionAppResourceId.Value, functionAppRegion.Value, Optional.ToNullable(createdOn), kind.Value);
         }
     }
 }

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="startOn"> The UTC timestamp when the operation began. </param>
         /// <param name="lastModifiedOn"> The UTC timestamp when the operation began. </param>
         /// <param name="error"> The errors that were encountered during execution of the operation. The details array contains the list of them. </param>
-        internal AvailablePatchSummary(PatchOperationStatus? status, string assessmentActivityId, bool? rebootPending, int? criticalAndSecurityPatchCount, int? otherPatchCount, DateTimeOffset? startOn, DateTimeOffset? lastModifiedOn, ApiError error)
+        internal AvailablePatchSummary(PatchOperationStatus? status, string assessmentActivityId, bool? rebootPending, int? criticalAndSecurityPatchCount, int? otherPatchCount, DateTimeOffset? startOn, DateTimeOffset? lastModifiedOn, ComputeApiError error)
         {
             Status = status;
             AssessmentActivityId = assessmentActivityId;
@@ -53,6 +53,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The UTC timestamp when the operation began. </summary>
         public DateTimeOffset? LastModifiedOn { get; }
         /// <summary> The errors that were encountered during execution of the operation. The details array contains the list of them. </summary>
-        public ApiError Error { get; }
+        public ComputeApiError Error { get; }
     }
 }

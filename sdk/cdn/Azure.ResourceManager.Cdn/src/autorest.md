@@ -8,9 +8,12 @@ library-name: Cdn
 namespace: Azure.ResourceManager.Cdn
 title: CdnManagementClient
 require: https://github.com/Azure/azure-rest-api-specs/blob/236c7ce93e9bcb875e1fbe1db8602a3a159ee2ae/specification/cdn/resource-manager/readme.md
+output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
-output-folder: Generated/
+modelerfour:
+  flatten-payloads: false
+
 operation-id-mappings:
   CdnEndpoint:
       profileName: Microsoft.Cdn/operationresults/profileresults
@@ -19,6 +22,14 @@ operation-id-mappings:
       profileName: Microsoft.Cdn/operationresults/profileresults
       endpointName: Microsoft.Cdn/operationresults/profileresults/endpointresults
       customDomainName: Microsoft.Cdn/operationresults/profileresults/endpointresults/customdomainresults
+
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'etag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
+
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
@@ -133,6 +144,10 @@ directive:
       $.CheckNameAvailabilityInput['x-ms-client-name'] = 'CdnNameAvailabilityContent';
       $.CheckNameAvailabilityOutput['x-ms-client-name'] = 'CdnNameAvailabilityResult';
       $.ValidateProbeOutput['x-ms-client-name'] = 'ValidateProbeResult';
+      $.ResourceUsage['x-ms-client-name'] = 'CdnUsage';
+      $.HealthProbeParameters.properties.probeProtocol['x-ms-enum'].name = 'HealthProbeProtocol';
+      $.CustomDomainHttpsParameters.properties.protocolType['x-ms-enum'].name = 'SecureDeliveryProtocolType';
+      $.ResponseBasedOriginErrorDetectionParameters.properties.responseBasedDetectedErrorTypes['x-ms-client-name'] = 'responseBasedDetectedErrorType';
       $.ValidateCustomDomainOutput.properties.customDomainValidated['x-ms-client-name'] = 'isCustomDomainValid';
       $.CustomDomainProperties.properties.customHttpsParameters['x-ms-client-name'] = 'customDomainHttpsContent';
       $.CustomDomainProperties.properties.customHttpsProvisioningSubstate['x-ms-client-name'] = 'customHttpsAvailabilityState';
@@ -142,6 +157,7 @@ directive:
       $.CacheExpirationActionParameters.properties.cacheType['x-ms-enum'].name = 'cacheLevel';
       $.CdnCertificateSourceParameters.properties.certificateType['x-ms-enum'].name = 'CdnManagedCertificateType';
       $.ResourceType['x-ms-enum'].name = 'CdnResourceType';
+      $.CustomDomainHttpsParameters.properties.minimumTlsVersion['x-ms-enum'].name = 'CdnMinimumTlsVersion';
       $.ResourceType['x-ms-enum'].values = [
                                 {
                                     "value": "Microsoft.Cdn/Profiles/Endpoints",
@@ -152,8 +168,6 @@ directive:
                                     "name": "FrontDoorEndpoints"
                                 }
                             ]
-      $.GeoFilter.properties.action['x-ms-enum'].name = 'GeoFilterAction';
-      $.ResponseBasedOriginErrorDetectionParameters.properties.responseBasedDetectedErrorTypes['x-ms-enum'].name = 'ResponseBasedDetectedErrorType';
       $.SocketAddrMatchConditionParameters.properties.typeName['x-ms-enum'].name = 'SocketAddressMatchConditionType';
       $.SocketAddrMatchConditionParameters.properties.typeName['x-ms-enum'].values[0].name = 'SocketAddressCondition';
       $.transform['x-ms-enum'].name = 'preTransformCategory';
@@ -161,6 +175,8 @@ directive:
       $.KeyVaultCertificateSourceParameters.properties.deleteRule['x-ms-enum'].name = 'certificateDeleteAction';
       $.DeliveryRuleAction.properties.name['x-ms-enum'].name = 'DeliveryRuleActionType';
       $.UrlSigningActionParameters.properties.algorithm['x-ms-enum'].name = 'urlSigningAlgorithm';
+      $.ResourceUsage.properties.unit['x-ms-enum'].name = 'CdnUsageUnit';
+      $.EndpointProperties.properties.provisioningState['x-ms-enum'].name = 'CdnEndpointProvisioningState';
       $.IsDeviceMatchConditionParameters.properties.matchValues.items['x-ms-enum'] = {
             "name": "IsDeviceMatchConditionMatchValue",
             "modelAsString": true
@@ -246,7 +262,8 @@ directive:
       $.ValidateSecretOutput['x-ms-client-name'] = 'ValidateSecretResult';
       $.LoadBalancingSettingsParameters['x-ms-client-name'] = 'LoadBalancingSettings';
       $.CompressionSettings['x-ms-client-name'] = 'RouteCacheCompressionSettings';
-      $.UsageName['x-ms-client-name'] = 'CdnUsageResourceName';
+      $.UsageName['x-ms-client-name'] = 'FrontDoorUsageResourceName';
+      $.Usage['x-ms-client-name'] = 'FrontDoorUsage';
       $.SecretProperties['x-ms-client-name'] = 'SecretDetails';
       $.SecurityPolicyProperties['x-ms-client-name'] = 'SecurityPolicyDetails';
       $.SecretParameters['x-ms-client-name'] = 'SecretProperties';
@@ -274,6 +291,7 @@ directive:
       $.AFDDomainHttpsParameters.properties.certificateType['x-ms-enum'].name = 'FrontDoorCertificateType';
       $.AFDDomainHttpsParameters.properties.minimumTlsVersion['x-ms-enum'].name = 'FrontDoorMinimumTlsVersion';
       $.AfdRouteCacheConfiguration.properties.queryStringCachingBehavior['x-ms-enum'].name = 'FrontDoorQueryStringCachingBehavior';
+      $.Usage.properties.unit['x-ms-enum'].name = 'FrontDoorUsageUnit';
       $.AFDDomainHttpsParameters.properties.secret = {
             "description": "Resource reference to the secret. ie. subs/rg/profile/secret",
             "type": "object",
@@ -326,10 +344,17 @@ directive:
   - from: cdnwebapplicationfirewall.json
     where: $.definitions
     transform: >
-      $.CdnWebApplicationFirewallPolicy.properties.etag['x-ms-format'] = 'etag';
       $.CdnEndpoint['x-ms-client-name'] = 'CdnEndpointReference';
+      $.policySettings['x-ms-client-name'] = 'WafPolicySettings';
+      $.MatchCondition['x-ms-client-name'] = 'CustomRuleMatchCondition';
+      $.ActionType['x-ms-enum'].name = 'OverrideActionType';
+      $.ManagedRuleSet['x-ms-client-name'] = 'WafPolicyManagedRuleSet';
+      $.ManagedRuleGroupOverride['x-ms-client-name'] = 'ManagedRuleGroupOverrideSetting';
+      $.ManagedRuleOverride['x-ms-client-name'] = 'ManagedRuleOverrideSetting';
+      $.ManagedRuleOverride.properties.enabledState['x-ms-enum'].name = 'ManagedRuleSetupState';
       $.CdnWebApplicationFirewallPolicyProperties.properties.rateLimitRules['x-ms-client-name'] = 'RateLimitSettings';
       $.CdnWebApplicationFirewallPolicyProperties.properties.customRules['x-ms-client-name'] = 'CustomSettings';
+      $.CdnWebApplicationFirewallPolicyProperties.properties.provisioningState['x-ms-enum'].name = 'WebApplicationFirewallPolicyProvisioningState';
       $.MatchCondition.properties.operator['x-ms-client-name'] = 'matchOperator';
       $.MatchCondition.properties.operator['x-ms-enum'].name = 'matchOperator';
       $.policySettings.properties.defaultCustomBlockResponseStatusCode['x-nullable'] = true;

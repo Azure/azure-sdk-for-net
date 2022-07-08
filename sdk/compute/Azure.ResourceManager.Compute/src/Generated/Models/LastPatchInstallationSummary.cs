@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="startOn"> The UTC timestamp when the operation began. </param>
         /// <param name="lastModifiedOn"> The UTC timestamp when the operation began. </param>
         /// <param name="error"> The errors that were encountered during execution of the operation. The details array contains the list of them. </param>
-        internal LastPatchInstallationSummary(PatchOperationStatus? status, string installationActivityId, bool? maintenanceWindowExceeded, int? notSelectedPatchCount, int? excludedPatchCount, int? pendingPatchCount, int? installedPatchCount, int? failedPatchCount, DateTimeOffset? startOn, DateTimeOffset? lastModifiedOn, ApiError error)
+        internal LastPatchInstallationSummary(PatchOperationStatus? status, string installationActivityId, bool? maintenanceWindowExceeded, int? notSelectedPatchCount, int? excludedPatchCount, int? pendingPatchCount, int? installedPatchCount, int? failedPatchCount, DateTimeOffset? startOn, DateTimeOffset? lastModifiedOn, ComputeApiError error)
         {
             Status = status;
             InstallationActivityId = installationActivityId;
@@ -65,6 +65,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The UTC timestamp when the operation began. </summary>
         public DateTimeOffset? LastModifiedOn { get; }
         /// <summary> The errors that were encountered during execution of the operation. The details array contains the list of them. </summary>
-        public ApiError Error { get; }
+        public ComputeApiError Error { get; }
     }
 }

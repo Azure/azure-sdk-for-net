@@ -43,14 +43,17 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WritePropertyName("sku");
                 writer.WriteObjectValue(Sku);
             }
-            writer.WritePropertyName("tags");
-            writer.WriteStartObject();
-            foreach (var item in Tags)
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
+                writer.WritePropertyName("tags");
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
@@ -90,12 +93,12 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<ArmApplicationManagedIdentity> identity = default;
             Optional<string> managedBy = default;
             Optional<ArmApplicationSku> sku = default;
-            IDictionary<string, string> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<ResourceIdentifier> managedResourceGroupId = default;
             Optional<ResourceIdentifier> applicationDefinitionId = default;
             Optional<BinaryData> parameters = default;
@@ -155,6 +158,11 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -185,6 +193,11 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -361,7 +374,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ArmApplicationPatch(id, name, type, systemData, tags, location, managedBy.Value, sku.Value, plan, kind.Value, identity.Value, managedResourceGroupId.Value, applicationDefinitionId.Value, parameters.Value, outputs.Value, Optional.ToNullable(provisioningState), billingDetails.Value, jitAccessPolicy.Value, Optional.ToNullable(publisherTenantId), Optional.ToList(authorizations), Optional.ToNullable(managementMode), customerSupport.Value, supportUrls.Value, Optional.ToList(artifacts), createdBy.Value, updatedBy.Value);
+            return new ArmApplicationPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, managedBy.Value, sku.Value, plan, kind.Value, identity.Value, managedResourceGroupId.Value, applicationDefinitionId.Value, parameters.Value, outputs.Value, Optional.ToNullable(provisioningState), billingDetails.Value, jitAccessPolicy.Value, Optional.ToNullable(publisherTenantId), Optional.ToList(authorizations), Optional.ToNullable(managementMode), customerSupport.Value, supportUrls.Value, Optional.ToList(artifacts), createdBy.Value, updatedBy.Value);
         }
     }
 }

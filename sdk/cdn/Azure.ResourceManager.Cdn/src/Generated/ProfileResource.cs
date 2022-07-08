@@ -522,10 +522,10 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: FrontDoorProfiles_ListResourceUsage
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CdnUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CdnUsage> GetFrontDoorProfileResourceUsagesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="FrontDoorUsage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<FrontDoorUsage> GetFrontDoorProfileResourceUsagesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<CdnUsage>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<FrontDoorUsage>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.GetFrontDoorProfileResourceUsages");
                 scope.Start();
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.Cdn
                     throw;
                 }
             }
-            async Task<Page<CdnUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<FrontDoorUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.GetFrontDoorProfileResourceUsages");
                 scope.Start();
@@ -564,10 +564,10 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: FrontDoorProfiles_ListResourceUsage
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CdnUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CdnUsage> GetFrontDoorProfileResourceUsages(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="FrontDoorUsage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<FrontDoorUsage> GetFrontDoorProfileResourceUsages(CancellationToken cancellationToken = default)
         {
-            Page<CdnUsage> FirstPageFunc(int? pageSizeHint)
+            Page<FrontDoorUsage> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.GetFrontDoorProfileResourceUsages");
                 scope.Start();
@@ -582,7 +582,7 @@ namespace Azure.ResourceManager.Cdn
                     throw;
                 }
             }
-            Page<CdnUsage> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<FrontDoorUsage> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.GetFrontDoorProfileResourceUsages");
                 scope.Start();
@@ -1100,10 +1100,10 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: Profiles_ListResourceUsage
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceUsage> GetResourceUsagesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CdnUsage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CdnUsage> GetResourceUsagesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ResourceUsage>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<CdnUsage>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.GetResourceUsages");
                 scope.Start();
@@ -1118,7 +1118,7 @@ namespace Azure.ResourceManager.Cdn
                     throw;
                 }
             }
-            async Task<Page<ResourceUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<CdnUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.GetResourceUsages");
                 scope.Start();
@@ -1142,10 +1142,10 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: Profiles_ListResourceUsage
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceUsage> GetResourceUsages(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CdnUsage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CdnUsage> GetResourceUsages(CancellationToken cancellationToken = default)
         {
-            Page<ResourceUsage> FirstPageFunc(int? pageSizeHint)
+            Page<CdnUsage> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.GetResourceUsages");
                 scope.Start();
@@ -1160,7 +1160,7 @@ namespace Azure.ResourceManager.Cdn
                     throw;
                 }
             }
-            Page<ResourceUsage> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<CdnUsage> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.GetResourceUsages");
                 scope.Start();

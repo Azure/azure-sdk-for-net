@@ -102,8 +102,8 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<DiagnosticsProfile> diagnosticsProfile = default;
             Optional<VirtualMachineScaleSetExtensionProfile> extensionProfile = default;
             Optional<string> licenseType = default;
-            Optional<VirtualMachinePriorityTypes> priority = default;
-            Optional<VirtualMachineEvictionPolicyTypes> evictionPolicy = default;
+            Optional<VirtualMachinePriorityType> priority = default;
+            Optional<VirtualMachineEvictionPolicyType> evictionPolicy = default;
             Optional<BillingProfile> billingProfile = default;
             Optional<ScheduledEventsProfile> scheduledEventsProfile = default;
             Optional<string> userData = default;
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    priority = new VirtualMachinePriorityTypes(property.Value.GetString());
+                    priority = new VirtualMachinePriorityType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("evictionPolicy"))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    evictionPolicy = new VirtualMachineEvictionPolicyTypes(property.Value.GetString());
+                    evictionPolicy = new VirtualMachineEvictionPolicyType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("billingProfile"))

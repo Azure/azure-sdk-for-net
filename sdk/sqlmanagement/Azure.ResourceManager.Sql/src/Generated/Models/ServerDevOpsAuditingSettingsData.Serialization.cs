@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<bool> isAzureMonitorTargetEnabled = default;
             Optional<BlobAuditingPolicyState> state = default;
             Optional<string> storageEndpoint = default;
@@ -79,6 +79,11 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -135,7 +140,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new ServerDevOpsAuditingSettingsData(id, name, type, systemData, Optional.ToNullable(isAzureMonitorTargetEnabled), Optional.ToNullable(state), storageEndpoint.Value, storageAccountAccessKey.Value, Optional.ToNullable(storageAccountSubscriptionId));
+            return new ServerDevOpsAuditingSettingsData(id, name, type, systemData.Value, Optional.ToNullable(isAzureMonitorTargetEnabled), Optional.ToNullable(state), storageEndpoint.Value, storageAccountAccessKey.Value, Optional.ToNullable(storageAccountSubscriptionId));
         }
     }
 }

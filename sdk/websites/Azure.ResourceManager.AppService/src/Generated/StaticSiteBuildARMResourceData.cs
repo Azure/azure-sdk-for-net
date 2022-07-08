@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing the StaticSiteBuildARMResource data model. </summary>
-    public partial class StaticSiteBuildARMResourceData : ProxyOnlyResource
+    public partial class StaticSiteBuildARMResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of StaticSiteBuildARMResourceData. </summary>
         public StaticSiteBuildARMResourceData()
@@ -27,7 +27,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="buildId"> An identifier for the static site build. </param>
         /// <param name="sourceBranch"> The source branch. </param>
         /// <param name="pullRequestTitle"> The title of a pull request that a static site build is related to. </param>
@@ -36,7 +35,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="lastUpdatedOn"> When this build was updated. </param>
         /// <param name="status"> The status of the static site build. </param>
         /// <param name="userProvidedFunctionApps"> User provided function apps registered with the static site build. </param>
-        internal StaticSiteBuildARMResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string buildId, string sourceBranch, string pullRequestTitle, string hostname, DateTimeOffset? createdTimeUtc, DateTimeOffset? lastUpdatedOn, BuildStatus? status, IReadOnlyList<StaticSiteUserProvidedFunctionApp> userProvidedFunctionApps) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal StaticSiteBuildARMResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string buildId, string sourceBranch, string pullRequestTitle, string hostname, DateTimeOffset? createdTimeUtc, DateTimeOffset? lastUpdatedOn, BuildStatus? status, IReadOnlyList<StaticSiteUserProvidedFunctionApp> userProvidedFunctionApps, string kind) : base(id, name, resourceType, systemData)
         {
             BuildId = buildId;
             SourceBranch = sourceBranch;
@@ -46,6 +46,7 @@ namespace Azure.ResourceManager.AppService
             LastUpdatedOn = lastUpdatedOn;
             Status = status;
             UserProvidedFunctionApps = userProvidedFunctionApps;
+            Kind = kind;
         }
 
         /// <summary> An identifier for the static site build. </summary>
@@ -64,5 +65,7 @@ namespace Azure.ResourceManager.AppService
         public BuildStatus? Status { get; }
         /// <summary> User provided function apps registered with the static site build. </summary>
         public IReadOnlyList<StaticSiteUserProvidedFunctionApp> UserProvidedFunctionApps { get; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

@@ -11,44 +11,13 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
 {
-    public partial class InnerErrorModel : IUtf8JsonSerializable
+    internal partial class InnerErrorModel
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("code");
-            writer.WriteStringValue(Code.ToString());
-            writer.WritePropertyName("message");
-            writer.WriteStringValue(Message);
-            if (Optional.IsCollectionDefined(Details))
-            {
-                writer.WritePropertyName("details");
-                writer.WriteStartObject();
-                foreach (var item in Details)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsDefined(Target))
-            {
-                writer.WritePropertyName("target");
-                writer.WriteStringValue(Target);
-            }
-            if (Optional.IsDefined(Innererror))
-            {
-                writer.WritePropertyName("innererror");
-                writer.WriteObjectValue(Innererror);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static InnerErrorModel DeserializeInnerErrorModel(JsonElement element)
         {
             InnerErrorCode code = default;
             string message = default;
-            Optional<IDictionary<string, string>> details = default;
+            Optional<IReadOnlyDictionary<string, string>> details = default;
             Optional<string> target = default;
             Optional<InnerErrorModel> innererror = default;
             foreach (var property in element.EnumerateObject())

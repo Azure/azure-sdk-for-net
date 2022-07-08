@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             {
                 ProbePath = "/healthz",
                 ProbeRequestType = HealthProbeRequestType.Head,
-                ProbeProtocol = ProbeProtocol.Https,
+                ProbeProtocol = HealthProbeProtocol.Https,
                 ProbeIntervalInSeconds = 60
             }
         };
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             {
                 ProbePath = "/healthz",
                 ProbeRequestType = HealthProbeRequestType.Head,
-                ProbeProtocol = ProbeProtocol.Https,
+                ProbeProtocol = HealthProbeProtocol.Https,
                 ProbeIntervalInSeconds = 60
             },
             LoadBalancingSettings = new LoadBalancingSettings

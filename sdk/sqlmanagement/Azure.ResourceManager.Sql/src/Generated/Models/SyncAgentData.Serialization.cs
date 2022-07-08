@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> name0 = default;
             Optional<string> syncDatabaseId = default;
             Optional<DateTimeOffset> lastAliveTime = default;
@@ -61,6 +61,11 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -132,7 +137,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new SyncAgentData(id, name, type, systemData, name0.Value, syncDatabaseId.Value, Optional.ToNullable(lastAliveTime), Optional.ToNullable(state), Optional.ToNullable(isUpToDate), Optional.ToNullable(expiryTime), version.Value);
+            return new SyncAgentData(id, name, type, systemData.Value, name0.Value, syncDatabaseId.Value, Optional.ToNullable(lastAliveTime), Optional.ToNullable(state), Optional.ToNullable(isUpToDate), Optional.ToNullable(expiryTime), version.Value);
         }
     }
 }

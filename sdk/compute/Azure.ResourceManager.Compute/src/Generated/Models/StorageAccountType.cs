@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> Specifies the storage account type to be used to store the image. This property is not updatable. </summary>
+    /// <summary> Specifies the storage account type for the managed disk. Managed OS disk storage account type can only be set when you create the scale set. NOTE: UltraSSD_LRS can only be used with data disks. It cannot be used with OS Disk. Standard_LRS uses Standard HDD. StandardSSD_LRS uses Standard SSD. Premium_LRS uses Premium SSD. UltraSSD_LRS uses Ultra disk. Premium_ZRS uses Premium SSD zone redundant storage. StandardSSD_ZRS uses Standard SSD zone redundant storage. For more information regarding disks supported for Windows Virtual Machines, refer to https://docs.microsoft.com/azure/virtual-machines/windows/disks-types and, for Linux Virtual Machines, refer to https://docs.microsoft.com/azure/virtual-machines/linux/disks-types. </summary>
     public readonly partial struct StorageAccountType : IEquatable<StorageAccountType>
     {
         private readonly string _value;
@@ -23,15 +23,27 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         private const string StandardLRSValue = "Standard_LRS";
-        private const string StandardZRSValue = "Standard_ZRS";
         private const string PremiumLRSValue = "Premium_LRS";
+        private const string StandardSsdLRSValue = "StandardSSD_LRS";
+        private const string UltraSsdLRSValue = "UltraSSD_LRS";
+        private const string PremiumZRSValue = "Premium_ZRS";
+        private const string StandardSsdZRSValue = "StandardSSD_ZRS";
+        private const string PremiumV2LRSValue = "PremiumV2_LRS";
 
         /// <summary> Standard_LRS. </summary>
         public static StorageAccountType StandardLRS { get; } = new StorageAccountType(StandardLRSValue);
-        /// <summary> Standard_ZRS. </summary>
-        public static StorageAccountType StandardZRS { get; } = new StorageAccountType(StandardZRSValue);
         /// <summary> Premium_LRS. </summary>
         public static StorageAccountType PremiumLRS { get; } = new StorageAccountType(PremiumLRSValue);
+        /// <summary> StandardSSD_LRS. </summary>
+        public static StorageAccountType StandardSsdLRS { get; } = new StorageAccountType(StandardSsdLRSValue);
+        /// <summary> UltraSSD_LRS. </summary>
+        public static StorageAccountType UltraSsdLRS { get; } = new StorageAccountType(UltraSsdLRSValue);
+        /// <summary> Premium_ZRS. </summary>
+        public static StorageAccountType PremiumZRS { get; } = new StorageAccountType(PremiumZRSValue);
+        /// <summary> StandardSSD_ZRS. </summary>
+        public static StorageAccountType StandardSsdZRS { get; } = new StorageAccountType(StandardSsdZRSValue);
+        /// <summary> PremiumV2_LRS. </summary>
+        public static StorageAccountType PremiumV2LRS { get; } = new StorageAccountType(PremiumV2LRSValue);
         /// <summary> Determines if two <see cref="StorageAccountType"/> values are the same. </summary>
         public static bool operator ==(StorageAccountType left, StorageAccountType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageAccountType"/> values are not the same. </summary>

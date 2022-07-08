@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
-                writer.WriteStringValue(Location);
+                writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsDefined(Identity))
             {
