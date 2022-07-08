@@ -30,14 +30,6 @@ keep-plural-enums:
 - IntervalInMins
 - ExpandTypeForGetCapacityReservationGroups
 
-prepend-rp-prefix:
-- UsageName
-- UsageUnit
-- ApiError
-- ApiErrorBase
-- DeleteOptions
-- ProtocolType
-
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
@@ -100,13 +92,31 @@ request-path-to-resource-data:
   /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}/images/{galleryImageName}: CommunityGalleryImage
   /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}/images/{galleryImageName}/versions/{galleryImageVersionName}: CommunityGalleryImageVersion
 
+prepend-rp-prefix:
+- UsageName
+- UsageUnit
+- ApiError
+- ApiErrorBase
+- DeleteOptions
+- ProtocolType
+- ResourceSku
+- ResourceSkuCapacity
+- ResourceSkuLocationInfo
+- ResourceSkuRestrictions
+- ResourceSkuRestrictionInfo
+- ResourceSkuRestrictionsReasonCode
+- ResourceSkuRestrictionsType
+- ResourceSkuZoneDetails
+- ResourceSkuCapacityScaleType
+- EncryptionType
+- ProtocolType
+- PublicIPAddressSku
+- PublicIPAddressSkuName
+- PublicIPAddressSkuTier
+- StatusLevelTypes
+
 rename-mapping:
   DiskSecurityTypes.ConfidentialVM_VMGuestStateOnlyEncryptedWithPlatformKey: ConfidentialVmGuestStateOnlyEncryptedWithPlatformKey
-  ResourceSku: ComputeResourceSku
-  ResourceSkuCapacity: ComputeResourceSkuCapacity
-  ResourceSkuLocationInfo: ComputeResourceSkuLocationInfo
-  ResourceSkuRestrictions: ComputeResourceSkuRestrictions
-  ResourceSkuRestrictionInfo: ComputeResourceSkuRestrictionInfo
   SubResource: ComputeWriteableSubResourceData
   SubResourceReadOnly: ComputeSubResourceData
   HyperVGenerationType: HyperVGeneration
@@ -172,6 +182,12 @@ rename-mapping:
   DataDisk: VirtualMachineDataDisk
   HardwareProfile: VirtualMachineHardwareProfile
   PublicNetworkAccess: DiskPublicNetworkAccess
+  LoadBalancerConfiguration: CloudServiceLoadBalancerConfiguration
+  ReplicationMode: GalleryReplicationMode
+  ReplicationState: RegionalReplicationState
+  RunCommandResult: VirtualMachineRunCommandResult
+  UpgradeMode: VirtualMachineScaleSetUpgradeMode
+  UpgradePolicy: VirtualMachineScaleSetUpgradePolicy
 
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced

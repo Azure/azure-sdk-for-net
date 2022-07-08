@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class RunCommandResult
+    public partial class VirtualMachineRunCommandResult
     {
-        internal static RunCommandResult DeserializeRunCommandResult(JsonElement element)
+        internal static VirtualMachineRunCommandResult DeserializeVirtualMachineRunCommandResult(JsonElement element)
         {
             Optional<IReadOnlyList<InstanceViewStatus>> value = default;
             foreach (var property in element.EnumerateObject())
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new RunCommandResult(Optional.ToList(value));
+            return new VirtualMachineRunCommandResult(Optional.ToList(value));
         }
     }
 }

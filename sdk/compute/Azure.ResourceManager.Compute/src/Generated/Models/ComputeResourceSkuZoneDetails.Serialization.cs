@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ResourceSkuZoneDetails
+    public partial class ComputeResourceSkuZoneDetails
     {
-        internal static ResourceSkuZoneDetails DeserializeResourceSkuZoneDetails(JsonElement element)
+        internal static ComputeResourceSkuZoneDetails DeserializeComputeResourceSkuZoneDetails(JsonElement element)
         {
             Optional<IReadOnlyList<string>> name = default;
             Optional<IReadOnlyList<ResourceSkuCapabilities>> capabilities = default;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new ResourceSkuZoneDetails(Optional.ToList(name), Optional.ToList(capabilities));
+            return new ComputeResourceSkuZoneDetails(Optional.ToList(name), Optional.ToList(capabilities));
         }
     }
 }

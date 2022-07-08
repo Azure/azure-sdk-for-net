@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The reason for restriction. </summary>
-    public enum ResourceSkuRestrictionsReasonCode
+    public enum ComputeResourceSkuRestrictionsReasonCode
     {
         /// <summary> QuotaId. </summary>
         QuotaId,

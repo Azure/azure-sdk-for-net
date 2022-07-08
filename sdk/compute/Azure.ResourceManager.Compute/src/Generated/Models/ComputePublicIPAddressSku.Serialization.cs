@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class PublicIPAddressSku : IUtf8JsonSerializable
+    public partial class ComputePublicIPAddressSku : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteEndObject();
         }
 
-        internal static PublicIPAddressSku DeserializePublicIPAddressSku(JsonElement element)
+        internal static ComputePublicIPAddressSku DeserializeComputePublicIPAddressSku(JsonElement element)
         {
-            Optional<PublicIPAddressSkuName> name = default;
-            Optional<PublicIPAddressSkuTier> tier = default;
+            Optional<ComputePublicIPAddressSkuName> name = default;
+            Optional<ComputePublicIPAddressSkuTier> tier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    name = new PublicIPAddressSkuName(property.Value.GetString());
+                    name = new ComputePublicIPAddressSkuName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tier"))
@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    tier = new PublicIPAddressSkuTier(property.Value.GetString());
+                    tier = new ComputePublicIPAddressSkuTier(property.Value.GetString());
                     continue;
                 }
             }
-            return new PublicIPAddressSku(Optional.ToNullable(name), Optional.ToNullable(tier));
+            return new ComputePublicIPAddressSku(Optional.ToNullable(name), Optional.ToNullable(tier));
         }
     }
 }

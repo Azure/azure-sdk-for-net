@@ -10,18 +10,18 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> The RunCommandResult. </summary>
-    public partial class RunCommandResult
+    /// <summary> The VirtualMachineRunCommandResult. </summary>
+    public partial class VirtualMachineRunCommandResult
     {
-        /// <summary> Initializes a new instance of RunCommandResult. </summary>
-        internal RunCommandResult()
+        /// <summary> Initializes a new instance of VirtualMachineRunCommandResult. </summary>
+        internal VirtualMachineRunCommandResult()
         {
             Value = new ChangeTrackingList<InstanceViewStatus>();
         }
 
-        /// <summary> Initializes a new instance of RunCommandResult. </summary>
+        /// <summary> Initializes a new instance of VirtualMachineRunCommandResult. </summary>
         /// <param name="value"> Run command operation response. </param>
-        internal RunCommandResult(IReadOnlyList<InstanceViewStatus> value)
+        internal VirtualMachineRunCommandResult(IReadOnlyList<InstanceViewStatus> value)
         {
             Value = value;
         }

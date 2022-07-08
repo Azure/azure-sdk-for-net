@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The identity of the virtual machine scale set, if configured. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The upgrade policy. </summary>
-        public UpgradePolicy UpgradePolicy { get; set; }
+        public VirtualMachineScaleSetUpgradePolicy UpgradePolicy { get; set; }
         /// <summary> Policy for automatic repairs. </summary>
         public AutomaticRepairsPolicy AutomaticRepairsPolicy { get; set; }
         /// <summary> The virtual machine profile. </summary>

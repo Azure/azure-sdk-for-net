@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class LoadBalancerConfiguration : IUtf8JsonSerializable
+    public partial class CloudServiceLoadBalancerConfiguration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteEndObject();
         }
 
-        internal static LoadBalancerConfiguration DeserializeLoadBalancerConfiguration(JsonElement element)
+        internal static CloudServiceLoadBalancerConfiguration DeserializeCloudServiceLoadBalancerConfiguration(JsonElement element)
         {
             Optional<ResourceIdentifier> id = default;
             string name = default;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new LoadBalancerConfiguration(id.Value, name, frontendIPConfigurations);
+            return new CloudServiceLoadBalancerConfiguration(id.Value, name, frontendIPConfigurations);
         }
     }
 }

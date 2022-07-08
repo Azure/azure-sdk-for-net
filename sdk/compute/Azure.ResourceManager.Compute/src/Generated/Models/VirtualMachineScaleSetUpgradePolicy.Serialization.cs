@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class UpgradePolicy : IUtf8JsonSerializable
+    public partial class VirtualMachineScaleSetUpgradePolicy : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteEndObject();
         }
 
-        internal static UpgradePolicy DeserializeUpgradePolicy(JsonElement element)
+        internal static VirtualMachineScaleSetUpgradePolicy DeserializeVirtualMachineScaleSetUpgradePolicy(JsonElement element)
         {
-            Optional<UpgradeMode> mode = default;
+            Optional<VirtualMachineScaleSetUpgradeMode> mode = default;
             Optional<RollingUpgradePolicy> rollingUpgradePolicy = default;
             Optional<AutomaticOSUpgradePolicy> automaticOSUpgradePolicy = default;
             foreach (var property in element.EnumerateObject())
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    mode = property.Value.GetString().ToUpgradeMode();
+                    mode = property.Value.GetString().ToVirtualMachineScaleSetUpgradeMode();
                     continue;
                 }
                 if (property.NameEquals("rollingUpgradePolicy"))
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new UpgradePolicy(Optional.ToNullable(mode), rollingUpgradePolicy.Value, automaticOSUpgradePolicy.Value);
+            return new VirtualMachineScaleSetUpgradePolicy(Optional.ToNullable(mode), rollingUpgradePolicy.Value, automaticOSUpgradePolicy.Value);
         }
     }
 }

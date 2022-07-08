@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
                 },
                 UpgradePolicy = new()
                 {
-                    Mode = UpgradeMode.Manual,
+                    Mode = VirtualMachineScaleSetUpgradeMode.Manual,
                 },
                 VirtualMachineProfile = new()
                 {

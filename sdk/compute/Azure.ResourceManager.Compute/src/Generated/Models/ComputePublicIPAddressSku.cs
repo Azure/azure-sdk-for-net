@@ -8,25 +8,25 @@
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the public IP Sku. It can only be set with OrchestrationMode as Flexible. </summary>
-    public partial class PublicIPAddressSku
+    public partial class ComputePublicIPAddressSku
     {
-        /// <summary> Initializes a new instance of PublicIPAddressSku. </summary>
-        public PublicIPAddressSku()
+        /// <summary> Initializes a new instance of ComputePublicIPAddressSku. </summary>
+        public ComputePublicIPAddressSku()
         {
         }
 
-        /// <summary> Initializes a new instance of PublicIPAddressSku. </summary>
+        /// <summary> Initializes a new instance of ComputePublicIPAddressSku. </summary>
         /// <param name="name"> Specify public IP sku name. </param>
         /// <param name="tier"> Specify public IP sku tier. </param>
-        internal PublicIPAddressSku(PublicIPAddressSkuName? name, PublicIPAddressSkuTier? tier)
+        internal ComputePublicIPAddressSku(ComputePublicIPAddressSkuName? name, ComputePublicIPAddressSkuTier? tier)
         {
             Name = name;
             Tier = tier;
         }
 
         /// <summary> Specify public IP sku name. </summary>
-        public PublicIPAddressSkuName? Name { get; set; }
+        public ComputePublicIPAddressSkuName? Name { get; set; }
         /// <summary> Specify public IP sku tier. </summary>
-        public PublicIPAddressSkuTier? Tier { get; set; }
+        public ComputePublicIPAddressSkuTier? Tier { get; set; }
     }
 }
