@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ServiceResourcePatch DeserializeServiceResourcePatch(JsonElement element)
         {
-            Optional<ETag> eTag = default;
+            Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    eTag = new ETag(property.Value.GetString());
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     continue;
                 }
             }
-            return new ServiceResourcePatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, placementConstraints.Value, Optional.ToList(correlationScheme), Optional.ToList(serviceLoadMetrics), Optional.ToList(servicePlacementPolicies), Optional.ToNullable(defaultMoveCost), Optional.ToNullable(serviceKind), Optional.ToNullable(eTag));
+            return new ServiceResourcePatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, placementConstraints.Value, Optional.ToList(correlationScheme), Optional.ToList(serviceLoadMetrics), Optional.ToList(servicePlacementPolicies), Optional.ToNullable(defaultMoveCost), Optional.ToNullable(serviceKind), Optional.ToNullable(etag));
         }
     }
 }
