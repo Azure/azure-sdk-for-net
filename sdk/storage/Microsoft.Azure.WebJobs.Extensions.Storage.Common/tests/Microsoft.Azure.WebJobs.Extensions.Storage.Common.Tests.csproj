@@ -9,7 +9,9 @@
 
   <ItemGroup>
     <Compile Remove="Shared\**\*.cs" />
-    <Compile Include="$(AzureStorageWebjobsExtensionSharedSources)\SkuUtility.cs" LinkBase="Shared" />
+		<Compile Include="$(AzureStorageWebjobsExtensionSharedSources)\Constants.cs" LinkBase="Shared" />
+		<Compile Include="$(AzureStorageWebjobsExtensionSharedSources)\SkuUtility.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageWebjobsExtensionSharedSources)\JsonSerialization.cs" LinkBase="Shared" />
   </ItemGroup>
 
   <ItemGroup>

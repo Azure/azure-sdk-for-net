@@ -6,6 +6,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
     internal static class Constants
     {
         public const string DateTimeFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffK";
-        public const int MaxDepthDefault = 4;
+        public const string MaxDepthEnvironmentVariable = "AZURE_WEBJOBS_STORAGE_JSONSERIALIZER_MAXDEPTH";
+        public const int MaxDepthDefault = 128;
     }
 }

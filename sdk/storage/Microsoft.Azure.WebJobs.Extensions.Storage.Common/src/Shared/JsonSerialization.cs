@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -18,8 +20,26 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Protocols
             DateParseHandling = DateParseHandling.DateTimeOffset,
             NullValueHandling = NullValueHandling.Ignore,
             Formatting = Formatting.Indented,
-            MaxDepth = Constants.MaxDepthDefault,
+            MaxDepth = GetMaxDepth(),
         };
+
+        private static int GetMaxDepth()
+        {
+            string envrMaxDepth = Environment.GetEnvironmentVariable(Constants.MaxDepthEnvironmentVariable);
+            if (!string.IsNullOrEmpty(envrMaxDepth))
+            {
+                if (int.TryParse(envrMaxDepth, NumberStyles.None, CultureInfo.InvariantCulture, out int maxDepth))
+                {
+                    return maxDepth;
+                }
+                else
+                {
+                    throw new ArgumentException($"Cannot parse the value for the Json Serializer Max Depth from the environment variable:\"{Constants.MaxDepthEnvironmentVariable}\"\n" +
+                        $"Please set the environment variable with a valid positive integer.");
+                }
+            }
+            return Constants.MaxDepthDefault;
+        }
 
         private static readonly JsonSerializer JsonSerializer = JsonSerializer.CreateDefault(JsonSerializerSettings);
 
