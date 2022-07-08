@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.Network.Models
         internal static IPConfigurationBgpPeeringAddress DeserializeIPConfigurationBgpPeeringAddress(JsonElement element)
         {
             Optional<string> ipconfigurationId = default;
-            Optional<IReadOnlyList<string>> defaultBgpIpAddresses = default;
-            Optional<IList<string>> customBgpIpAddresses = default;
-            Optional<IReadOnlyList<string>> tunnelIpAddresses = default;
+            Optional<IReadOnlyList<string>> defaultBgpIPAddresses = default;
+            Optional<IList<string>> customBgpIPAddresses = default;
+            Optional<IReadOnlyList<string>> tunnelIPAddresses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipconfigurationId"))
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         array.Add(item.GetString());
                     }
-                    defaultBgpIpAddresses = array;
+                    defaultBgpIPAddresses = array;
                     continue;
                 }
                 if (property.NameEquals("customBgpIpAddresses"))
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         array.Add(item.GetString());
                     }
-                    customBgpIpAddresses = array;
+                    customBgpIPAddresses = array;
                     continue;
                 }
                 if (property.NameEquals("tunnelIpAddresses"))
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         array.Add(item.GetString());
                     }
-                    tunnelIpAddresses = array;
+                    tunnelIPAddresses = array;
                     continue;
                 }
             }
-            return new IPConfigurationBgpPeeringAddress(ipconfigurationId.Value, Optional.ToList(defaultBgpIpAddresses), Optional.ToList(customBgpIpAddresses), Optional.ToList(tunnelIpAddresses));
+            return new IPConfigurationBgpPeeringAddress(ipconfigurationId.Value, Optional.ToList(defaultBgpIPAddresses), Optional.ToList(customBgpIPAddresses), Optional.ToList(tunnelIPAddresses));
         }
     }
 }

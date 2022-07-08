@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ServiceFabric
         internal static ApplicationResourceData DeserializeApplicationResourceData(JsonElement element)
         {
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ServiceFabric
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.ServiceFabric
                     continue;
                 }
             }
-            return new ApplicationResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, typeVersion.Value, Optional.ToDictionary(parameters), upgradePolicy.Value, Optional.ToNullable(minimumNodes), Optional.ToNullable(maximumNodes), Optional.ToNullable(removeApplicationCapacity), Optional.ToList(metrics), Optional.ToList(managedIdentities), provisioningState.Value, typeName.Value, Optional.ToNullable(etag));
+            return new ApplicationResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, typeVersion.Value, Optional.ToDictionary(parameters), upgradePolicy.Value, Optional.ToNullable(minimumNodes), Optional.ToNullable(maximumNodes), Optional.ToNullable(removeApplicationCapacity), Optional.ToList(metrics), Optional.ToList(managedIdentities), provisioningState.Value, typeName.Value, Optional.ToNullable(eTag));
         }
     }
 }

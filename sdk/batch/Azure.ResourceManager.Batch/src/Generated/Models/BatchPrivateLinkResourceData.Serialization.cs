@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Batch
 
         internal static BatchPrivateLinkResourceData DeserializeBatchPrivateLinkResourceData(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Batch
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Batch
                     continue;
                 }
             }
-            return new BatchPrivateLinkResourceData(id, name, type, systemData.Value, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames), Optional.ToNullable(etag));
+            return new BatchPrivateLinkResourceData(id, name, type, systemData.Value, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames), Optional.ToNullable(eTag));
         }
     }
 }

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ServiceFabric
 
         internal static ApplicationTypeVersionResourceData DeserializeApplicationTypeVersionResourceData(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ServiceFabric
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ServiceFabric
                     continue;
                 }
             }
-            return new ApplicationTypeVersionResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, provisioningState.Value, appPackageUrl.Value, Optional.ToDictionary(defaultParameterList), Optional.ToNullable(etag));
+            return new ApplicationTypeVersionResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, provisioningState.Value, appPackageUrl.Value, Optional.ToDictionary(defaultParameterList), Optional.ToNullable(eTag));
         }
     }
 }

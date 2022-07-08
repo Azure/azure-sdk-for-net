@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         internal static AppResourceProperties DeserializeAppResourceProperties(JsonElement element)
         {
             Optional<bool> @public = default;
-            Optional<Uri> url = default;
+            Optional<Uri> uri = default;
             Optional<IDictionary<string, IDictionary<string, BinaryData>>> addonConfigs = default;
             Optional<AppResourceProvisioningState> provisioningState = default;
             Optional<string> fqdn = default;
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<TemporaryDisk> temporaryDisk = default;
             Optional<PersistentDisk> persistentDisk = default;
             Optional<IList<CustomPersistentDiskData>> customPersistentDisks = default;
-            Optional<bool> enableEndToEndTLS = default;
+            Optional<bool> enableEndToEndTls = default;
             Optional<IList<LoadedCertificate>> loadedCertificates = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -120,10 +120,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        url = null;
+                        uri = null;
                         continue;
                     }
-                    url = new Uri(property.Value.GetString());
+                    uri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("addonConfigs"))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    enableEndToEndTLS = property.Value.GetBoolean();
+                    enableEndToEndTls = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("loadedCertificates"))
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AppResourceProperties(Optional.ToNullable(@public), url.Value, Optional.ToDictionary(addonConfigs), Optional.ToNullable(provisioningState), fqdn.Value, Optional.ToNullable(httpsOnly), temporaryDisk.Value, persistentDisk.Value, Optional.ToList(customPersistentDisks), Optional.ToNullable(enableEndToEndTLS), Optional.ToList(loadedCertificates));
+            return new AppResourceProperties(Optional.ToNullable(@public), uri.Value, Optional.ToDictionary(addonConfigs), Optional.ToNullable(provisioningState), fqdn.Value, Optional.ToNullable(httpsOnly), temporaryDisk.Value, persistentDisk.Value, Optional.ToList(customPersistentDisks), Optional.ToNullable(enableEndToEndTls), Optional.ToList(loadedCertificates));
         }
     }
 }

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="paths"> Path rules of URL path map. </param>
         /// <param name="backendAddressPool"> Backend address pool resource of URL path map path rule. </param>
         /// <param name="backendHttpSettings"> Backend http settings resource of URL path map path rule. </param>
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="rewriteRuleSet"> Rewrite rule set resource of URL path map path rule. </param>
         /// <param name="provisioningState"> The provisioning state of the path rule resource. </param>
         /// <param name="firewallPolicy"> Reference to the FirewallPolicy resource. </param>
-        internal ApplicationGatewayPathRule(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? eTag, IList<string> paths, WritableSubResource backendAddressPool, WritableSubResource backendHttpSettings, WritableSubResource redirectConfiguration, WritableSubResource rewriteRuleSet, NetworkProvisioningState? provisioningState, WritableSubResource firewallPolicy) : base(id, name, resourceType)
+        internal ApplicationGatewayPathRule(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, IList<string> paths, WritableSubResource backendAddressPool, WritableSubResource backendHttpSettings, WritableSubResource redirectConfiguration, WritableSubResource rewriteRuleSet, NetworkProvisioningState? provisioningState, WritableSubResource firewallPolicy) : base(id, name, resourceType)
         {
-            ETag = eTag;
+            ETag = etag;
             Paths = paths;
             BackendAddressPool = backendAddressPool;
             BackendHttpSettings = backendHttpSettings;

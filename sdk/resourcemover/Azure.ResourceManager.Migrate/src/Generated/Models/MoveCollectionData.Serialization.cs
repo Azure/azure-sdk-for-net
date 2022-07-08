@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Migrate
 
         internal static MoveCollectionData DeserializeMoveCollectionData(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             Optional<Identity> identity = default;
             Optional<MoveCollectionProperties> properties = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Migrate
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("identity"))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Migrate
                     continue;
                 }
             }
-            return new MoveCollectionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), identity.Value, properties.Value);
+            return new MoveCollectionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(eTag), identity.Value, properties.Value);
         }
     }
 }
