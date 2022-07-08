@@ -71,10 +71,10 @@ namespace Azure.AI.Language.QuestionAnswering
             Argument.AssertNotNull(credential, nameof(credential));
             Options = options ?? new QuestionAnsweringClientOptions();
 
-            var authorizationScope = $"{(string.IsNullOrEmpty(options.Audience?.ToString()) ? QuestionAnsweringAudience.AzurePublicCloud : options.Audience)}/.default";
+            var authorizationScope = $"{(string.IsNullOrEmpty(Options.Audience?.ToString()) ? QuestionAnsweringAudience.AzurePublicCloud : Options.Audience)}/.default";
 
-            Diagnostics = new ClientDiagnostics(options, true);
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(credential, authorizationScope) }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            Diagnostics = new ClientDiagnostics(Options, true);
+            Pipeline = HttpPipelineBuilder.Build(Options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(credential, authorizationScope) }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
             Endpoint = endpoint;
 
             _restClient = new(Diagnostics, Pipeline, Endpoint, Options.Version);
