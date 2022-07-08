@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 
 namespace Azure.Communication.Chat
 {
@@ -31,7 +30,6 @@ namespace Azure.Communication.Chat
         public string DisplayName { get; set; }
         /// <summary> Time from which the chat history is shared with the member. The timestamp is in ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
         public DateTimeOffset? ShareHistoryTime { get; set; }
-        /// <summary> Identifiers of roles for this chat participant. </summary>
 
         internal ChatParticipantInternal ToChatParticipantInternal()
         {
