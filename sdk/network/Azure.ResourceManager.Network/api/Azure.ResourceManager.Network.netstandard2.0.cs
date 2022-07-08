@@ -5877,7 +5877,7 @@ namespace Azure.ResourceManager.Network.Models
         public string Path { get { throw null; } set { } }
         public int? Port { get { throw null; } set { } }
         public bool? PreferHttps { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.NetworkHttpHeader> RequestHeaders { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.NetworkWatcherHttpHeader> RequestHeaders { get { throw null; } }
         public System.Collections.Generic.IList<string> ValidStatusCodeRanges { get { throw null; } }
     }
     public partial class ConnectionMonitorOutput
@@ -7103,7 +7103,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class HttpConfiguration
     {
         public HttpConfiguration() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.NetworkHttpHeader> Headers { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.NetworkWatcherHttpHeader> Headers { get { throw null; } }
         public Azure.ResourceManager.Network.Models.HttpMethod? Method { get { throw null; } set { } }
         public System.Collections.Generic.IList<int> ValidStatusCodes { get { throw null; } }
     }
@@ -7782,12 +7782,6 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator !=(Azure.ResourceManager.Network.Models.NetworkConnectionStatus left, Azure.ResourceManager.Network.Models.NetworkConnectionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class NetworkHttpHeader
-    {
-        public NetworkHttpHeader() { }
-        public string Name { get { throw null; } set { } }
-        public string Value { get { throw null; } set { } }
-    }
     public partial class NetworkIntentPolicy : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public NetworkIntentPolicy() { }
@@ -8059,6 +8053,12 @@ namespace Azure.ResourceManager.Network.Models
         public NetworkVirtualApplianceSkuInstances() { }
         public int? InstanceCount { get { throw null; } }
         public string ScaleUnit { get { throw null; } }
+    }
+    public partial class NetworkWatcherHttpHeader
+    {
+        public NetworkWatcherHttpHeader() { }
+        public string Name { get { throw null; } set { } }
+        public string Value { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NetworkWatcherProtocol : System.IEquatable<Azure.ResourceManager.Network.Models.NetworkWatcherProtocol>

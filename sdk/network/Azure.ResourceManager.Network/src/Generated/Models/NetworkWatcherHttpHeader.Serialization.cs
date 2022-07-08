@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class NetworkHttpHeader : IUtf8JsonSerializable
+    public partial class NetworkWatcherHttpHeader : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteEndObject();
         }
 
-        internal static NetworkHttpHeader DeserializeNetworkHttpHeader(JsonElement element)
+        internal static NetworkWatcherHttpHeader DeserializeNetworkWatcherHttpHeader(JsonElement element)
         {
             Optional<string> name = default;
             Optional<string> value = default;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new NetworkHttpHeader(name.Value, value.Value);
+            return new NetworkWatcherHttpHeader(name.Value, value.Value);
         }
     }
 }

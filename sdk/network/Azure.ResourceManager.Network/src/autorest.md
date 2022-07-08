@@ -70,7 +70,7 @@ rename-mapping:
   VpnClientConnectionHealthDetail.VpnConnectionTime: vpnConnectedOn
   TunnelConnectionHealth.lastConnectionEstablishedUtcTime: lastConnectionEstablishedOn
   ConnectivityIssue.type: ConnectivityIssueType
-  HTTPHeader: NetworkWatcherHTTPHeader
+  HttpHeader: NetworkWatcherHttpHeader
   IPVersion: NetworkIPVersion
   IPConfiguration: NetworkIPConfiguration
   IPAllocationMethod: NetworkIPAllocationMethod
@@ -82,7 +82,6 @@ rename-mapping:
   ProtocolCustomSettingsFormat: ProtocolCustomSettings
   ServiceEndpointPropertiesFormat: ServiceEndpointProperties
   ConnectionStatus: NetworkConnectionStatus
-  HttpHeader: NetworkHttpHeader
   IssueType: ConnectivityIssueType
   PrivateLinkServiceConnection: NetworkPrivateLinkServiceConnection
   ConnectivityHop: ConnectivityHopInfo
