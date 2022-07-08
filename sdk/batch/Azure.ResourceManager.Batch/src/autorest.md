@@ -16,8 +16,6 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
- 
-
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
@@ -40,11 +38,19 @@ rename-rules:
   VPN: Vpn
   NAT: Nat
   WAN: Wan
-  Ipv4: IPv4
-  Ipv6: IPv6
-  Ipsec: IPsec
+  Ipv4: IPv4|ipv4
+  Ipv6: IPv6|ipv6
+  Ipsec: IPsec|ipsec
   SSO: Sso
   URI: Uri
-  Etag: ETag
+  Etag: ETag|etag
 
+prepend-rp-prefix:
+- StorageAccountType
+- ImageReference
+
+rename-mapping:
+  DataDisk: BatchVirtualMachineDataDisk
+  NetworkProfile: BatchVirtualMachineNetworkProfile
+  CachingType: BatchDiskCachingType
 ```
