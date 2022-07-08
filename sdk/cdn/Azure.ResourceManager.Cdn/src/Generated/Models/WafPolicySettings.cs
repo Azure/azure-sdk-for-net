@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="defaultRedirectUri"> If action type is redirect, this field represents the default redirect URL for the client. </param>
         /// <param name="defaultCustomBlockResponseStatusCode"> If the action type is block, this field defines the default customer overridable http response status code. </param>
         /// <param name="defaultCustomBlockResponseBody"> If the action type is block, customer can override the response body. The body must be specified in base64 encoding. </param>
-        internal WafPolicySettings(PolicyEnabledState? enabledState, PolicyMode? mode, Uri defaultRedirectUri, PolicySettingsDefaultCustomBlockResponseStatusCode? defaultCustomBlockResponseStatusCode, BinaryData defaultCustomBlockResponseBody)
+        internal WafPolicySettings(PolicyEnabledState? enabledState, PolicyMode? mode, Uri defaultRedirectUri, PolicySettingsDefaultCustomBlockResponseStatusCode? defaultCustomBlockResponseStatusCode, string defaultCustomBlockResponseBody)
         {
             EnabledState = enabledState;
             Mode = mode;
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> If the action type is block, this field defines the default customer overridable http response status code. </summary>
         public PolicySettingsDefaultCustomBlockResponseStatusCode? DefaultCustomBlockResponseStatusCode { get; set; }
         /// <summary> If the action type is block, customer can override the response body. The body must be specified in base64 encoding. </summary>
-        public BinaryData DefaultCustomBlockResponseBody { get; set; }
+        public string DefaultCustomBlockResponseBody { get; set; }
     }
 }
