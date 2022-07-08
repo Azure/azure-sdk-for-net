@@ -4,7 +4,7 @@ languages:
 - csharp
 products:
 - azure
-- azure-iot-device-update
+- azure-iot
 name: Azure.IoT.DeviceUpdate samples for .NET
 description: Samples for theAzure.IoT.DeviceUpdate client library
 ---
