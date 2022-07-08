@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ResourceSkuCapacity
+    public partial class ApiManagementResourceSkuCapacity
     {
-        internal static ResourceSkuCapacity DeserializeResourceSkuCapacity(JsonElement element)
+        internal static ApiManagementResourceSkuCapacity DeserializeApiManagementResourceSkuCapacity(JsonElement element)
         {
             Optional<int> minimum = default;
             Optional<int> maximum = default;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new ResourceSkuCapacity(Optional.ToNullable(minimum), Optional.ToNullable(maximum), Optional.ToNullable(@default), Optional.ToNullable(scaleType));
+            return new ApiManagementResourceSkuCapacity(Optional.ToNullable(minimum), Optional.ToNullable(maximum), Optional.ToNullable(@default), Optional.ToNullable(scaleType));
         }
     }
 }

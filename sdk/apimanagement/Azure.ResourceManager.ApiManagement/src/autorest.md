@@ -53,6 +53,7 @@ override-operation-name:
   NetworkStatus_ListByLocation: GetNetworkStatusByLocation
 
 prepend-rp-prefix:
+- ResourceSkuCapacity
 - ResourceSkuCapacityScaleType
 
 rename-mapping:

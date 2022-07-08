@@ -2514,6 +2514,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.ApiManagementPrivateEndpointServiceConnectionStatus? Status { get { throw null; } set { } }
     }
+    public partial class ApiManagementResourceSkuCapacity
+    {
+        internal ApiManagementResourceSkuCapacity() { }
+        public int? Default { get { throw null; } }
+        public int? Maximum { get { throw null; } }
+        public int? Minimum { get { throw null; } }
+        public Azure.ResourceManager.ApiManagement.Models.ApiManagementResourceSkuCapacityScaleType? ScaleType { get { throw null; } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ApiManagementResourceSkuCapacityScaleType : System.IEquatable<Azure.ResourceManager.ApiManagement.Models.ApiManagementResourceSkuCapacityScaleType>
     {
@@ -4179,18 +4187,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public string District { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
     }
-    public partial class ResourceSkuCapacity
-    {
-        internal ResourceSkuCapacity() { }
-        public int? Default { get { throw null; } }
-        public int? Maximum { get { throw null; } }
-        public int? Minimum { get { throw null; } }
-        public Azure.ResourceManager.ApiManagement.Models.ApiManagementResourceSkuCapacityScaleType? ScaleType { get { throw null; } }
-    }
     public partial class ResourceSkuResult
     {
         internal ResourceSkuResult() { }
-        public Azure.ResourceManager.ApiManagement.Models.ResourceSkuCapacity Capacity { get { throw null; } }
+        public Azure.ResourceManager.ApiManagement.Models.ApiManagementResourceSkuCapacity Capacity { get { throw null; } }
         public string ResourceType { get { throw null; } }
         public Azure.ResourceManager.ApiManagement.Models.SkuType? SkuName { get { throw null; } }
     }
