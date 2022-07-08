@@ -5,24 +5,23 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.Communication.Chat
 {
     /// <summary> Result of the send cross-platform threadless external message operation. </summary>
     public partial class SendExternalMessageResult
     {
         /// <summary> Initializes a new instance of SendExternalMessageResult. </summary>
+        /// <param name="status"> The cross-platform threadless external message status. </param>
+        internal SendExternalMessageResult(ExternalMessageStatus status)
+        {
+            Status = status;
+        }
+
+        /// <summary> Initializes a new instance of SendExternalMessageResult. </summary>
         /// <param name="id"> A server-generated message id. </param>
         /// <param name="status"> The cross-platform threadless external message status. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         internal SendExternalMessageResult(string id, ExternalMessageStatus status)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-
             Id = id;
             Status = status;
         }

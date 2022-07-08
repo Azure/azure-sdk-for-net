@@ -14,7 +14,7 @@ namespace Azure.Communication.Chat
     {
         internal static SendExternalMessageResult DeserializeSendExternalMessageResult(JsonElement element)
         {
-            string id = default;
+            Optional<string> id = default;
             ExternalMessageStatus status = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -29,7 +29,7 @@ namespace Azure.Communication.Chat
                     continue;
                 }
             }
-            return new SendExternalMessageResult(id, status);
+            return new SendExternalMessageResult(id.Value, status);
         }
     }
 }
