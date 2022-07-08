@@ -49,11 +49,11 @@ ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().Get
 VirtualMachineCollection vmCollection = resourceGroup.GetVirtualMachines();
 // Use the same location as the resource group
 string vmName = "myVM";
-var input = new VirtualMachineData(resourceGroup.Data.Location)
+VirtualMachineData input = new VirtualMachineData(resourceGroup.Data.Location)
 {
     HardwareProfile = new HardwareProfile()
     {
-        VmSize = VirtualMachineSizeType.StandardF2
+        VmSize = VmSizeType.StandardF2
     },
     OSProfile = new OSProfile()
     {
@@ -71,11 +71,11 @@ var input = new VirtualMachineData(resourceGroup.Data.Location)
             }
         }
     },
-    NetworkProfile = new NetworkProfile()
+    NetworkProfile = new VmNetworkProfile()
     {
         NetworkInterfaces =
         {
-            new NetworkInterfaceReference()
+            new VmNetworkInterfaceReference()
             {
                 Id = new ResourceIdentifier("/subscriptions/<subscriptionId>/resourceGroups/<rgName>/providers/Microsoft.Network/networkInterfaces/<nicName>"),
                 Primary = true,
