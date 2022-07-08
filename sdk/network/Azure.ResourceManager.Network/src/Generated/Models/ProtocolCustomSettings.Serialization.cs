@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ProtocolCustomSettingsFormat : IUtf8JsonSerializable
+    public partial class ProtocolCustomSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteEndObject();
         }
 
-        internal static ProtocolCustomSettingsFormat DeserializeProtocolCustomSettingsFormat(JsonElement element)
+        internal static ProtocolCustomSettings DeserializeProtocolCustomSettings(JsonElement element)
         {
             Optional<DdosCustomPolicyProtocol> protocol = default;
             Optional<string> triggerRateOverride = default;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ProtocolCustomSettingsFormat(Optional.ToNullable(protocol), triggerRateOverride.Value, sourceRateOverride.Value, Optional.ToNullable(triggerSensitivityOverride));
+            return new ProtocolCustomSettings(Optional.ToNullable(protocol), triggerRateOverride.Value, sourceRateOverride.Value, Optional.ToNullable(triggerSensitivityOverride));
         }
     }
 }
