@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary> Type of VNet solution. </summary>
-    public readonly partial struct VnetSolutionType : IEquatable<VnetSolutionType>
+    public readonly partial struct VNetSolutionType : IEquatable<VNetSolutionType>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="VnetSolutionType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VNetSolutionType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public VnetSolutionType(string value)
+        public VNetSolutionType(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -26,21 +26,21 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         private const string PrivateLinkValue = "privateLink";
 
         /// <summary> serviceEndpoint. </summary>
-        public static VnetSolutionType ServiceEndpoint { get; } = new VnetSolutionType(ServiceEndpointValue);
+        public static VNetSolutionType ServiceEndpoint { get; } = new VNetSolutionType(ServiceEndpointValue);
         /// <summary> privateLink. </summary>
-        public static VnetSolutionType PrivateLink { get; } = new VnetSolutionType(PrivateLinkValue);
-        /// <summary> Determines if two <see cref="VnetSolutionType"/> values are the same. </summary>
-        public static bool operator ==(VnetSolutionType left, VnetSolutionType right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="VnetSolutionType"/> values are not the same. </summary>
-        public static bool operator !=(VnetSolutionType left, VnetSolutionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VnetSolutionType"/>. </summary>
-        public static implicit operator VnetSolutionType(string value) => new VnetSolutionType(value);
+        public static VNetSolutionType PrivateLink { get; } = new VNetSolutionType(PrivateLinkValue);
+        /// <summary> Determines if two <see cref="VNetSolutionType"/> values are the same. </summary>
+        public static bool operator ==(VNetSolutionType left, VNetSolutionType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="VNetSolutionType"/> values are not the same. </summary>
+        public static bool operator !=(VNetSolutionType left, VNetSolutionType right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="VNetSolutionType"/>. </summary>
+        public static implicit operator VNetSolutionType(string value) => new VNetSolutionType(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is VnetSolutionType other && Equals(other);
+        public override bool Equals(object obj) => obj is VNetSolutionType other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(VnetSolutionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(VNetSolutionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

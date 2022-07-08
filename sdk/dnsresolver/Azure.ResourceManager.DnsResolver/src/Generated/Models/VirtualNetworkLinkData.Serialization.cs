@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DnsResolver
 
         internal static VirtualNetworkLinkData DeserializeVirtualNetworkLinkData(JsonElement element)
         {
-            Optional<ETag> eTag = default;
+            Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DnsResolver
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    eTag = new ETag(property.Value.GetString());
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DnsResolver
                     continue;
                 }
             }
-            return new VirtualNetworkLinkData(id, name, type, systemData.Value, Optional.ToNullable(eTag), virtualNetwork, Optional.ToDictionary(metadata), Optional.ToNullable(provisioningState));
+            return new VirtualNetworkLinkData(id, name, type, systemData.Value, Optional.ToNullable(etag), virtualNetwork, Optional.ToDictionary(metadata), Optional.ToNullable(provisioningState));
         }
     }
 }

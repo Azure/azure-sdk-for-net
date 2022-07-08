@@ -31,6 +31,7 @@ rename-rules:
   Ips: IPs|ips
   ID: Id
   IDs: Ids
+  VMM: Vmm
   VM: Vm
   VMs: Vms
   VMScaleSet: VmScaleSet
@@ -44,7 +45,6 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
-  VMM: Vmm
 
 no-property-type-replacement:
 - VirtualMachineDeleteCheckpoint

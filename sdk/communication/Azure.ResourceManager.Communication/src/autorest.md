@@ -47,6 +47,7 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  SPF: Spf
 
 directive:
   - rename-model:

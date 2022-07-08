@@ -58,13 +58,13 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         {
             Optional<string> name = default;
             Optional<string> displayName = default;
-            Optional<IReadOnlyList<string>> iPv4Addresses = default;
-            Optional<IReadOnlyList<string>> iPv6Addresses = default;
+            Optional<IReadOnlyList<string>> ipv4Addresses = default;
+            Optional<IReadOnlyList<string>> ipv6Addresses = default;
             Optional<string> macAddress = default;
             Optional<string> virtualNetworkId = default;
             Optional<string> networkName = default;
-            Optional<AllocationMethod> iPv4AddressType = default;
-            Optional<AllocationMethod> iPv6AddressType = default;
+            Optional<AllocationMethod> ipv4AddressType = default;
+            Optional<AllocationMethod> ipv6AddressType = default;
             Optional<AllocationMethod> macAddressType = default;
             Optional<string> nicId = default;
             foreach (var property in element.EnumerateObject())
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     {
                         array.Add(item.GetString());
                     }
-                    iPv4Addresses = array;
+                    ipv4Addresses = array;
                     continue;
                 }
                 if (property.NameEquals("ipv6Addresses"))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     {
                         array.Add(item.GetString());
                     }
-                    iPv6Addresses = array;
+                    ipv6Addresses = array;
                     continue;
                 }
                 if (property.NameEquals("macAddress"))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    iPv4AddressType = new AllocationMethod(property.Value.GetString());
+                    ipv4AddressType = new AllocationMethod(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ipv6AddressType"))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    iPv6AddressType = new AllocationMethod(property.Value.GetString());
+                    ipv6AddressType = new AllocationMethod(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("macAddressType"))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     continue;
                 }
             }
-            return new NetworkInterfaces(name.Value, displayName.Value, Optional.ToList(iPv4Addresses), Optional.ToList(iPv6Addresses), macAddress.Value, virtualNetworkId.Value, networkName.Value, Optional.ToNullable(iPv4AddressType), Optional.ToNullable(iPv6AddressType), Optional.ToNullable(macAddressType), nicId.Value);
+            return new NetworkInterfaces(name.Value, displayName.Value, Optional.ToList(ipv4Addresses), Optional.ToList(ipv6Addresses), macAddress.Value, virtualNetworkId.Value, networkName.Value, Optional.ToNullable(ipv4AddressType), Optional.ToNullable(ipv6AddressType), Optional.ToNullable(macAddressType), nicId.Value);
         }
     }
 }

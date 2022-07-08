@@ -99,7 +99,6 @@ prepend-rp-prefix:
 - ApiError
 - ApiErrorBase
 - DeleteOptions
-- ProtocolType
 - ResourceSku
 - ResourceSkuCapacity
 - ResourceSkuLocationInfo
@@ -110,7 +109,7 @@ prepend-rp-prefix:
 - ResourceSkuZoneDetails
 - ResourceSkuCapacityScaleType
 - EncryptionType
-- ProtocolType
+- ProtocolTypes
 - PublicIPAddressSku
 - PublicIPAddressSkuName
 - PublicIPAddressSkuTier

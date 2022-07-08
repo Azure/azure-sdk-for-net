@@ -30,15 +30,15 @@ namespace Azure.ResourceManager.HDInsight
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="eTag"> The ETag for the resource. </param>
+        /// <param name="etag"> The ETag for the resource. </param>
         /// <param name="zones"> The availability zones. </param>
         /// <param name="properties"> The properties of the cluster. </param>
         /// <param name="identity"> The identity of the cluster, if configured. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal ClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, IReadOnlyList<string> zones, ClusterGetProperties properties, ClusterIdentity identity, IReadOnlyDictionary<string, string> tags, AzureLocation location) : base(id, name, resourceType, systemData)
+        internal ClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IReadOnlyList<string> zones, ClusterGetProperties properties, ClusterIdentity identity, IReadOnlyDictionary<string, string> tags, AzureLocation location) : base(id, name, resourceType, systemData)
         {
-            ETag = eTag;
+            ETag = etag;
             Zones = zones;
             Properties = properties;
             Identity = identity;
