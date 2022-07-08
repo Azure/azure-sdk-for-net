@@ -172,7 +172,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return activity.DisplayName;
         }
 
-        private static TelemetryItem AddExceptionTelemetryFromActivityExceptionEvents(Activity activity, ref TagEnumerationState monitorTags, string roleName, string roleInstance, string instrumentationKey, List<TelemetryItem> telemetryItems)
+        private static void AddExceptionTelemetryFromActivityExceptionEvents(Activity activity, ref TagEnumerationState monitorTags, string roleName, string roleInstance, string instrumentationKey, List<TelemetryItem> telemetryItems)
         {
             foreach (var evnt in activity.Events)
             {
@@ -190,8 +190,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     }
                 }
             }
-
-            return null;
         }
 
         internal static void SetExceptionDataDetailsOnTelemetryItem(IEnumerable<KeyValuePair<string, object>> activityEventTags, TelemetryItem exceptionTelemetryItem)
