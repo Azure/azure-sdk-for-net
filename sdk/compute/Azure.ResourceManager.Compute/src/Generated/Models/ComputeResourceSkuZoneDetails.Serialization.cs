@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal static ComputeResourceSkuZoneDetails DeserializeComputeResourceSkuZoneDetails(JsonElement element)
         {
             Optional<IReadOnlyList<string>> name = default;
-            Optional<IReadOnlyList<ResourceSkuCapabilities>> capabilities = default;
+            Optional<IReadOnlyList<ComputeResourceSkuCapabilities>> capabilities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ResourceSkuCapabilities> array = new List<ResourceSkuCapabilities>();
+                    List<ComputeResourceSkuCapabilities> array = new List<ComputeResourceSkuCapabilities>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSkuCapabilities.DeserializeResourceSkuCapabilities(item));
+                        array.Add(ComputeResourceSkuCapabilities.DeserializeComputeResourceSkuCapabilities(item));
                     }
                     capabilities = array;
                     continue;

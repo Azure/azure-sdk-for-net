@@ -8,17 +8,17 @@
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes The SKU capabilities object. </summary>
-    public partial class ResourceSkuCapabilities
+    public partial class ComputeResourceSkuCapabilities
     {
-        /// <summary> Initializes a new instance of ResourceSkuCapabilities. </summary>
-        internal ResourceSkuCapabilities()
+        /// <summary> Initializes a new instance of ComputeResourceSkuCapabilities. </summary>
+        internal ComputeResourceSkuCapabilities()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceSkuCapabilities. </summary>
+        /// <summary> Initializes a new instance of ComputeResourceSkuCapabilities. </summary>
         /// <param name="name"> An invariant to describe the feature. </param>
         /// <param name="value"> An invariant if the feature is measured by quantity. </param>
-        internal ResourceSkuCapabilities(string name, string value)
+        internal ComputeResourceSkuCapabilities(string name, string value)
         {
             Name = name;
             Value = value;

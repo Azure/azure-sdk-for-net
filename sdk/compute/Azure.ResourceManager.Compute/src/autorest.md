@@ -58,6 +58,8 @@ rename-rules:
   SSD: Ssd
   SAS: Sas
   VCPUs: VCpus
+  LRS: Lrs
+  ZRS: Zrs
   RestorePointCollection: RestorePointGroup # the word `collection` is reserved by the SDK, therefore we need to rename all the occurrences of this in all resources and models
   EncryptionSettingsCollection: EncryptionSettingsGroup # the word `collection` is reserved by the SDK, therefore we need to rename all the occurrences of this in all resources and models
 
@@ -109,7 +111,6 @@ prepend-rp-prefix:
 - ResourceSkuZoneDetails
 - ResourceSkuCapacityScaleType
 - EncryptionType
-- ProtocolTypes
 - PublicIPAddressSku
 - PublicIPAddressSkuName
 - PublicIPAddressSkuTier
@@ -188,6 +189,8 @@ rename-mapping:
   RunCommandResult: VirtualMachineRunCommandResult
   UpgradeMode: VirtualMachineScaleSetUpgradeMode
   UpgradePolicy: VirtualMachineScaleSetUpgradePolicy
+  ResourceSkuCapabilities: ComputeResourceSkuCapabilities
+  ProtocolTypes: WinRMListenerProtocolType
 
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced
