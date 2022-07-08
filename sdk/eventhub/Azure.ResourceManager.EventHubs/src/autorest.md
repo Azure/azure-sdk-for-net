@@ -27,7 +27,7 @@ override-operation-name:
 
 format-by-name-rules:
   'tenantId': 'uuid'
-  'etag': 'etag'
+  'ETag': 'etag'
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
@@ -53,6 +53,13 @@ rename-rules:
   Ipsec: IPsec
   SSO: Sso
   URI: Uri
+  Etag: ETag
+
+rename-mapping:
+  SchemaType: EventHubsSchemaType
+  SchemaCompatibility: EventHubsSchemaCompatibility
+  KeySource: EventHubsEncryptionKeySource
+  UnavailableReason: EventHubsNameUnavailableReason
 
 directive:
     - from: AuthorizationRules.json
@@ -120,7 +127,7 @@ directive:
       where: $.definitions
       transform: >
         $.SchemaGroup['x-ms-client-name'] = 'EventHubsSchemaGroup';
-#       delete $.SchemaGroup.properties.properties.properties.eTag['format'];
+        delete $.SchemaGroup.properties.properties.properties.eTag['format'];
 #        $.SchemaGroup.properties.properties.properties.eTag['x-ms-format'] = 'etag';
     - from: AvailableClusterRegions-preview.json
       where: $.definitions
