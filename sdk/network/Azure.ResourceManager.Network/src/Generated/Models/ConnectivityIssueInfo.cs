@@ -11,20 +11,20 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Information about an issue encountered in the process of checking for connectivity. </summary>
-    public partial class ConnectivityIssue
+    public partial class ConnectivityIssueInfo
     {
-        /// <summary> Initializes a new instance of ConnectivityIssue. </summary>
-        internal ConnectivityIssue()
+        /// <summary> Initializes a new instance of ConnectivityIssueInfo. </summary>
+        internal ConnectivityIssueInfo()
         {
             Contexts = new ChangeTrackingList<IDictionary<string, string>>();
         }
 
-        /// <summary> Initializes a new instance of ConnectivityIssue. </summary>
+        /// <summary> Initializes a new instance of ConnectivityIssueInfo. </summary>
         /// <param name="origin"> The origin of the issue. </param>
         /// <param name="severity"> The severity of the issue. </param>
         /// <param name="connectivityIssueType"> The type of issue. </param>
         /// <param name="contexts"> Provides additional context on the issue. </param>
-        internal ConnectivityIssue(IssueOrigin? origin, IssueSeverity? severity, IssueType? connectivityIssueType, IReadOnlyList<IDictionary<string, string>> contexts)
+        internal ConnectivityIssueInfo(IssueOrigin? origin, IssueSeverity? severity, ConnectivityIssueType? connectivityIssueType, IReadOnlyList<IDictionary<string, string>> contexts)
         {
             Origin = origin;
             Severity = severity;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The severity of the issue. </summary>
         public IssueSeverity? Severity { get; }
         /// <summary> The type of issue. </summary>
-        public IssueType? ConnectivityIssueType { get; }
+        public ConnectivityIssueType? ConnectivityIssueType { get; }
         /// <summary> Provides additional context on the issue. </summary>
         public IReadOnlyList<IDictionary<string, string>> Contexts { get; }
     }

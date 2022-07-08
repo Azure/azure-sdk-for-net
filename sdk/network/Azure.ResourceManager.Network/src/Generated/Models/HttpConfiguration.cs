@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of HttpConfiguration. </summary>
         public HttpConfiguration()
         {
-            Headers = new ChangeTrackingList<HttpHeader>();
+            Headers = new ChangeTrackingList<NetworkHttpHeader>();
             ValidStatusCodes = new ChangeTrackingList<int>();
         }
 
         /// <summary> HTTP method. </summary>
         public HttpMethod? Method { get; set; }
         /// <summary> List of HTTP headers. </summary>
-        public IList<HttpHeader> Headers { get; }
+        public IList<NetworkHttpHeader> Headers { get; }
         /// <summary> Valid status codes. </summary>
         public IList<int> ValidStatusCodes { get; }
     }

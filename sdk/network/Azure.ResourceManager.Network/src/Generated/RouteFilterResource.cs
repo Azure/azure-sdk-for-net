@@ -233,18 +233,18 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}
         /// Operation Id: RouteFilters_UpdateTags
         /// </summary>
-        /// <param name="tagsObject"> Parameters supplied to update route filter tags. </param>
+        /// <param name="networkTagsObject"> Parameters supplied to update route filter tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
-        public virtual async Task<Response<RouteFilterResource>> UpdateAsync(TagsObject tagsObject, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="networkTagsObject"/> is null. </exception>
+        public virtual async Task<Response<RouteFilterResource>> UpdateAsync(NetworkTagsObject networkTagsObject, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+            Argument.AssertNotNull(networkTagsObject, nameof(networkTagsObject));
 
             using var scope = _routeFilterClientDiagnostics.CreateScope("RouteFilterResource.Update");
             scope.Start();
             try
             {
-                var response = await _routeFilterRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject, cancellationToken).ConfigureAwait(false);
+                var response = await _routeFilterRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkTagsObject, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new RouteFilterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -259,18 +259,18 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}
         /// Operation Id: RouteFilters_UpdateTags
         /// </summary>
-        /// <param name="tagsObject"> Parameters supplied to update route filter tags. </param>
+        /// <param name="networkTagsObject"> Parameters supplied to update route filter tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
-        public virtual Response<RouteFilterResource> Update(TagsObject tagsObject, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="networkTagsObject"/> is null. </exception>
+        public virtual Response<RouteFilterResource> Update(NetworkTagsObject networkTagsObject, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+            Argument.AssertNotNull(networkTagsObject, nameof(networkTagsObject));
 
             using var scope = _routeFilterClientDiagnostics.CreateScope("RouteFilterResource.Update");
             scope.Start();
             try
             {
-                var response = _routeFilterRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject, cancellationToken);
+                var response = _routeFilterRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkTagsObject, cancellationToken);
                 return Response.FromValue(new RouteFilterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

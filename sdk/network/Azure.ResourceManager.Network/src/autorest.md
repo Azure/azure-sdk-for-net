@@ -77,6 +77,17 @@ rename-mapping:
   ConnectionStateSnapshot.connectionState: NetworkConnectionState
   ConnectivityInformation.connectionStatus: NetworkConnectionStatus
   DscpConfigurationPropertiesFormat.protocol: NetworkProtocolType
+  ConnectionStatus: NetworkConnectionStatus
+  HttpHeader: NetworkHttpHeader
+  IssueType: ConnectivityIssueType
+  PrivateLinkServiceConnection: NetworkPrivateLinkServiceConnection
+  ConnectivityHop: ConnectivityHopInfo
+  ConnectivityIssue: ConnectivityIssueInfo
+  PreferredIPVersion: TestEvalPreferredIPVersion
+  InboundNatPool: LoadBalancerInboundNatPool
+  TagsObject: NetworkTagsObject
+  EndpointType: ConnectionMonitorEndpointType
+  ConnectionState: NetworkConnectionState
 
 
 format-by-name-rules:
