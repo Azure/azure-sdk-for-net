@@ -312,8 +312,19 @@ directive:
       $.required = ["frontendIpConfigurations"];
       $.properties.frontendIPConfigurations = undefined;
     reason: Service returns response with property name as frontendIpConfigurations.
+  # this enforces the body parameter of CloudServices_CreateOrUpdate to be required
   - from: cloudService.json
     where: $.paths
     transform: >
       $["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}"].put.parameters[4]["required"] = true;
+  # this makes the name in VirtualMachineScaleSetExtension to be readonly so that our inheritance chooser could properly make it inherit from Azure.ResourceManager.ResourceData. We have some customized code to add the setter for name back (as in constructor)
+  - from: virtualMachineScaleSet.json
+    where: $.definitions.VirtualMachineScaleSetExtension.properties.name
+    transform: $["readOnly"] = true;
+  # fixing a swagger mistake, can be removed after https://github.com/Azure/azure-rest-api-specs/pull/19679 merges
+  - from: gallery.json
+    where: $.definitions.SharingProfile.properties.communityGalleryInfo
+    transform: >
+      $.items = undefined;
+      $["$ref"] = "#/definitions/CommunityGalleryInfo";
 ```

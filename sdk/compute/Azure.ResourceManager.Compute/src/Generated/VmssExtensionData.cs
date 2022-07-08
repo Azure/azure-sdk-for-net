@@ -8,12 +8,12 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing the VmssExtension data model. </summary>
-    public partial class VmssExtensionData : ComputeSubResourceData
+    public partial class VmssExtensionData : ResourceData
     {
         /// <summary> Initializes a new instance of VmssExtensionData. </summary>
         public VmssExtensionData()
@@ -22,9 +22,10 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Initializes a new instance of VmssExtensionData. </summary>
-        /// <param name="id"> Resource Id. </param>
-        /// <param name="name"> The name of the extension. </param>
-        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="forceUpdateTag"> If a value is provided and is different from the previous value, the extension handler will be forced to update even if the extension configuration has not changed. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
         /// <param name="extensionType"> Specifies the type of the extension; an example is &quot;CustomScriptExtension&quot;. </param>
@@ -37,10 +38,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="provisionAfterExtensions"> Collection of extension names after which this extension needs to be provisioned. </param>
         /// <param name="suppressFailures"> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </param>
         /// <param name="protectedSettingsFromKeyVault"> The extensions protected settings that are passed by reference, and consumed from key vault. </param>
-        internal VmssExtensionData(ResourceIdentifier id, string name, ResourceType? resourceType, string forceUpdateTag, string publisher, string extensionType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, BinaryData settings, BinaryData protectedSettings, string provisioningState, IList<string> provisionAfterExtensions, bool? suppressFailures, BinaryData protectedSettingsFromKeyVault) : base(id)
+        internal VmssExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string forceUpdateTag, string publisher, string extensionType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, BinaryData settings, BinaryData protectedSettings, string provisioningState, IList<string> provisionAfterExtensions, bool? suppressFailures, BinaryData protectedSettingsFromKeyVault) : base(id, name, resourceType, systemData)
         {
-            Name = name;
-            ResourceType = resourceType;
             ForceUpdateTag = forceUpdateTag;
             Publisher = publisher;
             ExtensionType = extensionType;
@@ -55,10 +54,6 @@ namespace Azure.ResourceManager.Compute
             ProtectedSettingsFromKeyVault = protectedSettingsFromKeyVault;
         }
 
-        /// <summary> The name of the extension. </summary>
-        public string Name { get; set; }
-        /// <summary> Resource type. </summary>
-        public ResourceType? ResourceType { get; }
         /// <summary> If a value is provided and is different from the previous value, the extension handler will be forced to update even if the extension configuration has not changed. </summary>
         public string ForceUpdateTag { get; set; }
         /// <summary> The name of the extension handler publisher. </summary>

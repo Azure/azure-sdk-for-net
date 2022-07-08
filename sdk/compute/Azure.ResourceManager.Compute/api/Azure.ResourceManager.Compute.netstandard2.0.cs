@@ -2002,20 +2002,19 @@ namespace Azure.ResourceManager.Compute
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Compute.VmssExtensionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.VmssExtensionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VmssExtensionData : Azure.ResourceManager.Compute.Models.ComputeSubResourceData
+    public partial class VmssExtensionData : Azure.ResourceManager.Models.ResourceData
     {
         public VmssExtensionData() { }
+        public VmssExtensionData(string name) { }
         public bool? AutoUpgradeMinorVersion { get { throw null; } set { } }
         public bool? EnableAutomaticUpgrade { get { throw null; } set { } }
         public string ExtensionType { get { throw null; } set { } }
         public string ForceUpdateTag { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
         public System.BinaryData ProtectedSettings { get { throw null; } set { } }
         public System.BinaryData ProtectedSettingsFromKeyVault { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> ProvisionAfterExtensions { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public string Publisher { get { throw null; } set { } }
-        public Azure.Core.ResourceType? ResourceType { get { throw null; } }
         public System.BinaryData Settings { get { throw null; } set { } }
         public bool? SuppressFailures { get { throw null; } set { } }
         public string TypeHandlerVersion { get { throw null; } set { } }
@@ -2548,6 +2547,16 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.Core.ResourceIdentifier SourceVaultId { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.CloudServiceVaultCertificate> VaultCertificates { get { throw null; } }
     }
+    public partial class CommunityGalleryInfo
+    {
+        public CommunityGalleryInfo() { }
+        public bool? CommunityGalleryEnabled { get { throw null; } }
+        public string Eula { get { throw null; } set { } }
+        public string PublicNamePrefix { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<string> PublicNames { get { throw null; } }
+        public string PublisherContact { get { throw null; } set { } }
+        public System.Uri PublisherUri { get { throw null; } set { } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ComponentName : System.IEquatable<Azure.ResourceManager.Compute.Models.ComponentName>
     {
@@ -2719,11 +2728,6 @@ namespace Azure.ResourceManager.Compute.Models
         public long? Capacity { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string Tier { get { throw null; } set { } }
-    }
-    public partial class ComputeSubResourceData
-    {
-        public ComputeSubResourceData() { }
-        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
     }
     public partial class ComputeSubResourceDataWithColocationStatus : Azure.ResourceManager.Compute.Models.ComputeWriteableSubResourceData
     {
@@ -4798,7 +4802,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class SharingProfile
     {
         public SharingProfile() { }
-        public System.BinaryData CommunityGalleryInfo { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.CommunityGalleryInfo CommunityGalleryInfo { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.SharingProfileGroup> Groups { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.GallerySharingPermissionType? Permission { get { throw null; } set { } }
     }
