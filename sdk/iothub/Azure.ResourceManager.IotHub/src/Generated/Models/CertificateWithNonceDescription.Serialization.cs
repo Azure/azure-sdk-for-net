@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.IotHub.Models
         internal static CertificateWithNonceDescription DeserializeCertificateWithNonceDescription(JsonElement element)
         {
             Optional<CertificatePropertiesWithNonce> properties = default;
-            Optional<ETag> eTag = default;
+            Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.IotHub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    eTag = new ETag(property.Value.GetString());
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     continue;
                 }
             }
-            return new CertificateWithNonceDescription(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(eTag));
+            return new CertificateWithNonceDescription(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(etag));
         }
     }
 }

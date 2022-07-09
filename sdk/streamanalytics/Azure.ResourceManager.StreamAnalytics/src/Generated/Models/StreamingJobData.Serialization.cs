@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             Optional<StreamingJobTransformationData> transformation = default;
             Optional<IList<StreamingJobOutputData>> outputs = default;
             Optional<IList<StreamingJobFunctionData>> functions = default;
-            Optional<ETag> eTag = default;
+            Optional<ETag> etag = default;
             Optional<JobStorageAccount> jobStorageAccount = default;
             Optional<ContentStoragePolicy> contentStoragePolicy = default;
             Optional<ExternalStorageAccount> externals = default;
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            eTag = new ETag(property0.Value.GetString());
+                            etag = new ETag(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("jobStorageAccount"))
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                     continue;
                 }
             }
-            return new StreamingJobData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity.Value, sku.Value, jobId.Value, provisioningState.Value, jobState.Value, Optional.ToNullable(jobType), Optional.ToNullable(outputStartMode), Optional.ToNullable(outputStartTime), Optional.ToNullable(lastOutputEventTime), Optional.ToNullable(eventsOutOfOrderPolicy), Optional.ToNullable(outputErrorPolicy), Optional.ToNullable(eventsOutOfOrderMaxDelayInSeconds), Optional.ToNullable(eventsLateArrivalMaxDelayInSeconds), dataLocale.Value, Optional.ToNullable(compatibilityLevel), Optional.ToNullable(createdDate), Optional.ToList(inputs), transformation.Value, Optional.ToList(outputs), Optional.ToList(functions), Optional.ToNullable(eTag), jobStorageAccount.Value, Optional.ToNullable(contentStoragePolicy), externals.Value, cluster);
+            return new StreamingJobData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity.Value, sku.Value, jobId.Value, provisioningState.Value, jobState.Value, Optional.ToNullable(jobType), Optional.ToNullable(outputStartMode), Optional.ToNullable(outputStartTime), Optional.ToNullable(lastOutputEventTime), Optional.ToNullable(eventsOutOfOrderPolicy), Optional.ToNullable(outputErrorPolicy), Optional.ToNullable(eventsOutOfOrderMaxDelayInSeconds), Optional.ToNullable(eventsLateArrivalMaxDelayInSeconds), dataLocale.Value, Optional.ToNullable(compatibilityLevel), Optional.ToNullable(createdDate), Optional.ToList(inputs), transformation.Value, Optional.ToList(outputs), Optional.ToList(functions), Optional.ToNullable(etag), jobStorageAccount.Value, Optional.ToNullable(contentStoragePolicy), externals.Value, cluster);
         }
     }
 }

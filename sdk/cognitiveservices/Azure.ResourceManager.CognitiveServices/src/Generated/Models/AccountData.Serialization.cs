@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.CognitiveServices
             Optional<CognitiveServicesSku> sku = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<AccountProperties> properties = default;
-            Optional<ETag> eTag = default;
+            Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.CognitiveServices
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    eTag = new ETag(property.Value.GetString());
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     continue;
                 }
             }
-            return new AccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, kind.Value, sku.Value, identity, properties.Value, Optional.ToNullable(eTag));
+            return new AccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, kind.Value, sku.Value, identity, properties.Value, Optional.ToNullable(etag));
         }
     }
 }

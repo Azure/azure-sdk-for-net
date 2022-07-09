@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         {
             Optional<string> protocol = default;
             Optional<int> port = default;
-            Optional<IReadOnlyList<string>> iPs = default;
+            Optional<IReadOnlyList<string>> ips = default;
             Optional<IReadOnlyList<string>> fqdns = default;
             Optional<TrafficDirection> direction = default;
             foreach (var property in element.EnumerateObject())
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         array.Add(item.GetString());
                     }
-                    iPs = array;
+                    ips = array;
                     continue;
                 }
                 if (property.NameEquals("fqdns"))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new RequiredTraffic(protocol.Value, Optional.ToNullable(port), Optional.ToList(iPs), Optional.ToList(fqdns), Optional.ToNullable(direction));
+            return new RequiredTraffic(protocol.Value, Optional.ToNullable(port), Optional.ToList(ips), Optional.ToList(fqdns), Optional.ToNullable(direction));
         }
     }
 }

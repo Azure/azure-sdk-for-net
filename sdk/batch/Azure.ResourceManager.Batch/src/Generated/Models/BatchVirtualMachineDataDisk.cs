@@ -8,18 +8,18 @@
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> Settings which will be used by the data disks associated to Compute Nodes in the Pool. When using attached data disks, you need to mount and format the disks from within a VM to use them. </summary>
-    public partial class DataDisk
+    public partial class BatchVirtualMachineDataDisk
     {
-        /// <summary> Initializes a new instance of DataDisk. </summary>
+        /// <summary> Initializes a new instance of BatchVirtualMachineDataDisk. </summary>
         /// <param name="lun"> The lun is used to uniquely identify each data disk. If attaching multiple disks, each should have a distinct lun. The value must be between 0 and 63, inclusive. </param>
         /// <param name="diskSizeGB"> The initial disk size in GB when creating new data disk. </param>
-        public DataDisk(int lun, int diskSizeGB)
+        public BatchVirtualMachineDataDisk(int lun, int diskSizeGB)
         {
             Lun = lun;
             DiskSizeGB = diskSizeGB;
         }
 
-        /// <summary> Initializes a new instance of DataDisk. </summary>
+        /// <summary> Initializes a new instance of BatchVirtualMachineDataDisk. </summary>
         /// <param name="lun"> The lun is used to uniquely identify each data disk. If attaching multiple disks, each should have a distinct lun. The value must be between 0 and 63, inclusive. </param>
         /// <param name="caching">
         /// Values are:
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Batch.Models
         ///  Standard_LRS - The data disk should use standard locally redundant storage.
         ///  Premium_LRS - The data disk should use premium locally redundant storage.
         /// </param>
-        internal DataDisk(int lun, CachingType? caching, int diskSizeGB, StorageAccountType? storageAccountType)
+        internal BatchVirtualMachineDataDisk(int lun, BatchDiskCachingType? caching, int diskSizeGB, BatchStorageAccountType? storageAccountType)
         {
             Lun = lun;
             Caching = caching;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// 
         ///  The default value for caching is none. For information about the caching options see: https://blogs.msdn.microsoft.com/windowsazurestorage/2012/06/27/exploring-windows-azure-drives-disks-and-images/.
         /// </summary>
-        public CachingType? Caching { get; set; }
+        public BatchDiskCachingType? Caching { get; set; }
         /// <summary> The initial disk size in GB when creating new data disk. </summary>
         public int DiskSizeGB { get; set; }
         /// <summary>
@@ -65,6 +65,6 @@ namespace Azure.ResourceManager.Batch.Models
         ///  Standard_LRS - The data disk should use standard locally redundant storage.
         ///  Premium_LRS - The data disk should use premium locally redundant storage.
         /// </summary>
-        public StorageAccountType? StorageAccountType { get; set; }
+        public BatchStorageAccountType? StorageAccountType { get; set; }
     }
 }

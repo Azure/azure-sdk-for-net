@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="imageReference"> A reference to an Azure Virtual Machines Marketplace image or the Azure Image resource of a custom Virtual Machine. To get the list of all imageReferences verified by Azure Batch, see the &apos;List supported node agent SKUs&apos; operation. </param>
         /// <param name="nodeAgentSkuId"> The Batch node agent is a program that runs on each node in the pool, and provides the command-and-control interface between the node and the Batch service. There are different implementations of the node agent, known as SKUs, for different operating systems. You must specify a node agent SKU which matches the selected image reference. To get the list of supported node agent SKUs along with their list of verified image references, see the &apos;List supported node agent SKUs&apos; operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="imageReference"/> or <paramref name="nodeAgentSkuId"/> is null. </exception>
-        public VirtualMachineConfiguration(ImageReference imageReference, string nodeAgentSkuId)
+        public VirtualMachineConfiguration(BatchImageReference imageReference, string nodeAgentSkuId)
         {
             if (imageReference == null)
             {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Batch.Models
 
             ImageReference = imageReference;
             NodeAgentSkuId = nodeAgentSkuId;
-            DataDisks = new ChangeTrackingList<DataDisk>();
+            DataDisks = new ChangeTrackingList<BatchVirtualMachineDataDisk>();
             Extensions = new ChangeTrackingList<VmExtension>();
         }
 
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="nodePlacementConfiguration"> This configuration will specify rules on how nodes in the pool will be physically allocated. </param>
         /// <param name="extensions"> If specified, the extensions mentioned in this configuration will be installed on each node. </param>
         /// <param name="osDisk"> Contains configuration for ephemeral OSDisk settings. </param>
-        internal VirtualMachineConfiguration(ImageReference imageReference, string nodeAgentSkuId, WindowsConfiguration windowsConfiguration, IList<DataDisk> dataDisks, string licenseType, ContainerConfiguration containerConfiguration, DiskEncryptionConfiguration diskEncryptionConfiguration, NodePlacementConfiguration nodePlacementConfiguration, IList<VmExtension> extensions, OSDisk osDisk)
+        internal VirtualMachineConfiguration(BatchImageReference imageReference, string nodeAgentSkuId, WindowsConfiguration windowsConfiguration, IList<BatchVirtualMachineDataDisk> dataDisks, string licenseType, ContainerConfiguration containerConfiguration, DiskEncryptionConfiguration diskEncryptionConfiguration, NodePlacementConfiguration nodePlacementConfiguration, IList<VmExtension> extensions, OSDisk osDisk)
         {
             ImageReference = imageReference;
             NodeAgentSkuId = nodeAgentSkuId;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Batch.Models
         }
 
         /// <summary> A reference to an Azure Virtual Machines Marketplace image or the Azure Image resource of a custom Virtual Machine. To get the list of all imageReferences verified by Azure Batch, see the &apos;List supported node agent SKUs&apos; operation. </summary>
-        public ImageReference ImageReference { get; set; }
+        public BatchImageReference ImageReference { get; set; }
         /// <summary> The Batch node agent is a program that runs on each node in the pool, and provides the command-and-control interface between the node and the Batch service. There are different implementations of the node agent, known as SKUs, for different operating systems. You must specify a node agent SKU which matches the selected image reference. To get the list of supported node agent SKUs along with their list of verified image references, see the &apos;List supported node agent SKUs&apos; operation. </summary>
         public string NodeAgentSkuId { get; set; }
         /// <summary> This property must not be specified if the imageReference specifies a Linux OS image. </summary>
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Batch.Models
         }
 
         /// <summary> This property must be specified if the compute nodes in the pool need to have empty data disks attached to them. </summary>
-        public IList<DataDisk> DataDisks { get; }
+        public IList<BatchVirtualMachineDataDisk> DataDisks { get; }
         /// <summary>
         /// This only applies to images that contain the Windows operating system, and should only be used when you hold valid on-premises licenses for the nodes which will be deployed. If omitted, no on-premises licensing discount is applied. Values are:
         /// 
