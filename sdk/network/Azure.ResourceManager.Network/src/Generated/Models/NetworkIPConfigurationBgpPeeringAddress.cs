@@ -11,22 +11,22 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Properties of IPConfigurationBgpPeeringAddress. </summary>
-    public partial class IPConfigurationBgpPeeringAddress
+    public partial class NetworkIPConfigurationBgpPeeringAddress
     {
-        /// <summary> Initializes a new instance of IPConfigurationBgpPeeringAddress. </summary>
-        public IPConfigurationBgpPeeringAddress()
+        /// <summary> Initializes a new instance of NetworkIPConfigurationBgpPeeringAddress. </summary>
+        public NetworkIPConfigurationBgpPeeringAddress()
         {
             DefaultBgpIPAddresses = new ChangeTrackingList<string>();
             CustomBgpIPAddresses = new ChangeTrackingList<string>();
             TunnelIPAddresses = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of IPConfigurationBgpPeeringAddress. </summary>
+        /// <summary> Initializes a new instance of NetworkIPConfigurationBgpPeeringAddress. </summary>
         /// <param name="ipConfigurationId"> The ID of IP configuration which belongs to gateway. </param>
         /// <param name="defaultBgpIPAddresses"> The list of default BGP peering addresses which belong to IP configuration. </param>
         /// <param name="customBgpIPAddresses"> The list of custom BGP peering addresses which belong to IP configuration. </param>
         /// <param name="tunnelIPAddresses"> The list of tunnel public IP addresses which belong to IP configuration. </param>
-        internal IPConfigurationBgpPeeringAddress(string ipConfigurationId, IReadOnlyList<string> defaultBgpIPAddresses, IList<string> customBgpIPAddresses, IReadOnlyList<string> tunnelIPAddresses)
+        internal NetworkIPConfigurationBgpPeeringAddress(string ipConfigurationId, IReadOnlyList<string> defaultBgpIPAddresses, IList<string> customBgpIPAddresses, IReadOnlyList<string> tunnelIPAddresses)
         {
             IPConfigurationId = ipConfigurationId;
             DefaultBgpIPAddresses = defaultBgpIPAddresses;

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class IPConfigurationProfile : IUtf8JsonSerializable
+    public partial class NetworkIPConfigurationProfile : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteEndObject();
         }
 
-        internal static IPConfigurationProfile DeserializeIPConfigurationProfile(JsonElement element)
+        internal static NetworkIPConfigurationProfile DeserializeNetworkIPConfigurationProfile(JsonElement element)
         {
             Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new IPConfigurationProfile(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), subnet.Value, Optional.ToNullable(provisioningState));
+            return new NetworkIPConfigurationProfile(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), subnet.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

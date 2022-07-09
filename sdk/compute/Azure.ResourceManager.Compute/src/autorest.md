@@ -10,7 +10,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Compute
 namespace: Azure.ResourceManager.Compute
-require: https://github.com/Azure/azure-rest-api-specs/blob/e50265479cae5da79144cce18a80751214a4ceca/specification/compute/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/6c11930fe7757c6416cb2580eeddb4e57695c707/specification/compute/resource-manager/readme.md
 tag: package-2022-04-04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -172,8 +172,6 @@ rename-mapping:
   VMDiskSecurityProfile: VirtualMachineDiskSecurityProfile
   VmDiskTypes: VirtualMachineDiskType
   VMGalleryApplication: VirtualMachineGalleryApplication
-  VMGuestPatchClassification_Linux: LinuxVmGuestPatchClassification
-  VMGuestPatchClassification_Windows: WindowsVmGuestPatchClassification
   VMSizeProperties: VirtualMachineSizeProperties
   ManagedDiskParameters: VirtualMachineManagedDisk
   VirtualMachineScaleSetManagedDiskParameters: VirtualMachineScaleSetManagedDisk
@@ -351,10 +349,4 @@ directive:
   - from: virtualMachineScaleSet.json
     where: $.definitions.VirtualMachineScaleSetExtension.properties.name
     transform: $["readOnly"] = true;
-  # fixing a swagger mistake, can be removed after github.com/Azure/azure-rest-api-specs/pull/19679 merges
-  - from: gallery.json
-    where: $.definitions.SharingProfile.properties.communityGalleryInfo
-    transform: >
-      $.items = undefined;
-      $["$ref"] = "#/definitions/CommunityGalleryInfo";
 ```

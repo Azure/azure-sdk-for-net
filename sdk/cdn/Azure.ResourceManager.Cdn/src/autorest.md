@@ -84,8 +84,12 @@ override-operation-name:
   FrontDoorEndpoints_ListResourceUsage: GetResourceUsages
   FrontDoorOriginGroups_ListResourceUsage: GetResourceUsages
   FrontDoorRuleSets_ListResourceUsage: GetResourceUsages
+
 rename-mapping:
   SecretProperties: FrontDoorSecretProperties
+  CacheLevel: CdnCacheLevel
+  SslProtocol: DeliveryRuleSslProtocol
+  SslProtocolMatchCondition: DeliveryRuleSslProtocolMatchCondition
   
 directive:
   - from: swagger-document

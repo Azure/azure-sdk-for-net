@@ -11,42 +11,42 @@ using Azure.Core;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for SslProtocol match conditions. </summary>
-    public partial class SslProtocolMatchCondition
+    public partial class DeliveryRuleSslProtocolMatchCondition
     {
-        /// <summary> Initializes a new instance of SslProtocolMatchCondition. </summary>
-        /// <param name="conditionType"></param>
+        /// <summary> Initializes a new instance of DeliveryRuleSslProtocolMatchCondition. </summary>
+        /// <param name="sslProtocolMatchConditionType"></param>
         /// <param name="sslProtocolOperator"> Describes operator to be matched. </param>
-        public SslProtocolMatchCondition(SslProtocolMatchConditionType conditionType, SslProtocolOperator sslProtocolOperator)
+        public DeliveryRuleSslProtocolMatchCondition(SslProtocolMatchConditionType sslProtocolMatchConditionType, SslProtocolOperator sslProtocolOperator)
         {
-            ConditionType = conditionType;
+            SslProtocolMatchConditionType = sslProtocolMatchConditionType;
             SslProtocolOperator = sslProtocolOperator;
-            MatchValues = new ChangeTrackingList<SslProtocol>();
+            MatchValues = new ChangeTrackingList<DeliveryRuleSslProtocol>();
             Transforms = new ChangeTrackingList<PreTransformCategory>();
         }
 
-        /// <summary> Initializes a new instance of SslProtocolMatchCondition. </summary>
-        /// <param name="conditionType"></param>
+        /// <summary> Initializes a new instance of DeliveryRuleSslProtocolMatchCondition. </summary>
+        /// <param name="sslProtocolMatchConditionType"></param>
         /// <param name="sslProtocolOperator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal SslProtocolMatchCondition(SslProtocolMatchConditionType conditionType, SslProtocolOperator sslProtocolOperator, bool? negateCondition, IList<SslProtocol> matchValues, IList<PreTransformCategory> transforms)
+        internal DeliveryRuleSslProtocolMatchCondition(SslProtocolMatchConditionType sslProtocolMatchConditionType, SslProtocolOperator sslProtocolOperator, bool? negateCondition, IList<DeliveryRuleSslProtocol> matchValues, IList<PreTransformCategory> transforms)
         {
-            ConditionType = conditionType;
+            SslProtocolMatchConditionType = sslProtocolMatchConditionType;
             SslProtocolOperator = sslProtocolOperator;
             NegateCondition = negateCondition;
             MatchValues = matchValues;
             Transforms = transforms;
         }
 
-        /// <summary> Gets or sets the condition type. </summary>
-        public SslProtocolMatchConditionType ConditionType { get; set; }
+        /// <summary> Gets or sets the ssl protocol match condition type. </summary>
+        public SslProtocolMatchConditionType SslProtocolMatchConditionType { get; set; }
         /// <summary> Describes operator to be matched. </summary>
         public SslProtocolOperator SslProtocolOperator { get; set; }
         /// <summary> Describes if this is negate condition or not. </summary>
         public bool? NegateCondition { get; set; }
         /// <summary> The match value for the condition of the delivery rule. </summary>
-        public IList<SslProtocol> MatchValues { get; }
+        public IList<DeliveryRuleSslProtocol> MatchValues { get; }
         /// <summary> List of transforms. </summary>
         public IList<PreTransformCategory> Transforms { get; }
     }

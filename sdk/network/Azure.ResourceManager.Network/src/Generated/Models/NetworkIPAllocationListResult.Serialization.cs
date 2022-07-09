@@ -12,9 +12,9 @@ using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class IPAllocationListResult
+    internal partial class NetworkIPAllocationListResult
     {
-        internal static IPAllocationListResult DeserializeIPAllocationListResult(JsonElement element)
+        internal static NetworkIPAllocationListResult DeserializeNetworkIPAllocationListResult(JsonElement element)
         {
             Optional<IReadOnlyList<IPAllocationData>> value = default;
             Optional<string> nextLink = default;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new IPAllocationListResult(Optional.ToList(value), nextLink.Value);
+            return new NetworkIPAllocationListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

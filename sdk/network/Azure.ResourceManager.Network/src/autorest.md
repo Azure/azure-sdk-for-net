@@ -71,9 +71,16 @@ rename-mapping:
   TunnelConnectionHealth.lastConnectionEstablishedUtcTime: lastConnectionEstablishedOn
   ConnectivityIssue.type: ConnectivityIssueType
   HttpHeader: NetworkWatcherHttpHeader
+  HttpMethod: NetworkWatcherHttpMethod
+  HttpConfiguration: NetworkHttpConfiguration
+  HttpConfigurationMethod: NetworkHttpConfigurationMethod
   IPVersion: NetworkIPVersion
   IPConfiguration: NetworkIPConfiguration
+  IPConfigurationProfile: NetworkIPConfigurationProfile
+  IPConfigurationBgpPeeringAddress: NetworkIPConfigurationBgpPeeringAddress
   IPAllocationMethod: NetworkIPAllocationMethod
+  IpAllocationType: NetworkIPAllocationType
+  IpAllocationListResult: NetworkIPAllocationListResult
   AuthenticationMethod: NetworkAuthenticationMethod
   ConnectionStateSnapshot.connectionState: NetworkConnectionState
   ConnectivityInformation.connectionStatus: NetworkConnectionStatus
