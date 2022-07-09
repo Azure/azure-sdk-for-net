@@ -83,15 +83,6 @@ prepend-rp-prefix:
   - ServerSecurityAlertPolicy
   - ServerTrustGroup
   - ServerVulnerabilityAssessment
-rename-mapping:
-  Job: SqlServerJob
-  JobAgent: SqlServerJobAgent
-  JobVersion: SqlServerJobVersion
-  JobCredential: SqlServerJobCredential
-  JobTargetGroup: SqlServerJobTargetGroup
-  LedgerDigestUploads: LedgerDigestUpload
-  ServerDevOpsAuditingSettings: SqlServerDevOpsAuditingSetting
-  ManagedDatabaseRestoreDetailsResult: ManagedDatabaseRestoreDetail
 list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}/rules/{ruleId}/baselines/{baselineName}
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/restoreDetails/{restoreDetailsName}
@@ -121,7 +112,6 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}: ResourceGroupLongTermRetentionManagedInstanceBackup
   /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionDatabases/{longTermRetentionDatabaseName}/longTermRetentionBackups/{backupName}: SubscriptionLongTermRetentionBackup
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionDatabases/{longTermRetentionDatabaseName}/longTermRetentionBackups/{backupName}: ResourceGroupLongTermRetentionBackup
-<<<<<<< HEAD
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}: SqlServerJobExecution
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}: SqlServerJobExecutionStep
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets/{targetId}: SqlServerJobExecutionStepTarget
@@ -145,7 +135,6 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}/scans/{scanId}: ManagedDatabaseVulnerabilityAssessmentScan
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/advisors/{advisorName}: SqlServerAdvisor
   
-=======
 
 rename-mapping:
   CopyLongTermRetentionBackupParameters: CopyLongTermRetentionBackupContent
@@ -158,14 +147,20 @@ rename-mapping:
   Metric: SqlMetric
   Server: SqlServer
   Database: SqlDatabase
-  Job: SqlJob
   SyncGroupsType: SyncGroupLogType
   SampleName: SampleSchemaName
   DayOfWeek: SqlDayOfWeek
   ManagedInstancePrivateEndpointConnection.properties.privateLinkServiceConnectionState: ConnectionState
   RestorePoint.properties.restorePointCreationDate: restorePointCreatedOn
+  Job: SqlServerJob
+  JobAgent: SqlServerJobAgent
+  JobVersion: SqlServerJobVersion
+  JobCredential: SqlServerJobCredential
+  JobTargetGroup: SqlServerJobTargetGroup
+  LedgerDigestUploads: LedgerDigestUpload
+  ServerDevOpsAuditingSettings: SqlServerDevOpsAuditingSetting
+  ManagedDatabaseRestoreDetailsResult: ManagedDatabaseRestoreDetail
 
->>>>>>> f0d32c9e536b98383aa488bbc29730d50ba25734
 directive:
     - remove-operation: DatabaseExtensions_Get # This operation is not supported
     - remove-operation: FirewallRules_Replace # This operation sends a list of rules but got a single rule in response, which is abnormal. Besides, using FirewallRules_CreateOrUpdate/FirewallRules_Delete multiple times could achieve the same goal.
@@ -196,50 +191,9 @@ directive:
     - rename-operation:
         from: ElasticPools_ListMetricDefinitions
         to: MetricDefinitions_ListElasticPool
-<<<<<<< HEAD
-    - rename-model:
-        from: UnlinkParameters
-        to: UnlinkOptions
-    - rename-model:
-        from: CopyLongTermRetentionBackupParameters
-        to: CopyLongTermRetentionBackupOptions
-    - rename-model:
-        from: UpdateLongTermRetentionBackupParameters
-        to: UpdateLongTermRetentionBackupOptions
-    - rename-model:
-        from: Name
-        to: UsageName
-    - rename-model:
-        from: Usage
-        to: InstancePoolUsage
-    - rename-model:
-        from: UsageListResult
-        to: InstancePoolUsageListResult
-    - from: BlobAuditing.json
-      where: $.parameters.BlobAuditingPolicyNameParameter
-      transform: >
-          $['x-ms-enum'] = {
-              "name": "BlobAuditingPolicyName",
-              "modelAsString": true
-          }
-    - from: SyncGroups.json
-      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/syncGroups/{syncGroupName}/logs'].get.parameters[?(@.name === "type")]
-      transform: >
-          $['x-ms-enum'] = {
-              "name": "SyncGroupLogType",
-              "modelAsString": true
-          }
-    - from: Databases.json
-      where: $.definitions.DatabaseProperties.properties.sampleName['x-ms-enum']
-      transform: >
-          $['name'] = "SampleSchemaName"
-    - from: Databases.json
-      where: $.definitions.DatabaseUpdateProperties.properties.sampleName['x-ms-enum']
-=======
     # add format to Usage
     - from: Usages.json
       where: $.definitions.Usage.properties
->>>>>>> f0d32c9e536b98383aa488bbc29730d50ba25734
       transform: >
         $.id["x-ms-format"] = "arm-id";
         $.type["x-ms-format"] = "resource-type";
@@ -327,7 +281,6 @@ directive:
       transform: >
           $['x-ms-format'] = 'arm-id'
       reason: Only update the format of properties named 'restorableDroppedDatabaseId'. There is also a path parameter with the same name and should remain a string.
-<<<<<<< HEAD
     - from: swagger-document
       where: $.definitions..emailAccountAdmins
       transform: >
@@ -336,6 +289,3 @@ directive:
       where: $.definitions..lastChecked
       transform: >
           $['x-ms-client-name'] = 'LastCheckedOn'
-=======
-```
->>>>>>> f0d32c9e536b98383aa488bbc29730d50ba25734
