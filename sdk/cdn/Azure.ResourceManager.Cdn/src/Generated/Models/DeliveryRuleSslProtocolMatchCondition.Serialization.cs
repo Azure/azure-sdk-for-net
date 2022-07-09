@@ -11,13 +11,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class SslProtocolMatchCondition : IUtf8JsonSerializable
+    public partial class DeliveryRuleSslProtocolMatchCondition : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("typeName");
-            writer.WriteStringValue(ConditionType.ToString());
+            writer.WriteStringValue(SslProtocolMatchConditionType.ToString());
             writer.WritePropertyName("operator");
             writer.WriteStringValue(SslProtocolOperator.ToString());
             if (Optional.IsDefined(NegateCondition))
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteEndObject();
         }
 
-        internal static SslProtocolMatchCondition DeserializeSslProtocolMatchCondition(JsonElement element)
+        internal static DeliveryRuleSslProtocolMatchCondition DeserializeDeliveryRuleSslProtocolMatchCondition(JsonElement element)
         {
             SslProtocolMatchConditionType typeName = default;
             SslProtocolOperator @operator = default;
             Optional<bool> negateCondition = default;
-            Optional<IList<SslProtocol>> matchValues = default;
+            Optional<IList<DeliveryRuleSslProtocol>> matchValues = default;
             Optional<IList<PreTransformCategory>> transforms = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Cdn.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SslProtocol> array = new List<SslProtocol>();
+                    List<DeliveryRuleSslProtocol> array = new List<DeliveryRuleSslProtocol>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new SslProtocol(item.GetString()));
+                        array.Add(new DeliveryRuleSslProtocol(item.GetString()));
                     }
                     matchValues = array;
                     continue;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new SslProtocolMatchCondition(typeName, @operator, Optional.ToNullable(negateCondition), Optional.ToList(matchValues), Optional.ToList(transforms));
+            return new DeliveryRuleSslProtocolMatchCondition(typeName, @operator, Optional.ToNullable(negateCondition), Optional.ToList(matchValues), Optional.ToList(transforms));
         }
     }
 }

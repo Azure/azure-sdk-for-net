@@ -12,18 +12,18 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for the ListIpAllocations API service call. </summary>
-    internal partial class IPAllocationListResult
+    internal partial class NetworkIPAllocationListResult
     {
-        /// <summary> Initializes a new instance of IPAllocationListResult. </summary>
-        internal IPAllocationListResult()
+        /// <summary> Initializes a new instance of NetworkIPAllocationListResult. </summary>
+        internal NetworkIPAllocationListResult()
         {
             Value = new ChangeTrackingList<IPAllocationData>();
         }
 
-        /// <summary> Initializes a new instance of IPAllocationListResult. </summary>
+        /// <summary> Initializes a new instance of NetworkIPAllocationListResult. </summary>
         /// <param name="value"> A list of IpAllocation resources. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal IPAllocationListResult(IReadOnlyList<IPAllocationData> value, string nextLink)
+        internal NetworkIPAllocationListResult(IReadOnlyList<IPAllocationData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;

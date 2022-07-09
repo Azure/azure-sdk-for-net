@@ -11,17 +11,17 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> HTTP configuration of the connectivity check. </summary>
-    public partial class HttpConfiguration
+    public partial class NetworkHttpConfiguration
     {
-        /// <summary> Initializes a new instance of HttpConfiguration. </summary>
-        public HttpConfiguration()
+        /// <summary> Initializes a new instance of NetworkHttpConfiguration. </summary>
+        public NetworkHttpConfiguration()
         {
             Headers = new ChangeTrackingList<NetworkWatcherHttpHeader>();
             ValidStatusCodes = new ChangeTrackingList<int>();
         }
 
         /// <summary> HTTP method. </summary>
-        public HttpMethod? Method { get; set; }
+        public NetworkWatcherHttpMethod? Method { get; set; }
         /// <summary> List of HTTP headers. </summary>
         public IList<NetworkWatcherHttpHeader> Headers { get; }
         /// <summary> Valid status codes. </summary>
