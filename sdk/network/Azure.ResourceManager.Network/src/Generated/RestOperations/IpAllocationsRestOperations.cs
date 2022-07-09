@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IPAllocationListResult>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkIPAllocationListResult>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -393,9 +393,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        IPAllocationListResult value = default;
+                        NetworkIPAllocationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IPAllocationListResult.DeserializeIPAllocationListResult(document.RootElement);
+                        value = NetworkIPAllocationListResult.DeserializeNetworkIPAllocationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IPAllocationListResult> List(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<NetworkIPAllocationListResult> List(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -418,9 +418,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        IPAllocationListResult value = default;
+                        NetworkIPAllocationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IPAllocationListResult.DeserializeIPAllocationListResult(document.RootElement);
+                        value = NetworkIPAllocationListResult.DeserializeNetworkIPAllocationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IPAllocationListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkIPAllocationListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -464,9 +464,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        IPAllocationListResult value = default;
+                        NetworkIPAllocationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IPAllocationListResult.DeserializeIPAllocationListResult(document.RootElement);
+                        value = NetworkIPAllocationListResult.DeserializeNetworkIPAllocationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IPAllocationListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<NetworkIPAllocationListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -491,9 +491,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        IPAllocationListResult value = default;
+                        NetworkIPAllocationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IPAllocationListResult.DeserializeIPAllocationListResult(document.RootElement);
+                        value = NetworkIPAllocationListResult.DeserializeNetworkIPAllocationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IPAllocationListResult>> ListNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkIPAllocationListResult>> ListNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -532,9 +532,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        IPAllocationListResult value = default;
+                        NetworkIPAllocationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IPAllocationListResult.DeserializeIPAllocationListResult(document.RootElement);
+                        value = NetworkIPAllocationListResult.DeserializeNetworkIPAllocationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IPAllocationListResult> ListNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<NetworkIPAllocationListResult> ListNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -559,9 +559,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        IPAllocationListResult value = default;
+                        NetworkIPAllocationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IPAllocationListResult.DeserializeIPAllocationListResult(document.RootElement);
+                        value = NetworkIPAllocationListResult.DeserializeNetworkIPAllocationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -590,7 +590,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IPAllocationListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkIPAllocationListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -602,9 +602,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        IPAllocationListResult value = default;
+                        NetworkIPAllocationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IPAllocationListResult.DeserializeIPAllocationListResult(document.RootElement);
+                        value = NetworkIPAllocationListResult.DeserializeNetworkIPAllocationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -619,7 +619,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IPAllocationListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<NetworkIPAllocationListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -631,9 +631,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        IPAllocationListResult value = default;
+                        NetworkIPAllocationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IPAllocationListResult.DeserializeIPAllocationListResult(document.RootElement);
+                        value = NetworkIPAllocationListResult.DeserializeNetworkIPAllocationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

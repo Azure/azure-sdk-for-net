@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class IPConfigurationBgpPeeringAddress : IUtf8JsonSerializable
+    public partial class NetworkIPConfigurationBgpPeeringAddress : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteEndObject();
         }
 
-        internal static IPConfigurationBgpPeeringAddress DeserializeIPConfigurationBgpPeeringAddress(JsonElement element)
+        internal static NetworkIPConfigurationBgpPeeringAddress DeserializeNetworkIPConfigurationBgpPeeringAddress(JsonElement element)
         {
             Optional<string> ipconfigurationId = default;
             Optional<IReadOnlyList<string>> defaultBgpIPAddresses = default;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new IPConfigurationBgpPeeringAddress(ipconfigurationId.Value, Optional.ToList(defaultBgpIPAddresses), Optional.ToList(customBgpIPAddresses), Optional.ToList(tunnelIPAddresses));
+            return new NetworkIPConfigurationBgpPeeringAddress(ipconfigurationId.Value, Optional.ToList(defaultBgpIPAddresses), Optional.ToList(customBgpIPAddresses), Optional.ToList(tunnelIPAddresses));
         }
     }
 }
