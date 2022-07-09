@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.HDInsight
     {
         internal static ClusterData DeserializeClusterData(JsonElement element)
         {
-            Optional<ETag> eTag = default;
+            Optional<ETag> etag = default;
             Optional<IReadOnlyList<string>> zones = default;
             Optional<ClusterGetProperties> properties = default;
             Optional<ClusterIdentity> identity = default;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HDInsight
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    eTag = new ETag(property.Value.GetString());
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("zones"))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.HDInsight
                     continue;
                 }
             }
-            return new ClusterData(id, name, type, systemData.Value, Optional.ToNullable(eTag), Optional.ToList(zones), properties.Value, identity.Value, Optional.ToDictionary(tags), location);
+            return new ClusterData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToList(zones), properties.Value, identity.Value, Optional.ToDictionary(tags), location);
         }
     }
 }

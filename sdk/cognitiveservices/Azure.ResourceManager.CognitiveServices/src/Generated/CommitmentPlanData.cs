@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="eTag"> Resource Etag. </param>
+        /// <param name="etag"> Resource Etag. </param>
         /// <param name="properties"> Properties of Cognitive Services account commitment plan. </param>
-        internal CommitmentPlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, CommitmentPlanProperties properties) : base(id, name, resourceType, systemData)
+        internal CommitmentPlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, CommitmentPlanProperties properties) : base(id, name, resourceType, systemData)
         {
-            ETag = eTag;
+            ETag = etag;
             Properties = properties;
         }
 
