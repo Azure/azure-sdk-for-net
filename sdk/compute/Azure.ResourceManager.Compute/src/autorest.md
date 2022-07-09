@@ -172,8 +172,6 @@ rename-mapping:
   VMDiskSecurityProfile: VirtualMachineDiskSecurityProfile
   VmDiskTypes: VirtualMachineDiskType
   VMGalleryApplication: VirtualMachineGalleryApplication
-  VMGuestPatchClassificationLinux: LinuxVmGuestPatchClassification
-  VMGuestPatchClassificationWindows: WindowsVmGuestPatchClassification
   VMSizeProperties: VirtualMachineSizeProperties
   ManagedDiskParameters: VirtualMachineManagedDisk
   VirtualMachineScaleSetManagedDiskParameters: VirtualMachineScaleSetManagedDisk
@@ -191,9 +189,6 @@ rename-mapping:
   UpgradePolicy: VirtualMachineScaleSetUpgradePolicy
   ResourceSkuCapabilities: ComputeResourceSkuCapabilities
   ProtocolTypes: WinRMListenerProtocolType
-  VMGuestPatchRebootBehavior: VirtualMachineGuestPatchRebootBehavior
-  VMGuestPatchRebootSetting: VirtualMachineGuestPatchRebootSetting
-  VMGuestPatchRebootStatus: VirtualMachineGuestPatchRebootStatus
 
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced

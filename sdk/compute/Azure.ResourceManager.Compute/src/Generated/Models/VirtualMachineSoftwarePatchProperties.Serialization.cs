@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> version = default;
             Optional<string> kbId = default;
             Optional<IReadOnlyList<string>> classifications = default;
-            Optional<VirtualMachineGuestPatchRebootBehavior> rebootBehavior = default;
+            Optional<VmGuestPatchRebootBehavior> rebootBehavior = default;
             Optional<string> activityId = default;
             Optional<DateTimeOffset> publishedDate = default;
             Optional<DateTimeOffset> lastModifiedDateTime = default;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    rebootBehavior = new VirtualMachineGuestPatchRebootBehavior(property.Value.GetString());
+                    rebootBehavior = new VmGuestPatchRebootBehavior(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("activityId"))

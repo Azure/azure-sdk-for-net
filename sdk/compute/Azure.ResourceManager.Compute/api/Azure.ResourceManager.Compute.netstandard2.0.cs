@@ -3833,7 +3833,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class LinuxParameters
     {
         public LinuxParameters() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.LinuxVmGuestPatchClassification> ClassificationsToInclude { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationLinux> ClassificationsToInclude { get { throw null; } }
         public string MaintenanceRunId { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> PackageNameMasksToExclude { get { throw null; } }
         public System.Collections.Generic.IList<string> PackageNameMasksToInclude { get { throw null; } }
@@ -3881,25 +3881,6 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator ==(Azure.ResourceManager.Compute.Models.LinuxVmGuestPatchAutomaticByPlatformRebootSetting left, Azure.ResourceManager.Compute.Models.LinuxVmGuestPatchAutomaticByPlatformRebootSetting right) { throw null; }
         public static implicit operator Azure.ResourceManager.Compute.Models.LinuxVmGuestPatchAutomaticByPlatformRebootSetting (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Compute.Models.LinuxVmGuestPatchAutomaticByPlatformRebootSetting left, Azure.ResourceManager.Compute.Models.LinuxVmGuestPatchAutomaticByPlatformRebootSetting right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct LinuxVmGuestPatchClassification : System.IEquatable<Azure.ResourceManager.Compute.Models.LinuxVmGuestPatchClassification>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public LinuxVmGuestPatchClassification(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.LinuxVmGuestPatchClassification Critical { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.LinuxVmGuestPatchClassification Other { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.LinuxVmGuestPatchClassification Security { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.Models.LinuxVmGuestPatchClassification other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.Models.LinuxVmGuestPatchClassification left, Azure.ResourceManager.Compute.Models.LinuxVmGuestPatchClassification right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Models.LinuxVmGuestPatchClassification (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.Models.LinuxVmGuestPatchClassification left, Azure.ResourceManager.Compute.Models.LinuxVmGuestPatchClassification right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -5174,67 +5155,6 @@ namespace Azure.ResourceManager.Compute.Models
         public string Tags { get { throw null; } set { } }
         public bool? TreatFailureAsDeploymentFailure { get { throw null; } set { } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct VirtualMachineGuestPatchRebootBehavior : System.IEquatable<Azure.ResourceManager.Compute.Models.VirtualMachineGuestPatchRebootBehavior>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public VirtualMachineGuestPatchRebootBehavior(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.VirtualMachineGuestPatchRebootBehavior AlwaysRequiresReboot { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.VirtualMachineGuestPatchRebootBehavior CanRequestReboot { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.VirtualMachineGuestPatchRebootBehavior NeverReboots { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.VirtualMachineGuestPatchRebootBehavior Unknown { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.Models.VirtualMachineGuestPatchRebootBehavior other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.Models.VirtualMachineGuestPatchRebootBehavior left, Azure.ResourceManager.Compute.Models.VirtualMachineGuestPatchRebootBehavior right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Models.VirtualMachineGuestPatchRebootBehavior (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.Models.VirtualMachineGuestPatchRebootBehavior left, Azure.ResourceManager.Compute.Models.VirtualMachineGuestPatchRebootBehavior right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct VirtualMachineGuestPatchRebootSetting : System.IEquatable<Azure.ResourceManager.Compute.Models.VirtualMachineGuestPatchRebootSetting>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public VirtualMachineGuestPatchRebootSetting(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.VirtualMachineGuestPatchRebootSetting Always { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.VirtualMachineGuestPatchRebootSetting IfRequired { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.VirtualMachineGuestPatchRebootSetting Never { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.Models.VirtualMachineGuestPatchRebootSetting other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.Models.VirtualMachineGuestPatchRebootSetting left, Azure.ResourceManager.Compute.Models.VirtualMachineGuestPatchRebootSetting right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Models.VirtualMachineGuestPatchRebootSetting (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.Models.VirtualMachineGuestPatchRebootSetting left, Azure.ResourceManager.Compute.Models.VirtualMachineGuestPatchRebootSetting right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct VirtualMachineGuestPatchRebootStatus : System.IEquatable<Azure.ResourceManager.Compute.Models.VirtualMachineGuestPatchRebootStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public VirtualMachineGuestPatchRebootStatus(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.VirtualMachineGuestPatchRebootStatus Completed { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.VirtualMachineGuestPatchRebootStatus Failed { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.VirtualMachineGuestPatchRebootStatus NotNeeded { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.VirtualMachineGuestPatchRebootStatus Required { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.VirtualMachineGuestPatchRebootStatus Started { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.VirtualMachineGuestPatchRebootStatus Unknown { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.Models.VirtualMachineGuestPatchRebootStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.Models.VirtualMachineGuestPatchRebootStatus left, Azure.ResourceManager.Compute.Models.VirtualMachineGuestPatchRebootStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Models.VirtualMachineGuestPatchRebootStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.Models.VirtualMachineGuestPatchRebootStatus left, Azure.ResourceManager.Compute.Models.VirtualMachineGuestPatchRebootStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class VirtualMachineHardwareProfile
     {
         public VirtualMachineHardwareProfile() { }
@@ -5269,10 +5189,10 @@ namespace Azure.ResourceManager.Compute.Models
     }
     public partial class VirtualMachineInstallPatchesContent
     {
-        public VirtualMachineInstallPatchesContent(Azure.ResourceManager.Compute.Models.VirtualMachineGuestPatchRebootSetting rebootSetting) { }
+        public VirtualMachineInstallPatchesContent(Azure.ResourceManager.Compute.Models.VmGuestPatchRebootSetting rebootSetting) { }
         public Azure.ResourceManager.Compute.Models.LinuxParameters LinuxParameters { get { throw null; } set { } }
         public System.TimeSpan? MaximumDuration { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.VirtualMachineGuestPatchRebootSetting RebootSetting { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.VmGuestPatchRebootSetting RebootSetting { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.WindowsParameters WindowsParameters { get { throw null; } set { } }
     }
     public partial class VirtualMachineInstallPatchesResult
@@ -5287,7 +5207,7 @@ namespace Azure.ResourceManager.Compute.Models
         public int? NotSelectedPatchCount { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.PatchInstallationDetail> Patches { get { throw null; } }
         public int? PendingPatchCount { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.VirtualMachineGuestPatchRebootStatus? RebootStatus { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.VmGuestPatchRebootStatus? RebootStatus { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.PatchOperationStatus? Status { get { throw null; } }
     }
@@ -6105,7 +6025,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string Name { get { throw null; } }
         public string PatchId { get { throw null; } }
         public System.DateTimeOffset? PublishedOn { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.VirtualMachineGuestPatchRebootBehavior? RebootBehavior { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.VmGuestPatchRebootBehavior? RebootBehavior { get { throw null; } }
         public string Version { get { throw null; } }
     }
     public partial class VirtualMachineStatusCodeCount
@@ -6121,6 +6041,110 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.ImageReference ImageReference { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineOSDisk OSDisk { get { throw null; } set { } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VmGuestPatchClassificationLinux : System.IEquatable<Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationLinux>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VmGuestPatchClassificationLinux(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationLinux Critical { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationLinux Other { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationLinux Security { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationLinux other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationLinux left, Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationLinux right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationLinux (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationLinux left, Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationLinux right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VmGuestPatchClassificationWindow : System.IEquatable<Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationWindow>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VmGuestPatchClassificationWindow(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationWindow Critical { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationWindow Definition { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationWindow FeaturePack { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationWindow Security { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationWindow ServicePack { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationWindow Tools { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationWindow UpdateRollUp { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationWindow Updates { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationWindow other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationWindow left, Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationWindow right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationWindow (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationWindow left, Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationWindow right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VmGuestPatchRebootBehavior : System.IEquatable<Azure.ResourceManager.Compute.Models.VmGuestPatchRebootBehavior>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VmGuestPatchRebootBehavior(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.VmGuestPatchRebootBehavior AlwaysRequiresReboot { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.VmGuestPatchRebootBehavior CanRequestReboot { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.VmGuestPatchRebootBehavior NeverReboots { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.VmGuestPatchRebootBehavior Unknown { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Models.VmGuestPatchRebootBehavior other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Models.VmGuestPatchRebootBehavior left, Azure.ResourceManager.Compute.Models.VmGuestPatchRebootBehavior right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.VmGuestPatchRebootBehavior (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Models.VmGuestPatchRebootBehavior left, Azure.ResourceManager.Compute.Models.VmGuestPatchRebootBehavior right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VmGuestPatchRebootSetting : System.IEquatable<Azure.ResourceManager.Compute.Models.VmGuestPatchRebootSetting>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VmGuestPatchRebootSetting(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.VmGuestPatchRebootSetting Always { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.VmGuestPatchRebootSetting IfRequired { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.VmGuestPatchRebootSetting Never { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Models.VmGuestPatchRebootSetting other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Models.VmGuestPatchRebootSetting left, Azure.ResourceManager.Compute.Models.VmGuestPatchRebootSetting right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.VmGuestPatchRebootSetting (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Models.VmGuestPatchRebootSetting left, Azure.ResourceManager.Compute.Models.VmGuestPatchRebootSetting right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VmGuestPatchRebootStatus : System.IEquatable<Azure.ResourceManager.Compute.Models.VmGuestPatchRebootStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VmGuestPatchRebootStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.VmGuestPatchRebootStatus Completed { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.VmGuestPatchRebootStatus Failed { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.VmGuestPatchRebootStatus NotNeeded { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.VmGuestPatchRebootStatus Required { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.VmGuestPatchRebootStatus Started { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.VmGuestPatchRebootStatus Unknown { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Models.VmGuestPatchRebootStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Models.VmGuestPatchRebootStatus left, Azure.ResourceManager.Compute.Models.VmGuestPatchRebootStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.VmGuestPatchRebootStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Models.VmGuestPatchRebootStatus left, Azure.ResourceManager.Compute.Models.VmGuestPatchRebootStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class WindowsConfiguration
     {
         public WindowsConfiguration() { }
@@ -6134,7 +6158,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class WindowsParameters
     {
         public WindowsParameters() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.WindowsVmGuestPatchClassification> ClassificationsToInclude { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationWindow> ClassificationsToInclude { get { throw null; } }
         public bool? ExcludeKbsRequiringReboot { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> KbNumbersToExclude { get { throw null; } }
         public System.Collections.Generic.IList<string> KbNumbersToInclude { get { throw null; } }
@@ -6176,30 +6200,6 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator ==(Azure.ResourceManager.Compute.Models.WindowsVmGuestPatchAutomaticByPlatformRebootSetting left, Azure.ResourceManager.Compute.Models.WindowsVmGuestPatchAutomaticByPlatformRebootSetting right) { throw null; }
         public static implicit operator Azure.ResourceManager.Compute.Models.WindowsVmGuestPatchAutomaticByPlatformRebootSetting (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Compute.Models.WindowsVmGuestPatchAutomaticByPlatformRebootSetting left, Azure.ResourceManager.Compute.Models.WindowsVmGuestPatchAutomaticByPlatformRebootSetting right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct WindowsVmGuestPatchClassification : System.IEquatable<Azure.ResourceManager.Compute.Models.WindowsVmGuestPatchClassification>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public WindowsVmGuestPatchClassification(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.WindowsVmGuestPatchClassification Critical { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.WindowsVmGuestPatchClassification Definition { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.WindowsVmGuestPatchClassification FeaturePack { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.WindowsVmGuestPatchClassification Security { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.WindowsVmGuestPatchClassification ServicePack { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.WindowsVmGuestPatchClassification Tools { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.WindowsVmGuestPatchClassification UpdateRollUp { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.WindowsVmGuestPatchClassification Updates { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.Models.WindowsVmGuestPatchClassification other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.Models.WindowsVmGuestPatchClassification left, Azure.ResourceManager.Compute.Models.WindowsVmGuestPatchClassification right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Models.WindowsVmGuestPatchClassification (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.Models.WindowsVmGuestPatchClassification left, Azure.ResourceManager.Compute.Models.WindowsVmGuestPatchClassification right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
