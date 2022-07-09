@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.Batch
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="value"> A base64 encoded string that represents the content of a detector. </param>
-        /// <param name="eTag"> The ETag of the resource, used for concurrency statements. </param>
-        internal DetectorResponseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string value, ETag? eTag) : base(id, name, resourceType, systemData)
+        /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
+        internal DetectorResponseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string value, ETag? etag) : base(id, name, resourceType, systemData)
         {
             Value = value;
-            ETag = eTag;
+            ETag = etag;
         }
 
         /// <summary> A base64 encoded string that represents the content of a detector. </summary>

@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Batch
         public Azure.ResourceManager.Batch.Models.KeyVaultReference KeyVaultReference { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public int? LowPriorityCoreQuota { get { throw null; } }
-        public Azure.ResourceManager.Batch.Models.NetworkProfile NetworkProfile { get { throw null; } }
+        public Azure.ResourceManager.Batch.Models.BatchVirtualMachineNetworkProfile NetworkProfile { get { throw null; } }
         public string NodeManagementEndpoint { get { throw null; } }
         public Azure.ResourceManager.Batch.Models.PoolAllocationMode? PoolAllocationMode { get { throw null; } }
         public int? PoolQuota { get { throw null; } }
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.Batch.Models
         public Azure.ResourceManager.Batch.Models.BatchAccountIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.KeyVaultReference KeyVaultReference { get { throw null; } set { } }
         public Azure.Core.AzureLocation Location { get { throw null; } }
-        public Azure.ResourceManager.Batch.Models.NetworkProfile NetworkProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchVirtualMachineNetworkProfile NetworkProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.PoolAllocationMode? PoolAllocationMode { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.PublicNetworkAccessType? PublicNetworkAccess { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.Batch.Models
         public Azure.ResourceManager.Batch.Models.AutoStorageBaseProperties AutoStorage { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.EncryptionProperties Encryption { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.BatchAccountIdentity Identity { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.NetworkProfile NetworkProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchVirtualMachineNetworkProfile NetworkProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.PublicNetworkAccessType? PublicNetworkAccess { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
@@ -538,6 +538,21 @@ namespace Azure.ResourceManager.Batch.Models
     {
         public BatchAccountRegenerateKeyContent(Azure.ResourceManager.Batch.Models.AccountKeyType keyName) { }
         public Azure.ResourceManager.Batch.Models.AccountKeyType KeyName { get { throw null; } }
+    }
+    public enum BatchDiskCachingType
+    {
+        None = 0,
+        ReadOnly = 1,
+        ReadWrite = 2,
+    }
+    public partial class BatchImageReference
+    {
+        public BatchImageReference() { }
+        public string Id { get { throw null; } set { } }
+        public string Offer { get { throw null; } set { } }
+        public string Publisher { get { throw null; } set { } }
+        public string Sku { get { throw null; } set { } }
+        public string Version { get { throw null; } set { } }
     }
     public partial class BatchLocationQuota
     {
@@ -566,11 +581,24 @@ namespace Azure.ResourceManager.Batch.Models
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.PrivateLinkServiceConnectionStatus Status { get { throw null; } set { } }
     }
-    public enum CachingType
+    public enum BatchStorageAccountType
     {
-        None = 0,
-        ReadOnly = 1,
-        ReadWrite = 2,
+        StandardLRS = 0,
+        PremiumLRS = 1,
+    }
+    public partial class BatchVirtualMachineDataDisk
+    {
+        public BatchVirtualMachineDataDisk(int lun, int diskSizeGB) { }
+        public Azure.ResourceManager.Batch.Models.BatchDiskCachingType? Caching { get { throw null; } set { } }
+        public int DiskSizeGB { get { throw null; } set { } }
+        public int Lun { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchStorageAccountType? StorageAccountType { get { throw null; } set { } }
+    }
+    public partial class BatchVirtualMachineNetworkProfile
+    {
+        public BatchVirtualMachineNetworkProfile() { }
+        public Azure.ResourceManager.Batch.Models.EndpointAccessProfile AccountAccess { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.EndpointAccessProfile NodeManagementAccess { get { throw null; } set { } }
     }
     public partial class CertificateCreateOrUpdateParameters : Azure.ResourceManager.Models.ResourceData
     {
@@ -689,14 +717,6 @@ namespace Azure.ResourceManager.Batch.Models
         TaskWorkingDirectory = 0,
         ContainerImageDefault = 1,
     }
-    public partial class DataDisk
-    {
-        public DataDisk(int lun, int diskSizeGB) { }
-        public Azure.ResourceManager.Batch.Models.CachingType? Caching { get { throw null; } set { } }
-        public int DiskSizeGB { get { throw null; } set { } }
-        public int Lun { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.StorageAccountType? StorageAccountType { get { throw null; } set { } }
-    }
     public partial class DeploymentConfiguration
     {
         public DeploymentConfiguration() { }
@@ -777,15 +797,6 @@ namespace Azure.ResourceManager.Batch.Models
         public System.TimeSpan? ResizeTimeout { get { throw null; } set { } }
         public int? TargetDedicatedNodes { get { throw null; } set { } }
         public int? TargetLowPriorityNodes { get { throw null; } set { } }
-    }
-    public partial class ImageReference
-    {
-        public ImageReference() { }
-        public string Id { get { throw null; } set { } }
-        public string Offer { get { throw null; } set { } }
-        public string Publisher { get { throw null; } set { } }
-        public string Sku { get { throw null; } set { } }
-        public string Version { get { throw null; } set { } }
     }
     public enum InboundEndpointProtocol
     {
@@ -885,12 +896,6 @@ namespace Azure.ResourceManager.Batch.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.InboundNatPool> EndpointInboundNatPools { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.PublicIPAddressConfiguration PublicIPAddressConfiguration { get { throw null; } set { } }
         public string SubnetId { get { throw null; } set { } }
-    }
-    public partial class NetworkProfile
-    {
-        public NetworkProfile() { }
-        public Azure.ResourceManager.Batch.Models.EndpointAccessProfile AccountAccess { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.EndpointAccessProfile NodeManagementAccess { get { throw null; } set { } }
     }
     public partial class NetworkSecurityGroupRule
     {
@@ -1044,11 +1049,6 @@ namespace Azure.ResourceManager.Batch.Models
         public Azure.ResourceManager.Batch.Models.UserIdentity UserIdentity { get { throw null; } set { } }
         public bool? WaitForSuccess { get { throw null; } set { } }
     }
-    public enum StorageAccountType
-    {
-        StandardLRS = 0,
-        PremiumLRS = 1,
-    }
     public partial class SupportedSku
     {
         internal SupportedSku() { }
@@ -1081,14 +1081,14 @@ namespace Azure.ResourceManager.Batch.Models
     }
     public partial class VirtualMachineConfiguration
     {
-        public VirtualMachineConfiguration(Azure.ResourceManager.Batch.Models.ImageReference imageReference, string nodeAgentSkuId) { }
+        public VirtualMachineConfiguration(Azure.ResourceManager.Batch.Models.BatchImageReference imageReference, string nodeAgentSkuId) { }
         public Azure.ResourceManager.Batch.Models.ContainerConfiguration ContainerConfiguration { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.DataDisk> DataDisks { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.BatchVirtualMachineDataDisk> DataDisks { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.DiskEncryptionTarget> DiskEncryptionTargets { get { throw null; } }
         public bool? EnableAutomaticUpdates { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.DiffDiskPlacement? EphemeralOSDiskPlacement { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.VmExtension> Extensions { get { throw null; } }
-        public Azure.ResourceManager.Batch.Models.ImageReference ImageReference { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchImageReference ImageReference { get { throw null; } set { } }
         public string LicenseType { get { throw null; } set { } }
         public string NodeAgentSkuId { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.NodePlacementPolicyType? NodePlacementPolicy { get { throw null; } set { } }

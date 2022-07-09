@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class NetworkProfile : IUtf8JsonSerializable
+    public partial class BatchVirtualMachineNetworkProfile : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteEndObject();
         }
 
-        internal static NetworkProfile DeserializeNetworkProfile(JsonElement element)
+        internal static BatchVirtualMachineNetworkProfile DeserializeBatchVirtualMachineNetworkProfile(JsonElement element)
         {
             Optional<EndpointAccessProfile> accountAccess = default;
             Optional<EndpointAccessProfile> nodeManagementAccess = default;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Batch.Models
                     continue;
                 }
             }
-            return new NetworkProfile(accountAccess.Value, nodeManagementAccess.Value);
+            return new BatchVirtualMachineNetworkProfile(accountAccess.Value, nodeManagementAccess.Value);
         }
     }
 }

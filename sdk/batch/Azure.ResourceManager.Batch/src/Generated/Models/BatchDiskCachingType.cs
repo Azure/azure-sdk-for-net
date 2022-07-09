@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> The type of caching to enable for the disk. </summary>
-    public enum CachingType
+    public enum BatchDiskCachingType
     {
         /// <summary> The caching mode for the disk is not enabled. </summary>
         None,

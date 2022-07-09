@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.Batch
         /// <param name="displayName"> The display name for the application. </param>
         /// <param name="allowUpdates"> A value indicating whether packages within the application may be overwritten using the same version string. </param>
         /// <param name="defaultVersion"> The package to use if a client requests the application but does not specify a version. This property can only be set to the name of an existing package. </param>
-        /// <param name="eTag"> The ETag of the resource, used for concurrency statements. </param>
-        internal ApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, bool? allowUpdates, string defaultVersion, ETag? eTag) : base(id, name, resourceType, systemData)
+        /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
+        internal ApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, bool? allowUpdates, string defaultVersion, ETag? etag) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             AllowUpdates = allowUpdates;
             DefaultVersion = defaultVersion;
-            ETag = eTag;
+            ETag = etag;
         }
 
         /// <summary> The display name for the application. </summary>

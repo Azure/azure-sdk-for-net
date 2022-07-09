@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.Batch
         /// <param name="previousProvisioningStateTransitionOn"> The time at which the certificate entered its previous state. </param>
         /// <param name="publicData"> The public key of the certificate. </param>
         /// <param name="deleteCertificateError"> This is only returned when the certificate provisioningState is &apos;Failed&apos;. </param>
-        /// <param name="eTag"> The ETag of the resource, used for concurrency statements. </param>
-        internal CertificateData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string thumbprintAlgorithm, string thumbprint, CertificateFormat? format, CertificateProvisioningState? provisioningState, DateTimeOffset? provisioningStateTransitionOn, CertificateProvisioningState? previousProvisioningState, DateTimeOffset? previousProvisioningStateTransitionOn, string publicData, ResponseError deleteCertificateError, ETag? eTag) : base(id, name, resourceType, systemData)
+        /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
+        internal CertificateData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string thumbprintAlgorithm, string thumbprint, CertificateFormat? format, CertificateProvisioningState? provisioningState, DateTimeOffset? provisioningStateTransitionOn, CertificateProvisioningState? previousProvisioningState, DateTimeOffset? previousProvisioningStateTransitionOn, string publicData, ResponseError deleteCertificateError, ETag? etag) : base(id, name, resourceType, systemData)
         {
             ThumbprintAlgorithm = thumbprintAlgorithm;
             Thumbprint = thumbprint;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Batch
             PreviousProvisioningStateTransitionOn = previousProvisioningStateTransitionOn;
             PublicData = publicData;
             DeleteCertificateError = deleteCertificateError;
-            ETag = eTag;
+            ETag = etag;
         }
 
         /// <summary> This must match the first portion of the certificate name. Currently required to be &apos;SHA1&apos;. </summary>
