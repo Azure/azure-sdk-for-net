@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             Optional<string> managedBy = default;
             Optional<string> kind = default;
-            Optional<ETag> eTag = default;
+            Optional<ETag> etag = default;
             Optional<ResourceModelWithAllowedPropertySetIdentity> identity = default;
             Optional<ResourceModelWithAllowedPropertySetSku> sku = default;
             Optional<ArmPlan> plan = default;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    eTag = new ETag(property.Value.GetString());
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("identity"))
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     continue;
                 }
             }
-            return new ScalingPlanData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, objectId.Value, description.Value, friendlyName.Value, timeZone.Value, Optional.ToNullable(hostPoolType), exclusionTag.Value, Optional.ToList(schedules), Optional.ToList(hostPoolReferences), managedBy.Value, kind.Value, Optional.ToNullable(eTag), identity.Value, sku.Value, plan);
+            return new ScalingPlanData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, objectId.Value, description.Value, friendlyName.Value, timeZone.Value, Optional.ToNullable(hostPoolType), exclusionTag.Value, Optional.ToList(schedules), Optional.ToList(hostPoolReferences), managedBy.Value, kind.Value, Optional.ToNullable(etag), identity.Value, sku.Value, plan);
         }
     }
 }

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         internal static StreamAnalyticsClusterData DeserializeStreamAnalyticsClusterData(JsonElement element)
         {
             Optional<ClusterSku> sku = default;
-            Optional<ETag> eTag = default;
+            Optional<ETag> etag = default;
             Optional<ClusterProperties> properties = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    eTag = new ETag(property.Value.GetString());
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                     continue;
                 }
             }
-            return new StreamAnalyticsClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(eTag), properties.Value);
+            return new StreamAnalyticsClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(etag), properties.Value);
         }
     }
 }

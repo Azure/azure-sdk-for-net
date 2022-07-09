@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.IotHub
 
         internal static IotHubDescriptionData DeserializeIotHubDescriptionData(JsonElement element)
         {
-            Optional<ETag> eTag = default;
+            Optional<ETag> etag = default;
             Optional<IotHubProperties> properties = default;
             IotHubSkuInfo sku = default;
             Optional<ManagedServiceIdentity> identity = default;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.IotHub
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    eTag = new ETag(property.Value.GetString());
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.IotHub
                     continue;
                 }
             }
-            return new IotHubDescriptionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(eTag), properties.Value, sku, identity);
+            return new IotHubDescriptionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), properties.Value, sku, identity);
         }
     }
 }
