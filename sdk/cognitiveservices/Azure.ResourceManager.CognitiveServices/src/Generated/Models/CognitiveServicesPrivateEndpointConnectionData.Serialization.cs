@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Optional<PrivateEndpointConnectionProperties> properties = default;
             Optional<AzureLocation> location = default;
-            Optional<ETag> eTag = default;
+            Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CognitiveServices
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    eTag = new ETag(property.Value.GetString());
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     continue;
                 }
             }
-            return new CognitiveServicesPrivateEndpointConnectionData(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(location), Optional.ToNullable(eTag));
+            return new CognitiveServicesPrivateEndpointConnectionData(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(location), Optional.ToNullable(etag));
         }
     }
 }

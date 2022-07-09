@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             Optional<int> streamingUnits = default;
             Optional<IList<int>> validStreamingUnits = default;
             Optional<string> query = default;
-            Optional<ETag> eTag = default;
+            Optional<ETag> etag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -120,14 +120,14 @@ namespace Azure.ResourceManager.StreamAnalytics
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            eTag = new ETag(property0.Value.GetString());
+                            etag = new ETag(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new StreamingJobTransformationData(id.Value, name.Value, type.Value, Optional.ToNullable(streamingUnits), Optional.ToList(validStreamingUnits), query.Value, Optional.ToNullable(eTag));
+            return new StreamingJobTransformationData(id.Value, name.Value, type.Value, Optional.ToNullable(streamingUnits), Optional.ToList(validStreamingUnits), query.Value, Optional.ToNullable(etag));
         }
     }
 }

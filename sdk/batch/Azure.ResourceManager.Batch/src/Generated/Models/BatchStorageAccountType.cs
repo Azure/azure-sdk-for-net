@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> The storage account type for use in creating data disks. </summary>
-    public enum StorageAccountType
+    public enum BatchStorageAccountType
     {
         /// <summary> The data disk should use standard locally redundant storage. </summary>
         StandardLRS,

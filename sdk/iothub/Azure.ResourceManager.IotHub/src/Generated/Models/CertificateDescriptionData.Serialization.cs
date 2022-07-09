@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.IotHub
         internal static CertificateDescriptionData DeserializeCertificateDescriptionData(JsonElement element)
         {
             Optional<CertificateProperties> properties = default;
-            Optional<ETag> eTag = default;
+            Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.IotHub
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    eTag = new ETag(property.Value.GetString());
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.IotHub
                     continue;
                 }
             }
-            return new CertificateDescriptionData(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(eTag));
+            return new CertificateDescriptionData(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(etag));
         }
     }
 }
