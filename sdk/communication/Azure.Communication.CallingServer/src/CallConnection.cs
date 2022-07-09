@@ -50,9 +50,10 @@ namespace Azure.Communication.CallingServer
         /// <summary> Content Capabilities for the call. </summary>
         internal ContentCapabilities ContentCapabilities { get; }
 
-        internal CallConnection(string callConnectionId, CallConnectionsRestClient callConnectionRestClient, ContentRestClient contentRestClient, ClientDiagnostics clientDiagnostics)
+        internal CallConnection(string callConnectionId, CallConnectionStateModel? callConnectionState, CallConnectionsRestClient callConnectionRestClient, ContentRestClient contentRestClient, ClientDiagnostics clientDiagnostics)
         {
             CallConnectionId = callConnectionId;
+            CallConnectionState = callConnectionState;
             RestClient = callConnectionRestClient;
             _clientDiagnostics = clientDiagnostics;
             ContentCapabilities = new ContentCapabilities(CallConnectionId, contentRestClient);
@@ -293,7 +294,7 @@ namespace Azure.Communication.CallingServer
         /// <returns>The <see cref="CallParticipant"/>.</returns>
         public virtual async Task<Response<CallParticipant>> GetParticipantAsync(CommunicationIdentifier participant, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(GetParticipantAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(GetParticipant)}");
             scope.Start();
             try
             {
@@ -344,7 +345,7 @@ namespace Azure.Communication.CallingServer
         /// <returns>The <see cref="IEnumerable{CallParticipant}"/>.</returns>
         public virtual async Task<Response<CallParticipantCollection>> GetParticipantsAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(GetParticipantsAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(GetParticipants)}");
             scope.Start();
             try
             {
@@ -422,7 +423,7 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="ArgumentNullException"> <paramref name="participantsToRemove"/> is null. </exception>
         public virtual RemoveParticipantsResponse RemoveParticipant(IEnumerable<CommunicationIdentifier> participantsToRemove, string operationContext = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(AddParticipant)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(RemoveParticipant)}");
             scope.Start();
             try
             {

@@ -3,7 +3,8 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
-namespace Azure.Communication.CallingServer.Tests
+
+namespace Azure.Communication.CallingServer.Tests.Infrastructure
 {
     public class CallingServerTestBase
     {
@@ -13,7 +14,7 @@ namespace Azure.Communication.CallingServer.Tests
                                                  "\"callConnectionId\": \"cad9df7b-f3ac-4c53-96f7-c76e7437b3c1\"" +
                                                  "}";
 
-        internal CallingServerClient CreateMockCallingServerClient(int responseCode, object? responseContent = null, HttpHeader[]? httpHeaders = null)
+        internal CallingServer.CallingServerClient CreateMockCallingServerClient(int responseCode, object? responseContent = null, HttpHeader[]? httpHeaders = null)
         {
             var mockResponse = new MockResponse(responseCode);
 
@@ -42,17 +43,17 @@ namespace Azure.Communication.CallingServer.Tests
                 Transport = new MockTransport(mockResponse)
             };
 
-            return new CallingServerClient(connectionString, callingServerClientOptions);
+            return new CallingServer.CallingServerClient(connectionString, callingServerClientOptions);
         }
 
-        internal CallingServerClient CreateMockCallingServerClient(params MockResponse[] mockResponses)
+        internal CallingServer.CallingServerClient CreateMockCallingServerClient(params MockResponse[] mockResponses)
         {
             var callingServerClientOptions = new CallingServerClientOptions
             {
                 Transport = new MockTransport(mockResponses)
             };
 
-            return new CallingServerClient(connectionString, callingServerClientOptions);
+            return new CallingServer.CallingServerClient(connectionString, callingServerClientOptions);
         }
     }
 }

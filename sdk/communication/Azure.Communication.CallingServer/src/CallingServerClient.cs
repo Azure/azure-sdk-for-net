@@ -120,7 +120,7 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="ArgumentNullException"><paramref name="incomingCallContext"/> is null.</exception>
         public virtual async Task<Response<CallConnection>> AnswerCallAsync(string incomingCallContext, Uri callbackUri, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(AnswerCallAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(AnswerCall)}");
             scope.Start();
             try
             {
@@ -130,7 +130,7 @@ namespace Azure.Communication.CallingServer
                 var answerResponse = await ServerCallingRestClient.AnswerCallAsync(request, cancellationToken: cancellationToken).ConfigureAwait(false);
 
                 return Response.FromValue(
-                    new CallConnection(answerResponse.Value.CallConnectionId, CallConnectionsRestClient, ContentRestClient, _clientDiagnostics),
+                    new CallConnection(answerResponse.Value.CallConnectionId, answerResponse.Value.CallConnectionState, CallConnectionsRestClient, ContentRestClient, _clientDiagnostics),
                     answerResponse.GetRawResponse());
             }
             catch (Exception ex)
@@ -159,7 +159,7 @@ namespace Azure.Communication.CallingServer
                     cancellationToken: cancellationToken);
 
                 return Response.FromValue(
-                    new CallConnection(answerResponse.Value.CallConnectionId, CallConnectionsRestClient, ContentRestClient, _clientDiagnostics),
+                    new CallConnection(answerResponse.Value.CallConnectionId, answerResponse.Value.CallConnectionState, CallConnectionsRestClient, ContentRestClient, _clientDiagnostics),
                     answerResponse.GetRawResponse());
             }
             catch (Exception ex)
@@ -178,7 +178,7 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="ArgumentNullException"><paramref name="target"/> is null.</exception>
         public virtual async Task<Response> RedirectCallAsync(string incomingCallContext, CommunicationIdentifier target, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(RedirectCallAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(RedirectCall)}");
             scope.Start();
             try
             {
@@ -231,7 +231,7 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="ArgumentNullException"><paramref name="incomingCallContext"/> is null.</exception>
         public virtual async Task<Response> RejectCallAsync(string incomingCallContext, CallRejectReason callRejectReason, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(RejectCallAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(RejectCall)}");
             scope.Start();
             try
             {
@@ -287,16 +287,13 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
         public virtual async Task<Response<CallConnection>> CreateCallAsync(CallSource source, IEnumerable<CommunicationIdentifier> targets, Uri callbackUri, CreateCallOptions options = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(CreateCallAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(CreateCall)}");
             scope.Start();
             try
             {
                 CallSourceDto sourceDto = new CallSourceDto(CommunicationIdentifierSerializer.Serialize(source.Identifier));
 
-                if (options != null)
-                {
-                    sourceDto.CallerId = source.AlternateCallerId == null ? null : new PhoneNumberIdentifierModel(source.AlternateCallerId.PhoneNumber);
-                }
+                sourceDto.CallerId = source.AlternateCallerId == null ? null : new PhoneNumberIdentifierModel(source.AlternateCallerId.PhoneNumber);
 
                 CreateCallRequestInternal request = new CreateCallRequestInternal(targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)), sourceDto, callbackUri?.AbsoluteUri);
 
@@ -311,7 +308,7 @@ namespace Azure.Communication.CallingServer
                     ).ConfigureAwait(false);
 
                 return Response.FromValue(
-                    new CallConnection(createCallResponse.Value.CallConnectionId, CallConnectionsRestClient, ContentRestClient, _clientDiagnostics),
+                    new CallConnection(createCallResponse.Value.CallConnectionId, createCallResponse.Value.CallConnectionState, CallConnectionsRestClient, ContentRestClient, _clientDiagnostics),
                     createCallResponse.GetRawResponse());
             }
             catch (Exception ex)
@@ -339,10 +336,7 @@ namespace Azure.Communication.CallingServer
             {
                 CallSourceDto sourceDto = new CallSourceDto(CommunicationIdentifierSerializer.Serialize(source.Identifier));
 
-                if (options != null)
-                {
-                    sourceDto.CallerId = source.AlternateCallerId == null ? null : new PhoneNumberIdentifierModel(source.AlternateCallerId.PhoneNumber);
-                }
+                sourceDto.CallerId = source.AlternateCallerId == null ? null : new PhoneNumberIdentifierModel(source.AlternateCallerId.PhoneNumber);
 
                 CreateCallRequestInternal request = new CreateCallRequestInternal(targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)), sourceDto, callbackUri?.AbsoluteUri);
 
@@ -357,7 +351,7 @@ namespace Azure.Communication.CallingServer
                     );
 
                 return Response.FromValue(
-                    new CallConnection(createCallResponse.Value.CallConnectionId, CallConnectionsRestClient, ContentRestClient, _clientDiagnostics),
+                    new CallConnection(createCallResponse.Value.CallConnectionId, createCallResponse.Value.CallConnectionState, CallConnectionsRestClient, ContentRestClient, _clientDiagnostics),
                     createCallResponse.GetRawResponse());
             }
             catch (Exception ex)
@@ -372,15 +366,18 @@ namespace Azure.Communication.CallingServer
         /// <param name="cancellationToken"> The cancellation token. </param>
         public virtual async Task<Response<CallConnection>> GetCallAsync(string callConnectionId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(GetCallAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(GetCall)}");
             scope.Start();
             try
             {
                 var response = await CallConnectionsRestClient.GetCallAsync(callConnectionId, cancellationToken: cancellationToken).ConfigureAwait(false);
 
-                var callConnection = new CallConnection(callConnectionId, CallConnectionsRestClient, ContentRestClient, _clientDiagnostics);
+                var callConnection = new CallConnection(callConnectionId, response.Value.CallConnectionState, CallConnectionsRestClient, ContentRestClient, _clientDiagnostics);
                 callConnection.Source = CommunicationIdentifierSerializer.Deserialize(response.Value.Source);
-                callConnection.AlternateCallerId = new PhoneNumberIdentifier(response.Value.AlternateCallerId.Value);
+                if (response.Value.AlternateCallerId != null)
+                {
+                    callConnection.AlternateCallerId = new PhoneNumberIdentifier(response.Value.AlternateCallerId.Value);
+                }
                 callConnection.Targets = response.Value.Targets.Select(t => CommunicationIdentifierSerializer.Deserialize(t));
                 callConnection.Subject = response.Value.Subject;
                 callConnection.CallbackUri = new Uri(response.Value.CallbackUri);
@@ -407,9 +404,12 @@ namespace Azure.Communication.CallingServer
             {
                 var response = CallConnectionsRestClient.GetCall(callConnectionId, cancellationToken: cancellationToken);
 
-                var callConnection = new CallConnection(callConnectionId, CallConnectionsRestClient, ContentRestClient, _clientDiagnostics);
+                var callConnection = new CallConnection(callConnectionId, response.Value.CallConnectionState, CallConnectionsRestClient, ContentRestClient, _clientDiagnostics);
                 callConnection.Source = CommunicationIdentifierSerializer.Deserialize(response.Value.Source);
-                callConnection.AlternateCallerId = new PhoneNumberIdentifier(response.Value.AlternateCallerId.Value);
+                if (response.Value.AlternateCallerId != null)
+                {
+                    callConnection.AlternateCallerId = new PhoneNumberIdentifier(response.Value.AlternateCallerId.Value);
+                }
                 callConnection.Targets = response.Value.Targets.Select(t => CommunicationIdentifierSerializer.Deserialize(t));
                 callConnection.Subject = response.Value.Subject;
                 callConnection.CallbackUri = new Uri(response.Value.CallbackUri);

@@ -4,6 +4,7 @@
 using System;
 using System.Net;
 using System.Threading.Tasks;
+using Azure.Communication.CallingServer.Tests.Infrastructure;
 using NUnit.Framework;
 
 namespace Azure.Communication.CallingServer.Tests
@@ -15,7 +16,7 @@ namespace Azure.Communication.CallingServer.Tests
         [Test]
         public void DeleteRecording_Returns200Ok()
         {
-            CallingServerClient callingServerClient = CreateMockCallingServerClient(200);
+            CallingServer.CallingServerClient callingServerClient = CreateMockCallingServerClient(200);
             var response = callingServerClient.DeleteRecording(new Uri(AmsDeleteUrl));
             Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
         }
@@ -23,7 +24,7 @@ namespace Azure.Communication.CallingServer.Tests
         [Test]
         public async Task DeleteRecordingAsync_Returns200Ok()
         {
-            CallingServerClient callingServerClient = CreateMockCallingServerClient(200);
+            CallingServer.CallingServerClient callingServerClient = CreateMockCallingServerClient(200);
             var response = await callingServerClient.DeleteRecordingAsync(new Uri(AmsDeleteUrl)).ConfigureAwait(false);
             Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
         }
@@ -31,7 +32,7 @@ namespace Azure.Communication.CallingServer.Tests
         [Test]
         public void DeleteRecording_Returns404NotFound()
         {
-            CallingServerClient callingServerClient = CreateMockCallingServerClient(404);
+            CallingServer.CallingServerClient callingServerClient = CreateMockCallingServerClient(404);
 
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callingServerClient.DeleteRecording(new Uri(AmsDeleteUrl)));
             Assert.NotNull(ex);
@@ -41,7 +42,7 @@ namespace Azure.Communication.CallingServer.Tests
         [Test]
         public void DeleteRecording_Returns401Unauthorized()
         {
-            CallingServerClient callingServerClient = CreateMockCallingServerClient(401);
+            CallingServer.CallingServerClient callingServerClient = CreateMockCallingServerClient(401);
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callingServerClient.DeleteRecording(new Uri(AmsDeleteUrl)));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 401);
