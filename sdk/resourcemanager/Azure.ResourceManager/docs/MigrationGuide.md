@@ -287,19 +287,31 @@ VirtualMachine vm = VMcomputeClient.VirtualMachines.CreateOrUpdate(rgName, input
 ```
 #### New
 ```C# Snippet:Create_VirtualMachine
-VirtualMachineData virutalMachineData = new VirtualMachineData(location);
-virutalMachineData.OSProfile.AdminUsername = "admin-username";
-virutalMachineData.OSProfile.AdminPassword = "admin-p4$$w0rd";
-virutalMachineData.OSProfile.ComputerName = "computer-name";
-virutalMachineData.AvailabilitySetId = availabilitySet.Id;
-NetworkInterfaceReference nicReference = new NetworkInterfaceReference();
-nicReference.Id = networkInterface.Id;
-virutalMachineData.NetworkProfile.NetworkInterfaces.Add(nicReference);
+VirtualMachineData virutalMachineData = new VirtualMachineData(location)
+{
+    OSProfile = new VirtualMachineOSProfile()
+    {
+        AdminUsername = "admin-username",
+        AdminPassword = "admin-p4$$w0rd",
+        ComputerName = "computer-name"
+    },
+    AvailabilitySetId = availabilitySet.Id,
+    NetworkProfile = new VirtualMachineNetworkProfile()
+    {
+        NetworkInterfaces =
+        {
+            new VirtualMachineNetworkInterfaceReference()
+            {
+                Id = networkInterface.Id
+            }
+        }
+    }
+};
 
 VirtualMachineCollection virtualMachines = resourceGroup.GetVirtualMachines();
 ArmOperation<VirtualMachineResource> virtualMachineOperation = await virtualMachines.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineName, virutalMachineData);
 VirtualMachineResource virtualMachine = virtualMachineOperation.Value;
-Console.WriteLine("VM ID: " + virtualMachine.Id);
+Console.WriteLine("VirtualMachine ID: " + virtualMachine.Id);
 ```
 
 Finally, as it can be seen here, from the resource group you can get the Virtual Machine collection and create a new one using the `VirtualMachineData` for the parameters.

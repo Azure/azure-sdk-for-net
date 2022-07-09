@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The tags. </param>
-        /// <param name="eTag"> The etag. </param>
-        internal EventHubConsumerGroupInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyDictionary<string, BinaryData> properties, ETag? eTag) : base(id, name, resourceType, systemData)
+        /// <param name="etag"> The etag. </param>
+        internal EventHubConsumerGroupInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyDictionary<string, BinaryData> properties, ETag? etag) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
-            ETag = eTag;
+            ETag = etag;
         }
 
         /// <summary> The tags. </summary>

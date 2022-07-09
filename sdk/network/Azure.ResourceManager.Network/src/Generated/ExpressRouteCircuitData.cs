@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="sku"> The SKU. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="allowClassicOperations"> Allow classic operations. </param>
         /// <param name="circuitProvisioningState"> The CircuitProvisioningState state of the resource. </param>
         /// <param name="serviceProviderProvisioningState"> The ServiceProviderProvisioningState state of the resource. </param>
@@ -41,14 +41,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="serviceProviderProperties"> The ServiceProviderProperties. </param>
         /// <param name="expressRoutePort"> The reference to the ExpressRoutePort resource when the circuit is provisioned on an ExpressRoutePort resource. </param>
         /// <param name="bandwidthInGbps"> The bandwidth of the circuit when the circuit is provisioned on an ExpressRoutePort resource. </param>
-        /// <param name="sTag"> The identifier of the circuit traffic. Outer tag for QinQ encapsulation. </param>
+        /// <param name="stag"> The identifier of the circuit traffic. Outer tag for QinQ encapsulation. </param>
         /// <param name="provisioningState"> The provisioning state of the express route circuit resource. </param>
         /// <param name="gatewayManagerETag"> The GatewayManager Etag. </param>
         /// <param name="globalReachEnabled"> Flag denoting global reach status. </param>
-        internal ExpressRouteCircuitData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExpressRouteCircuitSku sku, ETag? eTag, bool? allowClassicOperations, string circuitProvisioningState, ServiceProviderProvisioningState? serviceProviderProvisioningState, IList<ExpressRouteCircuitAuthorizationData> authorizations, IList<ExpressRouteCircuitPeeringData> peerings, string serviceKey, string serviceProviderNotes, ExpressRouteCircuitServiceProviderProperties serviceProviderProperties, WritableSubResource expressRoutePort, float? bandwidthInGbps, int? sTag, NetworkProvisioningState? provisioningState, string gatewayManagerETag, bool? globalReachEnabled) : base(id, name, resourceType, location, tags)
+        internal ExpressRouteCircuitData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExpressRouteCircuitSku sku, ETag? etag, bool? allowClassicOperations, string circuitProvisioningState, ServiceProviderProvisioningState? serviceProviderProvisioningState, IList<ExpressRouteCircuitAuthorizationData> authorizations, IList<ExpressRouteCircuitPeeringData> peerings, string serviceKey, string serviceProviderNotes, ExpressRouteCircuitServiceProviderProperties serviceProviderProperties, WritableSubResource expressRoutePort, float? bandwidthInGbps, int? stag, NetworkProvisioningState? provisioningState, string gatewayManagerETag, bool? globalReachEnabled) : base(id, name, resourceType, location, tags)
         {
             Sku = sku;
-            ETag = eTag;
+            ETag = etag;
             AllowClassicOperations = allowClassicOperations;
             CircuitProvisioningState = circuitProvisioningState;
             ServiceProviderProvisioningState = serviceProviderProvisioningState;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network
             ServiceProviderProperties = serviceProviderProperties;
             ExpressRoutePort = expressRoutePort;
             BandwidthInGbps = bandwidthInGbps;
-            STag = sTag;
+            STag = stag;
             ProvisioningState = provisioningState;
             GatewayManagerETag = gatewayManagerETag;
             GlobalReachEnabled = globalReachEnabled;

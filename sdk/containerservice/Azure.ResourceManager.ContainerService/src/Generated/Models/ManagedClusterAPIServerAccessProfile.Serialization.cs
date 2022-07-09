@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
             Optional<IList<string>> authorizedIPRanges = default;
             Optional<bool> enablePrivateCluster = default;
-            Optional<string> privateDNSZone = default;
+            Optional<string> privateDnsZone = default;
             Optional<bool> enablePrivateClusterPublicFQDN = default;
             Optional<bool> disableRunCommand = default;
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (property.NameEquals("privateDNSZone"))
                 {
-                    privateDNSZone = property.Value.GetString();
+                    privateDnsZone = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("enablePrivateClusterPublicFQDN"))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ManagedClusterAPIServerAccessProfile(Optional.ToList(authorizedIPRanges), Optional.ToNullable(enablePrivateCluster), privateDNSZone.Value, Optional.ToNullable(enablePrivateClusterPublicFQDN), Optional.ToNullable(disableRunCommand));
+            return new ManagedClusterAPIServerAccessProfile(Optional.ToList(authorizedIPRanges), Optional.ToNullable(enablePrivateCluster), privateDnsZone.Value, Optional.ToNullable(enablePrivateClusterPublicFQDN), Optional.ToNullable(disableRunCommand));
         }
     }
 }

@@ -47,7 +47,7 @@ rename-rules:
   CPUs: Cpus
   Os: OS
   Ip: IP
-  Ips: IPs
+  Ips: IPs|ips
   ID: Id
   IDs: Ids
   VM: Vm
@@ -58,11 +58,12 @@ rename-rules:
   VPN: Vpn
   NAT: Nat
   WAN: Wan
-  Ipv4: IPv4
-  Ipv6: IPv6
-  Ipsec: IPsec
+  Ipv4: IPv4|ipv4
+  Ipv6: IPv6|ipv6
+  Ipsec: IPsec|ipsec
   SSO: Sso
   URI: Uri
+  Etag: ETag|etag
 prepend-rp-prefix:
   - DatabaseAutomaticTuning
   - DatabaseBlobAuditingPolicy
@@ -97,7 +98,9 @@ list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/{sensitivityLabelSource}
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/{sensitivityLabelSource}
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}/rules/{ruleId}/baselines/{baselineName}
+
 no-property-type-replacement: ResourceMoveDefinition
+
 override-operation-name:
   ServerTrustGroups_ListByInstance: GetServerTrustGroups
   ManagedInstances_ListByManagedInstance: GetTopQueries
@@ -108,14 +111,17 @@ override-operation-name:
   Metrics_ListElasticPool: GetMetrics
   MetricDefinitions_ListElasticPool: GetMetricDefinitions
   Capabilities_ListByLocation: GetCapabilitiesByLocation
+
 request-path-is-non-resource:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/queries/{queryId}
+
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/restorableDroppedDatabases/{restorableDroppedDatabaseId}/backupShortTermRetentionPolicies/{policyName}: ManagedRestorableDroppedDbBackupShortTermRetentionPolicy
   /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}: SubscriptionLongTermRetentionManagedInstanceBackup
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}: ResourceGroupLongTermRetentionManagedInstanceBackup
   /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionDatabases/{longTermRetentionDatabaseName}/longTermRetentionBackups/{backupName}: SubscriptionLongTermRetentionBackup
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionDatabases/{longTermRetentionDatabaseName}/longTermRetentionBackups/{backupName}: ResourceGroupLongTermRetentionBackup
+<<<<<<< HEAD
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}: SqlServerJobExecution
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}: SqlServerJobExecutionStep
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets/{targetId}: SqlServerJobExecutionStepTarget
@@ -139,6 +145,27 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}/scans/{scanId}: ManagedDatabaseVulnerabilityAssessmentScan
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/advisors/{advisorName}: SqlServerAdvisor
   
+=======
+
+rename-mapping:
+  CopyLongTermRetentionBackupParameters: CopyLongTermRetentionBackupContent
+  UpdateLongTermRetentionBackupParameters: UpdateLongTermRetentionBackupContent
+  Name: InstancePoolUsageName
+  Usage: InstancePoolUsage
+  Usage.type: ResourceType
+  UsageListResult: InstancePoolUsageListResult
+  TimeZone: SqlTimeZone
+  Metric: SqlMetric
+  Server: SqlServer
+  Database: SqlDatabase
+  Job: SqlJob
+  SyncGroupsType: SyncGroupLogType
+  SampleName: SampleSchemaName
+  DayOfWeek: SqlDayOfWeek
+  ManagedInstancePrivateEndpointConnection.properties.privateLinkServiceConnectionState: ConnectionState
+  RestorePoint.properties.restorePointCreationDate: restorePointCreatedOn
+
+>>>>>>> f0d32c9e536b98383aa488bbc29730d50ba25734
 directive:
     - remove-operation: DatabaseExtensions_Get # This operation is not supported
     - remove-operation: FirewallRules_Replace # This operation sends a list of rules but got a single rule in response, which is abnormal. Besides, using FirewallRules_CreateOrUpdate/FirewallRules_Delete multiple times could achieve the same goal.
@@ -169,6 +196,7 @@ directive:
     - rename-operation:
         from: ElasticPools_ListMetricDefinitions
         to: MetricDefinitions_ListElasticPool
+<<<<<<< HEAD
     - rename-model:
         from: UnlinkParameters
         to: UnlinkOptions
@@ -207,16 +235,18 @@ directive:
           $['name'] = "SampleSchemaName"
     - from: Databases.json
       where: $.definitions.DatabaseUpdateProperties.properties.sampleName['x-ms-enum']
+=======
+    # add format to Usage
+    - from: Usages.json
+      where: $.definitions.Usage.properties
+>>>>>>> f0d32c9e536b98383aa488bbc29730d50ba25734
       transform: >
-          $['name'] = "SampleSchemaName"
-    - from: MaintenanceWindows.json
-      where: $.definitions.MaintenanceWindowTimeRange.properties.dayOfWeek['x-ms-enum']
-      transform: >
-          $['name'] = "SqlDayOfWeek"
-    - from: MaintenanceWindowOptions.json
-      where: $.definitions.MaintenanceWindowTimeRange.properties.dayOfWeek['x-ms-enum']
-      transform: >
-          $['name'] = "SqlDayOfWeek"
+        $.id["x-ms-format"] = "arm-id";
+        $.type["x-ms-format"] = "resource-type";
+    # why we have this change? If the modelAsString is false, this resource will become a singleton
+    - from: BlobAuditing.json
+      where: $.parameters.BlobAuditingPolicyNameParameter['x-ms-enum'].modelAsString
+      transform: return true;
     - from: swagger-document #DatabaseRecommendedActions.json, DatabaseAdvisors.json, ServerAdvisors.json
       where: $.definitions.RecommendedActionProperties.properties
       transform: >
@@ -226,19 +256,6 @@ directive:
       where: $.definitions.MaintenanceWindowTimeRange.properties.duration
       transform: >
           $.format = "duration";
-# shorten "privateLinkServiceConnectionState" property name
-    - from: ManagedInstances.json
-      where: $.definitions.ManagedInstancePrivateEndpointConnectionProperties
-      transform: >
-          $.properties.privateLinkServiceConnectionState["x-ms-client-name"] = "connectionState";
-    - from: ManagedInstancePrivateEndpointConnections.json
-      where: $.definitions.ManagedInstancePrivateEndpointConnectionProperties
-      transform: >
-          $.properties.privateLinkServiceConnectionState["x-ms-client-name"] = "connectionState";
-    - from: swagger-document
-      where: $.definitions..restorePointCreationDate
-      transform: >
-          $['x-ms-client-name'] = 'restorePointCreatedOn';
     - from: swagger-document
       where: $.definitions..creationDate
       transform: >
@@ -310,6 +327,7 @@ directive:
       transform: >
           $['x-ms-format'] = 'arm-id'
       reason: Only update the format of properties named 'restorableDroppedDatabaseId'. There is also a path parameter with the same name and should remain a string.
+<<<<<<< HEAD
     - from: swagger-document
       where: $.definitions..emailAccountAdmins
       transform: >
@@ -318,3 +336,6 @@ directive:
       where: $.definitions..lastChecked
       transform: >
           $['x-ms-client-name'] = 'LastCheckedOn'
+=======
+```
+>>>>>>> f0d32c9e536b98383aa488bbc29730d50ba25734

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         }
 
         /// <summary> The upgrade mode of the cluster when new Service Fabric runtime version is available. </summary>
-        public UpgradeMode? UpgradeMode { get; set; }
+        public ClusterUpgradeMode? UpgradeMode { get; set; }
         /// <summary> This property controls the logical grouping of VMs in upgrade domains (UDs). This property can&apos;t be modified if a node type with multiple Availability Zones is already present in the cluster. </summary>
         public SfZonalUpgradeMode? SfZonalUpgradeMode { get; set; }
         /// <summary> This property defines the upgrade mode for the virtual machine scale set, it is mandatory if a node type with multiple Availability Zones is added. </summary>

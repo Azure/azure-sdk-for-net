@@ -1,5 +1,15 @@
 # Release History
 
+## 12.12.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 12.11.0 (2022-07-07)
 - Includes all features from 12.11.0-beta.1.
 - Fixed bug where ShareFileClient and ShareDirectoryClient Rename() was not passing the AzureSasCredential to the source.

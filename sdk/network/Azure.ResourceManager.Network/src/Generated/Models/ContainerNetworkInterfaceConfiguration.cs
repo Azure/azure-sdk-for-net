@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="ipConfigurations"> A list of ip configurations of the container network interface configuration. </param>
         /// <param name="containerNetworkInterfaces"> A list of container network interfaces created from this container network interface configuration. </param>
         /// <param name="provisioningState"> The provisioning state of the container network interface configuration resource. </param>
-        internal ContainerNetworkInterfaceConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? eTag, IList<IPConfigurationProfile> ipConfigurations, IList<WritableSubResource> containerNetworkInterfaces, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal ContainerNetworkInterfaceConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, IList<IPConfigurationProfile> ipConfigurations, IList<WritableSubResource> containerNetworkInterfaces, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            ETag = eTag;
+            ETag = etag;
             IPConfigurations = ipConfigurations;
             ContainerNetworkInterfaces = containerNetworkInterfaces;
             ProvisioningState = provisioningState;

@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="offerReplacePending"> The throughput replace is pending. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
-        /// <param name="eTag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        internal ExtendedThroughputSettingsResourceInfo(int? throughput, AutoscaleSettingsResourceInfo autoscaleSettings, string minimumThroughput, string offerReplacePending, string rid, float? timestamp, ETag? eTag) : base(throughput, autoscaleSettings, minimumThroughput, offerReplacePending)
+        /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
+        internal ExtendedThroughputSettingsResourceInfo(int? throughput, AutoscaleSettingsResourceInfo autoscaleSettings, string minimumThroughput, string offerReplacePending, string rid, float? timestamp, ETag? etag) : base(throughput, autoscaleSettings, minimumThroughput, offerReplacePending)
         {
             Rid = rid;
             Timestamp = timestamp;
-            ETag = eTag;
+            ETag = etag;
         }
 
         /// <summary> A system generated property. A unique identifier. </summary>

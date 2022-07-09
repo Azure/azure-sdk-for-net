@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             Optional<AzureLocation> location = default;
             Optional<IReadOnlyList<string>> zones = default;
-            Optional<IReadOnlyList<ResourceSkuZoneDetails>> zoneDetails = default;
+            Optional<IReadOnlyList<ComputeResourceSkuZoneDetails>> zoneDetails = default;
             Optional<IReadOnlyList<string>> extendedLocations = default;
             Optional<ExtendedLocationType> type = default;
             foreach (var property in element.EnumerateObject())
@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ResourceSkuZoneDetails> array = new List<ResourceSkuZoneDetails>();
+                    List<ComputeResourceSkuZoneDetails> array = new List<ComputeResourceSkuZoneDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSkuZoneDetails.DeserializeResourceSkuZoneDetails(item));
+                        array.Add(ComputeResourceSkuZoneDetails.DeserializeComputeResourceSkuZoneDetails(item));
                     }
                     zoneDetails = array;
                     continue;
