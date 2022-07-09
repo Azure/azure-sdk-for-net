@@ -8,17 +8,17 @@
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> Network profile for Batch account, which contains network rule settings for each endpoint. </summary>
-    public partial class NetworkProfile
+    public partial class BatchVirtualMachineNetworkProfile
     {
-        /// <summary> Initializes a new instance of NetworkProfile. </summary>
-        public NetworkProfile()
+        /// <summary> Initializes a new instance of BatchVirtualMachineNetworkProfile. </summary>
+        public BatchVirtualMachineNetworkProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkProfile. </summary>
+        /// <summary> Initializes a new instance of BatchVirtualMachineNetworkProfile. </summary>
         /// <param name="accountAccess"> Network access profile for batchAccount endpoint (Batch account data plane API). </param>
         /// <param name="nodeManagementAccess"> Network access profile for nodeManagement endpoint (Batch service managing compute nodes for Batch pools). </param>
-        internal NetworkProfile(EndpointAccessProfile accountAccess, EndpointAccessProfile nodeManagementAccess)
+        internal BatchVirtualMachineNetworkProfile(EndpointAccessProfile accountAccess, EndpointAccessProfile nodeManagementAccess)
         {
             AccountAccess = accountAccess;
             NodeManagementAccess = nodeManagementAccess;
