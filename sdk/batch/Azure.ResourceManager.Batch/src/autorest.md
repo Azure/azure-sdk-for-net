@@ -16,8 +16,6 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
- 
-
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
@@ -47,4 +45,12 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+prepend-rp-prefix:
+- StorageAccountType
+- ImageReference
+
+rename-mapping:
+  DataDisk: BatchVirtualMachineDataDisk
+  NetworkProfile: BatchVirtualMachineNetworkProfile
+  CachingType: BatchDiskCachingType
 ```

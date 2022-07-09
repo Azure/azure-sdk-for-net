@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class DataDisk : IUtf8JsonSerializable
+    public partial class BatchVirtualMachineDataDisk : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteEndObject();
         }
 
-        internal static DataDisk DeserializeDataDisk(JsonElement element)
+        internal static BatchVirtualMachineDataDisk DeserializeBatchVirtualMachineDataDisk(JsonElement element)
         {
             int lun = default;
-            Optional<CachingType> caching = default;
+            Optional<BatchDiskCachingType> caching = default;
             int diskSizeGB = default;
-            Optional<StorageAccountType> storageAccountType = default;
+            Optional<BatchStorageAccountType> storageAccountType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lun"))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Batch.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    caching = property.Value.GetString().ToCachingType();
+                    caching = property.Value.GetString().ToBatchDiskCachingType();
                     continue;
                 }
                 if (property.NameEquals("diskSizeGB"))
@@ -67,11 +67,11 @@ namespace Azure.ResourceManager.Batch.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    storageAccountType = property.Value.GetString().ToStorageAccountType();
+                    storageAccountType = property.Value.GetString().ToBatchStorageAccountType();
                     continue;
                 }
             }
-            return new DataDisk(lun, Optional.ToNullable(caching), diskSizeGB, Optional.ToNullable(storageAccountType));
+            return new BatchVirtualMachineDataDisk(lun, Optional.ToNullable(caching), diskSizeGB, Optional.ToNullable(storageAccountType));
         }
     }
 }

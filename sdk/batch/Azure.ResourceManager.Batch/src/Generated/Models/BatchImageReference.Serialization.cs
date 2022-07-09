@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class ImageReference : IUtf8JsonSerializable
+    public partial class BatchImageReference : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteEndObject();
         }
 
-        internal static ImageReference DeserializeImageReference(JsonElement element)
+        internal static BatchImageReference DeserializeBatchImageReference(JsonElement element)
         {
             Optional<string> publisher = default;
             Optional<string> offer = default;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Batch.Models
                     continue;
                 }
             }
-            return new ImageReference(publisher.Value, offer.Value, sku.Value, version.Value, id.Value);
+            return new BatchImageReference(publisher.Value, offer.Value, sku.Value, version.Value, id.Value);
         }
     }
 }
