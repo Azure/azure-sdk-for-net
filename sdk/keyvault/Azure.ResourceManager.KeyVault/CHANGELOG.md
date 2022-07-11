@@ -1,22 +1,42 @@
 # Release History
 
-## 1.0.0-beta.9 (Unreleased)
+## 1.0.0 (2022-07-11)
+
+This is the first stable release of the Key Vaul Management client library.
 
 ### Features Added
 
+- Added Update methods in resource classes.
+
 ### Breaking Changes
 
-- Base type of `KeyVaultPrivateEndpointConnectionData` changed to `Azure.ResourceManager.Models.ResourceData`.
-- Base type of `ManagedHsmData` changed to `Azure.ResourceManager.Models.ResourceData`.
-- Base type of `ManagedHsmPrivateEndpointConnectionData` changed to `Azure.ResourceManager.Models.ResourceData`.
-- Type `KeyVaultResourceData` was removed.
-- Base type of `ManagedHsmPrivateLinkResourceData` changed to `Azure.ResourceManager.Models.ResourceData`.
-- Type `ManagedHsmTrackedResourceData` was removed.
-- Base type of `PrivateLinkResourceData` changed to `Azure.ResourceManager.Models.ResourceData`.
-
-### Bugs Fixed
+Polishing since last public beta release:
+- Prepended `KeyVault` / `ManagedHsm` prefix to all singel / simple model names.
+- Rename all `Vault` prefix models to `KeyVault` prefix.
+- Corrected the format of all `Guid` type properties / parameters.
+- Corrected the format of all `ResourceIdentifier` type properteis / parameters.
+- Corrected the format of all `ResouceType` type properteis / parameters.
+- Corrected the format of all `ETag` type properteis / parameters.
+- Corrected the format of all `AzureLocation` type properteis / parameters.
+- Corrected the format of all binary type properteis / parameters.
+- Corrected all acronyms which not follow [.Net Naming Guidelines](https://docs.microsoft.com/en-us/dotnet/standard/design-guidelines/naming-guidelines).
+- Corrected enumeration name by following [Naming Enumerations Rule](https://docs.microsoft.com/en-us/dotnet/standard/design-guidelines/names-of-classes-structs-and-interfaces#naming-enumerations).
+- Corrected the suffix of `DatatimeOffset` properties / parameters.
+- Corrected the name of interval / duration properties / parameters which end with units.
+- Optimized the name of some models and functions.
+- Correct inherits
+  - Base type of `KeyVaultPrivateEndpointConnectionData` changed to `Azure.ResourceManager.Models.ResourceData`.
+  - Base type of `ManagedHsmData` changed to `Azure.ResourceManager.Models.ResourceData`.
+  - Base type of `ManagedHsmPrivateEndpointConnectionData` changed to `Azure.ResourceManager.Models.ResourceData`.
+  - Type `KeyVaultResourceData` was removed.
+  - Base type of `ManagedHsmPrivateLinkResourceData` changed to `Azure.ResourceManager.Models.ResourceData`.
+  - Type `ManagedHsmTrackedResourceData` was removed.
+  - Base type of `PrivateLinkResourceData` changed to `Azure.ResourceManager.Models.ResourceData`.
 
 ### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.2.0
+- Upgraded dependent `Azure.Core` to 1.25.0
 
 ## 1.0.0-beta.8 (2022-04-08)
 
