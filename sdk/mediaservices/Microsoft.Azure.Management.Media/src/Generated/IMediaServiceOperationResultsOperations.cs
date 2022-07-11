@@ -19,25 +19,21 @@ namespace Microsoft.Azure.Management.Media
     using System.Threading.Tasks;
 
     /// <summary>
-    /// LocationsOperations operations.
+    /// MediaServiceOperationResultsOperations operations.
     /// </summary>
-    public partial interface ILocationsOperations
+    public partial interface IMediaServiceOperationResultsOperations
     {
         /// <summary>
-        /// Check Name Availability
+        /// Get operation result.
         /// </summary>
         /// <remarks>
-        /// Checks whether the Media Service resource name is available.
+        /// Get media service operation result.
         /// </remarks>
         /// <param name='locationName'>
         /// Location name.
         /// </param>
-        /// <param name='name'>
-        /// The account name.
-        /// </param>
-        /// <param name='type'>
-        /// The account type. For a Media Services account, this should be
-        /// 'MediaServices'.
+        /// <param name='operationId'>
+        /// Operation Id.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -54,6 +50,6 @@ namespace Microsoft.Azure.Management.Media
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<EntityNameAvailabilityCheckOutput>> CheckNameAvailabilityWithHttpMessagesAsync(string locationName, string name = default(string), string type = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<MediaService,MediaServiceOperationResultsGetHeaders>> GetWithHttpMessagesAsync(string locationName, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

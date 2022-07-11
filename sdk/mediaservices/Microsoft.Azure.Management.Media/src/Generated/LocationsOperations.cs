@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Media
         /// Checks whether the Media Service resource name is available.
         /// </remarks>
         /// <param name='locationName'>
-        /// The name of the location
+        /// Location name.
         /// </param>
         /// <param name='name'>
         /// The account name.
@@ -97,7 +97,10 @@ namespace Microsoft.Azure.Management.Media
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "locationName");
             }
-            string apiVersion = "2021-06-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             CheckNameAvailabilityInput parameters = new CheckNameAvailabilityInput();
             if (name != null || type != null)
             {
@@ -112,7 +115,6 @@ namespace Microsoft.Azure.Management.Media
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("locationName", locationName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CheckNameAvailability", tracingParameters);
@@ -123,9 +125,9 @@ namespace Microsoft.Azure.Management.Media
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{locationName}", System.Uri.EscapeDataString(locationName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {

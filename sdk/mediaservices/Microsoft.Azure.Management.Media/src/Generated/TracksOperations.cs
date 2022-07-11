@@ -104,7 +104,10 @@ namespace Microsoft.Azure.Management.Media
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "assetName");
             }
-            string apiVersion = "2021-11-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -115,7 +118,6 @@ namespace Microsoft.Azure.Management.Media
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("assetName", assetName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
@@ -127,9 +129,9 @@ namespace Microsoft.Azure.Management.Media
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
             _url = _url.Replace("{assetName}", System.Uri.EscapeDataString(assetName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -312,7 +314,10 @@ namespace Microsoft.Azure.Management.Media
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "trackName");
             }
-            string apiVersion = "2021-11-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -324,7 +329,6 @@ namespace Microsoft.Azure.Management.Media
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("assetName", assetName);
                 tracingParameters.Add("trackName", trackName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
@@ -337,9 +341,9 @@ namespace Microsoft.Azure.Management.Media
             _url = _url.Replace("{assetName}", System.Uri.EscapeDataString(assetName));
             _url = _url.Replace("{trackName}", System.Uri.EscapeDataString(trackName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -660,7 +664,10 @@ namespace Microsoft.Azure.Management.Media
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "trackName");
             }
-            string apiVersion = "2021-11-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             AssetTrack parameters = new AssetTrack();
             if (track != null)
             {
@@ -677,7 +684,6 @@ namespace Microsoft.Azure.Management.Media
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("assetName", assetName);
                 tracingParameters.Add("trackName", trackName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginCreateOrUpdate", tracingParameters);
@@ -691,9 +697,9 @@ namespace Microsoft.Azure.Management.Media
             _url = _url.Replace("{assetName}", System.Uri.EscapeDataString(assetName));
             _url = _url.Replace("{trackName}", System.Uri.EscapeDataString(trackName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -910,7 +916,10 @@ namespace Microsoft.Azure.Management.Media
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "trackName");
             }
-            string apiVersion = "2021-11-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -922,7 +931,6 @@ namespace Microsoft.Azure.Management.Media
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("assetName", assetName);
                 tracingParameters.Add("trackName", trackName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginDelete", tracingParameters);
             }
@@ -935,9 +943,9 @@ namespace Microsoft.Azure.Management.Media
             _url = _url.Replace("{assetName}", System.Uri.EscapeDataString(assetName));
             _url = _url.Replace("{trackName}", System.Uri.EscapeDataString(trackName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1118,7 +1126,10 @@ namespace Microsoft.Azure.Management.Media
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "trackName");
             }
-            string apiVersion = "2021-11-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             AssetTrack parameters = new AssetTrack();
             if (track != null)
             {
@@ -1135,7 +1146,6 @@ namespace Microsoft.Azure.Management.Media
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("assetName", assetName);
                 tracingParameters.Add("trackName", trackName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginUpdate", tracingParameters);
@@ -1149,9 +1159,9 @@ namespace Microsoft.Azure.Management.Media
             _url = _url.Replace("{assetName}", System.Uri.EscapeDataString(assetName));
             _url = _url.Replace("{trackName}", System.Uri.EscapeDataString(trackName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1355,7 +1365,10 @@ namespace Microsoft.Azure.Management.Media
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "trackName");
             }
-            string apiVersion = "2021-11-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1367,7 +1380,6 @@ namespace Microsoft.Azure.Management.Media
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("assetName", assetName);
                 tracingParameters.Add("trackName", trackName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginUpdateTrackData", tracingParameters);
             }
@@ -1380,9 +1392,9 @@ namespace Microsoft.Azure.Management.Media
             _url = _url.Replace("{assetName}", System.Uri.EscapeDataString(assetName));
             _url = _url.Replace("{trackName}", System.Uri.EscapeDataString(trackName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {

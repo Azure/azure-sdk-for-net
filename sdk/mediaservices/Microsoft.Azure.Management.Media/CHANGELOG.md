@@ -1,5 +1,11 @@
 # Microsoft.Azure.Management.Media release notes
 
+## Changes in 6.1.0
+
+- Media Service account create and update are now async operations, and polling for async operation will be taken care by the SDK
+- Added new ProvisioningState property on the MediaService.
+- New functions added BeginCreateOrUpdateWithHttpMessagesAsync on MediaService account, if user doesn't want to wait till the Create of update operation has finished 
+
 ## Changes in 6.0.0
 
 - Added new tracks API under asset to manage the tracks available in the asset.

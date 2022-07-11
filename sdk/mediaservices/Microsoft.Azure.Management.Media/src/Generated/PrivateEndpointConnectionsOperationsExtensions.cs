@@ -22,10 +22,10 @@ namespace Microsoft.Azure.Management.Media
     public static partial class PrivateEndpointConnectionsOperationsExtensions
     {
             /// <summary>
-            /// Get all private endpoint connections.
+            /// List private endpoint connections.
             /// </summary>
             /// <remarks>
-            /// Get all private endpoint connections.
+            /// List all private endpoint connections.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -42,10 +42,10 @@ namespace Microsoft.Azure.Management.Media
             }
 
             /// <summary>
-            /// Get all private endpoint connections.
+            /// List private endpoint connections.
             /// </summary>
             /// <remarks>
-            /// Get all private endpoint connections.
+            /// List all private endpoint connections.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.Media
             /// Get private endpoint connection.
             /// </summary>
             /// <remarks>
-            /// Get private endpoint connection.
+            /// Get the details of a private endpoint connection.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Management.Media
             /// Get private endpoint connection.
             /// </summary>
             /// <remarks>
-            /// Get private endpoint connection.
+            /// Get the details of a private endpoint connection.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -118,10 +118,10 @@ namespace Microsoft.Azure.Management.Media
             }
 
             /// <summary>
-            /// Update private endpoint connection.
+            /// Update a private endpoint connection.
             /// </summary>
             /// <remarks>
-            /// Update private endpoint connection.
+            /// Update an existing private endpoint connection.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -143,10 +143,10 @@ namespace Microsoft.Azure.Management.Media
             }
 
             /// <summary>
-            /// Update private endpoint connection.
+            /// Update a private endpoint connection.
             /// </summary>
             /// <remarks>
-            /// Update private endpoint connection.
+            /// Update an existing private endpoint connection.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -174,10 +174,10 @@ namespace Microsoft.Azure.Management.Media
             }
 
             /// <summary>
-            /// Delete private endpoint connection.
+            /// Delete a private endpoint connection.
             /// </summary>
             /// <remarks>
-            /// Delete private endpoint connection.
+            /// Deletes a private endpoint connection.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -196,10 +196,10 @@ namespace Microsoft.Azure.Management.Media
             }
 
             /// <summary>
-            /// Delete private endpoint connection.
+            /// Delete a private endpoint connection.
             /// </summary>
             /// <remarks>
-            /// Delete private endpoint connection.
+            /// Deletes a private endpoint connection.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.

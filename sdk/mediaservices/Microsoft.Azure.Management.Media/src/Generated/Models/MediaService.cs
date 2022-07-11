@@ -54,11 +54,16 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <param name="publicNetworkAccess">Whether or not public network
         /// access is allowed for resources under the Media Services account.
         /// Possible values include: 'Enabled', 'Disabled'</param>
-        /// <param name="identity">The Managed Identity for the Media Services
-        /// account.</param>
+        /// <param name="provisioningState">Provisioning state of the Media
+        /// Services account. Possible values include: 'Failed', 'InProgress',
+        /// 'Succeeded'</param>
+        /// <param name="privateEndpointConnections">The Private Endpoint
+        /// Connections created for the Media Service account.</param>
         /// <param name="systemData">The system metadata relating to this
         /// resource.</param>
-        public MediaService(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), System.Guid mediaServiceId = default(System.Guid), IList<StorageAccount> storageAccounts = default(IList<StorageAccount>), StorageAuthentication? storageAuthentication = default(StorageAuthentication?), AccountEncryption encryption = default(AccountEncryption), KeyDelivery keyDelivery = default(KeyDelivery), PublicNetworkAccess? publicNetworkAccess = default(PublicNetworkAccess?), MediaServiceIdentity identity = default(MediaServiceIdentity), SystemData systemData = default(SystemData))
+        /// <param name="identity">The Managed Identity for the Media Services
+        /// account.</param>
+        public MediaService(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), System.Guid mediaServiceId = default(System.Guid), IList<StorageAccount> storageAccounts = default(IList<StorageAccount>), StorageAuthentication? storageAuthentication = default(StorageAuthentication?), AccountEncryption encryption = default(AccountEncryption), KeyDelivery keyDelivery = default(KeyDelivery), PublicNetworkAccess? publicNetworkAccess = default(PublicNetworkAccess?), ProvisioningState provisioningState = default(ProvisioningState), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), SystemData systemData = default(SystemData), MediaServiceIdentity identity = default(MediaServiceIdentity))
             : base(location, id, name, type, tags)
         {
             MediaServiceId = mediaServiceId;
@@ -67,8 +72,10 @@ namespace Microsoft.Azure.Management.Media.Models
             Encryption = encryption;
             KeyDelivery = keyDelivery;
             PublicNetworkAccess = publicNetworkAccess;
-            Identity = identity;
+            ProvisioningState = provisioningState;
+            PrivateEndpointConnections = privateEndpointConnections;
             SystemData = systemData;
+            Identity = identity;
             CustomInit();
         }
 
@@ -117,16 +124,30 @@ namespace Microsoft.Azure.Management.Media.Models
         public PublicNetworkAccess? PublicNetworkAccess { get; set; }
 
         /// <summary>
-        /// Gets or sets the Managed Identity for the Media Services account.
+        /// Gets provisioning state of the Media Services account. Possible
+        /// values include: 'Failed', 'InProgress', 'Succeeded'
         /// </summary>
-        [JsonProperty(PropertyName = "identity")]
-        public MediaServiceIdentity Identity { get; set; }
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public ProvisioningState ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets the Private Endpoint Connections created for the Media Service
+        /// account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.privateEndpointConnections")]
+        public IList<PrivateEndpointConnection> PrivateEndpointConnections { get; private set; }
 
         /// <summary>
         /// Gets the system metadata relating to this resource.
         /// </summary>
         [JsonProperty(PropertyName = "systemData")]
         public SystemData SystemData { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the Managed Identity for the Media Services account.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public MediaServiceIdentity Identity { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -150,6 +171,16 @@ namespace Microsoft.Azure.Management.Media.Models
             if (Encryption != null)
             {
                 Encryption.Validate();
+            }
+            if (PrivateEndpointConnections != null)
+            {
+                foreach (var element1 in PrivateEndpointConnections)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
+                    }
+                }
             }
             if (Identity != null)
             {

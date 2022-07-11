@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.Media
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Operations operations.
+    /// MediaServiceOperationStatusesOperations operations.
     /// </summary>
-    internal partial class Operations : IServiceOperations<AzureMediaServicesClient>, IOperations
+    internal partial class MediaServiceOperationStatusesOperations : IServiceOperations<AzureMediaServicesClient>, IMediaServiceOperationStatusesOperations
     {
         /// <summary>
-        /// Initializes a new instance of the Operations class.
+        /// Initializes a new instance of the MediaServiceOperationStatusesOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Media
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal Operations(AzureMediaServicesClient client)
+        internal MediaServiceOperationStatusesOperations(AzureMediaServicesClient client)
         {
             if (client == null)
             {
@@ -51,11 +51,17 @@ namespace Microsoft.Azure.Management.Media
         public AzureMediaServicesClient Client { get; private set; }
 
         /// <summary>
-        /// List Operations
+        /// Get operation status.
         /// </summary>
         /// <remarks>
-        /// Lists all the Media Services operations.
+        /// Get media service operation status.
         /// </remarks>
+        /// <param name='locationName'>
+        /// Location name.
+        /// </param>
+        /// <param name='operationId'>
+        /// Operation ID.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -77,8 +83,20 @@ namespace Microsoft.Azure.Management.Media
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<OperationCollection>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<MediaServiceOperationStatus>> GetWithHttpMessagesAsync(string locationName, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (locationName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "locationName");
+            }
+            if (operationId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "operationId");
+            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -90,12 +108,17 @@ namespace Microsoft.Azure.Management.Media
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("locationName", locationName);
+                tracingParameters.Add("operationId", operationId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Media/operations").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/mediaServiceOperationStatuses/{operationId}").ToString();
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            _url = _url.Replace("{locationName}", System.Uri.EscapeDataString(locationName));
+            _url = _url.Replace("{operationId}", System.Uri.EscapeDataString(operationId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -189,7 +212,7 @@ namespace Microsoft.Azure.Management.Media
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<OperationCollection>();
+            var _result = new AzureOperationResponse<MediaServiceOperationStatus>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -202,7 +225,7 @@ namespace Microsoft.Azure.Management.Media
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<OperationCollection>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<MediaServiceOperationStatus>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

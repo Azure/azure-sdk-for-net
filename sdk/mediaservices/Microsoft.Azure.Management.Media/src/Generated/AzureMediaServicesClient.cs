@@ -49,6 +49,11 @@ namespace Microsoft.Azure.Management.Media
         public string SubscriptionId { get; set; }
 
         /// <summary>
+        /// The version of the API to be used with the client request.
+        /// </summary>
+        public string ApiVersion { get; private set; }
+
+        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
@@ -95,6 +100,16 @@ namespace Microsoft.Azure.Management.Media
         /// Gets the ILocationsOperations.
         /// </summary>
         public virtual ILocationsOperations Locations { get; private set; }
+
+        /// <summary>
+        /// Gets the IMediaServiceOperationStatusesOperations.
+        /// </summary>
+        public virtual IMediaServiceOperationStatusesOperations MediaServiceOperationStatuses { get; private set; }
+
+        /// <summary>
+        /// Gets the IMediaServiceOperationResultsOperations.
+        /// </summary>
+        public virtual IMediaServiceOperationResultsOperations MediaServiceOperationResults { get; private set; }
 
         /// <summary>
         /// Gets the IAssetsOperations.
@@ -408,6 +423,8 @@ namespace Microsoft.Azure.Management.Media
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             Locations = new LocationsOperations(this);
+            MediaServiceOperationStatuses = new MediaServiceOperationStatusesOperations(this);
+            MediaServiceOperationResults = new MediaServiceOperationResultsOperations(this);
             Assets = new AssetsOperations(this);
             AssetFilters = new AssetFiltersOperations(this);
             Tracks = new TracksOperations(this);
@@ -422,6 +439,7 @@ namespace Microsoft.Azure.Management.Media
             LiveOutputs = new LiveOutputsOperations(this);
             StreamingEndpoints = new StreamingEndpointsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
+            ApiVersion = "2021-11-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

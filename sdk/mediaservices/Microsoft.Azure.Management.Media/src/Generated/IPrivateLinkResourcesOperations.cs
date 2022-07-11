@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Media
         /// Get list of group IDs.
         /// </summary>
         /// <remarks>
-        /// Get list of group IDs.
+        /// List supported group IDs.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Media
         /// Get group ID.
         /// </summary>
         /// <remarks>
-        /// Get group ID.
+        /// Get details of a group ID.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.

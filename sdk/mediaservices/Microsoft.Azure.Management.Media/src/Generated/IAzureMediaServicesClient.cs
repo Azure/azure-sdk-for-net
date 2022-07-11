@@ -45,6 +45,11 @@ namespace Microsoft.Azure.Management.Media
         string SubscriptionId { get; set; }
 
         /// <summary>
+        /// The version of the API to be used with the client request.
+        /// </summary>
+        string ApiVersion { get; }
+
+        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
@@ -92,6 +97,16 @@ namespace Microsoft.Azure.Management.Media
         /// Gets the ILocationsOperations.
         /// </summary>
         ILocationsOperations Locations { get; }
+
+        /// <summary>
+        /// Gets the IMediaServiceOperationStatusesOperations.
+        /// </summary>
+        IMediaServiceOperationStatusesOperations MediaServiceOperationStatuses { get; }
+
+        /// <summary>
+        /// Gets the IMediaServiceOperationResultsOperations.
+        /// </summary>
+        IMediaServiceOperationResultsOperations MediaServiceOperationResults { get; }
 
         /// <summary>
         /// Gets the IAssetsOperations.

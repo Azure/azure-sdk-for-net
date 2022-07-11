@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Media
             /// The operations group for this extension method.
             /// </param>
             /// <param name='locationName'>
-            /// The name of the location
+            /// Location name.
             /// </param>
             /// <param name='name'>
             /// The account name.
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Media
             /// The operations group for this extension method.
             /// </param>
             /// <param name='locationName'>
-            /// The name of the location
+            /// Location name.
             /// </param>
             /// <param name='name'>
             /// The account name.

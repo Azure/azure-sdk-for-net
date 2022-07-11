@@ -309,7 +309,8 @@ namespace Microsoft.Azure.Management.Media
             /// List the media edge policies associated with the Media Services account.
             /// </summary>
             /// <remarks>
-            /// List the media edge policies associated with the Media Services account.
+            /// List all the media edge policies associated with the Media Services
+            /// account.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -332,7 +333,8 @@ namespace Microsoft.Azure.Management.Media
             /// List the media edge policies associated with the Media Services account.
             /// </summary>
             /// <remarks>
-            /// List the media edge policies associated with the Media Services account.
+            /// List all the media edge policies associated with the Media Services
+            /// account.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -386,6 +388,110 @@ namespace Microsoft.Azure.Management.Media
             public static async Task<IPage<MediaService>> ListBySubscriptionAsync(this IMediaservicesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListBySubscriptionWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Create or update a Media Services account
+            /// </summary>
+            /// <remarks>
+            /// Creates or updates a Media Services account
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the Azure subscription.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Media Services account name.
+            /// </param>
+            /// <param name='parameters'>
+            /// The request parameters
+            /// </param>
+            public static MediaService BeginCreateOrUpdate(this IMediaservicesOperations operations, string resourceGroupName, string accountName, MediaService parameters)
+            {
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, accountName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create or update a Media Services account
+            /// </summary>
+            /// <remarks>
+            /// Creates or updates a Media Services account
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the Azure subscription.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Media Services account name.
+            /// </param>
+            /// <param name='parameters'>
+            /// The request parameters
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<MediaService> BeginCreateOrUpdateAsync(this IMediaservicesOperations operations, string resourceGroupName, string accountName, MediaService parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, accountName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Update a Media Services account
+            /// </summary>
+            /// <remarks>
+            /// Updates an existing Media Services account
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the Azure subscription.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Media Services account name.
+            /// </param>
+            /// <param name='parameters'>
+            /// The request parameters
+            /// </param>
+            public static MediaService BeginUpdate(this IMediaservicesOperations operations, string resourceGroupName, string accountName, MediaServiceUpdate parameters)
+            {
+                return operations.BeginUpdateAsync(resourceGroupName, accountName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update a Media Services account
+            /// </summary>
+            /// <remarks>
+            /// Updates an existing Media Services account
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the Azure subscription.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Media Services account name.
+            /// </param>
+            /// <param name='parameters'>
+            /// The request parameters
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<MediaService> BeginUpdateAsync(this IMediaservicesOperations operations, string resourceGroupName, string accountName, MediaServiceUpdate parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, accountName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
