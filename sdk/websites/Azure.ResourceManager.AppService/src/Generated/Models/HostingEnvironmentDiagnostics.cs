@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Diagnostics for an App Service Environment. </summary>
+    /// <summary>
+    /// Diagnostics for an App Service Environment.
+    /// Serialized Name: HostingEnvironmentDiagnostics
+    /// </summary>
     public partial class HostingEnvironmentDiagnostics
     {
         /// <summary> Initializes a new instance of HostingEnvironmentDiagnostics. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of HostingEnvironmentDiagnostics. </summary>
-        /// <param name="name"> Name/identifier of the diagnostics. </param>
-        /// <param name="diagnosticsOutput"> Diagnostics output. </param>
+        /// <param name="name">
+        /// Name/identifier of the diagnostics.
+        /// Serialized Name: HostingEnvironmentDiagnostics.name
+        /// </param>
+        /// <param name="diagnosticsOutput">
+        /// Diagnostics output.
+        /// Serialized Name: HostingEnvironmentDiagnostics.diagnosticsOutput
+        /// </param>
         internal HostingEnvironmentDiagnostics(string name, string diagnosticsOutput)
         {
             Name = name;
             DiagnosticsOutput = diagnosticsOutput;
         }
 
-        /// <summary> Name/identifier of the diagnostics. </summary>
+        /// <summary>
+        /// Name/identifier of the diagnostics.
+        /// Serialized Name: HostingEnvironmentDiagnostics.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> Diagnostics output. </summary>
+        /// <summary>
+        /// Diagnostics output.
+        /// Serialized Name: HostingEnvironmentDiagnostics.diagnosticsOutput
+        /// </summary>
         public string DiagnosticsOutput { get; }
     }
 }

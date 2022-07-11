@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Function App stack runtimes. </summary>
+    /// <summary>
+    /// Function App stack runtimes.
+    /// Serialized Name: FunctionAppRuntimes
+    /// </summary>
     public partial class FunctionAppRuntimes
     {
         /// <summary> Initializes a new instance of FunctionAppRuntimes. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of FunctionAppRuntimes. </summary>
-        /// <param name="linuxRuntimeSettings"> Linux-specific settings associated with the minor version. </param>
-        /// <param name="windowsRuntimeSettings"> Windows-specific settings associated with the minor version. </param>
+        /// <param name="linuxRuntimeSettings">
+        /// Linux-specific settings associated with the minor version.
+        /// Serialized Name: FunctionAppRuntimes.linuxRuntimeSettings
+        /// </param>
+        /// <param name="windowsRuntimeSettings">
+        /// Windows-specific settings associated with the minor version.
+        /// Serialized Name: FunctionAppRuntimes.windowsRuntimeSettings
+        /// </param>
         internal FunctionAppRuntimes(FunctionAppRuntimeSettings linuxRuntimeSettings, FunctionAppRuntimeSettings windowsRuntimeSettings)
         {
             LinuxRuntimeSettings = linuxRuntimeSettings;
             WindowsRuntimeSettings = windowsRuntimeSettings;
         }
 
-        /// <summary> Linux-specific settings associated with the minor version. </summary>
+        /// <summary>
+        /// Linux-specific settings associated with the minor version.
+        /// Serialized Name: FunctionAppRuntimes.linuxRuntimeSettings
+        /// </summary>
         public FunctionAppRuntimeSettings LinuxRuntimeSettings { get; }
-        /// <summary> Windows-specific settings associated with the minor version. </summary>
+        /// <summary>
+        /// Windows-specific settings associated with the minor version.
+        /// Serialized Name: FunctionAppRuntimes.windowsRuntimeSettings
+        /// </summary>
         public FunctionAppRuntimeSettings WindowsRuntimeSettings { get; }
     }
 }

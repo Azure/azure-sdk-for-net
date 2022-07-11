@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Specification for a Kubernetes Environment to use for this resource. </summary>
+    /// <summary>
+    /// Specification for a Kubernetes Environment to use for this resource.
+    /// Serialized Name: KubeEnvironmentProfile
+    /// </summary>
     public partial class KubeEnvironmentProfile
     {
         /// <summary> Initializes a new instance of KubeEnvironmentProfile. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of KubeEnvironmentProfile. </summary>
-        /// <param name="id"> Resource ID of the Kubernetes Environment. </param>
-        /// <param name="name"> Name of the Kubernetes Environment. </param>
-        /// <param name="resourceType"> Resource type of the Kubernetes Environment. </param>
+        /// <param name="id">
+        /// Resource ID of the Kubernetes Environment.
+        /// Serialized Name: KubeEnvironmentProfile.id
+        /// </param>
+        /// <param name="name">
+        /// Name of the Kubernetes Environment.
+        /// Serialized Name: KubeEnvironmentProfile.name
+        /// </param>
+        /// <param name="resourceType">
+        /// Resource type of the Kubernetes Environment.
+        /// Serialized Name: KubeEnvironmentProfile.type
+        /// </param>
         internal KubeEnvironmentProfile(string id, string name, string resourceType)
         {
             Id = id;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceType = resourceType;
         }
 
-        /// <summary> Resource ID of the Kubernetes Environment. </summary>
+        /// <summary>
+        /// Resource ID of the Kubernetes Environment.
+        /// Serialized Name: KubeEnvironmentProfile.id
+        /// </summary>
         public string Id { get; set; }
-        /// <summary> Name of the Kubernetes Environment. </summary>
+        /// <summary>
+        /// Name of the Kubernetes Environment.
+        /// Serialized Name: KubeEnvironmentProfile.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> Resource type of the Kubernetes Environment. </summary>
+        /// <summary>
+        /// Resource type of the Kubernetes Environment.
+        /// Serialized Name: KubeEnvironmentProfile.type
+        /// </summary>
         public string ResourceType { get; }
     }
 }

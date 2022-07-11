@@ -7,12 +7,21 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Managed pipeline mode. </summary>
+    /// <summary>
+    /// Managed pipeline mode.
+    /// Serialized Name: ManagedPipelineMode
+    /// </summary>
     public enum ManagedPipelineMode
     {
-        /// <summary> Integrated. </summary>
+        /// <summary>
+        /// Integrated
+        /// Serialized Name: ManagedPipelineMode.Integrated
+        /// </summary>
         Integrated,
-        /// <summary> Classic. </summary>
+        /// <summary>
+        /// Classic
+        /// Serialized Name: ManagedPipelineMode.Classic
+        /// </summary>
         Classic
     }
 }

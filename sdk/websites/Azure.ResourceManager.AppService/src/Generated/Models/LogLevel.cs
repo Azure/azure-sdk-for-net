@@ -7,18 +7,36 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Log level. </summary>
+    /// <summary>
+    /// Log level.
+    /// Serialized Name: LogLevel
+    /// </summary>
     public enum LogLevel
     {
-        /// <summary> Off. </summary>
+        /// <summary>
+        /// Off
+        /// Serialized Name: LogLevel.Off
+        /// </summary>
         Off,
-        /// <summary> Verbose. </summary>
+        /// <summary>
+        /// Verbose
+        /// Serialized Name: LogLevel.Verbose
+        /// </summary>
         Verbose,
-        /// <summary> Information. </summary>
+        /// <summary>
+        /// Information
+        /// Serialized Name: LogLevel.Information
+        /// </summary>
         Information,
-        /// <summary> Warning. </summary>
+        /// <summary>
+        /// Warning
+        /// Serialized Name: LogLevel.Warning
+        /// </summary>
         Warning,
-        /// <summary> Error. </summary>
+        /// <summary>
+        /// Error
+        /// Serialized Name: LogLevel.Error
+        /// </summary>
         Error
     }
 }

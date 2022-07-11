@@ -12,11 +12,17 @@ using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Collection of Kudu web job information elements. </summary>
+    /// <summary>
+    /// Collection of Kudu web job information elements.
+    /// Serialized Name: WebJobCollection
+    /// </summary>
     internal partial class WebJobCollection
     {
         /// <summary> Initializes a new instance of WebJobCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: WebJobCollection.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal WebJobCollection(IEnumerable<WebJobData> value)
         {
@@ -29,17 +35,29 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of WebJobCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
-        /// <param name="nextLink"> Link to next page of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: WebJobCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to next page of resources.
+        /// Serialized Name: WebJobCollection.nextLink
+        /// </param>
         internal WebJobCollection(IReadOnlyList<WebJobData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Collection of resources. </summary>
+        /// <summary>
+        /// Collection of resources.
+        /// Serialized Name: WebJobCollection.value
+        /// </summary>
         public IReadOnlyList<WebJobData> Value { get; }
-        /// <summary> Link to next page of resources. </summary>
+        /// <summary>
+        /// Link to next page of resources.
+        /// Serialized Name: WebJobCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

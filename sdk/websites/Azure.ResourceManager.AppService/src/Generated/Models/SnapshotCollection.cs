@@ -11,11 +11,17 @@ using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Collection of snapshots which can be used to revert an app to a previous time. </summary>
+    /// <summary>
+    /// Collection of snapshots which can be used to revert an app to a previous time.
+    /// Serialized Name: SnapshotCollection
+    /// </summary>
     internal partial class SnapshotCollection
     {
         /// <summary> Initializes a new instance of SnapshotCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: SnapshotCollection.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SnapshotCollection(IEnumerable<Snapshot> value)
         {
@@ -28,17 +34,29 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of SnapshotCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
-        /// <param name="nextLink"> Link to next page of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: SnapshotCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to next page of resources.
+        /// Serialized Name: SnapshotCollection.nextLink
+        /// </param>
         internal SnapshotCollection(IReadOnlyList<Snapshot> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Collection of resources. </summary>
+        /// <summary>
+        /// Collection of resources.
+        /// Serialized Name: SnapshotCollection.value
+        /// </summary>
         public IReadOnlyList<Snapshot> Value { get; }
-        /// <summary> Link to next page of resources. </summary>
+        /// <summary>
+        /// Link to next page of resources.
+        /// Serialized Name: SnapshotCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

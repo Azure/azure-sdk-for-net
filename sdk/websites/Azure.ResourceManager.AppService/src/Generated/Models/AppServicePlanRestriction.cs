@@ -7,20 +7,41 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> App Service plans this offer is restricted to. </summary>
+    /// <summary>
+    /// App Service plans this offer is restricted to.
+    /// Serialized Name: AppServicePlanRestrictions
+    /// </summary>
     public enum AppServicePlanRestriction
     {
-        /// <summary> None. </summary>
+        /// <summary>
+        /// None
+        /// Serialized Name: AppServicePlanRestrictions.None
+        /// </summary>
         None,
-        /// <summary> Free. </summary>
+        /// <summary>
+        /// Free
+        /// Serialized Name: AppServicePlanRestrictions.Free
+        /// </summary>
         Free,
-        /// <summary> Shared. </summary>
+        /// <summary>
+        /// Shared
+        /// Serialized Name: AppServicePlanRestrictions.Shared
+        /// </summary>
         Shared,
-        /// <summary> Basic. </summary>
+        /// <summary>
+        /// Basic
+        /// Serialized Name: AppServicePlanRestrictions.Basic
+        /// </summary>
         Basic,
-        /// <summary> Standard. </summary>
+        /// <summary>
+        /// Standard
+        /// Serialized Name: AppServicePlanRestrictions.Standard
+        /// </summary>
         Standard,
-        /// <summary> Premium. </summary>
+        /// <summary>
+        /// Premium
+        /// Serialized Name: AppServicePlanRestrictions.Premium
+        /// </summary>
         Premium
     }
 }

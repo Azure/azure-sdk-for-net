@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Application stack major version. </summary>
+    /// <summary>
+    /// Application stack major version.
+    /// Serialized Name: StackMajorVersion
+    /// </summary>
     public partial class StackMajorVersion
     {
         /// <summary> Initializes a new instance of StackMajorVersion. </summary>
@@ -23,33 +26,59 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of StackMajorVersion. </summary>
-        /// <param name="displayVersion"> Application stack major version (display only). </param>
-        /// <param name="runtimeVersion"> Application stack major version (runtime only). </param>
-        /// <param name="isDefault"> &lt;code&gt;true&lt;/code&gt; if this is the default major version; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="minorVersions"> Minor versions associated with the major version. </param>
-        /// <param name="applicationInsights"> &lt;code&gt;true&lt;/code&gt; if this supports Application Insights; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="isPreview"> &lt;code&gt;true&lt;/code&gt; if this stack is in Preview, otherwise &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="isDeprecated"> &lt;code&gt;true&lt;/code&gt; if this stack has been deprecated, otherwise &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="isHidden"> &lt;code&gt;true&lt;/code&gt; if this stack should be hidden for new customers on portal, otherwise &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="displayVersion">
+        /// Application stack major version (display only).
+        /// Serialized Name: StackMajorVersion.displayVersion
+        /// </param>
+        /// <param name="runtimeVersion">
+        /// Application stack major version (runtime only).
+        /// Serialized Name: StackMajorVersion.runtimeVersion
+        /// </param>
+        /// <param name="isDefault">
+        /// &lt;code&gt;true&lt;/code&gt; if this is the default major version; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: StackMajorVersion.isDefault
+        /// </param>
+        /// <param name="minorVersions">
+        /// Minor versions associated with the major version.
+        /// Serialized Name: StackMajorVersion.minorVersions
+        /// </param>
+        /// <param name="isApplicationInsights">
+        /// &lt;code&gt;true&lt;/code&gt; if this supports Application Insights; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: StackMajorVersion.applicationInsights
+        /// </param>
+        /// <param name="isPreview">
+        /// &lt;code&gt;true&lt;/code&gt; if this stack is in Preview, otherwise &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: StackMajorVersion.isPreview
+        /// </param>
+        /// <param name="isDeprecated">
+        /// &lt;code&gt;true&lt;/code&gt; if this stack has been deprecated, otherwise &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: StackMajorVersion.isDeprecated
+        /// </param>
+        /// <param name="isHidden">
+        /// &lt;code&gt;true&lt;/code&gt; if this stack should be hidden for new customers on portal, otherwise &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: StackMajorVersion.isHidden
+        /// </param>
         /// <param name="appSettingsDictionary">
         /// &lt;appSettings&gt;
         ///  &lt;appSetting name=&quot;FUNCTIONS_WORKER_RUNTIME&quot; value=&quot;dotnet&quot; /&gt;
         /// &lt;/appSettings&gt;
         ///  Example: All the function apps need AppSetting: &quot;FUNCTIONS_WORKER_RUNTIME&quot; to be set stack name
+        /// Serialized Name: StackMajorVersion.appSettingsDictionary
         /// </param>
         /// <param name="siteConfigPropertiesDictionary">
         /// &lt;siteConfigProperties&gt;
         ///  &lt;siteConfigProperty name=&quot;Use32BitWorkerProcess&quot; value=&quot;false&quot; /&gt;
         /// &lt;/siteConfigProperties&gt;
         ///  Example: All Linux Function Apps, need Use32BitWorkerProcess to be set to 0
+        /// Serialized Name: StackMajorVersion.siteConfigPropertiesDictionary
         /// </param>
-        internal StackMajorVersion(string displayVersion, string runtimeVersion, bool? isDefault, IList<StackMinorVersion> minorVersions, bool? applicationInsights, bool? isPreview, bool? isDeprecated, bool? isHidden, IDictionary<string, BinaryData> appSettingsDictionary, IDictionary<string, BinaryData> siteConfigPropertiesDictionary)
+        internal StackMajorVersion(string displayVersion, string runtimeVersion, bool? isDefault, IList<StackMinorVersion> minorVersions, bool? isApplicationInsights, bool? isPreview, bool? isDeprecated, bool? isHidden, IDictionary<string, BinaryData> appSettingsDictionary, IDictionary<string, BinaryData> siteConfigPropertiesDictionary)
         {
             DisplayVersion = displayVersion;
             RuntimeVersion = runtimeVersion;
             IsDefault = isDefault;
             MinorVersions = minorVersions;
-            ApplicationInsights = applicationInsights;
+            IsApplicationInsights = isApplicationInsights;
             IsPreview = isPreview;
             IsDeprecated = isDeprecated;
             IsHidden = isHidden;
@@ -57,27 +86,52 @@ namespace Azure.ResourceManager.AppService.Models
             SiteConfigPropertiesDictionary = siteConfigPropertiesDictionary;
         }
 
-        /// <summary> Application stack major version (display only). </summary>
+        /// <summary>
+        /// Application stack major version (display only).
+        /// Serialized Name: StackMajorVersion.displayVersion
+        /// </summary>
         public string DisplayVersion { get; set; }
-        /// <summary> Application stack major version (runtime only). </summary>
+        /// <summary>
+        /// Application stack major version (runtime only).
+        /// Serialized Name: StackMajorVersion.runtimeVersion
+        /// </summary>
         public string RuntimeVersion { get; set; }
-        /// <summary> &lt;code&gt;true&lt;/code&gt; if this is the default major version; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        /// <summary>
+        /// &lt;code&gt;true&lt;/code&gt; if this is the default major version; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: StackMajorVersion.isDefault
+        /// </summary>
         public bool? IsDefault { get; set; }
-        /// <summary> Minor versions associated with the major version. </summary>
+        /// <summary>
+        /// Minor versions associated with the major version.
+        /// Serialized Name: StackMajorVersion.minorVersions
+        /// </summary>
         public IList<StackMinorVersion> MinorVersions { get; }
-        /// <summary> &lt;code&gt;true&lt;/code&gt; if this supports Application Insights; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
-        public bool? ApplicationInsights { get; set; }
-        /// <summary> &lt;code&gt;true&lt;/code&gt; if this stack is in Preview, otherwise &lt;code&gt;false&lt;/code&gt;. </summary>
+        /// <summary>
+        /// &lt;code&gt;true&lt;/code&gt; if this supports Application Insights; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: StackMajorVersion.applicationInsights
+        /// </summary>
+        public bool? IsApplicationInsights { get; set; }
+        /// <summary>
+        /// &lt;code&gt;true&lt;/code&gt; if this stack is in Preview, otherwise &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: StackMajorVersion.isPreview
+        /// </summary>
         public bool? IsPreview { get; set; }
-        /// <summary> &lt;code&gt;true&lt;/code&gt; if this stack has been deprecated, otherwise &lt;code&gt;false&lt;/code&gt;. </summary>
+        /// <summary>
+        /// &lt;code&gt;true&lt;/code&gt; if this stack has been deprecated, otherwise &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: StackMajorVersion.isDeprecated
+        /// </summary>
         public bool? IsDeprecated { get; set; }
-        /// <summary> &lt;code&gt;true&lt;/code&gt; if this stack should be hidden for new customers on portal, otherwise &lt;code&gt;false&lt;/code&gt;. </summary>
+        /// <summary>
+        /// &lt;code&gt;true&lt;/code&gt; if this stack should be hidden for new customers on portal, otherwise &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: StackMajorVersion.isHidden
+        /// </summary>
         public bool? IsHidden { get; set; }
         /// <summary>
         /// &lt;appSettings&gt;
         ///  &lt;appSetting name=&quot;FUNCTIONS_WORKER_RUNTIME&quot; value=&quot;dotnet&quot; /&gt;
         /// &lt;/appSettings&gt;
         ///  Example: All the function apps need AppSetting: &quot;FUNCTIONS_WORKER_RUNTIME&quot; to be set stack name
+        /// Serialized Name: StackMajorVersion.appSettingsDictionary
         /// </summary>
         public IDictionary<string, BinaryData> AppSettingsDictionary { get; }
         /// <summary>
@@ -85,6 +139,7 @@ namespace Azure.ResourceManager.AppService.Models
         ///  &lt;siteConfigProperty name=&quot;Use32BitWorkerProcess&quot; value=&quot;false&quot; /&gt;
         /// &lt;/siteConfigProperties&gt;
         ///  Example: All Linux Function Apps, need Use32BitWorkerProcess to be set to 0
+        /// Serialized Name: StackMajorVersion.siteConfigPropertiesDictionary
         /// </summary>
         public IDictionary<string, BinaryData> SiteConfigPropertiesDictionary { get; }
     }

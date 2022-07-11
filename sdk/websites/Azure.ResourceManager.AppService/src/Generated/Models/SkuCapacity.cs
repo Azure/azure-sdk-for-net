@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Description of the App Service plan scale options. </summary>
+    /// <summary>
+    /// Description of the App Service plan scale options.
+    /// Serialized Name: SkuCapacity
+    /// </summary>
     public partial class SkuCapacity
     {
         /// <summary> Initializes a new instance of SkuCapacity. </summary>
@@ -16,11 +19,26 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of SkuCapacity. </summary>
-        /// <param name="minimum"> Minimum number of workers for this App Service plan SKU. </param>
-        /// <param name="maximum"> Maximum number of workers for this App Service plan SKU. </param>
-        /// <param name="elasticMaximum"> Maximum number of Elastic workers for this App Service plan SKU. </param>
-        /// <param name="default"> Default number of workers for this App Service plan SKU. </param>
-        /// <param name="scaleType"> Available scale configurations for an App Service plan. </param>
+        /// <param name="minimum">
+        /// Minimum number of workers for this App Service plan SKU.
+        /// Serialized Name: SkuCapacity.minimum
+        /// </param>
+        /// <param name="maximum">
+        /// Maximum number of workers for this App Service plan SKU.
+        /// Serialized Name: SkuCapacity.maximum
+        /// </param>
+        /// <param name="elasticMaximum">
+        /// Maximum number of Elastic workers for this App Service plan SKU.
+        /// Serialized Name: SkuCapacity.elasticMaximum
+        /// </param>
+        /// <param name="default">
+        /// Default number of workers for this App Service plan SKU.
+        /// Serialized Name: SkuCapacity.default
+        /// </param>
+        /// <param name="scaleType">
+        /// Available scale configurations for an App Service plan.
+        /// Serialized Name: SkuCapacity.scaleType
+        /// </param>
         internal SkuCapacity(int? minimum, int? maximum, int? elasticMaximum, int? @default, string scaleType)
         {
             Minimum = minimum;
@@ -30,15 +48,30 @@ namespace Azure.ResourceManager.AppService.Models
             ScaleType = scaleType;
         }
 
-        /// <summary> Minimum number of workers for this App Service plan SKU. </summary>
+        /// <summary>
+        /// Minimum number of workers for this App Service plan SKU.
+        /// Serialized Name: SkuCapacity.minimum
+        /// </summary>
         public int? Minimum { get; set; }
-        /// <summary> Maximum number of workers for this App Service plan SKU. </summary>
+        /// <summary>
+        /// Maximum number of workers for this App Service plan SKU.
+        /// Serialized Name: SkuCapacity.maximum
+        /// </summary>
         public int? Maximum { get; set; }
-        /// <summary> Maximum number of Elastic workers for this App Service plan SKU. </summary>
+        /// <summary>
+        /// Maximum number of Elastic workers for this App Service plan SKU.
+        /// Serialized Name: SkuCapacity.elasticMaximum
+        /// </summary>
         public int? ElasticMaximum { get; set; }
-        /// <summary> Default number of workers for this App Service plan SKU. </summary>
+        /// <summary>
+        /// Default number of workers for this App Service plan SKU.
+        /// Serialized Name: SkuCapacity.default
+        /// </summary>
         public int? Default { get; set; }
-        /// <summary> Available scale configurations for an App Service plan. </summary>
+        /// <summary>
+        /// Available scale configurations for an App Service plan.
+        /// Serialized Name: SkuCapacity.scaleType
+        /// </summary>
         public string ScaleType { get; set; }
     }
 }

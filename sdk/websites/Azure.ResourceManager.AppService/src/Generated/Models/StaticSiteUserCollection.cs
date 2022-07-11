@@ -11,11 +11,17 @@ using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Collection of static site custom users. </summary>
+    /// <summary>
+    /// Collection of static site custom users.
+    /// Serialized Name: StaticSiteUserCollection
+    /// </summary>
     internal partial class StaticSiteUserCollection
     {
         /// <summary> Initializes a new instance of StaticSiteUserCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: StaticSiteUserCollection.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal StaticSiteUserCollection(IEnumerable<StaticSiteUserARMResource> value)
         {
@@ -28,17 +34,29 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of StaticSiteUserCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
-        /// <param name="nextLink"> Link to next page of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: StaticSiteUserCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to next page of resources.
+        /// Serialized Name: StaticSiteUserCollection.nextLink
+        /// </param>
         internal StaticSiteUserCollection(IReadOnlyList<StaticSiteUserARMResource> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Collection of resources. </summary>
+        /// <summary>
+        /// Collection of resources.
+        /// Serialized Name: StaticSiteUserCollection.value
+        /// </summary>
         public IReadOnlyList<StaticSiteUserARMResource> Value { get; }
-        /// <summary> Link to next page of resources. </summary>
+        /// <summary>
+        /// Link to next page of resources.
+        /// Serialized Name: StaticSiteUserCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

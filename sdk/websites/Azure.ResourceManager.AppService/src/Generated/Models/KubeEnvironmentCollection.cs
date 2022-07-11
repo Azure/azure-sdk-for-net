@@ -12,11 +12,17 @@ using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Collection of Kubernetes Environments. </summary>
+    /// <summary>
+    /// Collection of Kubernetes Environments
+    /// Serialized Name: KubeEnvironmentCollection
+    /// </summary>
     internal partial class KubeEnvironmentCollection
     {
         /// <summary> Initializes a new instance of KubeEnvironmentCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: KubeEnvironmentCollection.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal KubeEnvironmentCollection(IEnumerable<KubeEnvironmentData> value)
         {
@@ -29,17 +35,29 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of KubeEnvironmentCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
-        /// <param name="nextLink"> Link to next page of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: KubeEnvironmentCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to next page of resources.
+        /// Serialized Name: KubeEnvironmentCollection.nextLink
+        /// </param>
         internal KubeEnvironmentCollection(IReadOnlyList<KubeEnvironmentData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Collection of resources. </summary>
+        /// <summary>
+        /// Collection of resources.
+        /// Serialized Name: KubeEnvironmentCollection.value
+        /// </summary>
         public IReadOnlyList<KubeEnvironmentData> Value { get; }
-        /// <summary> Link to next page of resources. </summary>
+        /// <summary>
+        /// Link to next page of resources.
+        /// Serialized Name: KubeEnvironmentCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

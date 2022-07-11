@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Metadata for the metrics. </summary>
+    /// <summary>
+    /// Metadata for the metrics.
+    /// Serialized Name: ResourceMetricDefinition
+    /// </summary>
     public partial class ResourceMetricDefinition : ResourceData
     {
         /// <summary> Initializes a new instance of ResourceMetricDefinition. </summary>
@@ -27,12 +30,30 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="unit"> Unit of the metric. </param>
-        /// <param name="primaryAggregationType"> Primary aggregation type. </param>
-        /// <param name="metricAvailabilities"> List of time grains supported for the metric together with retention period. </param>
-        /// <param name="resourceUri"> Resource URI. </param>
-        /// <param name="properties"> Resource metric definition properties. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="unit">
+        /// Unit of the metric.
+        /// Serialized Name: ResourceMetricDefinition.properties.unit
+        /// </param>
+        /// <param name="primaryAggregationType">
+        /// Primary aggregation type.
+        /// Serialized Name: ResourceMetricDefinition.properties.primaryAggregationType
+        /// </param>
+        /// <param name="metricAvailabilities">
+        /// List of time grains supported for the metric together with retention period.
+        /// Serialized Name: ResourceMetricDefinition.properties.metricAvailabilities
+        /// </param>
+        /// <param name="resourceUri">
+        /// Resource URI.
+        /// Serialized Name: ResourceMetricDefinition.properties.resourceUri
+        /// </param>
+        /// <param name="properties">
+        /// Resource metric definition properties.
+        /// Serialized Name: ResourceMetricDefinition.properties.properties
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         internal ResourceMetricDefinition(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string unit, string primaryAggregationType, IReadOnlyList<ResourceMetricAvailability> metricAvailabilities, Uri resourceUri, IReadOnlyDictionary<string, string> properties, string kind) : base(id, name, resourceType, systemData)
         {
             Unit = unit;
@@ -43,17 +64,35 @@ namespace Azure.ResourceManager.AppService.Models
             Kind = kind;
         }
 
-        /// <summary> Unit of the metric. </summary>
+        /// <summary>
+        /// Unit of the metric.
+        /// Serialized Name: ResourceMetricDefinition.properties.unit
+        /// </summary>
         public string Unit { get; }
-        /// <summary> Primary aggregation type. </summary>
+        /// <summary>
+        /// Primary aggregation type.
+        /// Serialized Name: ResourceMetricDefinition.properties.primaryAggregationType
+        /// </summary>
         public string PrimaryAggregationType { get; }
-        /// <summary> List of time grains supported for the metric together with retention period. </summary>
+        /// <summary>
+        /// List of time grains supported for the metric together with retention period.
+        /// Serialized Name: ResourceMetricDefinition.properties.metricAvailabilities
+        /// </summary>
         public IReadOnlyList<ResourceMetricAvailability> MetricAvailabilities { get; }
-        /// <summary> Resource URI. </summary>
+        /// <summary>
+        /// Resource URI.
+        /// Serialized Name: ResourceMetricDefinition.properties.resourceUri
+        /// </summary>
         public Uri ResourceUri { get; }
-        /// <summary> Resource metric definition properties. </summary>
+        /// <summary>
+        /// Resource metric definition properties.
+        /// Serialized Name: ResourceMetricDefinition.properties.properties
+        /// </summary>
         public IReadOnlyDictionary<string, string> Properties { get; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         public string Kind { get; set; }
     }
 }

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The ContainerThrottlingData. </summary>
+    /// <summary>
+    /// The ContainerThrottlingData.
+    /// Serialized Name: ContainerThrottlingData
+    /// </summary>
     public partial class ContainerThrottlingData
     {
         /// <summary> Initializes a new instance of ContainerThrottlingData. </summary>
@@ -16,9 +19,9 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of ContainerThrottlingData. </summary>
-        /// <param name="periods"></param>
-        /// <param name="throttledPeriods"></param>
-        /// <param name="throttledTime"></param>
+        /// <param name="periods"> Serialized Name: ContainerThrottlingData.periods. </param>
+        /// <param name="throttledPeriods"> Serialized Name: ContainerThrottlingData.throttledPeriods. </param>
+        /// <param name="throttledTime"> Serialized Name: ContainerThrottlingData.throttledTime. </param>
         internal ContainerThrottlingData(int? periods, int? throttledPeriods, int? throttledTime)
         {
             Periods = periods;
@@ -26,11 +29,11 @@ namespace Azure.ResourceManager.AppService.Models
             ThrottledTime = throttledTime;
         }
 
-        /// <summary> Gets or sets the periods. </summary>
+        /// <summary> Serialized Name: ContainerThrottlingData.periods. </summary>
         public int? Periods { get; set; }
-        /// <summary> Gets or sets the throttled periods. </summary>
+        /// <summary> Serialized Name: ContainerThrottlingData.throttledPeriods. </summary>
         public int? ThrottledPeriods { get; set; }
-        /// <summary> Gets or sets the throttled time. </summary>
+        /// <summary> Serialized Name: ContainerThrottlingData.throttledTime. </summary>
         public int? ThrottledTime { get; set; }
     }
 }

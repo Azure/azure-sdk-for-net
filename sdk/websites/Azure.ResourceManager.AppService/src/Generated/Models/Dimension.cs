@@ -10,6 +10,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary>
     /// Dimension of a resource metric. For e.g. instance specific HTTP requests for a web app, 
     /// where instance name is dimension of the metric HTTP request
+    /// Serialized Name: Dimension
     /// </summary>
     public partial class Dimension
     {
@@ -19,25 +20,25 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of Dimension. </summary>
-        /// <param name="name"></param>
-        /// <param name="displayName"></param>
-        /// <param name="internalName"></param>
-        /// <param name="toBeExportedForShoebox"></param>
-        internal Dimension(string name, string displayName, string internalName, bool? toBeExportedForShoebox)
+        /// <param name="name"> Serialized Name: Dimension.name. </param>
+        /// <param name="displayName"> Serialized Name: Dimension.displayName. </param>
+        /// <param name="internalName"> Serialized Name: Dimension.internalName. </param>
+        /// <param name="isToBeExportedForShoebox"> Serialized Name: Dimension.toBeExportedForShoebox. </param>
+        internal Dimension(string name, string displayName, string internalName, bool? isToBeExportedForShoebox)
         {
             Name = name;
             DisplayName = displayName;
             InternalName = internalName;
-            ToBeExportedForShoebox = toBeExportedForShoebox;
+            IsToBeExportedForShoebox = isToBeExportedForShoebox;
         }
 
-        /// <summary> Gets the name. </summary>
+        /// <summary> Serialized Name: Dimension.name. </summary>
         public string Name { get; }
-        /// <summary> Gets the display name. </summary>
+        /// <summary> Serialized Name: Dimension.displayName. </summary>
         public string DisplayName { get; }
-        /// <summary> Gets the internal name. </summary>
+        /// <summary> Serialized Name: Dimension.internalName. </summary>
         public string InternalName { get; }
-        /// <summary> Gets the to be exported for shoebox. </summary>
-        public bool? ToBeExportedForShoebox { get; }
+        /// <summary> Serialized Name: Dimension.toBeExportedForShoebox. </summary>
+        public bool? IsToBeExportedForShoebox { get; }
     }
 }

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Options for retrieving the list of top level domain legal agreements. </summary>
+    /// <summary>
+    /// Options for retrieving the list of top level domain legal agreements.
+    /// Serialized Name: TopLevelDomainAgreementOption
+    /// </summary>
     public partial class TopLevelDomainAgreementOption
     {
         /// <summary> Initializes a new instance of TopLevelDomainAgreementOption. </summary>
@@ -15,9 +18,15 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary> If &lt;code&gt;true&lt;/code&gt;, then the list of agreements will include agreements for domain privacy as well; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
-        public bool? IncludePrivacy { get; set; }
-        /// <summary> If &lt;code&gt;true&lt;/code&gt;, then the list of agreements will include agreements for domain transfer as well; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
-        public bool? ForTransfer { get; set; }
+        /// <summary>
+        /// If &lt;code&gt;true&lt;/code&gt;, then the list of agreements will include agreements for domain privacy as well; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: TopLevelDomainAgreementOption.includePrivacy
+        /// </summary>
+        public bool? IsIncludePrivacy { get; set; }
+        /// <summary>
+        /// If &lt;code&gt;true&lt;/code&gt;, then the list of agreements will include agreements for domain transfer as well; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: TopLevelDomainAgreementOption.forTransfer
+        /// </summary>
+        public bool? IsForTransfer { get; set; }
     }
 }

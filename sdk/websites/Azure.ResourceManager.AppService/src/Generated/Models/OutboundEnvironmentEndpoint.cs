@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Endpoints accessed for a common purpose that the App Service Environment requires outbound network access to. </summary>
+    /// <summary>
+    /// Endpoints accessed for a common purpose that the App Service Environment requires outbound network access to.
+    /// Serialized Name: OutboundEnvironmentEndpoint
+    /// </summary>
     public partial class OutboundEnvironmentEndpoint
     {
         /// <summary> Initializes a new instance of OutboundEnvironmentEndpoint. </summary>
@@ -20,17 +23,29 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of OutboundEnvironmentEndpoint. </summary>
-        /// <param name="category"> The type of service accessed by the App Service Environment, e.g., Azure Storage, Azure SQL Database, and Azure Active Directory. </param>
-        /// <param name="endpoints"> The endpoints that the App Service Environment reaches the service at. </param>
+        /// <param name="category">
+        /// The type of service accessed by the App Service Environment, e.g., Azure Storage, Azure SQL Database, and Azure Active Directory.
+        /// Serialized Name: OutboundEnvironmentEndpoint.category
+        /// </param>
+        /// <param name="endpoints">
+        /// The endpoints that the App Service Environment reaches the service at.
+        /// Serialized Name: OutboundEnvironmentEndpoint.endpoints
+        /// </param>
         internal OutboundEnvironmentEndpoint(string category, IReadOnlyList<EndpointDependency> endpoints)
         {
             Category = category;
             Endpoints = endpoints;
         }
 
-        /// <summary> The type of service accessed by the App Service Environment, e.g., Azure Storage, Azure SQL Database, and Azure Active Directory. </summary>
+        /// <summary>
+        /// The type of service accessed by the App Service Environment, e.g., Azure Storage, Azure SQL Database, and Azure Active Directory.
+        /// Serialized Name: OutboundEnvironmentEndpoint.category
+        /// </summary>
         public string Category { get; }
-        /// <summary> The endpoints that the App Service Environment reaches the service at. </summary>
+        /// <summary>
+        /// The endpoints that the App Service Environment reaches the service at.
+        /// Serialized Name: OutboundEnvironmentEndpoint.endpoints
+        /// </summary>
         public IReadOnlyList<EndpointDependency> Endpoints { get; }
     }
 }

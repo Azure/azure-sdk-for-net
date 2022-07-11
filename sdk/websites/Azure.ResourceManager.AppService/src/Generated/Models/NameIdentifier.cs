@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Identifies an object. </summary>
+    /// <summary>
+    /// Identifies an object.
+    /// Serialized Name: NameIdentifier
+    /// </summary>
     public partial class NameIdentifier
     {
         /// <summary> Initializes a new instance of NameIdentifier. </summary>
@@ -16,13 +19,19 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of NameIdentifier. </summary>
-        /// <param name="name"> Name of the object. </param>
+        /// <param name="name">
+        /// Name of the object.
+        /// Serialized Name: NameIdentifier.name
+        /// </param>
         internal NameIdentifier(string name)
         {
             Name = name;
         }
 
-        /// <summary> Name of the object. </summary>
+        /// <summary>
+        /// Name of the object.
+        /// Serialized Name: NameIdentifier.name
+        /// </summary>
         public string Name { get; set; }
     }
 }

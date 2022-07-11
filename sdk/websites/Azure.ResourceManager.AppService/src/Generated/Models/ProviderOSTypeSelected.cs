@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The ProviderOSTypeSelected. </summary>
+    /// <summary>
+    /// The ProviderOSTypeSelected.
+    /// Serialized Name: ProviderOsTypeSelected
+    /// </summary>
     public readonly partial struct ProviderOSTypeSelected : IEquatable<ProviderOSTypeSelected>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.AppService.Models
         private const string LinuxFunctionsValue = "LinuxFunctions";
         private const string AllValue = "All";
 
-        /// <summary> Windows. </summary>
+        /// <summary>
+        /// Windows
+        /// Serialized Name: ProviderOsTypeSelected.Windows
+        /// </summary>
         public static ProviderOSTypeSelected Windows { get; } = new ProviderOSTypeSelected(WindowsValue);
-        /// <summary> Linux. </summary>
+        /// <summary>
+        /// Linux
+        /// Serialized Name: ProviderOsTypeSelected.Linux
+        /// </summary>
         public static ProviderOSTypeSelected Linux { get; } = new ProviderOSTypeSelected(LinuxValue);
-        /// <summary> WindowsFunctions. </summary>
+        /// <summary>
+        /// WindowsFunctions
+        /// Serialized Name: ProviderOsTypeSelected.WindowsFunctions
+        /// </summary>
         public static ProviderOSTypeSelected WindowsFunctions { get; } = new ProviderOSTypeSelected(WindowsFunctionsValue);
-        /// <summary> LinuxFunctions. </summary>
+        /// <summary>
+        /// LinuxFunctions
+        /// Serialized Name: ProviderOsTypeSelected.LinuxFunctions
+        /// </summary>
         public static ProviderOSTypeSelected LinuxFunctions { get; } = new ProviderOSTypeSelected(LinuxFunctionsValue);
-        /// <summary> All. </summary>
+        /// <summary>
+        /// All
+        /// Serialized Name: ProviderOsTypeSelected.All
+        /// </summary>
         public static ProviderOSTypeSelected All { get; } = new ProviderOSTypeSelected(AllValue);
         /// <summary> Determines if two <see cref="ProviderOSTypeSelected"/> values are the same. </summary>
         public static bool operator ==(ProviderOSTypeSelected left, ProviderOSTypeSelected right) => left.Equals(right);

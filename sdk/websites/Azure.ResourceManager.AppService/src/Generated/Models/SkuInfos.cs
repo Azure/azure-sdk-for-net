@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Collection of SKU information. </summary>
+    /// <summary>
+    /// Collection of SKU information.
+    /// Serialized Name: SkuInfos
+    /// </summary>
     public partial class SkuInfos
     {
         /// <summary> Initializes a new instance of SkuInfos. </summary>
@@ -20,17 +23,29 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of SkuInfos. </summary>
-        /// <param name="resourceType"> Resource type that this SKU applies to. </param>
-        /// <param name="skus"> List of SKUs the subscription is able to use. </param>
+        /// <param name="resourceType">
+        /// Resource type that this SKU applies to.
+        /// Serialized Name: SkuInfos.resourceType
+        /// </param>
+        /// <param name="skus">
+        /// List of SKUs the subscription is able to use.
+        /// Serialized Name: SkuInfos.skus
+        /// </param>
         internal SkuInfos(string resourceType, IReadOnlyList<GlobalCsmSkuDescription> skus)
         {
             ResourceType = resourceType;
             Skus = skus;
         }
 
-        /// <summary> Resource type that this SKU applies to. </summary>
+        /// <summary>
+        /// Resource type that this SKU applies to.
+        /// Serialized Name: SkuInfos.resourceType
+        /// </summary>
         public string ResourceType { get; }
-        /// <summary> List of SKUs the subscription is able to use. </summary>
+        /// <summary>
+        /// List of SKUs the subscription is able to use.
+        /// Serialized Name: SkuInfos.skus
+        /// </summary>
         public IReadOnlyList<GlobalCsmSkuDescription> Skus { get; }
     }
 }

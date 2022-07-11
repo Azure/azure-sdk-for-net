@@ -9,7 +9,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The configuration settings of the Apple provider. </summary>
+    /// <summary>
+    /// The configuration settings of the Apple provider.
+    /// Serialized Name: Apple
+    /// </summary>
     public partial class Apple
     {
         /// <summary> Initializes a new instance of Apple. </summary>
@@ -18,9 +21,18 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of Apple. </summary>
-        /// <param name="enabled"> &lt;code&gt;false&lt;/code&gt; if the Apple provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
-        /// <param name="registration"> The configuration settings of the Apple registration. </param>
-        /// <param name="login"> The configuration settings of the login flow. </param>
+        /// <param name="enabled">
+        /// &lt;code&gt;false&lt;/code&gt; if the Apple provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;.
+        /// Serialized Name: Apple.enabled
+        /// </param>
+        /// <param name="registration">
+        /// The configuration settings of the Apple registration.
+        /// Serialized Name: Apple.registration
+        /// </param>
+        /// <param name="login">
+        /// The configuration settings of the login flow.
+        /// Serialized Name: Apple.login
+        /// </param>
         internal Apple(bool? enabled, AppleRegistration registration, LoginScopes login)
         {
             Enabled = enabled;
@@ -28,13 +40,25 @@ namespace Azure.ResourceManager.AppService.Models
             Login = login;
         }
 
-        /// <summary> &lt;code&gt;false&lt;/code&gt; if the Apple provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </summary>
+        /// <summary>
+        /// &lt;code&gt;false&lt;/code&gt; if the Apple provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;.
+        /// Serialized Name: Apple.enabled
+        /// </summary>
         public bool? Enabled { get; set; }
-        /// <summary> The configuration settings of the Apple registration. </summary>
+        /// <summary>
+        /// The configuration settings of the Apple registration.
+        /// Serialized Name: Apple.registration
+        /// </summary>
         public AppleRegistration Registration { get; set; }
-        /// <summary> The configuration settings of the login flow. </summary>
+        /// <summary>
+        /// The configuration settings of the login flow.
+        /// Serialized Name: Apple.login
+        /// </summary>
         internal LoginScopes Login { get; set; }
-        /// <summary> A list of the scopes that should be requested while authenticating. </summary>
+        /// <summary>
+        /// A list of the scopes that should be requested while authenticating.
+        /// Serialized Name: LoginScopes.scopes
+        /// </summary>
         public IList<string> LoginScopes
         {
             get

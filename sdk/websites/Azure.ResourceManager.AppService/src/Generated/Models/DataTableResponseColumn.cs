@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Column definition. </summary>
+    /// <summary>
+    /// Column definition
+    /// Serialized Name: DataTableResponseColumn
+    /// </summary>
     public partial class DataTableResponseColumn
     {
         /// <summary> Initializes a new instance of DataTableResponseColumn. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of DataTableResponseColumn. </summary>
-        /// <param name="columnName"> Name of the column. </param>
-        /// <param name="dataType"> Data type which looks like &apos;String&apos; or &apos;Int32&apos;. </param>
-        /// <param name="columnType"> Column Type. </param>
+        /// <param name="columnName">
+        /// Name of the column
+        /// Serialized Name: DataTableResponseColumn.columnName
+        /// </param>
+        /// <param name="dataType">
+        /// Data type which looks like &apos;String&apos; or &apos;Int32&apos;.
+        /// Serialized Name: DataTableResponseColumn.dataType
+        /// </param>
+        /// <param name="columnType">
+        /// Column Type
+        /// Serialized Name: DataTableResponseColumn.columnType
+        /// </param>
         internal DataTableResponseColumn(string columnName, string dataType, string columnType)
         {
             ColumnName = columnName;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.AppService.Models
             ColumnType = columnType;
         }
 
-        /// <summary> Name of the column. </summary>
+        /// <summary>
+        /// Name of the column
+        /// Serialized Name: DataTableResponseColumn.columnName
+        /// </summary>
         public string ColumnName { get; set; }
-        /// <summary> Data type which looks like &apos;String&apos; or &apos;Int32&apos;. </summary>
+        /// <summary>
+        /// Data type which looks like &apos;String&apos; or &apos;Int32&apos;.
+        /// Serialized Name: DataTableResponseColumn.dataType
+        /// </summary>
         public string DataType { get; set; }
-        /// <summary> Column Type. </summary>
+        /// <summary>
+        /// Column Type
+        /// Serialized Name: DataTableResponseColumn.columnType
+        /// </summary>
         public string ColumnType { get; set; }
     }
 }

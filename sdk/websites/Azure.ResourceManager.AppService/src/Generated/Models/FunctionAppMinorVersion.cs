@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Function App stack minor version. </summary>
+    /// <summary>
+    /// Function App stack minor version.
+    /// Serialized Name: FunctionAppMinorVersion
+    /// </summary>
     public partial class FunctionAppMinorVersion
     {
         /// <summary> Initializes a new instance of FunctionAppMinorVersion. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of FunctionAppMinorVersion. </summary>
-        /// <param name="displayText"> Function App stack (display only). </param>
-        /// <param name="value"> Function App stack name. </param>
-        /// <param name="stackSettings"> Settings associated with the minor version. </param>
+        /// <param name="displayText">
+        /// Function App stack (display only).
+        /// Serialized Name: FunctionAppMinorVersion.displayText
+        /// </param>
+        /// <param name="value">
+        /// Function App stack name.
+        /// Serialized Name: FunctionAppMinorVersion.value
+        /// </param>
+        /// <param name="stackSettings">
+        /// Settings associated with the minor version.
+        /// Serialized Name: FunctionAppMinorVersion.stackSettings
+        /// </param>
         internal FunctionAppMinorVersion(string displayText, string value, FunctionAppRuntimes stackSettings)
         {
             DisplayText = displayText;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.AppService.Models
             StackSettings = stackSettings;
         }
 
-        /// <summary> Function App stack (display only). </summary>
+        /// <summary>
+        /// Function App stack (display only).
+        /// Serialized Name: FunctionAppMinorVersion.displayText
+        /// </summary>
         public string DisplayText { get; }
-        /// <summary> Function App stack name. </summary>
+        /// <summary>
+        /// Function App stack name.
+        /// Serialized Name: FunctionAppMinorVersion.value
+        /// </summary>
         public string Value { get; }
-        /// <summary> Settings associated with the minor version. </summary>
+        /// <summary>
+        /// Settings associated with the minor version.
+        /// Serialized Name: FunctionAppMinorVersion.stackSettings
+        /// </summary>
         public FunctionAppRuntimes StackSettings { get; }
     }
 }

@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Class representing certificate renew request. </summary>
+    /// <summary>
+    /// Class representing certificate renew request.
+    /// Serialized Name: RenewCertificateOrderRequest
+    /// </summary>
     public partial class RenewCertificateOrderContent : ResourceData
     {
         /// <summary> Initializes a new instance of RenewCertificateOrderContent. </summary>
@@ -23,10 +26,22 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="keySize"> Certificate Key Size. </param>
-        /// <param name="csr"> Csr to be used for re-key operation. </param>
-        /// <param name="isPrivateKeyExternal"> Should we change the ASC type (from managed private key to external private key and vice versa). </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="keySize">
+        /// Certificate Key Size.
+        /// Serialized Name: RenewCertificateOrderRequest.properties.keySize
+        /// </param>
+        /// <param name="csr">
+        /// Csr to be used for re-key operation.
+        /// Serialized Name: RenewCertificateOrderRequest.properties.csr
+        /// </param>
+        /// <param name="isPrivateKeyExternal">
+        /// Should we change the ASC type (from managed private key to external private key and vice versa).
+        /// Serialized Name: RenewCertificateOrderRequest.properties.isPrivateKeyExternal
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         internal RenewCertificateOrderContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? keySize, string csr, bool? isPrivateKeyExternal, string kind) : base(id, name, resourceType, systemData)
         {
             KeySize = keySize;
@@ -35,13 +50,25 @@ namespace Azure.ResourceManager.AppService.Models
             Kind = kind;
         }
 
-        /// <summary> Certificate Key Size. </summary>
+        /// <summary>
+        /// Certificate Key Size.
+        /// Serialized Name: RenewCertificateOrderRequest.properties.keySize
+        /// </summary>
         public int? KeySize { get; set; }
-        /// <summary> Csr to be used for re-key operation. </summary>
+        /// <summary>
+        /// Csr to be used for re-key operation.
+        /// Serialized Name: RenewCertificateOrderRequest.properties.csr
+        /// </summary>
         public string Csr { get; set; }
-        /// <summary> Should we change the ASC type (from managed private key to external private key and vice versa). </summary>
+        /// <summary>
+        /// Should we change the ASC type (from managed private key to external private key and vice versa).
+        /// Serialized Name: RenewCertificateOrderRequest.properties.isPrivateKeyExternal
+        /// </summary>
         public bool? IsPrivateKeyExternal { get; set; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         public string Kind { get; set; }
     }
 }

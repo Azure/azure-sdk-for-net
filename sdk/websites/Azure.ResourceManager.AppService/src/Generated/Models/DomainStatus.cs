@@ -7,50 +7,116 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Domain registration status. </summary>
+    /// <summary>
+    /// Domain registration status.
+    /// Serialized Name: DomainStatus
+    /// </summary>
     public enum DomainStatus
     {
-        /// <summary> Unknown. </summary>
+        /// <summary>
+        /// Unknown
+        /// Serialized Name: DomainStatus.Unknown
+        /// </summary>
         Unknown,
-        /// <summary> Active. </summary>
+        /// <summary>
+        /// Active
+        /// Serialized Name: DomainStatus.Active
+        /// </summary>
         Active,
-        /// <summary> Awaiting. </summary>
+        /// <summary>
+        /// Awaiting
+        /// Serialized Name: DomainStatus.Awaiting
+        /// </summary>
         Awaiting,
-        /// <summary> Cancelled. </summary>
+        /// <summary>
+        /// Cancelled
+        /// Serialized Name: DomainStatus.Cancelled
+        /// </summary>
         Cancelled,
-        /// <summary> Confiscated. </summary>
+        /// <summary>
+        /// Confiscated
+        /// Serialized Name: DomainStatus.Confiscated
+        /// </summary>
         Confiscated,
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: DomainStatus.Disabled
+        /// </summary>
         Disabled,
-        /// <summary> Excluded. </summary>
+        /// <summary>
+        /// Excluded
+        /// Serialized Name: DomainStatus.Excluded
+        /// </summary>
         Excluded,
-        /// <summary> Expired. </summary>
+        /// <summary>
+        /// Expired
+        /// Serialized Name: DomainStatus.Expired
+        /// </summary>
         Expired,
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: DomainStatus.Failed
+        /// </summary>
         Failed,
-        /// <summary> Held. </summary>
+        /// <summary>
+        /// Held
+        /// Serialized Name: DomainStatus.Held
+        /// </summary>
         Held,
-        /// <summary> Locked. </summary>
+        /// <summary>
+        /// Locked
+        /// Serialized Name: DomainStatus.Locked
+        /// </summary>
         Locked,
-        /// <summary> Parked. </summary>
+        /// <summary>
+        /// Parked
+        /// Serialized Name: DomainStatus.Parked
+        /// </summary>
         Parked,
-        /// <summary> Pending. </summary>
+        /// <summary>
+        /// Pending
+        /// Serialized Name: DomainStatus.Pending
+        /// </summary>
         Pending,
-        /// <summary> Reserved. </summary>
+        /// <summary>
+        /// Reserved
+        /// Serialized Name: DomainStatus.Reserved
+        /// </summary>
         Reserved,
-        /// <summary> Reverted. </summary>
+        /// <summary>
+        /// Reverted
+        /// Serialized Name: DomainStatus.Reverted
+        /// </summary>
         Reverted,
-        /// <summary> Suspended. </summary>
+        /// <summary>
+        /// Suspended
+        /// Serialized Name: DomainStatus.Suspended
+        /// </summary>
         Suspended,
-        /// <summary> Transferred. </summary>
+        /// <summary>
+        /// Transferred
+        /// Serialized Name: DomainStatus.Transferred
+        /// </summary>
         Transferred,
-        /// <summary> Unlocked. </summary>
+        /// <summary>
+        /// Unlocked
+        /// Serialized Name: DomainStatus.Unlocked
+        /// </summary>
         Unlocked,
-        /// <summary> Unparked. </summary>
+        /// <summary>
+        /// Unparked
+        /// Serialized Name: DomainStatus.Unparked
+        /// </summary>
         Unparked,
-        /// <summary> Updated. </summary>
+        /// <summary>
+        /// Updated
+        /// Serialized Name: DomainStatus.Updated
+        /// </summary>
         Updated,
-        /// <summary> JsonConverterFailed. </summary>
+        /// <summary>
+        /// JsonConverterFailed
+        /// Serialized Name: DomainStatus.JsonConverterFailed
+        /// </summary>
         JsonConverterFailed
     }
 }

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Set of data with rendering instructions. </summary>
+    /// <summary>
+    /// Set of data with rendering instructions
+    /// Serialized Name: DiagnosticData
+    /// </summary>
     public partial class DiagnosticData
     {
         /// <summary> Initializes a new instance of DiagnosticData. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of DiagnosticData. </summary>
-        /// <param name="table"> Data in table form. </param>
-        /// <param name="renderingProperties"> Properties that describe how the table should be rendered. </param>
+        /// <param name="table">
+        /// Data in table form
+        /// Serialized Name: DiagnosticData.table
+        /// </param>
+        /// <param name="renderingProperties">
+        /// Properties that describe how the table should be rendered
+        /// Serialized Name: DiagnosticData.renderingProperties
+        /// </param>
         internal DiagnosticData(DataTableResponseObject table, Rendering renderingProperties)
         {
             Table = table;
             RenderingProperties = renderingProperties;
         }
 
-        /// <summary> Data in table form. </summary>
+        /// <summary>
+        /// Data in table form
+        /// Serialized Name: DiagnosticData.table
+        /// </summary>
         public DataTableResponseObject Table { get; set; }
-        /// <summary> Properties that describe how the table should be rendered. </summary>
+        /// <summary>
+        /// Properties that describe how the table should be rendered
+        /// Serialized Name: DiagnosticData.renderingProperties
+        /// </summary>
         public Rendering RenderingProperties { get; set; }
     }
 }

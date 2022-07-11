@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Describes the result of resource validation. </summary>
+    /// <summary>
+    /// Describes the result of resource validation.
+    /// Serialized Name: ValidateResponse
+    /// </summary>
     public partial class ValidateResponse
     {
         /// <summary> Initializes a new instance of ValidateResponse. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of ValidateResponse. </summary>
-        /// <param name="status"> Result of validation. </param>
-        /// <param name="error"> Error details for the case when validation fails. </param>
+        /// <param name="status">
+        /// Result of validation.
+        /// Serialized Name: ValidateResponse.status
+        /// </param>
+        /// <param name="error">
+        /// Error details for the case when validation fails.
+        /// Serialized Name: ValidateResponse.error
+        /// </param>
         internal ValidateResponse(string status, ValidateResponseError error)
         {
             Status = status;
             Error = error;
         }
 
-        /// <summary> Result of validation. </summary>
+        /// <summary>
+        /// Result of validation.
+        /// Serialized Name: ValidateResponse.status
+        /// </summary>
         public string Status { get; }
-        /// <summary> Error details for the case when validation fails. </summary>
+        /// <summary>
+        /// Error details for the case when validation fails.
+        /// Serialized Name: ValidateResponse.error
+        /// </summary>
         public ValidateResponseError Error { get; }
     }
 }

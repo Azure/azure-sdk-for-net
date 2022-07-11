@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Class representing Response from Diagnostic Detectors. </summary>
+    /// <summary>
+    /// Class representing Response from Diagnostic Detectors
+    /// Serialized Name: DiagnosticDetectorResponse
+    /// </summary>
     public partial class DiagnosticDetectorResponse : ResourceData
     {
         /// <summary> Initializes a new instance of DiagnosticDetectorResponse. </summary>
@@ -28,20 +31,47 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="startOn"> Start time of the period. </param>
-        /// <param name="endOn"> End time of the period. </param>
-        /// <param name="issueDetected"> Flag representing Issue was detected. </param>
-        /// <param name="detectorDefinition"> Detector&apos;s definition. </param>
-        /// <param name="metrics"> Metrics provided by the detector. </param>
-        /// <param name="abnormalTimePeriods"> List of Correlated events found by the detector. </param>
-        /// <param name="data"> Additional Data that detector wants to send. </param>
-        /// <param name="responseMetaData"> Meta Data. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        internal DiagnosticDetectorResponse(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? startOn, DateTimeOffset? endOn, bool? issueDetected, DetectorDefinition detectorDefinition, IList<DiagnosticMetricSet> metrics, IList<DetectorAbnormalTimePeriod> abnormalTimePeriods, IList<IList<NameValuePair>> data, ResponseMetaData responseMetaData, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="startOn">
+        /// Start time of the period
+        /// Serialized Name: DiagnosticDetectorResponse.properties.startTime
+        /// </param>
+        /// <param name="endOn">
+        /// End time of the period
+        /// Serialized Name: DiagnosticDetectorResponse.properties.endTime
+        /// </param>
+        /// <param name="isIssueDetected">
+        /// Flag representing Issue was detected.
+        /// Serialized Name: DiagnosticDetectorResponse.properties.issueDetected
+        /// </param>
+        /// <param name="detectorDefinition">
+        /// Detector&apos;s definition
+        /// Serialized Name: DiagnosticDetectorResponse.properties.detectorDefinition
+        /// </param>
+        /// <param name="metrics">
+        /// Metrics provided by the detector
+        /// Serialized Name: DiagnosticDetectorResponse.properties.metrics
+        /// </param>
+        /// <param name="abnormalTimePeriods">
+        /// List of Correlated events found by the detector
+        /// Serialized Name: DiagnosticDetectorResponse.properties.abnormalTimePeriods
+        /// </param>
+        /// <param name="data">
+        /// Additional Data that detector wants to send.
+        /// Serialized Name: DiagnosticDetectorResponse.properties.data
+        /// </param>
+        /// <param name="responseMetaData">
+        /// Meta Data
+        /// Serialized Name: DiagnosticDetectorResponse.properties.responseMetaData
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
+        internal DiagnosticDetectorResponse(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? startOn, DateTimeOffset? endOn, bool? isIssueDetected, DetectorDefinition detectorDefinition, IList<DiagnosticMetricSet> metrics, IList<DetectorAbnormalTimePeriod> abnormalTimePeriods, IList<IList<NameValuePair>> data, ResponseMetaData responseMetaData, string kind) : base(id, name, resourceType, systemData)
         {
             StartOn = startOn;
             EndOn = endOn;
-            IssueDetected = issueDetected;
+            IsIssueDetected = isIssueDetected;
             DetectorDefinition = detectorDefinition;
             Metrics = metrics;
             AbnormalTimePeriods = abnormalTimePeriods;
@@ -50,23 +80,50 @@ namespace Azure.ResourceManager.AppService.Models
             Kind = kind;
         }
 
-        /// <summary> Start time of the period. </summary>
+        /// <summary>
+        /// Start time of the period
+        /// Serialized Name: DiagnosticDetectorResponse.properties.startTime
+        /// </summary>
         public DateTimeOffset? StartOn { get; set; }
-        /// <summary> End time of the period. </summary>
+        /// <summary>
+        /// End time of the period
+        /// Serialized Name: DiagnosticDetectorResponse.properties.endTime
+        /// </summary>
         public DateTimeOffset? EndOn { get; set; }
-        /// <summary> Flag representing Issue was detected. </summary>
-        public bool? IssueDetected { get; set; }
-        /// <summary> Detector&apos;s definition. </summary>
+        /// <summary>
+        /// Flag representing Issue was detected.
+        /// Serialized Name: DiagnosticDetectorResponse.properties.issueDetected
+        /// </summary>
+        public bool? IsIssueDetected { get; set; }
+        /// <summary>
+        /// Detector&apos;s definition
+        /// Serialized Name: DiagnosticDetectorResponse.properties.detectorDefinition
+        /// </summary>
         public DetectorDefinition DetectorDefinition { get; set; }
-        /// <summary> Metrics provided by the detector. </summary>
+        /// <summary>
+        /// Metrics provided by the detector
+        /// Serialized Name: DiagnosticDetectorResponse.properties.metrics
+        /// </summary>
         public IList<DiagnosticMetricSet> Metrics { get; }
-        /// <summary> List of Correlated events found by the detector. </summary>
+        /// <summary>
+        /// List of Correlated events found by the detector
+        /// Serialized Name: DiagnosticDetectorResponse.properties.abnormalTimePeriods
+        /// </summary>
         public IList<DetectorAbnormalTimePeriod> AbnormalTimePeriods { get; }
-        /// <summary> Additional Data that detector wants to send. </summary>
+        /// <summary>
+        /// Additional Data that detector wants to send.
+        /// Serialized Name: DiagnosticDetectorResponse.properties.data
+        /// </summary>
         public IList<IList<NameValuePair>> Data { get; }
-        /// <summary> Meta Data. </summary>
+        /// <summary>
+        /// Meta Data
+        /// Serialized Name: DiagnosticDetectorResponse.properties.responseMetaData
+        /// </summary>
         internal ResponseMetaData ResponseMetaData { get; set; }
-        /// <summary> Source of the Data. </summary>
+        /// <summary>
+        /// Source of the Data
+        /// Serialized Name: ResponseMetaData.dataSource
+        /// </summary>
         public DataSource DataSource
         {
             get => ResponseMetaData is null ? default : ResponseMetaData.DataSource;
@@ -78,7 +135,10 @@ namespace Azure.ResourceManager.AppService.Models
             }
         }
 
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         public string Kind { get; set; }
     }
 }

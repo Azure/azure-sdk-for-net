@@ -7,12 +7,21 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> State indicating whether staging environments are allowed or not allowed for a static web app. </summary>
+    /// <summary>
+    /// State indicating whether staging environments are allowed or not allowed for a static web app.
+    /// Serialized Name: StagingEnvironmentPolicy
+    /// </summary>
     public enum StagingEnvironmentPolicy
     {
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: StagingEnvironmentPolicy.Enabled
+        /// </summary>
         Enabled,
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: StagingEnvironmentPolicy.Disabled
+        /// </summary>
         Disabled
     }
 }

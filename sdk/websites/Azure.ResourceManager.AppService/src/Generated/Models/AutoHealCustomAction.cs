@@ -10,6 +10,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary>
     /// Custom action to be executed
     /// when an auto heal rule is triggered.
+    /// Serialized Name: AutoHealCustomAction
     /// </summary>
     public partial class AutoHealCustomAction
     {
@@ -19,17 +20,29 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of AutoHealCustomAction. </summary>
-        /// <param name="exe"> Executable to be run. </param>
-        /// <param name="parameters"> Parameters for the executable. </param>
+        /// <param name="exe">
+        /// Executable to be run.
+        /// Serialized Name: AutoHealCustomAction.exe
+        /// </param>
+        /// <param name="parameters">
+        /// Parameters for the executable.
+        /// Serialized Name: AutoHealCustomAction.parameters
+        /// </param>
         internal AutoHealCustomAction(string exe, string parameters)
         {
             Exe = exe;
             Parameters = parameters;
         }
 
-        /// <summary> Executable to be run. </summary>
+        /// <summary>
+        /// Executable to be run.
+        /// Serialized Name: AutoHealCustomAction.exe
+        /// </summary>
         public string Exe { get; set; }
-        /// <summary> Parameters for the executable. </summary>
+        /// <summary>
+        /// Parameters for the executable.
+        /// Serialized Name: AutoHealCustomAction.parameters
+        /// </summary>
         public string Parameters { get; set; }
     }
 }

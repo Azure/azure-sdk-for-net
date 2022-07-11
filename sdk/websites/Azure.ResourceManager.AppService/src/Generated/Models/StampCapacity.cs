@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Stamp capacity information. </summary>
+    /// <summary>
+    /// Stamp capacity information.
+    /// Serialized Name: StampCapacity
+    /// </summary>
     public partial class StampCapacity
     {
         /// <summary> Initializes a new instance of StampCapacity. </summary>
@@ -16,26 +19,55 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of StampCapacity. </summary>
-        /// <param name="name"> Name of the stamp. </param>
-        /// <param name="availableCapacity"> Available capacity (# of machines, bytes of storage etc...). </param>
-        /// <param name="totalCapacity"> Total capacity (# of machines, bytes of storage etc...). </param>
-        /// <param name="unit"> Name of the unit. </param>
-        /// <param name="computeMode"> Shared/dedicated workers. </param>
-        /// <param name="workerSize"> Size of the machines. </param>
+        /// <param name="name">
+        /// Name of the stamp.
+        /// Serialized Name: StampCapacity.name
+        /// </param>
+        /// <param name="availableCapacity">
+        /// Available capacity (# of machines, bytes of storage etc...).
+        /// Serialized Name: StampCapacity.availableCapacity
+        /// </param>
+        /// <param name="totalCapacity">
+        /// Total capacity (# of machines, bytes of storage etc...).
+        /// Serialized Name: StampCapacity.totalCapacity
+        /// </param>
+        /// <param name="unit">
+        /// Name of the unit.
+        /// Serialized Name: StampCapacity.unit
+        /// </param>
+        /// <param name="computeMode">
+        /// Shared/dedicated workers.
+        /// Serialized Name: StampCapacity.computeMode
+        /// </param>
+        /// <param name="workerSize">
+        /// Size of the machines.
+        /// Serialized Name: StampCapacity.workerSize
+        /// </param>
         /// <param name="workerSizeId">
         /// Size ID of machines: 
         /// 0 - Small
         /// 1 - Medium
         /// 2 - Large
+        /// Serialized Name: StampCapacity.workerSizeId
         /// </param>
-        /// <param name="excludeFromCapacityAllocation">
+        /// <param name="isExcludeFromCapacityAllocation">
         /// If &lt;code&gt;true&lt;/code&gt;, it includes basic apps.
         /// Basic apps are not used for capacity allocation.
+        /// Serialized Name: StampCapacity.excludeFromCapacityAllocation
         /// </param>
-        /// <param name="isApplicableForAllComputeModes"> &lt;code&gt;true&lt;/code&gt; if capacity is applicable for all apps; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="siteMode"> Shared or Dedicated. </param>
-        /// <param name="isLinux"> Is this a linux stamp capacity. </param>
-        internal StampCapacity(string name, long? availableCapacity, long? totalCapacity, string unit, ComputeModeOption? computeMode, WorkerSizeOption? workerSize, int? workerSizeId, bool? excludeFromCapacityAllocation, bool? isApplicableForAllComputeModes, string siteMode, bool? isLinux)
+        /// <param name="isApplicableForAllComputeModes">
+        /// &lt;code&gt;true&lt;/code&gt; if capacity is applicable for all apps; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: StampCapacity.isApplicableForAllComputeModes
+        /// </param>
+        /// <param name="siteMode">
+        /// Shared or Dedicated.
+        /// Serialized Name: StampCapacity.siteMode
+        /// </param>
+        /// <param name="isLinux">
+        /// Is this a linux stamp capacity
+        /// Serialized Name: StampCapacity.isLinux
+        /// </param>
+        internal StampCapacity(string name, long? availableCapacity, long? totalCapacity, string unit, ComputeModeOption? computeMode, WorkerSizeOption? workerSize, int? workerSizeId, bool? isExcludeFromCapacityAllocation, bool? isApplicableForAllComputeModes, string siteMode, bool? isLinux)
         {
             Name = name;
             AvailableCapacity = availableCapacity;
@@ -44,41 +76,70 @@ namespace Azure.ResourceManager.AppService.Models
             ComputeMode = computeMode;
             WorkerSize = workerSize;
             WorkerSizeId = workerSizeId;
-            ExcludeFromCapacityAllocation = excludeFromCapacityAllocation;
+            IsExcludeFromCapacityAllocation = isExcludeFromCapacityAllocation;
             IsApplicableForAllComputeModes = isApplicableForAllComputeModes;
             SiteMode = siteMode;
             IsLinux = isLinux;
         }
 
-        /// <summary> Name of the stamp. </summary>
+        /// <summary>
+        /// Name of the stamp.
+        /// Serialized Name: StampCapacity.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> Available capacity (# of machines, bytes of storage etc...). </summary>
+        /// <summary>
+        /// Available capacity (# of machines, bytes of storage etc...).
+        /// Serialized Name: StampCapacity.availableCapacity
+        /// </summary>
         public long? AvailableCapacity { get; }
-        /// <summary> Total capacity (# of machines, bytes of storage etc...). </summary>
+        /// <summary>
+        /// Total capacity (# of machines, bytes of storage etc...).
+        /// Serialized Name: StampCapacity.totalCapacity
+        /// </summary>
         public long? TotalCapacity { get; }
-        /// <summary> Name of the unit. </summary>
+        /// <summary>
+        /// Name of the unit.
+        /// Serialized Name: StampCapacity.unit
+        /// </summary>
         public string Unit { get; }
-        /// <summary> Shared/dedicated workers. </summary>
+        /// <summary>
+        /// Shared/dedicated workers.
+        /// Serialized Name: StampCapacity.computeMode
+        /// </summary>
         public ComputeModeOption? ComputeMode { get; }
-        /// <summary> Size of the machines. </summary>
+        /// <summary>
+        /// Size of the machines.
+        /// Serialized Name: StampCapacity.workerSize
+        /// </summary>
         public WorkerSizeOption? WorkerSize { get; }
         /// <summary>
         /// Size ID of machines: 
         /// 0 - Small
         /// 1 - Medium
         /// 2 - Large
+        /// Serialized Name: StampCapacity.workerSizeId
         /// </summary>
         public int? WorkerSizeId { get; }
         /// <summary>
         /// If &lt;code&gt;true&lt;/code&gt;, it includes basic apps.
         /// Basic apps are not used for capacity allocation.
+        /// Serialized Name: StampCapacity.excludeFromCapacityAllocation
         /// </summary>
-        public bool? ExcludeFromCapacityAllocation { get; }
-        /// <summary> &lt;code&gt;true&lt;/code&gt; if capacity is applicable for all apps; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        public bool? IsExcludeFromCapacityAllocation { get; }
+        /// <summary>
+        /// &lt;code&gt;true&lt;/code&gt; if capacity is applicable for all apps; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: StampCapacity.isApplicableForAllComputeModes
+        /// </summary>
         public bool? IsApplicableForAllComputeModes { get; }
-        /// <summary> Shared or Dedicated. </summary>
+        /// <summary>
+        /// Shared or Dedicated.
+        /// Serialized Name: StampCapacity.siteMode
+        /// </summary>
         public string SiteMode { get; }
-        /// <summary> Is this a linux stamp capacity. </summary>
+        /// <summary>
+        /// Is this a linux stamp capacity
+        /// Serialized Name: StampCapacity.isLinux
+        /// </summary>
         public bool? IsLinux { get; }
     }
 }

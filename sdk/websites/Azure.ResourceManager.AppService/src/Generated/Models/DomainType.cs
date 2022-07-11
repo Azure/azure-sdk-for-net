@@ -7,12 +7,21 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Valid values are Regular domain: Azure will charge the full price of domain registration, SoftDeleted: Purchasing this domain will simply restore it and this operation will not cost anything. </summary>
+    /// <summary>
+    /// Valid values are Regular domain: Azure will charge the full price of domain registration, SoftDeleted: Purchasing this domain will simply restore it and this operation will not cost anything.
+    /// Serialized Name: DomainType
+    /// </summary>
     public enum DomainType
     {
-        /// <summary> Regular. </summary>
+        /// <summary>
+        /// Regular
+        /// Serialized Name: DomainType.Regular
+        /// </summary>
         Regular,
-        /// <summary> SoftDeleted. </summary>
+        /// <summary>
+        /// SoftDeleted
+        /// Serialized Name: DomainType.SoftDeleted
+        /// </summary>
         SoftDeleted
     }
 }

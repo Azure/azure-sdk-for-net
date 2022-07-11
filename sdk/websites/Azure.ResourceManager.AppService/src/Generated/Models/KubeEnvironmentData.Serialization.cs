@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.AppService
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(InternalLoadBalancerEnabled))
+            if (Optional.IsDefined(IsInternalLoadBalancerEnabled))
             {
                 writer.WritePropertyName("internalLoadBalancerEnabled");
-                writer.WriteBooleanValue(InternalLoadBalancerEnabled.Value);
+                writer.WriteBooleanValue(IsInternalLoadBalancerEnabled.Value);
             }
             if (Optional.IsDefined(StaticIP))
             {

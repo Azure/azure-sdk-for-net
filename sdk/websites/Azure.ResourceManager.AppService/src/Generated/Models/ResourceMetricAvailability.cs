@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Metrics availability and retention. </summary>
+    /// <summary>
+    /// Metrics availability and retention.
+    /// Serialized Name: ResourceMetricAvailability
+    /// </summary>
     public partial class ResourceMetricAvailability
     {
         /// <summary> Initializes a new instance of ResourceMetricAvailability. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of ResourceMetricAvailability. </summary>
-        /// <param name="timeGrain"> Time grain . </param>
-        /// <param name="retention"> Retention period for the current time grain. </param>
+        /// <param name="timeGrain">
+        /// Time grain .
+        /// Serialized Name: ResourceMetricAvailability.timeGrain
+        /// </param>
+        /// <param name="retention">
+        /// Retention period for the current time grain.
+        /// Serialized Name: ResourceMetricAvailability.retention
+        /// </param>
         internal ResourceMetricAvailability(string timeGrain, string retention)
         {
             TimeGrain = timeGrain;
             Retention = retention;
         }
 
-        /// <summary> Time grain . </summary>
+        /// <summary>
+        /// Time grain .
+        /// Serialized Name: ResourceMetricAvailability.timeGrain
+        /// </summary>
         public string TimeGrain { get; }
-        /// <summary> Retention period for the current time grain. </summary>
+        /// <summary>
+        /// Retention period for the current time grain.
+        /// Serialized Name: ResourceMetricAvailability.retention
+        /// </summary>
         public string Retention { get; }
     }
 }

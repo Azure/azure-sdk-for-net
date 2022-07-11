@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Meta data about operation used for display in portal. </summary>
+    /// <summary>
+    /// Meta data about operation used for display in portal.
+    /// Serialized Name: CsmOperationDisplay
+    /// </summary>
     public partial class CsmOperationDisplay
     {
         /// <summary> Initializes a new instance of CsmOperationDisplay. </summary>
@@ -16,10 +19,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of CsmOperationDisplay. </summary>
-        /// <param name="provider"></param>
-        /// <param name="resource"></param>
-        /// <param name="operation"></param>
-        /// <param name="description"></param>
+        /// <param name="provider"> Serialized Name: CsmOperationDisplay.provider. </param>
+        /// <param name="resource"> Serialized Name: CsmOperationDisplay.resource. </param>
+        /// <param name="operation"> Serialized Name: CsmOperationDisplay.operation. </param>
+        /// <param name="description"> Serialized Name: CsmOperationDisplay.description. </param>
         internal CsmOperationDisplay(string provider, string resource, string operation, string description)
         {
             Provider = provider;
@@ -28,13 +31,13 @@ namespace Azure.ResourceManager.AppService.Models
             Description = description;
         }
 
-        /// <summary> Gets the provider. </summary>
+        /// <summary> Serialized Name: CsmOperationDisplay.provider. </summary>
         public string Provider { get; }
-        /// <summary> Gets the resource. </summary>
+        /// <summary> Serialized Name: CsmOperationDisplay.resource. </summary>
         public string Resource { get; }
-        /// <summary> Gets the operation. </summary>
+        /// <summary> Serialized Name: CsmOperationDisplay.operation. </summary>
         public string Operation { get; }
-        /// <summary> Gets the description. </summary>
+        /// <summary> Serialized Name: CsmOperationDisplay.description. </summary>
         public string Description { get; }
     }
 }

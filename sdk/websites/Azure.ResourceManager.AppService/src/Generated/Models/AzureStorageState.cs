@@ -7,16 +7,31 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> State of the storage account. </summary>
+    /// <summary>
+    /// State of the storage account.
+    /// Serialized Name: AzureStorageState
+    /// </summary>
     public enum AzureStorageState
     {
-        /// <summary> Ok. </summary>
+        /// <summary>
+        /// Ok
+        /// Serialized Name: AzureStorageState.Ok
+        /// </summary>
         Ok,
-        /// <summary> InvalidCredentials. </summary>
+        /// <summary>
+        /// InvalidCredentials
+        /// Serialized Name: AzureStorageState.InvalidCredentials
+        /// </summary>
         InvalidCredentials,
-        /// <summary> InvalidShare. </summary>
+        /// <summary>
+        /// InvalidShare
+        /// Serialized Name: AzureStorageState.InvalidShare
+        /// </summary>
         InvalidShare,
-        /// <summary> NotValidated. </summary>
+        /// <summary>
+        /// NotValidated
+        /// Serialized Name: AzureStorageState.NotValidated
+        /// </summary>
         NotValidated
     }
 }

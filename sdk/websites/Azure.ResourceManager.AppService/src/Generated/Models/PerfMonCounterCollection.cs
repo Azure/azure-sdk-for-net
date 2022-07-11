@@ -11,11 +11,17 @@ using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Collection of performance monitor counters. </summary>
+    /// <summary>
+    /// Collection of performance monitor counters.
+    /// Serialized Name: PerfMonCounterCollection
+    /// </summary>
     internal partial class PerfMonCounterCollection
     {
         /// <summary> Initializes a new instance of PerfMonCounterCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: PerfMonCounterCollection.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal PerfMonCounterCollection(IEnumerable<PerfMonResponse> value)
         {
@@ -28,17 +34,29 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of PerfMonCounterCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
-        /// <param name="nextLink"> Link to next page of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: PerfMonCounterCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to next page of resources.
+        /// Serialized Name: PerfMonCounterCollection.nextLink
+        /// </param>
         internal PerfMonCounterCollection(IReadOnlyList<PerfMonResponse> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Collection of resources. </summary>
+        /// <summary>
+        /// Collection of resources.
+        /// Serialized Name: PerfMonCounterCollection.value
+        /// </summary>
         public IReadOnlyList<PerfMonResponse> Value { get; }
-        /// <summary> Link to next page of resources. </summary>
+        /// <summary>
+        /// Link to next page of resources.
+        /// Serialized Name: PerfMonCounterCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

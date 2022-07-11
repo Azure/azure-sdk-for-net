@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Database connection string information. </summary>
+    /// <summary>
+    /// Database connection string information.
+    /// Serialized Name: ConnStringInfo
+    /// </summary>
     public partial class ConnStringInfo
     {
         /// <summary> Initializes a new instance of ConnStringInfo. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of ConnStringInfo. </summary>
-        /// <param name="name"> Name of connection string. </param>
-        /// <param name="connectionString"> Connection string value. </param>
-        /// <param name="connectionStringType"> Type of database. </param>
+        /// <param name="name">
+        /// Name of connection string.
+        /// Serialized Name: ConnStringInfo.name
+        /// </param>
+        /// <param name="connectionString">
+        /// Connection string value.
+        /// Serialized Name: ConnStringInfo.connectionString
+        /// </param>
+        /// <param name="connectionStringType">
+        /// Type of database.
+        /// Serialized Name: ConnStringInfo.type
+        /// </param>
         internal ConnStringInfo(string name, string connectionString, ConnectionStringType? connectionStringType)
         {
             Name = name;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.AppService.Models
             ConnectionStringType = connectionStringType;
         }
 
-        /// <summary> Name of connection string. </summary>
+        /// <summary>
+        /// Name of connection string.
+        /// Serialized Name: ConnStringInfo.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> Connection string value. </summary>
+        /// <summary>
+        /// Connection string value.
+        /// Serialized Name: ConnStringInfo.connectionString
+        /// </summary>
         public string ConnectionString { get; set; }
-        /// <summary> Type of database. </summary>
+        /// <summary>
+        /// Type of database.
+        /// Serialized Name: ConnStringInfo.type
+        /// </summary>
         public ConnectionStringType? ConnectionStringType { get; set; }
     }
 }

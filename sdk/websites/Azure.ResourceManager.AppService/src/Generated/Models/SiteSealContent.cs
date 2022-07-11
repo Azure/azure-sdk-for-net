@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Site seal request. </summary>
+    /// <summary>
+    /// Site seal request.
+    /// Serialized Name: SiteSealRequest
+    /// </summary>
     public partial class SiteSealContent
     {
         /// <summary> Initializes a new instance of SiteSealContent. </summary>
@@ -15,9 +18,15 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary> If &lt;code&gt;true&lt;/code&gt; use the light color theme for site seal; otherwise, use the default color theme. </summary>
-        public bool? LightTheme { get; set; }
-        /// <summary> Locale of site seal. </summary>
+        /// <summary>
+        /// If &lt;code&gt;true&lt;/code&gt; use the light color theme for site seal; otherwise, use the default color theme.
+        /// Serialized Name: SiteSealRequest.lightTheme
+        /// </summary>
+        public bool? IsLightTheme { get; set; }
+        /// <summary>
+        /// Locale of site seal.
+        /// Serialized Name: SiteSealRequest.locale
+        /// </summary>
         public string Locale { get; set; }
     }
 }

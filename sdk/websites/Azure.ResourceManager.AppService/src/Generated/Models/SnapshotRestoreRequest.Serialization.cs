@@ -33,20 +33,20 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("recoverySource");
                 writer.WriteObjectValue(RecoverySource);
             }
-            if (Optional.IsDefined(Overwrite))
+            if (Optional.IsDefined(IsOverwrite))
             {
                 writer.WritePropertyName("overwrite");
-                writer.WriteBooleanValue(Overwrite.Value);
+                writer.WriteBooleanValue(IsOverwrite.Value);
             }
-            if (Optional.IsDefined(RecoverConfiguration))
+            if (Optional.IsDefined(IsRecoverConfiguration))
             {
                 writer.WritePropertyName("recoverConfiguration");
-                writer.WriteBooleanValue(RecoverConfiguration.Value);
+                writer.WriteBooleanValue(IsRecoverConfiguration.Value);
             }
-            if (Optional.IsDefined(IgnoreConflictingHostNames))
+            if (Optional.IsDefined(IsIgnoreConflictingHostNames))
             {
                 writer.WritePropertyName("ignoreConflictingHostNames");
-                writer.WriteBooleanValue(IgnoreConflictingHostNames.Value);
+                writer.WriteBooleanValue(IsIgnoreConflictingHostNames.Value);
             }
             if (Optional.IsDefined(UseDRSecondary))
             {

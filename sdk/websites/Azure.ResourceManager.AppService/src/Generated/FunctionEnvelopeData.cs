@@ -26,20 +26,62 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="functionAppId"> Function App ID. </param>
-        /// <param name="scriptRootPathHref"> Script root path URI. </param>
-        /// <param name="scriptHref"> Script URI. </param>
-        /// <param name="configHref"> Config URI. </param>
-        /// <param name="testDataHref"> Test data URI. </param>
-        /// <param name="secretsFileHref"> Secrets file URI. </param>
-        /// <param name="href"> Function URI. </param>
-        /// <param name="config"> Config information. </param>
-        /// <param name="files"> File list. </param>
-        /// <param name="testData"> Test data used when testing via the Azure Portal. </param>
-        /// <param name="invokeUrlTemplate"> The invocation URL. </param>
-        /// <param name="language"> The function language. </param>
-        /// <param name="isDisabled"> Gets or sets a value indicating whether the function is disabled. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="functionAppId">
+        /// Function App ID.
+        /// Serialized Name: FunctionEnvelope.properties.function_app_id
+        /// </param>
+        /// <param name="scriptRootPathHref">
+        /// Script root path URI.
+        /// Serialized Name: FunctionEnvelope.properties.script_root_path_href
+        /// </param>
+        /// <param name="scriptHref">
+        /// Script URI.
+        /// Serialized Name: FunctionEnvelope.properties.script_href
+        /// </param>
+        /// <param name="configHref">
+        /// Config URI.
+        /// Serialized Name: FunctionEnvelope.properties.config_href
+        /// </param>
+        /// <param name="testDataHref">
+        /// Test data URI.
+        /// Serialized Name: FunctionEnvelope.properties.test_data_href
+        /// </param>
+        /// <param name="secretsFileHref">
+        /// Secrets file URI.
+        /// Serialized Name: FunctionEnvelope.properties.secrets_file_href
+        /// </param>
+        /// <param name="href">
+        /// Function URI.
+        /// Serialized Name: FunctionEnvelope.properties.href
+        /// </param>
+        /// <param name="config">
+        /// Config information.
+        /// Serialized Name: FunctionEnvelope.properties.config
+        /// </param>
+        /// <param name="files">
+        /// File list.
+        /// Serialized Name: FunctionEnvelope.properties.files
+        /// </param>
+        /// <param name="testData">
+        /// Test data used when testing via the Azure Portal.
+        /// Serialized Name: FunctionEnvelope.properties.test_data
+        /// </param>
+        /// <param name="invokeUrlTemplate">
+        /// The invocation URL
+        /// Serialized Name: FunctionEnvelope.properties.invoke_url_template
+        /// </param>
+        /// <param name="language">
+        /// The function language
+        /// Serialized Name: FunctionEnvelope.properties.language
+        /// </param>
+        /// <param name="isDisabled">
+        /// Gets or sets a value indicating whether the function is disabled
+        /// Serialized Name: FunctionEnvelope.properties.isDisabled
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         internal FunctionEnvelopeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string functionAppId, string scriptRootPathHref, string scriptHref, string configHref, string testDataHref, string secretsFileHref, string href, BinaryData config, IDictionary<string, string> files, string testData, string invokeUrlTemplate, string language, bool? isDisabled, string kind) : base(id, name, resourceType, systemData)
         {
             FunctionAppId = functionAppId;
@@ -58,33 +100,75 @@ namespace Azure.ResourceManager.AppService
             Kind = kind;
         }
 
-        /// <summary> Function App ID. </summary>
+        /// <summary>
+        /// Function App ID.
+        /// Serialized Name: FunctionEnvelope.properties.function_app_id
+        /// </summary>
         public string FunctionAppId { get; set; }
-        /// <summary> Script root path URI. </summary>
+        /// <summary>
+        /// Script root path URI.
+        /// Serialized Name: FunctionEnvelope.properties.script_root_path_href
+        /// </summary>
         public string ScriptRootPathHref { get; set; }
-        /// <summary> Script URI. </summary>
+        /// <summary>
+        /// Script URI.
+        /// Serialized Name: FunctionEnvelope.properties.script_href
+        /// </summary>
         public string ScriptHref { get; set; }
-        /// <summary> Config URI. </summary>
+        /// <summary>
+        /// Config URI.
+        /// Serialized Name: FunctionEnvelope.properties.config_href
+        /// </summary>
         public string ConfigHref { get; set; }
-        /// <summary> Test data URI. </summary>
+        /// <summary>
+        /// Test data URI.
+        /// Serialized Name: FunctionEnvelope.properties.test_data_href
+        /// </summary>
         public string TestDataHref { get; set; }
-        /// <summary> Secrets file URI. </summary>
+        /// <summary>
+        /// Secrets file URI.
+        /// Serialized Name: FunctionEnvelope.properties.secrets_file_href
+        /// </summary>
         public string SecretsFileHref { get; set; }
-        /// <summary> Function URI. </summary>
+        /// <summary>
+        /// Function URI.
+        /// Serialized Name: FunctionEnvelope.properties.href
+        /// </summary>
         public string Href { get; set; }
-        /// <summary> Config information. </summary>
+        /// <summary>
+        /// Config information.
+        /// Serialized Name: FunctionEnvelope.properties.config
+        /// </summary>
         public BinaryData Config { get; set; }
-        /// <summary> File list. </summary>
+        /// <summary>
+        /// File list.
+        /// Serialized Name: FunctionEnvelope.properties.files
+        /// </summary>
         public IDictionary<string, string> Files { get; }
-        /// <summary> Test data used when testing via the Azure Portal. </summary>
+        /// <summary>
+        /// Test data used when testing via the Azure Portal.
+        /// Serialized Name: FunctionEnvelope.properties.test_data
+        /// </summary>
         public string TestData { get; set; }
-        /// <summary> The invocation URL. </summary>
+        /// <summary>
+        /// The invocation URL
+        /// Serialized Name: FunctionEnvelope.properties.invoke_url_template
+        /// </summary>
         public string InvokeUrlTemplate { get; set; }
-        /// <summary> The function language. </summary>
+        /// <summary>
+        /// The function language
+        /// Serialized Name: FunctionEnvelope.properties.language
+        /// </summary>
         public string Language { get; set; }
-        /// <summary> Gets or sets a value indicating whether the function is disabled. </summary>
+        /// <summary>
+        /// Gets or sets a value indicating whether the function is disabled
+        /// Serialized Name: FunctionEnvelope.properties.isDisabled
+        /// </summary>
         public bool? IsDisabled { get; set; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         public string Kind { get; set; }
     }
 }

@@ -11,11 +11,17 @@ using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Collection of Inbound Environment Endpoints. </summary>
+    /// <summary>
+    /// Collection of Inbound Environment Endpoints
+    /// Serialized Name: InboundEnvironmentEndpointCollection
+    /// </summary>
     internal partial class InboundEnvironmentEndpointCollection
     {
         /// <summary> Initializes a new instance of InboundEnvironmentEndpointCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: InboundEnvironmentEndpointCollection.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal InboundEnvironmentEndpointCollection(IEnumerable<InboundEnvironmentEndpoint> value)
         {
@@ -28,17 +34,29 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of InboundEnvironmentEndpointCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
-        /// <param name="nextLink"> Link to next page of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: InboundEnvironmentEndpointCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to next page of resources.
+        /// Serialized Name: InboundEnvironmentEndpointCollection.nextLink
+        /// </param>
         internal InboundEnvironmentEndpointCollection(IReadOnlyList<InboundEnvironmentEndpoint> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Collection of resources. </summary>
+        /// <summary>
+        /// Collection of resources.
+        /// Serialized Name: InboundEnvironmentEndpointCollection.value
+        /// </summary>
         public IReadOnlyList<InboundEnvironmentEndpoint> Value { get; }
-        /// <summary> Link to next page of resources. </summary>
+        /// <summary>
+        /// Link to next page of resources.
+        /// Serialized Name: InboundEnvironmentEndpointCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

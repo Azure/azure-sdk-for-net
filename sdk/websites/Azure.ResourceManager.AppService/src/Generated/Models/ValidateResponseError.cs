@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Error details for when validation fails. </summary>
+    /// <summary>
+    /// Error details for when validation fails.
+    /// Serialized Name: ValidateResponseError
+    /// </summary>
     public partial class ValidateResponseError
     {
         /// <summary> Initializes a new instance of ValidateResponseError. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of ValidateResponseError. </summary>
-        /// <param name="code"> Validation error code. </param>
-        /// <param name="message"> Validation error message. </param>
+        /// <param name="code">
+        /// Validation error code.
+        /// Serialized Name: ValidateResponseError.code
+        /// </param>
+        /// <param name="message">
+        /// Validation error message.
+        /// Serialized Name: ValidateResponseError.message
+        /// </param>
         internal ValidateResponseError(string code, string message)
         {
             Code = code;
             Message = message;
         }
 
-        /// <summary> Validation error code. </summary>
+        /// <summary>
+        /// Validation error code.
+        /// Serialized Name: ValidateResponseError.code
+        /// </summary>
         public string Code { get; }
-        /// <summary> Validation error message. </summary>
+        /// <summary>
+        /// Validation error message.
+        /// Serialized Name: ValidateResponseError.message
+        /// </summary>
         public string Message { get; }
     }
 }

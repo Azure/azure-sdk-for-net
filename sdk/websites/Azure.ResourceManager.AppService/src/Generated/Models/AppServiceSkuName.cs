@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The AppServiceSkuName. </summary>
+    /// <summary>
+    /// The AppServiceSkuName.
+    /// Serialized Name: SkuName
+    /// </summary>
     public readonly partial struct AppServiceSkuName : IEquatable<AppServiceSkuName>
     {
         private readonly string _value;
@@ -36,31 +39,70 @@ namespace Azure.ResourceManager.AppService.Models
         private const string ElasticPremiumValue = "ElasticPremium";
         private const string ElasticIsolatedValue = "ElasticIsolated";
 
-        /// <summary> Free. </summary>
+        /// <summary>
+        /// Free
+        /// Serialized Name: SkuName.Free
+        /// </summary>
         public static AppServiceSkuName Free { get; } = new AppServiceSkuName(FreeValue);
-        /// <summary> Shared. </summary>
+        /// <summary>
+        /// Shared
+        /// Serialized Name: SkuName.Shared
+        /// </summary>
         public static AppServiceSkuName Shared { get; } = new AppServiceSkuName(SharedValue);
-        /// <summary> Basic. </summary>
+        /// <summary>
+        /// Basic
+        /// Serialized Name: SkuName.Basic
+        /// </summary>
         public static AppServiceSkuName Basic { get; } = new AppServiceSkuName(BasicValue);
-        /// <summary> Standard. </summary>
+        /// <summary>
+        /// Standard
+        /// Serialized Name: SkuName.Standard
+        /// </summary>
         public static AppServiceSkuName Standard { get; } = new AppServiceSkuName(StandardValue);
-        /// <summary> Premium. </summary>
+        /// <summary>
+        /// Premium
+        /// Serialized Name: SkuName.Premium
+        /// </summary>
         public static AppServiceSkuName Premium { get; } = new AppServiceSkuName(PremiumValue);
-        /// <summary> Dynamic. </summary>
+        /// <summary>
+        /// Dynamic
+        /// Serialized Name: SkuName.Dynamic
+        /// </summary>
         public static AppServiceSkuName Dynamic { get; } = new AppServiceSkuName(DynamicValue);
-        /// <summary> Isolated. </summary>
+        /// <summary>
+        /// Isolated
+        /// Serialized Name: SkuName.Isolated
+        /// </summary>
         public static AppServiceSkuName Isolated { get; } = new AppServiceSkuName(IsolatedValue);
-        /// <summary> IsolatedV2. </summary>
+        /// <summary>
+        /// IsolatedV2
+        /// Serialized Name: SkuName.IsolatedV2
+        /// </summary>
         public static AppServiceSkuName IsolatedV2 { get; } = new AppServiceSkuName(IsolatedV2Value);
-        /// <summary> PremiumV2. </summary>
+        /// <summary>
+        /// PremiumV2
+        /// Serialized Name: SkuName.PremiumV2
+        /// </summary>
         public static AppServiceSkuName PremiumV2 { get; } = new AppServiceSkuName(PremiumV2Value);
-        /// <summary> PremiumV3. </summary>
+        /// <summary>
+        /// PremiumV3
+        /// Serialized Name: SkuName.PremiumV3
+        /// </summary>
         public static AppServiceSkuName PremiumV3 { get; } = new AppServiceSkuName(PremiumV3Value);
-        /// <summary> PremiumContainer. </summary>
+        /// <summary>
+        /// PremiumContainer
+        /// Serialized Name: SkuName.PremiumContainer
+        /// </summary>
         public static AppServiceSkuName PremiumContainer { get; } = new AppServiceSkuName(PremiumContainerValue);
-        /// <summary> ElasticPremium. </summary>
+        /// <summary>
+        /// ElasticPremium
+        /// Serialized Name: SkuName.ElasticPremium
+        /// </summary>
         public static AppServiceSkuName ElasticPremium { get; } = new AppServiceSkuName(ElasticPremiumValue);
-        /// <summary> ElasticIsolated. </summary>
+        /// <summary>
+        /// ElasticIsolated
+        /// Serialized Name: SkuName.ElasticIsolated
+        /// </summary>
         public static AppServiceSkuName ElasticIsolated { get; } = new AppServiceSkuName(ElasticIsolatedValue);
         /// <summary> Determines if two <see cref="AppServiceSkuName"/> values are the same. </summary>
         public static bool operator ==(AppServiceSkuName left, AppServiceSkuName right) => left.Equals(right);

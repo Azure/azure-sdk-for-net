@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The FrontEndConfiguration. </summary>
+    /// <summary>
+    /// The FrontEndConfiguration.
+    /// Serialized Name: FrontEndConfiguration
+    /// </summary>
     internal partial class FrontEndConfiguration
     {
         /// <summary> Initializes a new instance of FrontEndConfiguration. </summary>
@@ -16,13 +19,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of FrontEndConfiguration. </summary>
-        /// <param name="kind"></param>
+        /// <param name="kind"> Serialized Name: FrontEndConfiguration.kind. </param>
         internal FrontEndConfiguration(FrontEndServiceType? kind)
         {
             Kind = kind;
         }
 
-        /// <summary> Gets or sets the kind. </summary>
+        /// <summary> Serialized Name: FrontEndConfiguration.kind. </summary>
         public FrontEndServiceType? Kind { get; set; }
     }
 }

@@ -9,7 +9,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The configuration settings of the legacy Microsoft Account provider. </summary>
+    /// <summary>
+    /// The configuration settings of the legacy Microsoft Account provider.
+    /// Serialized Name: LegacyMicrosoftAccount
+    /// </summary>
     public partial class LegacyMicrosoftAccount
     {
         /// <summary> Initializes a new instance of LegacyMicrosoftAccount. </summary>
@@ -18,25 +21,49 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of LegacyMicrosoftAccount. </summary>
-        /// <param name="enabled"> &lt;code&gt;false&lt;/code&gt; if the legacy Microsoft Account provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
-        /// <param name="registration"> The configuration settings of the app registration for the legacy Microsoft Account provider. </param>
-        /// <param name="login"> The configuration settings of the login flow. </param>
-        /// <param name="validation"> The configuration settings of the legacy Microsoft Account provider token validation flow. </param>
-        internal LegacyMicrosoftAccount(bool? enabled, ClientRegistration registration, LoginScopes login, AllowedAudiencesValidation validation)
+        /// <param name="isEnabled">
+        /// &lt;code&gt;false&lt;/code&gt; if the legacy Microsoft Account provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;.
+        /// Serialized Name: LegacyMicrosoftAccount.enabled
+        /// </param>
+        /// <param name="registration">
+        /// The configuration settings of the app registration for the legacy Microsoft Account provider.
+        /// Serialized Name: LegacyMicrosoftAccount.registration
+        /// </param>
+        /// <param name="login">
+        /// The configuration settings of the login flow.
+        /// Serialized Name: LegacyMicrosoftAccount.login
+        /// </param>
+        /// <param name="validation">
+        /// The configuration settings of the legacy Microsoft Account provider token validation flow.
+        /// Serialized Name: LegacyMicrosoftAccount.validation
+        /// </param>
+        internal LegacyMicrosoftAccount(bool? isEnabled, ClientRegistration registration, LoginScopes login, AllowedAudiencesValidation validation)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             Registration = registration;
             Login = login;
             Validation = validation;
         }
 
-        /// <summary> &lt;code&gt;false&lt;/code&gt; if the legacy Microsoft Account provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </summary>
-        public bool? Enabled { get; set; }
-        /// <summary> The configuration settings of the app registration for the legacy Microsoft Account provider. </summary>
+        /// <summary>
+        /// &lt;code&gt;false&lt;/code&gt; if the legacy Microsoft Account provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;.
+        /// Serialized Name: LegacyMicrosoftAccount.enabled
+        /// </summary>
+        public bool? IsEnabled { get; set; }
+        /// <summary>
+        /// The configuration settings of the app registration for the legacy Microsoft Account provider.
+        /// Serialized Name: LegacyMicrosoftAccount.registration
+        /// </summary>
         public ClientRegistration Registration { get; set; }
-        /// <summary> The configuration settings of the login flow. </summary>
+        /// <summary>
+        /// The configuration settings of the login flow.
+        /// Serialized Name: LegacyMicrosoftAccount.login
+        /// </summary>
         internal LoginScopes Login { get; set; }
-        /// <summary> A list of the scopes that should be requested while authenticating. </summary>
+        /// <summary>
+        /// A list of the scopes that should be requested while authenticating.
+        /// Serialized Name: LoginScopes.scopes
+        /// </summary>
         public IList<string> LoginScopes
         {
             get
@@ -47,9 +74,15 @@ namespace Azure.ResourceManager.AppService.Models
             }
         }
 
-        /// <summary> The configuration settings of the legacy Microsoft Account provider token validation flow. </summary>
+        /// <summary>
+        /// The configuration settings of the legacy Microsoft Account provider token validation flow.
+        /// Serialized Name: LegacyMicrosoftAccount.validation
+        /// </summary>
         internal AllowedAudiencesValidation Validation { get; set; }
-        /// <summary> The configuration settings of the allowed list of audiences from which to validate the JWT token. </summary>
+        /// <summary>
+        /// The configuration settings of the allowed list of audiences from which to validate the JWT token.
+        /// Serialized Name: AllowedAudiencesValidation.allowedAudiences
+        /// </summary>
         public IList<string> ValidationAllowedAudiences
         {
             get

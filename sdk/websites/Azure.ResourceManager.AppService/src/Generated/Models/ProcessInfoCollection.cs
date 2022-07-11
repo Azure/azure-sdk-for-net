@@ -12,11 +12,17 @@ using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Collection of Kudu process information elements. </summary>
+    /// <summary>
+    /// Collection of Kudu process information elements.
+    /// Serialized Name: ProcessInfoCollection
+    /// </summary>
     internal partial class ProcessInfoCollection
     {
         /// <summary> Initializes a new instance of ProcessInfoCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: ProcessInfoCollection.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ProcessInfoCollection(IEnumerable<ProcessInfoData> value)
         {
@@ -29,17 +35,29 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of ProcessInfoCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
-        /// <param name="nextLink"> Link to next page of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: ProcessInfoCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to next page of resources.
+        /// Serialized Name: ProcessInfoCollection.nextLink
+        /// </param>
         internal ProcessInfoCollection(IReadOnlyList<ProcessInfoData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Collection of resources. </summary>
+        /// <summary>
+        /// Collection of resources.
+        /// Serialized Name: ProcessInfoCollection.value
+        /// </summary>
         public IReadOnlyList<ProcessInfoData> Value { get; }
-        /// <summary> Link to next page of resources. </summary>
+        /// <summary>
+        /// Link to next page of resources.
+        /// Serialized Name: ProcessInfoCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

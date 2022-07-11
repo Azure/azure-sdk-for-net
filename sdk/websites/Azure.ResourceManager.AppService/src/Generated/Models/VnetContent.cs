@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The required set of inputs to validate a VNET. </summary>
+    /// <summary>
+    /// The required set of inputs to validate a VNET
+    /// Serialized Name: VnetParameters
+    /// </summary>
     public partial class VnetContent : ResourceData
     {
         /// <summary> Initializes a new instance of VnetContent. </summary>
@@ -23,11 +26,26 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="vnetResourceGroup"> The Resource Group of the VNET to be validated. </param>
-        /// <param name="vnetName"> The name of the VNET to be validated. </param>
-        /// <param name="vnetSubnetName"> The subnet name to be validated. </param>
-        /// <param name="subnetResourceId"> The ARM Resource ID of the subnet to validate. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="vnetResourceGroup">
+        /// The Resource Group of the VNET to be validated
+        /// Serialized Name: VnetParameters.properties.vnetResourceGroup
+        /// </param>
+        /// <param name="vnetName">
+        /// The name of the VNET to be validated
+        /// Serialized Name: VnetParameters.properties.vnetName
+        /// </param>
+        /// <param name="vnetSubnetName">
+        /// The subnet name to be validated
+        /// Serialized Name: VnetParameters.properties.vnetSubnetName
+        /// </param>
+        /// <param name="subnetResourceId">
+        /// The ARM Resource ID of the subnet to validate
+        /// Serialized Name: VnetParameters.properties.subnetResourceId
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         internal VnetContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string vnetResourceGroup, string vnetName, string vnetSubnetName, string subnetResourceId, string kind) : base(id, name, resourceType, systemData)
         {
             VnetResourceGroup = vnetResourceGroup;
@@ -37,15 +55,30 @@ namespace Azure.ResourceManager.AppService.Models
             Kind = kind;
         }
 
-        /// <summary> The Resource Group of the VNET to be validated. </summary>
+        /// <summary>
+        /// The Resource Group of the VNET to be validated
+        /// Serialized Name: VnetParameters.properties.vnetResourceGroup
+        /// </summary>
         public string VnetResourceGroup { get; set; }
-        /// <summary> The name of the VNET to be validated. </summary>
+        /// <summary>
+        /// The name of the VNET to be validated
+        /// Serialized Name: VnetParameters.properties.vnetName
+        /// </summary>
         public string VnetName { get; set; }
-        /// <summary> The subnet name to be validated. </summary>
+        /// <summary>
+        /// The subnet name to be validated
+        /// Serialized Name: VnetParameters.properties.vnetSubnetName
+        /// </summary>
         public string VnetSubnetName { get; set; }
-        /// <summary> The ARM Resource ID of the subnet to validate. </summary>
+        /// <summary>
+        /// The ARM Resource ID of the subnet to validate
+        /// Serialized Name: VnetParameters.properties.subnetResourceId
+        /// </summary>
         public string SubnetResourceId { get; set; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         public string Kind { get; set; }
     }
 }

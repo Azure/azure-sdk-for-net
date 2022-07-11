@@ -10,13 +10,25 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Resource validation request content. </summary>
+    /// <summary>
+    /// Resource validation request content.
+    /// Serialized Name: ValidateRequest
+    /// </summary>
     public partial class ValidateContent
     {
         /// <summary> Initializes a new instance of ValidateContent. </summary>
-        /// <param name="name"> Resource name to verify. </param>
-        /// <param name="validateResourceType"> Resource type used for verification. </param>
-        /// <param name="location"> Expected location of the resource. </param>
+        /// <param name="name">
+        /// Resource name to verify.
+        /// Serialized Name: ValidateRequest.name
+        /// </param>
+        /// <param name="validateResourceType">
+        /// Resource type used for verification.
+        /// Serialized Name: ValidateRequest.type
+        /// </param>
+        /// <param name="location">
+        /// Expected location of the resource.
+        /// Serialized Name: ValidateRequest.location
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ValidateContent(string name, ValidateResourceType validateResourceType, AzureLocation location)
         {
@@ -30,39 +42,90 @@ namespace Azure.ResourceManager.AppService.Models
             Location = location;
         }
 
-        /// <summary> Resource name to verify. </summary>
+        /// <summary>
+        /// Resource name to verify.
+        /// Serialized Name: ValidateRequest.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> Resource type used for verification. </summary>
+        /// <summary>
+        /// Resource type used for verification.
+        /// Serialized Name: ValidateRequest.type
+        /// </summary>
         public ValidateResourceType ValidateResourceType { get; }
-        /// <summary> Expected location of the resource. </summary>
+        /// <summary>
+        /// Expected location of the resource.
+        /// Serialized Name: ValidateRequest.location
+        /// </summary>
         public AzureLocation Location { get; }
-        /// <summary> ARM resource ID of an App Service plan that would host the app. </summary>
+        /// <summary>
+        /// ARM resource ID of an App Service plan that would host the app.
+        /// Serialized Name: ValidateRequest.properties.serverFarmId
+        /// </summary>
         public string ServerFarmId { get; set; }
-        /// <summary> Name of the target SKU for the App Service plan. </summary>
+        /// <summary>
+        /// Name of the target SKU for the App Service plan.
+        /// Serialized Name: ValidateRequest.properties.skuName
+        /// </summary>
         public string SkuName { get; set; }
-        /// <summary> &lt;code&gt;true&lt;/code&gt; if App Service plan is for Linux workers; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
-        public bool? NeedLinuxWorkers { get; set; }
-        /// <summary> &lt;code&gt;true&lt;/code&gt; if App Service plan is for Spot instances; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        /// <summary>
+        /// &lt;code&gt;true&lt;/code&gt; if App Service plan is for Linux workers; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: ValidateRequest.properties.needLinuxWorkers
+        /// </summary>
+        public bool? IsNeedLinuxWorkers { get; set; }
+        /// <summary>
+        /// &lt;code&gt;true&lt;/code&gt; if App Service plan is for Spot instances; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: ValidateRequest.properties.isSpot
+        /// </summary>
         public bool? IsSpot { get; set; }
-        /// <summary> Target capacity of the App Service plan (number of VMs). </summary>
+        /// <summary>
+        /// Target capacity of the App Service plan (number of VMs).
+        /// Serialized Name: ValidateRequest.properties.capacity
+        /// </summary>
         public int? Capacity { get; set; }
-        /// <summary> Name of App Service Environment where app or App Service plan should be created. </summary>
+        /// <summary>
+        /// Name of App Service Environment where app or App Service plan should be created.
+        /// Serialized Name: ValidateRequest.properties.hostingEnvironment
+        /// </summary>
         public string HostingEnvironment { get; set; }
-        /// <summary> &lt;code&gt;true&lt;/code&gt; if App Service plan is running as a windows container. </summary>
+        /// <summary>
+        /// &lt;code&gt;true&lt;/code&gt; if App Service plan is running as a windows container
+        /// Serialized Name: ValidateRequest.properties.isXenon
+        /// </summary>
         public bool? IsXenon { get; set; }
-        /// <summary> Base URL of the container registry. </summary>
+        /// <summary>
+        /// Base URL of the container registry
+        /// Serialized Name: ValidateRequest.properties.containerRegistryBaseUrl
+        /// </summary>
         public Uri ContainerRegistryBaseUri { get; set; }
-        /// <summary> Username for to access the container registry. </summary>
+        /// <summary>
+        /// Username for to access the container registry
+        /// Serialized Name: ValidateRequest.properties.containerRegistryUsername
+        /// </summary>
         public string ContainerRegistryUsername { get; set; }
-        /// <summary> Password for to access the container registry. </summary>
+        /// <summary>
+        /// Password for to access the container registry
+        /// Serialized Name: ValidateRequest.properties.containerRegistryPassword
+        /// </summary>
         public string ContainerRegistryPassword { get; set; }
-        /// <summary> Repository name (image name). </summary>
+        /// <summary>
+        /// Repository name (image name)
+        /// Serialized Name: ValidateRequest.properties.containerImageRepository
+        /// </summary>
         public string ContainerImageRepository { get; set; }
-        /// <summary> Image tag. </summary>
+        /// <summary>
+        /// Image tag
+        /// Serialized Name: ValidateRequest.properties.containerImageTag
+        /// </summary>
         public string ContainerImageTag { get; set; }
-        /// <summary> Platform (windows or linux). </summary>
+        /// <summary>
+        /// Platform (windows or linux)
+        /// Serialized Name: ValidateRequest.properties.containerImagePlatform
+        /// </summary>
         public string ContainerImagePlatform { get; set; }
-        /// <summary> App Service Environment Properties. </summary>
+        /// <summary>
+        /// App Service Environment Properties
+        /// Serialized Name: ValidateRequest.properties.appServiceEnvironment
+        /// </summary>
         public AppServiceEnvironmentAutoGenerated AppServiceEnvironment { get; set; }
     }
 }

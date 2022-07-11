@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Web App stack major version. </summary>
+    /// <summary>
+    /// Web App stack major version.
+    /// Serialized Name: WebAppMajorVersion
+    /// </summary>
     public partial class WebAppMajorVersion
     {
         /// <summary> Initializes a new instance of WebAppMajorVersion. </summary>
@@ -20,9 +23,18 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of WebAppMajorVersion. </summary>
-        /// <param name="displayText"> Web App stack major version (display only). </param>
-        /// <param name="value"> Web App stack major version name. </param>
-        /// <param name="minorVersions"> Minor versions associated with the major version. </param>
+        /// <param name="displayText">
+        /// Web App stack major version (display only).
+        /// Serialized Name: WebAppMajorVersion.displayText
+        /// </param>
+        /// <param name="value">
+        /// Web App stack major version name.
+        /// Serialized Name: WebAppMajorVersion.value
+        /// </param>
+        /// <param name="minorVersions">
+        /// Minor versions associated with the major version.
+        /// Serialized Name: WebAppMajorVersion.minorVersions
+        /// </param>
         internal WebAppMajorVersion(string displayText, string value, IReadOnlyList<WebAppMinorVersion> minorVersions)
         {
             DisplayText = displayText;
@@ -30,11 +42,20 @@ namespace Azure.ResourceManager.AppService.Models
             MinorVersions = minorVersions;
         }
 
-        /// <summary> Web App stack major version (display only). </summary>
+        /// <summary>
+        /// Web App stack major version (display only).
+        /// Serialized Name: WebAppMajorVersion.displayText
+        /// </summary>
         public string DisplayText { get; }
-        /// <summary> Web App stack major version name. </summary>
+        /// <summary>
+        /// Web App stack major version name.
+        /// Serialized Name: WebAppMajorVersion.value
+        /// </summary>
         public string Value { get; }
-        /// <summary> Minor versions associated with the major version. </summary>
+        /// <summary>
+        /// Minor versions associated with the major version.
+        /// Serialized Name: WebAppMajorVersion.minorVersions
+        /// </summary>
         public IReadOnlyList<WebAppMinorVersion> MinorVersions { get; }
     }
 }

@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Domain purchase consent object, representing acceptance of applicable legal agreements. </summary>
+    /// <summary>
+    /// Domain purchase consent object, representing acceptance of applicable legal agreements.
+    /// Serialized Name: DomainPurchaseConsent
+    /// </summary>
     public partial class DomainPurchaseConsent
     {
         /// <summary> Initializes a new instance of DomainPurchaseConsent. </summary>
@@ -21,9 +24,18 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of DomainPurchaseConsent. </summary>
-        /// <param name="agreementKeys"> List of applicable legal agreement keys. This list can be retrieved using ListLegalAgreements API under &lt;code&gt;TopLevelDomain&lt;/code&gt; resource. </param>
-        /// <param name="agreedBy"> Client IP address. </param>
-        /// <param name="agreedOn"> Timestamp when the agreements were accepted. </param>
+        /// <param name="agreementKeys">
+        /// List of applicable legal agreement keys. This list can be retrieved using ListLegalAgreements API under &lt;code&gt;TopLevelDomain&lt;/code&gt; resource.
+        /// Serialized Name: DomainPurchaseConsent.agreementKeys
+        /// </param>
+        /// <param name="agreedBy">
+        /// Client IP address.
+        /// Serialized Name: DomainPurchaseConsent.agreedBy
+        /// </param>
+        /// <param name="agreedOn">
+        /// Timestamp when the agreements were accepted.
+        /// Serialized Name: DomainPurchaseConsent.agreedAt
+        /// </param>
         internal DomainPurchaseConsent(IList<string> agreementKeys, string agreedBy, DateTimeOffset? agreedOn)
         {
             AgreementKeys = agreementKeys;
@@ -31,11 +43,20 @@ namespace Azure.ResourceManager.AppService.Models
             AgreedOn = agreedOn;
         }
 
-        /// <summary> List of applicable legal agreement keys. This list can be retrieved using ListLegalAgreements API under &lt;code&gt;TopLevelDomain&lt;/code&gt; resource. </summary>
+        /// <summary>
+        /// List of applicable legal agreement keys. This list can be retrieved using ListLegalAgreements API under &lt;code&gt;TopLevelDomain&lt;/code&gt; resource.
+        /// Serialized Name: DomainPurchaseConsent.agreementKeys
+        /// </summary>
         public IList<string> AgreementKeys { get; }
-        /// <summary> Client IP address. </summary>
+        /// <summary>
+        /// Client IP address.
+        /// Serialized Name: DomainPurchaseConsent.agreedBy
+        /// </summary>
         public string AgreedBy { get; set; }
-        /// <summary> Timestamp when the agreements were accepted. </summary>
+        /// <summary>
+        /// Timestamp when the agreements were accepted.
+        /// Serialized Name: DomainPurchaseConsent.agreedAt
+        /// </summary>
         public DateTimeOffset? AgreedOn { get; set; }
     }
 }

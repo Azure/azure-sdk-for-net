@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> String list resource. </summary>
+    /// <summary>
+    /// String list resource.
+    /// Serialized Name: StringList
+    /// </summary>
     public partial class StringList : ResourceData
     {
         /// <summary> Initializes a new instance of StringList. </summary>
@@ -25,17 +28,29 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> List of string resources. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="properties">
+        /// List of string resources.
+        /// Serialized Name: StringList.properties
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         internal StringList(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<string> properties, string kind) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Kind = kind;
         }
 
-        /// <summary> List of string resources. </summary>
+        /// <summary>
+        /// List of string resources.
+        /// Serialized Name: StringList.properties
+        /// </summary>
         public IList<string> Properties { get; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         public string Kind { get; set; }
     }
 }

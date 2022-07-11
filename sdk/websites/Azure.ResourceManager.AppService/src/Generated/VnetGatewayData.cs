@@ -24,9 +24,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="vnetName"> The Virtual Network name. </param>
-        /// <param name="vpnPackageUri"> The URI where the VPN package can be downloaded. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="vnetName">
+        /// The Virtual Network name.
+        /// Serialized Name: VnetGateway.properties.vnetName
+        /// </param>
+        /// <param name="vpnPackageUri">
+        /// The URI where the VPN package can be downloaded.
+        /// Serialized Name: VnetGateway.properties.vpnPackageUri
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         internal VnetGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string vnetName, Uri vpnPackageUri, string kind) : base(id, name, resourceType, systemData)
         {
             VnetName = vnetName;
@@ -34,11 +43,20 @@ namespace Azure.ResourceManager.AppService
             Kind = kind;
         }
 
-        /// <summary> The Virtual Network name. </summary>
+        /// <summary>
+        /// The Virtual Network name.
+        /// Serialized Name: VnetGateway.properties.vnetName
+        /// </summary>
         public string VnetName { get; set; }
-        /// <summary> The URI where the VPN package can be downloaded. </summary>
+        /// <summary>
+        /// The URI where the VPN package can be downloaded.
+        /// Serialized Name: VnetGateway.properties.vpnPackageUri
+        /// </summary>
         public Uri VpnPackageUri { get; set; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         public string Kind { get; set; }
     }
 }

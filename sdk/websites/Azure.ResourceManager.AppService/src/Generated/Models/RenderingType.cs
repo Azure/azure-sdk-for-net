@@ -7,58 +7,136 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Rendering Type. </summary>
+    /// <summary>
+    /// Rendering Type
+    /// Serialized Name: RenderingType
+    /// </summary>
     public enum RenderingType
     {
-        /// <summary> NoGraph. </summary>
+        /// <summary>
+        /// NoGraph
+        /// Serialized Name: RenderingType.NoGraph
+        /// </summary>
         NoGraph,
-        /// <summary> Table. </summary>
+        /// <summary>
+        /// Table
+        /// Serialized Name: RenderingType.Table
+        /// </summary>
         Table,
-        /// <summary> TimeSeries. </summary>
+        /// <summary>
+        /// TimeSeries
+        /// Serialized Name: RenderingType.TimeSeries
+        /// </summary>
         TimeSeries,
-        /// <summary> TimeSeriesPerInstance. </summary>
+        /// <summary>
+        /// TimeSeriesPerInstance
+        /// Serialized Name: RenderingType.TimeSeriesPerInstance
+        /// </summary>
         TimeSeriesPerInstance,
-        /// <summary> PieChart. </summary>
+        /// <summary>
+        /// PieChart
+        /// Serialized Name: RenderingType.PieChart
+        /// </summary>
         PieChart,
-        /// <summary> DataSummary. </summary>
+        /// <summary>
+        /// DataSummary
+        /// Serialized Name: RenderingType.DataSummary
+        /// </summary>
         DataSummary,
-        /// <summary> Email. </summary>
+        /// <summary>
+        /// Email
+        /// Serialized Name: RenderingType.Email
+        /// </summary>
         Email,
-        /// <summary> Insights. </summary>
+        /// <summary>
+        /// Insights
+        /// Serialized Name: RenderingType.Insights
+        /// </summary>
         Insights,
-        /// <summary> DynamicInsight. </summary>
+        /// <summary>
+        /// DynamicInsight
+        /// Serialized Name: RenderingType.DynamicInsight
+        /// </summary>
         DynamicInsight,
-        /// <summary> Markdown. </summary>
+        /// <summary>
+        /// Markdown
+        /// Serialized Name: RenderingType.Markdown
+        /// </summary>
         Markdown,
-        /// <summary> Detector. </summary>
+        /// <summary>
+        /// Detector
+        /// Serialized Name: RenderingType.Detector
+        /// </summary>
         Detector,
-        /// <summary> DropDown. </summary>
+        /// <summary>
+        /// DropDown
+        /// Serialized Name: RenderingType.DropDown
+        /// </summary>
         DropDown,
-        /// <summary> Card. </summary>
+        /// <summary>
+        /// Card
+        /// Serialized Name: RenderingType.Card
+        /// </summary>
         Card,
-        /// <summary> Solution. </summary>
+        /// <summary>
+        /// Solution
+        /// Serialized Name: RenderingType.Solution
+        /// </summary>
         Solution,
-        /// <summary> Guage. </summary>
+        /// <summary>
+        /// Guage
+        /// Serialized Name: RenderingType.Guage
+        /// </summary>
         Guage,
-        /// <summary> Form. </summary>
+        /// <summary>
+        /// Form
+        /// Serialized Name: RenderingType.Form
+        /// </summary>
         Form,
-        /// <summary> ChangeSets. </summary>
+        /// <summary>
+        /// ChangeSets
+        /// Serialized Name: RenderingType.ChangeSets
+        /// </summary>
         ChangeSets,
-        /// <summary> ChangeAnalysisOnboarding. </summary>
+        /// <summary>
+        /// ChangeAnalysisOnboarding
+        /// Serialized Name: RenderingType.ChangeAnalysisOnboarding
+        /// </summary>
         ChangeAnalysisOnboarding,
-        /// <summary> ChangesView. </summary>
+        /// <summary>
+        /// ChangesView
+        /// Serialized Name: RenderingType.ChangesView
+        /// </summary>
         ChangesView,
-        /// <summary> AppInsight. </summary>
+        /// <summary>
+        /// AppInsight
+        /// Serialized Name: RenderingType.AppInsight
+        /// </summary>
         AppInsight,
-        /// <summary> DependencyGraph. </summary>
+        /// <summary>
+        /// DependencyGraph
+        /// Serialized Name: RenderingType.DependencyGraph
+        /// </summary>
         DependencyGraph,
-        /// <summary> DownTime. </summary>
+        /// <summary>
+        /// DownTime
+        /// Serialized Name: RenderingType.DownTime
+        /// </summary>
         DownTime,
-        /// <summary> SummaryCard. </summary>
+        /// <summary>
+        /// SummaryCard
+        /// Serialized Name: RenderingType.SummaryCard
+        /// </summary>
         SummaryCard,
-        /// <summary> SearchComponent. </summary>
+        /// <summary>
+        /// SearchComponent
+        /// Serialized Name: RenderingType.SearchComponent
+        /// </summary>
         SearchComponent,
-        /// <summary> AppInsightEnablement. </summary>
+        /// <summary>
+        /// AppInsightEnablement
+        /// Serialized Name: RenderingType.AppInsightEnablement
+        /// </summary>
         AppInsightEnablement
     }
 }

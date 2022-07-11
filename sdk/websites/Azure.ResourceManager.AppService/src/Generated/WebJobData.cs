@@ -27,41 +27,89 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="runCommand"> Run command. </param>
-        /// <param name="uri"> Job URL. </param>
-        /// <param name="extraInfoUri"> Extra Info URL. </param>
-        /// <param name="webJobType"> Job type. </param>
-        /// <param name="error"> Error information. </param>
-        /// <param name="usingSdk"> Using SDK?. </param>
-        /// <param name="settings"> Job settings. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        internal WebJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string runCommand, Uri uri, Uri extraInfoUri, WebJobType? webJobType, string error, bool? usingSdk, IDictionary<string, BinaryData> settings, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="runCommand">
+        /// Run command.
+        /// Serialized Name: WebJob.properties.run_command
+        /// </param>
+        /// <param name="uri">
+        /// Job URL.
+        /// Serialized Name: WebJob.properties.url
+        /// </param>
+        /// <param name="extraInfoUri">
+        /// Extra Info URL.
+        /// Serialized Name: WebJob.properties.extra_info_url
+        /// </param>
+        /// <param name="webJobType">
+        /// Job type.
+        /// Serialized Name: WebJob.properties.web_job_type
+        /// </param>
+        /// <param name="error">
+        /// Error information.
+        /// Serialized Name: WebJob.properties.error
+        /// </param>
+        /// <param name="isUsingSdk">
+        /// Using SDK?
+        /// Serialized Name: WebJob.properties.using_sdk
+        /// </param>
+        /// <param name="settings">
+        /// Job settings.
+        /// Serialized Name: WebJob.properties.settings
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
+        internal WebJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string runCommand, Uri uri, Uri extraInfoUri, WebJobType? webJobType, string error, bool? isUsingSdk, IDictionary<string, BinaryData> settings, string kind) : base(id, name, resourceType, systemData)
         {
             RunCommand = runCommand;
             Uri = uri;
             ExtraInfoUri = extraInfoUri;
             WebJobType = webJobType;
             Error = error;
-            UsingSdk = usingSdk;
+            IsUsingSdk = isUsingSdk;
             Settings = settings;
             Kind = kind;
         }
 
-        /// <summary> Run command. </summary>
+        /// <summary>
+        /// Run command.
+        /// Serialized Name: WebJob.properties.run_command
+        /// </summary>
         public string RunCommand { get; set; }
-        /// <summary> Job URL. </summary>
+        /// <summary>
+        /// Job URL.
+        /// Serialized Name: WebJob.properties.url
+        /// </summary>
         public Uri Uri { get; set; }
-        /// <summary> Extra Info URL. </summary>
+        /// <summary>
+        /// Extra Info URL.
+        /// Serialized Name: WebJob.properties.extra_info_url
+        /// </summary>
         public Uri ExtraInfoUri { get; set; }
-        /// <summary> Job type. </summary>
+        /// <summary>
+        /// Job type.
+        /// Serialized Name: WebJob.properties.web_job_type
+        /// </summary>
         public WebJobType? WebJobType { get; set; }
-        /// <summary> Error information. </summary>
+        /// <summary>
+        /// Error information.
+        /// Serialized Name: WebJob.properties.error
+        /// </summary>
         public string Error { get; set; }
-        /// <summary> Using SDK?. </summary>
-        public bool? UsingSdk { get; set; }
-        /// <summary> Job settings. </summary>
+        /// <summary>
+        /// Using SDK?
+        /// Serialized Name: WebJob.properties.using_sdk
+        /// </summary>
+        public bool? IsUsingSdk { get; set; }
+        /// <summary>
+        /// Job settings.
+        /// Serialized Name: WebJob.properties.settings
+        /// </summary>
         public IDictionary<string, BinaryData> Settings { get; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         public string Kind { get; set; }
     }
 }

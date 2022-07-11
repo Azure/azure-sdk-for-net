@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Defines a unique Support Topic. </summary>
+    /// <summary>
+    /// Defines a unique Support Topic
+    /// Serialized Name: SupportTopic
+    /// </summary>
     public partial class SupportTopic
     {
         /// <summary> Initializes a new instance of SupportTopic. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of SupportTopic. </summary>
-        /// <param name="id"> Support Topic Id. </param>
-        /// <param name="pesId"> Unique resource Id. </param>
+        /// <param name="id">
+        /// Support Topic Id
+        /// Serialized Name: SupportTopic.id
+        /// </param>
+        /// <param name="pesId">
+        /// Unique resource Id
+        /// Serialized Name: SupportTopic.pesId
+        /// </param>
         internal SupportTopic(string id, string pesId)
         {
             Id = id;
             PesId = pesId;
         }
 
-        /// <summary> Support Topic Id. </summary>
+        /// <summary>
+        /// Support Topic Id
+        /// Serialized Name: SupportTopic.id
+        /// </summary>
         public string Id { get; }
-        /// <summary> Unique resource Id. </summary>
+        /// <summary>
+        /// Unique resource Id
+        /// Serialized Name: SupportTopic.pesId
+        /// </summary>
         public string PesId { get; }
     }
 }

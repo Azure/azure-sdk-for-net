@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The AppLogsConfiguration. </summary>
+    /// <summary>
+    /// The AppLogsConfiguration.
+    /// Serialized Name: AppLogsConfiguration
+    /// </summary>
     public partial class AppLogsConfiguration
     {
         /// <summary> Initializes a new instance of AppLogsConfiguration. </summary>
@@ -16,17 +19,17 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of AppLogsConfiguration. </summary>
-        /// <param name="destination"></param>
-        /// <param name="logAnalyticsConfiguration"></param>
+        /// <param name="destination"> Serialized Name: AppLogsConfiguration.destination. </param>
+        /// <param name="logAnalyticsConfiguration"> Serialized Name: AppLogsConfiguration.logAnalyticsConfiguration. </param>
         internal AppLogsConfiguration(string destination, LogAnalyticsConfiguration logAnalyticsConfiguration)
         {
             Destination = destination;
             LogAnalyticsConfiguration = logAnalyticsConfiguration;
         }
 
-        /// <summary> Gets or sets the destination. </summary>
+        /// <summary> Serialized Name: AppLogsConfiguration.destination. </summary>
         public string Destination { get; set; }
-        /// <summary> Gets or sets the log analytics configuration. </summary>
+        /// <summary> Serialized Name: AppLogsConfiguration.logAnalyticsConfiguration. </summary>
         public LogAnalyticsConfiguration LogAnalyticsConfiguration { get; set; }
     }
 }

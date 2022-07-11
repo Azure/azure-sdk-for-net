@@ -27,11 +27,26 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="virtualNetworkName"> The Virtual Network name. </param>
-        /// <param name="virtualNetworkConnection"> The Virtual Network summary view. </param>
-        /// <param name="hybridConnections"> The Hybrid Connections summary view. </param>
-        /// <param name="hybridConnectionsV2"> The Hybrid Connection V2 (Service Bus) view. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="virtualNetworkName">
+        /// The Virtual Network name.
+        /// Serialized Name: NetworkFeatures.properties.virtualNetworkName
+        /// </param>
+        /// <param name="virtualNetworkConnection">
+        /// The Virtual Network summary view.
+        /// Serialized Name: NetworkFeatures.properties.virtualNetworkConnection
+        /// </param>
+        /// <param name="hybridConnections">
+        /// The Hybrid Connections summary view.
+        /// Serialized Name: NetworkFeatures.properties.hybridConnections
+        /// </param>
+        /// <param name="hybridConnectionsV2">
+        /// The Hybrid Connection V2 (Service Bus) view.
+        /// Serialized Name: NetworkFeatures.properties.hybridConnectionsV2
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         internal NetworkFeaturesData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string virtualNetworkName, VnetInfo virtualNetworkConnection, IReadOnlyList<RelayServiceConnectionEntityData> hybridConnections, IReadOnlyList<HybridConnectionData> hybridConnectionsV2, string kind) : base(id, name, resourceType, systemData)
         {
             VirtualNetworkName = virtualNetworkName;
@@ -41,15 +56,30 @@ namespace Azure.ResourceManager.AppService
             Kind = kind;
         }
 
-        /// <summary> The Virtual Network name. </summary>
+        /// <summary>
+        /// The Virtual Network name.
+        /// Serialized Name: NetworkFeatures.properties.virtualNetworkName
+        /// </summary>
         public string VirtualNetworkName { get; }
-        /// <summary> The Virtual Network summary view. </summary>
+        /// <summary>
+        /// The Virtual Network summary view.
+        /// Serialized Name: NetworkFeatures.properties.virtualNetworkConnection
+        /// </summary>
         public VnetInfo VirtualNetworkConnection { get; }
-        /// <summary> The Hybrid Connections summary view. </summary>
+        /// <summary>
+        /// The Hybrid Connections summary view.
+        /// Serialized Name: NetworkFeatures.properties.hybridConnections
+        /// </summary>
         public IReadOnlyList<RelayServiceConnectionEntityData> HybridConnections { get; }
-        /// <summary> The Hybrid Connection V2 (Service Bus) view. </summary>
+        /// <summary>
+        /// The Hybrid Connection V2 (Service Bus) view.
+        /// Serialized Name: NetworkFeatures.properties.hybridConnectionsV2
+        /// </summary>
         public IReadOnlyList<HybridConnectionData> HybridConnectionsV2 { get; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         public string Kind { get; set; }
     }
 }

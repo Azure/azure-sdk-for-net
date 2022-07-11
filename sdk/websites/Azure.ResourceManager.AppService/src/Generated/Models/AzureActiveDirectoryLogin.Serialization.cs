@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DisableWWWAuthenticate))
+            if (Optional.IsDefined(IsDisableWWWAuthenticate))
             {
                 writer.WritePropertyName("disableWWWAuthenticate");
-                writer.WriteBooleanValue(DisableWWWAuthenticate.Value);
+                writer.WriteBooleanValue(IsDisableWWWAuthenticate.Value);
             }
             writer.WriteEndObject();
         }

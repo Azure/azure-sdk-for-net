@@ -28,20 +28,20 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("deletedSiteId");
                 writer.WriteStringValue(DeletedSiteId);
             }
-            if (Optional.IsDefined(RecoverConfiguration))
+            if (Optional.IsDefined(IsRecoverConfiguration))
             {
                 writer.WritePropertyName("recoverConfiguration");
-                writer.WriteBooleanValue(RecoverConfiguration.Value);
+                writer.WriteBooleanValue(IsRecoverConfiguration.Value);
             }
             if (Optional.IsDefined(SnapshotTime))
             {
                 writer.WritePropertyName("snapshotTime");
                 writer.WriteStringValue(SnapshotTime);
             }
-            if (Optional.IsDefined(UseDRSecondary))
+            if (Optional.IsDefined(IsUseDRSecondary))
             {
                 writer.WritePropertyName("useDRSecondary");
-                writer.WriteBooleanValue(UseDRSecondary.Value);
+                writer.WriteBooleanValue(IsUseDRSecondary.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

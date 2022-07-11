@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("stagingEnvironmentPolicy");
                 writer.WriteStringValue(StagingEnvironmentPolicy.Value.ToSerialString());
             }
-            if (Optional.IsDefined(AllowConfigFileUpdates))
+            if (Optional.IsDefined(IsAllowConfigFileUpdates))
             {
                 writer.WritePropertyName("allowConfigFileUpdates");
-                writer.WriteBooleanValue(AllowConfigFileUpdates.Value);
+                writer.WriteBooleanValue(IsAllowConfigFileUpdates.Value);
             }
             if (Optional.IsDefined(TemplateProperties))
             {

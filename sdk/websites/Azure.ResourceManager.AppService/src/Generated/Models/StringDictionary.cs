@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> String dictionary resource. </summary>
+    /// <summary>
+    /// String dictionary resource.
+    /// Serialized Name: StringDictionary
+    /// </summary>
     public partial class StringDictionary : ResourceData
     {
         /// <summary> Initializes a new instance of StringDictionary. </summary>
@@ -25,17 +28,29 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Settings. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="properties">
+        /// Settings.
+        /// Serialized Name: StringDictionary.properties
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         internal StringDictionary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> properties, string kind) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Kind = kind;
         }
 
-        /// <summary> Settings. </summary>
+        /// <summary>
+        /// Settings.
+        /// Serialized Name: StringDictionary.properties
+        /// </summary>
         public IDictionary<string, string> Properties { get; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         public string Kind { get; set; }
     }
 }

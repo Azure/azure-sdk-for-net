@@ -7,12 +7,21 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Indicates whether the hostname is a standard or repository hostname. </summary>
+    /// <summary>
+    /// Indicates whether the hostname is a standard or repository hostname.
+    /// Serialized Name: HostType
+    /// </summary>
     public enum HostType
     {
-        /// <summary> Standard. </summary>
+        /// <summary>
+        /// Standard
+        /// Serialized Name: HostType.Standard
+        /// </summary>
         Standard,
-        /// <summary> Repository. </summary>
+        /// <summary>
+        /// Repository
+        /// Serialized Name: HostType.Repository
+        /// </summary>
         Repository
     }
 }

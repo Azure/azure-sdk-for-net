@@ -386,11 +386,11 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ServerfarmHybridConnectionNamespaceRelayResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServerfarmHybridConnectionNamespaceRelayResource> GetHybridConnectionsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ServerfarmHybridConnectionNamespaceRelayResource> GetHybridConnectionRelaysAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ServerfarmHybridConnectionNamespaceRelayResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.GetHybridConnections");
+                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.GetHybridConnectionRelays");
                 scope.Start();
                 try
                 {
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.AppService
             }
             async Task<Page<ServerfarmHybridConnectionNamespaceRelayResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.GetHybridConnections");
+                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.GetHybridConnectionRelays");
                 scope.Start();
                 try
                 {
@@ -428,11 +428,11 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ServerfarmHybridConnectionNamespaceRelayResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServerfarmHybridConnectionNamespaceRelayResource> GetHybridConnections(CancellationToken cancellationToken = default)
+        public virtual Pageable<ServerfarmHybridConnectionNamespaceRelayResource> GetHybridConnectionRelays(CancellationToken cancellationToken = default)
         {
             Page<ServerfarmHybridConnectionNamespaceRelayResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.GetHybridConnections");
+                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.GetHybridConnectionRelays");
                 scope.Start();
                 try
                 {
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.AppService
             }
             Page<ServerfarmHybridConnectionNamespaceRelayResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.GetHybridConnections");
+                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.GetHybridConnectionRelays");
                 scope.Start();
                 try
                 {

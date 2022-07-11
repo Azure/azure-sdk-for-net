@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The LogAnalyticsConfiguration. </summary>
+    /// <summary>
+    /// The LogAnalyticsConfiguration.
+    /// Serialized Name: LogAnalyticsConfiguration
+    /// </summary>
     public partial class LogAnalyticsConfiguration
     {
         /// <summary> Initializes a new instance of LogAnalyticsConfiguration. </summary>
@@ -16,17 +19,17 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of LogAnalyticsConfiguration. </summary>
-        /// <param name="customerId"></param>
-        /// <param name="sharedKey"></param>
+        /// <param name="customerId"> Serialized Name: LogAnalyticsConfiguration.customerId. </param>
+        /// <param name="sharedKey"> Serialized Name: LogAnalyticsConfiguration.sharedKey. </param>
         internal LogAnalyticsConfiguration(string customerId, string sharedKey)
         {
             CustomerId = customerId;
             SharedKey = sharedKey;
         }
 
-        /// <summary> Gets or sets the customer id. </summary>
+        /// <summary> Serialized Name: LogAnalyticsConfiguration.customerId. </summary>
         public string CustomerId { get; set; }
-        /// <summary> Gets or sets the shared key. </summary>
+        /// <summary> Serialized Name: LogAnalyticsConfiguration.sharedKey. </summary>
         public string SharedKey { get; set; }
     }
 }

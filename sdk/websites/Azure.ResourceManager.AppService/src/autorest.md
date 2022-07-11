@@ -15,27 +15,29 @@ tag: package-2021-02
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
+mgmt-debug:
+  show-serialized-names: true
 modelerfour:
   flatten-payloads: false
   lenient-model-deduplication: true
   naming:
     override:
-      Site: WebSite
-      AppServiceCertificateOrderPatchResource: AppServiceCertificateOrderPatch
-      AppServiceCertificatePatchResource: AppServiceCertificatePatch
-      AppServiceEnvironmentPatchResource: AppServiceEnvironmentPatchOptions
-      AppserviceGithubToken: AppServiceGithubToken
-      AppServicePlanPatchResource: AppServicePlanPatchOptions
-      Contact: ContactInformation 
-      Login: LoginInformation
-      MSDeploy: MsDeploy
-      MSDeployLog: MsDeployLog
-      MSDeployLogEntry: MsDeployLogEntry
-      Operation: OperationInformation
-      Recommendation: AppServiceRecommendation
-      Resource: AppServiceResource
+    #   Site: WebSite
+    #   AppServiceCertificateOrderPatchResource: AppServiceCertificateOrderPatch
+    #   AppServiceCertificatePatchResource: AppServiceCertificatePatch
+    #   AppServiceEnvironmentPatchResource: AppServiceEnvironmentPatchOptions
+    #   AppserviceGithubToken: AppServiceGithubToken
+    #   AppServicePlanPatchResource: AppServicePlanPatchOptions
+    #   Contact: ContactInformation 
+    #   Login: LoginInformation
+    #   MSDeploy: MsDeploy
+    #   MSDeployLog: MsDeployLog
+    #   MSDeployLogEntry: MsDeployLogEntry
+    #   Operation: OperationInformation
+    #   Recommendation: AppServiceRecommendation
+    #   Resource: AppServiceResource
       Status: OperationStatus
-      DetectorResponse: AppServiceDetector
+    #   DetectorResponse: AppServiceDetector
       DetectorDefinitionResource: DetectorDefinition
 
 list-exception:
@@ -101,6 +103,8 @@ override-operation-name:
   StaticSites_ResetStaticSiteApiKey: ResetApiKey
   StaticSites_UpdateStaticSiteUser: UpdateUser
   CheckNameAvailability: CheckAppServiceNameAvailability
+  AppServicePlans_ListHybridConnections: GetHybridConnectionRelays
+  AppServicePlans_GetHybridConnection: GetServerfarmHybridConnectionRelaysByNamespace
 
 no-property-type-replacement:
 - ApiManagementConfig
@@ -136,12 +140,211 @@ rename-rules:
   Ipsec: IPsec
   SSO: Sso
   URI: Uri
-      
+
+rename-mapping:
+  Site: WebSite
+  AppServiceCertificateOrderPatchResource: AppServiceCertificateOrderPatch
+  AppServiceCertificatePatchResource: AppServiceCertificatePatch
+  AppServiceEnvironmentPatchResource: AppServiceEnvironmentPatchOptions
+  AppserviceGithubToken: AppServiceGithubToken
+  AppServicePlanPatchResource: AppServicePlanPatchOptions
+  Contact: ContactInformation 
+  Login: LoginInformation
+  MSDeploy: MsDeploy
+  MSDeployLog: MsDeployLog
+  MSDeployLogEntry: MsDeployLogEntry
+  Operation: OperationInformation
+  Recommendation: AppServiceRecommendation
+  Resource: AppServiceResource
+#   Status: OperationStatus
+  DetectorResponse: AppServiceDetector
+#   DetectorDefinitionResource: DetectorDefinition
+  ApiKVReference: ApiKeyVaultReference
+#   AppServiceEnvironmentResource: AppServiceEnvironment
+  Domain: AppServiceDomain
+  ValidateResourceTypes.Site: WebSite
+  CheckNameResourceTypes.Site: WebSite
+  ApiKVReference.properties.identityType: Identity
+  AppServiceCertificateOrder.properties.autoRenew: IsAutoRenew
+  AppServiceCertificateOrder.properties.expirationTime: ExpireOn
+  AppServiceCertificateOrder.properties.lastCertificateIssuanceTime: LastCertificateIssuedOn
+  AppServiceCertificateOrder.properties.nextAutoRenewalTimeStamp: NextAutoRenewTimeStamp
+  Domain.properties.privacy: HasPrivacy
+  Domain.properties.expirationTime: ExpireOn
+  Domain.properties.autoRenew: IsAutoRenew
+  AppServiceEnvironment.properties.ipsslAddressCount: IPSslAddressCount
+  AppServiceEnvironment.properties.suspended: IsSuspended
+  AppServicePlan.properties.elasticScaleEnabled: IsElasticScaleEnabled
+  AppServicePlan.properties.freeOfferExpirationTime: FreeOfferExpiredOn
+  AppServicePlan.properties.hyperV: IsHyperV
+  AppServicePlan.properties.perSiteScaling: IsPerSiteScaling
+  AppServicePlan.properties.reserved: IsReserved
+  AppServicePlan.properties.spotExpirationTime: SpotExpireOn
+  AppServicePlan.properties.zoneRedundant: IsZoneRedundant
+  BackupItem.properties.created: CreatedOn
+  BackupItem.properties.finishedTimeStamp: FinishedOn
+  BackupItem.properties.lastRestoreTimeStamp: LastRestoreOn
+  BackupItem.properties.scheduled: IsScheduled
+  Certificate.properties.expirationDate: ExpireOn
+  Certificate.properties.valid: IsValid
+  ContinuousWebJob.properties.using_sdk: IsUseingSdk
+  Deployment.properties.active: IsActive
+  KubeEnvironment.properties.internalLoadBalancerEnabled: IsInternalLoadBalancerEnabled
+  MigrateMySqlStatus.properties.localMySqlEnabled: IsLocalMySqlEnabled
+  MSDeployStatus.properties.complete: IsComplete
+  PrivateAccess.properties.enabled: IsEnabled
+  ResourceHealthMetadata.properties.signalAvailability: HasSignalAvailability
+  SiteConfig.properties.acrUseManagedIdentityCreds: HasAcrUseManagedIdentityCreds
+  SiteConfig.properties.alwaysOn: IsAlwaysOn
+  SiteConfig.properties.autoHealEnabled: IsAutoHealEnabled
+  SiteConfig.properties.detailedErrorLoggingEnabled: IsDetailedErrorLogginEnabled
+  SiteConfig.properties.functionsRuntimeScaleMonitoringEnabled: IsFunctionsRuntimeScaleMonitorEnabled
+  SiteConfig.properties.http20Enabled: IsHttpLoggingEnabled
+  SiteConfig.properties.localMySqlEnabled: IsLocalMySqlEnabled
+  SiteConfig.properties.remoteDebuggingEnabled: IsRemoteDebuggingEnabled
+  SiteConfig.properties.requestTracingEnabled: IsRequestTracingEnabled
+  SiteConfig.properties.vnetRouteAllEnabled: IsVnetRouteAllEnabled
+  SiteConfig.properties.webSocketsEnabled: IsWebSocketsEnabled
+  EnabledConfig.enabled: IsDetailedErrorMessagesEnabled
+  SiteSourceControl.properties.deploymentRollbackEnabled: IsDeploymentRollbackEnabled
+  StaticSiteBuildARMResource.properties.createdTimeUtc: CreatedOn
+  SwiftVirtualNetwork.properties.swiftSupported: IsSwiftSupported
+  TopLevelDomain.properties.privacy: HasPrivacy
+  TriggeredWebJob.properties.using_sdk: IsUsingSdk
+  VnetInfoResource.properties.resyncRequired: IsResyncRequired
+  WebJob.properties.using_sdk: IsUsingSdk
+  Site.properties.clientAffinityEnabled: IsClientAffinityEnabled
+  Site.properties.clientCertEnabled: IsClientCertEnabled
+  Site.properties.enabled: IsEnabled
+  Site.properties.hostNamesDisabled: IsHostNamesDisabled
+  Site.properties.httpsOnly: IsHttpsOnly
+  Site.properties.hyperV: IsHyperV
+  Site.properties.storageAccountRequired: IsStorageAccountRequired
+  CsmPublishingProfileOptions.includeDisasterRecoveryEndpoints: IsIncludeDisasterRecoveryEndpoints
+  AppServiceCertificateOrderPatchResource.properties.autoRenew: IsAutoRenew
+  AppServiceCertificateOrderPatchResource.properties.nextAutoRenewalTimeStamp: NextAutoRenewalTimeStampOn
+  DomainPatchResource.properties.autoRenew: IsAutoRenew
+  DomainPatchResource.properties.privacy: HasPrivacy
+  DomainPatchResource.properties.readyForDnsRecordManagement: IsReadyForDnsRecordManagement
+  AppServiceEnvironmentAutoGenerated.hasLinuxWorkers: IsHasLinuxWorkers
+  AppServiceEnvironmentAutoGenerated.ipsslAddressCount: IPSslAddressCount
+  AppServiceEnvironmentAutoGenerated.suspended: IsSuspended
+  AppServiceEnvironmentAutoGenerated.zoneRedundant: IsZoneRedundant
+  AppServicePlanPatchResource.properties.elasticScaleEnabled: IsElasticScaleEnabled
+  AppServicePlanPatchResource.properties.hyperV: IsHyperV
+  AppServicePlanPatchResource.properties.perSiteScaling: IsPerSiteScaling
+  AppServicePlanPatchResource.properties.reserved: IsReserved
+  AppServicePlanPatchResource.properties.zoneRedundant: IsZoneRedundant
+  AuthPlatform.enabled: IsEnabled
+  AzureActiveDirectory.enabled: IsEnabled
+  AzureActiveDirectoryLogin.disableWWWAuthenticate: IsDisableWWWAuthenticate
+  AzureBlobStorageHttpLogsConfig.enabled: IsEnabled
+  AzureStaticWebApps.enabled: IsEnabled
+  BackupRequest.properties.storageAccountUrl: IsEnabled
+  BackupSchedule.keepAtLeastOneBackup: IsKeepAtLeastOneBackup
+  CertificateDetails.notAfter: NoAfterOn
+  CertificateDetails.notBefore: NoBeforeOn
+  CertificateEmail.properties.timeStamp: TimeStampOn
+  CertificatePatchResource.properties.valid: IsValid
+  CloningInfo.cloneCustomHostNames: IsCloneCustomHostNames
+  CloningInfo.cloneSourceControl: IsCloneSourceControl
+  CloningInfo.configureLoadBalancing: IsConfigureLoadBalancing
+  CloningInfo.overwrite: IsOverwrite
+  ContainerInfo.currentTimeStamp: CurrentTimeStampOn
+  ContainerInfo.previousTimeStamp: PreviousTimeStampOn
+  CorsSettings.supportCredentials: IsSupportCredentials
+  CsmSlotEntity.preserveVnet: IsPreserveVnet
+  CustomOpenIdConnectProvider.enabled: IsEnabled
+  DeletedAppRestoreRequest.properties.recoverConfiguration: IsRecoverConfiguration
+  DeletedAppRestoreRequest.properties.useDRSecondary: IsUseDRSecondary
+  DiagnosticDetectorResponse.properties.issueDetected: IsIssueDetected
+  DiagnosticMetricSample.timestamp: TimestampOn
+  Dimension.toBeExportedForShoebox: IsToBeExportedForShoebox
+  DomainAvailabilityCheckResult.available: IsAvailable
+  Facebook.enabled: IsEnabled
+  FileSystemHttpLogsConfig.enabled: IsEnabled
+  FunctionAppRuntimeSettings.remoteDebuggingSupported: IsRemoteDebuggingSupported
+  GitHub.enabled: IsEnabled
+  GitHubActionConfiguration.generateWorkflowFile: IsGenerateWorkflowFile
+  GlobalValidation.requireAuthentication: IsGlobalValidation
+  Google.enabled: IsEnabled
+  HostNameSslState.toUpdate: IsToUpdate
+  HttpSettings.requireHttps: IsRequireHttps
+  KubeEnvironmentPatchResource.properties.internalLoadBalancerEnabled: IsInternalLoadBalancerEnabled
+  LegacyMicrosoftAccount.enabled: IsEnabled
+  Login.preserveUrlFragmentsForLogins: IsPreserveUrlFragmentsForLogins
+  MetricSpecification.enableRegionalMdmAccount: IsEnableRegionalMdmAccount
+  MetricSpecification.fillGapWithZero: IsFillGapWithZero
+  MetricSpecification.supportsInstanceLevelAggregation: IsSupportsInstanceLevelAggregation
+  MSDeploy.properties.appOffline: IsAppOffline
+  MSDeploy.properties.skipAppData: IsSkipAppData
+  Nonce.validateNonce: IsValiddateNonce
+  PerfMonSample.time: MeasuredCounterTime
+  PremierAddOnOffer.properties.promoCodeRequired: IsPromoCodeRequired
+  ResourceNameAvailability.nameAvailable: IsNameAvailable
+  RestoreRequest.properties.adjustConnectionStrings: IsAdjustConnectionStrings
+  RestoreRequest.properties.ignoreConflictingHostNames: IsIgnoreConflictingHostNames
+  RestoreRequest.properties.ignoreDatabases: IsIgnoreDatabases
+  RestoreRequest.properties.overwrite: IsOverwrite
+  SiteAuthSettings.properties.enabled: IsEnabled
+  SiteAuthSettings.properties.tokenStoreEnabled: IsTokenStoreEnabled
+  SiteConfigProperties.acrUseManagedIdentityCreds: IsAcrUseManagedIdentityCreds
+  SiteConfigProperties.alwaysOn: IsAlwaysOn
+  SiteConfigProperties.autoHealEnabled: AutoHealEnabled
+  SiteConfigProperties.functionsRuntimeScaleMonitoringEnabled: IsFunctionsRuntimeScaleMonitoringEnabled
+  SiteConfigProperties.detailedErrorLoggingEnabled: IsDetailedErrorLoggingEnabled
+  SiteConfigProperties.httpLoggingEnabled: IsHttpLoggingEnabled
+  SiteConfigProperties.http20Enabled: IsHttp20Enabled
+  SiteConfigProperties.localMySqlEnabled: IsLocalMySqlEnabled
+  SiteConfigProperties.remoteDebuggingEnabled: IsRemoteDebuggingEnabled
+  SiteConfigProperties.requestTracingEnabled: IsRequestTracingEnabled
+  SiteConfigProperties.scmIpSecurityRestrictionsUseMain: IsScmIPSecurityRestrictionsUseMain
+  SiteConfigProperties.use32BitWorkerProcess: IsUse32BitWorkerProcess
+  SiteConfigProperties.vnetRouteAllEnabled: IsVnetRouteAllEnabled
+  SiteConfigProperties.webSocketsEnabled: IsWebSocketsEnabled
+  SiteConfigPropertiesDictionary.use32BitWorkerProcess: IsUse32BitWorkerProcess
+  SiteConfigurationSnapshotInfo.properties.time: SnapshotTakenTime
+  SitePatchResource.properties.clientAffinityEnabled: IsClientAffinityEnabled
+  SitePatchResource.properties.clientCertEnabled: IsClientCertEnabled
+  SitePatchResource.properties.enabled: IsEnabled
+  SitePatchResource.properties.hostNamesDisabled: IsHostNamesDisabled
+  SitePatchResource.properties.httpsOnly: IsHttpOnly
+  SitePatchResource.properties.hyperV: IsHyperV
+  SitePatchResource.properties.lastModifiedTimeUtc: LastModifiedTimeOn
+  SitePatchResource.properties.scmSiteAlsoStopped: IsScmSiteAlsoStopped
+  SitePatchResource.properties.storageAccountRequired: IsStorageAccountRequired
+  SitePatchResource.properties.suspendedTill: SuspendTillOn
+  SiteSealRequest.lightTheme: IsLightTheme
+  SkuDescription.locations: AzureLocations
+  SnapshotRestoreRequest.properties.ignoreConflictingHostNames: IsIgnoreConflictingHostNames
+  SnapshotRestoreRequest.properties.overwrite: IsOverwrite
+  SnapshotRestoreRequest.properties.recoverConfiguration: IsRecoverConfiguration
+  StackMajorVersion.applicationInsights: IsApplicationInsights
+  StampCapacity.excludeFromCapacityAllocation: IsExcludeFromCapacityAllocation
+  StaticSitePatchResource.properties.allowConfigFileUpdates: IsAllowConfigFileUpdates
+  StaticSiteBuildProperties.appLocation: AppAzureLocation
+  StaticSiteBuildProperties.apiLocation: ApiAzureLocation
+  StaticSiteBuildProperties.appArtifactLocation: AppArtifactAzureLocation
+  StaticSiteBuildProperties.outputLocation: OutputAzureLocation
+  StaticSiteBuildProperties.skipGithubActionWorkflowGeneration: IsSkipGithubActionWorkflowGeneration
+  StaticSiteResetPropertiesARMResource.properties.shouldUpdateRepository: IsShouldUpdateRepository
+  StorageMigrationOptions.properties.blockWriteAccessToSite: IsBlockWriteAccessToSite
+  TokenStore.enabled: IsEnabled
+  TopLevelDomainAgreementOption.forTransfer: IsForTransfer
+  TopLevelDomainAgreementOption.includePrivacy: IsIncludePrivacy
+  Twitter.enabled: IsEnabled
+  ValidateRequest.properties.needLinuxWorkers: IsNeedLinuxWorkers
+  VirtualApplication.preloadEnabled: IsPreloadEnabled
+  VirtualIPMapping.inUse: IsInUse
+  VnetInfo.resyncRequired: IsResyncRequired
+  VnetValidationFailureDetails.properties.failed: IsFailed
+  WebAppRuntimeSettings.remoteDebuggingSupported: IsRemoteDebuggingSupported
+
 directive:
 # rename model
-  - rename-model:
-      from: ApiKVReference
-      to: ApiKeyVaultReference
+#   - rename-model:
+#       from: ApiKVReference
+#       to: ApiKeyVaultReference
 # 2 AppServiceCertificate exists in 2 different files 
 #   - rename-model:
 #       from: AppServiceCertificateResource
@@ -158,9 +361,9 @@ directive:
 #   - rename-model:
 #       from: DetectorResponse
 #       to: AppServiceDetector
-  - rename-model:
-      from: Domain
-      to: AppServiceDomain
+#   - rename-model:
+#       from: Domain
+#       to: AppServiceDomain
 #   - rename-model:
 #       from: SiteConfig
 #       to: SiteConfigProperties

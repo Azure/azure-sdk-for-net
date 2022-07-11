@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> A static site user provided function. </summary>
+    /// <summary>
+    /// A static site user provided function.
+    /// Serialized Name: StaticSiteUserProvidedFunctionApp
+    /// </summary>
     public partial class StaticSiteUserProvidedFunctionApp : ResourceData
     {
         /// <summary> Initializes a new instance of StaticSiteUserProvidedFunctionApp. </summary>
@@ -24,10 +27,22 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="functionAppResourceId"> The resource id of the function app registered with the static site. </param>
-        /// <param name="functionAppRegion"> The region of the function app registered with the static site. </param>
-        /// <param name="createdOn"> The date and time on which the function app was registered with the static site. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="functionAppResourceId">
+        /// The resource id of the function app registered with the static site
+        /// Serialized Name: StaticSiteUserProvidedFunctionApp.properties.functionAppResourceId
+        /// </param>
+        /// <param name="functionAppRegion">
+        /// The region of the function app registered with the static site
+        /// Serialized Name: StaticSiteUserProvidedFunctionApp.properties.functionAppRegion
+        /// </param>
+        /// <param name="createdOn">
+        /// The date and time on which the function app was registered with the static site.
+        /// Serialized Name: StaticSiteUserProvidedFunctionApp.properties.createdOn
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         internal StaticSiteUserProvidedFunctionApp(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string functionAppResourceId, string functionAppRegion, DateTimeOffset? createdOn, string kind) : base(id, name, resourceType, systemData)
         {
             FunctionAppResourceId = functionAppResourceId;
@@ -36,13 +51,25 @@ namespace Azure.ResourceManager.AppService.Models
             Kind = kind;
         }
 
-        /// <summary> The resource id of the function app registered with the static site. </summary>
+        /// <summary>
+        /// The resource id of the function app registered with the static site
+        /// Serialized Name: StaticSiteUserProvidedFunctionApp.properties.functionAppResourceId
+        /// </summary>
         public string FunctionAppResourceId { get; set; }
-        /// <summary> The region of the function app registered with the static site. </summary>
+        /// <summary>
+        /// The region of the function app registered with the static site
+        /// Serialized Name: StaticSiteUserProvidedFunctionApp.properties.functionAppRegion
+        /// </summary>
         public string FunctionAppRegion { get; set; }
-        /// <summary> The date and time on which the function app was registered with the static site. </summary>
+        /// <summary>
+        /// The date and time on which the function app was registered with the static site.
+        /// Serialized Name: StaticSiteUserProvidedFunctionApp.properties.createdOn
+        /// </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         public string Kind { get; set; }
     }
 }

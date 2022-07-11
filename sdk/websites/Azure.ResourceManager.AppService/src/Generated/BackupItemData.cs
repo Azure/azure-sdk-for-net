@@ -27,22 +27,67 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="backupId"> Id of the backup. </param>
-        /// <param name="storageAccountUri"> SAS URL for the storage account container which contains this backup. </param>
-        /// <param name="blobName"> Name of the blob which contains data for this backup. </param>
-        /// <param name="namePropertiesName"> Name of this backup. </param>
-        /// <param name="status"> Backup status. </param>
-        /// <param name="sizeInBytes"> Size of the backup in bytes. </param>
-        /// <param name="created"> Timestamp of the backup creation. </param>
-        /// <param name="log"> Details regarding this backup. Might contain an error message. </param>
-        /// <param name="databases"> List of databases included in the backup. </param>
-        /// <param name="scheduled"> True if this backup has been created due to a schedule being triggered. </param>
-        /// <param name="lastRestoreTimeStamp"> Timestamp of a last restore operation which used this backup. </param>
-        /// <param name="finishedTimeStamp"> Timestamp when this backup finished. </param>
-        /// <param name="correlationId"> Unique correlation identifier. Please use this along with the timestamp while communicating with Azure support. </param>
-        /// <param name="websiteSizeInBytes"> Size of the original web app which has been backed up. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        internal BackupItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? backupId, Uri storageAccountUri, string blobName, string namePropertiesName, BackupItemStatus? status, long? sizeInBytes, DateTimeOffset? created, string log, IReadOnlyList<DatabaseBackupSetting> databases, bool? scheduled, DateTimeOffset? lastRestoreTimeStamp, DateTimeOffset? finishedTimeStamp, string correlationId, long? websiteSizeInBytes, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="backupId">
+        /// Id of the backup.
+        /// Serialized Name: BackupItem.properties.id
+        /// </param>
+        /// <param name="storageAccountUri">
+        /// SAS URL for the storage account container which contains this backup.
+        /// Serialized Name: BackupItem.properties.storageAccountUrl
+        /// </param>
+        /// <param name="blobName">
+        /// Name of the blob which contains data for this backup.
+        /// Serialized Name: BackupItem.properties.blobName
+        /// </param>
+        /// <param name="namePropertiesName">
+        /// Name of this backup.
+        /// Serialized Name: BackupItem.properties.name
+        /// </param>
+        /// <param name="status">
+        /// Backup status.
+        /// Serialized Name: BackupItem.properties.status
+        /// </param>
+        /// <param name="sizeInBytes">
+        /// Size of the backup in bytes.
+        /// Serialized Name: BackupItem.properties.sizeInBytes
+        /// </param>
+        /// <param name="createdOn">
+        /// Timestamp of the backup creation.
+        /// Serialized Name: BackupItem.properties.created
+        /// </param>
+        /// <param name="log">
+        /// Details regarding this backup. Might contain an error message.
+        /// Serialized Name: BackupItem.properties.log
+        /// </param>
+        /// <param name="databases">
+        /// List of databases included in the backup.
+        /// Serialized Name: BackupItem.properties.databases
+        /// </param>
+        /// <param name="isScheduled">
+        /// True if this backup has been created due to a schedule being triggered.
+        /// Serialized Name: BackupItem.properties.scheduled
+        /// </param>
+        /// <param name="lastRestoreOn">
+        /// Timestamp of a last restore operation which used this backup.
+        /// Serialized Name: BackupItem.properties.lastRestoreTimeStamp
+        /// </param>
+        /// <param name="finishedOn">
+        /// Timestamp when this backup finished.
+        /// Serialized Name: BackupItem.properties.finishedTimeStamp
+        /// </param>
+        /// <param name="correlationId">
+        /// Unique correlation identifier. Please use this along with the timestamp while communicating with Azure support.
+        /// Serialized Name: BackupItem.properties.correlationId
+        /// </param>
+        /// <param name="websiteSizeInBytes">
+        /// Size of the original web app which has been backed up.
+        /// Serialized Name: BackupItem.properties.websiteSizeInBytes
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
+        internal BackupItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? backupId, Uri storageAccountUri, string blobName, string namePropertiesName, BackupItemStatus? status, long? sizeInBytes, DateTimeOffset? createdOn, string log, IReadOnlyList<DatabaseBackupSetting> databases, bool? isScheduled, DateTimeOffset? lastRestoreOn, DateTimeOffset? finishedOn, string correlationId, long? websiteSizeInBytes, string kind) : base(id, name, resourceType, systemData)
         {
             BackupId = backupId;
             StorageAccountUri = storageAccountUri;
@@ -50,46 +95,91 @@ namespace Azure.ResourceManager.AppService
             NamePropertiesName = namePropertiesName;
             Status = status;
             SizeInBytes = sizeInBytes;
-            Created = created;
+            CreatedOn = createdOn;
             Log = log;
             Databases = databases;
-            Scheduled = scheduled;
-            LastRestoreTimeStamp = lastRestoreTimeStamp;
-            FinishedTimeStamp = finishedTimeStamp;
+            IsScheduled = isScheduled;
+            LastRestoreOn = lastRestoreOn;
+            FinishedOn = finishedOn;
             CorrelationId = correlationId;
             WebsiteSizeInBytes = websiteSizeInBytes;
             Kind = kind;
         }
 
-        /// <summary> Id of the backup. </summary>
+        /// <summary>
+        /// Id of the backup.
+        /// Serialized Name: BackupItem.properties.id
+        /// </summary>
         public int? BackupId { get; }
-        /// <summary> SAS URL for the storage account container which contains this backup. </summary>
+        /// <summary>
+        /// SAS URL for the storage account container which contains this backup.
+        /// Serialized Name: BackupItem.properties.storageAccountUrl
+        /// </summary>
         public Uri StorageAccountUri { get; }
-        /// <summary> Name of the blob which contains data for this backup. </summary>
+        /// <summary>
+        /// Name of the blob which contains data for this backup.
+        /// Serialized Name: BackupItem.properties.blobName
+        /// </summary>
         public string BlobName { get; }
-        /// <summary> Name of this backup. </summary>
+        /// <summary>
+        /// Name of this backup.
+        /// Serialized Name: BackupItem.properties.name
+        /// </summary>
         public string NamePropertiesName { get; }
-        /// <summary> Backup status. </summary>
+        /// <summary>
+        /// Backup status.
+        /// Serialized Name: BackupItem.properties.status
+        /// </summary>
         public BackupItemStatus? Status { get; }
-        /// <summary> Size of the backup in bytes. </summary>
+        /// <summary>
+        /// Size of the backup in bytes.
+        /// Serialized Name: BackupItem.properties.sizeInBytes
+        /// </summary>
         public long? SizeInBytes { get; }
-        /// <summary> Timestamp of the backup creation. </summary>
-        public DateTimeOffset? Created { get; }
-        /// <summary> Details regarding this backup. Might contain an error message. </summary>
+        /// <summary>
+        /// Timestamp of the backup creation.
+        /// Serialized Name: BackupItem.properties.created
+        /// </summary>
+        public DateTimeOffset? CreatedOn { get; }
+        /// <summary>
+        /// Details regarding this backup. Might contain an error message.
+        /// Serialized Name: BackupItem.properties.log
+        /// </summary>
         public string Log { get; }
-        /// <summary> List of databases included in the backup. </summary>
+        /// <summary>
+        /// List of databases included in the backup.
+        /// Serialized Name: BackupItem.properties.databases
+        /// </summary>
         public IReadOnlyList<DatabaseBackupSetting> Databases { get; }
-        /// <summary> True if this backup has been created due to a schedule being triggered. </summary>
-        public bool? Scheduled { get; }
-        /// <summary> Timestamp of a last restore operation which used this backup. </summary>
-        public DateTimeOffset? LastRestoreTimeStamp { get; }
-        /// <summary> Timestamp when this backup finished. </summary>
-        public DateTimeOffset? FinishedTimeStamp { get; }
-        /// <summary> Unique correlation identifier. Please use this along with the timestamp while communicating with Azure support. </summary>
+        /// <summary>
+        /// True if this backup has been created due to a schedule being triggered.
+        /// Serialized Name: BackupItem.properties.scheduled
+        /// </summary>
+        public bool? IsScheduled { get; }
+        /// <summary>
+        /// Timestamp of a last restore operation which used this backup.
+        /// Serialized Name: BackupItem.properties.lastRestoreTimeStamp
+        /// </summary>
+        public DateTimeOffset? LastRestoreOn { get; }
+        /// <summary>
+        /// Timestamp when this backup finished.
+        /// Serialized Name: BackupItem.properties.finishedTimeStamp
+        /// </summary>
+        public DateTimeOffset? FinishedOn { get; }
+        /// <summary>
+        /// Unique correlation identifier. Please use this along with the timestamp while communicating with Azure support.
+        /// Serialized Name: BackupItem.properties.correlationId
+        /// </summary>
         public string CorrelationId { get; }
-        /// <summary> Size of the original web app which has been backed up. </summary>
+        /// <summary>
+        /// Size of the original web app which has been backed up.
+        /// Serialized Name: BackupItem.properties.websiteSizeInBytes
+        /// </summary>
         public long? WebsiteSizeInBytes { get; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         public string Kind { get; set; }
     }
 }

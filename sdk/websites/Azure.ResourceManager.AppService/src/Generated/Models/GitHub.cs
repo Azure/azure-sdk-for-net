@@ -9,7 +9,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The configuration settings of the GitHub provider. </summary>
+    /// <summary>
+    /// The configuration settings of the GitHub provider.
+    /// Serialized Name: GitHub
+    /// </summary>
     public partial class GitHub
     {
         /// <summary> Initializes a new instance of GitHub. </summary>
@@ -18,23 +21,44 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of GitHub. </summary>
-        /// <param name="enabled"> &lt;code&gt;false&lt;/code&gt; if the GitHub provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
-        /// <param name="registration"> The configuration settings of the app registration for the GitHub provider. </param>
-        /// <param name="login"> The configuration settings of the login flow. </param>
-        internal GitHub(bool? enabled, ClientRegistration registration, LoginScopes login)
+        /// <param name="isEnabled">
+        /// &lt;code&gt;false&lt;/code&gt; if the GitHub provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;.
+        /// Serialized Name: GitHub.enabled
+        /// </param>
+        /// <param name="registration">
+        /// The configuration settings of the app registration for the GitHub provider.
+        /// Serialized Name: GitHub.registration
+        /// </param>
+        /// <param name="login">
+        /// The configuration settings of the login flow.
+        /// Serialized Name: GitHub.login
+        /// </param>
+        internal GitHub(bool? isEnabled, ClientRegistration registration, LoginScopes login)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             Registration = registration;
             Login = login;
         }
 
-        /// <summary> &lt;code&gt;false&lt;/code&gt; if the GitHub provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </summary>
-        public bool? Enabled { get; set; }
-        /// <summary> The configuration settings of the app registration for the GitHub provider. </summary>
+        /// <summary>
+        /// &lt;code&gt;false&lt;/code&gt; if the GitHub provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;.
+        /// Serialized Name: GitHub.enabled
+        /// </summary>
+        public bool? IsEnabled { get; set; }
+        /// <summary>
+        /// The configuration settings of the app registration for the GitHub provider.
+        /// Serialized Name: GitHub.registration
+        /// </summary>
         public ClientRegistration Registration { get; set; }
-        /// <summary> The configuration settings of the login flow. </summary>
+        /// <summary>
+        /// The configuration settings of the login flow.
+        /// Serialized Name: GitHub.login
+        /// </summary>
         internal LoginScopes Login { get; set; }
-        /// <summary> A list of the scopes that should be requested while authenticating. </summary>
+        /// <summary>
+        /// A list of the scopes that should be requested while authenticating.
+        /// Serialized Name: LoginScopes.scopes
+        /// </summary>
         public IList<string> LoginScopes
         {
             get

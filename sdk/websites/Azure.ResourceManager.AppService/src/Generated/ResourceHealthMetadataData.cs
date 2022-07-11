@@ -23,21 +23,39 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="category"> The category that the resource matches in the RHC Policy File. </param>
-        /// <param name="signalAvailability"> Is there a health signal for the resource. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        internal ResourceHealthMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string category, bool? signalAvailability, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="category">
+        /// The category that the resource matches in the RHC Policy File
+        /// Serialized Name: ResourceHealthMetadata.properties.category
+        /// </param>
+        /// <param name="hasSignalAvailability">
+        /// Is there a health signal for the resource
+        /// Serialized Name: ResourceHealthMetadata.properties.signalAvailability
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
+        internal ResourceHealthMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string category, bool? hasSignalAvailability, string kind) : base(id, name, resourceType, systemData)
         {
             Category = category;
-            SignalAvailability = signalAvailability;
+            HasSignalAvailability = hasSignalAvailability;
             Kind = kind;
         }
 
-        /// <summary> The category that the resource matches in the RHC Policy File. </summary>
+        /// <summary>
+        /// The category that the resource matches in the RHC Policy File
+        /// Serialized Name: ResourceHealthMetadata.properties.category
+        /// </summary>
         public string Category { get; set; }
-        /// <summary> Is there a health signal for the resource. </summary>
-        public bool? SignalAvailability { get; set; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Is there a health signal for the resource
+        /// Serialized Name: ResourceHealthMetadata.properties.signalAvailability
+        /// </summary>
+        public bool? HasSignalAvailability { get; set; }
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         public string Kind { get; set; }
     }
 }

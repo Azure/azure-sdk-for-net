@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.AppService.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsCollectionDefined(HostNameSslStates))
             {
@@ -60,35 +60,35 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("isXenon");
                 writer.WriteBooleanValue(IsXenon.Value);
             }
-            if (Optional.IsDefined(HyperV))
+            if (Optional.IsDefined(IsHyperV))
             {
                 writer.WritePropertyName("hyperV");
-                writer.WriteBooleanValue(HyperV.Value);
+                writer.WriteBooleanValue(IsHyperV.Value);
             }
             if (Optional.IsDefined(SiteConfig))
             {
                 writer.WritePropertyName("siteConfig");
                 writer.WriteObjectValue(SiteConfig);
             }
-            if (Optional.IsDefined(ScmSiteAlsoStopped))
+            if (Optional.IsDefined(IsScmSiteAlsoStopped))
             {
                 writer.WritePropertyName("scmSiteAlsoStopped");
-                writer.WriteBooleanValue(ScmSiteAlsoStopped.Value);
+                writer.WriteBooleanValue(IsScmSiteAlsoStopped.Value);
             }
             if (Optional.IsDefined(HostingEnvironmentProfile))
             {
                 writer.WritePropertyName("hostingEnvironmentProfile");
                 writer.WriteObjectValue(HostingEnvironmentProfile);
             }
-            if (Optional.IsDefined(ClientAffinityEnabled))
+            if (Optional.IsDefined(IsClientAffinityEnabled))
             {
                 writer.WritePropertyName("clientAffinityEnabled");
-                writer.WriteBooleanValue(ClientAffinityEnabled.Value);
+                writer.WriteBooleanValue(IsClientAffinityEnabled.Value);
             }
-            if (Optional.IsDefined(ClientCertEnabled))
+            if (Optional.IsDefined(IsClientCertEnabled))
             {
                 writer.WritePropertyName("clientCertEnabled");
-                writer.WriteBooleanValue(ClientCertEnabled.Value);
+                writer.WriteBooleanValue(IsClientCertEnabled.Value);
             }
             if (Optional.IsDefined(ClientCertMode))
             {
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("clientCertExclusionPaths");
                 writer.WriteStringValue(ClientCertExclusionPaths);
             }
-            if (Optional.IsDefined(HostNamesDisabled))
+            if (Optional.IsDefined(IsHostNamesDisabled))
             {
                 writer.WritePropertyName("hostNamesDisabled");
-                writer.WriteBooleanValue(HostNamesDisabled.Value);
+                writer.WriteBooleanValue(IsHostNamesDisabled.Value);
             }
             if (Optional.IsDefined(CustomDomainVerificationId))
             {
@@ -125,20 +125,20 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("cloningInfo");
                 writer.WriteObjectValue(CloningInfo);
             }
-            if (Optional.IsDefined(HttpsOnly))
+            if (Optional.IsDefined(IsHttpOnly))
             {
                 writer.WritePropertyName("httpsOnly");
-                writer.WriteBooleanValue(HttpsOnly.Value);
+                writer.WriteBooleanValue(IsHttpOnly.Value);
             }
             if (Optional.IsDefined(RedundancyMode))
             {
                 writer.WritePropertyName("redundancyMode");
                 writer.WriteStringValue(RedundancyMode.Value.ToSerialString());
             }
-            if (Optional.IsDefined(StorageAccountRequired))
+            if (Optional.IsDefined(IsStorageAccountRequired))
             {
                 writer.WritePropertyName("storageAccountRequired");
-                writer.WriteBooleanValue(StorageAccountRequired.Value);
+                writer.WriteBooleanValue(IsStorageAccountRequired.Value);
             }
             if (Optional.IsDefined(KeyVaultReferenceIdentity))
             {

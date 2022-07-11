@@ -11,11 +11,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> A private link resource. </summary>
+    /// <summary>
+    /// A private link resource
+    /// Serialized Name: PrivateLinkResource
+    /// </summary>
     public partial class AppServicePrivateLinkResource : ResourceData
     {
         /// <summary> Initializes a new instance of AppServicePrivateLinkResource. </summary>
-        /// <param name="properties"> Properties of a private link resource. </param>
+        /// <param name="properties">
+        /// Properties of a private link resource
+        /// Serialized Name: PrivateLinkResource.properties
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         internal AppServicePrivateLinkResource(AppServicePrivateLinkResourceProperties properties)
         {
@@ -32,13 +38,19 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Properties of a private link resource. </param>
+        /// <param name="properties">
+        /// Properties of a private link resource
+        /// Serialized Name: PrivateLinkResource.properties
+        /// </param>
         internal AppServicePrivateLinkResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppServicePrivateLinkResourceProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
-        /// <summary> Properties of a private link resource. </summary>
+        /// <summary>
+        /// Properties of a private link resource
+        /// Serialized Name: PrivateLinkResource.properties
+        /// </summary>
         public AppServicePrivateLinkResourceProperties Properties { get; }
     }
 }

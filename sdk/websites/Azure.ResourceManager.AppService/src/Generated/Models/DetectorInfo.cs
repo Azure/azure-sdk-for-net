@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Definition of Detector. </summary>
+    /// <summary>
+    /// Definition of Detector
+    /// Serialized Name: DetectorInfo
+    /// </summary>
     public partial class DetectorInfo
     {
         /// <summary> Initializes a new instance of DetectorInfo. </summary>
@@ -21,15 +24,42 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of DetectorInfo. </summary>
-        /// <param name="id"> Id of detector. </param>
-        /// <param name="name"> Name of detector. </param>
-        /// <param name="description"> Short description of the detector and its purpose. </param>
-        /// <param name="author"> Author of the detector. </param>
-        /// <param name="category"> Problem category. This serves for organizing group for detectors. </param>
-        /// <param name="supportTopicList"> List of Support Topics for which this detector is enabled. </param>
-        /// <param name="analysisType"> Analysis Types for which this detector should apply to. </param>
-        /// <param name="detectorType"> Whether this detector is an Analysis Detector or not. </param>
-        /// <param name="score"> Defines score of a detector to power ML based matching. </param>
+        /// <param name="id">
+        /// Id of detector
+        /// Serialized Name: DetectorInfo.id
+        /// </param>
+        /// <param name="name">
+        /// Name of detector
+        /// Serialized Name: DetectorInfo.name
+        /// </param>
+        /// <param name="description">
+        /// Short description of the detector and its purpose.
+        /// Serialized Name: DetectorInfo.description
+        /// </param>
+        /// <param name="author">
+        /// Author of the detector.
+        /// Serialized Name: DetectorInfo.author
+        /// </param>
+        /// <param name="category">
+        /// Problem category. This serves for organizing group for detectors.
+        /// Serialized Name: DetectorInfo.category
+        /// </param>
+        /// <param name="supportTopicList">
+        /// List of Support Topics for which this detector is enabled.
+        /// Serialized Name: DetectorInfo.supportTopicList
+        /// </param>
+        /// <param name="analysisType">
+        /// Analysis Types for which this detector should apply to.
+        /// Serialized Name: DetectorInfo.analysisType
+        /// </param>
+        /// <param name="detectorType">
+        /// Whether this detector is an Analysis Detector or not.
+        /// Serialized Name: DetectorInfo.type
+        /// </param>
+        /// <param name="score">
+        /// Defines score of a detector to power ML based matching.
+        /// Serialized Name: DetectorInfo.score
+        /// </param>
         internal DetectorInfo(string id, string name, string description, string author, string category, IReadOnlyList<SupportTopic> supportTopicList, IReadOnlyList<string> analysisType, DetectorType? detectorType, float? score)
         {
             Id = id;
@@ -43,23 +73,50 @@ namespace Azure.ResourceManager.AppService.Models
             Score = score;
         }
 
-        /// <summary> Id of detector. </summary>
+        /// <summary>
+        /// Id of detector
+        /// Serialized Name: DetectorInfo.id
+        /// </summary>
         public string Id { get; }
-        /// <summary> Name of detector. </summary>
+        /// <summary>
+        /// Name of detector
+        /// Serialized Name: DetectorInfo.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> Short description of the detector and its purpose. </summary>
+        /// <summary>
+        /// Short description of the detector and its purpose.
+        /// Serialized Name: DetectorInfo.description
+        /// </summary>
         public string Description { get; }
-        /// <summary> Author of the detector. </summary>
+        /// <summary>
+        /// Author of the detector.
+        /// Serialized Name: DetectorInfo.author
+        /// </summary>
         public string Author { get; }
-        /// <summary> Problem category. This serves for organizing group for detectors. </summary>
+        /// <summary>
+        /// Problem category. This serves for organizing group for detectors.
+        /// Serialized Name: DetectorInfo.category
+        /// </summary>
         public string Category { get; }
-        /// <summary> List of Support Topics for which this detector is enabled. </summary>
+        /// <summary>
+        /// List of Support Topics for which this detector is enabled.
+        /// Serialized Name: DetectorInfo.supportTopicList
+        /// </summary>
         public IReadOnlyList<SupportTopic> SupportTopicList { get; }
-        /// <summary> Analysis Types for which this detector should apply to. </summary>
+        /// <summary>
+        /// Analysis Types for which this detector should apply to.
+        /// Serialized Name: DetectorInfo.analysisType
+        /// </summary>
         public IReadOnlyList<string> AnalysisType { get; }
-        /// <summary> Whether this detector is an Analysis Detector or not. </summary>
+        /// <summary>
+        /// Whether this detector is an Analysis Detector or not.
+        /// Serialized Name: DetectorInfo.type
+        /// </summary>
         public DetectorType? DetectorType { get; }
-        /// <summary> Defines score of a detector to power ML based matching. </summary>
+        /// <summary>
+        /// Defines score of a detector to power ML based matching.
+        /// Serialized Name: DetectorInfo.score
+        /// </summary>
         public float? Score { get; }
     }
 }

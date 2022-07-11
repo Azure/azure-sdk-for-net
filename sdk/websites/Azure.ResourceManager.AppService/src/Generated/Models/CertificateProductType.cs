@@ -7,12 +7,21 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Certificate product type. </summary>
+    /// <summary>
+    /// Certificate product type.
+    /// Serialized Name: CertificateProductType
+    /// </summary>
     public enum CertificateProductType
     {
-        /// <summary> StandardDomainValidatedSsl. </summary>
+        /// <summary>
+        /// StandardDomainValidatedSsl
+        /// Serialized Name: CertificateProductType.StandardDomainValidatedSsl
+        /// </summary>
         StandardDomainValidatedSsl,
-        /// <summary> StandardDomainValidatedWildCardSsl. </summary>
+        /// <summary>
+        /// StandardDomainValidatedWildCardSsl
+        /// Serialized Name: CertificateProductType.StandardDomainValidatedWildCardSsl
+        /// </summary>
         StandardDomainValidatedWildCardSsl
     }
 }

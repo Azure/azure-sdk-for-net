@@ -9,12 +9,21 @@ using System;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Database connection string value to type pair. </summary>
+    /// <summary>
+    /// Database connection string value to type pair.
+    /// Serialized Name: ConnStringValueTypePair
+    /// </summary>
     public partial class ConnStringValueTypePair
     {
         /// <summary> Initializes a new instance of ConnStringValueTypePair. </summary>
-        /// <param name="value"> Value of pair. </param>
-        /// <param name="connectionStringType"> Type of database. </param>
+        /// <param name="value">
+        /// Value of pair.
+        /// Serialized Name: ConnStringValueTypePair.value
+        /// </param>
+        /// <param name="connectionStringType">
+        /// Type of database.
+        /// Serialized Name: ConnStringValueTypePair.type
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConnStringValueTypePair(string value, ConnectionStringType connectionStringType)
         {
@@ -27,9 +36,15 @@ namespace Azure.ResourceManager.AppService.Models
             ConnectionStringType = connectionStringType;
         }
 
-        /// <summary> Value of pair. </summary>
+        /// <summary>
+        /// Value of pair.
+        /// Serialized Name: ConnStringValueTypePair.value
+        /// </summary>
         public string Value { get; set; }
-        /// <summary> Type of database. </summary>
+        /// <summary>
+        /// Type of database.
+        /// Serialized Name: ConnStringValueTypePair.type
+        /// </summary>
         public ConnectionStringType ConnectionStringType { get; set; }
     }
 }

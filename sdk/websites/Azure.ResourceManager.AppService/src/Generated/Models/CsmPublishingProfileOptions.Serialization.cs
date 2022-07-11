@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("format");
                 writer.WriteStringValue(Format.Value.ToString());
             }
-            if (Optional.IsDefined(IncludeDisasterRecoveryEndpoints))
+            if (Optional.IsDefined(IsIncludeDisasterRecoveryEndpoints))
             {
                 writer.WritePropertyName("includeDisasterRecoveryEndpoints");
-                writer.WriteBooleanValue(IncludeDisasterRecoveryEndpoints.Value);
+                writer.WriteBooleanValue(IsIncludeDisasterRecoveryEndpoints.Value);
             }
             writer.WriteEndObject();
         }

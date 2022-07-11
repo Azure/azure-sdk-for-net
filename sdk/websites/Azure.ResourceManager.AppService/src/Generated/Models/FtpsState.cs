@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> State of FTP / FTPS service. </summary>
+    /// <summary>
+    /// State of FTP / FTPS service
+    /// Serialized Name: FtpsState
+    /// </summary>
     public readonly partial struct FtpsState : IEquatable<FtpsState>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.AppService.Models
         private const string FtpsOnlyValue = "FtpsOnly";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> AllAllowed. </summary>
+        /// <summary>
+        /// AllAllowed
+        /// Serialized Name: FtpsState.AllAllowed
+        /// </summary>
         public static FtpsState AllAllowed { get; } = new FtpsState(AllAllowedValue);
-        /// <summary> FtpsOnly. </summary>
+        /// <summary>
+        /// FtpsOnly
+        /// Serialized Name: FtpsState.FtpsOnly
+        /// </summary>
         public static FtpsState FtpsOnly { get; } = new FtpsState(FtpsOnlyValue);
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: FtpsState.Disabled
+        /// </summary>
         public static FtpsState Disabled { get; } = new FtpsState(DisabledValue);
         /// <summary> Determines if two <see cref="FtpsState"/> values are the same. </summary>
         public static bool operator ==(FtpsState left, FtpsState right) => left.Equals(right);

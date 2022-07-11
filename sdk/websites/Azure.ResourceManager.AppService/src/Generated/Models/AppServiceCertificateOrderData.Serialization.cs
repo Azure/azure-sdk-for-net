@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("productType");
                 writer.WriteStringValue(ProductType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(AutoRenew))
+            if (Optional.IsDefined(IsAutoRenew))
             {
                 writer.WritePropertyName("autoRenew");
-                writer.WriteBooleanValue(AutoRenew.Value);
+                writer.WriteBooleanValue(IsAutoRenew.Value);
             }
             if (Optional.IsDefined(Csr))
             {

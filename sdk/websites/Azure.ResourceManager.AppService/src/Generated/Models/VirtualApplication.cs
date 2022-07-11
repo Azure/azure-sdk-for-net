@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Virtual application in an app. </summary>
+    /// <summary>
+    /// Virtual application in an app.
+    /// Serialized Name: VirtualApplication
+    /// </summary>
     public partial class VirtualApplication
     {
         /// <summary> Initializes a new instance of VirtualApplication. </summary>
@@ -20,25 +23,49 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of VirtualApplication. </summary>
-        /// <param name="virtualPath"> Virtual path. </param>
-        /// <param name="physicalPath"> Physical path. </param>
-        /// <param name="preloadEnabled"> &lt;code&gt;true&lt;/code&gt; if preloading is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="virtualDirectories"> Virtual directories for virtual application. </param>
-        internal VirtualApplication(string virtualPath, string physicalPath, bool? preloadEnabled, IList<VirtualDirectory> virtualDirectories)
+        /// <param name="virtualPath">
+        /// Virtual path.
+        /// Serialized Name: VirtualApplication.virtualPath
+        /// </param>
+        /// <param name="physicalPath">
+        /// Physical path.
+        /// Serialized Name: VirtualApplication.physicalPath
+        /// </param>
+        /// <param name="isPreloadEnabled">
+        /// &lt;code&gt;true&lt;/code&gt; if preloading is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: VirtualApplication.preloadEnabled
+        /// </param>
+        /// <param name="virtualDirectories">
+        /// Virtual directories for virtual application.
+        /// Serialized Name: VirtualApplication.virtualDirectories
+        /// </param>
+        internal VirtualApplication(string virtualPath, string physicalPath, bool? isPreloadEnabled, IList<VirtualDirectory> virtualDirectories)
         {
             VirtualPath = virtualPath;
             PhysicalPath = physicalPath;
-            PreloadEnabled = preloadEnabled;
+            IsPreloadEnabled = isPreloadEnabled;
             VirtualDirectories = virtualDirectories;
         }
 
-        /// <summary> Virtual path. </summary>
+        /// <summary>
+        /// Virtual path.
+        /// Serialized Name: VirtualApplication.virtualPath
+        /// </summary>
         public string VirtualPath { get; set; }
-        /// <summary> Physical path. </summary>
+        /// <summary>
+        /// Physical path.
+        /// Serialized Name: VirtualApplication.physicalPath
+        /// </summary>
         public string PhysicalPath { get; set; }
-        /// <summary> &lt;code&gt;true&lt;/code&gt; if preloading is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
-        public bool? PreloadEnabled { get; set; }
-        /// <summary> Virtual directories for virtual application. </summary>
+        /// <summary>
+        /// &lt;code&gt;true&lt;/code&gt; if preloading is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: VirtualApplication.preloadEnabled
+        /// </summary>
+        public bool? IsPreloadEnabled { get; set; }
+        /// <summary>
+        /// Virtual directories for virtual application.
+        /// Serialized Name: VirtualApplication.virtualDirectories
+        /// </summary>
         public IList<VirtualDirectory> VirtualDirectories { get; }
     }
 }

@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Static Site Reset Properties ARM resource. </summary>
+    /// <summary>
+    /// Static Site Reset Properties ARM resource.
+    /// Serialized Name: StaticSiteResetPropertiesARMResource
+    /// </summary>
     public partial class StaticSiteResetPropertiesARMResource : ResourceData
     {
         /// <summary> Initializes a new instance of StaticSiteResetPropertiesARMResource. </summary>
@@ -23,21 +26,39 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="repositoryToken"> The token which proves admin privileges to the repository. </param>
-        /// <param name="shouldUpdateRepository"> Determines whether the repository should be updated with the new properties. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        internal StaticSiteResetPropertiesARMResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string repositoryToken, bool? shouldUpdateRepository, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="repositoryToken">
+        /// The token which proves admin privileges to the repository.
+        /// Serialized Name: StaticSiteResetPropertiesARMResource.properties.repositoryToken
+        /// </param>
+        /// <param name="isShouldUpdateRepository">
+        /// Determines whether the repository should be updated with the new properties.
+        /// Serialized Name: StaticSiteResetPropertiesARMResource.properties.shouldUpdateRepository
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
+        internal StaticSiteResetPropertiesARMResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string repositoryToken, bool? isShouldUpdateRepository, string kind) : base(id, name, resourceType, systemData)
         {
             RepositoryToken = repositoryToken;
-            ShouldUpdateRepository = shouldUpdateRepository;
+            IsShouldUpdateRepository = isShouldUpdateRepository;
             Kind = kind;
         }
 
-        /// <summary> The token which proves admin privileges to the repository. </summary>
+        /// <summary>
+        /// The token which proves admin privileges to the repository.
+        /// Serialized Name: StaticSiteResetPropertiesARMResource.properties.repositoryToken
+        /// </summary>
         public string RepositoryToken { get; set; }
-        /// <summary> Determines whether the repository should be updated with the new properties. </summary>
-        public bool? ShouldUpdateRepository { get; set; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Determines whether the repository should be updated with the new properties.
+        /// Serialized Name: StaticSiteResetPropertiesARMResource.properties.shouldUpdateRepository
+        /// </summary>
+        public bool? IsShouldUpdateRepository { get; set; }
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         public string Kind { get; set; }
     }
 }

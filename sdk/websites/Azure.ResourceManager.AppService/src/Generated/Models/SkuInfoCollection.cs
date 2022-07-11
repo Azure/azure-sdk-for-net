@@ -11,11 +11,17 @@ using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Collection of SKU information. </summary>
+    /// <summary>
+    /// Collection of SKU information.
+    /// Serialized Name: SkuInfoCollection
+    /// </summary>
     internal partial class SkuInfoCollection
     {
         /// <summary> Initializes a new instance of SkuInfoCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: SkuInfoCollection.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SkuInfoCollection(IEnumerable<SkuInfo> value)
         {
@@ -28,17 +34,29 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of SkuInfoCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
-        /// <param name="nextLink"> Link to next page of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: SkuInfoCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to next page of resources.
+        /// Serialized Name: SkuInfoCollection.nextLink
+        /// </param>
         internal SkuInfoCollection(IReadOnlyList<SkuInfo> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Collection of resources. </summary>
+        /// <summary>
+        /// Collection of resources.
+        /// Serialized Name: SkuInfoCollection.value
+        /// </summary>
         public IReadOnlyList<SkuInfo> Value { get; }
-        /// <summary> Link to next page of resources. </summary>
+        /// <summary>
+        /// Link to next page of resources.
+        /// Serialized Name: SkuInfoCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

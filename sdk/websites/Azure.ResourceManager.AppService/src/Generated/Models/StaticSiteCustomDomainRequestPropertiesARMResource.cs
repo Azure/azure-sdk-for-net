@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Static Site Custom Domain Request Properties ARM resource. </summary>
+    /// <summary>
+    /// Static Site Custom Domain Request Properties ARM resource.
+    /// Serialized Name: StaticSiteCustomDomainRequestPropertiesARMResource
+    /// </summary>
     public partial class StaticSiteCustomDomainRequestPropertiesARMResource : ResourceData
     {
         /// <summary> Initializes a new instance of StaticSiteCustomDomainRequestPropertiesARMResource. </summary>
@@ -23,17 +26,29 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="validationMethod"> Validation method for adding a custom domain. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="validationMethod">
+        /// Validation method for adding a custom domain
+        /// Serialized Name: StaticSiteCustomDomainRequestPropertiesARMResource.properties.validationMethod
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         internal StaticSiteCustomDomainRequestPropertiesARMResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string validationMethod, string kind) : base(id, name, resourceType, systemData)
         {
             ValidationMethod = validationMethod;
             Kind = kind;
         }
 
-        /// <summary> Validation method for adding a custom domain. </summary>
+        /// <summary>
+        /// Validation method for adding a custom domain
+        /// Serialized Name: StaticSiteCustomDomainRequestPropertiesARMResource.properties.validationMethod
+        /// </summary>
         public string ValidationMethod { get; set; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         public string Kind { get; set; }
     }
 }

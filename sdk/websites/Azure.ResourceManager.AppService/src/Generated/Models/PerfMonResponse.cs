@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Performance monitor API response. </summary>
+    /// <summary>
+    /// Performance monitor API response.
+    /// Serialized Name: PerfMonResponse
+    /// </summary>
     public partial class PerfMonResponse
     {
         /// <summary> Initializes a new instance of PerfMonResponse. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of PerfMonResponse. </summary>
-        /// <param name="code"> The response code. </param>
-        /// <param name="message"> The message. </param>
-        /// <param name="data"> The performance monitor counters. </param>
+        /// <param name="code">
+        /// The response code.
+        /// Serialized Name: PerfMonResponse.code
+        /// </param>
+        /// <param name="message">
+        /// The message.
+        /// Serialized Name: PerfMonResponse.message
+        /// </param>
+        /// <param name="data">
+        /// The performance monitor counters.
+        /// Serialized Name: PerfMonResponse.data
+        /// </param>
         internal PerfMonResponse(string code, string message, PerfMonSet data)
         {
             Code = code;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.AppService.Models
             Data = data;
         }
 
-        /// <summary> The response code. </summary>
+        /// <summary>
+        /// The response code.
+        /// Serialized Name: PerfMonResponse.code
+        /// </summary>
         public string Code { get; }
-        /// <summary> The message. </summary>
+        /// <summary>
+        /// The message.
+        /// Serialized Name: PerfMonResponse.message
+        /// </summary>
         public string Message { get; }
-        /// <summary> The performance monitor counters. </summary>
+        /// <summary>
+        /// The performance monitor counters.
+        /// Serialized Name: PerfMonResponse.data
+        /// </summary>
         public PerfMonSet Data { get; }
     }
 }

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Http logs to file system configuration. </summary>
+    /// <summary>
+    /// Http logs to file system configuration.
+    /// Serialized Name: FileSystemHttpLogsConfig
+    /// </summary>
     public partial class FileSystemHttpLogsConfig
     {
         /// <summary> Initializes a new instance of FileSystemHttpLogsConfig. </summary>
@@ -20,33 +23,43 @@ namespace Azure.ResourceManager.AppService.Models
         /// Maximum size in megabytes that http log files can use.
         /// When reached old log files will be removed to make space for new ones.
         /// Value can range between 25 and 100.
+        /// Serialized Name: FileSystemHttpLogsConfig.retentionInMb
         /// </param>
         /// <param name="retentionInDays">
         /// Retention in days.
         /// Remove files older than X days.
         /// 0 or lower means no retention.
+        /// Serialized Name: FileSystemHttpLogsConfig.retentionInDays
         /// </param>
-        /// <param name="enabled"> True if configuration is enabled, false if it is disabled and null if configuration is not set. </param>
-        internal FileSystemHttpLogsConfig(int? retentionInMb, int? retentionInDays, bool? enabled)
+        /// <param name="isEnabled">
+        /// True if configuration is enabled, false if it is disabled and null if configuration is not set.
+        /// Serialized Name: FileSystemHttpLogsConfig.enabled
+        /// </param>
+        internal FileSystemHttpLogsConfig(int? retentionInMb, int? retentionInDays, bool? isEnabled)
         {
             RetentionInMb = retentionInMb;
             RetentionInDays = retentionInDays;
-            Enabled = enabled;
+            IsEnabled = isEnabled;
         }
 
         /// <summary>
         /// Maximum size in megabytes that http log files can use.
         /// When reached old log files will be removed to make space for new ones.
         /// Value can range between 25 and 100.
+        /// Serialized Name: FileSystemHttpLogsConfig.retentionInMb
         /// </summary>
         public int? RetentionInMb { get; set; }
         /// <summary>
         /// Retention in days.
         /// Remove files older than X days.
         /// 0 or lower means no retention.
+        /// Serialized Name: FileSystemHttpLogsConfig.retentionInDays
         /// </summary>
         public int? RetentionInDays { get; set; }
-        /// <summary> True if configuration is enabled, false if it is disabled and null if configuration is not set. </summary>
-        public bool? Enabled { get; set; }
+        /// <summary>
+        /// True if configuration is enabled, false if it is disabled and null if configuration is not set.
+        /// Serialized Name: FileSystemHttpLogsConfig.enabled
+        /// </summary>
+        public bool? IsEnabled { get; set; }
     }
 }

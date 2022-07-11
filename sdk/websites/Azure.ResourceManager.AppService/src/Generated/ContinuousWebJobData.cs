@@ -27,18 +27,51 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="status"> Job status. </param>
-        /// <param name="detailedStatus"> Detailed status. </param>
-        /// <param name="logUri"> Log URL. </param>
-        /// <param name="runCommand"> Run command. </param>
-        /// <param name="uri"> Job URL. </param>
-        /// <param name="extraInfoUri"> Extra Info URL. </param>
-        /// <param name="webJobType"> Job type. </param>
-        /// <param name="error"> Error information. </param>
-        /// <param name="usingSdk"> Using SDK?. </param>
-        /// <param name="settings"> Job settings. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        internal ContinuousWebJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContinuousWebJobStatus? status, string detailedStatus, Uri logUri, string runCommand, Uri uri, Uri extraInfoUri, WebJobType? webJobType, string error, bool? usingSdk, IDictionary<string, BinaryData> settings, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="status">
+        /// Job status.
+        /// Serialized Name: ContinuousWebJob.properties.status
+        /// </param>
+        /// <param name="detailedStatus">
+        /// Detailed status.
+        /// Serialized Name: ContinuousWebJob.properties.detailed_status
+        /// </param>
+        /// <param name="logUri">
+        /// Log URL.
+        /// Serialized Name: ContinuousWebJob.properties.log_url
+        /// </param>
+        /// <param name="runCommand">
+        /// Run command.
+        /// Serialized Name: ContinuousWebJob.properties.run_command
+        /// </param>
+        /// <param name="uri">
+        /// Job URL.
+        /// Serialized Name: ContinuousWebJob.properties.url
+        /// </param>
+        /// <param name="extraInfoUri">
+        /// Extra Info URL.
+        /// Serialized Name: ContinuousWebJob.properties.extra_info_url
+        /// </param>
+        /// <param name="webJobType">
+        /// Job type.
+        /// Serialized Name: ContinuousWebJob.properties.web_job_type
+        /// </param>
+        /// <param name="error">
+        /// Error information.
+        /// Serialized Name: ContinuousWebJob.properties.error
+        /// </param>
+        /// <param name="isUseingSdk">
+        /// Using SDK?
+        /// Serialized Name: ContinuousWebJob.properties.using_sdk
+        /// </param>
+        /// <param name="settings">
+        /// Job settings.
+        /// Serialized Name: ContinuousWebJob.properties.settings
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
+        internal ContinuousWebJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContinuousWebJobStatus? status, string detailedStatus, Uri logUri, string runCommand, Uri uri, Uri extraInfoUri, WebJobType? webJobType, string error, bool? isUseingSdk, IDictionary<string, BinaryData> settings, string kind) : base(id, name, resourceType, systemData)
         {
             Status = status;
             DetailedStatus = detailedStatus;
@@ -48,32 +81,65 @@ namespace Azure.ResourceManager.AppService
             ExtraInfoUri = extraInfoUri;
             WebJobType = webJobType;
             Error = error;
-            UsingSdk = usingSdk;
+            IsUseingSdk = isUseingSdk;
             Settings = settings;
             Kind = kind;
         }
 
-        /// <summary> Job status. </summary>
+        /// <summary>
+        /// Job status.
+        /// Serialized Name: ContinuousWebJob.properties.status
+        /// </summary>
         public ContinuousWebJobStatus? Status { get; set; }
-        /// <summary> Detailed status. </summary>
+        /// <summary>
+        /// Detailed status.
+        /// Serialized Name: ContinuousWebJob.properties.detailed_status
+        /// </summary>
         public string DetailedStatus { get; set; }
-        /// <summary> Log URL. </summary>
+        /// <summary>
+        /// Log URL.
+        /// Serialized Name: ContinuousWebJob.properties.log_url
+        /// </summary>
         public Uri LogUri { get; set; }
-        /// <summary> Run command. </summary>
+        /// <summary>
+        /// Run command.
+        /// Serialized Name: ContinuousWebJob.properties.run_command
+        /// </summary>
         public string RunCommand { get; set; }
-        /// <summary> Job URL. </summary>
+        /// <summary>
+        /// Job URL.
+        /// Serialized Name: ContinuousWebJob.properties.url
+        /// </summary>
         public Uri Uri { get; set; }
-        /// <summary> Extra Info URL. </summary>
+        /// <summary>
+        /// Extra Info URL.
+        /// Serialized Name: ContinuousWebJob.properties.extra_info_url
+        /// </summary>
         public Uri ExtraInfoUri { get; set; }
-        /// <summary> Job type. </summary>
+        /// <summary>
+        /// Job type.
+        /// Serialized Name: ContinuousWebJob.properties.web_job_type
+        /// </summary>
         public WebJobType? WebJobType { get; set; }
-        /// <summary> Error information. </summary>
+        /// <summary>
+        /// Error information.
+        /// Serialized Name: ContinuousWebJob.properties.error
+        /// </summary>
         public string Error { get; set; }
-        /// <summary> Using SDK?. </summary>
-        public bool? UsingSdk { get; set; }
-        /// <summary> Job settings. </summary>
+        /// <summary>
+        /// Using SDK?
+        /// Serialized Name: ContinuousWebJob.properties.using_sdk
+        /// </summary>
+        public bool? IsUseingSdk { get; set; }
+        /// <summary>
+        /// Job settings.
+        /// Serialized Name: ContinuousWebJob.properties.settings
+        /// </summary>
         public IDictionary<string, BinaryData> Settings { get; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         public string Kind { get; set; }
     }
 }

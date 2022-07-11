@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> String dictionary resource. </summary>
+    /// <summary>
+    /// String dictionary resource.
+    /// Serialized Name: ConnectionStringDictionary
+    /// </summary>
     public partial class ConnectionStringDictionary : ResourceData
     {
         /// <summary> Initializes a new instance of ConnectionStringDictionary. </summary>
@@ -25,17 +28,29 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Connection strings. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="properties">
+        /// Connection strings.
+        /// Serialized Name: ConnectionStringDictionary.properties
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         internal ConnectionStringDictionary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, ConnStringValueTypePair> properties, string kind) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Kind = kind;
         }
 
-        /// <summary> Connection strings. </summary>
+        /// <summary>
+        /// Connection strings.
+        /// Serialized Name: ConnectionStringDictionary.properties
+        /// </summary>
         public IDictionary<string, ConnStringValueTypePair> Properties { get; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         public string Kind { get; set; }
     }
 }

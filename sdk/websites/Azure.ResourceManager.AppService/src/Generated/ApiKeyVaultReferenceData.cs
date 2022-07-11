@@ -24,49 +24,61 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="reference"></param>
-        /// <param name="status"></param>
-        /// <param name="vaultName"></param>
-        /// <param name="secretName"></param>
-        /// <param name="secretVersion"></param>
-        /// <param name="identityType"> Managed service identity. </param>
-        /// <param name="details"></param>
-        /// <param name="source"></param>
-        /// <param name="activeVersion"></param>
-        /// <param name="kind"> Kind of resource. </param>
-        internal ApiKeyVaultReferenceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string reference, ResolveStatus? status, string vaultName, string secretName, string secretVersion, ManagedServiceIdentity identityType, string details, ConfigReferenceSource? source, string activeVersion, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="reference"> Serialized Name: ApiKVReference.properties.reference. </param>
+        /// <param name="status"> Serialized Name: ApiKVReference.properties.status. </param>
+        /// <param name="vaultName"> Serialized Name: ApiKVReference.properties.vaultName. </param>
+        /// <param name="secretName"> Serialized Name: ApiKVReference.properties.secretName. </param>
+        /// <param name="secretVersion"> Serialized Name: ApiKVReference.properties.secretVersion. </param>
+        /// <param name="identity">
+        /// Managed service identity.
+        /// Serialized Name: ApiKVReference.properties.identityType
+        /// </param>
+        /// <param name="details"> Serialized Name: ApiKVReference.properties.details. </param>
+        /// <param name="source"> Serialized Name: ApiKVReference.properties.source. </param>
+        /// <param name="activeVersion"> Serialized Name: ApiKVReference.properties.activeVersion. </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
+        internal ApiKeyVaultReferenceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string reference, ResolveStatus? status, string vaultName, string secretName, string secretVersion, ManagedServiceIdentity identity, string details, ConfigReferenceSource? source, string activeVersion, string kind) : base(id, name, resourceType, systemData)
         {
             Reference = reference;
             Status = status;
             VaultName = vaultName;
             SecretName = secretName;
             SecretVersion = secretVersion;
-            IdentityType = identityType;
+            Identity = identity;
             Details = details;
             Source = source;
             ActiveVersion = activeVersion;
             Kind = kind;
         }
 
-        /// <summary> Gets or sets the reference. </summary>
+        /// <summary> Serialized Name: ApiKVReference.properties.reference. </summary>
         public string Reference { get; set; }
-        /// <summary> Gets or sets the status. </summary>
+        /// <summary> Serialized Name: ApiKVReference.properties.status. </summary>
         public ResolveStatus? Status { get; set; }
-        /// <summary> Gets or sets the vault name. </summary>
+        /// <summary> Serialized Name: ApiKVReference.properties.vaultName. </summary>
         public string VaultName { get; set; }
-        /// <summary> Gets or sets the secret name. </summary>
+        /// <summary> Serialized Name: ApiKVReference.properties.secretName. </summary>
         public string SecretName { get; set; }
-        /// <summary> Gets or sets the secret version. </summary>
+        /// <summary> Serialized Name: ApiKVReference.properties.secretVersion. </summary>
         public string SecretVersion { get; set; }
-        /// <summary> Managed service identity. </summary>
-        public ManagedServiceIdentity IdentityType { get; set; }
-        /// <summary> Gets or sets the details. </summary>
+        /// <summary>
+        /// Managed service identity.
+        /// Serialized Name: ApiKVReference.properties.identityType
+        /// </summary>
+        public ManagedServiceIdentity Identity { get; set; }
+        /// <summary> Serialized Name: ApiKVReference.properties.details. </summary>
         public string Details { get; set; }
-        /// <summary> Gets or sets the source. </summary>
+        /// <summary> Serialized Name: ApiKVReference.properties.source. </summary>
         public ConfigReferenceSource? Source { get; set; }
-        /// <summary> Gets or sets the active version. </summary>
+        /// <summary> Serialized Name: ApiKVReference.properties.activeVersion. </summary>
         public string ActiveVersion { get; set; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         public string Kind { get; set; }
     }
 }

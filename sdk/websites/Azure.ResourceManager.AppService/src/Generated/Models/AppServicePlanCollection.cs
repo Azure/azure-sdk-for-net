@@ -12,11 +12,17 @@ using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Collection of App Service plans. </summary>
+    /// <summary>
+    /// Collection of App Service plans.
+    /// Serialized Name: AppServicePlanCollection
+    /// </summary>
     internal partial class AppServicePlanCollection
     {
         /// <summary> Initializes a new instance of AppServicePlanCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: AppServicePlanCollection.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AppServicePlanCollection(IEnumerable<AppServicePlanData> value)
         {
@@ -29,17 +35,29 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of AppServicePlanCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
-        /// <param name="nextLink"> Link to next page of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: AppServicePlanCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to next page of resources.
+        /// Serialized Name: AppServicePlanCollection.nextLink
+        /// </param>
         internal AppServicePlanCollection(IReadOnlyList<AppServicePlanData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Collection of resources. </summary>
+        /// <summary>
+        /// Collection of resources.
+        /// Serialized Name: AppServicePlanCollection.value
+        /// </summary>
         public IReadOnlyList<AppServicePlanData> Value { get; }
-        /// <summary> Link to next page of resources. </summary>
+        /// <summary>
+        /// Link to next page of resources.
+        /// Serialized Name: AppServicePlanCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

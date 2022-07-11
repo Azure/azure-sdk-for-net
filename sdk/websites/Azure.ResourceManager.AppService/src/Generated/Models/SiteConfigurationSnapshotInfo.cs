@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> A snapshot of a web app configuration. </summary>
+    /// <summary>
+    /// A snapshot of a web app configuration.
+    /// Serialized Name: SiteConfigurationSnapshotInfo
+    /// </summary>
     public partial class SiteConfigurationSnapshotInfo : ResourceData
     {
         /// <summary> Initializes a new instance of SiteConfigurationSnapshotInfo. </summary>
@@ -24,21 +27,39 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="time"> The time the snapshot was taken. </param>
-        /// <param name="snapshotId"> The id of the snapshot. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        internal SiteConfigurationSnapshotInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? time, int? snapshotId, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="snapshotTakenOn">
+        /// The time the snapshot was taken.
+        /// Serialized Name: SiteConfigurationSnapshotInfo.properties.time
+        /// </param>
+        /// <param name="snapshotId">
+        /// The id of the snapshot
+        /// Serialized Name: SiteConfigurationSnapshotInfo.properties.snapshotId
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
+        internal SiteConfigurationSnapshotInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? snapshotTakenOn, int? snapshotId, string kind) : base(id, name, resourceType, systemData)
         {
-            Time = time;
+            SnapshotTakenOn = snapshotTakenOn;
             SnapshotId = snapshotId;
             Kind = kind;
         }
 
-        /// <summary> The time the snapshot was taken. </summary>
-        public DateTimeOffset? Time { get; }
-        /// <summary> The id of the snapshot. </summary>
+        /// <summary>
+        /// The time the snapshot was taken.
+        /// Serialized Name: SiteConfigurationSnapshotInfo.properties.time
+        /// </summary>
+        public DateTimeOffset? SnapshotTakenOn { get; }
+        /// <summary>
+        /// The id of the snapshot
+        /// Serialized Name: SiteConfigurationSnapshotInfo.properties.snapshotId
+        /// </summary>
         public int? SnapshotId { get; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         public string Kind { get; set; }
     }
 }

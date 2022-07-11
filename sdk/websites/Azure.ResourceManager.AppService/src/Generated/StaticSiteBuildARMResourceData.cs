@@ -27,45 +27,99 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="buildId"> An identifier for the static site build. </param>
-        /// <param name="sourceBranch"> The source branch. </param>
-        /// <param name="pullRequestTitle"> The title of a pull request that a static site build is related to. </param>
-        /// <param name="hostname"> The hostname for a static site build. </param>
-        /// <param name="createdTimeUtc"> When this build was created. </param>
-        /// <param name="lastUpdatedOn"> When this build was updated. </param>
-        /// <param name="status"> The status of the static site build. </param>
-        /// <param name="userProvidedFunctionApps"> User provided function apps registered with the static site build. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        internal StaticSiteBuildARMResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string buildId, string sourceBranch, string pullRequestTitle, string hostname, DateTimeOffset? createdTimeUtc, DateTimeOffset? lastUpdatedOn, BuildStatus? status, IReadOnlyList<StaticSiteUserProvidedFunctionApp> userProvidedFunctionApps, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="buildId">
+        /// An identifier for the static site build.
+        /// Serialized Name: StaticSiteBuildARMResource.properties.buildId
+        /// </param>
+        /// <param name="sourceBranch">
+        /// The source branch.
+        /// Serialized Name: StaticSiteBuildARMResource.properties.sourceBranch
+        /// </param>
+        /// <param name="pullRequestTitle">
+        /// The title of a pull request that a static site build is related to.
+        /// Serialized Name: StaticSiteBuildARMResource.properties.pullRequestTitle
+        /// </param>
+        /// <param name="hostname">
+        /// The hostname for a static site build.
+        /// Serialized Name: StaticSiteBuildARMResource.properties.hostname
+        /// </param>
+        /// <param name="createdOn">
+        /// When this build was created.
+        /// Serialized Name: StaticSiteBuildARMResource.properties.createdTimeUtc
+        /// </param>
+        /// <param name="lastUpdatedOn">
+        /// When this build was updated.
+        /// Serialized Name: StaticSiteBuildARMResource.properties.lastUpdatedOn
+        /// </param>
+        /// <param name="status">
+        /// The status of the static site build.
+        /// Serialized Name: StaticSiteBuildARMResource.properties.status
+        /// </param>
+        /// <param name="userProvidedFunctionApps">
+        /// User provided function apps registered with the static site build
+        /// Serialized Name: StaticSiteBuildARMResource.properties.userProvidedFunctionApps
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
+        internal StaticSiteBuildARMResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string buildId, string sourceBranch, string pullRequestTitle, string hostname, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, BuildStatus? status, IReadOnlyList<StaticSiteUserProvidedFunctionApp> userProvidedFunctionApps, string kind) : base(id, name, resourceType, systemData)
         {
             BuildId = buildId;
             SourceBranch = sourceBranch;
             PullRequestTitle = pullRequestTitle;
             Hostname = hostname;
-            CreatedTimeUtc = createdTimeUtc;
+            CreatedOn = createdOn;
             LastUpdatedOn = lastUpdatedOn;
             Status = status;
             UserProvidedFunctionApps = userProvidedFunctionApps;
             Kind = kind;
         }
 
-        /// <summary> An identifier for the static site build. </summary>
+        /// <summary>
+        /// An identifier for the static site build.
+        /// Serialized Name: StaticSiteBuildARMResource.properties.buildId
+        /// </summary>
         public string BuildId { get; }
-        /// <summary> The source branch. </summary>
+        /// <summary>
+        /// The source branch.
+        /// Serialized Name: StaticSiteBuildARMResource.properties.sourceBranch
+        /// </summary>
         public string SourceBranch { get; }
-        /// <summary> The title of a pull request that a static site build is related to. </summary>
+        /// <summary>
+        /// The title of a pull request that a static site build is related to.
+        /// Serialized Name: StaticSiteBuildARMResource.properties.pullRequestTitle
+        /// </summary>
         public string PullRequestTitle { get; }
-        /// <summary> The hostname for a static site build. </summary>
+        /// <summary>
+        /// The hostname for a static site build.
+        /// Serialized Name: StaticSiteBuildARMResource.properties.hostname
+        /// </summary>
         public string Hostname { get; }
-        /// <summary> When this build was created. </summary>
-        public DateTimeOffset? CreatedTimeUtc { get; }
-        /// <summary> When this build was updated. </summary>
+        /// <summary>
+        /// When this build was created.
+        /// Serialized Name: StaticSiteBuildARMResource.properties.createdTimeUtc
+        /// </summary>
+        public DateTimeOffset? CreatedOn { get; }
+        /// <summary>
+        /// When this build was updated.
+        /// Serialized Name: StaticSiteBuildARMResource.properties.lastUpdatedOn
+        /// </summary>
         public DateTimeOffset? LastUpdatedOn { get; }
-        /// <summary> The status of the static site build. </summary>
+        /// <summary>
+        /// The status of the static site build.
+        /// Serialized Name: StaticSiteBuildARMResource.properties.status
+        /// </summary>
         public BuildStatus? Status { get; }
-        /// <summary> User provided function apps registered with the static site build. </summary>
+        /// <summary>
+        /// User provided function apps registered with the static site build
+        /// Serialized Name: StaticSiteBuildARMResource.properties.userProvidedFunctionApps
+        /// </summary>
         public IReadOnlyList<StaticSiteUserProvidedFunctionApp> UserProvidedFunctionApps { get; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         public string Kind { get; set; }
     }
 }

@@ -7,12 +7,21 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> State indicating whether the app has exceeded its quota usage. Read-only. </summary>
+    /// <summary>
+    /// State indicating whether the app has exceeded its quota usage. Read-only.
+    /// Serialized Name: UsageState
+    /// </summary>
     public enum UsageState
     {
-        /// <summary> Normal. </summary>
+        /// <summary>
+        /// Normal
+        /// Serialized Name: UsageState.Normal
+        /// </summary>
         Normal,
-        /// <summary> Exceeded. </summary>
+        /// <summary>
+        /// Exceeded
+        /// Serialized Name: UsageState.Exceeded
+        /// </summary>
         Exceeded
     }
 }

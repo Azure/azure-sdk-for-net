@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The configuration settings of the platform of App Service Authentication/Authorization. </summary>
+    /// <summary>
+    /// The configuration settings of the platform of App Service Authentication/Authorization.
+    /// Serialized Name: AuthPlatform
+    /// </summary>
     public partial class AuthPlatform
     {
         /// <summary> Initializes a new instance of AuthPlatform. </summary>
@@ -16,32 +19,42 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of AuthPlatform. </summary>
-        /// <param name="enabled"> &lt;code&gt;true&lt;/code&gt; if the Authentication / Authorization feature is enabled for the current app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isEnabled">
+        /// &lt;code&gt;true&lt;/code&gt; if the Authentication / Authorization feature is enabled for the current app; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: AuthPlatform.enabled
+        /// </param>
         /// <param name="runtimeVersion">
         /// The RuntimeVersion of the Authentication / Authorization feature in use for the current app.
         /// The setting in this value can control the behavior of certain features in the Authentication / Authorization module.
+        /// Serialized Name: AuthPlatform.runtimeVersion
         /// </param>
         /// <param name="configFilePath">
         /// The path of the config file containing auth settings if they come from a file.
         /// If the path is relative, base will the site&apos;s root directory.
+        /// Serialized Name: AuthPlatform.configFilePath
         /// </param>
-        internal AuthPlatform(bool? enabled, string runtimeVersion, string configFilePath)
+        internal AuthPlatform(bool? isEnabled, string runtimeVersion, string configFilePath)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             RuntimeVersion = runtimeVersion;
             ConfigFilePath = configFilePath;
         }
 
-        /// <summary> &lt;code&gt;true&lt;/code&gt; if the Authentication / Authorization feature is enabled for the current app; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
-        public bool? Enabled { get; set; }
+        /// <summary>
+        /// &lt;code&gt;true&lt;/code&gt; if the Authentication / Authorization feature is enabled for the current app; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: AuthPlatform.enabled
+        /// </summary>
+        public bool? IsEnabled { get; set; }
         /// <summary>
         /// The RuntimeVersion of the Authentication / Authorization feature in use for the current app.
         /// The setting in this value can control the behavior of certain features in the Authentication / Authorization module.
+        /// Serialized Name: AuthPlatform.runtimeVersion
         /// </summary>
         public string RuntimeVersion { get; set; }
         /// <summary>
         /// The path of the config file containing auth settings if they come from a file.
         /// If the path is relative, base will the site&apos;s root directory.
+        /// Serialized Name: AuthPlatform.configFilePath
         /// </summary>
         public string ConfigFilePath { get; set; }
     }

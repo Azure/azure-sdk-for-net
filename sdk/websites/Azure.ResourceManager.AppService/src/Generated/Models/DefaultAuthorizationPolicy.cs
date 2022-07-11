@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The configuration settings of the Azure Active Directory default authorization policy. </summary>
+    /// <summary>
+    /// The configuration settings of the Azure Active Directory default authorization policy.
+    /// Serialized Name: DefaultAuthorizationPolicy
+    /// </summary>
     public partial class DefaultAuthorizationPolicy
     {
         /// <summary> Initializes a new instance of DefaultAuthorizationPolicy. </summary>
@@ -20,17 +23,29 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of DefaultAuthorizationPolicy. </summary>
-        /// <param name="allowedPrincipals"> The configuration settings of the Azure Active Directory allowed principals. </param>
-        /// <param name="allowedApplications"> The configuration settings of the Azure Active Directory allowed applications. </param>
+        /// <param name="allowedPrincipals">
+        /// The configuration settings of the Azure Active Directory allowed principals.
+        /// Serialized Name: DefaultAuthorizationPolicy.allowedPrincipals
+        /// </param>
+        /// <param name="allowedApplications">
+        /// The configuration settings of the Azure Active Directory allowed applications.
+        /// Serialized Name: DefaultAuthorizationPolicy.allowedApplications
+        /// </param>
         internal DefaultAuthorizationPolicy(AllowedPrincipals allowedPrincipals, IList<string> allowedApplications)
         {
             AllowedPrincipals = allowedPrincipals;
             AllowedApplications = allowedApplications;
         }
 
-        /// <summary> The configuration settings of the Azure Active Directory allowed principals. </summary>
+        /// <summary>
+        /// The configuration settings of the Azure Active Directory allowed principals.
+        /// Serialized Name: DefaultAuthorizationPolicy.allowedPrincipals
+        /// </summary>
         public AllowedPrincipals AllowedPrincipals { get; set; }
-        /// <summary> The configuration settings of the Azure Active Directory allowed applications. </summary>
+        /// <summary>
+        /// The configuration settings of the Azure Active Directory allowed applications.
+        /// Serialized Name: DefaultAuthorizationPolicy.allowedApplications
+        /// </summary>
         public IList<string> AllowedApplications { get; }
     }
 }

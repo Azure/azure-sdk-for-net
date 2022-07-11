@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Static Site Function Overview ARM resource. </summary>
+    /// <summary>
+    /// Static Site Function Overview ARM resource.
+    /// Serialized Name: StaticSiteFunctionOverviewARMResource
+    /// </summary>
     public partial class StaticSiteFunctionOverviewARMResource : ResourceData
     {
         /// <summary> Initializes a new instance of StaticSiteFunctionOverviewARMResource. </summary>
@@ -23,9 +26,18 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="functionName"> The name for the function. </param>
-        /// <param name="triggerType"> The trigger type of the function. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="functionName">
+        /// The name for the function
+        /// Serialized Name: StaticSiteFunctionOverviewARMResource.properties.functionName
+        /// </param>
+        /// <param name="triggerType">
+        /// The trigger type of the function
+        /// Serialized Name: StaticSiteFunctionOverviewARMResource.properties.triggerType
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         internal StaticSiteFunctionOverviewARMResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string functionName, TriggerType? triggerType, string kind) : base(id, name, resourceType, systemData)
         {
             FunctionName = functionName;
@@ -33,11 +45,20 @@ namespace Azure.ResourceManager.AppService.Models
             Kind = kind;
         }
 
-        /// <summary> The name for the function. </summary>
+        /// <summary>
+        /// The name for the function
+        /// Serialized Name: StaticSiteFunctionOverviewARMResource.properties.functionName
+        /// </summary>
         public string FunctionName { get; }
-        /// <summary> The trigger type of the function. </summary>
+        /// <summary>
+        /// The trigger type of the function
+        /// Serialized Name: StaticSiteFunctionOverviewARMResource.properties.triggerType
+        /// </summary>
         public TriggerType? TriggerType { get; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         public string Kind { get; set; }
     }
 }

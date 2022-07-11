@@ -7,30 +7,66 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Type of database. </summary>
+    /// <summary>
+    /// Type of database.
+    /// Serialized Name: ConnectionStringType
+    /// </summary>
     public enum ConnectionStringType
     {
-        /// <summary> MySql. </summary>
+        /// <summary>
+        /// MySql
+        /// Serialized Name: ConnectionStringType.MySql
+        /// </summary>
         MySql,
-        /// <summary> SQLServer. </summary>
+        /// <summary>
+        /// SQLServer
+        /// Serialized Name: ConnectionStringType.SQLServer
+        /// </summary>
         SQLServer,
-        /// <summary> SQLAzure. </summary>
+        /// <summary>
+        /// SQLAzure
+        /// Serialized Name: ConnectionStringType.SQLAzure
+        /// </summary>
         SQLAzure,
-        /// <summary> Custom. </summary>
+        /// <summary>
+        /// Custom
+        /// Serialized Name: ConnectionStringType.Custom
+        /// </summary>
         Custom,
-        /// <summary> NotificationHub. </summary>
+        /// <summary>
+        /// NotificationHub
+        /// Serialized Name: ConnectionStringType.NotificationHub
+        /// </summary>
         NotificationHub,
-        /// <summary> ServiceBus. </summary>
+        /// <summary>
+        /// ServiceBus
+        /// Serialized Name: ConnectionStringType.ServiceBus
+        /// </summary>
         ServiceBus,
-        /// <summary> EventHub. </summary>
+        /// <summary>
+        /// EventHub
+        /// Serialized Name: ConnectionStringType.EventHub
+        /// </summary>
         EventHub,
-        /// <summary> ApiHub. </summary>
+        /// <summary>
+        /// ApiHub
+        /// Serialized Name: ConnectionStringType.ApiHub
+        /// </summary>
         ApiHub,
-        /// <summary> DocDb. </summary>
+        /// <summary>
+        /// DocDb
+        /// Serialized Name: ConnectionStringType.DocDb
+        /// </summary>
         DocDb,
-        /// <summary> RedisCache. </summary>
+        /// <summary>
+        /// RedisCache
+        /// Serialized Name: ConnectionStringType.RedisCache
+        /// </summary>
         RedisCache,
-        /// <summary> PostgreSQL. </summary>
+        /// <summary>
+        /// PostgreSQL
+        /// Serialized Name: ConnectionStringType.PostgreSQL
+        /// </summary>
         PostgreSQL
     }
 }

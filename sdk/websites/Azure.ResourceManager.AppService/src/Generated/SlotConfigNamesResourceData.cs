@@ -27,10 +27,22 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="connectionStringNames"> List of connection string names. </param>
-        /// <param name="appSettingNames"> List of application settings names. </param>
-        /// <param name="azureStorageConfigNames"> List of external Azure storage account identifiers. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="connectionStringNames">
+        /// List of connection string names.
+        /// Serialized Name: SlotConfigNamesResource.properties.connectionStringNames
+        /// </param>
+        /// <param name="appSettingNames">
+        /// List of application settings names.
+        /// Serialized Name: SlotConfigNamesResource.properties.appSettingNames
+        /// </param>
+        /// <param name="azureStorageConfigNames">
+        /// List of external Azure storage account identifiers.
+        /// Serialized Name: SlotConfigNamesResource.properties.azureStorageConfigNames
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         internal SlotConfigNamesResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<string> connectionStringNames, IList<string> appSettingNames, IList<string> azureStorageConfigNames, string kind) : base(id, name, resourceType, systemData)
         {
             ConnectionStringNames = connectionStringNames;
@@ -39,13 +51,25 @@ namespace Azure.ResourceManager.AppService
             Kind = kind;
         }
 
-        /// <summary> List of connection string names. </summary>
+        /// <summary>
+        /// List of connection string names.
+        /// Serialized Name: SlotConfigNamesResource.properties.connectionStringNames
+        /// </summary>
         public IList<string> ConnectionStringNames { get; }
-        /// <summary> List of application settings names. </summary>
+        /// <summary>
+        /// List of application settings names.
+        /// Serialized Name: SlotConfigNamesResource.properties.appSettingNames
+        /// </summary>
         public IList<string> AppSettingNames { get; }
-        /// <summary> List of external Azure storage account identifiers. </summary>
+        /// <summary>
+        /// List of external Azure storage account identifiers.
+        /// Serialized Name: SlotConfigNamesResource.properties.azureStorageConfigNames
+        /// </summary>
         public IList<string> AzureStorageConfigNames { get; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         public string Kind { get; set; }
     }
 }

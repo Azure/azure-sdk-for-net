@@ -24,25 +24,49 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="migrationOperationStatus"> Status of the migration task. </param>
-        /// <param name="operationId"> Operation ID for the migration task. </param>
-        /// <param name="localMySqlEnabled"> True if the web app has in app MySql enabled. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        internal MigrateMySqlStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, OperationStatus? migrationOperationStatus, string operationId, bool? localMySqlEnabled, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="migrationOperationStatus">
+        /// Status of the migration task.
+        /// Serialized Name: MigrateMySqlStatus.properties.migrationOperationStatus
+        /// </param>
+        /// <param name="operationId">
+        /// Operation ID for the migration task.
+        /// Serialized Name: MigrateMySqlStatus.properties.operationId
+        /// </param>
+        /// <param name="isLocalMySqlEnabled">
+        /// True if the web app has in app MySql enabled
+        /// Serialized Name: MigrateMySqlStatus.properties.localMySqlEnabled
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
+        internal MigrateMySqlStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, OperationStatus? migrationOperationStatus, string operationId, bool? isLocalMySqlEnabled, string kind) : base(id, name, resourceType, systemData)
         {
             MigrationOperationStatus = migrationOperationStatus;
             OperationId = operationId;
-            LocalMySqlEnabled = localMySqlEnabled;
+            IsLocalMySqlEnabled = isLocalMySqlEnabled;
             Kind = kind;
         }
 
-        /// <summary> Status of the migration task. </summary>
+        /// <summary>
+        /// Status of the migration task.
+        /// Serialized Name: MigrateMySqlStatus.properties.migrationOperationStatus
+        /// </summary>
         public OperationStatus? MigrationOperationStatus { get; }
-        /// <summary> Operation ID for the migration task. </summary>
+        /// <summary>
+        /// Operation ID for the migration task.
+        /// Serialized Name: MigrateMySqlStatus.properties.operationId
+        /// </summary>
         public string OperationId { get; }
-        /// <summary> True if the web app has in app MySql enabled. </summary>
-        public bool? LocalMySqlEnabled { get; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// True if the web app has in app MySql enabled
+        /// Serialized Name: MigrateMySqlStatus.properties.localMySqlEnabled
+        /// </summary>
+        public bool? IsLocalMySqlEnabled { get; }
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         public string Kind { get; set; }
     }
 }

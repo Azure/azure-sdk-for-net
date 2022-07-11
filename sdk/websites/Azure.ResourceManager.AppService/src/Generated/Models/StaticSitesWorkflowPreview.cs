@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Preview for the Static Site Workflow to be generated. </summary>
+    /// <summary>
+    /// Preview for the Static Site Workflow to be generated
+    /// Serialized Name: StaticSitesWorkflowPreview
+    /// </summary>
     public partial class StaticSitesWorkflowPreview : ResourceData
     {
         /// <summary> Initializes a new instance of StaticSitesWorkflowPreview. </summary>
@@ -23,9 +26,18 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="path"> The path for the workflow file to be generated. </param>
-        /// <param name="contents"> The contents for the workflow file to be generated. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="path">
+        /// The path for the workflow file to be generated
+        /// Serialized Name: StaticSitesWorkflowPreview.properties.path
+        /// </param>
+        /// <param name="contents">
+        /// The contents for the workflow file to be generated
+        /// Serialized Name: StaticSitesWorkflowPreview.properties.contents
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         internal StaticSitesWorkflowPreview(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string path, string contents, string kind) : base(id, name, resourceType, systemData)
         {
             Path = path;
@@ -33,11 +45,20 @@ namespace Azure.ResourceManager.AppService.Models
             Kind = kind;
         }
 
-        /// <summary> The path for the workflow file to be generated. </summary>
+        /// <summary>
+        /// The path for the workflow file to be generated
+        /// Serialized Name: StaticSitesWorkflowPreview.properties.path
+        /// </summary>
         public string Path { get; }
-        /// <summary> The contents for the workflow file to be generated. </summary>
+        /// <summary>
+        /// The contents for the workflow file to be generated
+        /// Serialized Name: StaticSitesWorkflowPreview.properties.contents
+        /// </summary>
         public string Contents { get; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         public string Kind { get; set; }
     }
 }

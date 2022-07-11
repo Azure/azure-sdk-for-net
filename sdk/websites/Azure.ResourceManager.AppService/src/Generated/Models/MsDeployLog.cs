@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> MSDeploy log. </summary>
+    /// <summary>
+    /// MSDeploy log
+    /// Serialized Name: MSDeployLog
+    /// </summary>
     public partial class MsDeployLog : ResourceData
     {
         /// <summary> Initializes a new instance of MsDeployLog. </summary>
@@ -25,17 +28,29 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="entries"> List of log entry messages. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="entries">
+        /// List of log entry messages
+        /// Serialized Name: MSDeployLog.properties.entries
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         internal MsDeployLog(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<MsDeployLogEntry> entries, string kind) : base(id, name, resourceType, systemData)
         {
             Entries = entries;
             Kind = kind;
         }
 
-        /// <summary> List of log entry messages. </summary>
+        /// <summary>
+        /// List of log entry messages
+        /// Serialized Name: MSDeployLog.properties.entries
+        /// </summary>
         public IReadOnlyList<MsDeployLogEntry> Entries { get; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         public string Kind { get; set; }
     }
 }

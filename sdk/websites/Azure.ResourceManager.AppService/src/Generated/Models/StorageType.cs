@@ -7,12 +7,21 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The StorageType. </summary>
+    /// <summary>
+    /// The StorageType.
+    /// Serialized Name: StorageType
+    /// </summary>
     public enum StorageType
     {
-        /// <summary> LocalNode. </summary>
+        /// <summary>
+        /// LocalNode
+        /// Serialized Name: StorageType.LocalNode
+        /// </summary>
         LocalNode,
-        /// <summary> NetworkFileSystem. </summary>
+        /// <summary>
+        /// NetworkFileSystem
+        /// Serialized Name: StorageType.NetworkFileSystem
+        /// </summary>
         NetworkFileSystem
     }
 }

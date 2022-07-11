@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> MinTlsVersion: configures the minimum version of TLS required for SSL requests. </summary>
+    /// <summary>
+    /// MinTlsVersion: configures the minimum version of TLS required for SSL requests
+    /// Serialized Name: SupportedTlsVersions
+    /// </summary>
     public readonly partial struct SupportedTlsVersion : IEquatable<SupportedTlsVersion>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.AppService.Models
         private const string One1Value = "1.1";
         private const string One2Value = "1.2";
 
-        /// <summary> 1.0. </summary>
+        /// <summary>
+        /// 1.0
+        /// Serialized Name: SupportedTlsVersions.1.0
+        /// </summary>
         public static SupportedTlsVersion One0 { get; } = new SupportedTlsVersion(One0Value);
-        /// <summary> 1.1. </summary>
+        /// <summary>
+        /// 1.1
+        /// Serialized Name: SupportedTlsVersions.1.1
+        /// </summary>
         public static SupportedTlsVersion One1 { get; } = new SupportedTlsVersion(One1Value);
-        /// <summary> 1.2. </summary>
+        /// <summary>
+        /// 1.2
+        /// Serialized Name: SupportedTlsVersions.1.2
+        /// </summary>
         public static SupportedTlsVersion One2 { get; } = new SupportedTlsVersion(One2Value);
         /// <summary> Determines if two <see cref="SupportedTlsVersion"/> values are the same. </summary>
         public static bool operator ==(SupportedTlsVersion left, SupportedTlsVersion right) => left.Equals(right);

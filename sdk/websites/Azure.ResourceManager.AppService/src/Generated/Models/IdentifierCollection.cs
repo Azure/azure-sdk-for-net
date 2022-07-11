@@ -12,11 +12,17 @@ using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Collection of identifiers. </summary>
+    /// <summary>
+    /// Collection of identifiers.
+    /// Serialized Name: IdentifierCollection
+    /// </summary>
     internal partial class IdentifierCollection
     {
         /// <summary> Initializes a new instance of IdentifierCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: IdentifierCollection.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal IdentifierCollection(IEnumerable<IdentifierData> value)
         {
@@ -29,17 +35,29 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of IdentifierCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
-        /// <param name="nextLink"> Link to next page of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: IdentifierCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to next page of resources.
+        /// Serialized Name: IdentifierCollection.nextLink
+        /// </param>
         internal IdentifierCollection(IReadOnlyList<IdentifierData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Collection of resources. </summary>
+        /// <summary>
+        /// Collection of resources.
+        /// Serialized Name: IdentifierCollection.value
+        /// </summary>
         public IReadOnlyList<IdentifierData> Value { get; }
-        /// <summary> Link to next page of resources. </summary>
+        /// <summary>
+        /// Link to next page of resources.
+        /// Serialized Name: IdentifierCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

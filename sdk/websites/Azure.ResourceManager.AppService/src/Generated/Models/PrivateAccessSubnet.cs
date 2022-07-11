@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Description of a Virtual Network subnet that is useable for private site access. </summary>
+    /// <summary>
+    /// Description of a Virtual Network subnet that is useable for private site access.
+    /// Serialized Name: PrivateAccessSubnet
+    /// </summary>
     public partial class PrivateAccessSubnet
     {
         /// <summary> Initializes a new instance of PrivateAccessSubnet. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of PrivateAccessSubnet. </summary>
-        /// <param name="name"> The name of the subnet. </param>
-        /// <param name="key"> The key (ID) of the subnet. </param>
+        /// <param name="name">
+        /// The name of the subnet.
+        /// Serialized Name: PrivateAccessSubnet.name
+        /// </param>
+        /// <param name="key">
+        /// The key (ID) of the subnet.
+        /// Serialized Name: PrivateAccessSubnet.key
+        /// </param>
         internal PrivateAccessSubnet(string name, int? key)
         {
             Name = name;
             Key = key;
         }
 
-        /// <summary> The name of the subnet. </summary>
+        /// <summary>
+        /// The name of the subnet.
+        /// Serialized Name: PrivateAccessSubnet.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> The key (ID) of the subnet. </summary>
+        /// <summary>
+        /// The key (ID) of the subnet.
+        /// Serialized Name: PrivateAccessSubnet.key
+        /// </summary>
         public int? Key { get; set; }
     }
 }

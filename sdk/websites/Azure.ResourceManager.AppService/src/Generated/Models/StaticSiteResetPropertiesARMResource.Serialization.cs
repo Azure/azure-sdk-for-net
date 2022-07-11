@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("repositoryToken");
                 writer.WriteStringValue(RepositoryToken);
             }
-            if (Optional.IsDefined(ShouldUpdateRepository))
+            if (Optional.IsDefined(IsShouldUpdateRepository))
             {
                 writer.WritePropertyName("shouldUpdateRepository");
-                writer.WriteBooleanValue(ShouldUpdateRepository.Value);
+                writer.WriteBooleanValue(IsShouldUpdateRepository.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

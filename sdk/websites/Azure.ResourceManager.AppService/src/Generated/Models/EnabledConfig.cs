@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Enabled configuration. </summary>
+    /// <summary>
+    /// Enabled configuration.
+    /// Serialized Name: EnabledConfig
+    /// </summary>
     internal partial class EnabledConfig
     {
         /// <summary> Initializes a new instance of EnabledConfig. </summary>
@@ -16,13 +19,19 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of EnabledConfig. </summary>
-        /// <param name="enabled"> True if configuration is enabled, false if it is disabled and null if configuration is not set. </param>
-        internal EnabledConfig(bool? enabled)
+        /// <param name="isDetailedErrorMessagesEnabled">
+        /// True if configuration is enabled, false if it is disabled and null if configuration is not set.
+        /// Serialized Name: EnabledConfig.enabled
+        /// </param>
+        internal EnabledConfig(bool? isDetailedErrorMessagesEnabled)
         {
-            Enabled = enabled;
+            IsDetailedErrorMessagesEnabled = isDetailedErrorMessagesEnabled;
         }
 
-        /// <summary> True if configuration is enabled, false if it is disabled and null if configuration is not set. </summary>
-        public bool? Enabled { get; set; }
+        /// <summary>
+        /// True if configuration is enabled, false if it is disabled and null if configuration is not set.
+        /// Serialized Name: EnabledConfig.enabled
+        /// </summary>
+        public bool? IsDetailedErrorMessagesEnabled { get; set; }
     }
 }

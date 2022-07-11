@@ -9,7 +9,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Specifies the web app that snapshot contents will be retrieved from. </summary>
+    /// <summary>
+    /// Specifies the web app that snapshot contents will be retrieved from.
+    /// Serialized Name: SnapshotRecoverySource
+    /// </summary>
     public partial class SnapshotRecoverySource
     {
         /// <summary> Initializes a new instance of SnapshotRecoverySource. </summary>
@@ -18,11 +21,15 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of SnapshotRecoverySource. </summary>
-        /// <param name="location"> Geographical location of the source web app, e.g. SouthEastAsia, SouthCentralUS. </param>
+        /// <param name="location">
+        /// Geographical location of the source web app, e.g. SouthEastAsia, SouthCentralUS
+        /// Serialized Name: SnapshotRecoverySource.location
+        /// </param>
         /// <param name="id">
         /// ARM resource ID of the source app. 
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName} for production slots and 
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slotName} for other slots.
+        /// Serialized Name: SnapshotRecoverySource.id
         /// </param>
         internal SnapshotRecoverySource(AzureLocation? location, string id)
         {
@@ -30,12 +37,16 @@ namespace Azure.ResourceManager.AppService.Models
             Id = id;
         }
 
-        /// <summary> Geographical location of the source web app, e.g. SouthEastAsia, SouthCentralUS. </summary>
+        /// <summary>
+        /// Geographical location of the source web app, e.g. SouthEastAsia, SouthCentralUS
+        /// Serialized Name: SnapshotRecoverySource.location
+        /// </summary>
         public AzureLocation? Location { get; set; }
         /// <summary>
         /// ARM resource ID of the source app. 
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName} for production slots and 
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slotName} for other slots.
+        /// Serialized Name: SnapshotRecoverySource.id
         /// </summary>
         public string Id { get; set; }
     }

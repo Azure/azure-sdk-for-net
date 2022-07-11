@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SupportCredentials))
+            if (Optional.IsDefined(IsSupportCredentials))
             {
                 writer.WritePropertyName("supportCredentials");
-                writer.WriteBooleanValue(SupportCredentials.Value);
+                writer.WriteBooleanValue(IsSupportCredentials.Value);
             }
             writer.WriteEndObject();
         }

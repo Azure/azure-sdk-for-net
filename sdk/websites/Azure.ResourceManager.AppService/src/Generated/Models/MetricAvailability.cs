@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Retention policy of a resource metric. </summary>
+    /// <summary>
+    /// Retention policy of a resource metric.
+    /// Serialized Name: MetricAvailability
+    /// </summary>
     public partial class MetricAvailability
     {
         /// <summary> Initializes a new instance of MetricAvailability. </summary>
@@ -18,17 +21,17 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of MetricAvailability. </summary>
-        /// <param name="timeGrain"></param>
-        /// <param name="blobDuration"></param>
+        /// <param name="timeGrain"> Serialized Name: MetricAvailability.timeGrain. </param>
+        /// <param name="blobDuration"> Serialized Name: MetricAvailability.blobDuration. </param>
         internal MetricAvailability(string timeGrain, TimeSpan? blobDuration)
         {
             TimeGrain = timeGrain;
             BlobDuration = blobDuration;
         }
 
-        /// <summary> Gets the time grain. </summary>
+        /// <summary> Serialized Name: MetricAvailability.timeGrain. </summary>
         public string TimeGrain { get; }
-        /// <summary> Gets the blob duration. </summary>
+        /// <summary> Serialized Name: MetricAvailability.blobDuration. </summary>
         public TimeSpan? BlobDuration { get; }
     }
 }

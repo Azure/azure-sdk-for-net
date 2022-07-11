@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The DomainNotRenewableReason. </summary>
+    /// <summary>
+    /// The DomainNotRenewableReason.
+    /// Serialized Name: DomainNotRenewableReasons
+    /// </summary>
     public readonly partial struct DomainNotRenewableReason : IEquatable<DomainNotRenewableReason>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.AppService.Models
         private const string ExpirationNotInRenewalTimeRangeValue = "ExpirationNotInRenewalTimeRange";
         private const string SubscriptionNotActiveValue = "SubscriptionNotActive";
 
-        /// <summary> RegistrationStatusNotSupportedForRenewal. </summary>
+        /// <summary>
+        /// RegistrationStatusNotSupportedForRenewal
+        /// Serialized Name: DomainNotRenewableReasons.RegistrationStatusNotSupportedForRenewal
+        /// </summary>
         public static DomainNotRenewableReason RegistrationStatusNotSupportedForRenewal { get; } = new DomainNotRenewableReason(RegistrationStatusNotSupportedForRenewalValue);
-        /// <summary> ExpirationNotInRenewalTimeRange. </summary>
+        /// <summary>
+        /// ExpirationNotInRenewalTimeRange
+        /// Serialized Name: DomainNotRenewableReasons.ExpirationNotInRenewalTimeRange
+        /// </summary>
         public static DomainNotRenewableReason ExpirationNotInRenewalTimeRange { get; } = new DomainNotRenewableReason(ExpirationNotInRenewalTimeRangeValue);
-        /// <summary> SubscriptionNotActive. </summary>
+        /// <summary>
+        /// SubscriptionNotActive
+        /// Serialized Name: DomainNotRenewableReasons.SubscriptionNotActive
+        /// </summary>
         public static DomainNotRenewableReason SubscriptionNotActive { get; } = new DomainNotRenewableReason(SubscriptionNotActiveValue);
         /// <summary> Determines if two <see cref="DomainNotRenewableReason"/> values are the same. </summary>
         public static bool operator ==(DomainNotRenewableReason left, DomainNotRenewableReason right) => left.Equals(right);

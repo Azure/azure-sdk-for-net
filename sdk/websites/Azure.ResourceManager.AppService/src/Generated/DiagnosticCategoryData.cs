@@ -23,17 +23,29 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> Description of the diagnostic category. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="description">
+        /// Description of the diagnostic category
+        /// Serialized Name: DiagnosticCategory.properties.description
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         internal DiagnosticCategoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string kind) : base(id, name, resourceType, systemData)
         {
             Description = description;
             Kind = kind;
         }
 
-        /// <summary> Description of the diagnostic category. </summary>
+        /// <summary>
+        /// Description of the diagnostic category
+        /// Serialized Name: DiagnosticCategory.properties.description
+        /// </summary>
         public string Description { get; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         public string Kind { get; set; }
     }
 }

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The configuration settings of the HTTP requests for authentication and authorization requests made against App Service Authentication/Authorization. </summary>
+    /// <summary>
+    /// The configuration settings of the HTTP requests for authentication and authorization requests made against App Service Authentication/Authorization.
+    /// Serialized Name: HttpSettings
+    /// </summary>
     public partial class HttpSettings
     {
         /// <summary> Initializes a new instance of HttpSettings. </summary>
@@ -16,21 +19,39 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of HttpSettings. </summary>
-        /// <param name="requireHttps"> &lt;code&gt;false&lt;/code&gt; if the authentication/authorization responses not having the HTTPS scheme are permissible; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
-        /// <param name="routes"> The configuration settings of the paths HTTP requests. </param>
-        /// <param name="forwardProxy"> The configuration settings of a forward proxy used to make the requests. </param>
-        internal HttpSettings(bool? requireHttps, HttpSettingsRoutes routes, ForwardProxy forwardProxy)
+        /// <param name="isRequireHttps">
+        /// &lt;code&gt;false&lt;/code&gt; if the authentication/authorization responses not having the HTTPS scheme are permissible; otherwise, &lt;code&gt;true&lt;/code&gt;.
+        /// Serialized Name: HttpSettings.requireHttps
+        /// </param>
+        /// <param name="routes">
+        /// The configuration settings of the paths HTTP requests.
+        /// Serialized Name: HttpSettings.routes
+        /// </param>
+        /// <param name="forwardProxy">
+        /// The configuration settings of a forward proxy used to make the requests.
+        /// Serialized Name: HttpSettings.forwardProxy
+        /// </param>
+        internal HttpSettings(bool? isRequireHttps, HttpSettingsRoutes routes, ForwardProxy forwardProxy)
         {
-            RequireHttps = requireHttps;
+            IsRequireHttps = isRequireHttps;
             Routes = routes;
             ForwardProxy = forwardProxy;
         }
 
-        /// <summary> &lt;code&gt;false&lt;/code&gt; if the authentication/authorization responses not having the HTTPS scheme are permissible; otherwise, &lt;code&gt;true&lt;/code&gt;. </summary>
-        public bool? RequireHttps { get; set; }
-        /// <summary> The configuration settings of the paths HTTP requests. </summary>
+        /// <summary>
+        /// &lt;code&gt;false&lt;/code&gt; if the authentication/authorization responses not having the HTTPS scheme are permissible; otherwise, &lt;code&gt;true&lt;/code&gt;.
+        /// Serialized Name: HttpSettings.requireHttps
+        /// </summary>
+        public bool? IsRequireHttps { get; set; }
+        /// <summary>
+        /// The configuration settings of the paths HTTP requests.
+        /// Serialized Name: HttpSettings.routes
+        /// </summary>
         internal HttpSettingsRoutes Routes { get; set; }
-        /// <summary> The prefix that should precede all the authentication/authorization paths. </summary>
+        /// <summary>
+        /// The prefix that should precede all the authentication/authorization paths.
+        /// Serialized Name: HttpSettingsRoutes.apiPrefix
+        /// </summary>
         public string RoutesApiPrefix
         {
             get => Routes is null ? default : Routes.ApiPrefix;
@@ -42,7 +63,10 @@ namespace Azure.ResourceManager.AppService.Models
             }
         }
 
-        /// <summary> The configuration settings of a forward proxy used to make the requests. </summary>
+        /// <summary>
+        /// The configuration settings of a forward proxy used to make the requests.
+        /// Serialized Name: HttpSettings.forwardProxy
+        /// </summary>
         public ForwardProxy ForwardProxy { get; set; }
     }
 }

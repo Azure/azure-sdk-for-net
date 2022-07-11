@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The ContainerMemoryStatistics. </summary>
+    /// <summary>
+    /// The ContainerMemoryStatistics.
+    /// Serialized Name: ContainerMemoryStatistics
+    /// </summary>
     public partial class ContainerMemoryStatistics
     {
         /// <summary> Initializes a new instance of ContainerMemoryStatistics. </summary>
@@ -16,9 +19,9 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of ContainerMemoryStatistics. </summary>
-        /// <param name="usage"></param>
-        /// <param name="maxUsage"></param>
-        /// <param name="limit"></param>
+        /// <param name="usage"> Serialized Name: ContainerMemoryStatistics.usage. </param>
+        /// <param name="maxUsage"> Serialized Name: ContainerMemoryStatistics.maxUsage. </param>
+        /// <param name="limit"> Serialized Name: ContainerMemoryStatistics.limit. </param>
         internal ContainerMemoryStatistics(long? usage, long? maxUsage, long? limit)
         {
             Usage = usage;
@@ -26,11 +29,11 @@ namespace Azure.ResourceManager.AppService.Models
             Limit = limit;
         }
 
-        /// <summary> Gets or sets the usage. </summary>
+        /// <summary> Serialized Name: ContainerMemoryStatistics.usage. </summary>
         public long? Usage { get; set; }
-        /// <summary> Gets or sets the max usage. </summary>
+        /// <summary> Serialized Name: ContainerMemoryStatistics.maxUsage. </summary>
         public long? MaxUsage { get; set; }
-        /// <summary> Gets or sets the limit. </summary>
+        /// <summary> Serialized Name: ContainerMemoryStatistics.limit. </summary>
         public long? Limit { get; set; }
     }
 }

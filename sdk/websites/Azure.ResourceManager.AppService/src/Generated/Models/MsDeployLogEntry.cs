@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> MSDeploy log entry. </summary>
+    /// <summary>
+    /// MSDeploy log entry
+    /// Serialized Name: MSDeployLogEntry
+    /// </summary>
     public partial class MsDeployLogEntry
     {
         /// <summary> Initializes a new instance of MsDeployLogEntry. </summary>
@@ -18,9 +21,18 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of MsDeployLogEntry. </summary>
-        /// <param name="time"> Timestamp of log entry. </param>
-        /// <param name="msDeployLogEntryType"> Log entry type. </param>
-        /// <param name="message"> Log entry message. </param>
+        /// <param name="time">
+        /// Timestamp of log entry
+        /// Serialized Name: MSDeployLogEntry.time
+        /// </param>
+        /// <param name="msDeployLogEntryType">
+        /// Log entry type
+        /// Serialized Name: MSDeployLogEntry.type
+        /// </param>
+        /// <param name="message">
+        /// Log entry message
+        /// Serialized Name: MSDeployLogEntry.message
+        /// </param>
         internal MsDeployLogEntry(DateTimeOffset? time, MSDeployLogEntryType? msDeployLogEntryType, string message)
         {
             Time = time;
@@ -28,11 +40,20 @@ namespace Azure.ResourceManager.AppService.Models
             Message = message;
         }
 
-        /// <summary> Timestamp of log entry. </summary>
+        /// <summary>
+        /// Timestamp of log entry
+        /// Serialized Name: MSDeployLogEntry.time
+        /// </summary>
         public DateTimeOffset? Time { get; }
-        /// <summary> Log entry type. </summary>
+        /// <summary>
+        /// Log entry type
+        /// Serialized Name: MSDeployLogEntry.type
+        /// </summary>
         public MSDeployLogEntryType? MSDeployLogEntryType { get; }
-        /// <summary> Log entry message. </summary>
+        /// <summary>
+        /// Log entry message
+        /// Serialized Name: MSDeployLogEntry.message
+        /// </summary>
         public string Message { get; }
     }
 }

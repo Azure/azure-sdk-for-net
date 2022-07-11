@@ -7,14 +7,26 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Management information availability state for the app. </summary>
+    /// <summary>
+    /// Management information availability state for the app.
+    /// Serialized Name: SiteAvailabilityState
+    /// </summary>
     public enum SiteAvailabilityState
     {
-        /// <summary> Normal. </summary>
+        /// <summary>
+        /// Normal
+        /// Serialized Name: SiteAvailabilityState.Normal
+        /// </summary>
         Normal,
-        /// <summary> Limited. </summary>
+        /// <summary>
+        /// Limited
+        /// Serialized Name: SiteAvailabilityState.Limited
+        /// </summary>
         Limited,
-        /// <summary> DisasterRecoveryMode. </summary>
+        /// <summary>
+        /// DisasterRecoveryMode
+        /// Serialized Name: SiteAvailabilityState.DisasterRecoveryMode
+        /// </summary>
         DisasterRecoveryMode
     }
 }

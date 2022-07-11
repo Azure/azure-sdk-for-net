@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> A snapshot of an app. </summary>
+    /// <summary>
+    /// A snapshot of an app.
+    /// Serialized Name: Snapshot
+    /// </summary>
     public partial class Snapshot : ResourceData
     {
         /// <summary> Initializes a new instance of Snapshot. </summary>
@@ -23,17 +26,29 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="time"> The time the snapshot was taken. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="time">
+        /// The time the snapshot was taken.
+        /// Serialized Name: Snapshot.properties.time
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         internal Snapshot(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string time, string kind) : base(id, name, resourceType, systemData)
         {
             Time = time;
             Kind = kind;
         }
 
-        /// <summary> The time the snapshot was taken. </summary>
+        /// <summary>
+        /// The time the snapshot was taken.
+        /// Serialized Name: Snapshot.properties.time
+        /// </summary>
         public string Time { get; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         public string Kind { get; set; }
     }
 }

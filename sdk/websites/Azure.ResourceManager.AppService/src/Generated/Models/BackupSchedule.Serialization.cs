@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WritePropertyName("frequencyUnit");
             writer.WriteStringValue(FrequencyUnit.ToSerialString());
             writer.WritePropertyName("keepAtLeastOneBackup");
-            writer.WriteBooleanValue(KeepAtLeastOneBackup);
+            writer.WriteBooleanValue(IsKeepAtLeastOneBackup);
             writer.WritePropertyName("retentionPeriodInDays");
             writer.WriteNumberValue(RetentionPeriodInDays);
             if (Optional.IsDefined(StartOn))

@@ -12,11 +12,17 @@ using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Collection of certificates. </summary>
+    /// <summary>
+    /// Collection of certificates.
+    /// Serialized Name: CertificateCollection
+    /// </summary>
     internal partial class CertificateCollection
     {
         /// <summary> Initializes a new instance of CertificateCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: CertificateCollection.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal CertificateCollection(IEnumerable<CertificateData> value)
         {
@@ -29,17 +35,29 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of CertificateCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
-        /// <param name="nextLink"> Link to next page of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: CertificateCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to next page of resources.
+        /// Serialized Name: CertificateCollection.nextLink
+        /// </param>
         internal CertificateCollection(IReadOnlyList<CertificateData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Collection of resources. </summary>
+        /// <summary>
+        /// Collection of resources.
+        /// Serialized Name: CertificateCollection.value
+        /// </summary>
         public IReadOnlyList<CertificateData> Value { get; }
-        /// <summary> Link to next page of resources. </summary>
+        /// <summary>
+        /// Link to next page of resources.
+        /// Serialized Name: CertificateCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

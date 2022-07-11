@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("subnetResourceId");
                 writer.WriteStringValue(SubnetResourceId);
             }
-            if (Optional.IsDefined(SwiftSupported))
+            if (Optional.IsDefined(IsSwiftSupported))
             {
                 writer.WritePropertyName("swiftSupported");
-                writer.WriteBooleanValue(SwiftSupported.Value);
+                writer.WriteBooleanValue(IsSwiftSupported.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

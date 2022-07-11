@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Specifies which endpoints to serve internally in the Virtual Network for the App Service Environment. </summary>
+    /// <summary>
+    /// Specifies which endpoints to serve internally in the Virtual Network for the App Service Environment.
+    /// Serialized Name: LoadBalancingMode
+    /// </summary>
     public readonly partial struct LoadBalancingMode : IEquatable<LoadBalancingMode>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.AppService.Models
         private const string PublishingValue = "Publishing";
         private const string WebPublishingValue = "Web, Publishing";
 
-        /// <summary> None. </summary>
+        /// <summary>
+        /// None
+        /// Serialized Name: LoadBalancingMode.None
+        /// </summary>
         public static LoadBalancingMode None { get; } = new LoadBalancingMode(NoneValue);
-        /// <summary> Web. </summary>
+        /// <summary>
+        /// Web
+        /// Serialized Name: LoadBalancingMode.Web
+        /// </summary>
         public static LoadBalancingMode Web { get; } = new LoadBalancingMode(WebValue);
-        /// <summary> Publishing. </summary>
+        /// <summary>
+        /// Publishing
+        /// Serialized Name: LoadBalancingMode.Publishing
+        /// </summary>
         public static LoadBalancingMode Publishing { get; } = new LoadBalancingMode(PublishingValue);
-        /// <summary> Web, Publishing. </summary>
+        /// <summary>
+        /// Web, Publishing
+        /// Serialized Name: LoadBalancingMode.Web, Publishing
+        /// </summary>
         public static LoadBalancingMode WebPublishing { get; } = new LoadBalancingMode(WebPublishingValue);
         /// <summary> Determines if two <see cref="LoadBalancingMode"/> values are the same. </summary>
         public static bool operator ==(LoadBalancingMode left, LoadBalancingMode right) => left.Equals(right);
