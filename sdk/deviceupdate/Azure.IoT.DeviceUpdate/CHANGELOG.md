@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0-beta.4 (2022-07-11)
 
 ### Features Added
 - Added RelatedFiles and DownloadHandler to Update
@@ -15,10 +15,6 @@
 ### Breaking Changes
 - DeviceUpdateClient models updated
 - DeviceManagementClient models updated
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0-beta.3 (2022-01-17)
 
