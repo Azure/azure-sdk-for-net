@@ -1,14 +1,21 @@
 # Release History
 
-## 1.0.0-beta.6 (Unreleased)
+## 1.0.0 (2022-07-11)
+This is the first stable release of the Azure Cdn management library.
 
 ### Features Added
 
+- Added Update methods in resource classes.
+
 ### Breaking Changes
+
+- Changed all the `Afd` prefix to `FrontDoor` prefix.
+- Optimized the names and types of some models and properties.
+- Flattened property from a read-only model no longer has setters.
 
 ### Bugs Fixed
 
-### Other Changes
+- Corrected the return type of `EnableCustomHttps` and `DisableCustomHttps` method.
 
 ## 1.0.0-beta.5 (2022-04-08)
 
