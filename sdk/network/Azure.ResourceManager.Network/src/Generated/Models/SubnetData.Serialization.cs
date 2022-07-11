@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Network
             Optional<IList<ServiceEndpointPolicyData>> serviceEndpointPolicies = default;
             Optional<IReadOnlyList<PrivateEndpointData>> privateEndpoints = default;
             Optional<IReadOnlyList<NetworkIPConfiguration>> ipConfigurations = default;
-            Optional<IReadOnlyList<IPConfigurationProfile>> ipConfigurationProfiles = default;
+            Optional<IReadOnlyList<NetworkIPConfigurationProfile>> ipConfigurationProfiles = default;
             Optional<IList<WritableSubResource>> ipAllocations = default;
             Optional<IReadOnlyList<ResourceNavigationLink>> resourceNavigationLinks = default;
             Optional<IReadOnlyList<ServiceAssociationLink>> serviceAssociationLinks = default;
@@ -318,10 +318,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<IPConfigurationProfile> array = new List<IPConfigurationProfile>();
+                            List<NetworkIPConfigurationProfile> array = new List<NetworkIPConfigurationProfile>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IPConfigurationProfile.DeserializeIPConfigurationProfile(item));
+                                array.Add(NetworkIPConfigurationProfile.DeserializeNetworkIPConfigurationProfile(item));
                             }
                             ipConfigurationProfiles = array;
                             continue;

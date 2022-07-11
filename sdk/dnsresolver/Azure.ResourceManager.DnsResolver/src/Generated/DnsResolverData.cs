@@ -39,14 +39,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="eTag"> ETag of the DNS resolver. </param>
+        /// <param name="etag"> ETag of the DNS resolver. </param>
         /// <param name="virtualNetwork"> The reference to the virtual network. This cannot be changed after creation. </param>
         /// <param name="dnsResolverState"> The current status of the DNS resolver. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="provisioningState"> The current provisioning state of the DNS resolver. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="resourceGuid"> The resourceGuid property of the DNS resolver resource. </param>
-        internal DnsResolverData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? eTag, WritableSubResource virtualNetwork, DnsResolverState? dnsResolverState, ProvisioningState? provisioningState, string resourceGuid) : base(id, name, resourceType, systemData, tags, location)
+        internal DnsResolverData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, WritableSubResource virtualNetwork, DnsResolverState? dnsResolverState, ProvisioningState? provisioningState, string resourceGuid) : base(id, name, resourceType, systemData, tags, location)
         {
-            ETag = eTag;
+            ETag = etag;
             VirtualNetwork = virtualNetwork;
             DnsResolverState = dnsResolverState;
             ProvisioningState = provisioningState;

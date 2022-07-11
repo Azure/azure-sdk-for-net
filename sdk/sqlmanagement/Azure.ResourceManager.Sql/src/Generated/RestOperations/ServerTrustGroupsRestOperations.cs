@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="locationName"/> or <paramref name="serverTrustGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="locationName"/> or <paramref name="serverTrustGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ServerTrustGroupData>> GetAsync(string subscriptionId, string resourceGroupName, string locationName, string serverTrustGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<SqlServerTrustGroupData>> GetAsync(string subscriptionId, string resourceGroupName, string locationName, string serverTrustGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -80,13 +80,13 @@ namespace Azure.ResourceManager.Sql
             {
                 case 200:
                     {
-                        ServerTrustGroupData value = default;
+                        SqlServerTrustGroupData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ServerTrustGroupData.DeserializeServerTrustGroupData(document.RootElement);
+                        value = SqlServerTrustGroupData.DeserializeSqlServerTrustGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ServerTrustGroupData)null, message.Response);
+                    return Response.FromValue((SqlServerTrustGroupData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="locationName"/> or <paramref name="serverTrustGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="locationName"/> or <paramref name="serverTrustGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ServerTrustGroupData> Get(string subscriptionId, string resourceGroupName, string locationName, string serverTrustGroupName, CancellationToken cancellationToken = default)
+        public Response<SqlServerTrustGroupData> Get(string subscriptionId, string resourceGroupName, string locationName, string serverTrustGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -113,19 +113,19 @@ namespace Azure.ResourceManager.Sql
             {
                 case 200:
                     {
-                        ServerTrustGroupData value = default;
+                        SqlServerTrustGroupData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ServerTrustGroupData.DeserializeServerTrustGroupData(document.RootElement);
+                        value = SqlServerTrustGroupData.DeserializeSqlServerTrustGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ServerTrustGroupData)null, message.Response);
+                    return Response.FromValue((SqlServerTrustGroupData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string locationName, string serverTrustGroupName, ServerTrustGroupData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string locationName, string serverTrustGroupName, SqlServerTrustGroupData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="locationName"/>, <paramref name="serverTrustGroupName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="locationName"/> or <paramref name="serverTrustGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string locationName, string serverTrustGroupName, ServerTrustGroupData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string locationName, string serverTrustGroupName, SqlServerTrustGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="locationName"/>, <paramref name="serverTrustGroupName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="locationName"/> or <paramref name="serverTrustGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string locationName, string serverTrustGroupName, ServerTrustGroupData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string locationName, string serverTrustGroupName, SqlServerTrustGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

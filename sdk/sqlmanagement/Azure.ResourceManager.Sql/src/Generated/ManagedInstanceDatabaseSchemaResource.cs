@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ManagedInstanceDatabaseSchemaTableResources in the ManagedInstanceDatabaseSchema. </summary>
-        /// <returns> An object representing collection of ManagedInstanceDatabaseSchemaTableResources and their operations over a ManagedInstanceDatabaseSchemaTableResource. </returns>
-        public virtual ManagedInstanceDatabaseSchemaTableCollection GetManagedInstanceDatabaseSchemaTables()
+        /// <summary> Gets a collection of ManagedDatabaseTableResources in the ManagedInstanceDatabaseSchema. </summary>
+        /// <returns> An object representing collection of ManagedDatabaseTableResources and their operations over a ManagedDatabaseTableResource. </returns>
+        public virtual ManagedDatabaseTableCollection GetManagedDatabaseTables()
         {
-            return GetCachedClient(Client => new ManagedInstanceDatabaseSchemaTableCollection(Client, Id));
+            return GetCachedClient(Client => new ManagedDatabaseTableCollection(Client, Id));
         }
 
         /// <summary>
@@ -103,9 +103,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ManagedInstanceDatabaseSchemaTableResource>> GetManagedInstanceDatabaseSchemaTableAsync(string tableName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedDatabaseTableResource>> GetManagedDatabaseTableAsync(string tableName, CancellationToken cancellationToken = default)
         {
-            return await GetManagedInstanceDatabaseSchemaTables().GetAsync(tableName, cancellationToken).ConfigureAwait(false);
+            return await GetManagedDatabaseTables().GetAsync(tableName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -118,9 +118,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ManagedInstanceDatabaseSchemaTableResource> GetManagedInstanceDatabaseSchemaTable(string tableName, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedDatabaseTableResource> GetManagedDatabaseTable(string tableName, CancellationToken cancellationToken = default)
         {
-            return GetManagedInstanceDatabaseSchemaTables().Get(tableName, cancellationToken);
+            return GetManagedDatabaseTables().Get(tableName, cancellationToken);
         }
 
         /// <summary>

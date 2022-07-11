@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             Optional<string> managedBy = default;
             Optional<string> kind = default;
-            Optional<ETag> eTag = default;
+            Optional<ETag> etag = default;
             Optional<ResourceModelWithAllowedPropertySetIdentity> identity = default;
             Optional<ResourceModelWithAllowedPropertySetSku> sku = default;
             Optional<ArmPlan> plan = default;
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    eTag = new ETag(property.Value.GetString());
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("identity"))
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     continue;
                 }
             }
-            return new HostPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, objectId.Value, friendlyName.Value, description.Value, hostPoolType, Optional.ToNullable(personalDesktopAssignmentType), customRdpProperty.Value, Optional.ToNullable(maxSessionLimit), loadBalancerType, Optional.ToNullable(ring), Optional.ToNullable(validationEnvironment), registrationInfo.Value, vmTemplate.Value, Optional.ToList(applicationGroupReferences), ssoadfsAuthority.Value, ssoClientId.Value, ssoClientSecretKeyVaultPath.Value, Optional.ToNullable(ssoSecretType), preferredAppGroupType, Optional.ToNullable(startVmOnConnect), migrationRequest.Value, Optional.ToNullable(cloudPcResource), managedBy.Value, kind.Value, Optional.ToNullable(eTag), identity.Value, sku.Value, plan);
+            return new HostPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, objectId.Value, friendlyName.Value, description.Value, hostPoolType, Optional.ToNullable(personalDesktopAssignmentType), customRdpProperty.Value, Optional.ToNullable(maxSessionLimit), loadBalancerType, Optional.ToNullable(ring), Optional.ToNullable(validationEnvironment), registrationInfo.Value, vmTemplate.Value, Optional.ToList(applicationGroupReferences), ssoadfsAuthority.Value, ssoClientId.Value, ssoClientSecretKeyVaultPath.Value, Optional.ToNullable(ssoSecretType), preferredAppGroupType, Optional.ToNullable(startVmOnConnect), migrationRequest.Value, Optional.ToNullable(cloudPcResource), managedBy.Value, kind.Value, Optional.ToNullable(etag), identity.Value, sku.Value, plan);
         }
     }
 }

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         internal static ScalarFunctionProperties DeserializeScalarFunctionProperties(JsonElement element)
         {
             string type = default;
-            Optional<ETag> eTag = default;
+            Optional<ETag> etag = default;
             Optional<IList<FunctionInput>> inputs = default;
             Optional<FunctionOutput> output = default;
             Optional<FunctionBinding> binding = default;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    eTag = new ETag(property.Value.GetString());
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new ScalarFunctionProperties(type, Optional.ToNullable(eTag), Optional.ToList(inputs), output.Value, binding.Value);
+            return new ScalarFunctionProperties(type, Optional.ToNullable(etag), Optional.ToList(inputs), output.Value, binding.Value);
         }
     }
 }

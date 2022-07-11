@@ -40,13 +40,13 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="eTag"> ETag of the DNS forwarding ruleset. </param>
+        /// <param name="etag"> ETag of the DNS forwarding ruleset. </param>
         /// <param name="dnsResolverOutboundEndpoints"> The reference to the DNS resolver outbound endpoints that are used to route DNS queries matching the forwarding rules in the ruleset to the target DNS servers. </param>
         /// <param name="provisioningState"> The current provisioning state of the DNS forwarding ruleset. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="resourceGuid"> The resourceGuid for the DNS forwarding ruleset. </param>
-        internal DnsForwardingRulesetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? eTag, IList<WritableSubResource> dnsResolverOutboundEndpoints, ProvisioningState? provisioningState, string resourceGuid) : base(id, name, resourceType, systemData, tags, location)
+        internal DnsForwardingRulesetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IList<WritableSubResource> dnsResolverOutboundEndpoints, ProvisioningState? provisioningState, string resourceGuid) : base(id, name, resourceType, systemData, tags, location)
         {
-            ETag = eTag;
+            ETag = etag;
             DnsResolverOutboundEndpoints = dnsResolverOutboundEndpoints;
             ProvisioningState = provisioningState;
             ResourceGuid = resourceGuid;

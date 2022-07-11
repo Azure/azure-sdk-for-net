@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DnsResolver
 
         internal static OutboundEndpointData DeserializeOutboundEndpointData(JsonElement element)
         {
-            Optional<ETag> eTag = default;
+            Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DnsResolver
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    eTag = new ETag(property.Value.GetString());
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DnsResolver
                     continue;
                 }
             }
-            return new OutboundEndpointData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(eTag), subnet, Optional.ToNullable(provisioningState), resourceGuid.Value);
+            return new OutboundEndpointData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), subnet, Optional.ToNullable(provisioningState), resourceGuid.Value);
         }
     }
 }

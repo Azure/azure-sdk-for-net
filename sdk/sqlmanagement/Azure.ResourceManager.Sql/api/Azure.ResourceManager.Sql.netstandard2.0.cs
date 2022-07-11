@@ -7,7 +7,7 @@ namespace Azure.ResourceManager.Sql
         public Azure.ResourceManager.Sql.Models.AutoExecuteStatus? AutoExecuteStatus { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.AutoExecuteStatusInheritedFrom? AutoExecuteStatusInheritedFrom { get { throw null; } }
         public string Kind { get { throw null; } }
-        public System.DateTimeOffset? LastChecked { get { throw null; } }
+        public System.DateTimeOffset? LastCheckedOn { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public string RecommendationsStatus { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.RecommendedActionData> RecommendedActions { get { throw null; } }
@@ -45,67 +45,6 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.BackupShortTermRetentionPolicyResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.BackupShortTermRetentionPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.BackupShortTermRetentionPolicyResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.BackupShortTermRetentionPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class DatabaseAutomaticTuningData : Azure.ResourceManager.Models.ResourceData
-    {
-        public DatabaseAutomaticTuningData() { }
-        public Azure.ResourceManager.Sql.Models.AutomaticTuningMode? ActualState { get { throw null; } }
-        public Azure.ResourceManager.Sql.Models.AutomaticTuningMode? DesiredState { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Sql.Models.AutomaticTuningOptions> Options { get { throw null; } }
-    }
-    public partial class DatabaseAutomaticTuningResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected DatabaseAutomaticTuningResource() { }
-        public virtual Azure.ResourceManager.Sql.DatabaseAutomaticTuningData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.DatabaseAutomaticTuningResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.DatabaseAutomaticTuningResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.DatabaseAutomaticTuningResource> Update(Azure.ResourceManager.Sql.DatabaseAutomaticTuningData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.DatabaseAutomaticTuningResource>> UpdateAsync(Azure.ResourceManager.Sql.DatabaseAutomaticTuningData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class DatabaseBlobAuditingPolicyCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.DatabaseBlobAuditingPolicyResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.DatabaseBlobAuditingPolicyResource>, System.Collections.IEnumerable
-    {
-        protected DatabaseBlobAuditingPolicyCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.DatabaseBlobAuditingPolicyResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.BlobAuditingPolicyName blobAuditingPolicyName, Azure.ResourceManager.Sql.DatabaseBlobAuditingPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.DatabaseBlobAuditingPolicyResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.BlobAuditingPolicyName blobAuditingPolicyName, Azure.ResourceManager.Sql.DatabaseBlobAuditingPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.Sql.Models.BlobAuditingPolicyName blobAuditingPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.Sql.Models.BlobAuditingPolicyName blobAuditingPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.DatabaseBlobAuditingPolicyResource> Get(Azure.ResourceManager.Sql.Models.BlobAuditingPolicyName blobAuditingPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.DatabaseBlobAuditingPolicyResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.DatabaseBlobAuditingPolicyResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.DatabaseBlobAuditingPolicyResource>> GetAsync(Azure.ResourceManager.Sql.Models.BlobAuditingPolicyName blobAuditingPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.DatabaseBlobAuditingPolicyResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.DatabaseBlobAuditingPolicyResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.DatabaseBlobAuditingPolicyResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.DatabaseBlobAuditingPolicyResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class DatabaseBlobAuditingPolicyData : Azure.ResourceManager.Models.ResourceData
-    {
-        public DatabaseBlobAuditingPolicyData() { }
-        public System.Collections.Generic.IList<string> AuditActionsAndGroups { get { throw null; } }
-        public bool? IsAzureMonitorTargetEnabled { get { throw null; } set { } }
-        public bool? IsManagedIdentityInUse { get { throw null; } set { } }
-        public bool? IsStorageSecondaryKeyInUse { get { throw null; } set { } }
-        public string Kind { get { throw null; } }
-        public int? QueueDelayMs { get { throw null; } set { } }
-        public int? RetentionDays { get { throw null; } set { } }
-        public Azure.ResourceManager.Sql.Models.BlobAuditingPolicyState? State { get { throw null; } set { } }
-        public string StorageAccountAccessKey { get { throw null; } set { } }
-        public System.Guid? StorageAccountSubscriptionId { get { throw null; } set { } }
-        public string StorageEndpoint { get { throw null; } set { } }
-    }
-    public partial class DatabaseBlobAuditingPolicyResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected DatabaseBlobAuditingPolicyResource() { }
-        public virtual Azure.ResourceManager.Sql.DatabaseBlobAuditingPolicyData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, Azure.ResourceManager.Sql.Models.BlobAuditingPolicyName blobAuditingPolicyName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.DatabaseBlobAuditingPolicyResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.DatabaseBlobAuditingPolicyResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.DatabaseBlobAuditingPolicyResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.DatabaseBlobAuditingPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.DatabaseBlobAuditingPolicyResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.DatabaseBlobAuditingPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     public partial class DatabaseColumnData : Azure.ResourceManager.Models.ResourceData
     {
         public DatabaseColumnData() { }
@@ -117,45 +56,6 @@ namespace Azure.ResourceManager.Sql
     public partial class DatabaseSchemaData : Azure.ResourceManager.Models.ResourceData
     {
         public DatabaseSchemaData() { }
-    }
-    public partial class DatabaseSecurityAlertPolicyCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.DatabaseSecurityAlertPolicyResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.DatabaseSecurityAlertPolicyResource>, System.Collections.IEnumerable
-    {
-        protected DatabaseSecurityAlertPolicyCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.DatabaseSecurityAlertPolicyResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.SecurityAlertPolicyName securityAlertPolicyName, Azure.ResourceManager.Sql.DatabaseSecurityAlertPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.DatabaseSecurityAlertPolicyResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.SecurityAlertPolicyName securityAlertPolicyName, Azure.ResourceManager.Sql.DatabaseSecurityAlertPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.Sql.Models.SecurityAlertPolicyName securityAlertPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.Sql.Models.SecurityAlertPolicyName securityAlertPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.DatabaseSecurityAlertPolicyResource> Get(Azure.ResourceManager.Sql.Models.SecurityAlertPolicyName securityAlertPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.DatabaseSecurityAlertPolicyResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.DatabaseSecurityAlertPolicyResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.DatabaseSecurityAlertPolicyResource>> GetAsync(Azure.ResourceManager.Sql.Models.SecurityAlertPolicyName securityAlertPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.DatabaseSecurityAlertPolicyResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.DatabaseSecurityAlertPolicyResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.DatabaseSecurityAlertPolicyResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.DatabaseSecurityAlertPolicyResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class DatabaseSecurityAlertPolicyData : Azure.ResourceManager.Models.ResourceData
-    {
-        public DatabaseSecurityAlertPolicyData() { }
-        public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public System.Collections.Generic.IList<string> DisabledAlerts { get { throw null; } }
-        public bool? EmailAccountAdmins { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> EmailAddresses { get { throw null; } }
-        public int? RetentionDays { get { throw null; } set { } }
-        public Azure.ResourceManager.Sql.Models.SecurityAlertsPolicyState? State { get { throw null; } set { } }
-        public string StorageAccountAccessKey { get { throw null; } set { } }
-        public string StorageEndpoint { get { throw null; } set { } }
-    }
-    public partial class DatabaseSecurityAlertPolicyResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected DatabaseSecurityAlertPolicyResource() { }
-        public virtual Azure.ResourceManager.Sql.DatabaseSecurityAlertPolicyData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, Azure.ResourceManager.Sql.Models.SecurityAlertPolicyName securityAlertPolicyName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.DatabaseSecurityAlertPolicyResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.DatabaseSecurityAlertPolicyResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.DatabaseSecurityAlertPolicyResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.DatabaseSecurityAlertPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.DatabaseSecurityAlertPolicyResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.DatabaseSecurityAlertPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class DatabaseTableData : Azure.ResourceManager.Models.ResourceData
     {
@@ -771,94 +671,6 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.IPv6FirewallRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.IPv6FirewallRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.IPv6FirewallRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.IPv6FirewallRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class JobAgentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.JobAgentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.JobAgentResource>, System.Collections.IEnumerable
-    {
-        protected JobAgentCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.JobAgentResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string jobAgentName, Azure.ResourceManager.Sql.JobAgentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.JobAgentResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string jobAgentName, Azure.ResourceManager.Sql.JobAgentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string jobAgentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string jobAgentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.JobAgentResource> Get(string jobAgentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.JobAgentResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.JobAgentResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.JobAgentResource>> GetAsync(string jobAgentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.JobAgentResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.JobAgentResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.JobAgentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.JobAgentResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class JobAgentData : Azure.ResourceManager.Models.TrackedResourceData
-    {
-        public JobAgentData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.Core.ResourceIdentifier DatabaseId { get { throw null; } set { } }
-        public Azure.ResourceManager.Sql.Models.SqlSku Sku { get { throw null; } set { } }
-        public Azure.ResourceManager.Sql.Models.JobAgentState? State { get { throw null; } }
-    }
-    public partial class JobAgentResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected JobAgentResource() { }
-        public virtual Azure.ResourceManager.Sql.JobAgentData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.JobAgentResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.JobAgentResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.JobAgentResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.JobAgentResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.JobCredentialResource> GetJobCredential(string credentialName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.JobCredentialResource>> GetJobCredentialAsync(string credentialName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.JobCredentialCollection GetJobCredentials() { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionResource> GetJobExecutionsByAgent(System.DateTimeOffset? createTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? createTimeMax = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMax = default(System.DateTimeOffset?), bool? isActive = default(bool?), int? skip = default(int?), int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionResource> GetJobExecutionsByAgentAsync(System.DateTimeOffset? createTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? createTimeMax = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMax = default(System.DateTimeOffset?), bool? isActive = default(bool?), int? skip = default(int?), int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.JobTargetGroupResource> GetJobTargetGroup(string targetGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.JobTargetGroupResource>> GetJobTargetGroupAsync(string targetGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.JobTargetGroupCollection GetJobTargetGroups() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlJobResource> GetSqlJob(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlJobResource>> GetSqlJobAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.SqlJobCollection GetSqlJobs() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.JobAgentResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.JobAgentResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.JobAgentResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.JobAgentResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.JobAgentResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.JobAgentPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.JobAgentResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.JobAgentPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class JobCredentialCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.JobCredentialResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.JobCredentialResource>, System.Collections.IEnumerable
-    {
-        protected JobCredentialCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.JobCredentialResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string credentialName, Azure.ResourceManager.Sql.JobCredentialData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.JobCredentialResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string credentialName, Azure.ResourceManager.Sql.JobCredentialData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string credentialName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string credentialName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.JobCredentialResource> Get(string credentialName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.JobCredentialResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.JobCredentialResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.JobCredentialResource>> GetAsync(string credentialName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.JobCredentialResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.JobCredentialResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.JobCredentialResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.JobCredentialResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class JobCredentialData : Azure.ResourceManager.Models.ResourceData
-    {
-        public JobCredentialData() { }
-        public string Password { get { throw null; } set { } }
-        public string Username { get { throw null; } set { } }
-    }
-    public partial class JobCredentialResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected JobCredentialResource() { }
-        public virtual Azure.ResourceManager.Sql.JobCredentialData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string credentialName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.JobCredentialResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.JobCredentialResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.JobCredentialResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.JobCredentialData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.JobCredentialResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.JobCredentialData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     public partial class JobExecutionData : Azure.ResourceManager.Models.ResourceData
     {
         public JobExecutionData() { }
@@ -886,104 +698,40 @@ namespace Azure.ResourceManager.Sql
         public int? StepId { get { throw null; } set { } }
         public string TargetGroup { get { throw null; } set { } }
     }
-    public partial class JobTargetGroupCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.JobTargetGroupResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.JobTargetGroupResource>, System.Collections.IEnumerable
+    public partial class LedgerDigestUploadCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.LedgerDigestUploadResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.LedgerDigestUploadResource>, System.Collections.IEnumerable
     {
-        protected JobTargetGroupCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.JobTargetGroupResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string targetGroupName, Azure.ResourceManager.Sql.JobTargetGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.JobTargetGroupResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string targetGroupName, Azure.ResourceManager.Sql.JobTargetGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string targetGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string targetGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.JobTargetGroupResource> Get(string targetGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.JobTargetGroupResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.JobTargetGroupResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.JobTargetGroupResource>> GetAsync(string targetGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.JobTargetGroupResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.JobTargetGroupResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.JobTargetGroupResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.JobTargetGroupResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class JobTargetGroupData : Azure.ResourceManager.Models.ResourceData
-    {
-        public JobTargetGroupData() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Sql.Models.JobTarget> Members { get { throw null; } }
-    }
-    public partial class JobTargetGroupResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected JobTargetGroupResource() { }
-        public virtual Azure.ResourceManager.Sql.JobTargetGroupData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string targetGroupName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.JobTargetGroupResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.JobTargetGroupResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.JobTargetGroupResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.JobTargetGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.JobTargetGroupResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.JobTargetGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class JobVersionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.JobVersionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.JobVersionResource>, System.Collections.IEnumerable
-    {
-        protected JobVersionCollection() { }
-        public virtual Azure.Response<bool> Exists(int jobVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(int jobVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.JobVersionResource> Get(int jobVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.JobVersionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.JobVersionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.JobVersionResource>> GetAsync(int jobVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.JobVersionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.JobVersionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.JobVersionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.JobVersionResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class JobVersionData : Azure.ResourceManager.Models.ResourceData
-    {
-        public JobVersionData() { }
-    }
-    public partial class JobVersionResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected JobVersionResource() { }
-        public virtual Azure.ResourceManager.Sql.JobVersionData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.JobVersionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.JobVersionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerJobAgentJobVersionStepResource> GetServerJobAgentJobVersionStep(string stepName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerJobAgentJobVersionStepResource>> GetServerJobAgentJobVersionStepAsync(string stepName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.ServerJobAgentJobVersionStepCollection GetServerJobAgentJobVersionSteps() { throw null; }
-    }
-    public partial class LedgerDigestUploadsCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.LedgerDigestUploadsResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.LedgerDigestUploadsResource>, System.Collections.IEnumerable
-    {
-        protected LedgerDigestUploadsCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.LedgerDigestUploadsResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.LedgerDigestUploadsName ledgerDigestUploads, Azure.ResourceManager.Sql.LedgerDigestUploadsData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.LedgerDigestUploadsResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.LedgerDigestUploadsName ledgerDigestUploads, Azure.ResourceManager.Sql.LedgerDigestUploadsData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected LedgerDigestUploadCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.LedgerDigestUploadResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.LedgerDigestUploadsName ledgerDigestUploads, Azure.ResourceManager.Sql.LedgerDigestUploadData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.LedgerDigestUploadResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.LedgerDigestUploadsName ledgerDigestUploads, Azure.ResourceManager.Sql.LedgerDigestUploadData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(Azure.ResourceManager.Sql.Models.LedgerDigestUploadsName ledgerDigestUploads, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.Sql.Models.LedgerDigestUploadsName ledgerDigestUploads, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.LedgerDigestUploadsResource> Get(Azure.ResourceManager.Sql.Models.LedgerDigestUploadsName ledgerDigestUploads, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.LedgerDigestUploadsResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.LedgerDigestUploadsResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.LedgerDigestUploadsResource>> GetAsync(Azure.ResourceManager.Sql.Models.LedgerDigestUploadsName ledgerDigestUploads, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.LedgerDigestUploadsResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.LedgerDigestUploadsResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.LedgerDigestUploadsResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.LedgerDigestUploadsResource>.GetEnumerator() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.LedgerDigestUploadResource> Get(Azure.ResourceManager.Sql.Models.LedgerDigestUploadsName ledgerDigestUploads, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.LedgerDigestUploadResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.LedgerDigestUploadResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.LedgerDigestUploadResource>> GetAsync(Azure.ResourceManager.Sql.Models.LedgerDigestUploadsName ledgerDigestUploads, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.LedgerDigestUploadResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.LedgerDigestUploadResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.LedgerDigestUploadResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.LedgerDigestUploadResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class LedgerDigestUploadsData : Azure.ResourceManager.Models.ResourceData
+    public partial class LedgerDigestUploadData : Azure.ResourceManager.Models.ResourceData
     {
-        public LedgerDigestUploadsData() { }
+        public LedgerDigestUploadData() { }
         public string DigestStorageEndpoint { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.LedgerDigestUploadsState? State { get { throw null; } }
     }
-    public partial class LedgerDigestUploadsResource : Azure.ResourceManager.ArmResource
+    public partial class LedgerDigestUploadResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected LedgerDigestUploadsResource() { }
-        public virtual Azure.ResourceManager.Sql.LedgerDigestUploadsData Data { get { throw null; } }
+        protected LedgerDigestUploadResource() { }
+        public virtual Azure.ResourceManager.Sql.LedgerDigestUploadData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, Azure.ResourceManager.Sql.Models.LedgerDigestUploadsName ledgerDigestUploads) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.LedgerDigestUploadsResource> Disable(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.LedgerDigestUploadsResource>> DisableAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.LedgerDigestUploadsResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.LedgerDigestUploadsResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.LedgerDigestUploadsResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.LedgerDigestUploadsData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.LedgerDigestUploadsResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.LedgerDigestUploadsData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.LedgerDigestUploadResource> Disable(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.LedgerDigestUploadResource>> DisableAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.LedgerDigestUploadResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.LedgerDigestUploadResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.LedgerDigestUploadResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.LedgerDigestUploadData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.LedgerDigestUploadResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.LedgerDigestUploadData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class LogicalDatabaseTransparentDataEncryptionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.LogicalDatabaseTransparentDataEncryptionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.LogicalDatabaseTransparentDataEncryptionResource>, System.Collections.IEnumerable
     {
@@ -1102,10 +850,37 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.Response<Azure.ResourceManager.Sql.MaintenanceWindowsResource> Get(string maintenanceWindowName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.MaintenanceWindowsResource>> GetAsync(string maintenanceWindowName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class ManagedBackupShortTermRetentionPolicyCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ManagedBackupShortTermRetentionPolicyResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ManagedBackupShortTermRetentionPolicyResource>, System.Collections.IEnumerable
+    {
+        protected ManagedBackupShortTermRetentionPolicyCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ManagedBackupShortTermRetentionPolicyResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.ManagedShortTermRetentionPolicyName policyName, Azure.ResourceManager.Sql.ManagedBackupShortTermRetentionPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ManagedBackupShortTermRetentionPolicyResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.ManagedShortTermRetentionPolicyName policyName, Azure.ResourceManager.Sql.ManagedBackupShortTermRetentionPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.Sql.Models.ManagedShortTermRetentionPolicyName policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.Sql.Models.ManagedShortTermRetentionPolicyName policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedBackupShortTermRetentionPolicyResource> Get(Azure.ResourceManager.Sql.Models.ManagedShortTermRetentionPolicyName policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ManagedBackupShortTermRetentionPolicyResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ManagedBackupShortTermRetentionPolicyResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedBackupShortTermRetentionPolicyResource>> GetAsync(Azure.ResourceManager.Sql.Models.ManagedShortTermRetentionPolicyName policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ManagedBackupShortTermRetentionPolicyResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ManagedBackupShortTermRetentionPolicyResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ManagedBackupShortTermRetentionPolicyResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ManagedBackupShortTermRetentionPolicyResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
     public partial class ManagedBackupShortTermRetentionPolicyData : Azure.ResourceManager.Models.ResourceData
     {
         public ManagedBackupShortTermRetentionPolicyData() { }
         public int? RetentionDays { get { throw null; } set { } }
+    }
+    public partial class ManagedBackupShortTermRetentionPolicyResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected ManagedBackupShortTermRetentionPolicyResource() { }
+        public virtual Azure.ResourceManager.Sql.ManagedBackupShortTermRetentionPolicyData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, Azure.ResourceManager.Sql.Models.ManagedShortTermRetentionPolicyName policyName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedBackupShortTermRetentionPolicyResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedBackupShortTermRetentionPolicyResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ManagedBackupShortTermRetentionPolicyResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.ManagedBackupShortTermRetentionPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ManagedBackupShortTermRetentionPolicyResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.ManagedBackupShortTermRetentionPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ManagedDatabaseCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ManagedDatabaseResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ManagedDatabaseResource>, System.Collections.IEnumerable
     {
@@ -1121,6 +896,36 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ManagedDatabaseResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ManagedDatabaseResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ManagedDatabaseResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ManagedDatabaseResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class ManagedDatabaseColumnCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ManagedDatabaseColumnResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ManagedDatabaseColumnResource>, System.Collections.IEnumerable
+    {
+        protected ManagedDatabaseColumnCollection() { }
+        public virtual Azure.Response<bool> Exists(string columnName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string columnName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseColumnResource> Get(string columnName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ManagedDatabaseColumnResource> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ManagedDatabaseColumnResource> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseColumnResource>> GetAsync(string columnName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ManagedDatabaseColumnResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ManagedDatabaseColumnResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ManagedDatabaseColumnResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ManagedDatabaseColumnResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class ManagedDatabaseColumnResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected ManagedDatabaseColumnResource() { }
+        public virtual Azure.ResourceManager.Sql.DatabaseColumnData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName) { throw null; }
+        public virtual Azure.Response DisableRecommendationManagedDatabaseSensitivityLabel(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DisableRecommendationManagedDatabaseSensitivityLabelAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response EnableRecommendationManagedDatabaseSensitivityLabel(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> EnableRecommendationManagedDatabaseSensitivityLabelAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseColumnResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseColumnResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseSensitivityLabelResource> GetManagedDatabaseSensitivityLabel(Azure.ResourceManager.Sql.Models.SensitivityLabelSource sensitivityLabelSource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseSensitivityLabelResource>> GetManagedDatabaseSensitivityLabelAsync(Azure.ResourceManager.Sql.Models.SensitivityLabelSource sensitivityLabelSource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sql.ManagedDatabaseSensitivityLabelCollection GetManagedDatabaseSensitivityLabels() { throw null; }
     }
     public partial class ManagedDatabaseData : Azure.ResourceManager.Models.TrackedResourceData
     {
@@ -1158,29 +963,29 @@ namespace Azure.ResourceManager.Sql
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource> GetCurrentManagedDatabaseSensitivityLabels(string skipToken = null, bool? count = default(bool?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource> GetCurrentManagedDatabaseSensitivityLabelsAsync(string skipToken = null, bool? count = default(bool?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableColumnResource> GetManagedDatabaseColumnsByDatabase(System.Collections.Generic.IEnumerable<string> schema = null, System.Collections.Generic.IEnumerable<string> table = null, System.Collections.Generic.IEnumerable<string> column = null, System.Collections.Generic.IEnumerable<string> orderBy = null, string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableColumnResource> GetManagedDatabaseColumnsByDatabaseAsync(System.Collections.Generic.IEnumerable<string> schema = null, System.Collections.Generic.IEnumerable<string> table = null, System.Collections.Generic.IEnumerable<string> column = null, System.Collections.Generic.IEnumerable<string> orderBy = null, string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ManagedDatabaseSensitivityLabelResource> GetCurrentManagedDatabaseSensitivityLabels(string skipToken = null, bool? count = default(bool?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ManagedDatabaseSensitivityLabelResource> GetCurrentManagedDatabaseSensitivityLabelsAsync(string skipToken = null, bool? count = default(bool?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sql.ManagedBackupShortTermRetentionPolicyCollection GetManagedBackupShortTermRetentionPolicies() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedBackupShortTermRetentionPolicyResource> GetManagedBackupShortTermRetentionPolicy(Azure.ResourceManager.Sql.Models.ManagedShortTermRetentionPolicyName policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedBackupShortTermRetentionPolicyResource>> GetManagedBackupShortTermRetentionPolicyAsync(Azure.ResourceManager.Sql.Models.ManagedShortTermRetentionPolicyName policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ManagedDatabaseColumnResource> GetManagedDatabaseColumnsByDatabase(System.Collections.Generic.IEnumerable<string> schema = null, System.Collections.Generic.IEnumerable<string> table = null, System.Collections.Generic.IEnumerable<string> column = null, System.Collections.Generic.IEnumerable<string> orderBy = null, string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ManagedDatabaseColumnResource> GetManagedDatabaseColumnsByDatabaseAsync(System.Collections.Generic.IEnumerable<string> schema = null, System.Collections.Generic.IEnumerable<string> table = null, System.Collections.Generic.IEnumerable<string> column = null, System.Collections.Generic.IEnumerable<string> orderBy = null, string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.Models.ManagedInstanceQuery> GetManagedDatabaseQuery(string queryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.Models.ManagedInstanceQuery>> GetManagedDatabaseQueryAsync(string queryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseRestoreDetailsResultResource> GetManagedDatabaseRestoreDetailsResult(Azure.ResourceManager.Sql.Models.RestoreDetailsName restoreDetailsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseRestoreDetailsResultResource>> GetManagedDatabaseRestoreDetailsResultAsync(Azure.ResourceManager.Sql.Models.RestoreDetailsName restoreDetailsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.ManagedDatabaseRestoreDetailsResultCollection GetManagedDatabaseRestoreDetailsResults() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseRestoreDetailResource> GetManagedDatabaseRestoreDetail(Azure.ResourceManager.Sql.Models.RestoreDetailsName restoreDetailsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseRestoreDetailResource>> GetManagedDatabaseRestoreDetailAsync(Azure.ResourceManager.Sql.Models.RestoreDetailsName restoreDetailsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sql.ManagedDatabaseRestoreDetailCollection GetManagedDatabaseRestoreDetails() { throw null; }
         public virtual Azure.ResourceManager.Sql.ManagedDatabaseSecurityAlertPolicyCollection GetManagedDatabaseSecurityAlertPolicies() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseSecurityAlertPolicyResource> GetManagedDatabaseSecurityAlertPolicy(Azure.ResourceManager.Sql.Models.SecurityAlertPolicyName securityAlertPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseSecurityAlertPolicyResource>> GetManagedDatabaseSecurityAlertPolicyAsync(Azure.ResourceManager.Sql.Models.SecurityAlertPolicyName securityAlertPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.Models.SecurityEvent> GetManagedDatabaseSecurityEventsByDatabase(string filter = null, int? skip = default(int?), int? top = default(int?), string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.Models.SecurityEvent> GetManagedDatabaseSecurityEventsByDatabaseAsync(string filter = null, int? skip = default(int?), int? top = default(int?), string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.ManagedInstanceDatabaseBackupShortTermRetentionPolicyCollection GetManagedInstanceDatabaseBackupShortTermRetentionPolicies() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource> GetManagedInstanceDatabaseBackupShortTermRetentionPolicy(Azure.ResourceManager.Sql.Models.ManagedShortTermRetentionPolicyName policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource>> GetManagedInstanceDatabaseBackupShortTermRetentionPolicyAsync(Azure.ResourceManager.Sql.Models.ManagedShortTermRetentionPolicyName policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentResource> GetManagedDatabaseVulnerabilityAssessment(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentResource>> GetManagedDatabaseVulnerabilityAssessmentAsync(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentCollection GetManagedDatabaseVulnerabilityAssessments() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaResource> GetManagedInstanceDatabaseSchema(string schemaName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaResource>> GetManagedInstanceDatabaseSchemaAsync(string schemaName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaCollection GetManagedInstanceDatabaseSchemas() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceDatabaseVulnerabilityAssessmentResource> GetManagedInstanceDatabaseVulnerabilityAssessment(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceDatabaseVulnerabilityAssessmentResource>> GetManagedInstanceDatabaseVulnerabilityAssessmentAsync(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.ManagedInstanceDatabaseVulnerabilityAssessmentCollection GetManagedInstanceDatabaseVulnerabilityAssessments() { throw null; }
         public virtual Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionPolicyCollection GetManagedInstanceLongTermRetentionPolicies() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionPolicyResource> GetManagedInstanceLongTermRetentionPolicy(Azure.ResourceManager.Sql.Models.ManagedInstanceLongTermRetentionPolicyName policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionPolicyResource>> GetManagedInstanceLongTermRetentionPolicyAsync(Azure.ResourceManager.Sql.Models.ManagedInstanceLongTermRetentionPolicyName policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1189,8 +994,8 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.ResourceManager.Sql.ManagedTransparentDataEncryptionCollection GetManagedTransparentDataEncryptions() { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.Models.QueryStatistics> GetQueryStatistics(string queryId, string startTime = null, string endTime = null, Azure.ResourceManager.Sql.Models.QueryTimeGrainType? interval = default(Azure.ResourceManager.Sql.Models.QueryTimeGrainType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.Models.QueryStatistics> GetQueryStatisticsAsync(string queryId, string startTime = null, string endTime = null, Azure.ResourceManager.Sql.Models.QueryTimeGrainType? interval = default(Azure.ResourceManager.Sql.Models.QueryTimeGrainType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource> GetRecommendedManagedDatabaseSensitivityLabels(string skipToken = null, bool? includeDisabledRecommendations = default(bool?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource> GetRecommendedManagedDatabaseSensitivityLabelsAsync(string skipToken = null, bool? includeDisabledRecommendations = default(bool?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ManagedDatabaseSensitivityLabelResource> GetRecommendedManagedDatabaseSensitivityLabels(string skipToken = null, bool? includeDisabledRecommendations = default(bool?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ManagedDatabaseSensitivityLabelResource> GetRecommendedManagedDatabaseSensitivityLabelsAsync(string skipToken = null, bool? includeDisabledRecommendations = default(bool?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1202,17 +1007,17 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.Response UpdateRecommendedManagedDatabaseSensitivityLabel(Azure.ResourceManager.Sql.Models.RecommendedSensitivityLabelUpdateList recommendedSensitivityLabelUpdateList, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateRecommendedManagedDatabaseSensitivityLabelAsync(Azure.ResourceManager.Sql.Models.RecommendedSensitivityLabelUpdateList recommendedSensitivityLabelUpdateList, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ManagedDatabaseRestoreDetailsResultCollection : Azure.ResourceManager.ArmCollection
+    public partial class ManagedDatabaseRestoreDetailCollection : Azure.ResourceManager.ArmCollection
     {
-        protected ManagedDatabaseRestoreDetailsResultCollection() { }
+        protected ManagedDatabaseRestoreDetailCollection() { }
         public virtual Azure.Response<bool> Exists(Azure.ResourceManager.Sql.Models.RestoreDetailsName restoreDetailsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.Sql.Models.RestoreDetailsName restoreDetailsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseRestoreDetailsResultResource> Get(Azure.ResourceManager.Sql.Models.RestoreDetailsName restoreDetailsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseRestoreDetailsResultResource>> GetAsync(Azure.ResourceManager.Sql.Models.RestoreDetailsName restoreDetailsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseRestoreDetailResource> Get(Azure.ResourceManager.Sql.Models.RestoreDetailsName restoreDetailsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseRestoreDetailResource>> GetAsync(Azure.ResourceManager.Sql.Models.RestoreDetailsName restoreDetailsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ManagedDatabaseRestoreDetailsResultData : Azure.ResourceManager.Models.ResourceData
+    public partial class ManagedDatabaseRestoreDetailData : Azure.ResourceManager.Models.ResourceData
     {
-        public ManagedDatabaseRestoreDetailsResultData() { }
+        public ManagedDatabaseRestoreDetailData() { }
         public string BlockReason { get { throw null; } }
         public string CurrentRestoringFileName { get { throw null; } }
         public string LastRestoredFileName { get { throw null; } }
@@ -1224,15 +1029,15 @@ namespace Azure.ResourceManager.Sql
         public string Status { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> UnrestorableFiles { get { throw null; } }
     }
-    public partial class ManagedDatabaseRestoreDetailsResultResource : Azure.ResourceManager.ArmResource
+    public partial class ManagedDatabaseRestoreDetailResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected ManagedDatabaseRestoreDetailsResultResource() { }
-        public virtual Azure.ResourceManager.Sql.ManagedDatabaseRestoreDetailsResultData Data { get { throw null; } }
+        protected ManagedDatabaseRestoreDetailResource() { }
+        public virtual Azure.ResourceManager.Sql.ManagedDatabaseRestoreDetailData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, Azure.ResourceManager.Sql.Models.RestoreDetailsName restoreDetailsName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseRestoreDetailsResultResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseRestoreDetailsResultResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseRestoreDetailResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseRestoreDetailResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ManagedDatabaseSecurityAlertPolicyCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ManagedDatabaseSecurityAlertPolicyResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ManagedDatabaseSecurityAlertPolicyResource>, System.Collections.IEnumerable
     {
@@ -1254,9 +1059,9 @@ namespace Azure.ResourceManager.Sql
         public ManagedDatabaseSecurityAlertPolicyData() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public System.Collections.Generic.IList<string> DisabledAlerts { get { throw null; } }
-        public bool? EmailAccountAdmins { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> EmailAddresses { get { throw null; } }
         public int? RetentionDays { get { throw null; } set { } }
+        public bool? SendToEmailAccountAdmins { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.SecurityAlertPolicyState? State { get { throw null; } set { } }
         public string StorageAccountAccessKey { get { throw null; } set { } }
         public string StorageEndpoint { get { throw null; } set { } }
@@ -1272,6 +1077,142 @@ namespace Azure.ResourceManager.Sql
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseSecurityAlertPolicyResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ManagedDatabaseSecurityAlertPolicyResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.ManagedDatabaseSecurityAlertPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ManagedDatabaseSecurityAlertPolicyResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.ManagedDatabaseSecurityAlertPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ManagedDatabaseSensitivityLabelCollection : Azure.ResourceManager.ArmCollection
+    {
+        protected ManagedDatabaseSensitivityLabelCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ManagedDatabaseSensitivityLabelResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SensitivityLabelData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ManagedDatabaseSensitivityLabelResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SensitivityLabelData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.Sql.Models.SensitivityLabelSource sensitivityLabelSource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.Sql.Models.SensitivityLabelSource sensitivityLabelSource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseSensitivityLabelResource> Get(Azure.ResourceManager.Sql.Models.SensitivityLabelSource sensitivityLabelSource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseSensitivityLabelResource>> GetAsync(Azure.ResourceManager.Sql.Models.SensitivityLabelSource sensitivityLabelSource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ManagedDatabaseSensitivityLabelResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected ManagedDatabaseSensitivityLabelResource() { }
+        public virtual Azure.ResourceManager.Sql.SensitivityLabelData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName, Azure.ResourceManager.Sql.Models.SensitivityLabelSource sensitivityLabelSource) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseSensitivityLabelResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseSensitivityLabelResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ManagedDatabaseSensitivityLabelResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SensitivityLabelData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ManagedDatabaseSensitivityLabelResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SensitivityLabelData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ManagedDatabaseTableCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ManagedDatabaseTableResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ManagedDatabaseTableResource>, System.Collections.IEnumerable
+    {
+        protected ManagedDatabaseTableCollection() { }
+        public virtual Azure.Response<bool> Exists(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseTableResource> Get(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ManagedDatabaseTableResource> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ManagedDatabaseTableResource> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseTableResource>> GetAsync(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ManagedDatabaseTableResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ManagedDatabaseTableResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ManagedDatabaseTableResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ManagedDatabaseTableResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class ManagedDatabaseTableResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected ManagedDatabaseTableResource() { }
+        public virtual Azure.ResourceManager.Sql.DatabaseTableData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseTableResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseTableResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseColumnResource> GetManagedDatabaseColumn(string columnName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseColumnResource>> GetManagedDatabaseColumnAsync(string columnName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sql.ManagedDatabaseColumnCollection GetManagedDatabaseColumns() { throw null; }
+    }
+    public partial class ManagedDatabaseVulnerabilityAssessmentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentResource>, System.Collections.IEnumerable
+    {
+        protected ManagedDatabaseVulnerabilityAssessmentCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, Azure.ResourceManager.Sql.DatabaseVulnerabilityAssessmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, Azure.ResourceManager.Sql.DatabaseVulnerabilityAssessmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentResource> Get(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentResource>> GetAsync(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class ManagedDatabaseVulnerabilityAssessmentResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected ManagedDatabaseVulnerabilityAssessmentResource() { }
+        public virtual Azure.ResourceManager.Sql.DatabaseVulnerabilityAssessmentData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentRuleBaselineResource> GetManagedDatabaseVulnerabilityAssessmentRuleBaseline(string ruleId, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentPolicyBaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentRuleBaselineResource>> GetManagedDatabaseVulnerabilityAssessmentRuleBaselineAsync(string ruleId, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentPolicyBaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentRuleBaselineCollection GetManagedDatabaseVulnerabilityAssessmentRuleBaselines() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentScanResource> GetManagedDatabaseVulnerabilityAssessmentScan(string scanId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentScanResource>> GetManagedDatabaseVulnerabilityAssessmentScanAsync(string scanId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentScanCollection GetManagedDatabaseVulnerabilityAssessmentScans() { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.DatabaseVulnerabilityAssessmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.DatabaseVulnerabilityAssessmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ManagedDatabaseVulnerabilityAssessmentRuleBaselineCollection : Azure.ResourceManager.ArmCollection
+    {
+        protected ManagedDatabaseVulnerabilityAssessmentRuleBaselineCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentRuleBaselineResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string ruleId, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentPolicyBaselineName baselineName, Azure.ResourceManager.Sql.DatabaseVulnerabilityAssessmentRuleBaselineData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentRuleBaselineResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string ruleId, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentPolicyBaselineName baselineName, Azure.ResourceManager.Sql.DatabaseVulnerabilityAssessmentRuleBaselineData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string ruleId, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentPolicyBaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string ruleId, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentPolicyBaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentRuleBaselineResource> Get(string ruleId, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentPolicyBaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentRuleBaselineResource>> GetAsync(string ruleId, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentPolicyBaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ManagedDatabaseVulnerabilityAssessmentRuleBaselineResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected ManagedDatabaseVulnerabilityAssessmentRuleBaselineResource() { }
+        public virtual Azure.ResourceManager.Sql.DatabaseVulnerabilityAssessmentRuleBaselineData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, string ruleId, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentPolicyBaselineName baselineName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentRuleBaselineResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentRuleBaselineResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentRuleBaselineResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.DatabaseVulnerabilityAssessmentRuleBaselineData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentRuleBaselineResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.DatabaseVulnerabilityAssessmentRuleBaselineData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ManagedDatabaseVulnerabilityAssessmentScanCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentScanResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentScanResource>, System.Collections.IEnumerable
+    {
+        protected ManagedDatabaseVulnerabilityAssessmentScanCollection() { }
+        public virtual Azure.Response<bool> Exists(string scanId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string scanId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentScanResource> Get(string scanId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentScanResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentScanResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentScanResource>> GetAsync(string scanId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentScanResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentScanResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentScanResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentScanResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class ManagedDatabaseVulnerabilityAssessmentScanResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected ManagedDatabaseVulnerabilityAssessmentScanResource() { }
+        public virtual Azure.ResourceManager.Sql.VulnerabilityAssessmentScanRecordData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, string scanId) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.Models.DatabaseVulnerabilityAssessmentScansExport> Export(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.Models.DatabaseVulnerabilityAssessmentScansExport>> ExportAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentScanResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentScanResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation InitiateScan(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> InitiateScanAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ManagedInstanceAdministratorCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ManagedInstanceAdministratorResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ManagedInstanceAdministratorResource>, System.Collections.IEnumerable
     {
@@ -1394,33 +1335,6 @@ namespace Azure.ResourceManager.Sql
         public int? VCores { get { throw null; } set { } }
         public bool? ZoneRedundant { get { throw null; } set { } }
     }
-    public partial class ManagedInstanceDatabaseBackupShortTermRetentionPolicyCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource>, System.Collections.IEnumerable
-    {
-        protected ManagedInstanceDatabaseBackupShortTermRetentionPolicyCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.ManagedShortTermRetentionPolicyName policyName, Azure.ResourceManager.Sql.ManagedBackupShortTermRetentionPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.ManagedShortTermRetentionPolicyName policyName, Azure.ResourceManager.Sql.ManagedBackupShortTermRetentionPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.Sql.Models.ManagedShortTermRetentionPolicyName policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.Sql.Models.ManagedShortTermRetentionPolicyName policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource> Get(Azure.ResourceManager.Sql.Models.ManagedShortTermRetentionPolicyName policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource>> GetAsync(Azure.ResourceManager.Sql.Models.ManagedShortTermRetentionPolicyName policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource() { }
-        public virtual Azure.ResourceManager.Sql.ManagedBackupShortTermRetentionPolicyData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, Azure.ResourceManager.Sql.Models.ManagedShortTermRetentionPolicyName policyName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.ManagedBackupShortTermRetentionPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.ManagedBackupShortTermRetentionPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     public partial class ManagedInstanceDatabaseSchemaCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaResource>, System.Collections.IEnumerable
     {
         protected ManagedInstanceDatabaseSchemaCollection() { }
@@ -1443,175 +1357,9 @@ namespace Azure.ResourceManager.Sql
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableResource> GetManagedInstanceDatabaseSchemaTable(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableResource>> GetManagedInstanceDatabaseSchemaTableAsync(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableCollection GetManagedInstanceDatabaseSchemaTables() { throw null; }
-    }
-    public partial class ManagedInstanceDatabaseSchemaTableCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableResource>, System.Collections.IEnumerable
-    {
-        protected ManagedInstanceDatabaseSchemaTableCollection() { }
-        public virtual Azure.Response<bool> Exists(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableResource> Get(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableResource> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableResource> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableResource>> GetAsync(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ManagedInstanceDatabaseSchemaTableColumnCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableColumnResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableColumnResource>, System.Collections.IEnumerable
-    {
-        protected ManagedInstanceDatabaseSchemaTableColumnCollection() { }
-        public virtual Azure.Response<bool> Exists(string columnName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string columnName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableColumnResource> Get(string columnName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableColumnResource> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableColumnResource> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableColumnResource>> GetAsync(string columnName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableColumnResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableColumnResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableColumnResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableColumnResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ManagedInstanceDatabaseSchemaTableColumnResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ManagedInstanceDatabaseSchemaTableColumnResource() { }
-        public virtual Azure.ResourceManager.Sql.DatabaseColumnData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName) { throw null; }
-        public virtual Azure.Response DisableRecommendationManagedDatabaseSensitivityLabel(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DisableRecommendationManagedDatabaseSensitivityLabelAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response EnableRecommendationManagedDatabaseSensitivityLabel(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> EnableRecommendationManagedDatabaseSensitivityLabelAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableColumnResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableColumnResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource> GetManagedInstanceDatabaseSchemaTableColumnSensitivityLabel(Azure.ResourceManager.Sql.Models.SensitivityLabelSource sensitivityLabelSource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource>> GetManagedInstanceDatabaseSchemaTableColumnSensitivityLabelAsync(Azure.ResourceManager.Sql.Models.SensitivityLabelSource sensitivityLabelSource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelCollection GetManagedInstanceDatabaseSchemaTableColumnSensitivityLabels() { throw null; }
-    }
-    public partial class ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelCollection : Azure.ResourceManager.ArmCollection
-    {
-        protected ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SensitivityLabelData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SensitivityLabelData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.Sql.Models.SensitivityLabelSource sensitivityLabelSource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.Sql.Models.SensitivityLabelSource sensitivityLabelSource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource> Get(Azure.ResourceManager.Sql.Models.SensitivityLabelSource sensitivityLabelSource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource>> GetAsync(Azure.ResourceManager.Sql.Models.SensitivityLabelSource sensitivityLabelSource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource() { }
-        public virtual Azure.ResourceManager.Sql.SensitivityLabelData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName, Azure.ResourceManager.Sql.Models.SensitivityLabelSource sensitivityLabelSource) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SensitivityLabelData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SensitivityLabelData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ManagedInstanceDatabaseSchemaTableResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ManagedInstanceDatabaseSchemaTableResource() { }
-        public virtual Azure.ResourceManager.Sql.DatabaseTableData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableColumnResource> GetManagedInstanceDatabaseSchemaTableColumn(string columnName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableColumnResource>> GetManagedInstanceDatabaseSchemaTableColumnAsync(string columnName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableColumnCollection GetManagedInstanceDatabaseSchemaTableColumns() { throw null; }
-    }
-    public partial class ManagedInstanceDatabaseVulnerabilityAssessmentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseVulnerabilityAssessmentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseVulnerabilityAssessmentResource>, System.Collections.IEnumerable
-    {
-        protected ManagedInstanceDatabaseVulnerabilityAssessmentCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ManagedInstanceDatabaseVulnerabilityAssessmentResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, Azure.ResourceManager.Sql.DatabaseVulnerabilityAssessmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ManagedInstanceDatabaseVulnerabilityAssessmentResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, Azure.ResourceManager.Sql.DatabaseVulnerabilityAssessmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceDatabaseVulnerabilityAssessmentResource> Get(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseVulnerabilityAssessmentResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseVulnerabilityAssessmentResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceDatabaseVulnerabilityAssessmentResource>> GetAsync(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ManagedInstanceDatabaseVulnerabilityAssessmentResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseVulnerabilityAssessmentResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ManagedInstanceDatabaseVulnerabilityAssessmentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseVulnerabilityAssessmentResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ManagedInstanceDatabaseVulnerabilityAssessmentResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ManagedInstanceDatabaseVulnerabilityAssessmentResource() { }
-        public virtual Azure.ResourceManager.Sql.DatabaseVulnerabilityAssessmentData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceDatabaseVulnerabilityAssessmentResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceDatabaseVulnerabilityAssessmentResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaselineResource> GetManagedInstanceDatabaseVulnerabilityAssessmentRuleBaseline(string ruleId, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentPolicyBaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaselineResource>> GetManagedInstanceDatabaseVulnerabilityAssessmentRuleBaselineAsync(string ruleId, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentPolicyBaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaselineCollection GetManagedInstanceDatabaseVulnerabilityAssessmentRuleBaselines() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceDatabaseVulnerabilityAssessmentScanResource> GetManagedInstanceDatabaseVulnerabilityAssessmentScan(string scanId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceDatabaseVulnerabilityAssessmentScanResource>> GetManagedInstanceDatabaseVulnerabilityAssessmentScanAsync(string scanId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.ManagedInstanceDatabaseVulnerabilityAssessmentScanCollection GetManagedInstanceDatabaseVulnerabilityAssessmentScans() { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ManagedInstanceDatabaseVulnerabilityAssessmentResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.DatabaseVulnerabilityAssessmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ManagedInstanceDatabaseVulnerabilityAssessmentResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.DatabaseVulnerabilityAssessmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaselineCollection : Azure.ResourceManager.ArmCollection
-    {
-        protected ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaselineCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaselineResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string ruleId, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentPolicyBaselineName baselineName, Azure.ResourceManager.Sql.DatabaseVulnerabilityAssessmentRuleBaselineData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaselineResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string ruleId, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentPolicyBaselineName baselineName, Azure.ResourceManager.Sql.DatabaseVulnerabilityAssessmentRuleBaselineData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string ruleId, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentPolicyBaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string ruleId, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentPolicyBaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaselineResource> Get(string ruleId, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentPolicyBaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaselineResource>> GetAsync(string ruleId, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentPolicyBaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaselineResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaselineResource() { }
-        public virtual Azure.ResourceManager.Sql.DatabaseVulnerabilityAssessmentRuleBaselineData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, string ruleId, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentPolicyBaselineName baselineName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaselineResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaselineResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaselineResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.DatabaseVulnerabilityAssessmentRuleBaselineData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaselineResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.DatabaseVulnerabilityAssessmentRuleBaselineData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ManagedInstanceDatabaseVulnerabilityAssessmentScanCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseVulnerabilityAssessmentScanResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseVulnerabilityAssessmentScanResource>, System.Collections.IEnumerable
-    {
-        protected ManagedInstanceDatabaseVulnerabilityAssessmentScanCollection() { }
-        public virtual Azure.Response<bool> Exists(string scanId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string scanId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceDatabaseVulnerabilityAssessmentScanResource> Get(string scanId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseVulnerabilityAssessmentScanResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseVulnerabilityAssessmentScanResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceDatabaseVulnerabilityAssessmentScanResource>> GetAsync(string scanId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ManagedInstanceDatabaseVulnerabilityAssessmentScanResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseVulnerabilityAssessmentScanResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ManagedInstanceDatabaseVulnerabilityAssessmentScanResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseVulnerabilityAssessmentScanResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ManagedInstanceDatabaseVulnerabilityAssessmentScanResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ManagedInstanceDatabaseVulnerabilityAssessmentScanResource() { }
-        public virtual Azure.ResourceManager.Sql.VulnerabilityAssessmentScanRecordData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, string scanId) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.Models.DatabaseVulnerabilityAssessmentScansExport> Export(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.Models.DatabaseVulnerabilityAssessmentScansExport>> ExportAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceDatabaseVulnerabilityAssessmentScanResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceDatabaseVulnerabilityAssessmentScanResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation InitiateScan(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> InitiateScanAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseTableResource> GetManagedDatabaseTable(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseTableResource>> GetManagedDatabaseTableAsync(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sql.ManagedDatabaseTableCollection GetManagedDatabaseTables() { throw null; }
     }
     public partial class ManagedInstanceEncryptionProtectorCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ManagedInstanceEncryptionProtectorResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ManagedInstanceEncryptionProtectorResource>, System.Collections.IEnumerable
     {
@@ -1894,6 +1642,9 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedInstancePrivateLinkResource> GetManagedInstancePrivateLink(string groupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedInstancePrivateLinkResource>> GetManagedInstancePrivateLinkAsync(string groupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Sql.ManagedInstancePrivateLinkCollection GetManagedInstancePrivateLinks() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceServerTrustCertificateResource> GetManagedInstanceServerTrustCertificate(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceServerTrustCertificateResource>> GetManagedInstanceServerTrustCertificateAsync(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sql.ManagedInstanceServerTrustCertificateCollection GetManagedInstanceServerTrustCertificates() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceVulnerabilityAssessmentResource> GetManagedInstanceVulnerabilityAssessment(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceVulnerabilityAssessmentResource>> GetManagedInstanceVulnerabilityAssessmentAsync(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Sql.ManagedInstanceVulnerabilityAssessmentCollection GetManagedInstanceVulnerabilityAssessments() { throw null; }
@@ -1906,11 +1657,8 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.Response<Azure.ResourceManager.Sql.RestorableDroppedManagedDatabaseResource> GetRestorableDroppedManagedDatabase(string restorableDroppedDatabaseId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.RestorableDroppedManagedDatabaseResource>> GetRestorableDroppedManagedDatabaseAsync(string restorableDroppedDatabaseId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Sql.RestorableDroppedManagedDatabaseCollection GetRestorableDroppedManagedDatabases() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerTrustCertificateResource> GetServerTrustCertificate(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerTrustCertificateResource>> GetServerTrustCertificateAsync(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.ServerTrustCertificateCollection GetServerTrustCertificates() { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerTrustGroupResource> GetServerTrustGroups(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerTrustGroupResource> GetServerTrustGroupsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlServerTrustGroupResource> GetServerTrustGroups(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlServerTrustGroupResource> GetServerTrustGroupsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Sql.SqlAgentConfigurationResource GetSqlAgentConfiguration() { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.Models.TopQueries> GetTopQueries(int? numberOfQueries = default(int?), string databases = null, string startTime = null, string endTime = null, Azure.ResourceManager.Sql.Models.QueryTimeGrainType? interval = default(Azure.ResourceManager.Sql.Models.QueryTimeGrainType?), Azure.ResourceManager.Sql.Models.AggregationFunctionType? aggregationFunction = default(Azure.ResourceManager.Sql.Models.AggregationFunctionType?), Azure.ResourceManager.Sql.Models.MetricType? observationMetric = default(Azure.ResourceManager.Sql.Models.MetricType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.Models.TopQueries> GetTopQueriesAsync(int? numberOfQueries = default(int?), string databases = null, string startTime = null, string endTime = null, Azure.ResourceManager.Sql.Models.QueryTimeGrainType? interval = default(Azure.ResourceManager.Sql.Models.QueryTimeGrainType?), Azure.ResourceManager.Sql.Models.AggregationFunctionType? aggregationFunction = default(Azure.ResourceManager.Sql.Models.AggregationFunctionType?), Azure.ResourceManager.Sql.Models.MetricType? observationMetric = default(Azure.ResourceManager.Sql.Models.MetricType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1920,6 +1668,35 @@ namespace Azure.ResourceManager.Sql
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ManagedInstanceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.ManagedInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ManagedInstanceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.ManagedInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ManagedInstanceServerTrustCertificateCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ManagedInstanceServerTrustCertificateResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ManagedInstanceServerTrustCertificateResource>, System.Collections.IEnumerable
+    {
+        protected ManagedInstanceServerTrustCertificateCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ManagedInstanceServerTrustCertificateResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string certificateName, Azure.ResourceManager.Sql.ServerTrustCertificateData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ManagedInstanceServerTrustCertificateResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string certificateName, Azure.ResourceManager.Sql.ServerTrustCertificateData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceServerTrustCertificateResource> Get(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ManagedInstanceServerTrustCertificateResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ManagedInstanceServerTrustCertificateResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceServerTrustCertificateResource>> GetAsync(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ManagedInstanceServerTrustCertificateResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ManagedInstanceServerTrustCertificateResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ManagedInstanceServerTrustCertificateResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ManagedInstanceServerTrustCertificateResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class ManagedInstanceServerTrustCertificateResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected ManagedInstanceServerTrustCertificateResource() { }
+        public virtual Azure.ResourceManager.Sql.ServerTrustCertificateData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string certificateName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceServerTrustCertificateResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceServerTrustCertificateResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ManagedInstanceServerTrustCertificateResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.ServerTrustCertificateData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ManagedInstanceServerTrustCertificateResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.ServerTrustCertificateData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ManagedInstanceVulnerabilityAssessmentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ManagedInstanceVulnerabilityAssessmentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ManagedInstanceVulnerabilityAssessmentResource>, System.Collections.IEnumerable
     {
@@ -2005,9 +1782,9 @@ namespace Azure.ResourceManager.Sql
         public ManagedServerSecurityAlertPolicyData() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public System.Collections.Generic.IList<string> DisabledAlerts { get { throw null; } }
-        public bool? EmailAccountAdmins { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> EmailAddresses { get { throw null; } }
         public int? RetentionDays { get { throw null; } set { } }
+        public bool? SendToEmailAccountAdmins { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.SecurityAlertsPolicyState? State { get { throw null; } set { } }
         public string StorageAccountAccessKey { get { throw null; } set { } }
         public string StorageEndpoint { get { throw null; } set { } }
@@ -2429,849 +2206,12 @@ namespace Azure.ResourceManager.Sql
         public string SchemaName { get { throw null; } }
         public string TableName { get { throw null; } }
     }
-    public partial class ServerAdvisorCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerAdvisorResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerAdvisorResource>, System.Collections.IEnumerable
-    {
-        protected ServerAdvisorCollection() { }
-        public virtual Azure.Response<bool> Exists(string advisorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string advisorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerAdvisorResource> Get(string advisorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerAdvisorResource> GetAll(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerAdvisorResource> GetAllAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerAdvisorResource>> GetAsync(string advisorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ServerAdvisorResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerAdvisorResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ServerAdvisorResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerAdvisorResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ServerAdvisorResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ServerAdvisorResource() { }
-        public virtual Azure.ResourceManager.Sql.AdvisorData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string advisorName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerAdvisorResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerAdvisorResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerAdvisorResource> Update(Azure.ResourceManager.Sql.AdvisorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerAdvisorResource>> UpdateAsync(Azure.ResourceManager.Sql.AdvisorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ServerAutomaticTuningData : Azure.ResourceManager.Models.ResourceData
-    {
-        public ServerAutomaticTuningData() { }
-        public Azure.ResourceManager.Sql.Models.AutomaticTuningServerMode? ActualState { get { throw null; } }
-        public Azure.ResourceManager.Sql.Models.AutomaticTuningServerMode? DesiredState { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Sql.Models.AutomaticTuningServerOptions> Options { get { throw null; } }
-    }
-    public partial class ServerAutomaticTuningResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ServerAutomaticTuningResource() { }
-        public virtual Azure.ResourceManager.Sql.ServerAutomaticTuningData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerAutomaticTuningResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerAutomaticTuningResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerAutomaticTuningResource> Update(Azure.ResourceManager.Sql.ServerAutomaticTuningData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerAutomaticTuningResource>> UpdateAsync(Azure.ResourceManager.Sql.ServerAutomaticTuningData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ServerAzureADAdministratorCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerAzureADAdministratorResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerAzureADAdministratorResource>, System.Collections.IEnumerable
-    {
-        protected ServerAzureADAdministratorCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerAzureADAdministratorResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.AdministratorName administratorName, Azure.ResourceManager.Sql.ServerAzureADAdministratorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerAzureADAdministratorResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.AdministratorName administratorName, Azure.ResourceManager.Sql.ServerAzureADAdministratorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.Sql.Models.AdministratorName administratorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.Sql.Models.AdministratorName administratorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerAzureADAdministratorResource> Get(Azure.ResourceManager.Sql.Models.AdministratorName administratorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerAzureADAdministratorResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerAzureADAdministratorResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerAzureADAdministratorResource>> GetAsync(Azure.ResourceManager.Sql.Models.AdministratorName administratorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ServerAzureADAdministratorResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerAzureADAdministratorResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ServerAzureADAdministratorResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerAzureADAdministratorResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ServerAzureADAdministratorData : Azure.ResourceManager.Models.ResourceData
-    {
-        public ServerAzureADAdministratorData() { }
-        public Azure.ResourceManager.Sql.Models.AdministratorType? AdministratorType { get { throw null; } set { } }
-        public bool? AzureADOnlyAuthentication { get { throw null; } }
-        public string Login { get { throw null; } set { } }
-        public System.Guid? Sid { get { throw null; } set { } }
-        public System.Guid? TenantId { get { throw null; } set { } }
-    }
-    public partial class ServerAzureADAdministratorResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ServerAzureADAdministratorResource() { }
-        public virtual Azure.ResourceManager.Sql.ServerAzureADAdministratorData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, Azure.ResourceManager.Sql.Models.AdministratorName administratorName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerAzureADAdministratorResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerAzureADAdministratorResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerAzureADAdministratorResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.ServerAzureADAdministratorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerAzureADAdministratorResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.ServerAzureADAdministratorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ServerAzureADOnlyAuthenticationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerAzureADOnlyAuthenticationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerAzureADOnlyAuthenticationResource>, System.Collections.IEnumerable
-    {
-        protected ServerAzureADOnlyAuthenticationCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerAzureADOnlyAuthenticationResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.AuthenticationName authenticationName, Azure.ResourceManager.Sql.ServerAzureADOnlyAuthenticationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerAzureADOnlyAuthenticationResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.AuthenticationName authenticationName, Azure.ResourceManager.Sql.ServerAzureADOnlyAuthenticationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.Sql.Models.AuthenticationName authenticationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.Sql.Models.AuthenticationName authenticationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerAzureADOnlyAuthenticationResource> Get(Azure.ResourceManager.Sql.Models.AuthenticationName authenticationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerAzureADOnlyAuthenticationResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerAzureADOnlyAuthenticationResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerAzureADOnlyAuthenticationResource>> GetAsync(Azure.ResourceManager.Sql.Models.AuthenticationName authenticationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ServerAzureADOnlyAuthenticationResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerAzureADOnlyAuthenticationResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ServerAzureADOnlyAuthenticationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerAzureADOnlyAuthenticationResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ServerAzureADOnlyAuthenticationData : Azure.ResourceManager.Models.ResourceData
-    {
-        public ServerAzureADOnlyAuthenticationData() { }
-        public bool? AzureADOnlyAuthentication { get { throw null; } set { } }
-    }
-    public partial class ServerAzureADOnlyAuthenticationResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ServerAzureADOnlyAuthenticationResource() { }
-        public virtual Azure.ResourceManager.Sql.ServerAzureADOnlyAuthenticationData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, Azure.ResourceManager.Sql.Models.AuthenticationName authenticationName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerAzureADOnlyAuthenticationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerAzureADOnlyAuthenticationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerAzureADOnlyAuthenticationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.ServerAzureADOnlyAuthenticationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerAzureADOnlyAuthenticationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.ServerAzureADOnlyAuthenticationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ServerBlobAuditingPolicyCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerBlobAuditingPolicyResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerBlobAuditingPolicyResource>, System.Collections.IEnumerable
-    {
-        protected ServerBlobAuditingPolicyCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerBlobAuditingPolicyResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.BlobAuditingPolicyName blobAuditingPolicyName, Azure.ResourceManager.Sql.ServerBlobAuditingPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerBlobAuditingPolicyResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.BlobAuditingPolicyName blobAuditingPolicyName, Azure.ResourceManager.Sql.ServerBlobAuditingPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.Sql.Models.BlobAuditingPolicyName blobAuditingPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.Sql.Models.BlobAuditingPolicyName blobAuditingPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerBlobAuditingPolicyResource> Get(Azure.ResourceManager.Sql.Models.BlobAuditingPolicyName blobAuditingPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerBlobAuditingPolicyResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerBlobAuditingPolicyResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerBlobAuditingPolicyResource>> GetAsync(Azure.ResourceManager.Sql.Models.BlobAuditingPolicyName blobAuditingPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ServerBlobAuditingPolicyResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerBlobAuditingPolicyResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ServerBlobAuditingPolicyResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerBlobAuditingPolicyResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ServerBlobAuditingPolicyData : Azure.ResourceManager.Models.ResourceData
-    {
-        public ServerBlobAuditingPolicyData() { }
-        public System.Collections.Generic.IList<string> AuditActionsAndGroups { get { throw null; } }
-        public bool? IsAzureMonitorTargetEnabled { get { throw null; } set { } }
-        public bool? IsDevopsAuditEnabled { get { throw null; } set { } }
-        public bool? IsManagedIdentityInUse { get { throw null; } set { } }
-        public bool? IsStorageSecondaryKeyInUse { get { throw null; } set { } }
-        public int? QueueDelayMs { get { throw null; } set { } }
-        public int? RetentionDays { get { throw null; } set { } }
-        public Azure.ResourceManager.Sql.Models.BlobAuditingPolicyState? State { get { throw null; } set { } }
-        public string StorageAccountAccessKey { get { throw null; } set { } }
-        public System.Guid? StorageAccountSubscriptionId { get { throw null; } set { } }
-        public string StorageEndpoint { get { throw null; } set { } }
-    }
-    public partial class ServerBlobAuditingPolicyResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ServerBlobAuditingPolicyResource() { }
-        public virtual Azure.ResourceManager.Sql.ServerBlobAuditingPolicyData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, Azure.ResourceManager.Sql.Models.BlobAuditingPolicyName blobAuditingPolicyName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerBlobAuditingPolicyResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerBlobAuditingPolicyResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerBlobAuditingPolicyResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.ServerBlobAuditingPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerBlobAuditingPolicyResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.ServerBlobAuditingPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ServerCommunicationLinkCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerCommunicationLinkResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerCommunicationLinkResource>, System.Collections.IEnumerable
-    {
-        protected ServerCommunicationLinkCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerCommunicationLinkResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string communicationLinkName, Azure.ResourceManager.Sql.ServerCommunicationLinkData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerCommunicationLinkResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string communicationLinkName, Azure.ResourceManager.Sql.ServerCommunicationLinkData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string communicationLinkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string communicationLinkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerCommunicationLinkResource> Get(string communicationLinkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerCommunicationLinkResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerCommunicationLinkResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerCommunicationLinkResource>> GetAsync(string communicationLinkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ServerCommunicationLinkResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerCommunicationLinkResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ServerCommunicationLinkResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerCommunicationLinkResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ServerCommunicationLinkData : Azure.ResourceManager.Models.ResourceData
-    {
-        public ServerCommunicationLinkData() { }
-        public string Kind { get { throw null; } }
-        public Azure.Core.AzureLocation? Location { get { throw null; } }
-        public string PartnerServer { get { throw null; } set { } }
-        public string State { get { throw null; } }
-    }
-    public partial class ServerCommunicationLinkResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ServerCommunicationLinkResource() { }
-        public virtual Azure.ResourceManager.Sql.ServerCommunicationLinkData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string communicationLinkName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerCommunicationLinkResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerCommunicationLinkResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerCommunicationLinkResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.ServerCommunicationLinkData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerCommunicationLinkResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.ServerCommunicationLinkData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ServerConnectionPolicyCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerConnectionPolicyResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerConnectionPolicyResource>, System.Collections.IEnumerable
-    {
-        protected ServerConnectionPolicyCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerConnectionPolicyResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.ConnectionPolicyName connectionPolicyName, Azure.ResourceManager.Sql.ServerConnectionPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerConnectionPolicyResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.ConnectionPolicyName connectionPolicyName, Azure.ResourceManager.Sql.ServerConnectionPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.Sql.Models.ConnectionPolicyName connectionPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.Sql.Models.ConnectionPolicyName connectionPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerConnectionPolicyResource> Get(Azure.ResourceManager.Sql.Models.ConnectionPolicyName connectionPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerConnectionPolicyResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerConnectionPolicyResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerConnectionPolicyResource>> GetAsync(Azure.ResourceManager.Sql.Models.ConnectionPolicyName connectionPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ServerConnectionPolicyResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerConnectionPolicyResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ServerConnectionPolicyResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerConnectionPolicyResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ServerConnectionPolicyData : Azure.ResourceManager.Models.ResourceData
-    {
-        public ServerConnectionPolicyData() { }
-        public Azure.ResourceManager.Sql.Models.ServerConnectionType? ConnectionType { get { throw null; } set { } }
-        public string Kind { get { throw null; } }
-        public Azure.Core.AzureLocation? Location { get { throw null; } }
-    }
-    public partial class ServerConnectionPolicyResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ServerConnectionPolicyResource() { }
-        public virtual Azure.ResourceManager.Sql.ServerConnectionPolicyData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, Azure.ResourceManager.Sql.Models.ConnectionPolicyName connectionPolicyName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerConnectionPolicyResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerConnectionPolicyResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerConnectionPolicyResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.ServerConnectionPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerConnectionPolicyResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.ServerConnectionPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ServerDatabaseAdvisorCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerDatabaseAdvisorResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerDatabaseAdvisorResource>, System.Collections.IEnumerable
-    {
-        protected ServerDatabaseAdvisorCollection() { }
-        public virtual Azure.Response<bool> Exists(string advisorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string advisorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseAdvisorResource> Get(string advisorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerDatabaseAdvisorResource> GetAll(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerDatabaseAdvisorResource> GetAllAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseAdvisorResource>> GetAsync(string advisorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ServerDatabaseAdvisorResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerDatabaseAdvisorResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ServerDatabaseAdvisorResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerDatabaseAdvisorResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ServerDatabaseAdvisorResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ServerDatabaseAdvisorResource() { }
-        public virtual Azure.ResourceManager.Sql.AdvisorData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string advisorName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseAdvisorResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseAdvisorResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.RecommendedActionResource> GetRecommendedAction(string recommendedActionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.RecommendedActionResource>> GetRecommendedActionAsync(string recommendedActionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.RecommendedActionCollection GetRecommendedActions() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseAdvisorResource> Update(Azure.ResourceManager.Sql.AdvisorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseAdvisorResource>> UpdateAsync(Azure.ResourceManager.Sql.AdvisorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ServerDatabaseSchemaCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerDatabaseSchemaResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerDatabaseSchemaResource>, System.Collections.IEnumerable
-    {
-        protected ServerDatabaseSchemaCollection() { }
-        public virtual Azure.Response<bool> Exists(string schemaName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string schemaName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSchemaResource> Get(string schemaName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerDatabaseSchemaResource> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerDatabaseSchemaResource> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSchemaResource>> GetAsync(string schemaName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ServerDatabaseSchemaResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerDatabaseSchemaResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ServerDatabaseSchemaResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerDatabaseSchemaResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ServerDatabaseSchemaResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ServerDatabaseSchemaResource() { }
-        public virtual Azure.ResourceManager.Sql.DatabaseSchemaData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSchemaResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSchemaResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableResource> GetServerDatabaseSchemaTable(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableResource>> GetServerDatabaseSchemaTableAsync(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.ServerDatabaseSchemaTableCollection GetServerDatabaseSchemaTables() { throw null; }
-    }
-    public partial class ServerDatabaseSchemaTableCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableResource>, System.Collections.IEnumerable
-    {
-        protected ServerDatabaseSchemaTableCollection() { }
-        public virtual Azure.Response<bool> Exists(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableResource> Get(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableResource> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableResource> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableResource>> GetAsync(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ServerDatabaseSchemaTableColumnCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableColumnResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableColumnResource>, System.Collections.IEnumerable
-    {
-        protected ServerDatabaseSchemaTableColumnCollection() { }
-        public virtual Azure.Response<bool> Exists(string columnName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string columnName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableColumnResource> Get(string columnName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableColumnResource> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableColumnResource> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableColumnResource>> GetAsync(string columnName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableColumnResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableColumnResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableColumnResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableColumnResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ServerDatabaseSchemaTableColumnResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ServerDatabaseSchemaTableColumnResource() { }
-        public virtual Azure.ResourceManager.Sql.DatabaseColumnData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName, string tableName, string columnName) { throw null; }
-        public virtual Azure.Response DisableRecommendationSensitivityLabel(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DisableRecommendationSensitivityLabelAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response EnableRecommendationSensitivityLabel(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> EnableRecommendationSensitivityLabelAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableColumnResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableColumnResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableColumnSensitivityLabelResource> GetServerDatabaseSchemaTableColumnSensitivityLabel(Azure.ResourceManager.Sql.Models.SensitivityLabelSource sensitivityLabelSource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableColumnSensitivityLabelResource>> GetServerDatabaseSchemaTableColumnSensitivityLabelAsync(Azure.ResourceManager.Sql.Models.SensitivityLabelSource sensitivityLabelSource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.ServerDatabaseSchemaTableColumnSensitivityLabelCollection GetServerDatabaseSchemaTableColumnSensitivityLabels() { throw null; }
-    }
-    public partial class ServerDatabaseSchemaTableColumnSensitivityLabelCollection : Azure.ResourceManager.ArmCollection
-    {
-        protected ServerDatabaseSchemaTableColumnSensitivityLabelCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableColumnSensitivityLabelResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SensitivityLabelData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableColumnSensitivityLabelResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SensitivityLabelData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.Sql.Models.SensitivityLabelSource sensitivityLabelSource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.Sql.Models.SensitivityLabelSource sensitivityLabelSource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableColumnSensitivityLabelResource> Get(Azure.ResourceManager.Sql.Models.SensitivityLabelSource sensitivityLabelSource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableColumnSensitivityLabelResource>> GetAsync(Azure.ResourceManager.Sql.Models.SensitivityLabelSource sensitivityLabelSource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ServerDatabaseSchemaTableColumnSensitivityLabelResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ServerDatabaseSchemaTableColumnSensitivityLabelResource() { }
-        public virtual Azure.ResourceManager.Sql.SensitivityLabelData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName, string tableName, string columnName, Azure.ResourceManager.Sql.Models.SensitivityLabelSource sensitivityLabelSource) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableColumnSensitivityLabelResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableColumnSensitivityLabelResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableColumnSensitivityLabelResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SensitivityLabelData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableColumnSensitivityLabelResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SensitivityLabelData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ServerDatabaseSchemaTableResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ServerDatabaseSchemaTableResource() { }
-        public virtual Azure.ResourceManager.Sql.DatabaseTableData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName, string tableName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableColumnResource> GetServerDatabaseSchemaTableColumn(string columnName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableColumnResource>> GetServerDatabaseSchemaTableColumnAsync(string columnName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.ServerDatabaseSchemaTableColumnCollection GetServerDatabaseSchemaTableColumns() { throw null; }
-    }
-    public partial class ServerDatabaseVulnerabilityAssessmentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerDatabaseVulnerabilityAssessmentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerDatabaseVulnerabilityAssessmentResource>, System.Collections.IEnumerable
-    {
-        protected ServerDatabaseVulnerabilityAssessmentCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerDatabaseVulnerabilityAssessmentResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, Azure.ResourceManager.Sql.DatabaseVulnerabilityAssessmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerDatabaseVulnerabilityAssessmentResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, Azure.ResourceManager.Sql.DatabaseVulnerabilityAssessmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseVulnerabilityAssessmentResource> Get(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerDatabaseVulnerabilityAssessmentResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerDatabaseVulnerabilityAssessmentResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseVulnerabilityAssessmentResource>> GetAsync(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ServerDatabaseVulnerabilityAssessmentResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerDatabaseVulnerabilityAssessmentResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ServerDatabaseVulnerabilityAssessmentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerDatabaseVulnerabilityAssessmentResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ServerDatabaseVulnerabilityAssessmentResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ServerDatabaseVulnerabilityAssessmentResource() { }
-        public virtual Azure.ResourceManager.Sql.DatabaseVulnerabilityAssessmentData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseVulnerabilityAssessmentResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseVulnerabilityAssessmentResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseVulnerabilityAssessmentRuleBaselineResource> GetServerDatabaseVulnerabilityAssessmentRuleBaseline(string ruleId, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentPolicyBaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseVulnerabilityAssessmentRuleBaselineResource>> GetServerDatabaseVulnerabilityAssessmentRuleBaselineAsync(string ruleId, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentPolicyBaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.ServerDatabaseVulnerabilityAssessmentRuleBaselineCollection GetServerDatabaseVulnerabilityAssessmentRuleBaselines() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseVulnerabilityAssessmentScanResource> GetServerDatabaseVulnerabilityAssessmentScan(string scanId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseVulnerabilityAssessmentScanResource>> GetServerDatabaseVulnerabilityAssessmentScanAsync(string scanId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.ServerDatabaseVulnerabilityAssessmentScanCollection GetServerDatabaseVulnerabilityAssessmentScans() { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerDatabaseVulnerabilityAssessmentResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.DatabaseVulnerabilityAssessmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerDatabaseVulnerabilityAssessmentResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.DatabaseVulnerabilityAssessmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ServerDatabaseVulnerabilityAssessmentRuleBaselineCollection : Azure.ResourceManager.ArmCollection
-    {
-        protected ServerDatabaseVulnerabilityAssessmentRuleBaselineCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerDatabaseVulnerabilityAssessmentRuleBaselineResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string ruleId, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentPolicyBaselineName baselineName, Azure.ResourceManager.Sql.DatabaseVulnerabilityAssessmentRuleBaselineData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerDatabaseVulnerabilityAssessmentRuleBaselineResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string ruleId, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentPolicyBaselineName baselineName, Azure.ResourceManager.Sql.DatabaseVulnerabilityAssessmentRuleBaselineData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string ruleId, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentPolicyBaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string ruleId, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentPolicyBaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseVulnerabilityAssessmentRuleBaselineResource> Get(string ruleId, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentPolicyBaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseVulnerabilityAssessmentRuleBaselineResource>> GetAsync(string ruleId, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentPolicyBaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ServerDatabaseVulnerabilityAssessmentRuleBaselineResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ServerDatabaseVulnerabilityAssessmentRuleBaselineResource() { }
-        public virtual Azure.ResourceManager.Sql.DatabaseVulnerabilityAssessmentRuleBaselineData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, string ruleId, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentPolicyBaselineName baselineName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseVulnerabilityAssessmentRuleBaselineResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseVulnerabilityAssessmentRuleBaselineResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerDatabaseVulnerabilityAssessmentRuleBaselineResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.DatabaseVulnerabilityAssessmentRuleBaselineData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerDatabaseVulnerabilityAssessmentRuleBaselineResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.DatabaseVulnerabilityAssessmentRuleBaselineData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ServerDatabaseVulnerabilityAssessmentScanCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerDatabaseVulnerabilityAssessmentScanResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerDatabaseVulnerabilityAssessmentScanResource>, System.Collections.IEnumerable
-    {
-        protected ServerDatabaseVulnerabilityAssessmentScanCollection() { }
-        public virtual Azure.Response<bool> Exists(string scanId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string scanId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseVulnerabilityAssessmentScanResource> Get(string scanId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerDatabaseVulnerabilityAssessmentScanResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerDatabaseVulnerabilityAssessmentScanResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseVulnerabilityAssessmentScanResource>> GetAsync(string scanId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ServerDatabaseVulnerabilityAssessmentScanResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerDatabaseVulnerabilityAssessmentScanResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ServerDatabaseVulnerabilityAssessmentScanResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerDatabaseVulnerabilityAssessmentScanResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ServerDatabaseVulnerabilityAssessmentScanResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ServerDatabaseVulnerabilityAssessmentScanResource() { }
-        public virtual Azure.ResourceManager.Sql.VulnerabilityAssessmentScanRecordData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, string scanId) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.Models.DatabaseVulnerabilityAssessmentScansExport> Export(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.Models.DatabaseVulnerabilityAssessmentScansExport>> ExportAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseVulnerabilityAssessmentScanResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseVulnerabilityAssessmentScanResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation InitiateScan(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> InitiateScanAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ServerDevOpsAuditingSettingsCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerDevOpsAuditingSettingsResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerDevOpsAuditingSettingsResource>, System.Collections.IEnumerable
-    {
-        protected ServerDevOpsAuditingSettingsCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerDevOpsAuditingSettingsResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string devOpsAuditingSettingsName, Azure.ResourceManager.Sql.ServerDevOpsAuditingSettingsData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerDevOpsAuditingSettingsResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string devOpsAuditingSettingsName, Azure.ResourceManager.Sql.ServerDevOpsAuditingSettingsData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string devOpsAuditingSettingsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string devOpsAuditingSettingsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerDevOpsAuditingSettingsResource> Get(string devOpsAuditingSettingsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerDevOpsAuditingSettingsResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerDevOpsAuditingSettingsResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerDevOpsAuditingSettingsResource>> GetAsync(string devOpsAuditingSettingsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ServerDevOpsAuditingSettingsResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerDevOpsAuditingSettingsResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ServerDevOpsAuditingSettingsResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerDevOpsAuditingSettingsResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ServerDevOpsAuditingSettingsData : Azure.ResourceManager.Models.ResourceData
-    {
-        public ServerDevOpsAuditingSettingsData() { }
-        public bool? IsAzureMonitorTargetEnabled { get { throw null; } set { } }
-        public Azure.ResourceManager.Sql.Models.BlobAuditingPolicyState? State { get { throw null; } set { } }
-        public string StorageAccountAccessKey { get { throw null; } set { } }
-        public System.Guid? StorageAccountSubscriptionId { get { throw null; } set { } }
-        public string StorageEndpoint { get { throw null; } set { } }
-    }
-    public partial class ServerDevOpsAuditingSettingsResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ServerDevOpsAuditingSettingsResource() { }
-        public virtual Azure.ResourceManager.Sql.ServerDevOpsAuditingSettingsData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string devOpsAuditingSettingsName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerDevOpsAuditingSettingsResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerDevOpsAuditingSettingsResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerDevOpsAuditingSettingsResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.ServerDevOpsAuditingSettingsData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerDevOpsAuditingSettingsResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.ServerDevOpsAuditingSettingsData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ServerDnsAliasCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerDnsAliasResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerDnsAliasResource>, System.Collections.IEnumerable
-    {
-        protected ServerDnsAliasCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerDnsAliasResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string dnsAliasName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerDnsAliasResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string dnsAliasName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string dnsAliasName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string dnsAliasName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerDnsAliasResource> Get(string dnsAliasName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerDnsAliasResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerDnsAliasResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerDnsAliasResource>> GetAsync(string dnsAliasName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ServerDnsAliasResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerDnsAliasResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ServerDnsAliasResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerDnsAliasResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ServerDnsAliasData : Azure.ResourceManager.Models.ResourceData
-    {
-        public ServerDnsAliasData() { }
-        public string AzureDnsRecord { get { throw null; } }
-    }
-    public partial class ServerDnsAliasResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ServerDnsAliasResource() { }
-        public virtual Azure.ResourceManager.Sql.ServerDnsAliasData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerDnsAliasResource> Acquire(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.ServerDnsAliasAcquisition serverDnsAliasAcquisition, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerDnsAliasResource>> AcquireAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.ServerDnsAliasAcquisition serverDnsAliasAcquisition, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string dnsAliasName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerDnsAliasResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerDnsAliasResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerDnsAliasResource> Update(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerDnsAliasResource>> UpdateAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ServerJobAgentJobExecutionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionResource>, System.Collections.IEnumerable
-    {
-        protected ServerJobAgentJobExecutionCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionResource> CreateOrUpdate(Azure.WaitUntil waitUntil, System.Guid jobExecutionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, System.Guid jobExecutionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(System.Guid jobExecutionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(System.Guid jobExecutionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionResource> Get(System.Guid jobExecutionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionResource> GetAll(System.DateTimeOffset? createTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? createTimeMax = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMax = default(System.DateTimeOffset?), bool? isActive = default(bool?), int? skip = default(int?), int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionResource> GetAllAsync(System.DateTimeOffset? createTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? createTimeMax = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMax = default(System.DateTimeOffset?), bool? isActive = default(bool?), int? skip = default(int?), int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionResource>> GetAsync(System.Guid jobExecutionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionStepTargetResource> GetJobTargetExecutions(System.Guid jobExecutionId, System.DateTimeOffset? createTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? createTimeMax = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMax = default(System.DateTimeOffset?), bool? isActive = default(bool?), int? skip = default(int?), int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionStepTargetResource> GetJobTargetExecutionsAsync(System.Guid jobExecutionId, System.DateTimeOffset? createTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? createTimeMax = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMax = default(System.DateTimeOffset?), bool? isActive = default(bool?), int? skip = default(int?), int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ServerJobAgentJobExecutionResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ServerJobAgentJobExecutionResource() { }
-        public virtual Azure.ResourceManager.Sql.JobExecutionData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response Cancel(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CancelAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, System.Guid jobExecutionId) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionStepResource> GetServerJobAgentJobExecutionStep(string stepName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionStepResource>> GetServerJobAgentJobExecutionStepAsync(string stepName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.ServerJobAgentJobExecutionStepCollection GetServerJobAgentJobExecutionSteps() { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionResource> Update(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionResource>> UpdateAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ServerJobAgentJobExecutionStepCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionStepResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionStepResource>, System.Collections.IEnumerable
-    {
-        protected ServerJobAgentJobExecutionStepCollection() { }
-        public virtual Azure.Response<bool> Exists(string stepName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string stepName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionStepResource> Get(string stepName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionStepResource> GetAll(System.DateTimeOffset? createTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? createTimeMax = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMax = default(System.DateTimeOffset?), bool? isActive = default(bool?), int? skip = default(int?), int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionStepResource> GetAllAsync(System.DateTimeOffset? createTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? createTimeMax = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMax = default(System.DateTimeOffset?), bool? isActive = default(bool?), int? skip = default(int?), int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionStepResource>> GetAsync(string stepName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionStepResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionStepResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionStepResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionStepResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ServerJobAgentJobExecutionStepResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ServerJobAgentJobExecutionStepResource() { }
-        public virtual Azure.ResourceManager.Sql.JobExecutionData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, System.Guid jobExecutionId, string stepName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionStepResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionStepResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionStepTargetResource> GetServerJobAgentJobExecutionStepTarget(System.Guid targetId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionStepTargetResource>> GetServerJobAgentJobExecutionStepTargetAsync(System.Guid targetId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.ServerJobAgentJobExecutionStepTargetCollection GetServerJobAgentJobExecutionStepTargets() { throw null; }
-    }
-    public partial class ServerJobAgentJobExecutionStepTargetCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionStepTargetResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionStepTargetResource>, System.Collections.IEnumerable
-    {
-        protected ServerJobAgentJobExecutionStepTargetCollection() { }
-        public virtual Azure.Response<bool> Exists(System.Guid targetId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(System.Guid targetId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionStepTargetResource> Get(System.Guid targetId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionStepTargetResource> GetAll(System.DateTimeOffset? createTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? createTimeMax = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMax = default(System.DateTimeOffset?), bool? isActive = default(bool?), int? skip = default(int?), int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionStepTargetResource> GetAllAsync(System.DateTimeOffset? createTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? createTimeMax = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMax = default(System.DateTimeOffset?), bool? isActive = default(bool?), int? skip = default(int?), int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionStepTargetResource>> GetAsync(System.Guid targetId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionStepTargetResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionStepTargetResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionStepTargetResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionStepTargetResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ServerJobAgentJobExecutionStepTargetResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ServerJobAgentJobExecutionStepTargetResource() { }
-        public virtual Azure.ResourceManager.Sql.JobExecutionData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, System.Guid jobExecutionId, string stepName, System.Guid targetId) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionStepTargetResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionStepTargetResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ServerJobAgentJobStepCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerJobAgentJobStepResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerJobAgentJobStepResource>, System.Collections.IEnumerable
-    {
-        protected ServerJobAgentJobStepCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerJobAgentJobStepResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string stepName, Azure.ResourceManager.Sql.JobStepData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerJobAgentJobStepResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string stepName, Azure.ResourceManager.Sql.JobStepData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string stepName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string stepName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerJobAgentJobStepResource> Get(string stepName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerJobAgentJobStepResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerJobAgentJobStepResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerJobAgentJobStepResource>> GetAsync(string stepName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ServerJobAgentJobStepResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerJobAgentJobStepResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ServerJobAgentJobStepResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerJobAgentJobStepResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ServerJobAgentJobStepResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ServerJobAgentJobStepResource() { }
-        public virtual Azure.ResourceManager.Sql.JobStepData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, string stepName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerJobAgentJobStepResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerJobAgentJobStepResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerJobAgentJobStepResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.JobStepData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerJobAgentJobStepResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.JobStepData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ServerJobAgentJobVersionStepCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerJobAgentJobVersionStepResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerJobAgentJobVersionStepResource>, System.Collections.IEnumerable
-    {
-        protected ServerJobAgentJobVersionStepCollection() { }
-        public virtual Azure.Response<bool> Exists(string stepName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string stepName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerJobAgentJobVersionStepResource> Get(string stepName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerJobAgentJobVersionStepResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerJobAgentJobVersionStepResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerJobAgentJobVersionStepResource>> GetAsync(string stepName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ServerJobAgentJobVersionStepResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerJobAgentJobVersionStepResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ServerJobAgentJobVersionStepResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerJobAgentJobVersionStepResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ServerJobAgentJobVersionStepResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ServerJobAgentJobVersionStepResource() { }
-        public virtual Azure.ResourceManager.Sql.JobStepData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion, string stepName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerJobAgentJobVersionStepResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerJobAgentJobVersionStepResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ServerKeyCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerKeyResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerKeyResource>, System.Collections.IEnumerable
-    {
-        protected ServerKeyCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerKeyResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string keyName, Azure.ResourceManager.Sql.ServerKeyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerKeyResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string keyName, Azure.ResourceManager.Sql.ServerKeyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string keyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string keyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerKeyResource> Get(string keyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerKeyResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerKeyResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerKeyResource>> GetAsync(string keyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ServerKeyResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerKeyResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ServerKeyResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerKeyResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ServerKeyData : Azure.ResourceManager.Models.ResourceData
-    {
-        public ServerKeyData() { }
-        public bool? AutoRotationEnabled { get { throw null; } }
-        public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public string Kind { get { throw null; } }
-        public Azure.Core.AzureLocation? Location { get { throw null; } }
-        public Azure.ResourceManager.Sql.Models.ServerKeyType? ServerKeyType { get { throw null; } set { } }
-        public string Subregion { get { throw null; } }
-        public string Thumbprint { get { throw null; } }
-        public System.Uri Uri { get { throw null; } set { } }
-    }
-    public partial class ServerKeyResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ServerKeyResource() { }
-        public virtual Azure.ResourceManager.Sql.ServerKeyData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string keyName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerKeyResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerKeyResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerKeyResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.ServerKeyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerKeyResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.ServerKeyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ServerSecurityAlertPolicyCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerSecurityAlertPolicyResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerSecurityAlertPolicyResource>, System.Collections.IEnumerable
-    {
-        protected ServerSecurityAlertPolicyCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerSecurityAlertPolicyResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.SecurityAlertPolicyName securityAlertPolicyName, Azure.ResourceManager.Sql.ServerSecurityAlertPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerSecurityAlertPolicyResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.SecurityAlertPolicyName securityAlertPolicyName, Azure.ResourceManager.Sql.ServerSecurityAlertPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.Sql.Models.SecurityAlertPolicyName securityAlertPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.Sql.Models.SecurityAlertPolicyName securityAlertPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerSecurityAlertPolicyResource> Get(Azure.ResourceManager.Sql.Models.SecurityAlertPolicyName securityAlertPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerSecurityAlertPolicyResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerSecurityAlertPolicyResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerSecurityAlertPolicyResource>> GetAsync(Azure.ResourceManager.Sql.Models.SecurityAlertPolicyName securityAlertPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ServerSecurityAlertPolicyResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerSecurityAlertPolicyResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ServerSecurityAlertPolicyResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerSecurityAlertPolicyResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ServerSecurityAlertPolicyData : Azure.ResourceManager.Models.ResourceData
-    {
-        public ServerSecurityAlertPolicyData() { }
-        public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public System.Collections.Generic.IList<string> DisabledAlerts { get { throw null; } }
-        public bool? EmailAccountAdmins { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> EmailAddresses { get { throw null; } }
-        public int? RetentionDays { get { throw null; } set { } }
-        public Azure.ResourceManager.Sql.Models.SecurityAlertsPolicyState? State { get { throw null; } set { } }
-        public string StorageAccountAccessKey { get { throw null; } set { } }
-        public string StorageEndpoint { get { throw null; } set { } }
-    }
-    public partial class ServerSecurityAlertPolicyResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ServerSecurityAlertPolicyResource() { }
-        public virtual Azure.ResourceManager.Sql.ServerSecurityAlertPolicyData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, Azure.ResourceManager.Sql.Models.SecurityAlertPolicyName securityAlertPolicyName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerSecurityAlertPolicyResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerSecurityAlertPolicyResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerSecurityAlertPolicyResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.ServerSecurityAlertPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerSecurityAlertPolicyResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.ServerSecurityAlertPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ServerTrustCertificateCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerTrustCertificateResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerTrustCertificateResource>, System.Collections.IEnumerable
-    {
-        protected ServerTrustCertificateCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerTrustCertificateResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string certificateName, Azure.ResourceManager.Sql.ServerTrustCertificateData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerTrustCertificateResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string certificateName, Azure.ResourceManager.Sql.ServerTrustCertificateData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerTrustCertificateResource> Get(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerTrustCertificateResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerTrustCertificateResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerTrustCertificateResource>> GetAsync(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ServerTrustCertificateResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerTrustCertificateResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ServerTrustCertificateResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerTrustCertificateResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
     public partial class ServerTrustCertificateData : Azure.ResourceManager.Models.ResourceData
     {
         public ServerTrustCertificateData() { }
         public string CertificateName { get { throw null; } }
         public string PublicBlob { get { throw null; } set { } }
         public string Thumbprint { get { throw null; } }
-    }
-    public partial class ServerTrustCertificateResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ServerTrustCertificateResource() { }
-        public virtual Azure.ResourceManager.Sql.ServerTrustCertificateData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string certificateName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerTrustCertificateResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerTrustCertificateResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerTrustCertificateResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.ServerTrustCertificateData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerTrustCertificateResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.ServerTrustCertificateData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ServerTrustGroupCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerTrustGroupResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerTrustGroupResource>, System.Collections.IEnumerable
-    {
-        protected ServerTrustGroupCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerTrustGroupResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string serverTrustGroupName, Azure.ResourceManager.Sql.ServerTrustGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerTrustGroupResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string serverTrustGroupName, Azure.ResourceManager.Sql.ServerTrustGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string serverTrustGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string serverTrustGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerTrustGroupResource> Get(string serverTrustGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerTrustGroupResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerTrustGroupResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerTrustGroupResource>> GetAsync(string serverTrustGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ServerTrustGroupResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerTrustGroupResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ServerTrustGroupResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerTrustGroupResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ServerTrustGroupData : Azure.ResourceManager.Models.ResourceData
-    {
-        public ServerTrustGroupData() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Sql.Models.ServerInfo> GroupMembers { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Sql.Models.ServerTrustGroupPropertiesTrustScopesItem> TrustScopes { get { throw null; } }
-    }
-    public partial class ServerTrustGroupResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ServerTrustGroupResource() { }
-        public virtual Azure.ResourceManager.Sql.ServerTrustGroupData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string locationName, string serverTrustGroupName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerTrustGroupResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerTrustGroupResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerTrustGroupResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.ServerTrustGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerTrustGroupResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.ServerTrustGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ServerVulnerabilityAssessmentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerVulnerabilityAssessmentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerVulnerabilityAssessmentResource>, System.Collections.IEnumerable
-    {
-        protected ServerVulnerabilityAssessmentCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerVulnerabilityAssessmentResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, Azure.ResourceManager.Sql.ServerVulnerabilityAssessmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerVulnerabilityAssessmentResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, Azure.ResourceManager.Sql.ServerVulnerabilityAssessmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerVulnerabilityAssessmentResource> Get(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerVulnerabilityAssessmentResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerVulnerabilityAssessmentResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerVulnerabilityAssessmentResource>> GetAsync(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ServerVulnerabilityAssessmentResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerVulnerabilityAssessmentResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ServerVulnerabilityAssessmentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerVulnerabilityAssessmentResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ServerVulnerabilityAssessmentData : Azure.ResourceManager.Models.ResourceData
-    {
-        public ServerVulnerabilityAssessmentData() { }
-        public Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentRecurringScansProperties RecurringScans { get { throw null; } set { } }
-        public string StorageAccountAccessKey { get { throw null; } set { } }
-        public string StorageContainerPath { get { throw null; } set { } }
-        public string StorageContainerSasKey { get { throw null; } set { } }
-    }
-    public partial class ServerVulnerabilityAssessmentResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ServerVulnerabilityAssessmentResource() { }
-        public virtual Azure.ResourceManager.Sql.ServerVulnerabilityAssessmentData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerVulnerabilityAssessmentResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerVulnerabilityAssessmentResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerVulnerabilityAssessmentResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.ServerVulnerabilityAssessmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerVulnerabilityAssessmentResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.ServerVulnerabilityAssessmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ServiceObjectiveCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServiceObjectiveResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServiceObjectiveResource>, System.Collections.IEnumerable
     {
@@ -3322,6 +2262,95 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.Response<Azure.ResourceManager.Sql.SqlAgentConfigurationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlAgentConfigurationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class SqlDatabaseAdvisorCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlDatabaseAdvisorResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlDatabaseAdvisorResource>, System.Collections.IEnumerable
+    {
+        protected SqlDatabaseAdvisorCollection() { }
+        public virtual Azure.Response<bool> Exists(string advisorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string advisorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseAdvisorResource> Get(string advisorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlDatabaseAdvisorResource> GetAll(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlDatabaseAdvisorResource> GetAllAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseAdvisorResource>> GetAsync(string advisorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlDatabaseAdvisorResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlDatabaseAdvisorResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlDatabaseAdvisorResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlDatabaseAdvisorResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SqlDatabaseAdvisorResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SqlDatabaseAdvisorResource() { }
+        public virtual Azure.ResourceManager.Sql.AdvisorData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string advisorName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseAdvisorResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseAdvisorResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.RecommendedActionResource> GetRecommendedAction(string recommendedActionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.RecommendedActionResource>> GetRecommendedActionAsync(string recommendedActionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sql.RecommendedActionCollection GetRecommendedActions() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseAdvisorResource> Update(Azure.ResourceManager.Sql.AdvisorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseAdvisorResource>> UpdateAsync(Azure.ResourceManager.Sql.AdvisorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SqlDatabaseAutomaticTuningData : Azure.ResourceManager.Models.ResourceData
+    {
+        public SqlDatabaseAutomaticTuningData() { }
+        public Azure.ResourceManager.Sql.Models.AutomaticTuningMode? ActualState { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.AutomaticTuningMode? DesiredState { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Sql.Models.AutomaticTuningOptions> Options { get { throw null; } }
+    }
+    public partial class SqlDatabaseAutomaticTuningResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SqlDatabaseAutomaticTuningResource() { }
+        public virtual Azure.ResourceManager.Sql.SqlDatabaseAutomaticTuningData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseAutomaticTuningResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseAutomaticTuningResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseAutomaticTuningResource> Update(Azure.ResourceManager.Sql.SqlDatabaseAutomaticTuningData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseAutomaticTuningResource>> UpdateAsync(Azure.ResourceManager.Sql.SqlDatabaseAutomaticTuningData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SqlDatabaseBlobAuditingPolicyCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlDatabaseBlobAuditingPolicyResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlDatabaseBlobAuditingPolicyResource>, System.Collections.IEnumerable
+    {
+        protected SqlDatabaseBlobAuditingPolicyCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlDatabaseBlobAuditingPolicyResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.BlobAuditingPolicyName blobAuditingPolicyName, Azure.ResourceManager.Sql.SqlDatabaseBlobAuditingPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlDatabaseBlobAuditingPolicyResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.BlobAuditingPolicyName blobAuditingPolicyName, Azure.ResourceManager.Sql.SqlDatabaseBlobAuditingPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.Sql.Models.BlobAuditingPolicyName blobAuditingPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.Sql.Models.BlobAuditingPolicyName blobAuditingPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseBlobAuditingPolicyResource> Get(Azure.ResourceManager.Sql.Models.BlobAuditingPolicyName blobAuditingPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlDatabaseBlobAuditingPolicyResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlDatabaseBlobAuditingPolicyResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseBlobAuditingPolicyResource>> GetAsync(Azure.ResourceManager.Sql.Models.BlobAuditingPolicyName blobAuditingPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlDatabaseBlobAuditingPolicyResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlDatabaseBlobAuditingPolicyResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlDatabaseBlobAuditingPolicyResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlDatabaseBlobAuditingPolicyResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SqlDatabaseBlobAuditingPolicyData : Azure.ResourceManager.Models.ResourceData
+    {
+        public SqlDatabaseBlobAuditingPolicyData() { }
+        public System.Collections.Generic.IList<string> AuditActionsAndGroups { get { throw null; } }
+        public bool? IsAzureMonitorTargetEnabled { get { throw null; } set { } }
+        public bool? IsManagedIdentityInUse { get { throw null; } set { } }
+        public bool? IsStorageSecondaryKeyInUse { get { throw null; } set { } }
+        public string Kind { get { throw null; } }
+        public int? QueueDelayMs { get { throw null; } set { } }
+        public int? RetentionDays { get { throw null; } set { } }
+        public Azure.ResourceManager.Sql.Models.BlobAuditingPolicyState? State { get { throw null; } set { } }
+        public string StorageAccountAccessKey { get { throw null; } set { } }
+        public System.Guid? StorageAccountSubscriptionId { get { throw null; } set { } }
+        public string StorageEndpoint { get { throw null; } set { } }
+    }
+    public partial class SqlDatabaseBlobAuditingPolicyResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SqlDatabaseBlobAuditingPolicyResource() { }
+        public virtual Azure.ResourceManager.Sql.SqlDatabaseBlobAuditingPolicyData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, Azure.ResourceManager.Sql.Models.BlobAuditingPolicyName blobAuditingPolicyName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseBlobAuditingPolicyResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseBlobAuditingPolicyResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlDatabaseBlobAuditingPolicyResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SqlDatabaseBlobAuditingPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlDatabaseBlobAuditingPolicyResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SqlDatabaseBlobAuditingPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class SqlDatabaseCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlDatabaseResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlDatabaseResource>, System.Collections.IEnumerable
     {
         protected SqlDatabaseCollection() { }
@@ -3336,6 +2365,36 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlDatabaseResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlDatabaseResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlDatabaseResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlDatabaseResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SqlDatabaseColumnCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlDatabaseColumnResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlDatabaseColumnResource>, System.Collections.IEnumerable
+    {
+        protected SqlDatabaseColumnCollection() { }
+        public virtual Azure.Response<bool> Exists(string columnName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string columnName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseColumnResource> Get(string columnName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlDatabaseColumnResource> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlDatabaseColumnResource> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseColumnResource>> GetAsync(string columnName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlDatabaseColumnResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlDatabaseColumnResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlDatabaseColumnResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlDatabaseColumnResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SqlDatabaseColumnResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SqlDatabaseColumnResource() { }
+        public virtual Azure.ResourceManager.Sql.DatabaseColumnData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName, string tableName, string columnName) { throw null; }
+        public virtual Azure.Response DisableRecommendationSensitivityLabel(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DisableRecommendationSensitivityLabelAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response EnableRecommendationSensitivityLabel(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> EnableRecommendationSensitivityLabelAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseColumnResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseColumnResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSensitivityLabelResource> GetSqlDatabaseSensitivityLabel(Azure.ResourceManager.Sql.Models.SensitivityLabelSource sensitivityLabelSource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSensitivityLabelResource>> GetSqlDatabaseSensitivityLabelAsync(Azure.ResourceManager.Sql.Models.SensitivityLabelSource sensitivityLabelSource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sql.SqlDatabaseSensitivityLabelCollection GetSqlDatabaseSensitivityLabels() { throw null; }
     }
     public partial class SqlDatabaseData : Azure.ResourceManager.Models.TrackedResourceData
     {
@@ -3410,21 +2469,14 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.ResourceManager.Sql.BackupShortTermRetentionPolicyCollection GetBackupShortTermRetentionPolicies() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.BackupShortTermRetentionPolicyResource> GetBackupShortTermRetentionPolicy(Azure.ResourceManager.Sql.Models.ShortTermRetentionPolicyName policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.BackupShortTermRetentionPolicyResource>> GetBackupShortTermRetentionPolicyAsync(Azure.ResourceManager.Sql.Models.ShortTermRetentionPolicyName policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableColumnSensitivityLabelResource> GetCurrentSensitivityLabels(string skipToken = null, bool? count = default(bool?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableColumnSensitivityLabelResource> GetCurrentSensitivityLabelsAsync(string skipToken = null, bool? count = default(bool?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.DatabaseAutomaticTuningResource GetDatabaseAutomaticTuning() { throw null; }
-        public virtual Azure.ResourceManager.Sql.DatabaseBlobAuditingPolicyCollection GetDatabaseBlobAuditingPolicies() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.DatabaseBlobAuditingPolicyResource> GetDatabaseBlobAuditingPolicy(Azure.ResourceManager.Sql.Models.BlobAuditingPolicyName blobAuditingPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.DatabaseBlobAuditingPolicyResource>> GetDatabaseBlobAuditingPolicyAsync(Azure.ResourceManager.Sql.Models.BlobAuditingPolicyName blobAuditingPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableColumnResource> GetDatabaseColumns(System.Collections.Generic.IEnumerable<string> schema = null, System.Collections.Generic.IEnumerable<string> table = null, System.Collections.Generic.IEnumerable<string> column = null, System.Collections.Generic.IEnumerable<string> orderBy = null, string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableColumnResource> GetDatabaseColumnsAsync(System.Collections.Generic.IEnumerable<string> schema = null, System.Collections.Generic.IEnumerable<string> table = null, System.Collections.Generic.IEnumerable<string> column = null, System.Collections.Generic.IEnumerable<string> orderBy = null, string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlDatabaseSensitivityLabelResource> GetCurrentSensitivityLabels(string skipToken = null, bool? count = default(bool?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlDatabaseSensitivityLabelResource> GetCurrentSensitivityLabelsAsync(string skipToken = null, bool? count = default(bool?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlDatabaseColumnResource> GetDatabaseColumns(System.Collections.Generic.IEnumerable<string> schema = null, System.Collections.Generic.IEnumerable<string> table = null, System.Collections.Generic.IEnumerable<string> column = null, System.Collections.Generic.IEnumerable<string> orderBy = null, string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlDatabaseColumnResource> GetDatabaseColumnsAsync(System.Collections.Generic.IEnumerable<string> schema = null, System.Collections.Generic.IEnumerable<string> table = null, System.Collections.Generic.IEnumerable<string> column = null, System.Collections.Generic.IEnumerable<string> orderBy = null, string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.Models.ImportExportExtensionsOperationResult> GetDatabaseExtensions(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.Models.ImportExportExtensionsOperationResult> GetDatabaseExtensionsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.Models.DatabaseOperation> GetDatabaseOperations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.Models.DatabaseOperation> GetDatabaseOperationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.DatabaseSecurityAlertPolicyCollection GetDatabaseSecurityAlertPolicies() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.DatabaseSecurityAlertPolicyResource> GetDatabaseSecurityAlertPolicy(Azure.ResourceManager.Sql.Models.SecurityAlertPolicyName securityAlertPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.DatabaseSecurityAlertPolicyResource>> GetDatabaseSecurityAlertPolicyAsync(Azure.ResourceManager.Sql.Models.SecurityAlertPolicyName securityAlertPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.Models.DatabaseUsage> GetDatabaseUsages(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.Models.DatabaseUsage> GetDatabaseUsagesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Sql.DataMaskingPolicyResource GetDataMaskingPolicy() { throw null; }
@@ -3437,9 +2489,9 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.ResourceManager.Sql.GeoBackupPolicyCollection GetGeoBackupPolicies() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.GeoBackupPolicyResource> GetGeoBackupPolicy(Azure.ResourceManager.Sql.Models.GeoBackupPolicyName geoBackupPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.GeoBackupPolicyResource>> GetGeoBackupPolicyAsync(Azure.ResourceManager.Sql.Models.GeoBackupPolicyName geoBackupPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.LedgerDigestUploadsCollection GetLedgerDigestUploads() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.LedgerDigestUploadsResource> GetLedgerDigestUploads(Azure.ResourceManager.Sql.Models.LedgerDigestUploadsName ledgerDigestUploads, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.LedgerDigestUploadsResource>> GetLedgerDigestUploadsAsync(Azure.ResourceManager.Sql.Models.LedgerDigestUploadsName ledgerDigestUploads, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.LedgerDigestUploadResource> GetLedgerDigestUpload(Azure.ResourceManager.Sql.Models.LedgerDigestUploadsName ledgerDigestUploads, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.LedgerDigestUploadResource>> GetLedgerDigestUploadAsync(Azure.ResourceManager.Sql.Models.LedgerDigestUploadsName ledgerDigestUploads, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sql.LedgerDigestUploadCollection GetLedgerDigestUploads() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.LogicalDatabaseTransparentDataEncryptionResource> GetLogicalDatabaseTransparentDataEncryption(Azure.ResourceManager.Sql.Models.TransparentDataEncryptionName tdeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.LogicalDatabaseTransparentDataEncryptionResource>> GetLogicalDatabaseTransparentDataEncryptionAsync(Azure.ResourceManager.Sql.Models.TransparentDataEncryptionName tdeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Sql.LogicalDatabaseTransparentDataEncryptionCollection GetLogicalDatabaseTransparentDataEncryptions() { throw null; }
@@ -3452,23 +2504,30 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.Models.MetricDefinition> GetMetricDefinitionsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.Models.SqlMetric> GetMetrics(string filter, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.Models.SqlMetric> GetMetricsAsync(string filter, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableColumnSensitivityLabelResource> GetRecommendedSensitivityLabels(string skipToken = null, bool? includeDisabledRecommendations = default(bool?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableColumnSensitivityLabelResource> GetRecommendedSensitivityLabelsAsync(string skipToken = null, bool? includeDisabledRecommendations = default(bool?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlDatabaseSensitivityLabelResource> GetRecommendedSensitivityLabels(string skipToken = null, bool? includeDisabledRecommendations = default(bool?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlDatabaseSensitivityLabelResource> GetRecommendedSensitivityLabelsAsync(string skipToken = null, bool? includeDisabledRecommendations = default(bool?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.ReplicationLinkResource> GetReplicationLink(string linkId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ReplicationLinkResource>> GetReplicationLinkAsync(string linkId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Sql.ReplicationLinkCollection GetReplicationLinks() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.RestorePointResource> GetRestorePoint(string restorePointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.RestorePointResource>> GetRestorePointAsync(string restorePointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Sql.RestorePointCollection GetRestorePoints() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseAdvisorResource> GetServerDatabaseAdvisor(string advisorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseAdvisorResource>> GetServerDatabaseAdvisorAsync(string advisorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.ServerDatabaseAdvisorCollection GetServerDatabaseAdvisors() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSchemaResource> GetServerDatabaseSchema(string schemaName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseSchemaResource>> GetServerDatabaseSchemaAsync(string schemaName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.ServerDatabaseSchemaCollection GetServerDatabaseSchemas() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseVulnerabilityAssessmentResource> GetServerDatabaseVulnerabilityAssessment(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerDatabaseVulnerabilityAssessmentResource>> GetServerDatabaseVulnerabilityAssessmentAsync(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.ServerDatabaseVulnerabilityAssessmentCollection GetServerDatabaseVulnerabilityAssessments() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseAdvisorResource> GetSqlDatabaseAdvisor(string advisorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseAdvisorResource>> GetSqlDatabaseAdvisorAsync(string advisorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sql.SqlDatabaseAdvisorCollection GetSqlDatabaseAdvisors() { throw null; }
+        public virtual Azure.ResourceManager.Sql.SqlDatabaseAutomaticTuningResource GetSqlDatabaseAutomaticTuning() { throw null; }
+        public virtual Azure.ResourceManager.Sql.SqlDatabaseBlobAuditingPolicyCollection GetSqlDatabaseBlobAuditingPolicies() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseBlobAuditingPolicyResource> GetSqlDatabaseBlobAuditingPolicy(Azure.ResourceManager.Sql.Models.BlobAuditingPolicyName blobAuditingPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseBlobAuditingPolicyResource>> GetSqlDatabaseBlobAuditingPolicyAsync(Azure.ResourceManager.Sql.Models.BlobAuditingPolicyName blobAuditingPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSchemaResource> GetSqlDatabaseSchema(string schemaName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSchemaResource>> GetSqlDatabaseSchemaAsync(string schemaName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sql.SqlDatabaseSchemaCollection GetSqlDatabaseSchemas() { throw null; }
+        public virtual Azure.ResourceManager.Sql.SqlDatabaseSecurityAlertPolicyCollection GetSqlDatabaseSecurityAlertPolicies() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSecurityAlertPolicyResource> GetSqlDatabaseSecurityAlertPolicy(Azure.ResourceManager.Sql.Models.SecurityAlertPolicyName securityAlertPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSecurityAlertPolicyResource>> GetSqlDatabaseSecurityAlertPolicyAsync(Azure.ResourceManager.Sql.Models.SecurityAlertPolicyName securityAlertPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentResource> GetSqlDatabaseVulnerabilityAssessment(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentResource>> GetSqlDatabaseVulnerabilityAssessmentAsync(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentCollection GetSqlDatabaseVulnerabilityAssessments() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.SyncGroupResource> GetSyncGroup(string syncGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SyncGroupResource>> GetSyncGroupAsync(string syncGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Sql.SyncGroupCollection GetSyncGroups() { throw null; }
@@ -3496,6 +2555,207 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.ResourceManager.ArmOperation UpgradeDataWarehouse(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> UpgradeDataWarehouseAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class SqlDatabaseSchemaCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlDatabaseSchemaResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlDatabaseSchemaResource>, System.Collections.IEnumerable
+    {
+        protected SqlDatabaseSchemaCollection() { }
+        public virtual Azure.Response<bool> Exists(string schemaName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string schemaName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSchemaResource> Get(string schemaName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlDatabaseSchemaResource> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlDatabaseSchemaResource> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSchemaResource>> GetAsync(string schemaName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlDatabaseSchemaResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlDatabaseSchemaResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlDatabaseSchemaResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlDatabaseSchemaResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SqlDatabaseSchemaResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SqlDatabaseSchemaResource() { }
+        public virtual Azure.ResourceManager.Sql.DatabaseSchemaData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSchemaResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSchemaResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseTableResource> GetSqlDatabaseTable(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseTableResource>> GetSqlDatabaseTableAsync(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sql.SqlDatabaseTableCollection GetSqlDatabaseTables() { throw null; }
+    }
+    public partial class SqlDatabaseSecurityAlertPolicyCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlDatabaseSecurityAlertPolicyResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlDatabaseSecurityAlertPolicyResource>, System.Collections.IEnumerable
+    {
+        protected SqlDatabaseSecurityAlertPolicyCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlDatabaseSecurityAlertPolicyResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.SecurityAlertPolicyName securityAlertPolicyName, Azure.ResourceManager.Sql.SqlDatabaseSecurityAlertPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlDatabaseSecurityAlertPolicyResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.SecurityAlertPolicyName securityAlertPolicyName, Azure.ResourceManager.Sql.SqlDatabaseSecurityAlertPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.Sql.Models.SecurityAlertPolicyName securityAlertPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.Sql.Models.SecurityAlertPolicyName securityAlertPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSecurityAlertPolicyResource> Get(Azure.ResourceManager.Sql.Models.SecurityAlertPolicyName securityAlertPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlDatabaseSecurityAlertPolicyResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlDatabaseSecurityAlertPolicyResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSecurityAlertPolicyResource>> GetAsync(Azure.ResourceManager.Sql.Models.SecurityAlertPolicyName securityAlertPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlDatabaseSecurityAlertPolicyResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlDatabaseSecurityAlertPolicyResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlDatabaseSecurityAlertPolicyResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlDatabaseSecurityAlertPolicyResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SqlDatabaseSecurityAlertPolicyData : Azure.ResourceManager.Models.ResourceData
+    {
+        public SqlDatabaseSecurityAlertPolicyData() { }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public System.Collections.Generic.IList<string> DisabledAlerts { get { throw null; } }
+        public System.Collections.Generic.IList<string> EmailAddresses { get { throw null; } }
+        public int? RetentionDays { get { throw null; } set { } }
+        public bool? SendToEmailAccountAdmins { get { throw null; } set { } }
+        public Azure.ResourceManager.Sql.Models.SecurityAlertsPolicyState? State { get { throw null; } set { } }
+        public string StorageAccountAccessKey { get { throw null; } set { } }
+        public string StorageEndpoint { get { throw null; } set { } }
+    }
+    public partial class SqlDatabaseSecurityAlertPolicyResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SqlDatabaseSecurityAlertPolicyResource() { }
+        public virtual Azure.ResourceManager.Sql.SqlDatabaseSecurityAlertPolicyData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, Azure.ResourceManager.Sql.Models.SecurityAlertPolicyName securityAlertPolicyName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSecurityAlertPolicyResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSecurityAlertPolicyResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlDatabaseSecurityAlertPolicyResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SqlDatabaseSecurityAlertPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlDatabaseSecurityAlertPolicyResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SqlDatabaseSecurityAlertPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SqlDatabaseSensitivityLabelCollection : Azure.ResourceManager.ArmCollection
+    {
+        protected SqlDatabaseSensitivityLabelCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlDatabaseSensitivityLabelResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SensitivityLabelData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlDatabaseSensitivityLabelResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SensitivityLabelData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.Sql.Models.SensitivityLabelSource sensitivityLabelSource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.Sql.Models.SensitivityLabelSource sensitivityLabelSource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSensitivityLabelResource> Get(Azure.ResourceManager.Sql.Models.SensitivityLabelSource sensitivityLabelSource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSensitivityLabelResource>> GetAsync(Azure.ResourceManager.Sql.Models.SensitivityLabelSource sensitivityLabelSource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SqlDatabaseSensitivityLabelResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SqlDatabaseSensitivityLabelResource() { }
+        public virtual Azure.ResourceManager.Sql.SensitivityLabelData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName, string tableName, string columnName, Azure.ResourceManager.Sql.Models.SensitivityLabelSource sensitivityLabelSource) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSensitivityLabelResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSensitivityLabelResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlDatabaseSensitivityLabelResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SensitivityLabelData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlDatabaseSensitivityLabelResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SensitivityLabelData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SqlDatabaseTableCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlDatabaseTableResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlDatabaseTableResource>, System.Collections.IEnumerable
+    {
+        protected SqlDatabaseTableCollection() { }
+        public virtual Azure.Response<bool> Exists(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseTableResource> Get(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlDatabaseTableResource> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlDatabaseTableResource> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseTableResource>> GetAsync(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlDatabaseTableResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlDatabaseTableResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlDatabaseTableResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlDatabaseTableResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SqlDatabaseTableResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SqlDatabaseTableResource() { }
+        public virtual Azure.ResourceManager.Sql.DatabaseTableData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName, string tableName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseTableResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseTableResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseColumnResource> GetSqlDatabaseColumn(string columnName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseColumnResource>> GetSqlDatabaseColumnAsync(string columnName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sql.SqlDatabaseColumnCollection GetSqlDatabaseColumns() { throw null; }
+    }
+    public partial class SqlDatabaseVulnerabilityAssessmentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentResource>, System.Collections.IEnumerable
+    {
+        protected SqlDatabaseVulnerabilityAssessmentCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, Azure.ResourceManager.Sql.DatabaseVulnerabilityAssessmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, Azure.ResourceManager.Sql.DatabaseVulnerabilityAssessmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentResource> Get(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentResource>> GetAsync(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SqlDatabaseVulnerabilityAssessmentResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SqlDatabaseVulnerabilityAssessmentResource() { }
+        public virtual Azure.ResourceManager.Sql.DatabaseVulnerabilityAssessmentData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentRuleBaselineResource> GetSqlDatabaseVulnerabilityAssessmentRuleBaseline(string ruleId, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentPolicyBaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentRuleBaselineResource>> GetSqlDatabaseVulnerabilityAssessmentRuleBaselineAsync(string ruleId, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentPolicyBaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentRuleBaselineCollection GetSqlDatabaseVulnerabilityAssessmentRuleBaselines() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentScanResource> GetSqlDatabaseVulnerabilityAssessmentScan(string scanId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentScanResource>> GetSqlDatabaseVulnerabilityAssessmentScanAsync(string scanId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentScanCollection GetSqlDatabaseVulnerabilityAssessmentScans() { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.DatabaseVulnerabilityAssessmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.DatabaseVulnerabilityAssessmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SqlDatabaseVulnerabilityAssessmentRuleBaselineCollection : Azure.ResourceManager.ArmCollection
+    {
+        protected SqlDatabaseVulnerabilityAssessmentRuleBaselineCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentRuleBaselineResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string ruleId, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentPolicyBaselineName baselineName, Azure.ResourceManager.Sql.DatabaseVulnerabilityAssessmentRuleBaselineData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentRuleBaselineResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string ruleId, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentPolicyBaselineName baselineName, Azure.ResourceManager.Sql.DatabaseVulnerabilityAssessmentRuleBaselineData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string ruleId, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentPolicyBaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string ruleId, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentPolicyBaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentRuleBaselineResource> Get(string ruleId, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentPolicyBaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentRuleBaselineResource>> GetAsync(string ruleId, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentPolicyBaselineName baselineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SqlDatabaseVulnerabilityAssessmentRuleBaselineResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SqlDatabaseVulnerabilityAssessmentRuleBaselineResource() { }
+        public virtual Azure.ResourceManager.Sql.DatabaseVulnerabilityAssessmentRuleBaselineData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, string ruleId, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentPolicyBaselineName baselineName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentRuleBaselineResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentRuleBaselineResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentRuleBaselineResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.DatabaseVulnerabilityAssessmentRuleBaselineData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentRuleBaselineResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.DatabaseVulnerabilityAssessmentRuleBaselineData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SqlDatabaseVulnerabilityAssessmentScanCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentScanResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentScanResource>, System.Collections.IEnumerable
+    {
+        protected SqlDatabaseVulnerabilityAssessmentScanCollection() { }
+        public virtual Azure.Response<bool> Exists(string scanId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string scanId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentScanResource> Get(string scanId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentScanResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentScanResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentScanResource>> GetAsync(string scanId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentScanResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentScanResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentScanResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentScanResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SqlDatabaseVulnerabilityAssessmentScanResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SqlDatabaseVulnerabilityAssessmentScanResource() { }
+        public virtual Azure.ResourceManager.Sql.VulnerabilityAssessmentScanRecordData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, string scanId) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.Models.DatabaseVulnerabilityAssessmentScansExport> Export(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.Models.DatabaseVulnerabilityAssessmentScansExport>> ExportAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentScanResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentScanResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation InitiateScan(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> InitiateScanAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public static partial class SqlExtensions
     {
         public static Azure.Response<Azure.ResourceManager.Sql.Models.CheckNameAvailabilityResponse> CheckNameAvailabilityServer(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Sql.Models.CheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -3503,9 +2763,6 @@ namespace Azure.ResourceManager.Sql
         public static Azure.ResourceManager.Sql.BackupShortTermRetentionPolicyResource GetBackupShortTermRetentionPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Sql.Models.LocationCapabilities> GetCapabilitiesByLocation(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, Azure.ResourceManager.Sql.Models.CapabilityGroup? include = default(Azure.ResourceManager.Sql.Models.CapabilityGroup?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.Models.LocationCapabilities>> GetCapabilitiesByLocationAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, Azure.ResourceManager.Sql.Models.CapabilityGroup? include = default(Azure.ResourceManager.Sql.Models.CapabilityGroup?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.Sql.DatabaseAutomaticTuningResource GetDatabaseAutomaticTuningResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.DatabaseBlobAuditingPolicyResource GetDatabaseBlobAuditingPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.DatabaseSecurityAlertPolicyResource GetDatabaseSecurityAlertPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.DataMaskingPolicyResource GetDataMaskingPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.DataWarehouseUserActivitiesResource GetDataWarehouseUserActivitiesResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Sql.DeletedServerResource> GetDeletedServer(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, string deletedServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -3534,11 +2791,7 @@ namespace Azure.ResourceManager.Sql
         public static Azure.Pageable<Azure.ResourceManager.Sql.InstancePoolResource> GetInstancePools(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Sql.InstancePoolResource> GetInstancePoolsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Sql.IPv6FirewallRuleResource GetIPv6FirewallRuleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.JobAgentResource GetJobAgentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.JobCredentialResource GetJobCredentialResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.JobTargetGroupResource GetJobTargetGroupResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.JobVersionResource GetJobVersionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.LedgerDigestUploadsResource GetLedgerDigestUploadsResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.LedgerDigestUploadResource GetLedgerDigestUploadResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.LogicalDatabaseTransparentDataEncryptionResource GetLogicalDatabaseTransparentDataEncryptionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Sql.SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByLocation(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, bool? onlyLatestPerDatabase = default(bool?), Azure.ResourceManager.Sql.Models.DatabaseState? databaseState = default(Azure.ResourceManager.Sql.Models.DatabaseState?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Sql.SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByLocationAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, bool? onlyLatestPerDatabase = default(bool?), Azure.ResourceManager.Sql.Models.DatabaseState? databaseState = default(Azure.ResourceManager.Sql.Models.DatabaseState?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -3559,21 +2812,21 @@ namespace Azure.ResourceManager.Sql
         public static Azure.ResourceManager.Sql.LongTermRetentionPolicyResource GetLongTermRetentionPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.MaintenanceWindowOptionsResource GetMaintenanceWindowOptionsResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.MaintenanceWindowsResource GetMaintenanceWindowsResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.ManagedBackupShortTermRetentionPolicyResource GetManagedBackupShortTermRetentionPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.ManagedDatabaseColumnResource GetManagedDatabaseColumnResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.ManagedDatabaseResource GetManagedDatabaseResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.ManagedDatabaseRestoreDetailsResultResource GetManagedDatabaseRestoreDetailsResultResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.ManagedDatabaseRestoreDetailResource GetManagedDatabaseRestoreDetailResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.ManagedDatabaseSecurityAlertPolicyResource GetManagedDatabaseSecurityAlertPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.ManagedDatabaseSensitivityLabelResource GetManagedDatabaseSensitivityLabelResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.ManagedDatabaseTableResource GetManagedDatabaseTableResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentResource GetManagedDatabaseVulnerabilityAssessmentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentRuleBaselineResource GetManagedDatabaseVulnerabilityAssessmentRuleBaselineResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.ManagedDatabaseVulnerabilityAssessmentScanResource GetManagedDatabaseVulnerabilityAssessmentScanResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceResource> GetManagedInstance(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string managedInstanceName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Sql.ManagedInstanceAdministratorResource GetManagedInstanceAdministratorResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceResource>> GetManagedInstanceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string managedInstanceName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Sql.ManagedInstanceAzureADOnlyAuthenticationResource GetManagedInstanceAzureADOnlyAuthenticationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource GetManagedInstanceDatabaseBackupShortTermRetentionPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaResource GetManagedInstanceDatabaseSchemaResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableColumnResource GetManagedInstanceDatabaseSchemaTableColumnResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource GetManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableResource GetManagedInstanceDatabaseSchemaTableResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.ManagedInstanceDatabaseVulnerabilityAssessmentResource GetManagedInstanceDatabaseVulnerabilityAssessmentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaselineResource GetManagedInstanceDatabaseVulnerabilityAssessmentRuleBaselineResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.ManagedInstanceDatabaseVulnerabilityAssessmentScanResource GetManagedInstanceDatabaseVulnerabilityAssessmentScanResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.ManagedInstanceEncryptionProtectorResource GetManagedInstanceEncryptionProtectorResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.ManagedInstanceKeyResource GetManagedInstanceKeyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionPolicyResource GetManagedInstanceLongTermRetentionPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -3584,6 +2837,7 @@ namespace Azure.ResourceManager.Sql
         public static Azure.ResourceManager.Sql.ManagedInstanceCollection GetManagedInstances(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Sql.ManagedInstanceResource> GetManagedInstances(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Sql.ManagedInstanceResource> GetManagedInstancesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Sql.ManagedInstanceServerTrustCertificateResource GetManagedInstanceServerTrustCertificateResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.ManagedInstanceVulnerabilityAssessmentResource GetManagedInstanceVulnerabilityAssessmentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource GetManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.ManagedServerSecurityAlertPolicyResource GetManagedServerSecurityAlertPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -3604,48 +2858,54 @@ namespace Azure.ResourceManager.Sql
         public static Azure.ResourceManager.Sql.RestorableDroppedDatabaseResource GetRestorableDroppedDatabaseResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.RestorableDroppedManagedDatabaseResource GetRestorableDroppedManagedDatabaseResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.RestorePointResource GetRestorePointResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.ServerAdvisorResource GetServerAdvisorResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.ServerAutomaticTuningResource GetServerAutomaticTuningResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.ServerAzureADAdministratorResource GetServerAzureADAdministratorResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.ServerAzureADOnlyAuthenticationResource GetServerAzureADOnlyAuthenticationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.ServerBlobAuditingPolicyResource GetServerBlobAuditingPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.ServerCommunicationLinkResource GetServerCommunicationLinkResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.ServerConnectionPolicyResource GetServerConnectionPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.ServerDatabaseAdvisorResource GetServerDatabaseAdvisorResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.ServerDatabaseSchemaResource GetServerDatabaseSchemaResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.ServerDatabaseSchemaTableColumnResource GetServerDatabaseSchemaTableColumnResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.ServerDatabaseSchemaTableColumnSensitivityLabelResource GetServerDatabaseSchemaTableColumnSensitivityLabelResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.ServerDatabaseSchemaTableResource GetServerDatabaseSchemaTableResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.ServerDatabaseVulnerabilityAssessmentResource GetServerDatabaseVulnerabilityAssessmentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.ServerDatabaseVulnerabilityAssessmentRuleBaselineResource GetServerDatabaseVulnerabilityAssessmentRuleBaselineResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.ServerDatabaseVulnerabilityAssessmentScanResource GetServerDatabaseVulnerabilityAssessmentScanResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.ServerDevOpsAuditingSettingsResource GetServerDevOpsAuditingSettingsResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.ServerDnsAliasResource GetServerDnsAliasResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.ServerJobAgentJobExecutionResource GetServerJobAgentJobExecutionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.ServerJobAgentJobExecutionStepResource GetServerJobAgentJobExecutionStepResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.ServerJobAgentJobExecutionStepTargetResource GetServerJobAgentJobExecutionStepTargetResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.ServerJobAgentJobStepResource GetServerJobAgentJobStepResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.ServerJobAgentJobVersionStepResource GetServerJobAgentJobVersionStepResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.ServerKeyResource GetServerKeyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.ServerSecurityAlertPolicyResource GetServerSecurityAlertPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.ServerTrustCertificateResource GetServerTrustCertificateResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.Sql.ServerTrustGroupResource> GetServerTrustGroup(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string locationName, string serverTrustGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerTrustGroupResource>> GetServerTrustGroupAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string locationName, string serverTrustGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.Sql.ServerTrustGroupResource GetServerTrustGroupResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.ServerTrustGroupCollection GetServerTrustGroups(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string locationName) { throw null; }
-        public static Azure.ResourceManager.Sql.ServerVulnerabilityAssessmentResource GetServerVulnerabilityAssessmentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.ServiceObjectiveResource GetServiceObjectiveResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.SqlAgentConfigurationResource GetSqlAgentConfigurationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlDatabaseAdvisorResource GetSqlDatabaseAdvisorResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlDatabaseAutomaticTuningResource GetSqlDatabaseAutomaticTuningResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlDatabaseBlobAuditingPolicyResource GetSqlDatabaseBlobAuditingPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlDatabaseColumnResource GetSqlDatabaseColumnResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.SqlDatabaseResource GetSqlDatabaseResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.SqlJobResource GetSqlJobResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlDatabaseSchemaResource GetSqlDatabaseSchemaResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlDatabaseSecurityAlertPolicyResource GetSqlDatabaseSecurityAlertPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlDatabaseSensitivityLabelResource GetSqlDatabaseSensitivityLabelResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlDatabaseTableResource GetSqlDatabaseTableResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentResource GetSqlDatabaseVulnerabilityAssessmentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentRuleBaselineResource GetSqlDatabaseVulnerabilityAssessmentRuleBaselineResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlDatabaseVulnerabilityAssessmentScanResource GetSqlDatabaseVulnerabilityAssessmentScanResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.SqlPrivateEndpointConnectionResource GetSqlPrivateEndpointConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.SqlPrivateLinkResource GetSqlPrivateLinkResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Sql.SqlServerResource> GetSqlServer(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string serverName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlServerAdvisorResource GetSqlServerAdvisorResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerResource>> GetSqlServerAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string serverName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlServerAutomaticTuningResource GetSqlServerAutomaticTuningResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlServerAzureADAdministratorResource GetSqlServerAzureADAdministratorResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlServerAzureADOnlyAuthenticationResource GetSqlServerAzureADOnlyAuthenticationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlServerBlobAuditingPolicyResource GetSqlServerBlobAuditingPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlServerCommunicationLinkResource GetSqlServerCommunicationLinkResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlServerConnectionPolicyResource GetSqlServerConnectionPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingResource GetSqlServerDevOpsAuditingSettingResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlServerDnsAliasResource GetSqlServerDnsAliasResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlServerJobAgentResource GetSqlServerJobAgentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlServerJobCredentialResource GetSqlServerJobCredentialResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlServerJobExecutionResource GetSqlServerJobExecutionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlServerJobExecutionStepResource GetSqlServerJobExecutionStepResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlServerJobExecutionStepTargetResource GetSqlServerJobExecutionStepTargetResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlServerJobResource GetSqlServerJobResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlServerJobStepResource GetSqlServerJobStepResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlServerJobTargetGroupResource GetSqlServerJobTargetGroupResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlServerJobVersionResource GetSqlServerJobVersionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlServerJobVersionStepResource GetSqlServerJobVersionStepResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlServerKeyResource GetSqlServerKeyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.SqlServerResource GetSqlServerResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.SqlServerCollection GetSqlServers(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Sql.SqlServerResource> GetSqlServers(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlServerResource> GetSqlServersAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlServerSecurityAlertPolicyResource GetSqlServerSecurityAlertPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Sql.SqlServerTrustGroupResource> GetSqlServerTrustGroup(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string locationName, string serverTrustGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerTrustGroupResource>> GetSqlServerTrustGroupAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string locationName, string serverTrustGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlServerTrustGroupResource GetSqlServerTrustGroupResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlServerTrustGroupCollection GetSqlServerTrustGroups(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string locationName) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlServerVulnerabilityAssessmentResource GetSqlServerVulnerabilityAssessmentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Sql.SqlTimeZoneResource> GetSqlTimeZone(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, string timeZoneId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlTimeZoneResource>> GetSqlTimeZoneAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, string timeZoneId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Sql.SqlTimeZoneResource GetSqlTimeZoneResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -3676,53 +2936,6 @@ namespace Azure.ResourceManager.Sql
         public static Azure.ResourceManager.Sql.VirtualNetworkRuleResource GetVirtualNetworkRuleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.WorkloadClassifierResource GetWorkloadClassifierResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.WorkloadGroupResource GetWorkloadGroupResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-    }
-    public partial class SqlJobCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlJobResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlJobResource>, System.Collections.IEnumerable
-    {
-        protected SqlJobCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlJobResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string jobName, Azure.ResourceManager.Sql.SqlJobData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlJobResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string jobName, Azure.ResourceManager.Sql.SqlJobData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlJobResource> Get(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlJobResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlJobResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlJobResource>> GetAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlJobResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlJobResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlJobResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlJobResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class SqlJobData : Azure.ResourceManager.Models.ResourceData
-    {
-        public SqlJobData() { }
-        public string Description { get { throw null; } set { } }
-        public Azure.ResourceManager.Sql.Models.JobSchedule Schedule { get { throw null; } set { } }
-        public int? Version { get { throw null; } }
-    }
-    public partial class SqlJobResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected SqlJobResource() { }
-        public virtual Azure.ResourceManager.Sql.SqlJobData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionResource> CreateJobExecution(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionResource>> CreateJobExecutionAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlJobResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlJobResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.JobVersionResource> GetJobVersion(int jobVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.JobVersionResource>> GetJobVersionAsync(int jobVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.JobVersionCollection GetJobVersions() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionResource> GetServerJobAgentJobExecution(System.Guid jobExecutionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionResource>> GetServerJobAgentJobExecutionAsync(System.Guid jobExecutionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.ServerJobAgentJobExecutionCollection GetServerJobAgentJobExecutions() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerJobAgentJobStepResource> GetServerJobAgentJobStep(string stepName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerJobAgentJobStepResource>> GetServerJobAgentJobStepAsync(string stepName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.ServerJobAgentJobStepCollection GetServerJobAgentJobSteps() { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlJobResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SqlJobData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlJobResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SqlJobData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SqlPrivateEndpointConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlPrivateEndpointConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlPrivateEndpointConnectionResource>, System.Collections.IEnumerable
     {
@@ -3788,6 +3001,164 @@ namespace Azure.ResourceManager.Sql
         public SqlPrivateLinkResourceData() { }
         public Azure.ResourceManager.Sql.Models.SqlPrivateLinkResourceProperties Properties { get { throw null; } }
     }
+    public partial class SqlServerAdvisorCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerAdvisorResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerAdvisorResource>, System.Collections.IEnumerable
+    {
+        protected SqlServerAdvisorCollection() { }
+        public virtual Azure.Response<bool> Exists(string advisorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string advisorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerAdvisorResource> Get(string advisorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlServerAdvisorResource> GetAll(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlServerAdvisorResource> GetAllAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerAdvisorResource>> GetAsync(string advisorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlServerAdvisorResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerAdvisorResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlServerAdvisorResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerAdvisorResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SqlServerAdvisorResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SqlServerAdvisorResource() { }
+        public virtual Azure.ResourceManager.Sql.AdvisorData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string advisorName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerAdvisorResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerAdvisorResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerAdvisorResource> Update(Azure.ResourceManager.Sql.AdvisorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerAdvisorResource>> UpdateAsync(Azure.ResourceManager.Sql.AdvisorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SqlServerAutomaticTuningData : Azure.ResourceManager.Models.ResourceData
+    {
+        public SqlServerAutomaticTuningData() { }
+        public Azure.ResourceManager.Sql.Models.AutomaticTuningServerMode? ActualState { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.AutomaticTuningServerMode? DesiredState { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Sql.Models.AutomaticTuningServerOptions> Options { get { throw null; } }
+    }
+    public partial class SqlServerAutomaticTuningResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SqlServerAutomaticTuningResource() { }
+        public virtual Azure.ResourceManager.Sql.SqlServerAutomaticTuningData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerAutomaticTuningResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerAutomaticTuningResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerAutomaticTuningResource> Update(Azure.ResourceManager.Sql.SqlServerAutomaticTuningData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerAutomaticTuningResource>> UpdateAsync(Azure.ResourceManager.Sql.SqlServerAutomaticTuningData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SqlServerAzureADAdministratorCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerAzureADAdministratorResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerAzureADAdministratorResource>, System.Collections.IEnumerable
+    {
+        protected SqlServerAzureADAdministratorCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerAzureADAdministratorResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.AdministratorName administratorName, Azure.ResourceManager.Sql.SqlServerAzureADAdministratorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerAzureADAdministratorResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.AdministratorName administratorName, Azure.ResourceManager.Sql.SqlServerAzureADAdministratorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.Sql.Models.AdministratorName administratorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.Sql.Models.AdministratorName administratorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerAzureADAdministratorResource> Get(Azure.ResourceManager.Sql.Models.AdministratorName administratorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlServerAzureADAdministratorResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlServerAzureADAdministratorResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerAzureADAdministratorResource>> GetAsync(Azure.ResourceManager.Sql.Models.AdministratorName administratorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlServerAzureADAdministratorResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerAzureADAdministratorResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlServerAzureADAdministratorResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerAzureADAdministratorResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SqlServerAzureADAdministratorData : Azure.ResourceManager.Models.ResourceData
+    {
+        public SqlServerAzureADAdministratorData() { }
+        public Azure.ResourceManager.Sql.Models.AdministratorType? AdministratorType { get { throw null; } set { } }
+        public bool? AzureADOnlyAuthentication { get { throw null; } }
+        public string Login { get { throw null; } set { } }
+        public System.Guid? Sid { get { throw null; } set { } }
+        public System.Guid? TenantId { get { throw null; } set { } }
+    }
+    public partial class SqlServerAzureADAdministratorResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SqlServerAzureADAdministratorResource() { }
+        public virtual Azure.ResourceManager.Sql.SqlServerAzureADAdministratorData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, Azure.ResourceManager.Sql.Models.AdministratorName administratorName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerAzureADAdministratorResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerAzureADAdministratorResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerAzureADAdministratorResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SqlServerAzureADAdministratorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerAzureADAdministratorResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SqlServerAzureADAdministratorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SqlServerAzureADOnlyAuthenticationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerAzureADOnlyAuthenticationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerAzureADOnlyAuthenticationResource>, System.Collections.IEnumerable
+    {
+        protected SqlServerAzureADOnlyAuthenticationCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerAzureADOnlyAuthenticationResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.AuthenticationName authenticationName, Azure.ResourceManager.Sql.SqlServerAzureADOnlyAuthenticationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerAzureADOnlyAuthenticationResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.AuthenticationName authenticationName, Azure.ResourceManager.Sql.SqlServerAzureADOnlyAuthenticationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.Sql.Models.AuthenticationName authenticationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.Sql.Models.AuthenticationName authenticationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerAzureADOnlyAuthenticationResource> Get(Azure.ResourceManager.Sql.Models.AuthenticationName authenticationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlServerAzureADOnlyAuthenticationResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlServerAzureADOnlyAuthenticationResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerAzureADOnlyAuthenticationResource>> GetAsync(Azure.ResourceManager.Sql.Models.AuthenticationName authenticationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlServerAzureADOnlyAuthenticationResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerAzureADOnlyAuthenticationResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlServerAzureADOnlyAuthenticationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerAzureADOnlyAuthenticationResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SqlServerAzureADOnlyAuthenticationData : Azure.ResourceManager.Models.ResourceData
+    {
+        public SqlServerAzureADOnlyAuthenticationData() { }
+        public bool? AzureADOnlyAuthentication { get { throw null; } set { } }
+    }
+    public partial class SqlServerAzureADOnlyAuthenticationResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SqlServerAzureADOnlyAuthenticationResource() { }
+        public virtual Azure.ResourceManager.Sql.SqlServerAzureADOnlyAuthenticationData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, Azure.ResourceManager.Sql.Models.AuthenticationName authenticationName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerAzureADOnlyAuthenticationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerAzureADOnlyAuthenticationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerAzureADOnlyAuthenticationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SqlServerAzureADOnlyAuthenticationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerAzureADOnlyAuthenticationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SqlServerAzureADOnlyAuthenticationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SqlServerBlobAuditingPolicyCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerBlobAuditingPolicyResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerBlobAuditingPolicyResource>, System.Collections.IEnumerable
+    {
+        protected SqlServerBlobAuditingPolicyCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerBlobAuditingPolicyResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.BlobAuditingPolicyName blobAuditingPolicyName, Azure.ResourceManager.Sql.SqlServerBlobAuditingPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerBlobAuditingPolicyResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.BlobAuditingPolicyName blobAuditingPolicyName, Azure.ResourceManager.Sql.SqlServerBlobAuditingPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.Sql.Models.BlobAuditingPolicyName blobAuditingPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.Sql.Models.BlobAuditingPolicyName blobAuditingPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerBlobAuditingPolicyResource> Get(Azure.ResourceManager.Sql.Models.BlobAuditingPolicyName blobAuditingPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlServerBlobAuditingPolicyResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlServerBlobAuditingPolicyResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerBlobAuditingPolicyResource>> GetAsync(Azure.ResourceManager.Sql.Models.BlobAuditingPolicyName blobAuditingPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlServerBlobAuditingPolicyResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerBlobAuditingPolicyResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlServerBlobAuditingPolicyResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerBlobAuditingPolicyResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SqlServerBlobAuditingPolicyData : Azure.ResourceManager.Models.ResourceData
+    {
+        public SqlServerBlobAuditingPolicyData() { }
+        public System.Collections.Generic.IList<string> AuditActionsAndGroups { get { throw null; } }
+        public bool? IsAzureMonitorTargetEnabled { get { throw null; } set { } }
+        public bool? IsDevopsAuditEnabled { get { throw null; } set { } }
+        public bool? IsManagedIdentityInUse { get { throw null; } set { } }
+        public bool? IsStorageSecondaryKeyInUse { get { throw null; } set { } }
+        public int? QueueDelayMs { get { throw null; } set { } }
+        public int? RetentionDays { get { throw null; } set { } }
+        public Azure.ResourceManager.Sql.Models.BlobAuditingPolicyState? State { get { throw null; } set { } }
+        public string StorageAccountAccessKey { get { throw null; } set { } }
+        public System.Guid? StorageAccountSubscriptionId { get { throw null; } set { } }
+        public string StorageEndpoint { get { throw null; } set { } }
+    }
+    public partial class SqlServerBlobAuditingPolicyResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SqlServerBlobAuditingPolicyResource() { }
+        public virtual Azure.ResourceManager.Sql.SqlServerBlobAuditingPolicyData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, Azure.ResourceManager.Sql.Models.BlobAuditingPolicyName blobAuditingPolicyName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerBlobAuditingPolicyResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerBlobAuditingPolicyResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerBlobAuditingPolicyResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SqlServerBlobAuditingPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerBlobAuditingPolicyResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SqlServerBlobAuditingPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class SqlServerCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerResource>, System.Collections.IEnumerable
     {
         protected SqlServerCollection() { }
@@ -3802,6 +3173,77 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlServerResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlServerResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SqlServerCommunicationLinkCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerCommunicationLinkResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerCommunicationLinkResource>, System.Collections.IEnumerable
+    {
+        protected SqlServerCommunicationLinkCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerCommunicationLinkResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string communicationLinkName, Azure.ResourceManager.Sql.SqlServerCommunicationLinkData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerCommunicationLinkResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string communicationLinkName, Azure.ResourceManager.Sql.SqlServerCommunicationLinkData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string communicationLinkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string communicationLinkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerCommunicationLinkResource> Get(string communicationLinkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlServerCommunicationLinkResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlServerCommunicationLinkResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerCommunicationLinkResource>> GetAsync(string communicationLinkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlServerCommunicationLinkResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerCommunicationLinkResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlServerCommunicationLinkResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerCommunicationLinkResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SqlServerCommunicationLinkData : Azure.ResourceManager.Models.ResourceData
+    {
+        public SqlServerCommunicationLinkData() { }
+        public string Kind { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
+        public string PartnerServer { get { throw null; } set { } }
+        public string State { get { throw null; } }
+    }
+    public partial class SqlServerCommunicationLinkResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SqlServerCommunicationLinkResource() { }
+        public virtual Azure.ResourceManager.Sql.SqlServerCommunicationLinkData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string communicationLinkName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerCommunicationLinkResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerCommunicationLinkResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerCommunicationLinkResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SqlServerCommunicationLinkData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerCommunicationLinkResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SqlServerCommunicationLinkData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SqlServerConnectionPolicyCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerConnectionPolicyResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerConnectionPolicyResource>, System.Collections.IEnumerable
+    {
+        protected SqlServerConnectionPolicyCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerConnectionPolicyResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.ConnectionPolicyName connectionPolicyName, Azure.ResourceManager.Sql.SqlServerConnectionPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerConnectionPolicyResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.ConnectionPolicyName connectionPolicyName, Azure.ResourceManager.Sql.SqlServerConnectionPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.Sql.Models.ConnectionPolicyName connectionPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.Sql.Models.ConnectionPolicyName connectionPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerConnectionPolicyResource> Get(Azure.ResourceManager.Sql.Models.ConnectionPolicyName connectionPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlServerConnectionPolicyResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlServerConnectionPolicyResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerConnectionPolicyResource>> GetAsync(Azure.ResourceManager.Sql.Models.ConnectionPolicyName connectionPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlServerConnectionPolicyResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerConnectionPolicyResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlServerConnectionPolicyResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerConnectionPolicyResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SqlServerConnectionPolicyData : Azure.ResourceManager.Models.ResourceData
+    {
+        public SqlServerConnectionPolicyData() { }
+        public Azure.ResourceManager.Sql.Models.ServerConnectionType? ConnectionType { get { throw null; } set { } }
+        public string Kind { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
+    }
+    public partial class SqlServerConnectionPolicyResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SqlServerConnectionPolicyResource() { }
+        public virtual Azure.ResourceManager.Sql.SqlServerConnectionPolicyData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, Azure.ResourceManager.Sql.Models.ConnectionPolicyName connectionPolicyName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerConnectionPolicyResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerConnectionPolicyResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerConnectionPolicyResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SqlServerConnectionPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerConnectionPolicyResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SqlServerConnectionPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SqlServerData : Azure.ResourceManager.Models.TrackedResourceData
     {
@@ -3822,6 +3264,453 @@ namespace Azure.ResourceManager.Sql
         public string State { get { throw null; } }
         public string Version { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.ServerWorkspaceFeature? WorkspaceFeature { get { throw null; } }
+    }
+    public partial class SqlServerDevOpsAuditingSettingCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingResource>, System.Collections.IEnumerable
+    {
+        protected SqlServerDevOpsAuditingSettingCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string devOpsAuditingSettingsName, Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string devOpsAuditingSettingsName, Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string devOpsAuditingSettingsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string devOpsAuditingSettingsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingResource> Get(string devOpsAuditingSettingsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingResource>> GetAsync(string devOpsAuditingSettingsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SqlServerDevOpsAuditingSettingData : Azure.ResourceManager.Models.ResourceData
+    {
+        public SqlServerDevOpsAuditingSettingData() { }
+        public bool? IsAzureMonitorTargetEnabled { get { throw null; } set { } }
+        public Azure.ResourceManager.Sql.Models.BlobAuditingPolicyState? State { get { throw null; } set { } }
+        public string StorageAccountAccessKey { get { throw null; } set { } }
+        public System.Guid? StorageAccountSubscriptionId { get { throw null; } set { } }
+        public string StorageEndpoint { get { throw null; } set { } }
+    }
+    public partial class SqlServerDevOpsAuditingSettingResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SqlServerDevOpsAuditingSettingResource() { }
+        public virtual Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string devOpsAuditingSettingsName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SqlServerDnsAliasCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerDnsAliasResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerDnsAliasResource>, System.Collections.IEnumerable
+    {
+        protected SqlServerDnsAliasCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerDnsAliasResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string dnsAliasName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerDnsAliasResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string dnsAliasName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string dnsAliasName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string dnsAliasName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerDnsAliasResource> Get(string dnsAliasName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlServerDnsAliasResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlServerDnsAliasResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerDnsAliasResource>> GetAsync(string dnsAliasName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlServerDnsAliasResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerDnsAliasResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlServerDnsAliasResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerDnsAliasResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SqlServerDnsAliasData : Azure.ResourceManager.Models.ResourceData
+    {
+        public SqlServerDnsAliasData() { }
+        public string AzureDnsRecord { get { throw null; } }
+    }
+    public partial class SqlServerDnsAliasResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SqlServerDnsAliasResource() { }
+        public virtual Azure.ResourceManager.Sql.SqlServerDnsAliasData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerDnsAliasResource> Acquire(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.ServerDnsAliasAcquisition serverDnsAliasAcquisition, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerDnsAliasResource>> AcquireAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.ServerDnsAliasAcquisition serverDnsAliasAcquisition, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string dnsAliasName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerDnsAliasResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerDnsAliasResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerDnsAliasResource> Update(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerDnsAliasResource>> UpdateAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SqlServerJobAgentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerJobAgentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerJobAgentResource>, System.Collections.IEnumerable
+    {
+        protected SqlServerJobAgentCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerJobAgentResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string jobAgentName, Azure.ResourceManager.Sql.SqlServerJobAgentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerJobAgentResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string jobAgentName, Azure.ResourceManager.Sql.SqlServerJobAgentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string jobAgentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string jobAgentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerJobAgentResource> Get(string jobAgentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlServerJobAgentResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlServerJobAgentResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerJobAgentResource>> GetAsync(string jobAgentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlServerJobAgentResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerJobAgentResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlServerJobAgentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerJobAgentResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SqlServerJobAgentData : Azure.ResourceManager.Models.TrackedResourceData
+    {
+        public SqlServerJobAgentData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public Azure.Core.ResourceIdentifier DatabaseId { get { throw null; } set { } }
+        public Azure.ResourceManager.Sql.Models.SqlSku Sku { get { throw null; } set { } }
+        public Azure.ResourceManager.Sql.Models.JobAgentState? State { get { throw null; } }
+    }
+    public partial class SqlServerJobAgentResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SqlServerJobAgentResource() { }
+        public virtual Azure.ResourceManager.Sql.SqlServerJobAgentData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerJobAgentResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerJobAgentResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerJobAgentResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerJobAgentResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlServerJobExecutionResource> GetJobExecutionsByAgent(System.DateTimeOffset? createTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? createTimeMax = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMax = default(System.DateTimeOffset?), bool? isActive = default(bool?), int? skip = default(int?), int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlServerJobExecutionResource> GetJobExecutionsByAgentAsync(System.DateTimeOffset? createTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? createTimeMax = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMax = default(System.DateTimeOffset?), bool? isActive = default(bool?), int? skip = default(int?), int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerJobResource> GetSqlServerJob(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerJobResource>> GetSqlServerJobAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerJobCredentialResource> GetSqlServerJobCredential(string credentialName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerJobCredentialResource>> GetSqlServerJobCredentialAsync(string credentialName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sql.SqlServerJobCredentialCollection GetSqlServerJobCredentials() { throw null; }
+        public virtual Azure.ResourceManager.Sql.SqlServerJobCollection GetSqlServerJobs() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerJobTargetGroupResource> GetSqlServerJobTargetGroup(string targetGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerJobTargetGroupResource>> GetSqlServerJobTargetGroupAsync(string targetGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sql.SqlServerJobTargetGroupCollection GetSqlServerJobTargetGroups() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerJobAgentResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerJobAgentResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerJobAgentResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerJobAgentResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerJobAgentResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.SqlServerJobAgentPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerJobAgentResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.SqlServerJobAgentPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SqlServerJobCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerJobResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerJobResource>, System.Collections.IEnumerable
+    {
+        protected SqlServerJobCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerJobResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string jobName, Azure.ResourceManager.Sql.SqlServerJobData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerJobResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string jobName, Azure.ResourceManager.Sql.SqlServerJobData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerJobResource> Get(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlServerJobResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlServerJobResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerJobResource>> GetAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlServerJobResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerJobResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlServerJobResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerJobResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SqlServerJobCredentialCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerJobCredentialResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerJobCredentialResource>, System.Collections.IEnumerable
+    {
+        protected SqlServerJobCredentialCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerJobCredentialResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string credentialName, Azure.ResourceManager.Sql.SqlServerJobCredentialData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerJobCredentialResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string credentialName, Azure.ResourceManager.Sql.SqlServerJobCredentialData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string credentialName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string credentialName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerJobCredentialResource> Get(string credentialName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlServerJobCredentialResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlServerJobCredentialResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerJobCredentialResource>> GetAsync(string credentialName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlServerJobCredentialResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerJobCredentialResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlServerJobCredentialResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerJobCredentialResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SqlServerJobCredentialData : Azure.ResourceManager.Models.ResourceData
+    {
+        public SqlServerJobCredentialData() { }
+        public string Password { get { throw null; } set { } }
+        public string Username { get { throw null; } set { } }
+    }
+    public partial class SqlServerJobCredentialResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SqlServerJobCredentialResource() { }
+        public virtual Azure.ResourceManager.Sql.SqlServerJobCredentialData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string credentialName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerJobCredentialResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerJobCredentialResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerJobCredentialResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SqlServerJobCredentialData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerJobCredentialResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SqlServerJobCredentialData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SqlServerJobData : Azure.ResourceManager.Models.ResourceData
+    {
+        public SqlServerJobData() { }
+        public string Description { get { throw null; } set { } }
+        public Azure.ResourceManager.Sql.Models.JobSchedule Schedule { get { throw null; } set { } }
+        public int? Version { get { throw null; } }
+    }
+    public partial class SqlServerJobExecutionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerJobExecutionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerJobExecutionResource>, System.Collections.IEnumerable
+    {
+        protected SqlServerJobExecutionCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerJobExecutionResource> CreateOrUpdate(Azure.WaitUntil waitUntil, System.Guid jobExecutionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerJobExecutionResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, System.Guid jobExecutionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(System.Guid jobExecutionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(System.Guid jobExecutionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerJobExecutionResource> Get(System.Guid jobExecutionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlServerJobExecutionResource> GetAll(System.DateTimeOffset? createTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? createTimeMax = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMax = default(System.DateTimeOffset?), bool? isActive = default(bool?), int? skip = default(int?), int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlServerJobExecutionResource> GetAllAsync(System.DateTimeOffset? createTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? createTimeMax = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMax = default(System.DateTimeOffset?), bool? isActive = default(bool?), int? skip = default(int?), int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerJobExecutionResource>> GetAsync(System.Guid jobExecutionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlServerJobExecutionStepTargetResource> GetJobTargetExecutions(System.Guid jobExecutionId, System.DateTimeOffset? createTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? createTimeMax = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMax = default(System.DateTimeOffset?), bool? isActive = default(bool?), int? skip = default(int?), int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlServerJobExecutionStepTargetResource> GetJobTargetExecutionsAsync(System.Guid jobExecutionId, System.DateTimeOffset? createTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? createTimeMax = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMax = default(System.DateTimeOffset?), bool? isActive = default(bool?), int? skip = default(int?), int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlServerJobExecutionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerJobExecutionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlServerJobExecutionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerJobExecutionResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SqlServerJobExecutionResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SqlServerJobExecutionResource() { }
+        public virtual Azure.ResourceManager.Sql.JobExecutionData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response Cancel(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CancelAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, System.Guid jobExecutionId) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerJobExecutionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerJobExecutionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerJobExecutionStepResource> GetSqlServerJobExecutionStep(string stepName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerJobExecutionStepResource>> GetSqlServerJobExecutionStepAsync(string stepName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sql.SqlServerJobExecutionStepCollection GetSqlServerJobExecutionSteps() { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerJobExecutionResource> Update(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerJobExecutionResource>> UpdateAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SqlServerJobExecutionStepCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerJobExecutionStepResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerJobExecutionStepResource>, System.Collections.IEnumerable
+    {
+        protected SqlServerJobExecutionStepCollection() { }
+        public virtual Azure.Response<bool> Exists(string stepName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string stepName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerJobExecutionStepResource> Get(string stepName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlServerJobExecutionStepResource> GetAll(System.DateTimeOffset? createTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? createTimeMax = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMax = default(System.DateTimeOffset?), bool? isActive = default(bool?), int? skip = default(int?), int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlServerJobExecutionStepResource> GetAllAsync(System.DateTimeOffset? createTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? createTimeMax = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMax = default(System.DateTimeOffset?), bool? isActive = default(bool?), int? skip = default(int?), int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerJobExecutionStepResource>> GetAsync(string stepName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlServerJobExecutionStepResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerJobExecutionStepResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlServerJobExecutionStepResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerJobExecutionStepResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SqlServerJobExecutionStepResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SqlServerJobExecutionStepResource() { }
+        public virtual Azure.ResourceManager.Sql.JobExecutionData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, System.Guid jobExecutionId, string stepName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerJobExecutionStepResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerJobExecutionStepResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerJobExecutionStepTargetResource> GetSqlServerJobExecutionStepTarget(System.Guid targetId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerJobExecutionStepTargetResource>> GetSqlServerJobExecutionStepTargetAsync(System.Guid targetId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sql.SqlServerJobExecutionStepTargetCollection GetSqlServerJobExecutionStepTargets() { throw null; }
+    }
+    public partial class SqlServerJobExecutionStepTargetCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerJobExecutionStepTargetResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerJobExecutionStepTargetResource>, System.Collections.IEnumerable
+    {
+        protected SqlServerJobExecutionStepTargetCollection() { }
+        public virtual Azure.Response<bool> Exists(System.Guid targetId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(System.Guid targetId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerJobExecutionStepTargetResource> Get(System.Guid targetId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlServerJobExecutionStepTargetResource> GetAll(System.DateTimeOffset? createTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? createTimeMax = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMax = default(System.DateTimeOffset?), bool? isActive = default(bool?), int? skip = default(int?), int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlServerJobExecutionStepTargetResource> GetAllAsync(System.DateTimeOffset? createTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? createTimeMax = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMin = default(System.DateTimeOffset?), System.DateTimeOffset? endTimeMax = default(System.DateTimeOffset?), bool? isActive = default(bool?), int? skip = default(int?), int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerJobExecutionStepTargetResource>> GetAsync(System.Guid targetId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlServerJobExecutionStepTargetResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerJobExecutionStepTargetResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlServerJobExecutionStepTargetResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerJobExecutionStepTargetResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SqlServerJobExecutionStepTargetResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SqlServerJobExecutionStepTargetResource() { }
+        public virtual Azure.ResourceManager.Sql.JobExecutionData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, System.Guid jobExecutionId, string stepName, System.Guid targetId) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerJobExecutionStepTargetResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerJobExecutionStepTargetResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SqlServerJobResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SqlServerJobResource() { }
+        public virtual Azure.ResourceManager.Sql.SqlServerJobData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerJobExecutionResource> CreateJobExecution(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerJobExecutionResource>> CreateJobExecutionAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerJobResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerJobResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerJobExecutionResource> GetSqlServerJobExecution(System.Guid jobExecutionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerJobExecutionResource>> GetSqlServerJobExecutionAsync(System.Guid jobExecutionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sql.SqlServerJobExecutionCollection GetSqlServerJobExecutions() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerJobStepResource> GetSqlServerJobStep(string stepName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerJobStepResource>> GetSqlServerJobStepAsync(string stepName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sql.SqlServerJobStepCollection GetSqlServerJobSteps() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerJobVersionResource> GetSqlServerJobVersion(int jobVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerJobVersionResource>> GetSqlServerJobVersionAsync(int jobVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sql.SqlServerJobVersionCollection GetSqlServerJobVersions() { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerJobResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SqlServerJobData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerJobResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SqlServerJobData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SqlServerJobStepCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerJobStepResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerJobStepResource>, System.Collections.IEnumerable
+    {
+        protected SqlServerJobStepCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerJobStepResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string stepName, Azure.ResourceManager.Sql.JobStepData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerJobStepResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string stepName, Azure.ResourceManager.Sql.JobStepData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string stepName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string stepName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerJobStepResource> Get(string stepName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlServerJobStepResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlServerJobStepResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerJobStepResource>> GetAsync(string stepName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlServerJobStepResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerJobStepResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlServerJobStepResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerJobStepResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SqlServerJobStepResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SqlServerJobStepResource() { }
+        public virtual Azure.ResourceManager.Sql.JobStepData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, string stepName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerJobStepResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerJobStepResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerJobStepResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.JobStepData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerJobStepResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.JobStepData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SqlServerJobTargetGroupCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerJobTargetGroupResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerJobTargetGroupResource>, System.Collections.IEnumerable
+    {
+        protected SqlServerJobTargetGroupCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerJobTargetGroupResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string targetGroupName, Azure.ResourceManager.Sql.SqlServerJobTargetGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerJobTargetGroupResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string targetGroupName, Azure.ResourceManager.Sql.SqlServerJobTargetGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string targetGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string targetGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerJobTargetGroupResource> Get(string targetGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlServerJobTargetGroupResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlServerJobTargetGroupResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerJobTargetGroupResource>> GetAsync(string targetGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlServerJobTargetGroupResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerJobTargetGroupResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlServerJobTargetGroupResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerJobTargetGroupResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SqlServerJobTargetGroupData : Azure.ResourceManager.Models.ResourceData
+    {
+        public SqlServerJobTargetGroupData() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Sql.Models.JobTarget> Members { get { throw null; } }
+    }
+    public partial class SqlServerJobTargetGroupResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SqlServerJobTargetGroupResource() { }
+        public virtual Azure.ResourceManager.Sql.SqlServerJobTargetGroupData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string targetGroupName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerJobTargetGroupResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerJobTargetGroupResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerJobTargetGroupResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SqlServerJobTargetGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerJobTargetGroupResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SqlServerJobTargetGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SqlServerJobVersionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerJobVersionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerJobVersionResource>, System.Collections.IEnumerable
+    {
+        protected SqlServerJobVersionCollection() { }
+        public virtual Azure.Response<bool> Exists(int jobVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(int jobVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerJobVersionResource> Get(int jobVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlServerJobVersionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlServerJobVersionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerJobVersionResource>> GetAsync(int jobVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlServerJobVersionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerJobVersionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlServerJobVersionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerJobVersionResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SqlServerJobVersionData : Azure.ResourceManager.Models.ResourceData
+    {
+        public SqlServerJobVersionData() { }
+    }
+    public partial class SqlServerJobVersionResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SqlServerJobVersionResource() { }
+        public virtual Azure.ResourceManager.Sql.SqlServerJobVersionData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerJobVersionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerJobVersionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerJobVersionStepResource> GetSqlServerJobVersionStep(string stepName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerJobVersionStepResource>> GetSqlServerJobVersionStepAsync(string stepName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sql.SqlServerJobVersionStepCollection GetSqlServerJobVersionSteps() { throw null; }
+    }
+    public partial class SqlServerJobVersionStepCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerJobVersionStepResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerJobVersionStepResource>, System.Collections.IEnumerable
+    {
+        protected SqlServerJobVersionStepCollection() { }
+        public virtual Azure.Response<bool> Exists(string stepName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string stepName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerJobVersionStepResource> Get(string stepName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlServerJobVersionStepResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlServerJobVersionStepResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerJobVersionStepResource>> GetAsync(string stepName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlServerJobVersionStepResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerJobVersionStepResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlServerJobVersionStepResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerJobVersionStepResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SqlServerJobVersionStepResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SqlServerJobVersionStepResource() { }
+        public virtual Azure.ResourceManager.Sql.JobStepData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion, string stepName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerJobVersionStepResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerJobVersionStepResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SqlServerKeyCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerKeyResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerKeyResource>, System.Collections.IEnumerable
+    {
+        protected SqlServerKeyCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerKeyResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string keyName, Azure.ResourceManager.Sql.SqlServerKeyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerKeyResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string keyName, Azure.ResourceManager.Sql.SqlServerKeyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string keyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string keyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerKeyResource> Get(string keyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlServerKeyResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlServerKeyResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerKeyResource>> GetAsync(string keyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlServerKeyResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerKeyResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlServerKeyResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerKeyResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SqlServerKeyData : Azure.ResourceManager.Models.ResourceData
+    {
+        public SqlServerKeyData() { }
+        public bool? AutoRotationEnabled { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public string Kind { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.ServerKeyType? ServerKeyType { get { throw null; } set { } }
+        public string Subregion { get { throw null; } }
+        public string Thumbprint { get { throw null; } }
+        public System.Uri Uri { get { throw null; } set { } }
+    }
+    public partial class SqlServerKeyResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SqlServerKeyResource() { }
+        public virtual Azure.ResourceManager.Sql.SqlServerKeyData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string keyName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerKeyResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerKeyResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerKeyResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SqlServerKeyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerKeyResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SqlServerKeyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SqlServerResource : Azure.ResourceManager.ArmResource
     {
@@ -3858,9 +3747,6 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.Response<Azure.ResourceManager.Sql.IPv6FirewallRuleResource> GetIPv6FirewallRule(string firewallRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.IPv6FirewallRuleResource>> GetIPv6FirewallRuleAsync(string firewallRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Sql.IPv6FirewallRuleCollection GetIPv6FirewallRules() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.JobAgentResource> GetJobAgent(string jobAgentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.JobAgentResource>> GetJobAgentAsync(string jobAgentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.JobAgentCollection GetJobAgents() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.OutboundFirewallRuleResource> GetOutboundFirewallRule(string outboundRuleFqdn, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.OutboundFirewallRuleResource>> GetOutboundFirewallRuleAsync(string outboundRuleFqdn, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Sql.OutboundFirewallRuleCollection GetOutboundFirewallRules() { throw null; }
@@ -3872,44 +3758,10 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.Response<Azure.ResourceManager.Sql.RestorableDroppedDatabaseResource> GetRestorableDroppedDatabase(string restorableDroppedDatabaseId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.RestorableDroppedDatabaseResource>> GetRestorableDroppedDatabaseAsync(string restorableDroppedDatabaseId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Sql.RestorableDroppedDatabaseCollection GetRestorableDroppedDatabases() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerAdvisorResource> GetServerAdvisor(string advisorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerAdvisorResource>> GetServerAdvisorAsync(string advisorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.ServerAdvisorCollection GetServerAdvisors() { throw null; }
-        public virtual Azure.ResourceManager.Sql.ServerAutomaticTuningResource GetServerAutomaticTuning() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerAzureADAdministratorResource> GetServerAzureADAdministrator(Azure.ResourceManager.Sql.Models.AdministratorName administratorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerAzureADAdministratorResource>> GetServerAzureADAdministratorAsync(Azure.ResourceManager.Sql.Models.AdministratorName administratorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.ServerAzureADAdministratorCollection GetServerAzureADAdministrators() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerAzureADOnlyAuthenticationResource> GetServerAzureADOnlyAuthentication(Azure.ResourceManager.Sql.Models.AuthenticationName authenticationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerAzureADOnlyAuthenticationResource>> GetServerAzureADOnlyAuthenticationAsync(Azure.ResourceManager.Sql.Models.AuthenticationName authenticationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.ServerAzureADOnlyAuthenticationCollection GetServerAzureADOnlyAuthentications() { throw null; }
-        public virtual Azure.ResourceManager.Sql.ServerBlobAuditingPolicyCollection GetServerBlobAuditingPolicies() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerBlobAuditingPolicyResource> GetServerBlobAuditingPolicy(Azure.ResourceManager.Sql.Models.BlobAuditingPolicyName blobAuditingPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerBlobAuditingPolicyResource>> GetServerBlobAuditingPolicyAsync(Azure.ResourceManager.Sql.Models.BlobAuditingPolicyName blobAuditingPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerCommunicationLinkResource> GetServerCommunicationLink(string communicationLinkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerCommunicationLinkResource>> GetServerCommunicationLinkAsync(string communicationLinkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.ServerCommunicationLinkCollection GetServerCommunicationLinks() { throw null; }
-        public virtual Azure.ResourceManager.Sql.ServerConnectionPolicyCollection GetServerConnectionPolicies() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerConnectionPolicyResource> GetServerConnectionPolicy(Azure.ResourceManager.Sql.Models.ConnectionPolicyName connectionPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerConnectionPolicyResource>> GetServerConnectionPolicyAsync(Azure.ResourceManager.Sql.Models.ConnectionPolicyName connectionPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.ServerDevOpsAuditingSettingsCollection GetServerDevOpsAuditingSettings() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerDevOpsAuditingSettingsResource> GetServerDevOpsAuditingSettings(string devOpsAuditingSettingsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerDevOpsAuditingSettingsResource>> GetServerDevOpsAuditingSettingsAsync(string devOpsAuditingSettingsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerDnsAliasResource> GetServerDnsAlias(string dnsAliasName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerDnsAliasResource>> GetServerDnsAliasAsync(string dnsAliasName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.ServerDnsAliasCollection GetServerDnsAliases() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerKeyResource> GetServerKey(string keyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerKeyResource>> GetServerKeyAsync(string keyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.ServerKeyCollection GetServerKeys() { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.Models.ServerOperation> GetServerOperations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.Models.ServerOperation> GetServerOperationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.ServerSecurityAlertPolicyCollection GetServerSecurityAlertPolicies() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerSecurityAlertPolicyResource> GetServerSecurityAlertPolicy(Azure.ResourceManager.Sql.Models.SecurityAlertPolicyName securityAlertPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerSecurityAlertPolicyResource>> GetServerSecurityAlertPolicyAsync(Azure.ResourceManager.Sql.Models.SecurityAlertPolicyName securityAlertPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.Models.ServerUsage> GetServerUsages(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.Models.ServerUsage> GetServerUsagesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.ServerVulnerabilityAssessmentResource> GetServerVulnerabilityAssessment(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerVulnerabilityAssessmentResource>> GetServerVulnerabilityAssessmentAsync(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.ServerVulnerabilityAssessmentCollection GetServerVulnerabilityAssessments() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.ServiceObjectiveResource> GetServiceObjective(string serviceObjectiveName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServiceObjectiveResource>> GetServiceObjectiveAsync(string serviceObjectiveName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Sql.ServiceObjectiveCollection GetServiceObjectives() { throw null; }
@@ -3922,6 +3774,43 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.Response<Azure.ResourceManager.Sql.SqlPrivateLinkResource> GetSqlPrivateLinkResource(string groupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlPrivateLinkResource>> GetSqlPrivateLinkResourceAsync(string groupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Sql.SqlPrivateLinkResourceCollection GetSqlPrivateLinkResources() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerAdvisorResource> GetSqlServerAdvisor(string advisorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerAdvisorResource>> GetSqlServerAdvisorAsync(string advisorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sql.SqlServerAdvisorCollection GetSqlServerAdvisors() { throw null; }
+        public virtual Azure.ResourceManager.Sql.SqlServerAutomaticTuningResource GetSqlServerAutomaticTuning() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerAzureADAdministratorResource> GetSqlServerAzureADAdministrator(Azure.ResourceManager.Sql.Models.AdministratorName administratorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerAzureADAdministratorResource>> GetSqlServerAzureADAdministratorAsync(Azure.ResourceManager.Sql.Models.AdministratorName administratorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sql.SqlServerAzureADAdministratorCollection GetSqlServerAzureADAdministrators() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerAzureADOnlyAuthenticationResource> GetSqlServerAzureADOnlyAuthentication(Azure.ResourceManager.Sql.Models.AuthenticationName authenticationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerAzureADOnlyAuthenticationResource>> GetSqlServerAzureADOnlyAuthenticationAsync(Azure.ResourceManager.Sql.Models.AuthenticationName authenticationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sql.SqlServerAzureADOnlyAuthenticationCollection GetSqlServerAzureADOnlyAuthentications() { throw null; }
+        public virtual Azure.ResourceManager.Sql.SqlServerBlobAuditingPolicyCollection GetSqlServerBlobAuditingPolicies() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerBlobAuditingPolicyResource> GetSqlServerBlobAuditingPolicy(Azure.ResourceManager.Sql.Models.BlobAuditingPolicyName blobAuditingPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerBlobAuditingPolicyResource>> GetSqlServerBlobAuditingPolicyAsync(Azure.ResourceManager.Sql.Models.BlobAuditingPolicyName blobAuditingPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerCommunicationLinkResource> GetSqlServerCommunicationLink(string communicationLinkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerCommunicationLinkResource>> GetSqlServerCommunicationLinkAsync(string communicationLinkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sql.SqlServerCommunicationLinkCollection GetSqlServerCommunicationLinks() { throw null; }
+        public virtual Azure.ResourceManager.Sql.SqlServerConnectionPolicyCollection GetSqlServerConnectionPolicies() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerConnectionPolicyResource> GetSqlServerConnectionPolicy(Azure.ResourceManager.Sql.Models.ConnectionPolicyName connectionPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerConnectionPolicyResource>> GetSqlServerConnectionPolicyAsync(Azure.ResourceManager.Sql.Models.ConnectionPolicyName connectionPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingResource> GetSqlServerDevOpsAuditingSetting(string devOpsAuditingSettingsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingResource>> GetSqlServerDevOpsAuditingSettingAsync(string devOpsAuditingSettingsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingCollection GetSqlServerDevOpsAuditingSettings() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerDnsAliasResource> GetSqlServerDnsAlias(string dnsAliasName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerDnsAliasResource>> GetSqlServerDnsAliasAsync(string dnsAliasName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sql.SqlServerDnsAliasCollection GetSqlServerDnsAliases() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerJobAgentResource> GetSqlServerJobAgent(string jobAgentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerJobAgentResource>> GetSqlServerJobAgentAsync(string jobAgentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sql.SqlServerJobAgentCollection GetSqlServerJobAgents() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerKeyResource> GetSqlServerKey(string keyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerKeyResource>> GetSqlServerKeyAsync(string keyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sql.SqlServerKeyCollection GetSqlServerKeys() { throw null; }
+        public virtual Azure.ResourceManager.Sql.SqlServerSecurityAlertPolicyCollection GetSqlServerSecurityAlertPolicies() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerSecurityAlertPolicyResource> GetSqlServerSecurityAlertPolicy(Azure.ResourceManager.Sql.Models.SecurityAlertPolicyName securityAlertPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerSecurityAlertPolicyResource>> GetSqlServerSecurityAlertPolicyAsync(Azure.ResourceManager.Sql.Models.SecurityAlertPolicyName securityAlertPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerVulnerabilityAssessmentResource> GetSqlServerVulnerabilityAssessment(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerVulnerabilityAssessmentResource>> GetSqlServerVulnerabilityAssessmentAsync(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sql.SqlServerVulnerabilityAssessmentCollection GetSqlServerVulnerabilityAssessments() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.SyncAgentResource> GetSyncAgent(string syncAgentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SyncAgentResource>> GetSyncAgentAsync(string syncAgentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Sql.SyncAgentCollection GetSyncAgents() { throw null; }
@@ -3936,6 +3825,117 @@ namespace Azure.ResourceManager.Sql
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.SqlServerPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.SqlServerPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SqlServerSecurityAlertPolicyCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerSecurityAlertPolicyResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerSecurityAlertPolicyResource>, System.Collections.IEnumerable
+    {
+        protected SqlServerSecurityAlertPolicyCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerSecurityAlertPolicyResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.SecurityAlertPolicyName securityAlertPolicyName, Azure.ResourceManager.Sql.SqlServerSecurityAlertPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerSecurityAlertPolicyResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.SecurityAlertPolicyName securityAlertPolicyName, Azure.ResourceManager.Sql.SqlServerSecurityAlertPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.Sql.Models.SecurityAlertPolicyName securityAlertPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.Sql.Models.SecurityAlertPolicyName securityAlertPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerSecurityAlertPolicyResource> Get(Azure.ResourceManager.Sql.Models.SecurityAlertPolicyName securityAlertPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlServerSecurityAlertPolicyResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlServerSecurityAlertPolicyResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerSecurityAlertPolicyResource>> GetAsync(Azure.ResourceManager.Sql.Models.SecurityAlertPolicyName securityAlertPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlServerSecurityAlertPolicyResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerSecurityAlertPolicyResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlServerSecurityAlertPolicyResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerSecurityAlertPolicyResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SqlServerSecurityAlertPolicyData : Azure.ResourceManager.Models.ResourceData
+    {
+        public SqlServerSecurityAlertPolicyData() { }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public System.Collections.Generic.IList<string> DisabledAlerts { get { throw null; } }
+        public System.Collections.Generic.IList<string> EmailAddresses { get { throw null; } }
+        public int? RetentionDays { get { throw null; } set { } }
+        public bool? SendToEmailAccountAdmins { get { throw null; } set { } }
+        public Azure.ResourceManager.Sql.Models.SecurityAlertsPolicyState? State { get { throw null; } set { } }
+        public string StorageAccountAccessKey { get { throw null; } set { } }
+        public string StorageEndpoint { get { throw null; } set { } }
+    }
+    public partial class SqlServerSecurityAlertPolicyResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SqlServerSecurityAlertPolicyResource() { }
+        public virtual Azure.ResourceManager.Sql.SqlServerSecurityAlertPolicyData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, Azure.ResourceManager.Sql.Models.SecurityAlertPolicyName securityAlertPolicyName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerSecurityAlertPolicyResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerSecurityAlertPolicyResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerSecurityAlertPolicyResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SqlServerSecurityAlertPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerSecurityAlertPolicyResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SqlServerSecurityAlertPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SqlServerTrustGroupCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerTrustGroupResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerTrustGroupResource>, System.Collections.IEnumerable
+    {
+        protected SqlServerTrustGroupCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerTrustGroupResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string serverTrustGroupName, Azure.ResourceManager.Sql.SqlServerTrustGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerTrustGroupResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string serverTrustGroupName, Azure.ResourceManager.Sql.SqlServerTrustGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string serverTrustGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string serverTrustGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerTrustGroupResource> Get(string serverTrustGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlServerTrustGroupResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlServerTrustGroupResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerTrustGroupResource>> GetAsync(string serverTrustGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlServerTrustGroupResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerTrustGroupResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlServerTrustGroupResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerTrustGroupResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SqlServerTrustGroupData : Azure.ResourceManager.Models.ResourceData
+    {
+        public SqlServerTrustGroupData() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Sql.Models.ServerInfo> GroupMembers { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Sql.Models.ServerTrustGroupPropertiesTrustScopesItem> TrustScopes { get { throw null; } }
+    }
+    public partial class SqlServerTrustGroupResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SqlServerTrustGroupResource() { }
+        public virtual Azure.ResourceManager.Sql.SqlServerTrustGroupData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string locationName, string serverTrustGroupName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerTrustGroupResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerTrustGroupResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerTrustGroupResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SqlServerTrustGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerTrustGroupResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SqlServerTrustGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SqlServerVulnerabilityAssessmentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerVulnerabilityAssessmentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerVulnerabilityAssessmentResource>, System.Collections.IEnumerable
+    {
+        protected SqlServerVulnerabilityAssessmentCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerVulnerabilityAssessmentResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, Azure.ResourceManager.Sql.SqlServerVulnerabilityAssessmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerVulnerabilityAssessmentResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, Azure.ResourceManager.Sql.SqlServerVulnerabilityAssessmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerVulnerabilityAssessmentResource> Get(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlServerVulnerabilityAssessmentResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlServerVulnerabilityAssessmentResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerVulnerabilityAssessmentResource>> GetAsync(Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlServerVulnerabilityAssessmentResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerVulnerabilityAssessmentResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlServerVulnerabilityAssessmentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerVulnerabilityAssessmentResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SqlServerVulnerabilityAssessmentData : Azure.ResourceManager.Models.ResourceData
+    {
+        public SqlServerVulnerabilityAssessmentData() { }
+        public Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentRecurringScansProperties RecurringScans { get { throw null; } set { } }
+        public string StorageAccountAccessKey { get { throw null; } set { } }
+        public string StorageContainerPath { get { throw null; } set { } }
+        public string StorageContainerSasKey { get { throw null; } set { } }
+    }
+    public partial class SqlServerVulnerabilityAssessmentResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SqlServerVulnerabilityAssessmentResource() { }
+        public virtual Azure.ResourceManager.Sql.SqlServerVulnerabilityAssessmentData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentName vulnerabilityAssessmentName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerVulnerabilityAssessmentResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerVulnerabilityAssessmentResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerVulnerabilityAssessmentResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SqlServerVulnerabilityAssessmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerVulnerabilityAssessmentResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SqlServerVulnerabilityAssessmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SqlTimeZoneCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlTimeZoneResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlTimeZoneResource>, System.Collections.IEnumerable
     {
@@ -5428,11 +5428,6 @@ namespace Azure.ResourceManager.Sql.Models
     {
         Yes = 0,
         No = 1,
-    }
-    public partial class JobAgentPatch
-    {
-        public JobAgentPatch() { }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct JobAgentState : System.IEquatable<Azure.ResourceManager.Sql.Models.JobAgentState>
@@ -7183,6 +7178,11 @@ namespace Azure.ResourceManager.Sql.Models
         public Azure.ResourceManager.Sql.Models.PrivateLinkServiceConnectionStateActionsRequire? ActionsRequired { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.PrivateLinkServiceConnectionStateStatus Status { get { throw null; } set { } }
+    }
+    public partial class SqlServerJobAgentPatch
+    {
+        public SqlServerJobAgentPatch() { }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class SqlServerPatch
     {

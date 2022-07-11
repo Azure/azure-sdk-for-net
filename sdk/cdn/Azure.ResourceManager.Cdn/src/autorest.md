@@ -41,7 +41,6 @@ rename-rules:
   IDs: Ids
   VM: Vm
   VMs: Vms
-  Vmos: VmOS
   VMScaleSet: VmScaleSet
   DNS: Dns
   VPN: Vpn
@@ -52,6 +51,7 @@ rename-rules:
   Ipsec: IPsec|ipsec
   SSO: Sso
   URI: Uri
+  Etag: ETag|etag
   Url: Uri
   URL: Uri
   AFDDomainHttpsParameters: FrontDoorCustomDomainHttpsContent
@@ -61,7 +61,6 @@ rename-rules:
   PUT: Put
   SHA256: Sha256
   EndpointPropertiesUpdateParametersDeliveryPolicy: EndpointDeliveryPolicy
-  Etag: ETag|etag
 
 no-property-type-replacement: 
   - ContinentsResponseContinentsItem
@@ -85,8 +84,12 @@ override-operation-name:
   FrontDoorEndpoints_ListResourceUsage: GetResourceUsages
   FrontDoorOriginGroups_ListResourceUsage: GetResourceUsages
   FrontDoorRuleSets_ListResourceUsage: GetResourceUsages
+
 rename-mapping:
   SecretProperties: FrontDoorSecretProperties
+  CacheLevel: CdnCacheLevel
+  SslProtocol: DeliveryRuleSslProtocol
+  SslProtocolMatchCondition: DeliveryRuleSslProtocolMatchCondition
   
 directive:
   - from: swagger-document

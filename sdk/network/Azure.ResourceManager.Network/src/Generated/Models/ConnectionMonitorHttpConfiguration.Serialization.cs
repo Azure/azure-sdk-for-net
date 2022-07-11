@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Models
         internal static ConnectionMonitorHttpConfiguration DeserializeConnectionMonitorHttpConfiguration(JsonElement element)
         {
             Optional<int> port = default;
-            Optional<HttpConfigurationMethod> method = default;
+            Optional<NetworkHttpConfigurationMethod> method = default;
             Optional<string> path = default;
             Optional<IList<NetworkWatcherHttpHeader>> requestHeaders = default;
             Optional<IList<string>> validStatusCodeRanges = default;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    method = new HttpConfigurationMethod(property.Value.GetString());
+                    method = new NetworkHttpConfigurationMethod(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("path"))

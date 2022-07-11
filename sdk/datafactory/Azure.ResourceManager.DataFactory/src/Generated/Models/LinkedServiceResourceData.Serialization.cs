@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory
         internal static LinkedServiceResourceData DeserializeLinkedServiceResourceData(JsonElement element)
         {
             LinkedService properties = default;
-            Optional<ETag> eTag = default;
+            Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataFactory
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    eTag = new ETag(property.Value.GetString());
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataFactory
                     continue;
                 }
             }
-            return new LinkedServiceResourceData(id, name, type, systemData.Value, properties, Optional.ToNullable(eTag));
+            return new LinkedServiceResourceData(id, name, type, systemData.Value, properties, Optional.ToNullable(etag));
         }
     }
 }
