@@ -12,7 +12,6 @@ This is the first stable release of the Compute Management client library.
 
 Polishing since last public beta release:
 - Prepended `Compute` / `VirtualMachine` prefix to all single / simple model names.
-- Renamed all `Vault` prefix models to `KeyVault` prefix.
 - Corrected the format of all `Guid` type properties / parameters.
 - Corrected the format of all `ResourceIdentifier` type properteis / parameters.
 - Corrected the format of all `ResouceType` type properteis / parameters.
