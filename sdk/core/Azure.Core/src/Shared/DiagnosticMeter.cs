@@ -74,10 +74,10 @@ namespace Azure.Core.Shared
     }
 
     /// <summary>
-    /// Allow to pre-build and cache list of attributes. Servers several purposes:
-    /// - limits set of supported tags types
-    /// - allow to remap attribute names if otel schema changes
-    /// - caches tags array - Add happens at client creation time only, AsSpan on every metric report
+    /// Allows to pre-build and cache list of attributes:
+    /// - limits set of supported tag value types
+    /// - allows to remap attribute names if otel schema changes
+    /// - caches tags array - Add call happens at client creation time only, AsSpan on every metric report
     /// </summary>
     internal class DiagnosticTags
     {
