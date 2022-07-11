@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Compute.Tests
     public class ComputeResourceSkuTests : ComputeTestBase
     {
         public ComputeResourceSkuTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var subscription = await Client.GetDefaultSubscriptionAsync();
             int count = 0;
-            await foreach (var resourceSku in subscription.GetComputeResourceSkusAsync(includeExtendedLocations: "true"))
+            await foreach (var resourceSku in subscription.GetComputeResourceSkusAsync(filter: "location eq 'westus'", includeExtendedLocations: "true"))
             {
                 count++;
             }
