@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -44,7 +45,5 @@ namespace Azure.ResourceManager.Compute.Models
         public IReadOnlyList<ComputeResourceSkuZoneDetails> ZoneDetails { get; }
         /// <summary> The names of extended locations. </summary>
         public IReadOnlyList<string> ExtendedLocations { get; }
-        /// <summary> The type of the extended location. </summary>
-        public ExtendedLocationType? ExtendedLocationType { get; }
     }
 }
