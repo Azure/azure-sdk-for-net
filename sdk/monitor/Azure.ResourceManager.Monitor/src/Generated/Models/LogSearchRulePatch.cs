@@ -22,6 +22,6 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The flag which indicates whether the Log Search rule is enabled. Value should be true or false. </summary>
-        public Enabled? Enabled { get; set; }
+        public MonitorEnabled? Enabled { get; set; }
     }
 }

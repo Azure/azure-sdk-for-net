@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IList<string>> destinationAddresses = default;
             Optional<IList<string>> destinationPorts = default;
             Optional<IList<string>> destinationFqdns = default;
-            Optional<IList<string>> sourceIpGroups = default;
-            Optional<IList<string>> destinationIpGroups = default;
+            Optional<IList<string>> sourceIPGroups = default;
+            Optional<IList<string>> destinationIPGroups = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         array.Add(item.GetString());
                     }
-                    sourceIpGroups = array;
+                    sourceIPGroups = array;
                     continue;
                 }
                 if (property.NameEquals("destinationIpGroups"))
@@ -224,11 +224,11 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         array.Add(item.GetString());
                     }
-                    destinationIpGroups = array;
+                    destinationIPGroups = array;
                     continue;
                 }
             }
-            return new AzureFirewallNetworkRule(name.Value, description.Value, Optional.ToList(protocols), Optional.ToList(sourceAddresses), Optional.ToList(destinationAddresses), Optional.ToList(destinationPorts), Optional.ToList(destinationFqdns), Optional.ToList(sourceIpGroups), Optional.ToList(destinationIpGroups));
+            return new AzureFirewallNetworkRule(name.Value, description.Value, Optional.ToList(protocols), Optional.ToList(sourceAddresses), Optional.ToList(destinationAddresses), Optional.ToList(destinationPorts), Optional.ToList(destinationFqdns), Optional.ToList(sourceIPGroups), Optional.ToList(destinationIPGroups));
         }
     }
 }

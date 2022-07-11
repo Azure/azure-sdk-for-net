@@ -25,6 +25,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\src\Shared\Multipart\*.cs" LinkBase="Shared\Multipart" />
+    <Compile Remove="..\src\Shared\Multipart\MemoryResponse.cs" />
     <Compile Include="..\src\Shared\ArrayBufferWriter.cs" LinkBase="Shared" />
     <Compile Include="..\src\Shared\ARMChallengeAuthenticationPolicy.cs" LinkBase="Shared" />
     <Compile Include="..\src\Shared\AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />

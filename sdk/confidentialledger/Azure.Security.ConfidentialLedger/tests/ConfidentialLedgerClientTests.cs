@@ -48,8 +48,8 @@ namespace Azure.Security.ConfidentialLedger.Tests
                             })
                     }));
 
-            var ex = Assert.ThrowsAsync<InvalidOperationException>(
-                async () => await client.PostLedgerEntryAsync(RequestContent.Create(new { contents = "test" }), null, true, default));
+            var ex = Assert.ThrowsAsync<RequestFailedException>(
+                async () => await client.PostLedgerEntryAsync(waitUntil: WaitUntil.Completed, RequestContent.Create(new { contents = "test" }), null, default));
             Assert.That(ex.Message, Does.Contain(transactionId));
         }
     }

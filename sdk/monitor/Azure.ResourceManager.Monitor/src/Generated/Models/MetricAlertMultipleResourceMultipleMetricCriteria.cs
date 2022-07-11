@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public MetricAlertMultipleResourceMultipleMetricCriteria()
         {
             AllOf = new ChangeTrackingList<MultiMetricCriteria>();
-            OdataType = Odatatype.MicrosoftAzureMonitorMultipleResourceMultipleMetricCriteria;
+            OdataType = MonitorOdataType.MicrosoftAzureMonitorMultipleResourceMultipleMetricCriteria;
         }
 
         /// <summary> Initializes a new instance of MetricAlertMultipleResourceMultipleMetricCriteria. </summary>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// Please note <see cref="MultiMetricCriteria"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DynamicMetricCriteria"/> and <see cref="MetricCriteria"/>.
         /// </param>
-        internal MetricAlertMultipleResourceMultipleMetricCriteria(Odatatype odataType, IDictionary<string, BinaryData> additionalProperties, IList<MultiMetricCriteria> allOf) : base(odataType, additionalProperties)
+        internal MetricAlertMultipleResourceMultipleMetricCriteria(MonitorOdataType odataType, IDictionary<string, BinaryData> additionalProperties, IList<MultiMetricCriteria> allOf) : base(odataType, additionalProperties)
         {
             AllOf = allOf;
             OdataType = odataType;

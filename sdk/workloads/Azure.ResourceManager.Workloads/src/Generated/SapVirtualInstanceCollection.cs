@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.Workloads
     /// </summary>
     public partial class SapVirtualInstanceCollection : ArmCollection, IEnumerable<SapVirtualInstanceResource>, IAsyncEnumerable<SapVirtualInstanceResource>
     {
-        private readonly ClientDiagnostics _sapVirtualInstanceSAPVirtualInstancesClientDiagnostics;
-        private readonly SAPVirtualInstancesRestOperations _sapVirtualInstanceSAPVirtualInstancesRestClient;
+        private readonly ClientDiagnostics _sapVirtualInstanceSapVirtualInstancesClientDiagnostics;
+        private readonly SAPVirtualInstancesRestOperations _sapVirtualInstanceSapVirtualInstancesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SapVirtualInstanceCollection"/> class for mocking. </summary>
         protected SapVirtualInstanceCollection()
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SapVirtualInstanceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _sapVirtualInstanceSAPVirtualInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Workloads", SapVirtualInstanceResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SapVirtualInstanceResource.ResourceType, out string sapVirtualInstanceSAPVirtualInstancesApiVersion);
-            _sapVirtualInstanceSAPVirtualInstancesRestClient = new SAPVirtualInstancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sapVirtualInstanceSAPVirtualInstancesApiVersion);
+            _sapVirtualInstanceSapVirtualInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Workloads", SapVirtualInstanceResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SapVirtualInstanceResource.ResourceType, out string sapVirtualInstanceSapVirtualInstancesApiVersion);
+            _sapVirtualInstanceSapVirtualInstancesRestClient = new SAPVirtualInstancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sapVirtualInstanceSapVirtualInstancesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.Workloads
         {
             Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
 
-            using var scope = _sapVirtualInstanceSAPVirtualInstancesClientDiagnostics.CreateScope("SapVirtualInstanceCollection.CreateOrUpdate");
+            using var scope = _sapVirtualInstanceSapVirtualInstancesClientDiagnostics.CreateScope("SapVirtualInstanceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _sapVirtualInstanceSAPVirtualInstancesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, sapVirtualInstanceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadsArmOperation<SapVirtualInstanceResource>(new SapVirtualInstanceOperationSource(Client), _sapVirtualInstanceSAPVirtualInstancesClientDiagnostics, Pipeline, _sapVirtualInstanceSAPVirtualInstancesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, sapVirtualInstanceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _sapVirtualInstanceSapVirtualInstancesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, sapVirtualInstanceName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new WorkloadsArmOperation<SapVirtualInstanceResource>(new SapVirtualInstanceOperationSource(Client), _sapVirtualInstanceSapVirtualInstancesClientDiagnostics, Pipeline, _sapVirtualInstanceSapVirtualInstancesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, sapVirtualInstanceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -101,12 +101,12 @@ namespace Azure.ResourceManager.Workloads
         {
             Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
 
-            using var scope = _sapVirtualInstanceSAPVirtualInstancesClientDiagnostics.CreateScope("SapVirtualInstanceCollection.CreateOrUpdate");
+            using var scope = _sapVirtualInstanceSapVirtualInstancesClientDiagnostics.CreateScope("SapVirtualInstanceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _sapVirtualInstanceSAPVirtualInstancesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, sapVirtualInstanceName, data, cancellationToken);
-                var operation = new WorkloadsArmOperation<SapVirtualInstanceResource>(new SapVirtualInstanceOperationSource(Client), _sapVirtualInstanceSAPVirtualInstancesClientDiagnostics, Pipeline, _sapVirtualInstanceSAPVirtualInstancesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, sapVirtualInstanceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _sapVirtualInstanceSapVirtualInstancesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, sapVirtualInstanceName, data, cancellationToken);
+                var operation = new WorkloadsArmOperation<SapVirtualInstanceResource>(new SapVirtualInstanceOperationSource(Client), _sapVirtualInstanceSapVirtualInstancesClientDiagnostics, Pipeline, _sapVirtualInstanceSapVirtualInstancesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, sapVirtualInstanceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -131,11 +131,11 @@ namespace Azure.ResourceManager.Workloads
         {
             Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
 
-            using var scope = _sapVirtualInstanceSAPVirtualInstancesClientDiagnostics.CreateScope("SapVirtualInstanceCollection.Get");
+            using var scope = _sapVirtualInstanceSapVirtualInstancesClientDiagnostics.CreateScope("SapVirtualInstanceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _sapVirtualInstanceSAPVirtualInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, sapVirtualInstanceName, cancellationToken).ConfigureAwait(false);
+                var response = await _sapVirtualInstanceSapVirtualInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, sapVirtualInstanceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SapVirtualInstanceResource(Client, response.Value), response.GetRawResponse());
@@ -160,11 +160,11 @@ namespace Azure.ResourceManager.Workloads
         {
             Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
 
-            using var scope = _sapVirtualInstanceSAPVirtualInstancesClientDiagnostics.CreateScope("SapVirtualInstanceCollection.Get");
+            using var scope = _sapVirtualInstanceSapVirtualInstancesClientDiagnostics.CreateScope("SapVirtualInstanceCollection.Get");
             scope.Start();
             try
             {
-                var response = _sapVirtualInstanceSAPVirtualInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, sapVirtualInstanceName, cancellationToken);
+                var response = _sapVirtualInstanceSapVirtualInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, sapVirtualInstanceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SapVirtualInstanceResource(Client, response.Value), response.GetRawResponse());
@@ -187,11 +187,11 @@ namespace Azure.ResourceManager.Workloads
         {
             async Task<Page<SapVirtualInstanceResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _sapVirtualInstanceSAPVirtualInstancesClientDiagnostics.CreateScope("SapVirtualInstanceCollection.GetAll");
+                using var scope = _sapVirtualInstanceSapVirtualInstancesClientDiagnostics.CreateScope("SapVirtualInstanceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _sapVirtualInstanceSAPVirtualInstancesRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _sapVirtualInstanceSapVirtualInstancesRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new SapVirtualInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -202,11 +202,11 @@ namespace Azure.ResourceManager.Workloads
             }
             async Task<Page<SapVirtualInstanceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _sapVirtualInstanceSAPVirtualInstancesClientDiagnostics.CreateScope("SapVirtualInstanceCollection.GetAll");
+                using var scope = _sapVirtualInstanceSapVirtualInstancesClientDiagnostics.CreateScope("SapVirtualInstanceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _sapVirtualInstanceSAPVirtualInstancesRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _sapVirtualInstanceSapVirtualInstancesRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new SapVirtualInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -229,11 +229,11 @@ namespace Azure.ResourceManager.Workloads
         {
             Page<SapVirtualInstanceResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _sapVirtualInstanceSAPVirtualInstancesClientDiagnostics.CreateScope("SapVirtualInstanceCollection.GetAll");
+                using var scope = _sapVirtualInstanceSapVirtualInstancesClientDiagnostics.CreateScope("SapVirtualInstanceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _sapVirtualInstanceSAPVirtualInstancesRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _sapVirtualInstanceSapVirtualInstancesRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new SapVirtualInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -244,11 +244,11 @@ namespace Azure.ResourceManager.Workloads
             }
             Page<SapVirtualInstanceResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _sapVirtualInstanceSAPVirtualInstancesClientDiagnostics.CreateScope("SapVirtualInstanceCollection.GetAll");
+                using var scope = _sapVirtualInstanceSapVirtualInstancesClientDiagnostics.CreateScope("SapVirtualInstanceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _sapVirtualInstanceSAPVirtualInstancesRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _sapVirtualInstanceSapVirtualInstancesRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new SapVirtualInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -273,11 +273,11 @@ namespace Azure.ResourceManager.Workloads
         {
             Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
 
-            using var scope = _sapVirtualInstanceSAPVirtualInstancesClientDiagnostics.CreateScope("SapVirtualInstanceCollection.Exists");
+            using var scope = _sapVirtualInstanceSapVirtualInstancesClientDiagnostics.CreateScope("SapVirtualInstanceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _sapVirtualInstanceSAPVirtualInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, sapVirtualInstanceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _sapVirtualInstanceSapVirtualInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, sapVirtualInstanceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -300,11 +300,11 @@ namespace Azure.ResourceManager.Workloads
         {
             Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
 
-            using var scope = _sapVirtualInstanceSAPVirtualInstancesClientDiagnostics.CreateScope("SapVirtualInstanceCollection.Exists");
+            using var scope = _sapVirtualInstanceSapVirtualInstancesClientDiagnostics.CreateScope("SapVirtualInstanceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _sapVirtualInstanceSAPVirtualInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, sapVirtualInstanceName, cancellationToken: cancellationToken);
+                var response = _sapVirtualInstanceSapVirtualInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, sapVirtualInstanceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

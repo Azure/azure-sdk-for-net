@@ -1,8 +1,11 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0 (Unreleased)
 
 ### Features Added
+
+- Added `string RawID { get; }` and `static CommunicationIdentifier FromRawId(string rawId)` to `CommunicationIdentifier` to translate between a `CommunicationIdentifier` and its underlying canonical rawId representation. Developers can now use the rawId as an encoded format for identifiers to store in their databases or as stable keys in general.
+- Always include `rawId` when serializing identifiers to wire format.
 
 ### Breaking Changes
 

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Storage.Models
         internal static SignedIdentifier DeserializeSignedIdentifier(JsonElement element)
         {
             Optional<string> id = default;
-            Optional<AccessPolicy> accessPolicy = default;
+            Optional<StorageServiceAccessPolicy> accessPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Storage.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    accessPolicy = AccessPolicy.DeserializeAccessPolicy(property.Value);
+                    accessPolicy = StorageServiceAccessPolicy.DeserializeStorageServiceAccessPolicy(property.Value);
                     continue;
                 }
             }

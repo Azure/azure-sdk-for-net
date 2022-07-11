@@ -1,22 +1,20 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/indexes?api-version=2020-06-30",
+      "RequestUri": "https://shreja-search-service.search.windows.net/indexes?api-version=2021-04-30-Preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "Content-Length": "855",
+        "Connection": "keep-alive",
+        "Content-Length": "880",
         "Content-Type": "application/json",
-        "User-Agent": [
-          "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
-          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
-        ],
-        "x-ms-client-request-id": "6ee3306ff1b8a71feee3bfcc41bf1926",
+        "User-Agent": "azsdk-net-Search.Documents/11.4.0-alpha.20220629.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "dfab75e8dc5a803ce35043645208feaa",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "name": "dtnismrn",
+        "name": "uunjwncb",
         "fields": [
           {
             "name": "id",
@@ -68,7 +66,8 @@
             "filterable": true,
             "sortable": false,
             "facetable": true,
-            "analyzer": "en.lucene"
+            "analyzer": "en.lucene",
+            "normalizer": "lowercase"
           }
         ],
         "suggesters": [
@@ -84,25 +83,25 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "client-request-id": "6ee3306f-f1b8-a71f-eee3-bfcc41bf1926",
-        "Content-Length": "1569",
+        "client-request-id": "dfab75e8-dc5a-803c-e350-43645208feaa",
+        "Content-Length": "1710",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Sat, 27 Mar 2021 18:39:48 GMT",
-        "elapsed-time": "921",
-        "ETag": "W/\u00220x8D8F14FB3245EDC\u0022",
+        "Date": "Thu, 30 Jun 2022 01:08:49 GMT",
+        "elapsed-time": "737",
+        "ETag": "W/\u00220x8DA5A351708823D\u0022",
         "Expires": "-1",
-        "Location": "https://mohitc-acs.search.windows.net/indexes(\u0027dtnismrn\u0027)?api-version=2020-06-30",
+        "Location": "https://shreja-search-service.search.windows.net/indexes(\u0027uunjwncb\u0027)?api-version=2021-04-30-Preview",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
-        "request-id": "6ee3306f-f1b8-a71f-eee3-bfcc41bf1926",
+        "request-id": "dfab75e8-dc5a-803c-e350-43645208feaa",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "6ee3306f-f1b8-a71f-eee3-bfcc41bf1926"
+        "x-ms-client-request-id": "dfab75e8-dc5a-803c-e350-43645208feaa"
       },
       "ResponseBody": {
-        "@odata.context": "https://mohitc-acs.search.windows.net/$metadata#indexes/$entity",
-        "@odata.etag": "\u00220x8D8F14FB3245EDC\u0022",
-        "name": "dtnismrn",
+        "@odata.context": "https://shreja-search-service.search.windows.net/$metadata#indexes/$entity",
+        "@odata.etag": "\u00220x8DA5A351708823D\u0022",
+        "name": "uunjwncb",
         "defaultScoringProfile": null,
         "fields": [
           {
@@ -117,6 +116,7 @@
             "indexAnalyzer": null,
             "searchAnalyzer": null,
             "analyzer": null,
+            "normalizer": null,
             "synonymMaps": []
           },
           {
@@ -131,6 +131,7 @@
             "indexAnalyzer": null,
             "searchAnalyzer": null,
             "analyzer": "en.lucene",
+            "normalizer": null,
             "synonymMaps": []
           },
           {
@@ -145,6 +146,7 @@
             "indexAnalyzer": null,
             "searchAnalyzer": null,
             "analyzer": null,
+            "normalizer": null,
             "synonymMaps": []
           },
           {
@@ -159,6 +161,7 @@
             "indexAnalyzer": null,
             "searchAnalyzer": null,
             "analyzer": null,
+            "normalizer": null,
             "synonymMaps": []
           },
           {
@@ -173,6 +176,7 @@
             "indexAnalyzer": null,
             "searchAnalyzer": null,
             "analyzer": "en.lucene",
+            "normalizer": "lowercase",
             "synonymMaps": []
           }
         ],
@@ -188,6 +192,7 @@
           }
         ],
         "analyzers": [],
+        "normalizers": [],
         "tokenizers": [],
         "tokenFilters": [],
         "charFilters": [],
@@ -196,29 +201,27 @@
           "@odata.type": "#Microsoft.Azure.Search.BM25Similarity",
           "k1": null,
           "b": null
-        }
+        },
+        "semantic": null
       }
     },
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027dtnismrn\u0027)/docs/search.index?api-version=2020-06-30",
+      "RequestUri": "https://shreja-search-service.search.windows.net/indexes(\u0027uunjwncb\u0027)/docs/search.index?api-version=2021-04-30-Preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
         "Content-Length": "192",
         "Content-Type": "application/json",
-        "User-Agent": [
-          "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
-          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
-        ],
-        "x-ms-client-request-id": "20d307503030e75cf39e6616b9d0f81f",
+        "User-Agent": "azsdk-net-Search.Documents/11.4.0-alpha.20220629.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "249541fd6396f53ee318d2a1995fdaac",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "value": [
           {
             "@search.action": "upload",
-            "id": "88f9ff7fa77c483ca3f06df5cc672751",
+            "id": "28ee4977599645f5abf37fa07dbae228",
             "name": "The Lord of the Rings: The Return of the King",
             "genre": "Fantasy",
             "year": 2003,
@@ -229,23 +232,23 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "client-request-id": "20d30750-3030-e75c-f39e-6616b9d0f81f",
+        "client-request-id": "249541fd-6396-f53e-e318-d2a1995fdaac",
         "Content-Length": "105",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Sat, 27 Mar 2021 18:39:48 GMT",
-        "elapsed-time": "108",
+        "Date": "Thu, 30 Jun 2022 01:08:49 GMT",
+        "elapsed-time": "79",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
-        "request-id": "20d30750-3030-e75c-f39e-6616b9d0f81f",
+        "request-id": "249541fd-6396-f53e-e318-d2a1995fdaac",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "20d30750-3030-e75c-f39e-6616b9d0f81f"
+        "x-ms-client-request-id": "249541fd-6396-f53e-e318-d2a1995fdaac"
       },
       "ResponseBody": {
         "value": [
           {
-            "key": "88f9ff7fa77c483ca3f06df5cc672751",
+            "key": "28ee4977599645f5abf37fa07dbae228",
             "status": true,
             "errorMessage": null,
             "statusCode": 201
@@ -254,40 +257,38 @@
       }
     },
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027dtnismrn\u0027)?api-version=2020-06-30",
+      "RequestUri": "https://shreja-search-service.search.windows.net/indexes(\u0027uunjwncb\u0027)?api-version=2021-04-30-Preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-ea33d17377122c47ae42482187f813d5-c7a05143b064a948-00",
-        "User-Agent": [
-          "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
-          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
-        ],
-        "x-ms-client-request-id": "b305b470010f19d3bdb938b227febbc5",
+        "Content-Length": "0",
+        "traceparent": "00-8e0b8c8ab5be4f42850e9acf51fcfca6-41edd0d695c2d443-00",
+        "User-Agent": "azsdk-net-Search.Documents/11.4.0-alpha.20220629.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "2e600c823969b3f647b4f8fe6684415c",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 204,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "client-request-id": "b305b470-010f-19d3-bdb9-38b227febbc5",
-        "Date": "Sat, 27 Mar 2021 18:39:48 GMT",
-        "elapsed-time": "186",
+        "client-request-id": "2e600c82-3969-b3f6-47b4-f8fe6684415c",
+        "Date": "Thu, 30 Jun 2022 01:08:50 GMT",
+        "elapsed-time": "159",
         "Expires": "-1",
         "Pragma": "no-cache",
-        "request-id": "b305b470-010f-19d3-bdb9-38b227febbc5",
+        "request-id": "2e600c82-3969-b3f6-47b4-f8fe6684415c",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "b305b470-010f-19d3-bdb9-38b227febbc5"
+        "x-ms-client-request-id": "2e600c82-3969-b3f6-47b4-f8fe6684415c"
       },
-      "ResponseBody": []
+      "ResponseBody": null
     }
   ],
   "Variables": {
-    "RandomSeed": "683846869",
-    "SearchIndexName": "dtnismrn",
+    "RandomSeed": "908058385",
+    "SearchIndexName": "uunjwncb",
     "SEARCH_ADMIN_API_KEY": "Sanitized",
     "SEARCH_ENDPOINT_SUFFIX": null,
-    "SEARCH_SERVICE_NAME": "mohitc-acs"
+    "SEARCH_SERVICE_NAME": "shreja-search-service"
   }
 }

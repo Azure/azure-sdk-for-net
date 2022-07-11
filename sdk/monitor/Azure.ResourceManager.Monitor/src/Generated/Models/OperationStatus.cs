@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="endOn"> End time of the job in standard ISO8601 format. </param>
         /// <param name="status"> The status of the operation. </param>
         /// <param name="error"> The error detail of the operation if any. </param>
-        internal OperationStatus(string id, string name, DateTimeOffset? startOn, DateTimeOffset? endOn, string status, ErrorResponseCommon error)
+        internal OperationStatus(string id, string name, DateTimeOffset? startOn, DateTimeOffset? endOn, string status, ResponseError error)
         {
             Id = id;
             Name = name;
@@ -45,6 +46,6 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> The status of the operation. </summary>
         public string Status { get; }
         /// <summary> The error detail of the operation if any. </summary>
-        public ErrorResponseCommon Error { get; }
+        public ResponseError Error { get; }
     }
 }

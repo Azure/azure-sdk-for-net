@@ -11,6 +11,8 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Security.ConfidentialLedger
 {
+    [CodeGenSuppress("PostLedgerEntry", typeof(RequestContent), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("PostLedgerEntryAsync", typeof(RequestContent), typeof(string), typeof(RequestContext))]
     public partial class ConfidentialLedgerClient
     {
         /// <summary> Initializes a new instance of ConfidentialLedgerClient. </summary>
@@ -73,35 +75,41 @@ namespace Azure.Security.ConfidentialLedger
         /// Schema for <c>LedgerEntry</c>:
         /// <code>{
         ///   contents: string, # Required. Contents of the ledger entry.
-        ///   collectionId: {
-        ///     collectionId: string, # Required.
-        ///   }, # Optional. Identifier for collections.
+        ///   collectionId: string, # Optional.
         ///   transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
         /// }
         /// </code>
         /// </remarks>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>.</param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="collectionId"> The collection id. </param>
-        /// <param name="waitForCompletion"> If <c>true</c>, the <see cref="PostLedgerEntryOperation"/> will not be returned until the ledger entry is committed.
-        /// If <c>false</c>,<see cref="Operation.WaitForCompletionResponse(System.Threading.CancellationToken)"/> must be called to ensure the operation has completed.</param>
         /// <param name="context"> The request context. </param>
-#pragma warning disable AZC0002
-        public virtual PostLedgerEntryOperation PostLedgerEntry(
+        public virtual Operation PostLedgerEntry(
+            WaitUntil waitUntil,
             RequestContent content,
             string collectionId = null,
-            bool waitForCompletion = true,
             RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            var response = PostLedgerEntry(content, collectionId, context);
-            response.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionIdHeaderName, out string transactionId);
-
-            var operation = new PostLedgerEntryOperation(this, transactionId);
-            if (waitForCompletion)
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.PostLedgerEntry");
+            scope.Start();
+            try
             {
-                operation.WaitForCompletionResponse(context?.CancellationToken ?? default);
+                using HttpMessage message = CreatePostLedgerEntryRequest(content, collectionId, context);
+                var response = _pipeline.ProcessMessage(message, context);
+                response.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionIdHeaderName, out string transactionId);
+
+                var operation = new PostLedgerEntryOperation(this, transactionId);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(context?.CancellationToken ?? default);
+                }
+                return operation;
             }
-            return operation;
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Posts a new entry to the ledger. A collection id may optionally be specified. </summary>
@@ -113,37 +121,41 @@ namespace Azure.Security.ConfidentialLedger
         /// Schema for <c>LedgerEntry</c>:
         /// <code>{
         ///   contents: string, # Required. Contents of the ledger entry.
-        ///   collectionId: {
-        ///     collectionId: string, # Required.
-        ///   }, # Optional. Identifier for collections.
+        ///   collectionId: string, # Optional.
         ///   transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
         /// }
         /// </code>
         /// </remarks>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>.</param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="collectionId"> The collection id. </param>
-        /// <param name="waitForCompletion"> If <c>true</c>, the <see cref="PostLedgerEntryOperation"/>
-        /// will automatically poll for status until the ledger entry is committed before it is returned.
-        /// If <c>false</c>,<see cref="Operation.WaitForCompletionResponseAsync(System.Threading.CancellationToken)"/>
-        /// must be called to ensure the operation has completed.</param>
         /// <param name="context"> The request context. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<PostLedgerEntryOperation> PostLedgerEntryAsync(
+        public virtual async Task<Operation> PostLedgerEntryAsync(
+            WaitUntil waitUntil,
             RequestContent content,
             string collectionId = null,
-            bool waitForCompletion = true,
             RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            var response = await PostLedgerEntryAsync(content, collectionId, context).ConfigureAwait(false);
-            response.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionIdHeaderName, out string transactionId);
-
-            var operation = new PostLedgerEntryOperation(this, transactionId);
-            if (waitForCompletion)
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.PostLedgerEntry");
+            scope.Start();
+            try
             {
-                await operation.WaitForCompletionResponseAsync(context?.CancellationToken ?? default).ConfigureAwait(false);
+                using HttpMessage message = CreatePostLedgerEntryRequest(content, collectionId, context);
+                var response = await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                response.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionIdHeaderName, out string transactionId);
+
+                var operation = new PostLedgerEntryOperation(this, transactionId);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(context?.CancellationToken ?? default).ConfigureAwait(false);
+                }
+                return operation;
             }
-            return operation;
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         internal static X509Certificate2 GetIdentityServerTlsCert(Uri ledgerUri, ConfidentialLedgerClientOptions options, ConfidentialLedgerIdentityServiceClient client = null)

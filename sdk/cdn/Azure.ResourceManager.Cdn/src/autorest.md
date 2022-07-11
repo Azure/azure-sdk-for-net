@@ -27,6 +27,7 @@ format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
   'location': 'azure-location'
+  'defaultCustomBlockResponseBody': 'any'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
@@ -35,22 +36,22 @@ rename-rules:
   CPUs: Cpus
   Os: OS
   Ip: IP
-  Ips: IPs
+  Ips: IPs|ips
   ID: Id
   IDs: Ids
   VM: Vm
   VMs: Vms
-  Vmos: VmOS
   VMScaleSet: VmScaleSet
   DNS: Dns
   VPN: Vpn
   NAT: Nat
   WAN: Wan
-  Ipv4: IPv4
-  Ipv6: IPv6
-  Ipsec: IPsec
+  Ipv4: IPv4|ipv4
+  Ipv6: IPv6|ipv6
+  Ipsec: IPsec|ipsec
   SSO: Sso
   URI: Uri
+  Etag: ETag|etag
   Url: Uri
   URL: Uri
   AFDDomainHttpsParameters: FrontDoorCustomDomainHttpsContent
@@ -60,7 +61,6 @@ rename-rules:
   PUT: Put
   SHA256: Sha256
   EndpointPropertiesUpdateParametersDeliveryPolicy: EndpointDeliveryPolicy
-  Etag: ETag
 
 no-property-type-replacement: 
   - ContinentsResponseContinentsItem
@@ -84,6 +84,13 @@ override-operation-name:
   FrontDoorEndpoints_ListResourceUsage: GetResourceUsages
   FrontDoorOriginGroups_ListResourceUsage: GetResourceUsages
   FrontDoorRuleSets_ListResourceUsage: GetResourceUsages
+
+rename-mapping:
+  SecretProperties: FrontDoorSecretProperties
+  CacheLevel: CdnCacheLevel
+  SslProtocol: DeliveryRuleSslProtocol
+  SslProtocolMatchCondition: DeliveryRuleSslProtocolMatchCondition
+  
 directive:
   - from: swagger-document
     where: $.definitions..parameters
@@ -359,5 +366,6 @@ directive:
       $.MatchCondition.properties.operator['x-ms-client-name'] = 'matchOperator';
       $.MatchCondition.properties.operator['x-ms-enum'].name = 'matchOperator';
       $.policySettings.properties.defaultCustomBlockResponseStatusCode['x-nullable'] = true;
+      $.policySettings.properties.defaultCustomBlockResponseBody['x-nullable'] = true;
   - remove-operation: Validate_Secret
 ```

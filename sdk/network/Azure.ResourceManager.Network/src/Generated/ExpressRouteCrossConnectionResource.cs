@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="crossConnectionParameters"> Parameters supplied to update express route cross connection tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="crossConnectionParameters"/> is null. </exception>
-        public virtual async Task<Response<ExpressRouteCrossConnectionResource>> UpdateAsync(TagsObject crossConnectionParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExpressRouteCrossConnectionResource>> UpdateAsync(NetworkTagsObject crossConnectionParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(crossConnectionParameters, nameof(crossConnectionParameters));
 
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="crossConnectionParameters"> Parameters supplied to update express route cross connection tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="crossConnectionParameters"/> is null. </exception>
-        public virtual Response<ExpressRouteCrossConnectionResource> Update(TagsObject crossConnectionParameters, CancellationToken cancellationToken = default)
+        public virtual Response<ExpressRouteCrossConnectionResource> Update(NetworkTagsObject crossConnectionParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(crossConnectionParameters, nameof(crossConnectionParameters));
 

@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="instanceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RestorableDatabaseAccountData>> GetByLocationAsync(string subscriptionId, AzureLocation location, string instanceId, CancellationToken cancellationToken = default)
+        public async Task<Response<RestorableCosmosDBAccountData>> GetByLocationAsync(string subscriptionId, AzureLocation location, string instanceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
@@ -213,13 +213,13 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        RestorableDatabaseAccountData value = default;
+                        RestorableCosmosDBAccountData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RestorableDatabaseAccountData.DeserializeRestorableDatabaseAccountData(document.RootElement);
+                        value = RestorableCosmosDBAccountData.DeserializeRestorableCosmosDBAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RestorableDatabaseAccountData)null, message.Response);
+                    return Response.FromValue((RestorableCosmosDBAccountData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="instanceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RestorableDatabaseAccountData> GetByLocation(string subscriptionId, AzureLocation location, string instanceId, CancellationToken cancellationToken = default)
+        public Response<RestorableCosmosDBAccountData> GetByLocation(string subscriptionId, AzureLocation location, string instanceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
@@ -243,13 +243,13 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        RestorableDatabaseAccountData value = default;
+                        RestorableCosmosDBAccountData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RestorableDatabaseAccountData.DeserializeRestorableDatabaseAccountData(document.RootElement);
+                        value = RestorableCosmosDBAccountData.DeserializeRestorableCosmosDBAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RestorableDatabaseAccountData)null, message.Response);
+                    return Response.FromValue((RestorableCosmosDBAccountData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

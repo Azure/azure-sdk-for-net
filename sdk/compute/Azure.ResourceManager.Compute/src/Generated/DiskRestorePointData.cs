@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="replicationState"> Replication state of disk restore point when source resource is from a different region. </param>
         /// <param name="sourceResourceLocation"> Location of source disk or source disk restore point when source resource is from a different region. </param>
         /// <param name="securityProfile"> Contains the security related information for the resource. </param>
-        internal DiskRestorePointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? timeCreated, ResourceIdentifier sourceResourceId, SupportedOperatingSystemType? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, string familyId, string sourceUniqueId, DiskEncryption encryption, bool? supportsHibernation, NetworkAccessPolicy? networkAccessPolicy, PublicNetworkAccess? publicNetworkAccess, ResourceIdentifier diskAccessId, float? completionPercent, string replicationState, AzureLocation? sourceResourceLocation, DiskSecurityProfile securityProfile) : base(id, name, resourceType, systemData)
+        internal DiskRestorePointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? timeCreated, ResourceIdentifier sourceResourceId, SupportedOperatingSystemType? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, string familyId, string sourceUniqueId, DiskEncryption encryption, bool? supportsHibernation, NetworkAccessPolicy? networkAccessPolicy, DiskPublicNetworkAccess? publicNetworkAccess, ResourceIdentifier diskAccessId, float? completionPercent, string replicationState, AzureLocation? sourceResourceLocation, DiskSecurityProfile securityProfile) : base(id, name, resourceType, systemData)
         {
             TimeCreated = timeCreated;
             SourceResourceId = sourceResourceId;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Policy for accessing the disk via network. </summary>
         public NetworkAccessPolicy? NetworkAccessPolicy { get; }
         /// <summary> Policy for controlling export on the disk. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; }
+        public DiskPublicNetworkAccess? PublicNetworkAccess { get; }
         /// <summary> ARM id of the DiskAccess resource for using private endpoints on disks. </summary>
         public ResourceIdentifier DiskAccessId { get; }
         /// <summary> Percentage complete for the background copy of disk restore point when source resource is from a different region. </summary>

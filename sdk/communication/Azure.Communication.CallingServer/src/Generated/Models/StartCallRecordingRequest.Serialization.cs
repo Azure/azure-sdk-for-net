@@ -10,11 +10,13 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    internal partial class StartCallRecordingRequest : IUtf8JsonSerializable
+    public partial class StartCallRecordingRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            writer.WritePropertyName("callLocator");
+            writer.WriteObjectValue(CallLocator);
             if (Optional.IsDefined(RecordingStateCallbackUri))
             {
                 writer.WritePropertyName("recordingStateCallbackUri");
@@ -23,17 +25,17 @@ namespace Azure.Communication.CallingServer
             if (Optional.IsDefined(RecordingContentType))
             {
                 writer.WritePropertyName("recordingContentType");
-                writer.WriteStringValue(RecordingContentType.Value.ToSerialString());
+                writer.WriteStringValue(RecordingContentType.Value.ToString());
             }
             if (Optional.IsDefined(RecordingChannelType))
             {
                 writer.WritePropertyName("recordingChannelType");
-                writer.WriteStringValue(RecordingChannelType.Value.ToSerialString());
+                writer.WriteStringValue(RecordingChannelType.Value.ToString());
             }
             if (Optional.IsDefined(RecordingFormatType))
             {
                 writer.WritePropertyName("recordingFormatType");
-                writer.WriteStringValue(RecordingFormatType.Value.ToSerialString());
+                writer.WriteStringValue(RecordingFormatType.Value.ToString());
             }
             writer.WriteEndObject();
         }

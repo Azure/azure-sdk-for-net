@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ElasticSan
             Optional<SystemData> systemData = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<StorageTargetType> protocolType = default;
-            Optional<EncryptionType> encryption = default;
+            Optional<ElasticSanEncryptionType> encryption = default;
             Optional<NetworkRuleSet> networkAcls = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ElasticSan
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encryption = new EncryptionType(property0.Value.GetString());
+                            encryption = new ElasticSanEncryptionType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("networkAcls"))
