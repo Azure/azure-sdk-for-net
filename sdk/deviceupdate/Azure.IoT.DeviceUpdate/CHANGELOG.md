@@ -16,10 +16,6 @@
 - DeviceUpdateClient models updated
 - DeviceManagementClient models updated
 
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.0.0-beta.3 (2022-01-17)
 
 ### Features Added
