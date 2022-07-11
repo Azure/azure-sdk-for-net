@@ -15,7 +15,6 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
-  lenient-model-deduplication: true
 
 override-operation-name:
   CheckNameAvailability: CheckLedgerNameAvailability
