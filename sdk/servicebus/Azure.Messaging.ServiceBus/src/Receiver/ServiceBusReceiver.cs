@@ -6,14 +6,19 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Metrics;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
+using Azure.Core.Shared;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
+using Microsoft.Azure.Amqp.Framing;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -24,6 +29,9 @@ namespace Azure.Messaging.ServiceBus
     /// </summary>
     public class ServiceBusReceiver : IAsyncDisposable
     {
+        private readonly DiagnosticHistogram<long> _receiveLag;
+        private readonly DiagnosticTags _tags;
+
         /// <summary>
         /// The fully qualified Service Bus namespace that the receiver is associated with.  This is likely
         /// to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
@@ -182,6 +190,16 @@ namespace Azure.Messaging.ServiceBus
                     // the link is opened.
                     Logger.ClientCreateComplete(type, Identifier);
                 }
+
+                _receiveLag = new DiagnosticMeter("Azure.Messagins.ServiceBus", "7.9.0-beta")
+                    .CreateHistorgram<long>("messaging.az.servicebus.consumer.lag", "ms");
+
+                if (_receiveLag.IsEnabled)
+                {
+                    _tags = new DiagnosticTags()
+                        .Add("namespace", FullyQualifiedNamespace)
+                        .Add("entity", EntityPath);
+                }
             }
             catch (Exception ex)
             {
@@ -322,9 +340,22 @@ namespace Azure.Messaging.ServiceBus
             }
 
             Logger.ReceiveMessageComplete(Identifier, messages);
+            recordLagMetric(messages);
             scope.SetMessageData(messages);
 
             return messages;
+        }
+
+        private void recordLagMetric(IReadOnlyList<ServiceBusReceivedMessage> messages)
+        {
+            if (_receiveLag.IsEnabled)
+            {
+                DateTimeOffset now = DateTimeOffset.UtcNow;
+                foreach (var msg in messages)
+                {
+                    _receiveLag.Record((long)(now - msg.EnqueuedTime).TotalMilliseconds, _tags);
+                }
+            }
         }
 
         /// <summary>

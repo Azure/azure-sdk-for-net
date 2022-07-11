@@ -38,6 +38,7 @@ namespace Azure.Core
                 LoggedContentSizeLimit = diagnosticsOptions.LoggedContentSizeLimit;
                 IsDistributedTracingEnabled = diagnosticsOptions.IsDistributedTracingEnabled;
                 IsLoggingContentEnabled = diagnosticsOptions.IsLoggingContentEnabled;
+                Metrics = diagnosticsOptions.Metrics;
             }
             else
             {
@@ -72,6 +73,7 @@ namespace Azure.Core
                 LoggedQueryParameters = new List<string> { "api-version" };
                 IsTelemetryEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TELEMETRY_DISABLED")) ?? true;
                 IsDistributedTracingEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TRACING_DISABLED")) ?? true;
+                Metrics = new MetricsOptions(!EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_METRICS_DISABLED")) ?? true);
             }
         }
 
@@ -127,6 +129,11 @@ namespace Azure.Core
                 _applicationId = value;
             }
         }
+
+        /// <summary>
+        /// Gets or sets metrics options.
+        /// </summary>
+        public MetricsOptions Metrics { get; }
 
         /// <summary>
         /// Gets or sets the default application id. Default application id would be set on all instances.
