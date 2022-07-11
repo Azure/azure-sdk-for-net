@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -14,8 +15,16 @@ namespace Azure.ResourceManager.DnsResolver.Models
     public partial class IPConfiguration
     {
         /// <summary> Initializes a new instance of IPConfiguration. </summary>
-        public IPConfiguration()
+        /// <param name="subnet"> The reference to the subnet bound to the IP configuration. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subnet"/> is null. </exception>
+        public IPConfiguration(WritableSubResource subnet)
         {
+            if (subnet == null)
+            {
+                throw new ArgumentNullException(nameof(subnet));
+            }
+
+            Subnet = subnet;
         }
 
         /// <summary> Initializes a new instance of IPConfiguration. </summary>

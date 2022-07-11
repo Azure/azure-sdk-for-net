@@ -21,21 +21,15 @@ namespace Azure.ResourceManager.DnsResolver
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(DomainName))
+            writer.WritePropertyName("domainName");
+            writer.WriteStringValue(DomainName);
+            writer.WritePropertyName("targetDnsServers");
+            writer.WriteStartArray();
+            foreach (var item in TargetDnsServers)
             {
-                writer.WritePropertyName("domainName");
-                writer.WriteStringValue(DomainName);
+                writer.WriteObjectValue(item);
             }
-            if (Optional.IsCollectionDefined(TargetDnsServers))
-            {
-                writer.WritePropertyName("targetDnsServers");
-                writer.WriteStartArray();
-                foreach (var item in TargetDnsServers)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
+            writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata");
@@ -63,8 +57,8 @@ namespace Azure.ResourceManager.DnsResolver
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> domainName = default;
-            Optional<IList<TargetDnsServer>> targetDnsServers = default;
+            string domainName = default;
+            IList<TargetDnsServer> targetDnsServers = default;
             Optional<IDictionary<string, string>> metadata = default;
             Optional<ForwardingRuleState> forwardingRuleState = default;
             Optional<ProvisioningState> provisioningState = default;
@@ -121,11 +115,6 @@ namespace Azure.ResourceManager.DnsResolver
                         }
                         if (property0.NameEquals("targetDnsServers"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
                             List<TargetDnsServer> array = new List<TargetDnsServer>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -173,7 +162,7 @@ namespace Azure.ResourceManager.DnsResolver
                     continue;
                 }
             }
-            return new ForwardingRuleData(id, name, type, systemData.Value, Optional.ToNullable(eTag), domainName.Value, Optional.ToList(targetDnsServers), Optional.ToDictionary(metadata), Optional.ToNullable(forwardingRuleState), Optional.ToNullable(provisioningState));
+            return new ForwardingRuleData(id, name, type, systemData.Value, Optional.ToNullable(eTag), domainName, targetDnsServers, Optional.ToDictionary(metadata), Optional.ToNullable(forwardingRuleState), Optional.ToNullable(provisioningState));
         }
     }
 }

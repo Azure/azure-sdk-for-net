@@ -15,11 +15,8 @@ namespace Azure.ResourceManager.DnsResolver.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IPAddress))
-            {
-                writer.WritePropertyName("ipAddress");
-                writer.WriteStringValue(IPAddress);
-            }
+            writer.WritePropertyName("ipAddress");
+            writer.WriteStringValue(IPAddress);
             if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port");
@@ -30,7 +27,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
 
         internal static TargetDnsServer DeserializeTargetDnsServer(JsonElement element)
         {
-            Optional<string> ipAddress = default;
+            string ipAddress = default;
             Optional<int> port = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -50,7 +47,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                     continue;
                 }
             }
-            return new TargetDnsServer(ipAddress.Value, Optional.ToNullable(port));
+            return new TargetDnsServer(ipAddress, Optional.ToNullable(port));
         }
     }
 }
