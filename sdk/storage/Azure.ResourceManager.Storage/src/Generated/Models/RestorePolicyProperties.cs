@@ -13,27 +13,27 @@ namespace Azure.ResourceManager.Storage.Models
     public partial class RestorePolicyProperties
     {
         /// <summary> Initializes a new instance of RestorePolicyProperties. </summary>
-        /// <param name="enabled"> Blob restore is enabled if set to true. </param>
-        public RestorePolicyProperties(bool enabled)
+        /// <param name="isEnabled"> Blob restore is enabled if set to true. </param>
+        public RestorePolicyProperties(bool isEnabled)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
         }
 
         /// <summary> Initializes a new instance of RestorePolicyProperties. </summary>
-        /// <param name="enabled"> Blob restore is enabled if set to true. </param>
+        /// <param name="isEnabled"> Blob restore is enabled if set to true. </param>
         /// <param name="days"> how long this blob can be restored. It should be great than zero and less than DeleteRetentionPolicy.days. </param>
         /// <param name="lastEnabledOn"> Deprecated in favor of minRestoreTime property. </param>
         /// <param name="minRestoreOn"> Returns the minimum date and time that the restore can be started. </param>
-        internal RestorePolicyProperties(bool enabled, int? days, DateTimeOffset? lastEnabledOn, DateTimeOffset? minRestoreOn)
+        internal RestorePolicyProperties(bool isEnabled, int? days, DateTimeOffset? lastEnabledOn, DateTimeOffset? minRestoreOn)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             Days = days;
             LastEnabledOn = lastEnabledOn;
             MinRestoreOn = minRestoreOn;
         }
 
         /// <summary> Blob restore is enabled if set to true. </summary>
-        public bool Enabled { get; set; }
+        public bool IsEnabled { get; set; }
         /// <summary> how long this blob can be restored. It should be great than zero and less than DeleteRetentionPolicy.days. </summary>
         public int? Days { get; set; }
         /// <summary> Deprecated in favor of minRestoreTime property. </summary>

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         /// <summary> Initializes a new instance of FunctionProperties. </summary>
         /// <param name="functionPropertiesType"> Indicates the type of function. </param>
-        /// <param name="eTag"> The current entity tag for the function. This is an opaque string. You can use it to detect whether the resource has changed between requests. You can also use it in the If-Match or If-None-Match headers for write operations for optimistic concurrency. </param>
+        /// <param name="etag"> The current entity tag for the function. This is an opaque string. You can use it to detect whether the resource has changed between requests. You can also use it in the If-Match or If-None-Match headers for write operations for optimistic concurrency. </param>
         /// <param name="inputs"></param>
         /// <param name="output"> Describes the output of a function. </param>
         /// <param name="binding">
@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// Please note <see cref="FunctionBinding"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureMachineLearningStudioFunctionBinding"/>, <see cref="AzureMachineLearningServiceFunctionBinding"/>, <see cref="CSharpFunctionBinding"/> and <see cref="JavaScriptFunctionBinding"/>.
         /// </param>
-        internal FunctionProperties(string functionPropertiesType, ETag? eTag, IList<FunctionInput> inputs, FunctionOutput output, FunctionBinding binding)
+        internal FunctionProperties(string functionPropertiesType, ETag? etag, IList<FunctionInput> inputs, FunctionOutput output, FunctionBinding binding)
         {
             FunctionPropertiesType = functionPropertiesType;
-            ETag = eTag;
+            ETag = etag;
             Inputs = inputs;
             Output = output;
             Binding = binding;

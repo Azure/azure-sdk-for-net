@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="kind"> The kind of the resource. </param>
-        /// <param name="eTag"> Resource entity tag (ETag). </param>
+        /// <param name="etag"> Resource entity tag (ETag). </param>
         /// <param name="description"> Description of the data collection rule. </param>
         /// <param name="immutableId"> The immutable ID of this data collection rule. This property is READ-ONLY. </param>
         /// <param name="dataSources">
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="destinations"> The specification of destinations. </param>
         /// <param name="dataFlows"> The specification of data flows. </param>
         /// <param name="provisioningState"> The resource provisioning state. </param>
-        internal DataCollectionRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, KnownDataCollectionRuleResourceKind? kind, ETag? eTag, string description, string immutableId, DataCollectionRuleDataSources dataSources, DataCollectionRuleDestinations destinations, IList<DataFlow> dataFlows, KnownDataCollectionRuleProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        internal DataCollectionRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, KnownDataCollectionRuleResourceKind? kind, ETag? etag, string description, string immutableId, DataCollectionRuleDataSources dataSources, DataCollectionRuleDestinations destinations, IList<DataFlow> dataFlows, KnownDataCollectionRuleProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             Kind = kind;
-            ETag = eTag;
+            ETag = etag;
             Description = description;
             ImmutableId = immutableId;
             DataSources = dataSources;

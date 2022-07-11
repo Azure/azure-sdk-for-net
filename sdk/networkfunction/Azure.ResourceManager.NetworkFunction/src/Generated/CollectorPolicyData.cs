@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="ingestionPolicy"> Ingestion policies. </param>
         /// <param name="emissionPolicies"> Emission policies. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
-        internal CollectorPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, IngestionPolicyPropertiesFormat ingestionPolicy, IList<EmissionPoliciesPropertiesFormat> emissionPolicies, CollectorProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal CollectorPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IngestionPolicyPropertiesFormat ingestionPolicy, IList<EmissionPoliciesPropertiesFormat> emissionPolicies, CollectorProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
-            ETag = eTag;
+            ETag = etag;
             IngestionPolicy = ingestionPolicy;
             EmissionPolicies = emissionPolicies;
             ProvisioningState = provisioningState;

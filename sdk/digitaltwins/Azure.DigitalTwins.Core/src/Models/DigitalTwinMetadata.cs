@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
@@ -17,7 +18,7 @@ namespace Azure.DigitalTwins.Core
     public class DigitalTwinMetadata
     {
         /// <summary>
-        /// The Id of the model that the digital twin or component is modeled by.
+        /// The Id of the model that the digital twin is modeled by.
         /// </summary>
         [JsonPropertyName(DigitalTwinsJsonPropertyNames.MetadataModel)]
         public string ModelId { get; set; }

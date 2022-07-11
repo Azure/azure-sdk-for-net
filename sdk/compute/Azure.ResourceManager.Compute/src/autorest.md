@@ -10,7 +10,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Compute
 namespace: Azure.ResourceManager.Compute
-require: https://github.com/Azure/azure-rest-api-specs/blob/e50265479cae5da79144cce18a80751214a4ceca/specification/compute/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/6c11930fe7757c6416cb2580eeddb4e57695c707/specification/compute/resource-manager/readme.md
 tag: package-2022-04-04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -30,38 +30,36 @@ keep-plural-enums:
 - IntervalInMins
 - ExpandTypeForGetCapacityReservationGroups
 
-prepend-rp-prefix:
-- UsageName
-- UsageUnit
-- ApiError
-- ApiErrorBase
-- DeleteOptions
-- ProtocolType
-
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
   Ip: IP
-  Ips: IPs
+  Ips: IPs|ips
   ID: Id
   IDs: Ids
   VM: Vm
   VMs: Vms
   Vmos: VmOS
-  VMScaleSet: VmScaleSet
+  VMScaleSet: VirtualMachineScaleSet
+  VmScaleSet: VirtualMachineScaleSet
+  VmScaleSets: VirtualMachineScaleSets
+  VMScaleSets: VirtualMachineScaleSets
   DNS: Dns
   VPN: Vpn
   NAT: Nat
   WAN: Wan
-  Ipv4: IPv4
-  Ipv6: IPv6
-  Ipsec: IPsec
+  Ipv4: IPv4|ipv4
+  Ipv6: IPv6|ipv6
+  Ipsec: IPsec|ipsec
   SSO: Sso
   URI: Uri
+  Etag: ETag|etag
   SSD: Ssd
   SAS: Sas
   VCPUs: VCpus
+  LRS: Lrs
+  ZRS: Zrs
   RestorePointCollection: RestorePointGroup # the word `collection` is reserved by the SDK, therefore we need to rename all the occurrences of this in all resources and models
   EncryptionSettingsCollection: EncryptionSettingsGroup # the word `collection` is reserved by the SDK, therefore we need to rename all the occurrences of this in all resources and models
 
@@ -97,13 +95,29 @@ request-path-to-resource-data:
   /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}/images/{galleryImageName}: CommunityGalleryImage
   /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}/images/{galleryImageName}/versions/{galleryImageVersionName}: CommunityGalleryImageVersion
 
+prepend-rp-prefix:
+- UsageName
+- UsageUnit
+- ApiError
+- ApiErrorBase
+- DeleteOptions
+- ResourceSku
+- ResourceSkuCapacity
+- ResourceSkuLocationInfo
+- ResourceSkuRestrictions
+- ResourceSkuRestrictionInfo
+- ResourceSkuRestrictionsReasonCode
+- ResourceSkuRestrictionsType
+- ResourceSkuZoneDetails
+- ResourceSkuCapacityScaleType
+- EncryptionType
+- PublicIPAddressSku
+- PublicIPAddressSkuName
+- PublicIPAddressSkuTier
+- StatusLevelTypes
+
 rename-mapping:
   DiskSecurityTypes.ConfidentialVM_VMGuestStateOnlyEncryptedWithPlatformKey: ConfidentialVmGuestStateOnlyEncryptedWithPlatformKey
-  ResourceSku: ComputeResourceSku
-  ResourceSkuCapacity: ComputeResourceSkuCapacity
-  ResourceSkuLocationInfo: ComputeResourceSkuLocationInfo
-  ResourceSkuRestrictions: ComputeResourceSkuRestrictions
-  ResourceSkuRestrictionInfo: ComputeResourceSkuRestrictionInfo
   SubResource: ComputeWriteableSubResourceData
   SubResourceReadOnly: ComputeSubResourceData
   HyperVGenerationType: HyperVGeneration
@@ -121,9 +135,9 @@ rename-mapping:
   RestorePointExpandOptions: RestorePointExpand
   RestorePointCollectionExpandOptions: RestorePointCollectionExpand
   ImageReference.sharedGalleryImageId: sharedGalleryImageUniqueId
-  UpdateResource: ComputeUpdateResourceData
+  UpdateResource: ComputeResourcePatch
   SubResourceWithColocationStatus: ComputeSubResourceDataWithColocationStatus
-  SshPublicKey: SshPublicKeyInfo
+  SshPublicKey: SshPublicKeyConfiguration
   SshPublicKeyResource: SshPublicKey
   LogAnalyticsOperationResult: LogAnalytics
   PrivateLinkResource: ComputePrivateLinkResourceData
@@ -152,6 +166,29 @@ rename-mapping:
   DedicatedHostGroup.properties.hosts: DedicatedHosts
   UefiSettings.secureBootEnabled: IsSecureBootEnabled
   UefiSettings.vTpmEnabled: IsVirtualTpmEnabled
+  NetworkProfile: VirtualMachineNetworkProfile
+  NetworkInterfaceReference: VirtualMachineNetworkInterfaceReference
+  Image: DiskImage
+  VMDiskSecurityProfile: VirtualMachineDiskSecurityProfile
+  VmDiskTypes: VirtualMachineDiskType
+  VMGalleryApplication: VirtualMachineGalleryApplication
+  VMSizeProperties: VirtualMachineSizeProperties
+  ManagedDiskParameters: VirtualMachineManagedDisk
+  VirtualMachineScaleSetManagedDiskParameters: VirtualMachineScaleSetManagedDisk
+  StorageProfile: VirtualMachineStorageProfile
+  OSProfile: VirtualMachineOSProfile
+  OSDisk: VirtualMachineOSDisk
+  DataDisk: VirtualMachineDataDisk
+  HardwareProfile: VirtualMachineHardwareProfile
+  PublicNetworkAccess: DiskPublicNetworkAccess
+  LoadBalancerConfiguration: CloudServiceLoadBalancerConfiguration
+  ReplicationMode: GalleryReplicationMode
+  ReplicationState: RegionalReplicationState
+  RunCommandResult: VirtualMachineRunCommandResult
+  UpgradeMode: VirtualMachineScaleSetUpgradeMode
+  UpgradePolicy: VirtualMachineScaleSetUpgradePolicy
+  ResourceSkuCapabilities: ComputeResourceSkuCapabilities
+  ProtocolTypes: WinRMListenerProtocolType
 
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced
@@ -303,8 +340,13 @@ directive:
       $.required = ["frontendIpConfigurations"];
       $.properties.frontendIPConfigurations = undefined;
     reason: Service returns response with property name as frontendIpConfigurations.
+  # this enforces the body parameter of CloudServices_CreateOrUpdate to be required
   - from: cloudService.json
     where: $.paths
     transform: >
       $["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}"].put.parameters[4]["required"] = true;
+  # this makes the name in VirtualMachineScaleSetExtension to be readonly so that our inheritance chooser could properly make it inherit from Azure.ResourceManager.ResourceData. We have some customized code to add the setter for name back (as in constructor)
+  - from: virtualMachineScaleSet.json
+    where: $.definitions.VirtualMachineScaleSetExtension.properties.name
+    transform: $["readOnly"] = true;
 ```

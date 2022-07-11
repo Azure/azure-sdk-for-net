@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         internal static VirtualNetworkRule DeserializeVirtualNetworkRule(JsonElement element)
         {
             string id = default;
-            Optional<Action> action = default;
+            Optional<VirtualNetworkRuleAction> action = default;
             Optional<VirtualNetworkRuleState> state = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    action = new Action(property.Value.GetString());
+                    action = new VirtualNetworkRuleAction(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("state"))
