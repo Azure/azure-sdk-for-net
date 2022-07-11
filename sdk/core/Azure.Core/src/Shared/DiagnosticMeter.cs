@@ -53,7 +53,7 @@ namespace Azure.Core.Shared
 
         public void Add(T delta, DiagnosticTags tags)
         {
-            _counter?.Add(delta, tags.AsSpan());
+            _counter?.Add(delta, tags.Tags);
         }
     }
 
@@ -69,7 +69,7 @@ namespace Azure.Core.Shared
 
         public void Record(T value, DiagnosticTags tags)
         {
-            _histogram?.Record(value, tags.AsSpan());
+            _histogram?.Record(value, tags.Tags);
         }
     }
 
@@ -105,14 +105,13 @@ namespace Azure.Core.Shared
             return this;
         }
 
-        internal ReadOnlySpan<KeyValuePair<string, object?>> AsSpan()
-        {
-            if (_tagsArray == null)
-            {
-                _tagsArray = _tags.ToArray();
-            }
+        // and would remain internal even if DiagnosticTags become public at some point
+        internal KeyValuePair<string, object?>[] Tags {
+            get {
+                _tagsArray ??= _tags.ToArray();
 
-            return new ReadOnlySpan<KeyValuePair<string, object?>>(_tagsArray);
+                return _tagsArray;
+            }
         }
     }
 }
