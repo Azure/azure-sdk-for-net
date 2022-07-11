@@ -30,6 +30,7 @@ namespace Azure.Messaging.ServiceBus
     public class ServiceBusReceiver : IAsyncDisposable
     {
         private readonly DiagnosticHistogram<long> _receiveLag;
+        private readonly DiagnosticMeter _meter;
         private readonly DiagnosticTags _tags;
 
         /// <summary>
@@ -191,8 +192,8 @@ namespace Azure.Messaging.ServiceBus
                     Logger.ClientCreateComplete(type, Identifier);
                 }
 
-                _receiveLag = new DiagnosticMeter("Azure.Messagins.ServiceBus", "7.9.0-beta")
-                    .CreateHistorgram<long>("messaging.az.servicebus.consumer.lag", "ms");
+                _meter = new DiagnosticMeter("Azure.Messaging.ServiceBus", "7.9.0-beta");
+                _receiveLag = _meter.CreateHistogram<long>("messaging.az.servicebus.consumer.lag", "ms");
 
                 if (_receiveLag.IsEnabled)
                 {
@@ -258,6 +259,7 @@ namespace Azure.Messaging.ServiceBus
                 throw;
             }
 
+            _meter.Dispose();
             Logger.ClientCloseComplete(clientType, Identifier);
         }
 
@@ -340,13 +342,13 @@ namespace Azure.Messaging.ServiceBus
             }
 
             Logger.ReceiveMessageComplete(Identifier, messages);
-            recordLagMetric(messages);
+            RecordLagMetric(messages);
             scope.SetMessageData(messages);
 
             return messages;
         }
 
-        private void recordLagMetric(IReadOnlyList<ServiceBusReceivedMessage> messages)
+        private void RecordLagMetric(IReadOnlyList<ServiceBusReceivedMessage> messages)
         {
             if (_receiveLag.IsEnabled)
             {

@@ -15,9 +15,8 @@ namespace Azure.Core.Shared
         private readonly MetricsOptions? _options;
         private readonly Meter? _meter;
 
-        public DiagnosticMeter(string name, string? version, MetricsOptions? options)
+        public DiagnosticMeter(string name, string? version, MetricsOptions? options = null)
         {
-            _meter = new Meter(name, version);
             _options = options;
             if (_options == null || _options.IsEnabled)
             {
@@ -30,7 +29,7 @@ namespace Azure.Core.Shared
             return new DiagnosticCounter<T>(_meter?.CreateCounter<T>(name, unit, description));
         }
 
-        public DiagnosticHistogram<T> CreateHistorgram<T>(string name, string? unit = default, string? description = default) where T : struct
+        public DiagnosticHistogram<T> CreateHistogram<T>(string name, string? unit = default, string? description = default) where T : struct
         {
             return new DiagnosticHistogram<T>(_meter?.CreateHistogram<T>(name, unit, description));
         }
@@ -77,7 +76,7 @@ namespace Azure.Core.Shared
     /// Allows to pre-build and cache list of attributes:
     /// - limits set of supported tag value types
     /// - allows to remap attribute names if otel schema changes
-    /// - caches tags array - Add call happens at client creation time only, AsSpan on every metric report
+    /// - caches tags array - Add call happens at client creation time only, .Tags on every metric report
     /// </summary>
     internal class DiagnosticTags
     {
