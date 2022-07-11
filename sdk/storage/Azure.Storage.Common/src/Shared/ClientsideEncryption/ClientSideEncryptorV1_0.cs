@@ -39,7 +39,9 @@ namespace Azure.Storage.Cryptography
             }
         }
 
-        public long ExpectedOutputContentLength(long plaintextLength)
+        public long ExpectedOutputContentLength(long plaintextLength) => CalculateExpectedOutputContentLength(plaintextLength);
+
+        public static long CalculateExpectedOutputContentLength(long plaintextLength)
         {
             const int aesBlockSizeBytes = 16;
 

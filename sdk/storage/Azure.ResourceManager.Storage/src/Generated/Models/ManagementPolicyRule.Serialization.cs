@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Storage.Models
         {
             Optional<bool> enabled = default;
             string name = default;
-            RuleType type = default;
+            ManagementPolicyRuleType type = default;
             ManagementPolicyDefinition definition = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = new RuleType(property.Value.GetString());
+                    type = new ManagementPolicyRuleType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("definition"))

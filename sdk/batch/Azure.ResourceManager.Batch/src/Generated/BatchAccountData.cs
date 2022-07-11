@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="allowedAuthenticationModes"> List of allowed authentication modes for the Batch account that can be used to authenticate with the data plane. This does not affect authentication with the control plane. </param>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="tags"> The tags of the resource. </param>
-        internal BatchAccountData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, BatchAccountIdentity identity, string accountEndpoint, string nodeManagementEndpoint, ProvisioningState? provisioningState, PoolAllocationMode? poolAllocationMode, KeyVaultReference keyVaultReference, PublicNetworkAccessType? publicNetworkAccess, NetworkProfile networkProfile, IReadOnlyList<BatchPrivateEndpointConnectionData> privateEndpointConnections, AutoStorageProperties autoStorage, Models.EncryptionProperties encryption, int? dedicatedCoreQuota, int? lowPriorityCoreQuota, IReadOnlyList<VirtualMachineFamilyCoreQuota> dedicatedCoreQuotaPerVmFamily, bool? dedicatedCoreQuotaPerVmFamilyEnforced, int? poolQuota, int? activeJobAndJobScheduleQuota, IReadOnlyList<AuthenticationMode> allowedAuthenticationModes, AzureLocation? location, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        internal BatchAccountData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, BatchAccountIdentity identity, string accountEndpoint, string nodeManagementEndpoint, ProvisioningState? provisioningState, PoolAllocationMode? poolAllocationMode, KeyVaultReference keyVaultReference, PublicNetworkAccessType? publicNetworkAccess, BatchVirtualMachineNetworkProfile networkProfile, IReadOnlyList<BatchPrivateEndpointConnectionData> privateEndpointConnections, AutoStorageProperties autoStorage, Models.EncryptionProperties encryption, int? dedicatedCoreQuota, int? lowPriorityCoreQuota, IReadOnlyList<VirtualMachineFamilyCoreQuota> dedicatedCoreQuotaPerVmFamily, bool? dedicatedCoreQuotaPerVmFamilyEnforced, int? poolQuota, int? activeJobAndJobScheduleQuota, IReadOnlyList<AuthenticationMode> allowedAuthenticationModes, AzureLocation? location, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             Identity = identity;
             AccountEndpoint = accountEndpoint;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Batch
         /// <summary> If not specified, the default value is &apos;enabled&apos;. </summary>
         public PublicNetworkAccessType? PublicNetworkAccess { get; }
         /// <summary> The network profile only takes effect when publicNetworkAccess is enabled. </summary>
-        public NetworkProfile NetworkProfile { get; }
+        public BatchVirtualMachineNetworkProfile NetworkProfile { get; }
         /// <summary> List of private endpoint connections associated with the Batch account. </summary>
         public IReadOnlyList<BatchPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> Contains information about the auto-storage account associated with a Batch account. </summary>

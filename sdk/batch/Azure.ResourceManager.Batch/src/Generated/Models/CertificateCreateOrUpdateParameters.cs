@@ -29,15 +29,15 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="format"> The format of the certificate - either Pfx or Cer. If omitted, the default is Pfx. </param>
         /// <param name="data"> The maximum size is 10KB. </param>
         /// <param name="password"> This must not be specified if the certificate format is Cer. </param>
-        /// <param name="eTag"> The ETag of the resource, used for concurrency statements. </param>
-        internal CertificateCreateOrUpdateParameters(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string thumbprintAlgorithm, string thumbprint, CertificateFormat? format, string data, string password, ETag? eTag) : base(id, name, resourceType, systemData)
+        /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
+        internal CertificateCreateOrUpdateParameters(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string thumbprintAlgorithm, string thumbprint, CertificateFormat? format, string data, string password, ETag? etag) : base(id, name, resourceType, systemData)
         {
             ThumbprintAlgorithm = thumbprintAlgorithm;
             Thumbprint = thumbprint;
             Format = format;
             Data = data;
             Password = password;
-            ETag = eTag;
+            ETag = etag;
         }
 
         /// <summary> This must match the first portion of the certificate name. Currently required to be &apos;SHA1&apos;. </summary>

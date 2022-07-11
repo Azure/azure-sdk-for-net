@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Network
             Optional<IList<LoadBalancingRuleData>> loadBalancingRules = default;
             Optional<IList<ProbeData>> probes = default;
             Optional<IList<InboundNatRuleData>> inboundNatRules = default;
-            Optional<IList<InboundNatPool>> inboundNatPools = default;
+            Optional<IList<LoadBalancerInboundNatPool>> inboundNatPools = default;
             Optional<IList<OutboundRuleData>> outboundRules = default;
             Optional<Guid> resourceGuid = default;
             Optional<NetworkProvisioningState> provisioningState = default;
@@ -319,10 +319,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<InboundNatPool> array = new List<InboundNatPool>();
+                            List<LoadBalancerInboundNatPool> array = new List<LoadBalancerInboundNatPool>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(InboundNatPool.DeserializeInboundNatPool(item));
+                                array.Add(LoadBalancerInboundNatPool.DeserializeLoadBalancerInboundNatPool(item));
                             }
                             inboundNatPools = array;
                             continue;

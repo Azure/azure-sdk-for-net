@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.ServiceFabric
         public Azure.ResourceManager.ServiceFabric.Models.ServerCertificateCommonNames ReverseProxyCertificateCommonNames { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceFabric.Models.SfZonalUpgradeMode? SfZonalUpgradeMode { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceFabric.Models.ClusterUpgradePolicy UpgradeDescription { get { throw null; } set { } }
-        public Azure.ResourceManager.ServiceFabric.Models.UpgradeMode? UpgradeMode { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceFabric.Models.ClusterUpgradeMode? UpgradeMode { get { throw null; } set { } }
         public System.DateTimeOffset? UpgradePauseEndTimestampUtc { get { throw null; } set { } }
         public System.DateTimeOffset? UpgradePauseStartTimestampUtc { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceFabric.Models.ClusterUpgradeCadence? UpgradeWave { get { throw null; } set { } }
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public Azure.ResourceManager.ServiceFabric.Models.SfZonalUpgradeMode? SfZonalUpgradeMode { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public Azure.ResourceManager.ServiceFabric.Models.ClusterUpgradePolicy UpgradeDescription { get { throw null; } set { } }
-        public Azure.ResourceManager.ServiceFabric.Models.UpgradeMode? UpgradeMode { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceFabric.Models.ClusterUpgradeMode? UpgradeMode { get { throw null; } set { } }
         public System.DateTimeOffset? UpgradePauseEndTimestampUtc { get { throw null; } set { } }
         public System.DateTimeOffset? UpgradePauseStartTimestampUtc { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceFabric.Models.ClusterUpgradeCadence? UpgradeWave { get { throw null; } set { } }
@@ -563,6 +563,24 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public int MaxPercentDeltaUnhealthyApplications { get { throw null; } set { } }
         public int MaxPercentDeltaUnhealthyNodes { get { throw null; } set { } }
         public int MaxPercentUpgradeDomainDeltaUnhealthyNodes { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ClusterUpgradeMode : System.IEquatable<Azure.ResourceManager.ServiceFabric.Models.ClusterUpgradeMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ClusterUpgradeMode(string value) { throw null; }
+        public static Azure.ResourceManager.ServiceFabric.Models.ClusterUpgradeMode Automatic { get { throw null; } }
+        public static Azure.ResourceManager.ServiceFabric.Models.ClusterUpgradeMode Manual { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ServiceFabric.Models.ClusterUpgradeMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ServiceFabric.Models.ClusterUpgradeMode left, Azure.ResourceManager.ServiceFabric.Models.ClusterUpgradeMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ServiceFabric.Models.ClusterUpgradeMode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ServiceFabric.Models.ClusterUpgradeMode left, Azure.ResourceManager.ServiceFabric.Models.ClusterUpgradeMode right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class ClusterUpgradePolicy
     {
@@ -977,24 +995,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     {
         public UpgradableVersionsDescription(string targetVersion) { }
         public string TargetVersion { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct UpgradeMode : System.IEquatable<Azure.ResourceManager.ServiceFabric.Models.UpgradeMode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public UpgradeMode(string value) { throw null; }
-        public static Azure.ResourceManager.ServiceFabric.Models.UpgradeMode Automatic { get { throw null; } }
-        public static Azure.ResourceManager.ServiceFabric.Models.UpgradeMode Manual { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ServiceFabric.Models.UpgradeMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ServiceFabric.Models.UpgradeMode left, Azure.ResourceManager.ServiceFabric.Models.UpgradeMode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ServiceFabric.Models.UpgradeMode (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ServiceFabric.Models.UpgradeMode left, Azure.ResourceManager.ServiceFabric.Models.UpgradeMode right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VmssZonalUpgradeMode : System.IEquatable<Azure.ResourceManager.ServiceFabric.Models.VmssZonalUpgradeMode>

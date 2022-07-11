@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="autoScaleConfiguration"> Configuration for auto scaling. </param>
         /// <param name="expressRouteConnections"> List of ExpressRoute connections to the ExpressRoute gateway. </param>
         /// <param name="provisioningState"> The provisioning state of the express route gateway resource. </param>
         /// <param name="virtualHub"> The Virtual Hub where the ExpressRoute gateway is or will be deployed. </param>
-        internal ExpressRouteGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? eTag, ExpressRouteGatewayPropertiesAutoScaleConfiguration autoScaleConfiguration, IReadOnlyList<ExpressRouteConnectionData> expressRouteConnections, NetworkProvisioningState? provisioningState, WritableSubResource virtualHub) : base(id, name, resourceType, location, tags)
+        internal ExpressRouteGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, ExpressRouteGatewayPropertiesAutoScaleConfiguration autoScaleConfiguration, IReadOnlyList<ExpressRouteConnectionData> expressRouteConnections, NetworkProvisioningState? provisioningState, WritableSubResource virtualHub) : base(id, name, resourceType, location, tags)
         {
-            ETag = eTag;
+            ETag = etag;
             AutoScaleConfiguration = autoScaleConfiguration;
             ExpressRouteConnections = expressRouteConnections;
             ProvisioningState = provisioningState;

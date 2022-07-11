@@ -24,6 +24,9 @@ namespace Azure.Storage.Cryptography
         // in read mode, innerStream content length may not allign with buffer size
         // need to record how much data in buffer is legitimate
         private int _bufferPopulatedLength;
+        // length of the usable buffer. Note the array may be slightly larger due to
+        // rental logic.
+        private readonly int _bufferLength;
 
         private readonly int _tempRefillBufferSize;
 
@@ -72,14 +75,15 @@ namespace Azure.Storage.Cryptography
                 throw Errors.InvalidArgument(nameof(transform));
             }
 
-            _buffer = new byte[bufferSize];
-            _bufferPopulatedLength = _buffer.Length;
+            _buffer = ArrayPool<byte>.Shared.Rent(bufferSize);
+            _bufferLength = bufferSize; // not necessarily the total rented array size
+            _bufferPopulatedLength = _bufferLength; // starting at max length triggers the refresh upfront when needed
 
             // handle first read/write
             _bufferPos = streamMode switch
             {
                 // buffer needs refilling from source on first read
-                CryptoStreamMode.Read => _buffer.Length,
+                CryptoStreamMode.Read => _bufferLength,
                 // buffer is ready to write to immediately
                 CryptoStreamMode.Write => 0,
                 _ => throw Errors.InvalidArgument(nameof(streamMode)),
@@ -101,7 +105,7 @@ namespace Azure.Storage.Cryptography
             }
 
             // refill _buffer with transformed contents from innerStream
-            if (_bufferPos >= _buffer.Length)
+            if (_bufferPos >= _bufferLength)
             {
                 byte[] transformInputBuffer = null;
                 try
@@ -135,7 +139,7 @@ namespace Azure.Storage.Cryptography
 
                     _bufferPopulatedLength = _transform.TransformAuthenticationBlock(
                         input: new ReadOnlySpan<byte>(transformInputBuffer, 0, totalRead),
-                        output: _buffer);
+                        output: new Span<byte>(_buffer, 0, _bufferLength));
                     _bufferPos = 0;
                 }
                 finally
@@ -173,7 +177,7 @@ namespace Azure.Storage.Cryptography
                 // clear buffer if full
                 await FlushIfReadyInternal(async, cancellationToken).ConfigureAwait(false);
 
-                int bytesToWrite = Math.Min(count - written, _buffer.Length - _bufferPos);
+                int bytesToWrite = Math.Min(count - written, _bufferLength - _bufferPos);
                 Array.Copy(buffer, offset + written, _buffer, _bufferPos, bytesToWrite);
                 _bufferPos += bytesToWrite;
                 written += bytesToWrite;
@@ -195,14 +199,14 @@ namespace Azure.Storage.Cryptography
             }
 
             // flush buffer if full, else ignore
-            if (_bufferPos >= _buffer.Length)
+            if (_bufferPos >= _bufferLength)
             {
                 byte[] transformedContentsBuffer = null;
                 try
                 {
                     transformedContentsBuffer = ArrayPool<byte>.Shared.Rent(_tempRefillBufferSize);
                     int outputBytes = _transform.TransformAuthenticationBlock(
-                        input: _buffer,
+                        input: new ReadOnlySpan<byte>(_buffer, 0, _bufferLength),
                         output: transformedContentsBuffer);
 
                     if (async)
@@ -300,6 +304,7 @@ namespace Azure.Storage.Cryptography
             {
                 FlushFinalInternal(async: false, cancellationToken: default).EnsureCompleted();
             }
+            ArrayPool<byte>.Shared.Return(_buffer);
             base.Dispose(disposing);
             _transform.Dispose();
             _innerStream?.Dispose();

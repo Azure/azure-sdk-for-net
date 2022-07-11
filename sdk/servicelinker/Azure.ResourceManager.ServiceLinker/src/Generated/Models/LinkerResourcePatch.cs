@@ -34,16 +34,16 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> The provisioning state. </summary>
         public string ProvisioningState { get; }
         /// <summary> The VNet solution. </summary>
-        internal VnetSolution VnetSolution { get; set; }
+        internal VNetSolution VNetSolution { get; set; }
         /// <summary> Type of VNet solution. </summary>
-        public VnetSolutionType? SolutionType
+        public VNetSolutionType? SolutionType
         {
-            get => VnetSolution is null ? default : VnetSolution.SolutionType;
+            get => VNetSolution is null ? default : VNetSolution.SolutionType;
             set
             {
-                if (VnetSolution is null)
-                    VnetSolution = new VnetSolution();
-                VnetSolution.SolutionType = value;
+                if (VNetSolution is null)
+                    VNetSolution = new VNetSolution();
+                VNetSolution.SolutionType = value;
             }
         }
 

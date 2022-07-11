@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -23,7 +24,11 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(PublicCertData))
             {
                 writer.WritePropertyName("publicCertData");
-                writer.WriteStringValue(PublicCertData);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(PublicCertData);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(PublicCertData.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -31,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
         internal static VpnServerConfigRadiusServerRootCertificate DeserializeVpnServerConfigRadiusServerRootCertificate(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<string> publicCertData = default;
+            Optional<BinaryData> publicCertData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -41,7 +46,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("publicCertData"))
                 {
-                    publicCertData = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    publicCertData = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
             }

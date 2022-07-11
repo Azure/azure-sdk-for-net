@@ -92,8 +92,8 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="upgradePauseEndTimestampUtc"> Indicates the end date and time to pause automatic runtime version upgrades on the cluster for an specific period of time on the cluster (UTC). </param>
         /// <param name="waveUpgradePaused"> Boolean to pause automatic runtime version upgrades to the cluster. </param>
         /// <param name="notifications"> Indicates a list of notification channels for cluster events. </param>
-        /// <param name="eTag"> Azure resource etag. </param>
-        internal ClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<AddOnFeature> addOnFeatures, IReadOnlyList<ClusterVersionDetails> availableClusterVersions, AzureActiveDirectory azureActiveDirectory, CertificateDescription certificate, ServerCertificateCommonNames certificateCommonNames, IList<ClientCertificateCommonName> clientCertificateCommonNames, IList<ClientCertificateThumbprint> clientCertificateThumbprints, string clusterCodeVersion, string clusterEndpoint, string clusterId, ClusterState? clusterState, DiagnosticsStorageAccountConfig diagnosticsStorageAccountConfig, bool? eventStoreServiceEnabled, IList<SettingsSectionDescription> fabricSettings, string managementEndpoint, IList<NodeTypeDescription> nodeTypes, ProvisioningState? provisioningState, ReliabilityLevel? reliabilityLevel, CertificateDescription reverseProxyCertificate, ServerCertificateCommonNames reverseProxyCertificateCommonNames, ClusterUpgradePolicy upgradeDescription, UpgradeMode? upgradeMode, ApplicationTypeVersionsCleanupPolicy applicationTypeVersionsCleanupPolicy, string vmImage, SfZonalUpgradeMode? sfZonalUpgradeMode, VmssZonalUpgradeMode? vmssZonalUpgradeMode, bool? infrastructureServiceManager, ClusterUpgradeCadence? upgradeWave, DateTimeOffset? upgradePauseStartTimestampUtc, DateTimeOffset? upgradePauseEndTimestampUtc, bool? waveUpgradePaused, IList<Notification> notifications, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="etag"> Azure resource etag. </param>
+        internal ClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<AddOnFeature> addOnFeatures, IReadOnlyList<ClusterVersionDetails> availableClusterVersions, AzureActiveDirectory azureActiveDirectory, CertificateDescription certificate, ServerCertificateCommonNames certificateCommonNames, IList<ClientCertificateCommonName> clientCertificateCommonNames, IList<ClientCertificateThumbprint> clientCertificateThumbprints, string clusterCodeVersion, string clusterEndpoint, string clusterId, ClusterState? clusterState, DiagnosticsStorageAccountConfig diagnosticsStorageAccountConfig, bool? eventStoreServiceEnabled, IList<SettingsSectionDescription> fabricSettings, string managementEndpoint, IList<NodeTypeDescription> nodeTypes, ProvisioningState? provisioningState, ReliabilityLevel? reliabilityLevel, CertificateDescription reverseProxyCertificate, ServerCertificateCommonNames reverseProxyCertificateCommonNames, ClusterUpgradePolicy upgradeDescription, ClusterUpgradeMode? upgradeMode, ApplicationTypeVersionsCleanupPolicy applicationTypeVersionsCleanupPolicy, string vmImage, SfZonalUpgradeMode? sfZonalUpgradeMode, VmssZonalUpgradeMode? vmssZonalUpgradeMode, bool? infrastructureServiceManager, ClusterUpgradeCadence? upgradeWave, DateTimeOffset? upgradePauseStartTimestampUtc, DateTimeOffset? upgradePauseEndTimestampUtc, bool? waveUpgradePaused, IList<Notification> notifications, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
         {
             AddOnFeatures = addOnFeatures;
             AvailableClusterVersions = availableClusterVersions;
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ServiceFabric
             UpgradePauseEndTimestampUtc = upgradePauseEndTimestampUtc;
             WaveUpgradePaused = waveUpgradePaused;
             Notifications = notifications;
-            ETag = eTag;
+            ETag = etag;
         }
 
         /// <summary> The list of add-on features to enable in the cluster. </summary>
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <summary> The policy to use when upgrading the cluster. </summary>
         public ClusterUpgradePolicy UpgradeDescription { get; set; }
         /// <summary> The upgrade mode of the cluster when new Service Fabric runtime version is available. </summary>
-        public UpgradeMode? UpgradeMode { get; set; }
+        public ClusterUpgradeMode? UpgradeMode { get; set; }
         /// <summary> The policy used to clean up unused versions. </summary>
         internal ApplicationTypeVersionsCleanupPolicy ApplicationTypeVersionsCleanupPolicy { get; set; }
         /// <summary> Number of unused versions per application type to keep. </summary>

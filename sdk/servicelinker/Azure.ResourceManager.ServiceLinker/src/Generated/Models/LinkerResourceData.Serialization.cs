@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.ServiceLinker
                 writer.WritePropertyName("clientType");
                 writer.WriteStringValue(ClientType.Value.ToString());
             }
-            if (Optional.IsDefined(VnetSolution))
+            if (Optional.IsDefined(VNetSolution))
             {
-                if (VnetSolution != null)
+                if (VNetSolution != null)
                 {
                     writer.WritePropertyName("vNetSolution");
-                    writer.WriteObjectValue(VnetSolution);
+                    writer.WriteObjectValue(VNetSolution);
                 }
                 else
                 {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ServiceLinker
             Optional<AuthBaseInfo> authInfo = default;
             Optional<LinkerClientType> clientType = default;
             Optional<string> provisioningState = default;
-            Optional<VnetSolution> vNetSolution = default;
+            Optional<VNetSolution> vNetSolution = default;
             Optional<LinkerSecretStore> secretStore = default;
             Optional<string> scope = default;
             foreach (var property in element.EnumerateObject())
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ServiceLinker
                                 vNetSolution = null;
                                 continue;
                             }
-                            vNetSolution = VnetSolution.DeserializeVnetSolution(property0.Value);
+                            vNetSolution = VNetSolution.DeserializeVNetSolution(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("secretStore"))

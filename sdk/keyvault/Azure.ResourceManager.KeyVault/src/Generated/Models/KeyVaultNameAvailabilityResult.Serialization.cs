@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         internal static KeyVaultNameAvailabilityResult DeserializeKeyVaultNameAvailabilityResult(JsonElement element)
         {
             Optional<bool> nameAvailable = default;
-            Optional<NameAvailabilityReason> reason = default;
+            Optional<KeyVaultNameUnavailableReason> reason = default;
             Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    reason = property.Value.GetString().ToNameAvailabilityReason();
+                    reason = property.Value.GetString().ToKeyVaultNameUnavailableReason();
                     continue;
                 }
                 if (property.NameEquals("message"))
