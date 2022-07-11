@@ -11,7 +11,7 @@ This is the first stable release of the Network Management client library.
 ### Breaking Changes
 
 Polishing since last public beta release:
-- Prepended `Network` prefix to all singel / simple model names.
+- Prepended `Network` prefix to all single / simple model names.
 - Corrected the format of all `Guid` type properties / parameters.
 - Corrected the format of all `ResourceIdentifier` type properteis / parameters.
 - Corrected the format of all `ResouceType` type properteis / parameters.
@@ -33,12 +33,12 @@ Polishing since last public beta release:
 
 ### Breaking Changes
 
-- Simplify `type` property names.
+- Simplified `type` property names.
 - Normalized the body parameter type names for PUT / POST / PATCH operations if it is only used as input.
 
 ### Other Changes
 
-- Upgrade dependency to Azure.ResourceManager 1.0.0
+- Upgraded dependency to Azure.ResourceManager 1.0.0
 
 ## 1.0.0-beta.6 (2022-03-31)
 
