@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.Sql
         private readonly ManagedDatabasesRestOperations _managedDatabaseRestClient;
         private readonly ClientDiagnostics _managedInstanceTdeCertificatesClientDiagnostics;
         private readonly ManagedInstanceTdeCertificatesRestOperations _managedInstanceTdeCertificatesRestClient;
-        private readonly ClientDiagnostics _serverTrustGroupClientDiagnostics;
-        private readonly ServerTrustGroupsRestOperations _serverTrustGroupRestClient;
+        private readonly ClientDiagnostics _sqlServerTrustGroupServerTrustGroupsClientDiagnostics;
+        private readonly ServerTrustGroupsRestOperations _sqlServerTrustGroupServerTrustGroupsRestClient;
         private readonly ManagedInstanceData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ManagedInstanceResource"/> class for mocking. </summary>
@@ -72,9 +72,9 @@ namespace Azure.ResourceManager.Sql
             _managedDatabaseRestClient = new ManagedDatabasesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedDatabaseApiVersion);
             _managedInstanceTdeCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _managedInstanceTdeCertificatesRestClient = new ManagedInstanceTdeCertificatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _serverTrustGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerTrustGroupResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ServerTrustGroupResource.ResourceType, out string serverTrustGroupApiVersion);
-            _serverTrustGroupRestClient = new ServerTrustGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serverTrustGroupApiVersion);
+            _sqlServerTrustGroupServerTrustGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlServerTrustGroupResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SqlServerTrustGroupResource.ResourceType, out string sqlServerTrustGroupServerTrustGroupsApiVersion);
+            _sqlServerTrustGroupServerTrustGroupsRestClient = new ServerTrustGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerTrustGroupServerTrustGroupsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -568,11 +568,11 @@ namespace Azure.ResourceManager.Sql
             return GetDistributedAvailabilityGroups().Get(distributedAvailabilityGroupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServerTrustCertificateResources in the ManagedInstance. </summary>
-        /// <returns> An object representing collection of ServerTrustCertificateResources and their operations over a ServerTrustCertificateResource. </returns>
-        public virtual ServerTrustCertificateCollection GetServerTrustCertificates()
+        /// <summary> Gets a collection of ManagedInstanceServerTrustCertificateResources in the ManagedInstance. </summary>
+        /// <returns> An object representing collection of ManagedInstanceServerTrustCertificateResources and their operations over a ManagedInstanceServerTrustCertificateResource. </returns>
+        public virtual ManagedInstanceServerTrustCertificateCollection GetManagedInstanceServerTrustCertificates()
         {
-            return GetCachedClient(Client => new ServerTrustCertificateCollection(Client, Id));
+            return GetCachedClient(Client => new ManagedInstanceServerTrustCertificateCollection(Client, Id));
         }
 
         /// <summary>
@@ -585,9 +585,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ServerTrustCertificateResource>> GetServerTrustCertificateAsync(string certificateName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedInstanceServerTrustCertificateResource>> GetManagedInstanceServerTrustCertificateAsync(string certificateName, CancellationToken cancellationToken = default)
         {
-            return await GetServerTrustCertificates().GetAsync(certificateName, cancellationToken).ConfigureAwait(false);
+            return await GetManagedInstanceServerTrustCertificates().GetAsync(certificateName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -600,9 +600,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ServerTrustCertificateResource> GetServerTrustCertificate(string certificateName, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedInstanceServerTrustCertificateResource> GetManagedInstanceServerTrustCertificate(string certificateName, CancellationToken cancellationToken = default)
         {
-            return GetServerTrustCertificates().Get(certificateName, cancellationToken);
+            return GetManagedInstanceServerTrustCertificates().Get(certificateName, cancellationToken);
         }
 
         /// <summary> Gets a collection of EndpointCertificateResources in the ManagedInstance. </summary>
@@ -954,17 +954,17 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ServerTrustGroups_ListByInstance
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServerTrustGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServerTrustGroupResource> GetServerTrustGroupsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SqlServerTrustGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SqlServerTrustGroupResource> GetServerTrustGroupsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ServerTrustGroupResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SqlServerTrustGroupResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _serverTrustGroupClientDiagnostics.CreateScope("ManagedInstanceResource.GetServerTrustGroups");
+                using var scope = _sqlServerTrustGroupServerTrustGroupsClientDiagnostics.CreateScope("ManagedInstanceResource.GetServerTrustGroups");
                 scope.Start();
                 try
                 {
-                    var response = await _serverTrustGroupRestClient.ListByInstanceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerTrustGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _sqlServerTrustGroupServerTrustGroupsRestClient.ListByInstanceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerTrustGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -972,14 +972,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<ServerTrustGroupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SqlServerTrustGroupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _serverTrustGroupClientDiagnostics.CreateScope("ManagedInstanceResource.GetServerTrustGroups");
+                using var scope = _sqlServerTrustGroupServerTrustGroupsClientDiagnostics.CreateScope("ManagedInstanceResource.GetServerTrustGroups");
                 scope.Start();
                 try
                 {
-                    var response = await _serverTrustGroupRestClient.ListByInstanceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerTrustGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _sqlServerTrustGroupServerTrustGroupsRestClient.ListByInstanceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerTrustGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -996,17 +996,17 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ServerTrustGroups_ListByInstance
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServerTrustGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServerTrustGroupResource> GetServerTrustGroups(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SqlServerTrustGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SqlServerTrustGroupResource> GetServerTrustGroups(CancellationToken cancellationToken = default)
         {
-            Page<ServerTrustGroupResource> FirstPageFunc(int? pageSizeHint)
+            Page<SqlServerTrustGroupResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _serverTrustGroupClientDiagnostics.CreateScope("ManagedInstanceResource.GetServerTrustGroups");
+                using var scope = _sqlServerTrustGroupServerTrustGroupsClientDiagnostics.CreateScope("ManagedInstanceResource.GetServerTrustGroups");
                 scope.Start();
                 try
                 {
-                    var response = _serverTrustGroupRestClient.ListByInstance(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerTrustGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _sqlServerTrustGroupServerTrustGroupsRestClient.ListByInstance(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerTrustGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1014,14 +1014,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<ServerTrustGroupResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SqlServerTrustGroupResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _serverTrustGroupClientDiagnostics.CreateScope("ManagedInstanceResource.GetServerTrustGroups");
+                using var scope = _sqlServerTrustGroupServerTrustGroupsClientDiagnostics.CreateScope("ManagedInstanceResource.GetServerTrustGroups");
                 scope.Start();
                 try
                 {
-                    var response = _serverTrustGroupRestClient.ListByInstanceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerTrustGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _sqlServerTrustGroupServerTrustGroupsRestClient.ListByInstanceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerTrustGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

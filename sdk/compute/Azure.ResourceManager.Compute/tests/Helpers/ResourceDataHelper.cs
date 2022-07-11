@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
             {
                 Sku = new DiskSku()
                 {
-                    Name = DiskStorageAccountType.StandardLRS
+                    Name = DiskStorageAccountType.StandardLrs
                 },
                 CreationData = new DiskCreationData(DiskCreateOption.Empty),
                 DiskSizeGB = 1,
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
                         Caching = CachingType.ReadWrite,
                         ManagedDisk = new()
                         {
-                            StorageAccountType = StorageAccountType.StandardLRS
+                            StorageAccountType = StorageAccountType.StandardLrs
                         }
                     },
                     ImageReference = new()
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
                             Caching = CachingType.ReadWrite,
                             ManagedDisk = new()
                             {
-                                StorageAccountType = StorageAccountType.StandardLRS
+                                StorageAccountType = StorageAccountType.StandardLrs
                             }
                         },
                         ImageReference = new()

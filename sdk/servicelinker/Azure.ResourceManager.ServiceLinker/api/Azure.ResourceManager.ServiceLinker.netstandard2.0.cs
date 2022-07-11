@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ServiceLinker
         public string ProvisioningState { get { throw null; } }
         public string Scope { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SecretStoreKeyVaultId { get { throw null; } set { } }
-        public Azure.ResourceManager.ServiceLinker.Models.VnetSolutionType? SolutionType { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceLinker.Models.VNetSolutionType? SolutionType { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceLinker.Models.TargetServiceBaseInfo TargetService { get { throw null; } set { } }
     }
     public static partial class ServiceLinkerExtensions
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public string ProvisioningState { get { throw null; } }
         public string Scope { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SecretStoreKeyVaultId { get { throw null; } set { } }
-        public Azure.ResourceManager.ServiceLinker.Models.VnetSolutionType? SolutionType { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceLinker.Models.VNetSolutionType? SolutionType { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceLinker.Models.TargetServiceBaseInfo TargetService { get { throw null; } set { } }
     }
     public partial class RawValueSecretInfo : Azure.ResourceManager.ServiceLinker.Models.SecretBaseInfo
@@ -249,21 +249,21 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct VnetSolutionType : System.IEquatable<Azure.ResourceManager.ServiceLinker.Models.VnetSolutionType>
+    public readonly partial struct VNetSolutionType : System.IEquatable<Azure.ResourceManager.ServiceLinker.Models.VNetSolutionType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public VnetSolutionType(string value) { throw null; }
-        public static Azure.ResourceManager.ServiceLinker.Models.VnetSolutionType PrivateLink { get { throw null; } }
-        public static Azure.ResourceManager.ServiceLinker.Models.VnetSolutionType ServiceEndpoint { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ServiceLinker.Models.VnetSolutionType other) { throw null; }
+        public VNetSolutionType(string value) { throw null; }
+        public static Azure.ResourceManager.ServiceLinker.Models.VNetSolutionType PrivateLink { get { throw null; } }
+        public static Azure.ResourceManager.ServiceLinker.Models.VNetSolutionType ServiceEndpoint { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ServiceLinker.Models.VNetSolutionType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ServiceLinker.Models.VnetSolutionType left, Azure.ResourceManager.ServiceLinker.Models.VnetSolutionType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ServiceLinker.Models.VnetSolutionType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ServiceLinker.Models.VnetSolutionType left, Azure.ResourceManager.ServiceLinker.Models.VnetSolutionType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ServiceLinker.Models.VNetSolutionType left, Azure.ResourceManager.ServiceLinker.Models.VNetSolutionType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ServiceLinker.Models.VNetSolutionType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ServiceLinker.Models.VNetSolutionType left, Azure.ResourceManager.ServiceLinker.Models.VNetSolutionType right) { throw null; }
         public override string ToString() { throw null; }
     }
 }

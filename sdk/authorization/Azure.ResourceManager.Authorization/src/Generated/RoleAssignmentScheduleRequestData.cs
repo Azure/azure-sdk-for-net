@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="createdOn"> DateTime when role assignment schedule request was created. </param>
         /// <param name="requestorId"> Id of the user who created this request. </param>
         /// <param name="expandedProperties"> Additional properties of principal, scope and role definition. </param>
-        internal RoleAssignmentScheduleRequestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, string roleDefinitionId, string principalId, PrincipalType? principalType, RequestType? requestType, RoleAssignmentScheduleRequestStatus? status, string approvalId, string targetRoleAssignmentScheduleId, string targetRoleAssignmentScheduleInstanceId, RoleAssignmentScheduleInfo scheduleInfo, string linkedRoleEligibilityScheduleId, string justification, RoleAssignmentScheduleTicketInfo ticketInfo, string condition, string conditionVersion, DateTimeOffset? createdOn, string requestorId, ExpandedProperties expandedProperties) : base(id, name, resourceType, systemData)
+        internal RoleAssignmentScheduleRequestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, ResourceIdentifier roleDefinitionId, string principalId, PrincipalType? principalType, RequestType? requestType, RoleAssignmentScheduleRequestStatus? status, string approvalId, string targetRoleAssignmentScheduleId, string targetRoleAssignmentScheduleInstanceId, RoleAssignmentScheduleInfo scheduleInfo, string linkedRoleEligibilityScheduleId, string justification, RoleAssignmentScheduleTicketInfo ticketInfo, string condition, string conditionVersion, DateTimeOffset? createdOn, string requestorId, ExpandedProperties expandedProperties) : base(id, name, resourceType, systemData)
         {
             Scope = scope;
             RoleDefinitionId = roleDefinitionId;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Authorization
         /// <summary> The role assignment schedule request scope. </summary>
         public string Scope { get; }
         /// <summary> The role definition ID. </summary>
-        public string RoleDefinitionId { get; set; }
+        public ResourceIdentifier RoleDefinitionId { get; set; }
         /// <summary> The principal ID. </summary>
         public string PrincipalId { get; set; }
         /// <summary> The principal type of the assigned principal ID. </summary>

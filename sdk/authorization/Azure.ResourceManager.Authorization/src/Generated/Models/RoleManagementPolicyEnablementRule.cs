@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="ruleType"> The type of rule. </param>
         /// <param name="target"> The target of the current rule. </param>
         /// <param name="enabledRules"> The list of enabled rules. </param>
-        internal RoleManagementPolicyEnablementRule(string id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, IList<EnablementRule> enabledRules) : base(id, ruleType, target)
+        internal RoleManagementPolicyEnablementRule(ResourceIdentifier id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, IList<EnablementRule> enabledRules) : base(id, ruleType, target)
         {
             EnabledRules = enabledRules;
             RuleType = ruleType;
