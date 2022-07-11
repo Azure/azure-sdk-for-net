@@ -65,7 +65,7 @@ function create-metadata-table($readmeFolder, $readmeName, $moniker, $msService,
   Add-Content -Path $readmePath -Value $metadataString
 
   # Add tables, seperate client and mgmt.
-  $readmeHeader = "# Azure $serviceName SDK for $languageDisplayName - $moniker"
+  $readmeHeader = "# Azure $serviceName SDK for $languageDisplayName - $moniker`r`n"
   Add-Content -Path $readmePath -Value $readmeHeader
   Add-Content -Path $readmePath -Value $content
 }
