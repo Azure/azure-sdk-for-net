@@ -375,7 +375,7 @@ See [Data Plane Quick Start Tutorial](https://github.com/Azure/azure-sdk-for-net
 10. A Pull request of your Azure SDK for .NET changes against **master** branch of the [Azure SDK for .NET](https://github.com/azure/azure-sdk-for-net)
 11. The pull requests will be reviewed and merged by the Azure SDK team
 
-#### Generating Client Codes
+#### Generating Client Code
 
 1. Install templates for both data-plane and management-plane (control-plan) SDKs:
 
@@ -392,20 +392,20 @@ See [Data Plane Quick Start Tutorial](https://github.com/Azure/azure-sdk-for-net
    There are several options available for management-plane SDKs. You can see all those available with `--help` as shown above, or
    [read about them](https://github.com/heaths/azure-sdk-for-net/blob/main/eng/templates/README.md) in our documentation.
 
-   This will perform most of the renames, namespace fix-ups, etc., for you automatically; though, be sure to check all files - especially the README.md file(s) - for required manual changes.
+   This will perform most of the renames, namespace fix-ups, and similar, for you automatically; though, be sure to check all files - especially the README.md file(s) - for required manual changes.
    If the template is already installed, this same command will upgrade it.
 
 2. Modify `autorest.md` to point to you Swagger file or central README.md file. E.g.
 
    ``` yaml
    input-file:
-       - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/storage/resource-manager/Microsoft.Storage/stable/2019-06-01/blob.json
-       - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/storage/resource-manager/Microsoft.Storage/stable/2019-06-01/file.json
-       - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/storage/resource-manager/Microsoft.Storage/stable/2019-06-01/storage.json
+       - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/[COMMIT-HASH]/specification/storage/resource-manager/Microsoft.Storage/stable/2019-06-01/blob.json
+       - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/[COMMIT-HASH]/specification/storage/resource-manager/Microsoft.Storage/stable/2019-06-01/file.json
+       - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/[COMMIT-HASH]/specification/storage/resource-manager/Microsoft.Storage/stable/2019-06-01/storage.json
    ```
 
    ``` yaml
-   require: https://github.com/Azure/azure-rest-api-specs/blob/49fc16354df7211f8392c56884a3437138317d1f/specification/azsadmin/resource-manager/storage/readme.md
+   require: https://github.com/Azure/azure-rest-api-specs/blob/[COMMIT-HASH]/specification/azsadmin/resource-manager/storage/readme.md
    ```
 
 3. Run `dotnet build /t:GenerateCode` in src directory of the project (e.g. `net\sdk\storage\Azure.Management.Storage\src`). This would run AutoRest and generate the code. (NOTE: this step requires Node 14).
@@ -462,7 +462,7 @@ See [Data Plane Quick Start Tutorial](https://github.com/Azure/azure-sdk-for-net
 Before a pull request will be considered by the Azure SDK team, the following requirements must be met:
 
 - Prior to issuing the pull request:
-  - All code must have completed any necessary legal signoff for being publicly viewable (Patent review, JSR review, etc.)
+  - All code must have completed any necessary legal sign off for being publicly viewable (Patent review, JSR review, etc.)
   - The changes cannot break any existing functional/unit tests that are part of the central repository.
     - This includes all tests, even those not associated with the given feature area.
   - Code submitted must have basic unit test coverage, and have all the unit tests pass. Testing is the full responsibility of the service team
@@ -481,12 +481,12 @@ Before a pull request will be considered by the Azure SDK team, the following re
   - MS internal folks, please reach out to us via our Teams channel or
   - Send an email to the Azure Developer Platform team [adpteam@microsoft.com](mailto:adpteam@microsoft.com) alias.
     - Include all interested parties from your team as well.
-    - In the message, make sure to acknowledge that the legal signoff process is complete.
+    - In the message, make sure to acknowledge that the legal sign off process is complete.
 
 Once all of the above steps are met, the following process will be followed:
 
 - A member of the Azure SDK team will review the pull request on GitHub.
-- If the pull request meets the repository's requirements, the individual will approve the pull request, merging the code into the dev branch of the source repository.
+- If the pull request meets the repository's requirements, the individual will approve the pull request, merging the code into the appropriate branch of the source repository.
   - The owner will then respond to the email sent as part of the pull request, informing the group of the completion of the request.
 - If the request does not meet any of the requirements, the pull request will not be merged, and the necessary fixes for acceptance will be communicated back to the partner team.
 
@@ -508,7 +508,7 @@ Once all of the above steps are met, the following process will be followed:
 - When to mark a PR as "Request Changes"
   - You have significant concerns that must be addressed before this PR should be merged such as unintentional breaking changes, security issues, or potential data loss.
 
-#### PR Authors
+#### Pull Request Authors
 
 - If you add significant changes to a PR after it has been marked approved, please confirm with reviewers that they still approve before merging.
 - Please ensure that you have obtained an approval from at least one of the code owners before merging.
@@ -516,11 +516,13 @@ Once all of the above steps are met, the following process will be followed:
   - One exception is when a comment clearly states that the feedback is optional or just a nit
   - When in doubt, reach out to the commentor to confirm that they have no concerns with you merging without addressing a comment.
 
-### Client Library Tested OSs and .NET Versions
+### Client Library Tested Operating Systems and .NET Versions
 
-|                   | Linux (Ubuntu 16.04) | MacOS 10.13 | Windows Server 2016 |
-| ----------------- | -------------------- | ----------- | ------------------- |
-| **.NET Core 2.1** | x                    | x           | x                   |
+|                          | Linux (Ubuntu 20.04) | MacOS 10.15 | Windows Server 2019 |
+| ------------------------ | :------------------: | :---------: | :-----------------: |
+| **.NET 6**               | x                    | x           | x                   |
+| **.NET Core 3.1**        | x                    | x           | x                   |
+| **.NET Framework 4.6.1** |                      |             | x                   |
 
 ### Issues with Generated Code
 
@@ -532,11 +534,11 @@ Much of the management plane SDK code is generated from metadata specs about the
 
 ## Versioning
 
-For more information on how we version see [Versioning](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/Versioning.md)
+For more information on how we version see [Versioning](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/Versioning.md).
 
 ## Breaking Changes
 
-For information about breaking changes see [Breaking Change Rules](https://github.com/dotnet/corefx/blob/master/Documentation/coding-guidelines/breaking-change-rules.md)
+For information about breaking changes see [Breaking Change Rules](https://github.com/dotnet/corefx/blob/master/Documentation/coding-guidelines/breaking-change-rules.md).
 
 ## Debugging
 
