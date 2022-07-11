@@ -2,7 +2,7 @@
 
 ## 1.0.0 (2022-07-11)
 
-This is the first stable release of the Key Vaul Management client library.
+This is the first stable release of the Key Vault Management client library.
 
 ### Features Added
 
@@ -11,8 +11,8 @@ This is the first stable release of the Key Vaul Management client library.
 ### Breaking Changes
 
 Polishing since last public beta release:
-- Prepended `KeyVault` / `ManagedHsm` prefix to all singel / simple model names.
-- Rename all `Vault` prefix models to `KeyVault` prefix.
+- Prepended `KeyVault` / `ManagedHsm` prefix to all single / simple model names.
+- Renamed all `Vault` prefix models to `KeyVault` prefix.
 - Corrected the format of all `Guid` type properties / parameters.
 - Corrected the format of all `ResourceIdentifier` type properteis / parameters.
 - Corrected the format of all `ResouceType` type properteis / parameters.
@@ -42,12 +42,12 @@ Polishing since last public beta release:
 
 ### Breaking Changes
 
-- Simplify `type` property names.
+- Simplified `type` property names.
 - Normalized the body parameter type names for PUT / POST / PATCH operations if it is only used as input.
 
 ### Other Changes
 
-- Upgrade dependency to Azure.ResourceManager 1.0.0
+- Upgraded dependency to Azure.ResourceManager 1.0.0
 
 ## 1.0.0-beta.7 (2022-03-31)
 
