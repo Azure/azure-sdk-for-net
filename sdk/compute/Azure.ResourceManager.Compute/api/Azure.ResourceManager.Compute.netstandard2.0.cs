@@ -3833,7 +3833,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class LinuxParameters
     {
         public LinuxParameters() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationLinux> ClassificationsToInclude { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForLinux> ClassificationsToInclude { get { throw null; } }
         public string MaintenanceRunId { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> PackageNameMasksToExclude { get { throw null; } }
         public System.Collections.Generic.IList<string> PackageNameMasksToInclude { get { throw null; } }
@@ -6042,46 +6042,46 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.VirtualMachineOSDisk OSDisk { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct VmGuestPatchClassificationLinux : System.IEquatable<Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationLinux>
+    public readonly partial struct VmGuestPatchClassificationForLinux : System.IEquatable<Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForLinux>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public VmGuestPatchClassificationLinux(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationLinux Critical { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationLinux Other { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationLinux Security { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationLinux other) { throw null; }
+        public VmGuestPatchClassificationForLinux(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForLinux Critical { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForLinux Other { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForLinux Security { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForLinux other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationLinux left, Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationLinux right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationLinux (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationLinux left, Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationLinux right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForLinux left, Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForLinux right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForLinux (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForLinux left, Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForLinux right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct VmGuestPatchClassificationWindow : System.IEquatable<Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationWindow>
+    public readonly partial struct VmGuestPatchClassificationForWindows : System.IEquatable<Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForWindows>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public VmGuestPatchClassificationWindow(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationWindow Critical { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationWindow Definition { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationWindow FeaturePack { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationWindow Security { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationWindow ServicePack { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationWindow Tools { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationWindow UpdateRollUp { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationWindow Updates { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationWindow other) { throw null; }
+        public VmGuestPatchClassificationForWindows(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForWindows Critical { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForWindows Definition { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForWindows FeaturePack { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForWindows Security { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForWindows ServicePack { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForWindows Tools { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForWindows UpdateRollUp { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForWindows Updates { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForWindows other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationWindow left, Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationWindow right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationWindow (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationWindow left, Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationWindow right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForWindows left, Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForWindows right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForWindows (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForWindows left, Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForWindows right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -6158,7 +6158,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class WindowsParameters
     {
         public WindowsParameters() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationWindow> ClassificationsToInclude { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForWindows> ClassificationsToInclude { get { throw null; } }
         public bool? ExcludeKbsRequiringReboot { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> KbNumbersToExclude { get { throw null; } }
         public System.Collections.Generic.IList<string> KbNumbersToInclude { get { throw null; } }
