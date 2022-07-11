@@ -64,12 +64,5 @@ directive:
         }
       ];
       $.RedisResource['x-ms-client-name'] = 'Redis';
-      delete $.OperationStatus.allOf; 
-
-  # This must be revmoved after https://github.com/Azure/azure-sdk-for-net/issues/29636 was fixed
-  - from: redis.json
-    where: $.definitions
-    transform: >
-      delete $.OperationStatus.allOf; 
 
 ```
