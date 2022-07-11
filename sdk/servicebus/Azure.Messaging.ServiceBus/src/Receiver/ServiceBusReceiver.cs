@@ -31,7 +31,7 @@ namespace Azure.Messaging.ServiceBus
     {
         private readonly DiagnosticHistogram<long> _receiveLag;
         private readonly DiagnosticMeter _meter;
-        private readonly DiagnosticTags _tags;
+        private readonly DiagnosticAttributes _attributes;
 
         /// <summary>
         /// The fully qualified Service Bus namespace that the receiver is associated with.  This is likely
@@ -197,7 +197,7 @@ namespace Azure.Messaging.ServiceBus
 
                 if (_receiveLag.IsEnabled)
                 {
-                    _tags = new DiagnosticTags()
+                    _attributes = new DiagnosticAttributes()
                         .Add("namespace", FullyQualifiedNamespace)
                         .Add("entity", EntityPath);
                 }
@@ -258,8 +258,11 @@ namespace Azure.Messaging.ServiceBus
                 Logger.ClientCloseException(clientType, Identifier, ex);
                 throw;
             }
+            finally
+            {
+                _meter.Dispose();
+            }
 
-            _meter.Dispose();
             Logger.ClientCloseComplete(clientType, Identifier);
         }
 
@@ -355,7 +358,7 @@ namespace Azure.Messaging.ServiceBus
                 DateTimeOffset now = DateTimeOffset.UtcNow;
                 foreach (var msg in messages)
                 {
-                    _receiveLag.Record((long)(now - msg.EnqueuedTime).TotalMilliseconds, _tags);
+                    _receiveLag.Record((long)(now - msg.EnqueuedTime).TotalMilliseconds, _attributes);
                 }
             }
         }

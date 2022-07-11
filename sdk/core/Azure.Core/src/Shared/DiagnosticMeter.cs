@@ -50,9 +50,9 @@ namespace Azure.Core.Shared
             IsEnabled = _counter?.Enabled ?? false;
         }
 
-        public void Add(T delta, DiagnosticTags tags)
+        public void Add(T delta, DiagnosticAttributes attributes)
         {
-            _counter?.Add(delta, tags.Tags);
+            _counter?.Add(delta, attributes.Attributes);
         }
     }
 
@@ -66,9 +66,9 @@ namespace Azure.Core.Shared
             IsEnabled = _histogram?.Enabled ?? false;
         }
 
-        public void Record(T value, DiagnosticTags tags)
+        public void Record(T value, DiagnosticAttributes attributes)
         {
-            _histogram?.Record(value, tags.Tags);
+            _histogram?.Record(value, attributes.Attributes);
         }
     }
 
@@ -76,40 +76,41 @@ namespace Azure.Core.Shared
     /// Allows to pre-build and cache list of attributes:
     /// - limits set of supported tag value types
     /// - allows to remap attribute names if otel schema changes
-    /// - caches tags array - Add call happens at client creation time only, .Tags on every metric report
+    /// - caches attributes array - Add call happens at client creation time only, .Attributes on every metric report
+    /// - in some cases can be shared between metrics and tracing (can pass them to scopes)
     /// </summary>
-    internal class DiagnosticTags
+    internal class DiagnosticAttributes
     {
-        private readonly List<KeyValuePair<string, object?>> _tags = new List<KeyValuePair<string, object?>>();
-        private KeyValuePair<string, object?>[]? _tagsArray;
+        private readonly List<KeyValuePair<string, object?>> _attributes = new List<KeyValuePair<string, object?>>();
+        private KeyValuePair<string, object?>[]? _attributesArray;
 
-        public DiagnosticTags Add(string key, string value)
+        public DiagnosticAttributes Add(string key, string value)
         {
-            _tags.Add(new KeyValuePair<string, object?>(key, value));
-            _tagsArray = null;
+            _attributes.Add(new KeyValuePair<string, object?>(key, value));
+            _attributesArray = null;
             return this;
         }
 
-        public DiagnosticTags Add(string key, long value)
+        public DiagnosticAttributes Add(string key, long value)
         {
-            _tags.Add(new KeyValuePair<string, object?>(key, value));
-            _tagsArray = null;
+            _attributes.Add(new KeyValuePair<string, object?>(key, value));
+            _attributesArray = null;
             return this;
         }
 
-        public DiagnosticTags Add(string key, double value)
+        public DiagnosticAttributes Add(string key, double value)
         {
-            _tags.Add(new KeyValuePair<string, object?>(key, value));
-            _tagsArray = null;
+            _attributes.Add(new KeyValuePair<string, object?>(key, value));
+            _attributesArray = null;
             return this;
         }
 
-        // and would remain internal even if DiagnosticTags become public at some point
-        internal KeyValuePair<string, object?>[] Tags {
+        // and would remain internal even if DiagnosticAttributes become public at some point
+        internal KeyValuePair<string, object?>[] Attributes {
             get {
-                _tagsArray ??= _tags.ToArray();
+                _attributesArray ??= _attributes.ToArray();
 
-                return _tagsArray;
+                return _attributesArray;
             }
         }
     }
