@@ -65,12 +65,15 @@ function create-metadata-table($readmeFolder, $readmeName, $moniker, $msService,
   Add-Content -Path $readmePath -Value $metadataString
 
   # Add tables, seperate client and mgmt.
-  $readmeHeader = "# $langTitle - $moniker"
+  $readmeHeader = "# Azure $serviceName SDK for $languageDisplayName - $moniker"
   Add-Content -Path $readmePath -Value $readmeHeader
   Add-Content -Path $readmePath -Value $content
 }
 
 function compare-and-merge-metadata ($original, $updated) {
+  if (!$original -or !$updated) {
+    return $original + $updated 
+  }
   $originalTable = ConvertFrom-StringData -StringData $original -Delimiter ":"
   $updatedTable = ConvertFrom-StringData -StringData $updated -Delimiter ":"
   foreach ($key in $originalTable.Keys) {
@@ -87,16 +90,22 @@ function update-metadata-table($readmeFolder, $readmeName, $serviceName, $msServ
 {
   $readmePath = Join-Path $readmeFolder -ChildPath $readmeName
   $readmeContent = Get-Content -Path $readmePath -Raw
-  $null = $readmeContent -match "---`n*(?<metadata>(.*`n)*)---`n*(?<content>(.*`n)*)"
-  $restContent = $Matches["content"]
-  $orignalMetadata = $Matches["metadata"]
   # $Language, $LanguageDisplayName are the variables globally defined in Language-Settings.ps1
   $metadataString = GenerateDocsMsMetadata -language $Language -languageDisplayName $LanguageDisplayName -serviceName $serviceName `
     -tenantId $TenantId -clientId $ClientId -clientSecret $ClientSecret `
     -msService $msService
-  $null = $metadataString -match "---`n*(?<metadata>(.*`n)*)---"
-  $mergedMetadata = compare-and-merge-metadata -original $orignalMetadata -updated $Matches["metadata"]
-  Set-Content -Path $readmePath -Value "---`n$mergedMetadata---`n$restContent" -NoNewline
+  $match = $readmeContent -match "^---\n*(?<metadata>(((?!---).)*\n)*)---(\n)*(?<content>(.*\n)*)"
+  if (!$match) {
+    Set-Content -Path $readmePath -Value "$metadataString`r`n$readmeContent" -NoNewline
+    return
+  }
+  $restContent = $Matches["content"]
+  $metadata = $Matches["metadata"]
+  $metadataMatch = $metadataString -match "---\n(?<metadata>(.*\n)*)---"
+  if ($metadataMatch) {
+    $metadata = compare-and-merge-metadata -original $metadata -updated $Matches["metadata"]
+  }
+  Set-Content -Path $readmePath -Value "---`r`n$metadata---`r`n$restContent" -NoNewline
 }
 
 function generate-markdown-table($readmeFolder, $readmeName, $packageInfo, $moniker) {
@@ -105,6 +114,9 @@ function generate-markdown-table($readmeFolder, $readmeName, $packageInfo, $moni
   # Here is the table, the versioned value will
   foreach ($pkg in $packageInfo) {
     $repositoryLink = $RepositoryUri
+    if (Test-Path "Function:$GetRepositoryLinkFn") {
+      $repositoryLink = &$GetRepositoryLinkFn -packageInfo $pkg
+    }
     $packageLevelReadme = ""
     if (Test-Path "Function:$GetPackageLevelReadmeFn") {
       $packageLevelReadme = &$GetPackageLevelReadmeFn -packageMetadata $pkg
@@ -118,7 +130,7 @@ function generate-markdown-table($readmeFolder, $readmeName, $packageInfo, $moni
     if ($pkg.PSObject.Members.Name -contains "DirectoryPath") {
       $githubLink = "$GithubUri/blob/main/$($pkg.DirectoryPath)"
     }
-    $line = "|$referenceLink|[$($pkg.Package)]($repositoryLink/$($pkg.Package))|[Github]($githubLink)|`r`n"
+    $line = "|$referenceLink|[$($pkg.Package)]($repositoryLink)|[Github]($githubLink)|`r`n"
     $tableContent += $line
   }
   $readmePath = Join-Path $readmeFolder -ChildPath $readmeName
