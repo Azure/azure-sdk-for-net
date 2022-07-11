@@ -45,7 +45,8 @@ list-exception:
 directive:
   # The requested resource does not support http method 'DELETE'
   - remove-operation: 'RoleManagementPolicies_Delete'
-  
+  - remove-operation: 'RoleManagementPolicyAssignments_Delete'
+
   # Duplicate Schema name
   - from: RoleAssignmentScheduleRequest.json
     where: $.definitions.RoleAssignmentScheduleRequestProperties
