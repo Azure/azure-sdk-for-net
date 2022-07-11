@@ -1,18 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/eventroutes/someEventRouteId-532352335?api-version=2020-10-31",
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/eventroutes/someEventRouteId-2104448972?api-version=2022-05-31",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "84",
         "Content-Type": "application/json",
-        "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.1.0-alpha.20201104.1",
-          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
-        ],
-        "x-ms-client-request-id": "c2450140ce917ff39a4eeceae5f9c22f",
+        "traceparent": "00-242246b47af99a458d8196c73e230782-0238c07230f3ab40-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.4.0-alpha.20220629.1 (.NET Core 3.1.26; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "6a8fa3120e36d46d8518d860c26a5522",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -21,21 +19,24 @@
       },
       "StatusCode": 400,
       "ResponseHeaders": {
-        "Content-Length": "248",
+        "Content-Length": "249",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 05 Nov 2020 07:43:37 GMT",
-        "Strict-Transport-Security": "max-age=2592000"
+        "Date": "Wed, 29 Jun 2022 09:18:04 GMT",
+        "mise-correlation-id": "68fc2472-f6e3-43b0-8257-abc4070ab883",
+        "Strict-Transport-Security": "max-age=2592000",
+        "traceresponse": "00-242246b47af99a458d8196c73e230782-c1cf881cf5f7b4f6-01"
       },
       "ResponseBody": {
         "error": {
           "code": "EventRouteFilterInvalid",
-          "message": "The provided filter is invalid. Parsing error, Line=1, Position=6, Message=Unexpected input \u0027is\u0027. See event route documentation for supported values and structure (http://aka.ms/ADTv2Routes)."
+          "message": "The provided filter is invalid. Parsing error, Line=1, Position=6, Message=Unexpected input \u0027is\u0027. See event route documentation for supported values and structure (https://aka.ms/ADTv2Routes)."
         }
       }
     }
   ],
   "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
     "DIGITALTWINS_URL": "https://fakeHost.api.wus2.digitaltwins.azure.net",
-    "RandomSeed": "1419465955"
+    "RandomSeed": "1769582264"
   }
 }

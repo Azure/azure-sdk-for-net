@@ -811,7 +811,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public MachineExtensionInstanceViewStatus() { }
         public string Code { get { throw null; } }
         public string DisplayStatus { get { throw null; } }
-        public Azure.ResourceManager.ConnectedVMwarevSphere.Models.StatusLevelType? Level { get { throw null; } }
+        public Azure.ResourceManager.ConnectedVMwarevSphere.Models.MachineExtensionStatusLevelType? Level { get { throw null; } }
         public string Message { get { throw null; } }
         public System.DateTimeOffset? Time { get { throw null; } }
     }
@@ -829,6 +829,25 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     public partial class MachineExtensionPropertiesInstanceView : Azure.ResourceManager.ConnectedVMwarevSphere.Models.MachineExtensionInstanceView
     {
         public MachineExtensionPropertiesInstanceView() { }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MachineExtensionStatusLevelType : System.IEquatable<Azure.ResourceManager.ConnectedVMwarevSphere.Models.MachineExtensionStatusLevelType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MachineExtensionStatusLevelType(string value) { throw null; }
+        public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.MachineExtensionStatusLevelType Error { get { throw null; } }
+        public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.MachineExtensionStatusLevelType Info { get { throw null; } }
+        public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.MachineExtensionStatusLevelType Warning { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ConnectedVMwarevSphere.Models.MachineExtensionStatusLevelType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ConnectedVMwarevSphere.Models.MachineExtensionStatusLevelType left, Azure.ResourceManager.ConnectedVMwarevSphere.Models.MachineExtensionStatusLevelType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ConnectedVMwarevSphere.Models.MachineExtensionStatusLevelType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ConnectedVMwarevSphere.Models.MachineExtensionStatusLevelType left, Azure.ResourceManager.ConnectedVMwarevSphere.Models.MachineExtensionStatusLevelType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class NetworkInterface
     {
@@ -1028,25 +1047,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public static bool operator ==(Azure.ResourceManager.ConnectedVMwarevSphere.Models.ScsiControllerType left, Azure.ResourceManager.ConnectedVMwarevSphere.Models.ScsiControllerType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ConnectedVMwarevSphere.Models.ScsiControllerType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ConnectedVMwarevSphere.Models.ScsiControllerType left, Azure.ResourceManager.ConnectedVMwarevSphere.Models.ScsiControllerType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct StatusLevelType : System.IEquatable<Azure.ResourceManager.ConnectedVMwarevSphere.Models.StatusLevelType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public StatusLevelType(string value) { throw null; }
-        public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.StatusLevelType Error { get { throw null; } }
-        public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.StatusLevelType Info { get { throw null; } }
-        public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.StatusLevelType Warning { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ConnectedVMwarevSphere.Models.StatusLevelType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ConnectedVMwarevSphere.Models.StatusLevelType left, Azure.ResourceManager.ConnectedVMwarevSphere.Models.StatusLevelType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ConnectedVMwarevSphere.Models.StatusLevelType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ConnectedVMwarevSphere.Models.StatusLevelType left, Azure.ResourceManager.ConnectedVMwarevSphere.Models.StatusLevelType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

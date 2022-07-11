@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Network
             Optional<IDictionary<string, string>> tags = default;
             Optional<WritableSubResource> subnet = default;
             Optional<WritableSubResource> virtualNetwork = default;
-            Optional<IPAllocationType> type0 = default;
+            Optional<NetworkIPAllocationType> type0 = default;
             Optional<string> prefix = default;
             Optional<int?> prefixLength = default;
             Optional<NetworkIPVersion> prefixType = default;
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            type0 = new IPAllocationType(property0.Value.GetString());
+                            type0 = new NetworkIPAllocationType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("prefix"))

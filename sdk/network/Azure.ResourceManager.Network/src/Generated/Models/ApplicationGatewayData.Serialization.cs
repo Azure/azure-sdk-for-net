@@ -21,11 +21,11 @@ namespace Azure.ResourceManager.Network
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Zones))
+            if (Optional.IsCollectionDefined(AvailabilityZones))
             {
                 writer.WritePropertyName("zones");
                 writer.WriteStartArray();
-                foreach (var item in Zones)
+                foreach (var item in AvailabilityZones)
                 {
                     writer.WriteStringValue(item);
                 }

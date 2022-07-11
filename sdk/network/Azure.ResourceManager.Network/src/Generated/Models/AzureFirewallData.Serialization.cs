@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Network
             Optional<IList<AzureFirewallNatRuleCollectionData>> natRuleCollections = default;
             Optional<IList<AzureFirewallNetworkRuleCollectionData>> networkRuleCollections = default;
             Optional<IList<AzureFirewallIPConfiguration>> ipConfigurations = default;
-            Optional<AzureFirewallIPConfiguration> managementIpConfiguration = default;
+            Optional<AzureFirewallIPConfiguration> managementIPConfiguration = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<AzureFirewallThreatIntelMode> threatIntelMode = default;
             Optional<WritableSubResource> virtualHub = default;
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            managementIpConfiguration = AzureFirewallIPConfiguration.DeserializeAzureFirewallIPConfiguration(property0.Value);
+                            managementIPConfiguration = AzureFirewallIPConfiguration.DeserializeAzureFirewallIPConfiguration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new AzureFirewallData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToList(zones), Optional.ToNullable(etag), Optional.ToList(applicationRuleCollections), Optional.ToList(natRuleCollections), Optional.ToList(networkRuleCollections), Optional.ToList(ipConfigurations), managementIpConfiguration.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(threatIntelMode), virtualHub, firewallPolicy, hubIPAddresses.Value, Optional.ToList(ipGroups), sku.Value, Optional.ToDictionary(additionalProperties));
+            return new AzureFirewallData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToList(zones), Optional.ToNullable(etag), Optional.ToList(applicationRuleCollections), Optional.ToList(natRuleCollections), Optional.ToList(networkRuleCollections), Optional.ToList(ipConfigurations), managementIPConfiguration.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(threatIntelMode), virtualHub, firewallPolicy, hubIPAddresses.Value, Optional.ToList(ipGroups), sku.Value, Optional.ToDictionary(additionalProperties));
         }
     }
 }

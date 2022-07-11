@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                 PrivateEndpointData privateEndpointData = new PrivateEndpointData()
                 {
                     Location = "eastus",
-                    PrivateLinkServiceConnections = { new PrivateLinkServiceConnection()
+                    PrivateLinkServiceConnections = { new NetworkPrivateLinkServiceConnection()
                         {
                             Name ="myconnection",
                             PrivateLinkServiceId = ConfigStore.Data.Id,

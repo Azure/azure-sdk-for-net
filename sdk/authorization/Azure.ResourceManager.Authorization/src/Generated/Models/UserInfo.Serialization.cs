@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Authorization.Models
         {
             Optional<UserType> userType = default;
             Optional<bool> isBackup = default;
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -68,7 +68,12 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("description"))
