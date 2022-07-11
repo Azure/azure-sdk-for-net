@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.MySql
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            string startIpAddress = default;
-            string endIpAddress = default;
+            string startIPAddress = default;
+            string endIPAddress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -72,19 +72,19 @@ namespace Azure.ResourceManager.MySql
                     {
                         if (property0.NameEquals("startIpAddress"))
                         {
-                            startIpAddress = property0.Value.GetString();
+                            startIPAddress = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("endIpAddress"))
                         {
-                            endIpAddress = property0.Value.GetString();
+                            endIPAddress = property0.Value.GetString();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new FirewallRuleData(id, name, type, systemData.Value, startIpAddress, endIpAddress);
+            return new FirewallRuleData(id, name, type, systemData.Value, startIPAddress, endIPAddress);
         }
     }
 }

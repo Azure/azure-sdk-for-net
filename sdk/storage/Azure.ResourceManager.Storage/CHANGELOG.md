@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- Refined quite a few names of types and properties according to internal review comments.
+
 ### Bugs Fixed
 
 ### Other Changes
@@ -161,9 +163,14 @@ ArmClient client = new ArmClient(new DefaultAzureCredential());
 ResourceGroupResource resourceGroup = client.GetDefaultSubscription().GetResourceGroups().Get(resourceGroupName);
 StorageAccountCollection storageAccountCollection = resourceGroup.GetStorageAccounts();
 StorageSku sku = new StorageSku(StorageSkuName.PremiumLRS);
-StorageAccountCreateOrUpdateContent parameters = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.StandardGRS), StorageKind.Storage, AzureLocation.WestUS);
-parameters.Tags.Add("key1", "value1");
-parameters.Tags.Add("key2", "value2");
+StorageAccountCreateOrUpdateContent parameters = new StorageAccountCreateOrUpdateContent(sku, StorageKind.Storage, AzureLocation.WestUS)
+{
+    Tags =
+    {
+        ["key1"] = "value1",
+        ["key2"] = "value2"
+    }
+};
 StorageAccountResource account = storageAccountCollection.CreateOrUpdate(WaitUntil.Completed, accountName, parameters).Value;
 ```
 

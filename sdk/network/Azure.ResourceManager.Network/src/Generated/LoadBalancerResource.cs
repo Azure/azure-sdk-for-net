@@ -425,18 +425,18 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}
         /// Operation Id: LoadBalancers_UpdateTags
         /// </summary>
-        /// <param name="tagsObject"> Parameters supplied to update load balancer tags. </param>
+        /// <param name="networkTagsObject"> Parameters supplied to update load balancer tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
-        public virtual async Task<Response<LoadBalancerResource>> UpdateAsync(TagsObject tagsObject, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="networkTagsObject"/> is null. </exception>
+        public virtual async Task<Response<LoadBalancerResource>> UpdateAsync(NetworkTagsObject networkTagsObject, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+            Argument.AssertNotNull(networkTagsObject, nameof(networkTagsObject));
 
             using var scope = _loadBalancerClientDiagnostics.CreateScope("LoadBalancerResource.Update");
             scope.Start();
             try
             {
-                var response = await _loadBalancerRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject, cancellationToken).ConfigureAwait(false);
+                var response = await _loadBalancerRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkTagsObject, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new LoadBalancerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -451,18 +451,18 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}
         /// Operation Id: LoadBalancers_UpdateTags
         /// </summary>
-        /// <param name="tagsObject"> Parameters supplied to update load balancer tags. </param>
+        /// <param name="networkTagsObject"> Parameters supplied to update load balancer tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
-        public virtual Response<LoadBalancerResource> Update(TagsObject tagsObject, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="networkTagsObject"/> is null. </exception>
+        public virtual Response<LoadBalancerResource> Update(NetworkTagsObject networkTagsObject, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+            Argument.AssertNotNull(networkTagsObject, nameof(networkTagsObject));
 
             using var scope = _loadBalancerClientDiagnostics.CreateScope("LoadBalancerResource.Update");
             scope.Start();
             try
             {
-                var response = _loadBalancerRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject, cancellationToken);
+                var response = _loadBalancerRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkTagsObject, cancellationToken);
                 return Response.FromValue(new LoadBalancerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

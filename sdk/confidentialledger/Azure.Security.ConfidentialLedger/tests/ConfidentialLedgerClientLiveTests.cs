@@ -163,8 +163,8 @@ namespace Azure.Security.ConfidentialLedger.Tests
         public async Task PostLedgerEntry()
         {
             var operation = await Client.PostLedgerEntryAsync(
-                RequestContent.Create(new { contents = Recording.GenerateAssetName("test") }),
-                waitForCompletion: true);
+                waitUntil: WaitUntil.Completed,
+                RequestContent.Create(new { contents = Recording.GenerateAssetName("test") }));
             var result = operation.GetRawResponse();
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
@@ -178,8 +178,8 @@ namespace Azure.Security.ConfidentialLedger.Tests
         public async Task GetCurrentLedgerEntry()
         {
             await Client.PostLedgerEntryAsync(
-               RequestContent.Create(new { contents = Recording.GenerateAssetName("test") }),
-               waitForCompletion: true);
+               waitUntil: WaitUntil.Completed,
+               RequestContent.Create( new { contents = Recording.GenerateAssetName("test") }));
 
             var result = await Client.GetCurrentLedgerEntryAsync();
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();

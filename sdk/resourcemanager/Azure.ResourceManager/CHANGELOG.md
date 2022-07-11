@@ -1,16 +1,12 @@
 # Release History
 
-## 1.2.0 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.2.0 (2022-07-11)
 
 ### Other Changes
 
 - Changed `OperationStatusResult` initialization constructor from internal to public.
+
+- Upgraded dependent `Azure.Core` to 1.25.0
 
 ## 1.1.2 (2022-07-01)
 

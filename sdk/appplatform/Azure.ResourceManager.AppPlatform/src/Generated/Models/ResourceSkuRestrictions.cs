@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// </param>
         /// <param name="restrictionInfo"> Gets the information about the restriction where the SKU cannot be used. </param>
         /// <param name="reasonCode"> Gets the reason for restriction. Possible values include: &apos;QuotaId&apos;, &apos;NotAvailableForSubscription&apos;. </param>
-        internal ResourceSkuRestrictions(ResourceSkuRestrictionsType? restrictionsType, IReadOnlyList<string> values, ResourceSkuRestrictionInfo restrictionInfo, ResourceSkuRestrictionsReasonCode? reasonCode)
+        internal ResourceSkuRestrictions(AppPlatformResourceSkuRestrictionsType? restrictionsType, IReadOnlyList<string> values, ResourceSkuRestrictionInfo restrictionInfo, AppPlatformResourceSkuRestrictionsReasonCode? reasonCode)
         {
             RestrictionsType = restrictionsType;
             Values = values;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         }
 
         /// <summary> Gets the type of restrictions. Possible values include: &apos;Location&apos;, &apos;Zone&apos;. </summary>
-        public ResourceSkuRestrictionsType? RestrictionsType { get; }
+        public AppPlatformResourceSkuRestrictionsType? RestrictionsType { get; }
         /// <summary>
         /// Gets the value of restrictions. If the restriction type is set to
         /// location. This would be different locations where the SKU is restricted.
@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Gets the information about the restriction where the SKU cannot be used. </summary>
         public ResourceSkuRestrictionInfo RestrictionInfo { get; }
         /// <summary> Gets the reason for restriction. Possible values include: &apos;QuotaId&apos;, &apos;NotAvailableForSubscription&apos;. </summary>
-        public ResourceSkuRestrictionsReasonCode? ReasonCode { get; }
+        public AppPlatformResourceSkuRestrictionsReasonCode? ReasonCode { get; }
     }
 }

@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> If not specified, the default value is &apos;enabled&apos;. </summary>
         public PublicNetworkAccessType? PublicNetworkAccess { get; set; }
         /// <summary> The network profile only takes effect when publicNetworkAccess is enabled. </summary>
-        public NetworkProfile NetworkProfile { get; set; }
+        public BatchVirtualMachineNetworkProfile NetworkProfile { get; set; }
     }
 }

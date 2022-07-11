@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.ServiceFabric
             Optional<CertificateDescription> reverseProxyCertificate = default;
             Optional<ServerCertificateCommonNames> reverseProxyCertificateCommonNames = default;
             Optional<ClusterUpgradePolicy> upgradeDescription = default;
-            Optional<UpgradeMode> upgradeMode = default;
+            Optional<ClusterUpgradeMode> upgradeMode = default;
             Optional<ApplicationTypeVersionsCleanupPolicy> applicationTypeVersionsCleanupPolicy = default;
             Optional<string> vmImage = default;
             Optional<SfZonalUpgradeMode> sfZonalUpgradeMode = default;
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.ServiceFabric
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            upgradeMode = new UpgradeMode(property0.Value.GetString());
+                            upgradeMode = new ClusterUpgradeMode(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("applicationTypeVersionsCleanupPolicy"))

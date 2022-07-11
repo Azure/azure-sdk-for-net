@@ -1575,10 +1575,10 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="P2sVpnGatewayResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<P2sVpnGatewayResource> GetP2sVpnGatewaysAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="P2SVpnGatewayResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<P2SVpnGatewayResource> GetP2SVpnGatewaysAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetP2sVpnGatewaysAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetP2SVpnGatewaysAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1588,10 +1588,10 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="P2sVpnGatewayResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<P2sVpnGatewayResource> GetP2sVpnGateways(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="P2SVpnGatewayResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<P2SVpnGatewayResource> GetP2SVpnGateways(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetP2sVpnGateways(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetP2SVpnGateways(cancellationToken);
         }
 
         /// <summary>
@@ -3293,12 +3293,12 @@ namespace Azure.ResourceManager.Network
             return resourceGroupResource.GetVpnGateways().Get(gatewayName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of P2sVpnGatewayResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of P2SVpnGatewayResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of P2sVpnGatewayResources and their operations over a P2sVpnGatewayResource. </returns>
-        public static P2sVpnGatewayCollection GetP2sVpnGateways(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of P2SVpnGatewayResources and their operations over a P2SVpnGatewayResource. </returns>
+        public static P2SVpnGatewayCollection GetP2SVpnGateways(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetP2sVpnGateways();
+            return GetExtensionClient(resourceGroupResource).GetP2SVpnGateways();
         }
 
         /// <summary>
@@ -3312,9 +3312,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<P2sVpnGatewayResource>> GetP2sVpnGatewayAsync(this ResourceGroupResource resourceGroupResource, string gatewayName, CancellationToken cancellationToken = default)
+        public static async Task<Response<P2SVpnGatewayResource>> GetP2SVpnGatewayAsync(this ResourceGroupResource resourceGroupResource, string gatewayName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetP2sVpnGateways().GetAsync(gatewayName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetP2SVpnGateways().GetAsync(gatewayName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3328,9 +3328,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<P2sVpnGatewayResource> GetP2sVpnGateway(this ResourceGroupResource resourceGroupResource, string gatewayName, CancellationToken cancellationToken = default)
+        public static Response<P2SVpnGatewayResource> GetP2SVpnGateway(this ResourceGroupResource resourceGroupResource, string gatewayName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetP2sVpnGateways().Get(gatewayName, cancellationToken);
+            return resourceGroupResource.GetP2SVpnGateways().Get(gatewayName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ExpressRouteGatewayResources in the ResourceGroupResource. </summary>
@@ -5062,20 +5062,20 @@ namespace Azure.ResourceManager.Network
         }
         #endregion
 
-        #region P2sVpnGatewayResource
+        #region P2SVpnGatewayResource
         /// <summary>
-        /// Gets an object representing a <see cref="P2sVpnGatewayResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="P2sVpnGatewayResource.CreateResourceIdentifier" /> to create a <see cref="P2sVpnGatewayResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="P2SVpnGatewayResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="P2SVpnGatewayResource.CreateResourceIdentifier" /> to create a <see cref="P2SVpnGatewayResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="P2sVpnGatewayResource" /> object. </returns>
-        public static P2sVpnGatewayResource GetP2sVpnGatewayResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="P2SVpnGatewayResource" /> object. </returns>
+        public static P2SVpnGatewayResource GetP2SVpnGatewayResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                P2sVpnGatewayResource.ValidateResourceId(id);
-                return new P2sVpnGatewayResource(client, id);
+                P2SVpnGatewayResource.ValidateResourceId(id);
+                return new P2SVpnGatewayResource(client, id);
             }
             );
         }

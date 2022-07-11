@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the capacity reservation. Only tags and sku.capacity can be updated. </summary>
-    public partial class CapacityReservationPatch : ComputeUpdateResourceData
+    public partial class CapacityReservationPatch : ComputeResourcePatch
     {
         /// <summary> Initializes a new instance of CapacityReservationPatch. </summary>
         public CapacityReservationPatch()

@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.WebPubSub
             Optional<string> hostNamePrefix = default;
             Optional<LiveTraceConfiguration> liveTraceConfiguration = default;
             Optional<ResourceLogConfiguration> resourceLogConfiguration = default;
-            Optional<WebPubSubNetworkAcls> networkACLs = default;
+            Optional<WebPubSubNetworkAcls> networkAcls = default;
             Optional<string> publicNetworkAccess = default;
             Optional<bool> disableLocalAuth = default;
             Optional<bool> disableAadAuth = default;
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.WebPubSub
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            networkACLs = WebPubSubNetworkAcls.DeserializeWebPubSubNetworkAcls(property0.Value);
+                            networkAcls = WebPubSubNetworkAcls.DeserializeWebPubSubNetworkAcls(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"))
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.WebPubSub
                     continue;
                 }
             }
-            return new WebPubSubData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity.Value, Optional.ToNullable(provisioningState), externalIP.Value, hostName.Value, Optional.ToNullable(publicPort), Optional.ToNullable(serverPort), version.Value, Optional.ToList(privateEndpointConnections), Optional.ToList(sharedPrivateLinkResources), tls.Value, hostNamePrefix.Value, liveTraceConfiguration.Value, resourceLogConfiguration.Value, networkACLs.Value, publicNetworkAccess.Value, Optional.ToNullable(disableLocalAuth), Optional.ToNullable(disableAadAuth));
+            return new WebPubSubData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity.Value, Optional.ToNullable(provisioningState), externalIP.Value, hostName.Value, Optional.ToNullable(publicPort), Optional.ToNullable(serverPort), version.Value, Optional.ToList(privateEndpointConnections), Optional.ToList(sharedPrivateLinkResources), tls.Value, hostNamePrefix.Value, liveTraceConfiguration.Value, resourceLogConfiguration.Value, networkAcls.Value, publicNetworkAccess.Value, Optional.ToNullable(disableLocalAuth), Optional.ToNullable(disableAadAuth));
         }
     }
 }

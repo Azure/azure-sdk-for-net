@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="roleEligibilityExpirationType"> Type of the role eligibility schedule expiration. </param>
         /// <param name="endOn"> End DateTime of the role eligibility schedule. </param>
         /// <param name="duration"> Duration of the role eligibility schedule in TimeSpan. </param>
-        internal RoleEligibilityScheduleRequestPropertiesScheduleInfoExpiration(RoleEligibilityScheduleType? roleEligibilityExpirationType, DateTimeOffset? endOn, TimeSpan? duration)
+        internal RoleEligibilityScheduleRequestPropertiesScheduleInfoExpiration(RoleEligibilityScheduleType? roleEligibilityExpirationType, DateTimeOffset? endOn, string duration)
         {
             RoleEligibilityExpirationType = roleEligibilityExpirationType;
             EndOn = endOn;
@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> End DateTime of the role eligibility schedule. </summary>
         public DateTimeOffset? EndOn { get; set; }
         /// <summary> Duration of the role eligibility schedule in TimeSpan. </summary>
-        public TimeSpan? Duration { get; set; }
+        public string Duration { get; set; }
     }
 }
