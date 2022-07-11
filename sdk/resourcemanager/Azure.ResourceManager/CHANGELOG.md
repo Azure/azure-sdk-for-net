@@ -6,6 +6,8 @@
 
 - Changed `OperationStatusResult` initialization constructor from internal to public.
 
+- Upgraded dependent `Azure.Core` to 1.25.0
+
 ## 1.1.2 (2022-07-01)
 
 ### Features Added
