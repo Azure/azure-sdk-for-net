@@ -189,6 +189,8 @@ rename-mapping:
   UpgradePolicy: VirtualMachineScaleSetUpgradePolicy
   ResourceSkuCapabilities: ComputeResourceSkuCapabilities
   ProtocolTypes: WinRMListenerProtocolType
+  VMGuestPatchClassificationLinux: LinuxVmGuestPatchClassification
+  VMGuestPatchClassificationWindows: WindowsVmGuestPatchClassification
 
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced
