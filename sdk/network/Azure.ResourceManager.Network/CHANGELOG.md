@@ -20,7 +20,7 @@ Polishing since last public beta release:
 - Corrected the format of all binary type properteis / parameters.
 - Corrected all acronyms which not follow [.Net Naming Guidelines](https://docs.microsoft.com/en-us/dotnet/standard/design-guidelines/naming-guidelines).
 - Corrected enumeration name by following [Naming Enumerations Rule](https://docs.microsoft.com/en-us/dotnet/standard/design-guidelines/names-of-classes-structs-and-interfaces#naming-enumerations).
-- Corrected the suffix of `DatetimeOffset` properties / parameters.
+- Corrected the suffix of `DateTimeOffset` properties / parameters.
 - Corrected the name of interval / duration properties / parameters which end with units.
 - Optimized the name of some models and functions.
 
