@@ -94,7 +94,7 @@ function update-metadata-table($readmeFolder, $readmeName, $serviceName, $msServ
   $metadataString = GenerateDocsMsMetadata -language $Language -languageDisplayName $LanguageDisplayName -serviceName $serviceName `
     -tenantId $TenantId -clientId $ClientId -clientSecret $ClientSecret `
     -msService $msService
-  $match = $readmeContent -match "^---\n*(?<metadata>(((?!---).)*\n)*)---(\n)*(?<content>(.*\n)*)"
+  $match = $readmeContent -match "^---\n*(?<metadata>(.*\n?)*?)---\n*(?<content>(.*\n?)*)"
   if (!$match) {
     Set-Content -Path $readmePath -Value "$metadataString`r`n$readmeContent" -NoNewline
     return
@@ -152,12 +152,12 @@ function generate-service-level-readme($readmeBaseName, $pathPrefix, $packageInf
   $mgmtIndexReadme  = "$readmeBaseName-mgmt-index.md"
   $clientPackageInfo = $packageInfos.Where({ 'client' -eq $_.Type }) | Sort-Object -Property Package
   if ($clientPackageInfo) {
-    generate-markdown-table -readmeFolder $readmeFolder -readmeName "$clientIndexReadme" -packageInfo $clientPackageInfo -moniker $moniker
+    generate-markdown-table -readmeFolder $readmeFolder -readmeName $clientIndexReadme -packageInfo $clientPackageInfo -moniker $moniker
   }
 
   $mgmtPackageInfo = $packageInfos.Where({ 'mgmt' -eq $_.Type }) | Sort-Object -Property Package
   if ($mgmtPackageInfo) {
-    generate-markdown-table -readmeFolder $readmeFolder -readmeName "$mgmtIndexReadme" -packageInfo $mgmtPackageInfo -moniker $moniker
+    generate-markdown-table -readmeFolder $readmeFolder -readmeName $mgmtIndexReadme -packageInfo $mgmtPackageInfo -moniker $moniker
   }
   if (!(Test-Path (Join-Path $readmeFolder -ChildPath $serviceReadme))) {
     create-metadata-table -readmeFolder $readmeFolder -readmeName $serviceReadme -moniker $moniker -msService $msService `
