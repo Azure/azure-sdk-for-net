@@ -13,6 +13,7 @@
 - Renamed `DocumentModelInfo` to `DocumentModelSummary`.
 - Removed `DocumentCaption` and `DocumentFootnote` features.
 - `FormRecognizerClientOptions.Audience` and `DocumentAnalysisClientOptions.Audience` now default to `null`.
+- In the `DocumentAnalysis` namespace, `CopyModelOperation.PercentCompleted` and `BuildModelOperation.PercentCompleted` now throw an `InvalidOperationException` if called before a call to `UpdateStatus`.
 
 ### Bugs Fixed
 
