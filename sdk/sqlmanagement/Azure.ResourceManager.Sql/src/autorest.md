@@ -72,6 +72,7 @@ prepend-rp-prefix:
   - Metric
   - Server
   - Database
+  - DayOfWeek
   - ServerAutomaticTuning
   - ServerAzureADAdministrator
   - ServerAzureADOnlyAuthentication
@@ -143,13 +144,8 @@ rename-mapping:
   Usage: InstancePoolUsage
   Usage.type: ResourceType
   UsageListResult: InstancePoolUsageListResult
-  TimeZone: SqlTimeZone
-  Metric: SqlMetric
-  Server: SqlServer
-  Database: SqlDatabase
   SyncGroupsType: SyncGroupLogType
   SampleName: SampleSchemaName
-  DayOfWeek: SqlDayOfWeek
   ManagedInstancePrivateEndpointConnection.properties.privateLinkServiceConnectionState: ConnectionState
   RestorePoint.properties.restorePointCreationDate: restorePointCreatedOn
   Job: SqlServerJob
