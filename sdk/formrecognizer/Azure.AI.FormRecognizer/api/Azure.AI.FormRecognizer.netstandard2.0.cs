@@ -312,6 +312,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public System.Drawing.PointF this[int index] { get { throw null; } }
+        public int Length { get { throw null; } }
         public override string ToString() { throw null; }
     }
     public partial class BoundingRegion

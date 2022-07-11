@@ -3,6 +3,7 @@
 ## 4.0.0-beta.5 (Unreleased)
 
 ### Features Added
+- Added `Length` property to `BoundingPolygon`.
 
 ### Breaking Changes
 - Renamed method `StartCreateComposedModel` to `StartComposeModel`.
