@@ -28,7 +28,7 @@ format-by-name-rules:
 
 keep-plural-enums:
 - IntervalInMins
-- ExpandTypeForGetCapacityReservationGroups
+- VmGuestPatchClassificationForWindows # we have this because the generator will change windows to window which does not make sense
 
 rename-rules:
   CPU: Cpu
@@ -189,8 +189,8 @@ rename-mapping:
   UpgradePolicy: VirtualMachineScaleSetUpgradePolicy
   ResourceSkuCapabilities: ComputeResourceSkuCapabilities
   ProtocolTypes: WinRMListenerProtocolType
-  VMGuestPatchClassificationLinux: LinuxVmGuestPatchClassification
-  VMGuestPatchClassificationWindows: WindowsVmGuestPatchClassification
+  VMGuestPatchClassificationLinux: VmGuestPatchClassificationForLinux
+  VMGuestPatchClassificationWindows: VmGuestPatchClassificationForWindows
 
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced
