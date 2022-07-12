@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary> The authentication info when authType is servicePrincipal certificate. </summary>
-    public partial class ServicePrincipalCertificateAuthInfo : AuthInfoBase
+    public partial class ServicePrincipalCertificateAuthInfo : AuthBaseInfo
     {
         /// <summary> Initializes a new instance of ServicePrincipalCertificateAuthInfo. </summary>
         /// <param name="clientId"> Application clientId for servicePrincipal auth. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             ClientId = clientId;
             PrincipalId = principalId;
             Certificate = certificate;
-            AuthType = AuthType.ServicePrincipalCertificate;
+            AuthType = LinkerAuthType.ServicePrincipalCertificate;
         }
 
         /// <summary> Initializes a new instance of ServicePrincipalCertificateAuthInfo. </summary>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="clientId"> Application clientId for servicePrincipal auth. </param>
         /// <param name="principalId"> Principal Id for servicePrincipal auth. </param>
         /// <param name="certificate"> ServicePrincipal certificate for servicePrincipal auth. </param>
-        internal ServicePrincipalCertificateAuthInfo(AuthType authType, string clientId, string principalId, string certificate) : base(authType)
+        internal ServicePrincipalCertificateAuthInfo(LinkerAuthType authType, string clientId, string principalId, string certificate) : base(authType)
         {
             ClientId = clientId;
             PrincipalId = principalId;

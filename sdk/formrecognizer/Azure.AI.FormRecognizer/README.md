@@ -146,7 +146,7 @@ More information about analyzing documents, including supported features, locale
 `DocumentModelAdministrationClient` provides operations for:
 
 - Building custom models to analyze specific fields you specify by labeling your custom documents. A `DocumentModel` is returned indicating the document type(s) the model can analyze, the fields it can analyze for each document type, as well as the estimated confidence for each field. See the [service documentation][formreco_build_model] for a more detailed explanation.
-- Creating a composed model from a collection of existing models.
+- Compose a model from a collection of existing models.
 - Managing models created in your account.
 - Listing document model operations or getting a specific model operation created within the last 24 hours.
 - Copying a custom model from one Form Recognizer resource to another.
@@ -631,16 +631,16 @@ Console.WriteLine($"Account has {accountProperties.DocumentModelCount} models.")
 Console.WriteLine($"It can have at most {accountProperties.DocumentModelLimit} models.");
 
 // List the first ten or fewer models currently stored in the account.
-AsyncPageable<DocumentModelInfo> models = client.GetModelsAsync();
+AsyncPageable<DocumentModelSummary> models = client.GetModelsAsync();
 
 int count = 0;
-await foreach (DocumentModelInfo modelInfo in models)
+await foreach (DocumentModelSummary modelSummary in models)
 {
-    Console.WriteLine($"Custom Model Info:");
-    Console.WriteLine($"  Model Id: {modelInfo.ModelId}");
-    if (string.IsNullOrEmpty(modelInfo.Description))
-        Console.WriteLine($"  Model description: {modelInfo.Description}");
-    Console.WriteLine($"  Created on: {modelInfo.CreatedOn}");
+    Console.WriteLine($"Custom Model Summary:");
+    Console.WriteLine($"  Model Id: {modelSummary.ModelId}");
+    if (string.IsNullOrEmpty(modelSummary.Description))
+        Console.WriteLine($"  Model description: {modelSummary.Description}");
+    Console.WriteLine($"  Created on: {modelSummary.CreatedOn}");
     if (++count == 10)
         break;
 }
@@ -679,15 +679,15 @@ Console.WriteLine($"Account has {accountProperties.DocumentModelCount} models.")
 Console.WriteLine($"It can have at most {accountProperties.DocumentModelLimit} models.");
 
 // List the first ten or fewer models currently stored in the account.
-Pageable<DocumentModelInfo> models = client.GetModels();
+Pageable<DocumentModelSummary> models = client.GetModels();
 
-foreach (DocumentModelInfo modelInfo in models.Take(10))
+foreach (DocumentModelSummary modelSummary in models.Take(10))
 {
-    Console.WriteLine($"Custom Model Info:");
-    Console.WriteLine($"  Model Id: {modelInfo.ModelId}");
-    if (string.IsNullOrEmpty(modelInfo.Description))
-        Console.WriteLine($"  Model description: {modelInfo.Description}");
-    Console.WriteLine($"  Created on: {modelInfo.CreatedOn}");
+    Console.WriteLine($"Custom Model Summary:");
+    Console.WriteLine($"  Model Id: {modelSummary.ModelId}");
+    if (string.IsNullOrEmpty(modelSummary.Description))
+        Console.WriteLine($"  Model description: {modelSummary.Description}");
+    Console.WriteLine($"  Created on: {modelSummary.CreatedOn}");
 }
 
 // Create a new model to store in the account
@@ -776,7 +776,7 @@ Samples showing how to use the Cognitive Services Form Recognizer library are av
 - [Build a custom model][build_a_custom_model]
 - [Manage models][manage_models]
 - [Get and List document model operations][get_and_list]
-- [Create a composed model][composed_model]
+- [Compose a model][compose_model]
 - [Copy a custom model between Form Recognizer resources][copy_custom_models]
 
 > Note that these samples use SDK `V4.0.0-beta.X`. For lower versions of the SDK, please see [Form Recognizer Samples for V3.1.X][formrecov3_samples].
@@ -834,7 +834,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [build_a_custom_model]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample_BuildCustomModel.md
 [manage_models]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample_ManageModels.md
 [copy_custom_models]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample_CopyCustomModel.md
-[composed_model]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample_ModelCompose.md
+[compose_model]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample_ModelCompose.md
 [get_and_list]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample_GetAndListOperations.md
 
 [azure_cli]: https://docs.microsoft.com/cli/azure

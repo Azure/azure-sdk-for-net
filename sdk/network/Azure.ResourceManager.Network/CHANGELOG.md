@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.8 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -10,16 +10,45 @@
 
 ### Other Changes
 
+## 1.0.0 (2022-07-11)
+
+This is the first stable release of the Network Management client library.
+
+### Features Added
+
+- Added Update methods in resource classes.
+
+### Breaking Changes
+
+Polishing since last public beta release:
+- Prepended `Network` prefix to all single / simple model names.
+- Corrected the format of all `Guid` type properties / parameters.
+- Corrected the format of all `ResourceIdentifier` type properteis / parameters.
+- Corrected the format of all `ResouceType` type properteis / parameters.
+- Corrected the format of all `ETag` type properteis / parameters.
+- Corrected the format of all `AzureLocation` type properteis / parameters.
+- Corrected the format of all binary type properteis / parameters.
+- Corrected all acronyms which not follow [.Net Naming Guidelines](https://docs.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
+- Corrected enumeration name by following [Naming Enumerations Rule](https://docs.microsoft.com/dotnet/standard/design-guidelines/names-of-classes-structs-and-interfaces#naming-enumerations).
+- Corrected the suffix of `DateTimeOffset` properties / parameters.
+- Corrected the name of interval / duration properties / parameters which end with units.
+- Optimized the name of some models and functions.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.2.0
+- Upgraded dependent `Azure.Core` to 1.25.0
+
 ## 1.0.0-beta.7 (2022-04-08)
 
 ### Breaking Changes
 
-- Simplify `type` property names.
+- Simplified `type` property names.
 - Normalized the body parameter type names for PUT / POST / PATCH operations if it is only used as input.
 
 ### Other Changes
 
-- Upgrade dependency to Azure.ResourceManager 1.0.0
+- Upgraded dependency to Azure.ResourceManager 1.0.0
 
 ## 1.0.0-beta.6 (2022-03-31)
 
@@ -178,10 +207,10 @@ After upgrade:
 IPsecPolicy policy = new IPsecPolicy(
    300,
    1024,
-   IPsecEncryption.AES128,
-   IPsecIntegrity.SHA256,
-   IkeEncryption.AES192,
-   IkeIntegrity.SHA1,
-   DhGroup.DHGroup2,
-   PfsGroup.PFS1);
+   IPsecEncryption.Aes128,
+   IPsecIntegrity.Sha256,
+   IkeEncryption.Aes192,
+   IkeIntegrity.Sha1,
+   DHGroup.DHGroup2,
+   PfsGroup.Pfs1);
 ```

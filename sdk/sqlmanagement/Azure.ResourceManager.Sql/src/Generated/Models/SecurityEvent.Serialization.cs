@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<string> subscription = default;
             Optional<string> server = default;
             Optional<string> database = default;
-            Optional<string> clientIp = default;
+            Optional<string> clientIP = default;
             Optional<string> applicationName = default;
             Optional<string> principalName = default;
             Optional<SecurityEventSqlInjectionAdditionalProperties> securityEventSqlInjectionAdditionalProperties = default;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("clientIp"))
                         {
-                            clientIp = property0.Value.GetString();
+                            clientIP = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("applicationName"))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new SecurityEvent(id, name, type, systemData.Value, Optional.ToNullable(eventTime), Optional.ToNullable(securityEventType), subscription.Value, server.Value, database.Value, clientIp.Value, applicationName.Value, principalName.Value, securityEventSqlInjectionAdditionalProperties.Value);
+            return new SecurityEvent(id, name, type, systemData.Value, Optional.ToNullable(eventTime), Optional.ToNullable(securityEventType), subscription.Value, server.Value, database.Value, clientIP.Value, applicationName.Value, principalName.Value, securityEventSqlInjectionAdditionalProperties.Value);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation");
-                writer.WriteObjectValue(ExtendedLocation);
+                JsonSerializer.Serialize(writer, ExtendedLocation);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new TrackedResourceExtendedData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation.Value);
+            return new TrackedResourceExtendedData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation);
         }
     }
 }

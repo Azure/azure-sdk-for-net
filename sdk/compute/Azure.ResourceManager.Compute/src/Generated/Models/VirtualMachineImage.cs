@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies disallowed configuration for the VirtualMachine created from the image. </summary>
         internal DisallowedConfiguration Disallowed { get; set; }
         /// <summary> VM disk types which are disallowed. </summary>
-        public VmDiskType? DisallowedVmDiskType
+        public VirtualMachineDiskType? DisallowedVmDiskType
         {
             get => Disallowed is null ? default : Disallowed.VmDiskType;
             set

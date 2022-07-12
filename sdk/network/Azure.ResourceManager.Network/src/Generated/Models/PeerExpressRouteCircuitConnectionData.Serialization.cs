@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(AuthResourceGuid))
             {
                 writer.WritePropertyName("authResourceGuid");
-                writer.WriteStringValue(AuthResourceGuid);
+                writer.WriteStringValue(AuthResourceGuid.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> addressPrefix = default;
             Optional<CircuitConnectionStatus> circuitConnectionStatus = default;
             Optional<string> connectionName = default;
-            Optional<string> authResourceGuid = default;
+            Optional<Guid> authResourceGuid = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -160,7 +161,12 @@ namespace Azure.ResourceManager.Network
                         }
                         if (property0.NameEquals("authResourceGuid"))
                         {
-                            authResourceGuid = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            authResourceGuid = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -177,7 +183,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new PeerExpressRouteCircuitConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), expressRouteCircuitPeering, peerExpressRouteCircuitPeering, addressPrefix.Value, Optional.ToNullable(circuitConnectionStatus), connectionName.Value, authResourceGuid.Value, Optional.ToNullable(provisioningState));
+            return new PeerExpressRouteCircuitConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), expressRouteCircuitPeering, peerExpressRouteCircuitPeering, addressPrefix.Value, Optional.ToNullable(circuitConnectionStatus), connectionName.Value, Optional.ToNullable(authResourceGuid), Optional.ToNullable(provisioningState));
         }
     }
 }

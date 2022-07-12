@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static WorkspaceInfo DeserializeWorkspaceInfo(JsonElement element)
         {
-            string id = default;
+            ResourceIdentifier id = default;
             AzureLocation location = default;
             string customerId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("location"))

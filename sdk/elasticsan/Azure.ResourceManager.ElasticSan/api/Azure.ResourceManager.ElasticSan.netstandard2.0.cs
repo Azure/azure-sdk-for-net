@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ElasticSan
     public partial class ElasticSanVolumeGroupData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public ElasticSanVolumeGroupData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.ElasticSan.Models.EncryptionType? Encryption { get { throw null; } set { } }
+        public Azure.ResourceManager.ElasticSan.Models.ElasticSanEncryptionType? Encryption { get { throw null; } set { } }
         public Azure.ResourceManager.ElasticSan.Models.StorageTargetType? ProtocolType { get { throw null; } set { } }
         public Azure.ResourceManager.ElasticSan.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ElasticSan.Models.VirtualNetworkRule> VirtualNetworkRules { get { throw null; } }
@@ -157,27 +157,10 @@ namespace Azure.ResourceManager.ElasticSan
 }
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Action : System.IEquatable<Azure.ResourceManager.ElasticSan.Models.Action>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Action(string value) { throw null; }
-        public static Azure.ResourceManager.ElasticSan.Models.Action Allow { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ElasticSan.Models.Action other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ElasticSan.Models.Action left, Azure.ResourceManager.ElasticSan.Models.Action right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ElasticSan.Models.Action (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ElasticSan.Models.Action left, Azure.ResourceManager.ElasticSan.Models.Action right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class ElasticSanElasticSanVolumeGroupPatch
     {
         public ElasticSanElasticSanVolumeGroupPatch() { }
-        public Azure.ResourceManager.ElasticSan.Models.EncryptionType? Encryption { get { throw null; } set { } }
+        public Azure.ResourceManager.ElasticSan.Models.ElasticSanEncryptionType? Encryption { get { throw null; } set { } }
         public Azure.ResourceManager.ElasticSan.Models.StorageTargetType? ProtocolType { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ElasticSan.Models.VirtualNetworkRule> VirtualNetworkRules { get { throw null; } }
@@ -187,6 +170,25 @@ namespace Azure.ResourceManager.ElasticSan.Models
         public ElasticSanElasticSanVolumePatch() { }
         public long? SizeGiB { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ElasticSanEncryptionType : System.IEquatable<Azure.ResourceManager.ElasticSan.Models.ElasticSanEncryptionType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ElasticSanEncryptionType(string value) { throw null; }
+        public static Azure.ResourceManager.ElasticSan.Models.ElasticSanEncryptionType EncryptionAtRestWithCustomerKey { get { throw null; } }
+        public static Azure.ResourceManager.ElasticSan.Models.ElasticSanEncryptionType EncryptionAtRestWithPlatformAndCustomerKeys { get { throw null; } }
+        public static Azure.ResourceManager.ElasticSan.Models.ElasticSanEncryptionType EncryptionAtRestWithPlatformKey { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ElasticSan.Models.ElasticSanEncryptionType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ElasticSan.Models.ElasticSanEncryptionType left, Azure.ResourceManager.ElasticSan.Models.ElasticSanEncryptionType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ElasticSan.Models.ElasticSanEncryptionType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ElasticSan.Models.ElasticSanEncryptionType left, Azure.ResourceManager.ElasticSan.Models.ElasticSanEncryptionType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class ElasticSanPatch
     {
@@ -257,25 +259,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
         public long? MaxSizeGiB { get { throw null; } }
         public long? MinIncrementSizeGiB { get { throw null; } }
         public long? MinSizeGiB { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct EncryptionType : System.IEquatable<Azure.ResourceManager.ElasticSan.Models.EncryptionType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public EncryptionType(string value) { throw null; }
-        public static Azure.ResourceManager.ElasticSan.Models.EncryptionType EncryptionAtRestWithCustomerKey { get { throw null; } }
-        public static Azure.ResourceManager.ElasticSan.Models.EncryptionType EncryptionAtRestWithPlatformAndCustomerKeys { get { throw null; } }
-        public static Azure.ResourceManager.ElasticSan.Models.EncryptionType EncryptionAtRestWithPlatformKey { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ElasticSan.Models.EncryptionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ElasticSan.Models.EncryptionType left, Azure.ResourceManager.ElasticSan.Models.EncryptionType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ElasticSan.Models.EncryptionType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ElasticSan.Models.EncryptionType left, Azure.ResourceManager.ElasticSan.Models.EncryptionType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class IscsiTargetInfo
     {
@@ -388,9 +371,26 @@ namespace Azure.ResourceManager.ElasticSan.Models
     public partial class VirtualNetworkRule
     {
         public VirtualNetworkRule(string virtualNetworkResourceId) { }
-        public Azure.ResourceManager.ElasticSan.Models.Action? Action { get { throw null; } set { } }
+        public Azure.ResourceManager.ElasticSan.Models.VirtualNetworkRuleAction? Action { get { throw null; } set { } }
         public Azure.ResourceManager.ElasticSan.Models.VirtualNetworkRuleState? State { get { throw null; } }
         public string VirtualNetworkResourceId { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VirtualNetworkRuleAction : System.IEquatable<Azure.ResourceManager.ElasticSan.Models.VirtualNetworkRuleAction>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VirtualNetworkRuleAction(string value) { throw null; }
+        public static Azure.ResourceManager.ElasticSan.Models.VirtualNetworkRuleAction Allow { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ElasticSan.Models.VirtualNetworkRuleAction other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ElasticSan.Models.VirtualNetworkRuleAction left, Azure.ResourceManager.ElasticSan.Models.VirtualNetworkRuleAction right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ElasticSan.Models.VirtualNetworkRuleAction (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ElasticSan.Models.VirtualNetworkRuleAction left, Azure.ResourceManager.ElasticSan.Models.VirtualNetworkRuleAction right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public enum VirtualNetworkRuleState
     {

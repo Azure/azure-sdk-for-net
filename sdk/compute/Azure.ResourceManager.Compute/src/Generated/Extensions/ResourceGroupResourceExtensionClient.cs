@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.Compute
             return GetCachedClient(Client => new SshPublicKeyCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ImageResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ImageResources and their operations over a ImageResource. </returns>
-        public virtual ImageCollection GetImages()
+        /// <summary> Gets a collection of DiskImageResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of DiskImageResources and their operations over a DiskImageResource. </returns>
+        public virtual DiskImageCollection GetDiskImages()
         {
-            return GetCachedClient(Client => new ImageCollection(Client, Id));
+            return GetCachedClient(Client => new DiskImageCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of RestorePointGroupResources in the ResourceGroupResource. </summary>

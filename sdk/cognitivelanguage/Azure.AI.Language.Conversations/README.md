@@ -304,6 +304,184 @@ if (targetIntentResult.GetProperty("targetProjectKind").GetString() == "Question
 }
 ```
 
+#### Conversational summarization
+
+To summarize a conversation, you can use the `AnalyzeConversation` method overload that returns an `Operation<BinaryData>`:
+
+```C# Snippet:AnalyzeConversation_ConversationSummarization
+var data = new
+{
+    analysisInput = new
+    {
+        conversations = new[]
+        {
+            new
+            {
+                conversationItems = new[]
+                {
+                    new
+                    {
+                        text = "Hello, how can I help you?",
+                        id = "1",
+                        participantId = "Agent",
+                    },
+                    new
+                    {
+                        text = "How to upgrade Office? I am getting error messages the whole day.",
+                        id = "2",
+                        participantId = "Customer",
+                    },
+                    new
+                    {
+                        text = "Press the upgrade button please. Then sign in and follow the instructions.",
+                        id = "3",
+                        participantId = "Agent",
+                    },
+                },
+                id = "1",
+                language = "en",
+                modality = "text",
+            },
+        }
+    },
+    tasks = new[]
+    {
+        new
+        {
+            parameters = new
+            {
+                summaryAspects = new[]
+                {
+                    "issue",
+                    "resolution",
+                }
+            },
+            kind = "ConversationalSummarizationTask",
+            taskName = "1",
+        },
+    },
+};
+
+Operation<BinaryData> analyzeConversationOperation = client.AnalyzeConversation(WaitUntil.Started, RequestContent.Create(data));
+analyzeConversationOperation.WaitForCompletion();
+
+using JsonDocument result = JsonDocument.Parse(analyzeConversationOperation.Value.ToStream());
+JsonElement jobResults = result.RootElement;
+foreach (JsonElement task in jobResults.GetProperty("tasks").GetProperty("items").EnumerateArray())
+{
+    JsonElement results = task.GetProperty("results");
+
+    Console.WriteLine("Conversations:");
+    foreach (JsonElement conversation in results.GetProperty("conversations").EnumerateArray())
+    {
+        Console.WriteLine($"Conversation: #{conversation.GetProperty("id").GetString()}");
+        Console.WriteLine("Summaries:");
+        foreach (JsonElement summary in conversation.GetProperty("summaries").EnumerateArray())
+        {
+            Console.WriteLine($"Text: {summary.GetProperty("text").GetString()}");
+            Console.WriteLine($"Aspect: {summary.GetProperty("aspect").GetString()}");
+        }
+        Console.WriteLine();
+    }
+}
+```
+
+#### Conversational PII
+
+To extract and redact personally-identifiable information (PII) from text, you can use the `AnalyzeConversation` method overload that returns an `Operation<BinaryData>`:
+
+```C# Snippet:AnalyzeConversation_ConversationPII_Text
+var data = new
+{
+    analysisInput = new
+    {
+        conversations = new[]
+        {
+            new
+            {
+                conversationItems = new[]
+                {
+                    new
+                    {
+                        text = "Hi, I am John Doe.",
+                        id = "1",
+                        participantId = "0",
+                    },
+                    new
+                    {
+                        text = "Hi John, how are you doing today?",
+                        id = "2",
+                        participantId = "1",
+                    },
+                    new
+                    {
+                        text = "Pretty good.",
+                        id = "3",
+                        participantId = "0",
+                    },
+                },
+                id = "1",
+                language = "en",
+                modality = "text",
+            },
+        }
+    },
+    tasks = new[]
+    {
+        new
+        {
+            parameters = new
+            {
+                piiCategories = new[]
+                {
+                    "All",
+                },
+                includeAudioRedaction = false,
+                modelVersion = "2022-05-15-preview",
+                loggingOptOut = false,
+            },
+            kind = "ConversationalPIITask",
+            taskName = "analyze",
+        },
+    },
+};
+
+Operation<BinaryData> analyzeConversationOperation = client.AnalyzeConversation(WaitUntil.Started, RequestContent.Create(data));
+analyzeConversationOperation.WaitForCompletion();
+
+using JsonDocument result = JsonDocument.Parse(analyzeConversationOperation.Value.ToStream());
+JsonElement jobResults = result.RootElement;
+foreach (JsonElement task in jobResults.GetProperty("tasks").GetProperty("items").EnumerateArray())
+{
+    JsonElement results = task.GetProperty("results");
+
+    Console.WriteLine("Conversations:");
+    foreach (JsonElement conversation in results.GetProperty("conversations").EnumerateArray())
+    {
+        Console.WriteLine($"Conversation: #{conversation.GetProperty("id").GetString()}");
+        Console.WriteLine("Conversation Items:");
+        foreach (JsonElement conversationItem in conversation.GetProperty("conversationItems").EnumerateArray())
+        {
+            Console.WriteLine($"Conversation Item: #{conversationItem.GetProperty("id").GetString()}");
+
+            Console.WriteLine($"Redacted Text: {conversationItem.GetProperty("redactedContent").GetProperty("text").GetString()}");
+
+            Console.WriteLine("Entities:");
+            foreach (JsonElement entity in conversationItem.GetProperty("entities").EnumerateArray())
+            {
+                Console.WriteLine($"Text: {entity.GetProperty("text").GetString()}");
+                Console.WriteLine($"Offset: {entity.GetProperty("offset").GetInt32()}");
+                Console.WriteLine($"Category: {entity.GetProperty("category").GetString()}");
+                Console.WriteLine($"Confidence Score: {entity.GetProperty("confidenceScore").GetSingle()}");
+                Console.WriteLine($"Length: {entity.GetProperty("length").GetInt32()}");
+                Console.WriteLine();
+            }
+        }
+        Console.WriteLine();
+    }
+}
+```
+
 ### Additional samples
 
 Browser our [samples][conversationanalysis_samples] for more examples of how to analyze conversations.

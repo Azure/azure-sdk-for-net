@@ -63,12 +63,12 @@ namespace Azure.ResourceManager.Sql
             return GetCachedClient(Client => new InstancePoolCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ServerTrustGroupResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of SqlServerTrustGroupResources in the ResourceGroupResource. </summary>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
-        /// <returns> An object representing collection of ServerTrustGroupResources and their operations over a ServerTrustGroupResource. </returns>
-        public virtual ServerTrustGroupCollection GetServerTrustGroups(string locationName)
+        /// <returns> An object representing collection of SqlServerTrustGroupResources and their operations over a SqlServerTrustGroupResource. </returns>
+        public virtual SqlServerTrustGroupCollection GetSqlServerTrustGroups(string locationName)
         {
-            return new ServerTrustGroupCollection(Client, Id, locationName);
+            return new SqlServerTrustGroupCollection(Client, Id, locationName);
         }
 
         /// <summary> Gets a collection of VirtualClusterResources in the ResourceGroupResource. </summary>
