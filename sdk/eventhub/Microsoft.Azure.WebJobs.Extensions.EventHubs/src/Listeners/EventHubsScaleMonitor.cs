@@ -89,8 +89,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 
             try
             {
-                checkpoints = (await Task.WhenAll(checkpointTasks).ConfigureAwait(false))
-                    ?? Array.Empty<EventProcessorCheckpoint>();
+                checkpoints = await Task.WhenAll(checkpointTasks).ConfigureAwait(false);
             }
             catch
             {
