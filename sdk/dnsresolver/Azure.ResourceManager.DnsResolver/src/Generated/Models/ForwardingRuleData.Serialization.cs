@@ -162,7 +162,6 @@ namespace Azure.ResourceManager.DnsResolver
                     continue;
                 }
             }
-
             return new ForwardingRuleData(id, name, type, systemData.Value, Optional.ToNullable(etag), domainName, targetDnsServers, Optional.ToDictionary(metadata), Optional.ToNullable(forwardingRuleState), Optional.ToNullable(provisioningState));
         }
     }

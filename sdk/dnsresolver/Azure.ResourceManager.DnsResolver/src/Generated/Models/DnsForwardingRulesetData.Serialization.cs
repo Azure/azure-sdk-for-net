@@ -153,7 +153,6 @@ namespace Azure.ResourceManager.DnsResolver
                     continue;
                 }
             }
-
             return new DnsForwardingRulesetData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), dnsResolverOutboundEndpoints, Optional.ToNullable(provisioningState), resourceGuid.Value);
         }
     }

@@ -152,7 +152,6 @@ namespace Azure.ResourceManager.DnsResolver
                     continue;
                 }
             }
-
             return new InboundEndpointData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), ipConfigurations, Optional.ToNullable(provisioningState), resourceGuid.Value);
         }
     }
