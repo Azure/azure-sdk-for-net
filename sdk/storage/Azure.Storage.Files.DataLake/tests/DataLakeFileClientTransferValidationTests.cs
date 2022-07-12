@@ -67,7 +67,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
             return await client.AppendAsync(source, 0, new DataLakeFileAppendOptions
             {
-                TransactionalValidationOptions = hashingOptions
+                TransferValidationOptions = hashingOptions
             });
         }
 
@@ -87,7 +87,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
             await client.UploadAsync(source, new DataLakeFileUploadOptions
             {
-                ValidationOptions = hashingOptions,
+                TransferValidationOptions = hashingOptions,
                 TransferOptions = transferOptions
             });
         }
@@ -105,7 +105,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
             return await client.OpenWriteAsync(true, new DataLakeFileOpenWriteOptions
             {
-                ValidationOptions = hashingOptions,
+                TransferValidationOptions = hashingOptions,
                 BufferSize = internalBufferSize
             });
         }

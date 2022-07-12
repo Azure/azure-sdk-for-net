@@ -1128,7 +1128,7 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken = default) =>
             AppendBlockInternal(
                 content,
-                options?.TransactionalValidationOptions,
+                options?.TransferValidationOptions,
                 options?.Conditions,
                 options?.ProgressHandler,
                 false, // async
@@ -1171,7 +1171,7 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken = default) =>
             await AppendBlockInternal(
                 content,
-                options?.TransactionalValidationOptions,
+                options?.TransferValidationOptions,
                 options?.Conditions,
                 options?.ProgressHandler,
                 true, // async
@@ -2053,7 +2053,7 @@ namespace Azure.Storage.Blobs.Specialized
                     position: position,
                     conditions: conditions,
                     progressHandler: options?.ProgressHandler,
-                    options?.ValidationOptions
+                    options?.TransferValidationOptions
                     );
             }
             catch (Exception ex)

@@ -48,7 +48,7 @@ namespace Azure.Storage.Blobs.Tests
         {
             return await client.OpenWriteAsync(true, new AppendBlobOpenWriteOptions
             {
-                ValidationOptions = hashingOptions,
+                TransferValidationOptions = hashingOptions,
                 BufferSize = internalBufferSize
             });
         }
@@ -70,7 +70,7 @@ namespace Azure.Storage.Blobs.Tests
         {
             return (await client.AppendBlockAsync(source, new AppendBlobAppendBlockOptions
             {
-                TransactionalValidationOptions = hashingOptions
+                TransferValidationOptions = hashingOptions
             })).GetRawResponse();
         }
 

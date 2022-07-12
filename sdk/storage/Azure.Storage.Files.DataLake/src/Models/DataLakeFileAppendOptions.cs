@@ -28,6 +28,6 @@ namespace Azure.Storage.Files.DataLake.Models
         /// Optional <see cref="UploadTransferValidationOptions"/> for using transactional
         /// checksum validation on append.
         /// </summary>
-        public UploadTransferValidationOptions TransactionalValidationOptions { get; set; }
+        public UploadTransferValidationOptions TransferValidationOptions { get; set; }
     }
 }

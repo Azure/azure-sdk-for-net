@@ -34,6 +34,6 @@ namespace Azure.Storage.Blobs.Models
         /// AppendBlock accepts precalcualted checksums, but the method will calculate
         /// one if not provided.
         /// </summary>
-        public UploadTransferValidationOptions TransactionalValidationOptions { get; set; }
+        public UploadTransferValidationOptions TransferValidationOptions { get; set; }
     }
 }
