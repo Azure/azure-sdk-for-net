@@ -21,7 +21,7 @@ using Azure.ResourceManager.Cdn.Models;
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CdnCustomDomainResource" /> and their operations.
+    /// A! class representing a collection of <see cref="CdnCustomDomainResource" /> and their operations.
     /// Each <see cref="CdnCustomDomainResource" /> in the collection will belong to the same instance of <see cref="CdnEndpointResource" />.
     /// To get a <see cref="CdnCustomDomainCollection" /> instance call the GetCdnCustomDomains method from an instance of <see cref="CdnEndpointResource" />.
     /// </summary>
