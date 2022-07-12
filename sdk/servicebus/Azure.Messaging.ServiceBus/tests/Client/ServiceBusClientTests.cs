@@ -80,7 +80,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
         {
             var credential = new Mock<ServiceBusTokenCredential>(Mock.Of<TokenCredential>());
             var fakeConnection = "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake";
-            var fakeEndpoint = new Uri("sb://not-real.com");
 
             var options = new ServiceBusClientOptions
             {
