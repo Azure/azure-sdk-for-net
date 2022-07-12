@@ -56,6 +56,8 @@ ServiceBusClient client = new ServiceBusClient(connectionString);
 
 To see how to authenticate using Azure.Identity, view this [example](#authenticating-with-azureidentity).
 
+To see how to initiate the connection with a custom endpoint, view this [example](#initiating-the-connection-with-a-custom-endpoint).
+
 ### ASP.NET Core
 
 To inject `ServiceBusClient` as a dependency in an ASP.NET Core app, install the Azure client library integration for ASP.NET Core package.
@@ -150,6 +152,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 * [Dead letter a message](#dead-letter-a-message)
 * [Using the processor](#using-the-processor)
 * [Authenticating with Azure.Identity](#authenticating-with-azureidentity)
+* [Initiating the connection with a custom endpoint](#initiating-the-connection-with-a-custom-endpoint)
 * [Working with sessions](#working-with-sessions)
 * [More samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/README.md)
 
@@ -410,6 +413,8 @@ The [Azure Identity library](https://github.com/Azure/azure-sdk-for-net/tree/mai
 string fullyQualifiedNamespace = "yournamespace.servicebus.windows.net";
 ServiceBusClient client = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential());
 ```
+
+### Initiating the connection with a custom endpoint
 
 ### Working with Sessions
 
