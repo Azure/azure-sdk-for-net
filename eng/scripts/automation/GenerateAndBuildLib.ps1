@@ -67,11 +67,11 @@ function CreateOrUpdateAutorestConfigFile() {
 
             $startNum = ($fileContent | Select-String -Pattern '```').LineNumber[0]
             $configline = ""
-            if ($readme -ne "") {
+            if ($readme) {
                 Write-Host "Updating autorest.md file to config required readme file."
                 $requirefile = $readme
                 $configline = "require:" + [Environment]::NewLine + "- " + "$requirefile" + [Environment]::NewLine + "csharp: true"
-            } elseif ($inputfile -ne "") {
+            } elseif ($inputfile) {
                 Write-Host "Updating autorest.md file to update input-file."
                 if ($inputfile.StartsWith('-')) {
                     $configline = "input-file:" + [Environment]::NewLine + "$inputfile"
@@ -89,7 +89,7 @@ function CreateOrUpdateAutorestConfigFile() {
         }
         
         # update autorest.md with configuration
-        if ( $autorestConfigYaml -ne "") {
+        if ( $autorestConfigYaml) {
             Write-Host "Update autorest.md with configuration."
             $range = ($autorestConfigYaml | Select-String -Pattern '```').LineNumber
             if ( $range.count -gt 1) {
@@ -120,7 +120,7 @@ function CreateOrUpdateAutorestConfigFile() {
         }
     } else {
         Write-Host "autorest.md does not exist. start to create one."
-        if ( $autorestConfigYaml -ne "") {
+        if ( $autorestConfigYaml ) {
             Write-Host "Create autorest.md with configuration."
             $autorestConfigYaml = "# Azure.IoT.DeviceUpdate" + [Environment]::NewLine + '``` yaml' +  [Environment]::NewLine + $autorestConfigYaml + '```' + [Environment]::NewLine;
             $autorestConfigYaml | Out-File $autorestFilePath
@@ -304,7 +304,7 @@ function New-MgmtPackageFolder() {
     }
   
     # update the readme path.
-    if ($readme -ne "") {
+    if ($readme) {
       Write-Host "Updating autorest.md file."
       $requirefile = "require: $readme"
       $rquirefileRex = "require *:.*.md"
@@ -414,7 +414,7 @@ function Invoke-GenerateAndBuildSDK () {
     } else {
         Write-Host "Generate data-plane SDK client library."
         $namespace = ""
-        if ( $autorestConfigYaml -ne "") {
+        if ( $autorestConfigYaml) {
             # support single package
             $range = ($autorestConfigYaml | Select-String -Pattern '```').LineNumber
             if ( $range.count -gt 1) {
@@ -427,7 +427,7 @@ function Invoke-GenerateAndBuildSDK () {
             $yml = ConvertFrom-YAML $autorestConfigYaml
 
             $outputFolder = $yml["output-folder"]
-            if ($outputFolder -ne "") {
+            if ($outputFolder) {
                 $directories = $outputFolder.Split("/");
                 $service = $directories[-2];
                 $namespace = $directories[-1];
@@ -514,7 +514,7 @@ function GeneratePackage()
             }
             # Generate APIs
             Write-Host "Start to export api for $service"
-            pwsh $sdkRootPath/eng/scripts/Export-API.ps1 $service
+            & $sdkRootPath/eng/scripts/Export-API.ps1 $service
             if ( !$? ) {
                 Write-Error "Failed to export api for sdk. exit code: $?"
             }

@@ -53,8 +53,7 @@ for ($i = 0; $i -le $readmeFiles.Count - 1; $i++) {
             $readme = "https://github.com/$org/azure-rest-api-specs/blob/$commitid/$readmeFile"
         }
     } else {
-        Write-Error "No readme File path provided."
-        exit 1
+        throw "No readme File path provided."
     }
 
     if ($autorestConfigYaml) {
@@ -78,7 +77,7 @@ foreach( $file in $inputFilePaths) {
     }
 }
 
-if ($inputFileToGen.Count -gt 0 ) {
+if ($inputFileToGen) {
     UpdateExistingSDKByInputFiles -inputFilePaths $inputFileToGen -sdkRootPath $sdkPath -headSha $commitid -repoHttpsUrl $repoHttpsUrl -downloadUrlPrefix "$downloadUrlPrefix" -generatedSDKPackages $generatedSDKPackages
 }
 
