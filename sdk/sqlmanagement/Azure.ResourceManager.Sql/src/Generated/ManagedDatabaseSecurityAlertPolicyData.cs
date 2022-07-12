@@ -31,17 +31,17 @@ namespace Azure.ResourceManager.Sql
         /// <param name="state"> Specifies the state of the policy, whether it is enabled or disabled or a policy has not been applied yet on the specific database. </param>
         /// <param name="disabledAlerts"> Specifies an array of alerts that are disabled. Allowed values are: Sql_Injection, Sql_Injection_Vulnerability, Access_Anomaly, Data_Exfiltration, Unsafe_Action, Brute_Force. </param>
         /// <param name="emailAddresses"> Specifies an array of e-mail addresses to which the alert is sent. </param>
-        /// <param name="emailAccountAdmins"> Specifies that the alert is sent to the account administrators. </param>
+        /// <param name="sendToEmailAccountAdmins"> Specifies that the alert is sent to the account administrators. </param>
         /// <param name="storageEndpoint"> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). This blob storage will hold all Threat Detection audit logs. </param>
         /// <param name="storageAccountAccessKey"> Specifies the identifier key of the Threat Detection audit storage account. </param>
         /// <param name="retentionDays"> Specifies the number of days to keep in the Threat Detection audit logs. </param>
         /// <param name="createdOn"> Specifies the UTC creation time of the policy. </param>
-        internal ManagedDatabaseSecurityAlertPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityAlertPolicyState? state, IList<string> disabledAlerts, IList<string> emailAddresses, bool? emailAccountAdmins, string storageEndpoint, string storageAccountAccessKey, int? retentionDays, DateTimeOffset? createdOn) : base(id, name, resourceType, systemData)
+        internal ManagedDatabaseSecurityAlertPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityAlertPolicyState? state, IList<string> disabledAlerts, IList<string> emailAddresses, bool? sendToEmailAccountAdmins, string storageEndpoint, string storageAccountAccessKey, int? retentionDays, DateTimeOffset? createdOn) : base(id, name, resourceType, systemData)
         {
             State = state;
             DisabledAlerts = disabledAlerts;
             EmailAddresses = emailAddresses;
-            EmailAccountAdmins = emailAccountAdmins;
+            SendToEmailAccountAdmins = sendToEmailAccountAdmins;
             StorageEndpoint = storageEndpoint;
             StorageAccountAccessKey = storageAccountAccessKey;
             RetentionDays = retentionDays;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Specifies an array of e-mail addresses to which the alert is sent. </summary>
         public IList<string> EmailAddresses { get; }
         /// <summary> Specifies that the alert is sent to the account administrators. </summary>
-        public bool? EmailAccountAdmins { get; set; }
+        public bool? SendToEmailAccountAdmins { get; set; }
         /// <summary> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). This blob storage will hold all Threat Detection audit logs. </summary>
         public string StorageEndpoint { get; set; }
         /// <summary> Specifies the identifier key of the Threat Detection audit storage account. </summary>

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="protocolType"> Type of storage target. </param>
         /// <param name="encryption"> Type of encryption. </param>
         /// <param name="networkAcls"> A collection of rules governing the accessibility from specific network locations. </param>
-        internal ElasticSanVolumeGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProvisioningState? provisioningState, StorageTargetType? protocolType, EncryptionType? encryption, NetworkRuleSet networkAcls) : base(id, name, resourceType, systemData, tags, location)
+        internal ElasticSanVolumeGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProvisioningState? provisioningState, StorageTargetType? protocolType, ElasticSanEncryptionType? encryption, NetworkRuleSet networkAcls) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             ProtocolType = protocolType;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <summary> Type of storage target. </summary>
         public StorageTargetType? ProtocolType { get; set; }
         /// <summary> Type of encryption. </summary>
-        public EncryptionType? Encryption { get; set; }
+        public ElasticSanEncryptionType? Encryption { get; set; }
         /// <summary> A collection of rules governing the accessibility from specific network locations. </summary>
         internal NetworkRuleSet NetworkAcls { get; set; }
         /// <summary> The list of virtual network rules. </summary>

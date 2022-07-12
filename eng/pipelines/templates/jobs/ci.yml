@@ -140,6 +140,7 @@ jobs:
           ignoreDirectories: '.nuget'
 
   - job: "Analyze"
+    timeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
     condition: and(succeededOrFailed(), ne(variables['Skip.Analyze'], true))
     pool:
       name: azsdk-pool-mms-ubuntu-2004-general
@@ -151,6 +152,7 @@ jobs:
               Paths:
                 - "/*"
                 - "!SessionRecords"
+      - template: /eng/common/pipelines/templates/steps/validate-filename.yml
       - template: /eng/common/pipelines/templates/steps/check-spelling.yml
       - task: UsePythonVersion@0
         displayName: "Use Python 3.6"

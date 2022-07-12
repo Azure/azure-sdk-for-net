@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
             Optional<string> resourceType = default;
             Optional<ResourceSku> sku = default;
-            Optional<ResourceSkuCapacity> capacity = default;
+            Optional<ApiManagementResourceSkuCapacity> capacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"))
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    capacity = ResourceSkuCapacity.DeserializeResourceSkuCapacity(property.Value);
+                    capacity = ApiManagementResourceSkuCapacity.DeserializeApiManagementResourceSkuCapacity(property.Value);
                     continue;
                 }
             }

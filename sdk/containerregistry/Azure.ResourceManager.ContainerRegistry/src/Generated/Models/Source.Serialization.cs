@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         internal static Source DeserializeSource(JsonElement element)
         {
             Optional<string> addr = default;
-            Optional<string> instanceID = default;
+            Optional<string> instanceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("addr"))
@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 if (property.NameEquals("instanceID"))
                 {
-                    instanceID = property.Value.GetString();
+                    instanceId = property.Value.GetString();
                     continue;
                 }
             }
-            return new Source(addr.Value, instanceID.Value);
+            return new Source(addr.Value, instanceId.Value);
         }
     }
 }

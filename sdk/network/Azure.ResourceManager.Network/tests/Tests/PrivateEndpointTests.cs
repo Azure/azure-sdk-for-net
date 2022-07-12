@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = TestEnvironment.Location,
                 Subnet = virtualNetwork.Data.Subnets[0],
                 PrivateLinkServiceConnections = {
-                    new PrivateLinkServiceConnection
+                    new NetworkPrivateLinkServiceConnection
                     {
                         Name = Recording.GenerateAssetName("pec"),
                         // TODO: externalize or create the service on-demand, like virtual network
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = TestEnvironment.Location,
                 Subnet = virtualNetwork.Data.Subnets[0],
                 PrivateLinkServiceConnections = {
-                    new PrivateLinkServiceConnection
+                    new NetworkPrivateLinkServiceConnection
                     {
                         Name = Recording.GenerateAssetName("pec"),
                         // TODO: externalize or create the service on-demand, like virtual network

@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.Network
         private ExpressRoutePortsRestOperations _expressRoutePortRestClient;
         private ClientDiagnostics _firewallPolicyClientDiagnostics;
         private FirewallPoliciesRestOperations _firewallPolicyRestClient;
-        private ClientDiagnostics _ipAllocationIpAllocationsClientDiagnostics;
-        private IpAllocationsRestOperations _ipAllocationIpAllocationsRestClient;
-        private ClientDiagnostics _ipGroupIpGroupsClientDiagnostics;
-        private IpGroupsRestOperations _ipGroupIpGroupsRestClient;
+        private ClientDiagnostics _ipAllocationIPAllocationsClientDiagnostics;
+        private IpAllocationsRestOperations _ipAllocationIPAllocationsRestClient;
+        private ClientDiagnostics _ipGroupIPGroupsClientDiagnostics;
+        private IpGroupsRestOperations _ipGroupIPGroupsRestClient;
         private ClientDiagnostics _loadBalancerClientDiagnostics;
         private LoadBalancersRestOperations _loadBalancerRestClient;
         private ClientDiagnostics _natGatewayClientDiagnostics;
@@ -114,8 +114,8 @@ namespace Azure.ResourceManager.Network
         private VirtualHubsRestOperations _virtualHubRestClient;
         private ClientDiagnostics _vpnGatewayClientDiagnostics;
         private VpnGatewaysRestOperations _vpnGatewayRestClient;
-        private ClientDiagnostics _p2sVpnGatewayClientDiagnostics;
-        private P2SVpnGatewaysRestOperations _p2sVpnGatewayRestClient;
+        private ClientDiagnostics _p2sVpnGatewayP2sVpnGatewaysClientDiagnostics;
+        private P2SVpnGatewaysRestOperations _p2sVpnGatewayP2sVpnGatewaysRestClient;
         private ClientDiagnostics _expressRouteGatewayClientDiagnostics;
         private ExpressRouteGatewaysRestOperations _expressRouteGatewayRestClient;
         private ClientDiagnostics _webApplicationFirewallPolicyClientDiagnostics;
@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.Network
         private ExpressRoutePortsRestOperations ExpressRoutePortRestClient => _expressRoutePortRestClient ??= new ExpressRoutePortsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ExpressRoutePortResource.ResourceType));
         private ClientDiagnostics FirewallPolicyClientDiagnostics => _firewallPolicyClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", FirewallPolicyResource.ResourceType.Namespace, Diagnostics);
         private FirewallPoliciesRestOperations FirewallPolicyRestClient => _firewallPolicyRestClient ??= new FirewallPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(FirewallPolicyResource.ResourceType));
-        private ClientDiagnostics IPAllocationIpAllocationsClientDiagnostics => _ipAllocationIpAllocationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", IPAllocationResource.ResourceType.Namespace, Diagnostics);
-        private IpAllocationsRestOperations IPAllocationIpAllocationsRestClient => _ipAllocationIpAllocationsRestClient ??= new IpAllocationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(IPAllocationResource.ResourceType));
-        private ClientDiagnostics IPGroupIpGroupsClientDiagnostics => _ipGroupIpGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", IPGroupResource.ResourceType.Namespace, Diagnostics);
-        private IpGroupsRestOperations IPGroupIpGroupsRestClient => _ipGroupIpGroupsRestClient ??= new IpGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(IPGroupResource.ResourceType));
+        private ClientDiagnostics IPAllocationIpAllocationsClientDiagnostics => _ipAllocationIPAllocationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", IPAllocationResource.ResourceType.Namespace, Diagnostics);
+        private IpAllocationsRestOperations IPAllocationIpAllocationsRestClient => _ipAllocationIPAllocationsRestClient ??= new IpAllocationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(IPAllocationResource.ResourceType));
+        private ClientDiagnostics IPGroupIpGroupsClientDiagnostics => _ipGroupIPGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", IPGroupResource.ResourceType.Namespace, Diagnostics);
+        private IpGroupsRestOperations IPGroupIpGroupsRestClient => _ipGroupIPGroupsRestClient ??= new IpGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(IPGroupResource.ResourceType));
         private ClientDiagnostics LoadBalancerClientDiagnostics => _loadBalancerClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", LoadBalancerResource.ResourceType.Namespace, Diagnostics);
         private LoadBalancersRestOperations LoadBalancerRestClient => _loadBalancerRestClient ??= new LoadBalancersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(LoadBalancerResource.ResourceType));
         private ClientDiagnostics NatGatewayClientDiagnostics => _natGatewayClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", NatGatewayResource.ResourceType.Namespace, Diagnostics);
@@ -227,8 +227,8 @@ namespace Azure.ResourceManager.Network
         private VirtualHubsRestOperations VirtualHubRestClient => _virtualHubRestClient ??= new VirtualHubsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VirtualHubResource.ResourceType));
         private ClientDiagnostics VpnGatewayClientDiagnostics => _vpnGatewayClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", VpnGatewayResource.ResourceType.Namespace, Diagnostics);
         private VpnGatewaysRestOperations VpnGatewayRestClient => _vpnGatewayRestClient ??= new VpnGatewaysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VpnGatewayResource.ResourceType));
-        private ClientDiagnostics P2sVpnGatewayClientDiagnostics => _p2sVpnGatewayClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", P2sVpnGatewayResource.ResourceType.Namespace, Diagnostics);
-        private P2SVpnGatewaysRestOperations P2sVpnGatewayRestClient => _p2sVpnGatewayRestClient ??= new P2SVpnGatewaysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(P2sVpnGatewayResource.ResourceType));
+        private ClientDiagnostics P2SVpnGatewayP2sVpnGatewaysClientDiagnostics => _p2sVpnGatewayP2sVpnGatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", P2SVpnGatewayResource.ResourceType.Namespace, Diagnostics);
+        private P2SVpnGatewaysRestOperations P2SVpnGatewayP2sVpnGatewaysRestClient => _p2sVpnGatewayP2sVpnGatewaysRestClient ??= new P2SVpnGatewaysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(P2SVpnGatewayResource.ResourceType));
         private ClientDiagnostics ExpressRouteGatewayClientDiagnostics => _expressRouteGatewayClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRouteGatewayResource.ResourceType.Namespace, Diagnostics);
         private ExpressRouteGatewaysRestOperations ExpressRouteGatewayRestClient => _expressRouteGatewayRestClient ??= new ExpressRouteGatewaysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ExpressRouteGatewayResource.ResourceType));
         private ClientDiagnostics WebApplicationFirewallPolicyClientDiagnostics => _webApplicationFirewallPolicyClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", WebApplicationFirewallPolicyResource.ResourceType.Namespace, Diagnostics);
@@ -4451,17 +4451,17 @@ namespace Azure.ResourceManager.Network
         /// Operation Id: P2sVpnGateways_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="P2sVpnGatewayResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<P2sVpnGatewayResource> GetP2sVpnGatewaysAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="P2SVpnGatewayResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<P2SVpnGatewayResource> GetP2SVpnGatewaysAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<P2sVpnGatewayResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<P2SVpnGatewayResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = P2sVpnGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetP2sVpnGateways");
+                using var scope = P2SVpnGatewayP2sVpnGatewaysClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetP2SVpnGateways");
                 scope.Start();
                 try
                 {
-                    var response = await P2sVpnGatewayRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new P2sVpnGatewayResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await P2SVpnGatewayP2sVpnGatewaysRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new P2SVpnGatewayResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -4469,14 +4469,14 @@ namespace Azure.ResourceManager.Network
                     throw;
                 }
             }
-            async Task<Page<P2sVpnGatewayResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<P2SVpnGatewayResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = P2sVpnGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetP2sVpnGateways");
+                using var scope = P2SVpnGatewayP2sVpnGatewaysClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetP2SVpnGateways");
                 scope.Start();
                 try
                 {
-                    var response = await P2sVpnGatewayRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new P2sVpnGatewayResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await P2SVpnGatewayP2sVpnGatewaysRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new P2SVpnGatewayResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -4493,17 +4493,17 @@ namespace Azure.ResourceManager.Network
         /// Operation Id: P2sVpnGateways_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="P2sVpnGatewayResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<P2sVpnGatewayResource> GetP2sVpnGateways(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="P2SVpnGatewayResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<P2SVpnGatewayResource> GetP2SVpnGateways(CancellationToken cancellationToken = default)
         {
-            Page<P2sVpnGatewayResource> FirstPageFunc(int? pageSizeHint)
+            Page<P2SVpnGatewayResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = P2sVpnGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetP2sVpnGateways");
+                using var scope = P2SVpnGatewayP2sVpnGatewaysClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetP2SVpnGateways");
                 scope.Start();
                 try
                 {
-                    var response = P2sVpnGatewayRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new P2sVpnGatewayResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = P2SVpnGatewayP2sVpnGatewaysRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new P2SVpnGatewayResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -4511,14 +4511,14 @@ namespace Azure.ResourceManager.Network
                     throw;
                 }
             }
-            Page<P2sVpnGatewayResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<P2SVpnGatewayResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = P2sVpnGatewayClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetP2sVpnGateways");
+                using var scope = P2SVpnGatewayP2sVpnGatewaysClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetP2SVpnGateways");
                 scope.Start();
                 try
                 {
-                    var response = P2sVpnGatewayRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new P2sVpnGatewayResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = P2SVpnGatewayP2sVpnGatewaysRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new P2SVpnGatewayResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

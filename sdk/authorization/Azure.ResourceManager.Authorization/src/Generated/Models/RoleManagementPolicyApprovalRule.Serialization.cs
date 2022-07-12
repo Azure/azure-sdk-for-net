@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Authorization.Models
         internal static RoleManagementPolicyApprovalRule DeserializeRoleManagementPolicyApprovalRule(JsonElement element)
         {
             Optional<ApprovalSettings> setting = default;
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             RoleManagementPolicyRuleType ruleType = default;
             Optional<RoleManagementPolicyRuleTarget> target = default;
             foreach (var property in element.EnumerateObject())
@@ -55,7 +55,12 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ruleType"))

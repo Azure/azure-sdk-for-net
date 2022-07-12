@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Storage.Models
             Optional<string> resourceType = default;
             Optional<StorageKind> kind = default;
             Optional<IReadOnlyList<string>> locations = default;
-            Optional<IReadOnlyList<SKUCapability>> capabilities = default;
-            Optional<IReadOnlyList<Restriction>> restrictions = default;
+            Optional<IReadOnlyList<StorageSkuCapability>> capabilities = default;
+            Optional<IReadOnlyList<StorageSkuRestriction>> restrictions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -76,10 +76,10 @@ namespace Azure.ResourceManager.Storage.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SKUCapability> array = new List<SKUCapability>();
+                    List<StorageSkuCapability> array = new List<StorageSkuCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SKUCapability.DeserializeSKUCapability(item));
+                        array.Add(StorageSkuCapability.DeserializeStorageSkuCapability(item));
                     }
                     capabilities = array;
                     continue;
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Storage.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Restriction> array = new List<Restriction>();
+                    List<StorageSkuRestriction> array = new List<StorageSkuRestriction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Restriction.DeserializeRestriction(item));
+                        array.Add(StorageSkuRestriction.DeserializeStorageSkuRestriction(item));
                     }
                     restrictions = array;
                     continue;

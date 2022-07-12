@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="servicePlacementPolicies"> A list that describes the correlation of the service with other services. </param>
         /// <param name="defaultMoveCost"> Specifies the move cost for the service. </param>
         /// <param name="serviceKind"> The kind of service (Stateless or Stateful). </param>
-        /// <param name="eTag"> Azure resource etag. </param>
-        internal ServiceResourcePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string placementConstraints, IList<ServiceCorrelationDescription> correlationScheme, IList<ServiceLoadMetricDescription> serviceLoadMetrics, IList<ServicePlacementPolicyDescription> servicePlacementPolicies, MoveCost? defaultMoveCost, ServiceKind? serviceKind, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="etag"> Azure resource etag. </param>
+        internal ServiceResourcePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string placementConstraints, IList<ServiceCorrelationDescription> correlationScheme, IList<ServiceLoadMetricDescription> serviceLoadMetrics, IList<ServicePlacementPolicyDescription> servicePlacementPolicies, MoveCost? defaultMoveCost, ServiceKind? serviceKind, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
         {
             PlacementConstraints = placementConstraints;
             CorrelationScheme = correlationScheme;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             ServicePlacementPolicies = servicePlacementPolicies;
             DefaultMoveCost = defaultMoveCost;
             ServiceKind = serviceKind;
-            ETag = eTag;
+            ETag = etag;
         }
 
         /// <summary> The placement constraints as a string. Placement constraints are boolean expressions on node properties and allow for restricting a service to particular nodes based on the service requirements. For example, to place a service on nodes where NodeType is blue specify the following: &quot;NodeColor == blue)&quot;. </summary>

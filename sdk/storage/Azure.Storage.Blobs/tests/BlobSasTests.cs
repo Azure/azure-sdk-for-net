@@ -10,6 +10,7 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Sas;
 using Azure.Storage.Test.Shared;
+using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Test
 {
@@ -304,6 +305,74 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             AppendBlobClient sasBlobClient = InstrumentClient(new AppendBlobClient(blobUriBuilder.ToUri(), GetOptions()));
             await sasBlobClient.GetPropertiesAsync();
+        }
+
+        private async Task InvokeAccountSasTest(
+            string permissions = "rwdylacuptfi",
+            string services = "bqtf",
+            string resourceType = "sco")
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            string blobName = GetNewBlobName();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+            await blob.CreateAsync();
+
+            // Generate a SAS that would set the srt / ResourceTypes in a different order than
+            // the .NET SDK would normally create the SAS
+            TestAccountSasBuilder accountSasBuilder = new TestAccountSasBuilder(
+                permissions: permissions,
+                expiresOn: Recording.UtcNow.AddDays(1),
+                services: services,
+                resourceTypes: resourceType);
+
+            UriBuilder blobUriBuilder = new UriBuilder(blob.Uri)
+            {
+                Query = accountSasBuilder.ToTestSasQueryParameters(Tenants.GetNewSharedKeyCredentials()).ToString()
+            };
+
+            // Assert
+            AppendBlobClient sasBlobClient = InstrumentClient(new AppendBlobClient(blobUriBuilder.Uri, GetOptions()));
+            await sasBlobClient.GetPropertiesAsync();
+        }
+
+        [RecordedTest]
+        [TestCase("sco")]
+        [TestCase("soc")]
+        [TestCase("cos")]
+        [TestCase("ocs")]
+        [TestCase("os")]
+        [TestCase("oc")]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task AccountSas_ResourceTypeOrder(string resourceType)
+        {
+            await InvokeAccountSasTest(resourceType: resourceType);
+        }
+
+        [RecordedTest]
+        [TestCase("bfqt")]
+        [TestCase("qftb")]
+        [TestCase("tqfb")]
+        [TestCase("bqt")]
+        [TestCase("qb")]
+        [TestCase("fb")]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task AccountSas_ServiceOrder(string services)
+        {
+            await InvokeAccountSasTest(services: services);
+        }
+
+        [RecordedTest]
+        [TestCase("rwdylacuptfi")]
+        [TestCase("cuprwdylatfi")]
+        [TestCase("cudypafitrwl")]
+        [TestCase("cuprwdyla")]
+        [TestCase("rywdlcaup")]
+        [TestCase("larwdycup")]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task AccountSas_PermissionsOrder(string permissions)
+        {
+            await InvokeAccountSasTest(permissions: permissions);
         }
     }
 }

@@ -193,18 +193,18 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}
         /// Operation Id: ConnectionMonitors_UpdateTags
         /// </summary>
-        /// <param name="tagsObject"> Parameters supplied to update connection monitor tags. </param>
+        /// <param name="networkTagsObject"> Parameters supplied to update connection monitor tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
-        public virtual async Task<Response<ConnectionMonitorResource>> UpdateAsync(TagsObject tagsObject, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="networkTagsObject"/> is null. </exception>
+        public virtual async Task<Response<ConnectionMonitorResource>> UpdateAsync(NetworkTagsObject networkTagsObject, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+            Argument.AssertNotNull(networkTagsObject, nameof(networkTagsObject));
 
             using var scope = _connectionMonitorClientDiagnostics.CreateScope("ConnectionMonitorResource.Update");
             scope.Start();
             try
             {
-                var response = await _connectionMonitorRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagsObject, cancellationToken).ConfigureAwait(false);
+                var response = await _connectionMonitorRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkTagsObject, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ConnectionMonitorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -219,18 +219,18 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}
         /// Operation Id: ConnectionMonitors_UpdateTags
         /// </summary>
-        /// <param name="tagsObject"> Parameters supplied to update connection monitor tags. </param>
+        /// <param name="networkTagsObject"> Parameters supplied to update connection monitor tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
-        public virtual Response<ConnectionMonitorResource> Update(TagsObject tagsObject, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="networkTagsObject"/> is null. </exception>
+        public virtual Response<ConnectionMonitorResource> Update(NetworkTagsObject networkTagsObject, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+            Argument.AssertNotNull(networkTagsObject, nameof(networkTagsObject));
 
             using var scope = _connectionMonitorClientDiagnostics.CreateScope("ConnectionMonitorResource.Update");
             scope.Start();
             try
             {
-                var response = _connectionMonitorRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagsObject, cancellationToken);
+                var response = _connectionMonitorRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkTagsObject, cancellationToken);
                 return Response.FromValue(new ConnectionMonitorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

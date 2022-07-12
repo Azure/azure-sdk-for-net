@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of SignedIdentifier. </summary>
         /// <param name="id"> An unique identifier of the stored access policy. </param>
         /// <param name="accessPolicy"> Access policy. </param>
-        internal SignedIdentifier(string id, AccessPolicy accessPolicy)
+        internal SignedIdentifier(string id, StorageServiceAccessPolicy accessPolicy)
         {
             Id = id;
             AccessPolicy = accessPolicy;
@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> An unique identifier of the stored access policy. </summary>
         public string Id { get; set; }
         /// <summary> Access policy. </summary>
-        public AccessPolicy AccessPolicy { get; set; }
+        public StorageServiceAccessPolicy AccessPolicy { get; set; }
     }
 }

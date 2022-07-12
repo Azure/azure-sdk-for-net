@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Cdn
             Optional<string> probePath = default;
             Optional<IList<GeoFilter>> geoFilters = default;
             Optional<EndpointPropertiesUpdateParametersDefaultOriginGroup> defaultOriginGroup = default;
-            Optional<IList<UriSigningKey>> urlSigningKeys = default;
+            Optional<IList<UriSigningKey>> uriSigningKeys = default;
             Optional<EndpointDeliveryPolicy> deliveryPolicy = default;
             Optional<EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink> webApplicationFirewallPolicyLink = default;
             Optional<string> hostName = default;
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.Cdn
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                urlSigningKeys = null;
+                                uriSigningKeys = null;
                                 continue;
                             }
                             List<UriSigningKey> array = new List<UriSigningKey>();
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Cdn
                             {
                                 array.Add(UriSigningKey.DeserializeUriSigningKey(item));
                             }
-                            urlSigningKeys = array;
+                            uriSigningKeys = array;
                             continue;
                         }
                         if (property0.NameEquals("deliveryPolicy"))
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.Cdn
                     continue;
                 }
             }
-            return new CdnEndpointData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, originPath.Value, Optional.ToList(contentTypesToCompress), originHostHeader.Value, Optional.ToNullable(isCompressionEnabled), Optional.ToNullable(isHttpAllowed), Optional.ToNullable(isHttpsAllowed), Optional.ToNullable(queryStringCachingBehavior), Optional.ToNullable(optimizationType), probePath.Value, Optional.ToList(geoFilters), defaultOriginGroup.Value, Optional.ToList(urlSigningKeys), deliveryPolicy.Value, webApplicationFirewallPolicyLink.Value, hostName.Value, Optional.ToList(origins), Optional.ToList(originGroups), Optional.ToList(customDomains), Optional.ToNullable(resourceState), Optional.ToNullable(provisioningState));
+            return new CdnEndpointData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, originPath.Value, Optional.ToList(contentTypesToCompress), originHostHeader.Value, Optional.ToNullable(isCompressionEnabled), Optional.ToNullable(isHttpAllowed), Optional.ToNullable(isHttpsAllowed), Optional.ToNullable(queryStringCachingBehavior), Optional.ToNullable(optimizationType), probePath.Value, Optional.ToList(geoFilters), defaultOriginGroup.Value, Optional.ToList(uriSigningKeys), deliveryPolicy.Value, webApplicationFirewallPolicyLink.Value, hostName.Value, Optional.ToList(origins), Optional.ToList(originGroups), Optional.ToList(customDomains), Optional.ToNullable(resourceState), Optional.ToNullable(provisioningState));
         }
     }
 }

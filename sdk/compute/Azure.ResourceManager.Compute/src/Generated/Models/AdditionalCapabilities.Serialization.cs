@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static AdditionalCapabilities DeserializeAdditionalCapabilities(JsonElement element)
         {
-            Optional<bool> ultraSSDEnabled = default;
+            Optional<bool> ultraSsdEnabled = default;
             Optional<bool> hibernationEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    ultraSSDEnabled = property.Value.GetBoolean();
+                    ultraSsdEnabled = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("hibernationEnabled"))
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new AdditionalCapabilities(Optional.ToNullable(ultraSSDEnabled), Optional.ToNullable(hibernationEnabled));
+            return new AdditionalCapabilities(Optional.ToNullable(ultraSsdEnabled), Optional.ToNullable(hibernationEnabled));
         }
     }
 }

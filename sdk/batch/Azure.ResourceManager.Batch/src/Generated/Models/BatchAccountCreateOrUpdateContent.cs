@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> If not specified, the default value is &apos;enabled&apos;. </summary>
         public PublicNetworkAccessType? PublicNetworkAccess { get; set; }
         /// <summary> The network profile only takes effect when publicNetworkAccess is enabled. </summary>
-        public NetworkProfile NetworkProfile { get; set; }
+        public BatchVirtualMachineNetworkProfile NetworkProfile { get; set; }
         /// <summary> Configures how customer data is encrypted inside the Batch account. By default, accounts are encrypted using a Microsoft managed key. For additional control, a customer-managed key can be used instead. </summary>
         public EncryptionProperties Encryption { get; set; }
         /// <summary> List of allowed authentication modes for the Batch account that can be used to authenticate with the data plane. This does not affect authentication with the control plane. </summary>
