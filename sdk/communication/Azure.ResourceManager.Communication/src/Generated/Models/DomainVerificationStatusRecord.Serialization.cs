@@ -10,11 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Communication.Models
 {
-    public partial class VerificationStatusRecord
+    public partial class DomainVerificationStatusRecord
     {
-        internal static VerificationStatusRecord DeserializeVerificationStatusRecord(JsonElement element)
+        internal static DomainVerificationStatusRecord DeserializeDomainVerificationStatusRecord(JsonElement element)
         {
-            Optional<VerificationStatus> status = default;
+            Optional<DomainRecordVerificationStatus> status = default;
             Optional<string> errorCode = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Communication.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new VerificationStatus(property.Value.GetString());
+                    status = new DomainRecordVerificationStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("errorCode"))
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Communication.Models
                     continue;
                 }
             }
-            return new VerificationStatusRecord(Optional.ToNullable(status), errorCode.Value);
+            return new DomainVerificationStatusRecord(Optional.ToNullable(status), errorCode.Value);
         }
     }
 }

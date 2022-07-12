@@ -10,13 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Communication.Models
 {
-    public partial class VerificationContent : IUtf8JsonSerializable
+    public partial class RegenerateCommunicationServiceKeyContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("verificationType");
-            writer.WriteStringValue(VerificationType.ToString());
+            if (Optional.IsDefined(KeyType))
+            {
+                writer.WritePropertyName("keyType");
+                writer.WriteStringValue(KeyType.Value.ToSerialString());
+            }
             writer.WriteEndObject();
         }
     }

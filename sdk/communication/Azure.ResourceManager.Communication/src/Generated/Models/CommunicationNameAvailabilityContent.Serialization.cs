@@ -10,15 +10,20 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Communication.Models
 {
-    public partial class RegenerateKeyContent : IUtf8JsonSerializable
+    public partial class CommunicationNameAvailabilityContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(KeyType))
+            if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("keyType");
-                writer.WriteStringValue(KeyType.Value.ToSerialString());
+                writer.WritePropertyName("name");
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(ResourceType))
+            {
+                writer.WritePropertyName("type");
+                writer.WriteStringValue(ResourceType.Value);
             }
             writer.WriteEndObject();
         }
