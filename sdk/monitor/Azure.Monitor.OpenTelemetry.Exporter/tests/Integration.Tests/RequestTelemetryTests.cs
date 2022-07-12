@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 using Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.TestFramework;
+using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
 using Xunit;
 using Xunit.Abstractions;
@@ -50,7 +50,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
 
             output.WriteLine($"Name: {telemetryItem.Name}");
             Assert.Equal("Request", telemetryItem.Name);
-            Assert.Equal("RequestData", telemetryItem.Data.BaseType);
+            Assert.Equal(nameof(RequestData), telemetryItem.Data.BaseType);
 
             output.WriteLine($"Tags: {telemetryItem.Tags.Count}");
             foreach (var tag in telemetryItem.Tags)
@@ -65,7 +65,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
             Assert.Contains("ai.cloud.roleInstance", telemetryItem.Tags.Keys);
             Assert.Contains("ai.internal.sdkVersion", telemetryItem.Tags.Keys);
 
-            var requestData = (Models.RequestData)telemetryItem.Data.BaseData;
+            var requestData = (RequestData)telemetryItem.Data.BaseData;
             output.WriteLine($"Url: {requestData.Url}");
             Assert.Equal("200", requestData.ResponseCode);
             Assert.Equal(request.AbsoluteUri, requestData.Url);
