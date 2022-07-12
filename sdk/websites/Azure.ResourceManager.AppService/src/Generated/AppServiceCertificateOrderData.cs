@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> The location. </param>
         public AppServiceCertificateOrderData(AzureLocation location) : base(location)
         {
-            Certificates = new ChangeTrackingDictionary<string, AppServiceCertificate>();
+            Certificates = new ChangeTrackingDictionary<string, AppServiceCertificateInfo>();
             AppServiceCertificateNotRenewableReasons = new ChangeTrackingList<AppServiceCertificateNotRenewableReason>();
         }
 
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppService
         /// Kind of resource.
         /// Serialized Name: Resource.kind
         /// </param>
-        internal AppServiceCertificateOrderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IDictionary<string, AppServiceCertificate> certificates, string distinguishedName, string domainVerificationToken, int? validityInYears, int? keySize, CertificateProductType? productType, bool? isAutoRenew, ProvisioningState? provisioningState, CertificateOrderStatus? status, CertificateDetails signedCertificate, string csr, CertificateDetails intermediate, CertificateDetails root, string serialNumber, DateTimeOffset? lastCertificateIssuedOn, DateTimeOffset? expireOn, bool? isPrivateKeyExternal, IReadOnlyList<AppServiceCertificateNotRenewableReason> appServiceCertificateNotRenewableReasons, DateTimeOffset? nextAutoRenewTimeStamp, CertificateOrderContact contact, string kind) : base(id, name, resourceType, systemData, tags, location)
+        internal AppServiceCertificateOrderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IDictionary<string, AppServiceCertificateInfo> certificates, string distinguishedName, string domainVerificationToken, int? validityInYears, int? keySize, CertificateProductType? productType, bool? isAutoRenew, ProvisioningState? provisioningState, CertificateOrderStatus? status, CertificateDetails signedCertificate, string csr, CertificateDetails intermediate, CertificateDetails root, string serialNumber, DateTimeOffset? lastCertificateIssuedOn, DateTimeOffset? expireOn, bool? isPrivateKeyExternal, IReadOnlyList<AppServiceCertificateNotRenewableReason> appServiceCertificateNotRenewableReasons, DateTimeOffset? nextAutoRenewTimeStamp, CertificateOrderContact contact, string kind) : base(id, name, resourceType, systemData, tags, location)
         {
             Certificates = certificates;
             DistinguishedName = distinguishedName;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppService
         /// State of the Key Vault secret.
         /// Serialized Name: AppServiceCertificateOrder.properties.certificates
         /// </summary>
-        public IDictionary<string, AppServiceCertificate> Certificates { get; }
+        public IDictionary<string, AppServiceCertificateInfo> Certificates { get; }
         /// <summary>
         /// Certificate distinguished name.
         /// Serialized Name: AppServiceCertificateOrder.properties.distinguishedName

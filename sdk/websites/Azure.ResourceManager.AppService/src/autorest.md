@@ -162,6 +162,7 @@ rename-mapping:
   ApiKVReference: ApiKeyVaultReference
 #   AppServiceEnvironmentResource: AppServiceEnvironment
   Domain: AppServiceDomain
+# rename property
   ValidateResourceTypes.Site: WebSite
   CheckNameResourceTypes.Site: WebSite
   ApiKVReference.properties.identityType: Identity
@@ -339,6 +340,11 @@ rename-mapping:
   VnetInfo.resyncRequired: IsResyncRequired
   VnetValidationFailureDetails.properties.failed: IsFailed
   WebAppRuntimeSettings.remoteDebuggingSupported: IsRemoteDebuggingSupported
+#rename resource
+  AppServiceCertificate: AppServiceCertificateInfo
+  AppServiceCertificateResource: AppServicCertificate
+  SiteSlotHybridconnection: SiteSlotHybridConnection
+  SiteSiteextension: SiteExtension
 
 directive:
 # rename model

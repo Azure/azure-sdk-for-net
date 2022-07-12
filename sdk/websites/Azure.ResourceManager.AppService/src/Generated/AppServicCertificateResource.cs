@@ -19,46 +19,46 @@ using Azure.ResourceManager.AppService.Models;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A Class representing an AppServiceCertificateResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppServiceCertificateResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAppServiceCertificateResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AppServiceCertificateOrderResource" /> using the GetAppServiceCertificateResource method.
+    /// A Class representing an AppServicCertificate along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppServicCertificateResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetAppServicCertificateResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppServiceCertificateOrderResource" /> using the GetAppServicCertificate method.
     /// </summary>
-    public partial class AppServiceCertificateResource : ArmResource
+    public partial class AppServicCertificateResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="AppServiceCertificateResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="AppServicCertificateResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string certificateOrderName, string name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/certificates/{name}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _appServiceCertificateResourceAppServiceCertificateOrdersClientDiagnostics;
-        private readonly AppServiceCertificateOrdersRestOperations _appServiceCertificateResourceAppServiceCertificateOrdersRestClient;
-        private readonly AppServiceCertificateResourceData _data;
+        private readonly ClientDiagnostics _appServicCertificateAppServiceCertificateOrdersClientDiagnostics;
+        private readonly AppServiceCertificateOrdersRestOperations _appServicCertificateAppServiceCertificateOrdersRestClient;
+        private readonly AppServicCertificateData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="AppServiceCertificateResource"/> class for mocking. </summary>
-        protected AppServiceCertificateResource()
+        /// <summary> Initializes a new instance of the <see cref="AppServicCertificateResource"/> class for mocking. </summary>
+        protected AppServicCertificateResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AppServiceCertificateResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "AppServicCertificateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AppServiceCertificateResource(ArmClient client, AppServiceCertificateResourceData data) : this(client, data.Id)
+        internal AppServicCertificateResource(ArmClient client, AppServicCertificateData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AppServiceCertificateResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppServicCertificateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AppServiceCertificateResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal AppServicCertificateResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _appServiceCertificateResourceAppServiceCertificateOrdersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string appServiceCertificateResourceAppServiceCertificateOrdersApiVersion);
-            _appServiceCertificateResourceAppServiceCertificateOrdersRestClient = new AppServiceCertificateOrdersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, appServiceCertificateResourceAppServiceCertificateOrdersApiVersion);
+            _appServicCertificateAppServiceCertificateOrdersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string appServicCertificateAppServiceCertificateOrdersApiVersion);
+            _appServicCertificateAppServiceCertificateOrdersRestClient = new AppServiceCertificateOrdersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, appServicCertificateAppServiceCertificateOrdersApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual AppServiceCertificateResourceData Data
+        public virtual AppServicCertificateData Data
         {
             get
             {
@@ -94,16 +94,16 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: AppServiceCertificateOrders_GetCertificate
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AppServiceCertificateResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServicCertificateResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _appServiceCertificateResourceAppServiceCertificateOrdersClientDiagnostics.CreateScope("AppServiceCertificateResource.Get");
+            using var scope = _appServicCertificateAppServiceCertificateOrdersClientDiagnostics.CreateScope("AppServicCertificateResource.Get");
             scope.Start();
             try
             {
-                var response = await _appServiceCertificateResourceAppServiceCertificateOrdersRestClient.GetCertificateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _appServicCertificateAppServiceCertificateOrdersRestClient.GetCertificateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AppServiceCertificateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppServicCertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -118,16 +118,16 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: AppServiceCertificateOrders_GetCertificate
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AppServiceCertificateResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<AppServicCertificateResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _appServiceCertificateResourceAppServiceCertificateOrdersClientDiagnostics.CreateScope("AppServiceCertificateResource.Get");
+            using var scope = _appServicCertificateAppServiceCertificateOrdersClientDiagnostics.CreateScope("AppServicCertificateResource.Get");
             scope.Start();
             try
             {
-                var response = _appServiceCertificateResourceAppServiceCertificateOrdersRestClient.GetCertificate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _appServicCertificateAppServiceCertificateOrdersRestClient.GetCertificate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AppServiceCertificateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppServicCertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,11 +145,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _appServiceCertificateResourceAppServiceCertificateOrdersClientDiagnostics.CreateScope("AppServiceCertificateResource.Delete");
+            using var scope = _appServicCertificateAppServiceCertificateOrdersClientDiagnostics.CreateScope("AppServicCertificateResource.Delete");
             scope.Start();
             try
             {
-                var response = await _appServiceCertificateResourceAppServiceCertificateOrdersRestClient.DeleteCertificateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _appServicCertificateAppServiceCertificateOrdersRestClient.DeleteCertificateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new AppServiceArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -171,11 +171,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _appServiceCertificateResourceAppServiceCertificateOrdersClientDiagnostics.CreateScope("AppServiceCertificateResource.Delete");
+            using var scope = _appServicCertificateAppServiceCertificateOrdersClientDiagnostics.CreateScope("AppServicCertificateResource.Delete");
             scope.Start();
             try
             {
-                var response = _appServiceCertificateResourceAppServiceCertificateOrdersRestClient.DeleteCertificate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _appServicCertificateAppServiceCertificateOrdersRestClient.DeleteCertificate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new AppServiceArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -196,16 +196,16 @@ namespace Azure.ResourceManager.AppService
         /// <param name="patch"> Key vault certificate resource Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<AppServiceCertificateResource>> UpdateAsync(AppServiceCertificateResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServicCertificateResource>> UpdateAsync(AppServicCertificatePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _appServiceCertificateResourceAppServiceCertificateOrdersClientDiagnostics.CreateScope("AppServiceCertificateResource.Update");
+            using var scope = _appServicCertificateAppServiceCertificateOrdersClientDiagnostics.CreateScope("AppServicCertificateResource.Update");
             scope.Start();
             try
             {
-                var response = await _appServiceCertificateResourceAppServiceCertificateOrdersRestClient.UpdateCertificateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new AppServiceCertificateResource(Client, response.Value), response.GetRawResponse());
+                var response = await _appServicCertificateAppServiceCertificateOrdersRestClient.UpdateCertificateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new AppServicCertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -222,16 +222,16 @@ namespace Azure.ResourceManager.AppService
         /// <param name="patch"> Key vault certificate resource Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<AppServiceCertificateResource> Update(AppServiceCertificateResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<AppServicCertificateResource> Update(AppServicCertificatePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _appServiceCertificateResourceAppServiceCertificateOrdersClientDiagnostics.CreateScope("AppServiceCertificateResource.Update");
+            using var scope = _appServicCertificateAppServiceCertificateOrdersClientDiagnostics.CreateScope("AppServicCertificateResource.Update");
             scope.Start();
             try
             {
-                var response = _appServiceCertificateResourceAppServiceCertificateOrdersRestClient.UpdateCertificate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new AppServiceCertificateResource(Client, response.Value), response.GetRawResponse());
+                var response = _appServicCertificateAppServiceCertificateOrdersRestClient.UpdateCertificate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                return Response.FromValue(new AppServicCertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -249,20 +249,20 @@ namespace Azure.ResourceManager.AppService
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<AppServiceCertificateResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServicCertificateResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _appServiceCertificateResourceAppServiceCertificateOrdersClientDiagnostics.CreateScope("AppServiceCertificateResource.AddTag");
+            using var scope = _appServicCertificateAppServiceCertificateOrdersClientDiagnostics.CreateScope("AppServicCertificateResource.AddTag");
             scope.Start();
             try
             {
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues[key] = value;
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _appServiceCertificateResourceAppServiceCertificateOrdersRestClient.GetCertificateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new AppServiceCertificateResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _appServicCertificateAppServiceCertificateOrdersRestClient.GetCertificateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new AppServicCertificateResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -280,20 +280,20 @@ namespace Azure.ResourceManager.AppService
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<AppServiceCertificateResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<AppServicCertificateResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _appServiceCertificateResourceAppServiceCertificateOrdersClientDiagnostics.CreateScope("AppServiceCertificateResource.AddTag");
+            using var scope = _appServicCertificateAppServiceCertificateOrdersClientDiagnostics.CreateScope("AppServicCertificateResource.AddTag");
             scope.Start();
             try
             {
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues[key] = value;
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _appServiceCertificateResourceAppServiceCertificateOrdersRestClient.GetCertificate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new AppServiceCertificateResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _appServicCertificateAppServiceCertificateOrdersRestClient.GetCertificate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return Response.FromValue(new AppServicCertificateResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -310,11 +310,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<AppServiceCertificateResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServicCertificateResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _appServiceCertificateResourceAppServiceCertificateOrdersClientDiagnostics.CreateScope("AppServiceCertificateResource.SetTags");
+            using var scope = _appServicCertificateAppServiceCertificateOrdersClientDiagnostics.CreateScope("AppServicCertificateResource.SetTags");
             scope.Start();
             try
             {
@@ -322,8 +322,8 @@ namespace Azure.ResourceManager.AppService
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _appServiceCertificateResourceAppServiceCertificateOrdersRestClient.GetCertificateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new AppServiceCertificateResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _appServicCertificateAppServiceCertificateOrdersRestClient.GetCertificateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new AppServicCertificateResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -340,11 +340,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<AppServiceCertificateResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<AppServicCertificateResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _appServiceCertificateResourceAppServiceCertificateOrdersClientDiagnostics.CreateScope("AppServiceCertificateResource.SetTags");
+            using var scope = _appServicCertificateAppServiceCertificateOrdersClientDiagnostics.CreateScope("AppServicCertificateResource.SetTags");
             scope.Start();
             try
             {
@@ -352,8 +352,8 @@ namespace Azure.ResourceManager.AppService
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _appServiceCertificateResourceAppServiceCertificateOrdersRestClient.GetCertificate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new AppServiceCertificateResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _appServicCertificateAppServiceCertificateOrdersRestClient.GetCertificate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return Response.FromValue(new AppServicCertificateResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -370,19 +370,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<AppServiceCertificateResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServicCertificateResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _appServiceCertificateResourceAppServiceCertificateOrdersClientDiagnostics.CreateScope("AppServiceCertificateResource.RemoveTag");
+            using var scope = _appServicCertificateAppServiceCertificateOrdersClientDiagnostics.CreateScope("AppServicCertificateResource.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.Remove(key);
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _appServiceCertificateResourceAppServiceCertificateOrdersRestClient.GetCertificateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new AppServiceCertificateResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _appServicCertificateAppServiceCertificateOrdersRestClient.GetCertificateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new AppServicCertificateResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -399,19 +399,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<AppServiceCertificateResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<AppServicCertificateResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _appServiceCertificateResourceAppServiceCertificateOrdersClientDiagnostics.CreateScope("AppServiceCertificateResource.RemoveTag");
+            using var scope = _appServicCertificateAppServiceCertificateOrdersClientDiagnostics.CreateScope("AppServicCertificateResource.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues.Remove(key);
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _appServiceCertificateResourceAppServiceCertificateOrdersRestClient.GetCertificate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new AppServiceCertificateResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _appServicCertificateAppServiceCertificateOrdersRestClient.GetCertificate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return Response.FromValue(new AppServicCertificateResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -11,14 +11,14 @@ namespace Azure.ResourceManager.AppService.Models
     /// Key Vault container for a certificate that is purchased through Azure.
     /// Serialized Name: AppServiceCertificate
     /// </summary>
-    public partial class AppServiceCertificate
+    public partial class AppServiceCertificateInfo
     {
-        /// <summary> Initializes a new instance of AppServiceCertificate. </summary>
-        public AppServiceCertificate()
+        /// <summary> Initializes a new instance of AppServiceCertificateInfo. </summary>
+        public AppServiceCertificateInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceCertificate. </summary>
+        /// <summary> Initializes a new instance of AppServiceCertificateInfo. </summary>
         /// <param name="keyVaultId">
         /// Key Vault resource Id.
         /// Serialized Name: AppServiceCertificate.keyVaultId
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// Status of the Key Vault secret.
         /// Serialized Name: AppServiceCertificate.provisioningState
         /// </param>
-        internal AppServiceCertificate(string keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? provisioningState)
+        internal AppServiceCertificateInfo(string keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? provisioningState)
         {
             KeyVaultId = keyVaultId;
             KeyVaultSecretName = keyVaultSecretName;

@@ -1709,20 +1709,20 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region AppServiceCertificateResource
+        #region AppServicCertificateResource
         /// <summary>
-        /// Gets an object representing an <see cref="AppServiceCertificateResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AppServiceCertificateResource.CreateResourceIdentifier" /> to create an <see cref="AppServiceCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AppServicCertificateResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppServicCertificateResource.CreateResourceIdentifier" /> to create an <see cref="AppServicCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppServiceCertificateResource" /> object. </returns>
-        public static AppServiceCertificateResource GetAppServiceCertificateResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AppServicCertificateResource" /> object. </returns>
+        public static AppServicCertificateResource GetAppServicCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AppServiceCertificateResource.ValidateResourceId(id);
-                return new AppServiceCertificateResource(client, id);
+                AppServicCertificateResource.ValidateResourceId(id);
+                return new AppServicCertificateResource(client, id);
             }
             );
         }

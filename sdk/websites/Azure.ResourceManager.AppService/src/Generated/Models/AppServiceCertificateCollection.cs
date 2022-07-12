@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// Serialized Name: AppServiceCertificateCollection.value
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal AppServiceCertificateCollection(IEnumerable<AppServiceCertificateResourceData> value)
+        internal AppServiceCertificateCollection(IEnumerable<AppServicCertificateData> value)
         {
             if (value == null)
             {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// Link to next page of resources.
         /// Serialized Name: AppServiceCertificateCollection.nextLink
         /// </param>
-        internal AppServiceCertificateCollection(IReadOnlyList<AppServiceCertificateResourceData> value, string nextLink)
+        internal AppServiceCertificateCollection(IReadOnlyList<AppServicCertificateData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// Collection of resources.
         /// Serialized Name: AppServiceCertificateCollection.value
         /// </summary>
-        public IReadOnlyList<AppServiceCertificateResourceData> Value { get; }
+        public IReadOnlyList<AppServicCertificateData> Value { get; }
         /// <summary>
         /// Link to next page of resources.
         /// Serialized Name: AppServiceCertificateCollection.nextLink

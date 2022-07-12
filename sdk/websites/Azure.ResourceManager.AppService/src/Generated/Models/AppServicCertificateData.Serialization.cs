@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class AppServiceCertificateResourceData : IUtf8JsonSerializable
+    public partial class AppServicCertificateData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService
             writer.WriteEndObject();
         }
 
-        internal static AppServiceCertificateResourceData DeserializeAppServiceCertificateResourceData(JsonElement element)
+        internal static AppServicCertificateData DeserializeAppServicCertificateData(JsonElement element)
         {
             Optional<string> kind = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new AppServiceCertificateResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, keyVaultId.Value, keyVaultSecretName.Value, Optional.ToNullable(provisioningState), kind.Value);
+            return new AppServicCertificateData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, keyVaultId.Value, keyVaultSecretName.Value, Optional.ToNullable(provisioningState), kind.Value);
         }
     }
 }

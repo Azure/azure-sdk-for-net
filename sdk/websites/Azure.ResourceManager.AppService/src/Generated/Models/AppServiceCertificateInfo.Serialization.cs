@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceCertificate : IUtf8JsonSerializable
+    public partial class AppServiceCertificateInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteEndObject();
         }
 
-        internal static AppServiceCertificate DeserializeAppServiceCertificate(JsonElement element)
+        internal static AppServiceCertificateInfo DeserializeAppServiceCertificateInfo(JsonElement element)
         {
             Optional<string> keyVaultId = default;
             Optional<string> keyVaultSecretName = default;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServiceCertificate(keyVaultId.Value, keyVaultSecretName.Value, Optional.ToNullable(provisioningState));
+            return new AppServiceCertificateInfo(keyVaultId.Value, keyVaultSecretName.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

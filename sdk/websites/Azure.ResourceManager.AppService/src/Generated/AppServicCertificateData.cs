@@ -12,16 +12,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the AppServiceCertificateResource data model. </summary>
-    public partial class AppServiceCertificateResourceData : TrackedResourceData
+    /// <summary> A class representing the AppServicCertificate data model. </summary>
+    public partial class AppServicCertificateData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of AppServiceCertificateResourceData. </summary>
+        /// <summary> Initializes a new instance of AppServicCertificateData. </summary>
         /// <param name="location"> The location. </param>
-        public AppServiceCertificateResourceData(AzureLocation location) : base(location)
+        public AppServicCertificateData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceCertificateResourceData. </summary>
+        /// <summary> Initializes a new instance of AppServicCertificateData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService
         /// Kind of resource.
         /// Serialized Name: Resource.kind
         /// </param>
-        internal AppServiceCertificateResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? provisioningState, string kind) : base(id, name, resourceType, systemData, tags, location)
+        internal AppServicCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? provisioningState, string kind) : base(id, name, resourceType, systemData, tags, location)
         {
             KeyVaultId = keyVaultId;
             KeyVaultSecretName = keyVaultSecretName;
