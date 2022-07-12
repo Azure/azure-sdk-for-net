@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             Optional<ResourceIdentifier> sourceId = default;
             Optional<ResourceIdentifier> targetId = default;
             Optional<LinkerAuthType?> authType = default;
-            Optional<IReadOnlyList<LinkerValidationResultItemData>> validationDetail = default;
+            Optional<IReadOnlyList<LinkerValidationResultItemInfo>> validationDetail = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"))
@@ -134,10 +134,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                                 validationDetail = null;
                                 continue;
                             }
-                            List<LinkerValidationResultItemData> array = new List<LinkerValidationResultItemData>();
+                            List<LinkerValidationResultItemInfo> array = new List<LinkerValidationResultItemInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LinkerValidationResultItemData.DeserializeLinkerValidationResultItemData(item));
+                                array.Add(LinkerValidationResultItemInfo.DeserializeLinkerValidationResultItemInfo(item));
                             }
                             validationDetail = array;
                             continue;

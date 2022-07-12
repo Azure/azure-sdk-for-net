@@ -8,20 +8,20 @@
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary> The validation item for a linker. </summary>
-    public partial class LinkerValidationResultItemData
+    public partial class LinkerValidationResultItemInfo
     {
-        /// <summary> Initializes a new instance of LinkerValidationResultItemData. </summary>
-        internal LinkerValidationResultItemData()
+        /// <summary> Initializes a new instance of LinkerValidationResultItemInfo. </summary>
+        internal LinkerValidationResultItemInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of LinkerValidationResultItemData. </summary>
+        /// <summary> Initializes a new instance of LinkerValidationResultItemInfo. </summary>
         /// <param name="name"> The validation item name. </param>
         /// <param name="description"> The display name of validation item. </param>
         /// <param name="result"> The result of validation. </param>
         /// <param name="errorMessage"> The error message of validation result. </param>
         /// <param name="errorCode"> The error code of validation result. </param>
-        internal LinkerValidationResultItemData(string name, string description, LinkerValidationResultStatus? result, string errorMessage, string errorCode)
+        internal LinkerValidationResultItemInfo(string name, string description, LinkerValidationResultStatus? result, string errorMessage, string errorCode)
         {
             Name = name;
             Description = description;

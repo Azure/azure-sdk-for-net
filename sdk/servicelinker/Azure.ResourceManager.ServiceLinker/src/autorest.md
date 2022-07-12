@@ -32,7 +32,7 @@ rename-mapping:
   ValidateOperationResult: LinkerValidateOperationResult
   ValidateOperationResult.properties.reportStartTimeUtc: reportStartOn
   ValidateOperationResult.properties.reportEndTimeUtc: reportEndOn
-  ValidationResultItem: LinkerValidationResultItemData
+  ValidationResultItem: LinkerValidationResultItemInfo
   ValidationResultStatus: LinkerValidationResultStatus
 
 
