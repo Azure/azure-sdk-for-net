@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Communication.Models
 {
-    public partial class CommunicationServiceNameAvailabilityResult
+    public partial class CommunicationNameAvailabilityResult
     {
-        internal static CommunicationServiceNameAvailabilityResult DeserializeCommunicationServiceNameAvailabilityResult(JsonElement element)
+        internal static CommunicationNameAvailabilityResult DeserializeCommunicationNameAvailabilityResult(JsonElement element)
         {
             Optional<bool> nameAvailable = default;
-            Optional<CheckNameAvailabilityReason> reason = default;
+            Optional<CommunicationNameAvailabilityReason> reason = default;
             Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Communication.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    reason = new CheckNameAvailabilityReason(property.Value.GetString());
+                    reason = new CommunicationNameAvailabilityReason(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("message"))
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Communication.Models
                     continue;
                 }
             }
-            return new CommunicationServiceNameAvailabilityResult(Optional.ToNullable(nameAvailable), Optional.ToNullable(reason), message.Value);
+            return new CommunicationNameAvailabilityResult(Optional.ToNullable(nameAvailable), Optional.ToNullable(reason), message.Value);
         }
     }
 }
