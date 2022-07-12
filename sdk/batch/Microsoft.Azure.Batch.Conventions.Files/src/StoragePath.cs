@@ -14,6 +14,7 @@
 
 ﻿using Microsoft.Azure.Batch.Conventions.Files.Utilities;
 using Microsoft.WindowsAzure.Storage.Blob;
+using Azure.Storage.Blobs;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -230,7 +231,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files
         {
             private readonly string _taskId;
 
-            internal TaskStoragePath(CloudBlobContainer jobOutputContainer, string taskId)
+            internal TaskStoragePath(BlobContainerClient jobOutputContainer, string taskId)
                 : base(jobOutputContainer)
             {
                 Debug.Assert(taskId != null);
