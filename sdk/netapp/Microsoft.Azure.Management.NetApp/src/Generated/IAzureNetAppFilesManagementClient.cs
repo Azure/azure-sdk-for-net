@@ -127,6 +127,11 @@ namespace Microsoft.Azure.Management.NetApp
         IBackupPoliciesOperations BackupPolicies { get; }
 
         /// <summary>
+        /// Gets the IVolumeQuotaRulesOperations.
+        /// </summary>
+        IVolumeQuotaRulesOperations VolumeQuotaRules { get; }
+
+        /// <summary>
         /// Gets the IVaultsOperations.
         /// </summary>
         IVaultsOperations Vaults { get; }
