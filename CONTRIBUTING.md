@@ -2,7 +2,7 @@
 
 | Component            | Build Status                                                                                                                                                                                                          |
 | -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Management Libraries | [![Build Status](https://dev.azure.com/azure-sdk/public/_apis/build/status/net/net%20-%20mgmt%20-%20ci?branchName=master)](https://dev.azure.com/azure-sdk/public/_build/latest?definitionId=529&branchName=master)   |
+| Management Libraries | [![Build Status](https://dev.azure.com/azure-sdk/public/_apis/build/status/net/net%20-%20mgmt%20-%20ci?branchName=main)](https://dev.azure.com/azure-sdk/public/_build/latest?definitionId=529&branchName=main)   |
 
 # Prerequisites:
 
@@ -248,7 +248,7 @@ dotnet build eng\service.proj /p:ServiceDirectory=eventhub /p:UpdateSourceOnBuil
 
 ## API Compatibility Verification
 
-.NET is using the [ApiCompat tool](https://github.com/dotnet/arcade/tree/master/src/Microsoft.DotNet.ApiCompat) to enforce API compatibility between versions. Builds of GA'ed libraries will fail locally and in CI if there are breaking changes.
+.NET is using the [ApiCompat tool](https://github.com/dotnet/arcade/tree/main/src/Microsoft.DotNet.ApiCompat) to enforce API compatibility between versions. Builds of GA'ed libraries will fail locally and in CI if there are breaking changes.
 
 ### How it works
 Each library needs to provide a `ApiCompatVersion` property which is set to the last GA'ed version of the library that will be used to compare APIs with the current to ensure no breaks have been introduced. Projects with this property set will download the specified package and the ApiCompat (Microsoft.DotNet.ApiCompat) tools package as part of the restore step of the project. Then as a post build step of the project it will run ApiCompat to verify the current APIs are compatible with the last GA'ed version of the APIs. For libraries that wish to disable the APICompat check they can remove the `ApiCompatVersion` property from their project. Our version bump automation will automatically add or increment the `ApiCompatVersion` property to the project when it detects that the version it is changing was a GA version which usually indicates that we just shipped that GA version and so it should be the new baseline for API checks.
@@ -367,12 +367,12 @@ See [Data Plane Quick Start Tutorial](https://github.com/Azure/azure-sdk-for-net
 2. Create fork of [Azure SDK for .NET](https://github.com/azure/azure-sdk-for-net)
 3. Create your Swagger specification for your HTTP API. For more information see [Introduction to Swagger - The World's Most Popular Framework for APIs](https://swagger.io)
 4. Install the latest version of AutoRest. For more info on getting started with AutoRest, see the [AutoRest repository](https://github.com/Azure/autorest)
-5. Create a branch in your fork of Azure SDK for .NET.
-6. Generate the codes. See [Generating Client Codes](#generating-client-codes) below.
+5. Create a branch in your fork of the Azure SDK for .NET.
+6. Generate the code. See [Generating Client Code](#generating-client-code) below.
 7. **MANDATORY**: Add or update tests for the newly generated code.
 8. Once added to the Azure SDK for .NET, build your local package using [client](#client-libraries) or [management](#management-libraries) library instructions shown in the above sections.
 9. For management libraries run `eng\scripts\Update-Mgmt-Yml.ps1` to update PR include paths in `eng\pipelines\mgmt.yml`
-10. A Pull request of your Azure SDK for .NET changes against **master** branch of the [Azure SDK for .NET](https://github.com/azure/azure-sdk-for-net)
+10. A Pull request of your Azure SDK for .NET changes against **main** branch of the [Azure SDK for .NET](https://github.com/azure/azure-sdk-for-net)
 11. The pull requests will be reviewed and merged by the Azure SDK team
 
 #### Generating Client Code
@@ -462,7 +462,7 @@ See [Data Plane Quick Start Tutorial](https://github.com/Azure/azure-sdk-for-net
 Before a pull request will be considered by the Azure SDK team, the following requirements must be met:
 
 - Prior to issuing the pull request:
-  - All code must have completed any necessary legal sign off for being publicly viewable (Patent review, JSR review, etc.)
+  - All code must have completed any necessary legal sign-off for being publicly viewable (Patent review, JSR review, etc.)
   - The changes cannot break any existing functional/unit tests that are part of the central repository.
     - This includes all tests, even those not associated with the given feature area.
   - Code submitted must have basic unit test coverage, and have all the unit tests pass. Testing is the full responsibility of the service team
@@ -481,7 +481,7 @@ Before a pull request will be considered by the Azure SDK team, the following re
   - MS internal folks, please reach out to us via our Teams channel or
   - Send an email to the Azure Developer Platform team [adpteam@microsoft.com](mailto:adpteam@microsoft.com) alias.
     - Include all interested parties from your team as well.
-    - In the message, make sure to acknowledge that the legal sign off process is complete.
+    - In the message, make sure to acknowledge that the legal sign-off process is complete.
 
 Once all of the above steps are met, the following process will be followed:
 
@@ -538,7 +538,7 @@ For more information on how we version see [Versioning](https://github.com/Azure
 
 ## Breaking Changes
 
-For information about breaking changes see [Breaking Change Rules](https://github.com/dotnet/corefx/blob/master/Documentation/coding-guidelines/breaking-change-rules.md).
+For information about breaking changes see [Breaking Change Rules](https://github.com/dotnet/corefx/blob/main/Documentation/coding-guidelines/breaking-change-rules.md).
 
 ## Debugging
 
