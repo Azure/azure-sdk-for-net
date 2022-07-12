@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// This operation retrieves the data policy manifest with the given policy mode.
+        /// Retrieves a data policy manifest.
         /// Request Path: /providers/Microsoft.Authorization/dataPolicyManifests/{policyMode}
         /// Operation Id: DataPolicyManifests_GetByPolicyMode
         /// </summary>
@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyMode"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyMode"/> is null. </exception>
+        /// <remarks> This operation retrieves the data policy manifest with the given policy mode. </remarks>
         public virtual async Task<Response<DataPolicyManifestResource>> GetAsync(string policyMode, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyMode, nameof(policyMode));
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// This operation retrieves the data policy manifest with the given policy mode.
+        /// Retrieves a data policy manifest.
         /// Request Path: /providers/Microsoft.Authorization/dataPolicyManifests/{policyMode}
         /// Operation Id: DataPolicyManifests_GetByPolicyMode
         /// </summary>
@@ -91,6 +92,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyMode"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyMode"/> is null. </exception>
+        /// <remarks> This operation retrieves the data policy manifest with the given policy mode. </remarks>
         public virtual Response<DataPolicyManifestResource> Get(string policyMode, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyMode, nameof(policyMode));
@@ -112,13 +114,14 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// This operation retrieves a list of all the data policy manifests that match the optional given $filter. Valid values for $filter are: &quot;$filter=namespace eq &apos;{0}&apos;&quot;. If $filter is not provided, the unfiltered list includes all data policy manifests for data resource types. If $filter=namespace is provided, the returned list only includes all data policy manifests that have a namespace matching the provided value.
+        /// Retrieves data policy manifests
         /// Request Path: /providers/Microsoft.Authorization/dataPolicyManifests
         /// Operation Id: DataPolicyManifests_List
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: &quot;namespace eq &apos;{value}&apos;&quot;. If $filter is not provided, no filtering is performed. If $filter=namespace eq &apos;{value}&apos; is provided, the returned list only includes all data policy manifests that have a namespace matching the provided value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataPolicyManifestResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> This operation retrieves a list of all the data policy manifests that match the optional given $filter. Valid values for $filter are: &quot;$filter=namespace eq &apos;{0}&apos;&quot;. If $filter is not provided, the unfiltered list includes all data policy manifests for data resource types. If $filter=namespace is provided, the returned list only includes all data policy manifests that have a namespace matching the provided value. </remarks>
         public virtual AsyncPageable<DataPolicyManifestResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<DataPolicyManifestResource>> FirstPageFunc(int? pageSizeHint)
@@ -155,13 +158,14 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// This operation retrieves a list of all the data policy manifests that match the optional given $filter. Valid values for $filter are: &quot;$filter=namespace eq &apos;{0}&apos;&quot;. If $filter is not provided, the unfiltered list includes all data policy manifests for data resource types. If $filter=namespace is provided, the returned list only includes all data policy manifests that have a namespace matching the provided value.
+        /// Retrieves data policy manifests
         /// Request Path: /providers/Microsoft.Authorization/dataPolicyManifests
         /// Operation Id: DataPolicyManifests_List
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: &quot;namespace eq &apos;{value}&apos;&quot;. If $filter is not provided, no filtering is performed. If $filter=namespace eq &apos;{value}&apos; is provided, the returned list only includes all data policy manifests that have a namespace matching the provided value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataPolicyManifestResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> This operation retrieves a list of all the data policy manifests that match the optional given $filter. Valid values for $filter are: &quot;$filter=namespace eq &apos;{0}&apos;&quot;. If $filter is not provided, the unfiltered list includes all data policy manifests for data resource types. If $filter=namespace is provided, the returned list only includes all data policy manifests that have a namespace matching the provided value. </remarks>
         public virtual Pageable<DataPolicyManifestResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             Page<DataPolicyManifestResource> FirstPageFunc(int? pageSizeHint)
@@ -198,7 +202,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Retrieves a data policy manifest.
         /// Request Path: /providers/Microsoft.Authorization/dataPolicyManifests/{policyMode}
         /// Operation Id: DataPolicyManifests_GetByPolicyMode
         /// </summary>
@@ -206,6 +210,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyMode"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyMode"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string policyMode, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyMode, nameof(policyMode));
@@ -225,7 +230,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Retrieves a data policy manifest.
         /// Request Path: /providers/Microsoft.Authorization/dataPolicyManifests/{policyMode}
         /// Operation Id: DataPolicyManifests_GetByPolicyMode
         /// </summary>
@@ -233,6 +238,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyMode"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyMode"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string policyMode, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyMode, nameof(policyMode));

@@ -105,12 +105,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for List all ResourceHealthMetadata for all sites in the resource group in the subscription.
+        /// List all ResourceHealthMetadata for all sites in the resource group in the subscription.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/resourceHealthMetadata
         /// Operation Id: ResourceHealthMetadata_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SiteResourceHealthMetadataResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for List all ResourceHealthMetadata for all sites in the resource group in the subscription. </remarks>
         public virtual AsyncPageable<SiteResourceHealthMetadataResource> GetAllResourceHealthMetadataByResourceGroupAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<SiteResourceHealthMetadataResource>> FirstPageFunc(int? pageSizeHint)
@@ -147,12 +148,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for List all ResourceHealthMetadata for all sites in the resource group in the subscription.
+        /// List all ResourceHealthMetadata for all sites in the resource group in the subscription.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/resourceHealthMetadata
         /// Operation Id: ResourceHealthMetadata_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SiteResourceHealthMetadataResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for List all ResourceHealthMetadata for all sites in the resource group in the subscription. </remarks>
         public virtual Pageable<SiteResourceHealthMetadataResource> GetAllResourceHealthMetadataByResourceGroup(CancellationToken cancellationToken = default)
         {
             Page<SiteResourceHealthMetadataResource> FirstPageFunc(int? pageSizeHint)
@@ -189,12 +191,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Move resources between resource groups.
+        /// Move resources between resource groups.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/moveResources
         /// Operation Id: Move
         /// </summary>
         /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Move resources between resource groups. </remarks>
         public virtual async Task<Response> MoveAsync(CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.Move");
@@ -212,12 +215,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Move resources between resource groups.
+        /// Move resources between resource groups.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/moveResources
         /// Operation Id: Move
         /// </summary>
         /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Move resources between resource groups. </remarks>
         public virtual Response Move(CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.Move");
@@ -235,12 +239,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Validate if a resource can be created.
+        /// Validate if a resource can be created.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/validate
         /// Operation Id: Validate
         /// </summary>
         /// <param name="content"> Request with the resources to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Validate if a resource can be created. </remarks>
         public virtual async Task<Response<ValidateResponse>> ValidateAsync(ValidateContent content, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.Validate");
@@ -258,12 +263,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Validate if a resource can be created.
+        /// Validate if a resource can be created.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/validate
         /// Operation Id: Validate
         /// </summary>
         /// <param name="content"> Request with the resources to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Validate if a resource can be created. </remarks>
         public virtual Response<ValidateResponse> Validate(ValidateContent content, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.Validate");
@@ -281,12 +287,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Validate whether a resource can be moved.
+        /// Validate whether a resource can be moved.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/validateMoveResources
         /// Operation Id: ValidateMove
         /// </summary>
         /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Validate whether a resource can be moved. </remarks>
         public virtual async Task<Response> ValidateMoveAsync(CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.ValidateMove");
@@ -304,12 +311,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Validate whether a resource can be moved.
+        /// Validate whether a resource can be moved.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/validateMoveResources
         /// Operation Id: ValidateMove
         /// </summary>
         /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Validate whether a resource can be moved. </remarks>
         public virtual Response ValidateMove(CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.ValidateMove");

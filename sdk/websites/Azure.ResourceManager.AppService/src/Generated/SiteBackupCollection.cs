@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a backup of an app by its ID.
+        /// Gets a backup of an app by its ID.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/backups/{backupId}
         /// Operation Id: WebApps_GetBackupStatus
         /// </summary>
@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="backupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupId"/> is null. </exception>
+        /// <remarks> Description for Gets a backup of an app by its ID. </remarks>
         public virtual async Task<Response<SiteBackupResource>> GetAsync(string backupId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupId, nameof(backupId));
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a backup of an app by its ID.
+        /// Gets a backup of an app by its ID.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/backups/{backupId}
         /// Operation Id: WebApps_GetBackupStatus
         /// </summary>
@@ -91,6 +92,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="backupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupId"/> is null. </exception>
+        /// <remarks> Description for Gets a backup of an app by its ID. </remarks>
         public virtual Response<SiteBackupResource> Get(string backupId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupId, nameof(backupId));
@@ -112,12 +114,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets existing backups of an app.
+        /// Gets existing backups of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/backups
         /// Operation Id: WebApps_ListBackups
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SiteBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Gets existing backups of an app. </remarks>
         public virtual AsyncPageable<SiteBackupResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<SiteBackupResource>> FirstPageFunc(int? pageSizeHint)
@@ -154,12 +157,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets existing backups of an app.
+        /// Gets existing backups of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/backups
         /// Operation Id: WebApps_ListBackups
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SiteBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Gets existing backups of an app. </remarks>
         public virtual Pageable<SiteBackupResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<SiteBackupResource> FirstPageFunc(int? pageSizeHint)
@@ -196,7 +200,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Gets a backup of an app by its ID.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/backups/{backupId}
         /// Operation Id: WebApps_GetBackupStatus
         /// </summary>
@@ -204,6 +208,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="backupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupId"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string backupId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupId, nameof(backupId));
@@ -223,7 +228,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Gets a backup of an app by its ID.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/backups/{backupId}
         /// Operation Id: WebApps_GetBackupStatus
         /// </summary>
@@ -231,6 +236,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="backupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupId"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string backupId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupId, nameof(backupId));

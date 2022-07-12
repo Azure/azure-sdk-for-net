@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get Detector
+        /// Get Detector
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/diagnostics/{diagnosticCategory}/detectors/{detectorName}
         /// Operation Id: Diagnostics_GetSiteDetector
         /// </summary>
@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        /// <remarks> Description for Get Detector. </remarks>
         public virtual async Task<Response<SiteDiagnosticDetectorResource>> GetAsync(string detectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get Detector
+        /// Get Detector
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/diagnostics/{diagnosticCategory}/detectors/{detectorName}
         /// Operation Id: Diagnostics_GetSiteDetector
         /// </summary>
@@ -91,6 +92,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        /// <remarks> Description for Get Detector. </remarks>
         public virtual Response<SiteDiagnosticDetectorResource> Get(string detectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
@@ -112,12 +114,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get Detectors
+        /// Get Detectors
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/diagnostics/{diagnosticCategory}/detectors
         /// Operation Id: Diagnostics_ListSiteDetectors
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SiteDiagnosticDetectorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get Detectors. </remarks>
         public virtual AsyncPageable<SiteDiagnosticDetectorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<SiteDiagnosticDetectorResource>> FirstPageFunc(int? pageSizeHint)
@@ -154,12 +157,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get Detectors
+        /// Get Detectors
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/diagnostics/{diagnosticCategory}/detectors
         /// Operation Id: Diagnostics_ListSiteDetectors
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SiteDiagnosticDetectorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get Detectors. </remarks>
         public virtual Pageable<SiteDiagnosticDetectorResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<SiteDiagnosticDetectorResource> FirstPageFunc(int? pageSizeHint)
@@ -196,7 +200,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get Detector
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/diagnostics/{diagnosticCategory}/detectors/{detectorName}
         /// Operation Id: Diagnostics_GetSiteDetector
         /// </summary>
@@ -204,6 +208,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string detectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
@@ -223,7 +228,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get Detector
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/diagnostics/{diagnosticCategory}/detectors/{detectorName}
         /// Operation Id: Diagnostics_GetSiteDetector
         /// </summary>
@@ -231,6 +236,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string detectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));

@@ -58,13 +58,14 @@ namespace Azure.ResourceManager.ContainerService
             return message;
         }
 
-        /// <summary> To learn more about private clusters, see: https://docs.microsoft.com/azure/aks/private-clusters. </summary>
+        /// <summary> Gets a list of private link resources in the specified managed cluster. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> To learn more about private clusters, see: https://docs.microsoft.com/azure/aks/private-clusters. </remarks>
         public async Task<Response<PrivateLinkResourcesListResult>> ListAsync(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -87,13 +88,14 @@ namespace Azure.ResourceManager.ContainerService
             }
         }
 
-        /// <summary> To learn more about private clusters, see: https://docs.microsoft.com/azure/aks/private-clusters. </summary>
+        /// <summary> Gets a list of private link resources in the specified managed cluster. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> To learn more about private clusters, see: https://docs.microsoft.com/azure/aks/private-clusters. </remarks>
         public Response<PrivateLinkResourcesListResult> List(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));

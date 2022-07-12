@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// This operation retrieves the built-in policy set definition with the given name.
+        /// Retrieves a built in policy set definition.
         /// Request Path: /providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}
         /// Operation Id: PolicySetDefinitions_GetBuiltIn
         /// </summary>
@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
+        /// <remarks> This operation retrieves the built-in policy set definition with the given name. </remarks>
         public virtual async Task<Response<TenantPolicySetDefinitionResource>> GetAsync(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// This operation retrieves the built-in policy set definition with the given name.
+        /// Retrieves a built in policy set definition.
         /// Request Path: /providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}
         /// Operation Id: PolicySetDefinitions_GetBuiltIn
         /// </summary>
@@ -91,6 +92,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
+        /// <remarks> This operation retrieves the built-in policy set definition with the given name. </remarks>
         public virtual Response<TenantPolicySetDefinitionResource> Get(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
@@ -112,7 +114,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// This operation retrieves a list of all the built-in policy set definitions that match the optional given $filter. If $filter=&apos;category -eq {value}&apos; is provided, the returned list only includes all built-in policy set definitions whose category match the {value}.
+        /// Retrieves built-in policy set definitions.
         /// Request Path: /providers/Microsoft.Authorization/policySetDefinitions
         /// Operation Id: PolicySetDefinitions_ListBuiltIn
         /// </summary>
@@ -120,6 +122,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> Maximum number of records to return. When the $top filter is not provided, it will return 500 records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="TenantPolicySetDefinitionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> This operation retrieves a list of all the built-in policy set definitions that match the optional given $filter. If $filter=&apos;category -eq {value}&apos; is provided, the returned list only includes all built-in policy set definitions whose category match the {value}. </remarks>
         public virtual AsyncPageable<TenantPolicySetDefinitionResource> GetAllAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<TenantPolicySetDefinitionResource>> FirstPageFunc(int? pageSizeHint)
@@ -156,7 +159,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// This operation retrieves a list of all the built-in policy set definitions that match the optional given $filter. If $filter=&apos;category -eq {value}&apos; is provided, the returned list only includes all built-in policy set definitions whose category match the {value}.
+        /// Retrieves built-in policy set definitions.
         /// Request Path: /providers/Microsoft.Authorization/policySetDefinitions
         /// Operation Id: PolicySetDefinitions_ListBuiltIn
         /// </summary>
@@ -164,6 +167,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> Maximum number of records to return. When the $top filter is not provided, it will return 500 records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="TenantPolicySetDefinitionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> This operation retrieves a list of all the built-in policy set definitions that match the optional given $filter. If $filter=&apos;category -eq {value}&apos; is provided, the returned list only includes all built-in policy set definitions whose category match the {value}. </remarks>
         public virtual Pageable<TenantPolicySetDefinitionResource> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Page<TenantPolicySetDefinitionResource> FirstPageFunc(int? pageSizeHint)
@@ -200,7 +204,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Retrieves a built in policy set definition.
         /// Request Path: /providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}
         /// Operation Id: PolicySetDefinitions_GetBuiltIn
         /// </summary>
@@ -208,6 +212,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
@@ -227,7 +232,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Retrieves a built in policy set definition.
         /// Request Path: /providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}
         /// Operation Id: PolicySetDefinitions_GetBuiltIn
         /// </summary>
@@ -235,6 +240,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));

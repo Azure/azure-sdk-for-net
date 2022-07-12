@@ -88,11 +88,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a backup of an app by its ID.
+        /// Gets a backup of an app by its ID.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/backups/{backupId}
         /// Operation Id: WebApps_GetBackupStatus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Gets a backup of an app by its ID. </remarks>
         public virtual async Task<Response<SiteBackupResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteBackupWebAppsClientDiagnostics.CreateScope("SiteBackupResource.Get");
@@ -112,11 +113,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a backup of an app by its ID.
+        /// Gets a backup of an app by its ID.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/backups/{backupId}
         /// Operation Id: WebApps_GetBackupStatus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Gets a backup of an app by its ID. </remarks>
         public virtual Response<SiteBackupResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _siteBackupWebAppsClientDiagnostics.CreateScope("SiteBackupResource.Get");
@@ -136,12 +138,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Deletes a backup of an app by its ID.
+        /// Deletes a backup of an app by its ID.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/backups/{backupId}
         /// Operation Id: WebApps_DeleteBackup
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Deletes a backup of an app by its ID. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _siteBackupWebAppsClientDiagnostics.CreateScope("SiteBackupResource.Delete");
@@ -162,12 +165,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Deletes a backup of an app by its ID.
+        /// Deletes a backup of an app by its ID.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/backups/{backupId}
         /// Operation Id: WebApps_DeleteBackup
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Deletes a backup of an app by its ID. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _siteBackupWebAppsClientDiagnostics.CreateScope("SiteBackupResource.Delete");
@@ -188,13 +192,14 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets status of a web app backup that may be in progress, including secrets associated with the backup, such as the Azure Storage SAS URL. Also can be used to update the SAS URL for the backup if a new URL is passed in the request body.
+        /// Gets status of a web app backup that may be in progress, including secrets associated with the backup, such as the Azure Storage SAS URL. Also can be used to update the SAS URL for the backup if a new URL is passed in the request body.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/backups/{backupId}/list
         /// Operation Id: WebApps_ListBackupStatusSecrets
         /// </summary>
         /// <param name="request"> Information on backup request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
+        /// <remarks> Description for Gets status of a web app backup that may be in progress, including secrets associated with the backup, such as the Azure Storage SAS URL. Also can be used to update the SAS URL for the backup if a new URL is passed in the request body. </remarks>
         public virtual async Task<Response<SiteBackupResource>> GetBackupStatusSecretsAsync(BackupRequest request, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(request, nameof(request));
@@ -214,13 +219,14 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets status of a web app backup that may be in progress, including secrets associated with the backup, such as the Azure Storage SAS URL. Also can be used to update the SAS URL for the backup if a new URL is passed in the request body.
+        /// Gets status of a web app backup that may be in progress, including secrets associated with the backup, such as the Azure Storage SAS URL. Also can be used to update the SAS URL for the backup if a new URL is passed in the request body.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/backups/{backupId}/list
         /// Operation Id: WebApps_ListBackupStatusSecrets
         /// </summary>
         /// <param name="request"> Information on backup request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
+        /// <remarks> Description for Gets status of a web app backup that may be in progress, including secrets associated with the backup, such as the Azure Storage SAS URL. Also can be used to update the SAS URL for the backup if a new URL is passed in the request body. </remarks>
         public virtual Response<SiteBackupResource> GetBackupStatusSecrets(BackupRequest request, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(request, nameof(request));
@@ -240,7 +246,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Restores a specific backup to another app (or deployment slot, if specified).
+        /// Restores a specific backup to another app (or deployment slot, if specified).
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/backups/{backupId}/restore
         /// Operation Id: WebApps_Restore
         /// </summary>
@@ -248,6 +254,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="request"> Information on restore request . </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
+        /// <remarks> Description for Restores a specific backup to another app (or deployment slot, if specified). </remarks>
         public virtual async Task<ArmOperation> RestoreAsync(WaitUntil waitUntil, RestoreRequest request, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(request, nameof(request));
@@ -270,7 +277,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Restores a specific backup to another app (or deployment slot, if specified).
+        /// Restores a specific backup to another app (or deployment slot, if specified).
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/backups/{backupId}/restore
         /// Operation Id: WebApps_Restore
         /// </summary>
@@ -278,6 +285,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="request"> Information on restore request . </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
+        /// <remarks> Description for Restores a specific backup to another app (or deployment slot, if specified). </remarks>
         public virtual ArmOperation Restore(WaitUntil waitUntil, RestoreRequest request, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(request, nameof(request));

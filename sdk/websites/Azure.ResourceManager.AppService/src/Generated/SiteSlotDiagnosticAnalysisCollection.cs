@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get Site Analysis
+        /// Get Site Analysis
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/analyses/{analysisName}
         /// Operation Id: Diagnostics_GetSiteAnalysisSlot
         /// </summary>
@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
+        /// <remarks> Description for Get Site Analysis. </remarks>
         public virtual async Task<Response<SiteSlotDiagnosticAnalysisResource>> GetAsync(string analysisName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(analysisName, nameof(analysisName));
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get Site Analysis
+        /// Get Site Analysis
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/analyses/{analysisName}
         /// Operation Id: Diagnostics_GetSiteAnalysisSlot
         /// </summary>
@@ -91,6 +92,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
+        /// <remarks> Description for Get Site Analysis. </remarks>
         public virtual Response<SiteSlotDiagnosticAnalysisResource> Get(string analysisName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(analysisName, nameof(analysisName));
@@ -112,12 +114,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get Site Analyses
+        /// Get Site Analyses
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/analyses
         /// Operation Id: Diagnostics_ListSiteAnalysesSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SiteSlotDiagnosticAnalysisResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get Site Analyses. </remarks>
         public virtual AsyncPageable<SiteSlotDiagnosticAnalysisResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<SiteSlotDiagnosticAnalysisResource>> FirstPageFunc(int? pageSizeHint)
@@ -154,12 +157,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get Site Analyses
+        /// Get Site Analyses
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/analyses
         /// Operation Id: Diagnostics_ListSiteAnalysesSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SiteSlotDiagnosticAnalysisResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get Site Analyses. </remarks>
         public virtual Pageable<SiteSlotDiagnosticAnalysisResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<SiteSlotDiagnosticAnalysisResource> FirstPageFunc(int? pageSizeHint)
@@ -196,7 +200,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get Site Analysis
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/analyses/{analysisName}
         /// Operation Id: Diagnostics_GetSiteAnalysisSlot
         /// </summary>
@@ -204,6 +208,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string analysisName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(analysisName, nameof(analysisName));
@@ -223,7 +228,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get Site Analysis
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/analyses/{analysisName}
         /// Operation Id: Diagnostics_GetSiteAnalysisSlot
         /// </summary>
@@ -231,6 +236,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string analysisName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(analysisName, nameof(analysisName));

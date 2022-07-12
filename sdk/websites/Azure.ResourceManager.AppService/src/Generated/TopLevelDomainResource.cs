@@ -89,11 +89,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get details of a top-level domain.
+        /// Get details of a top-level domain.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}
         /// Operation Id: TopLevelDomains_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Get details of a top-level domain. </remarks>
         public virtual async Task<Response<TopLevelDomainResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomainResource.Get");
@@ -113,11 +114,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get details of a top-level domain.
+        /// Get details of a top-level domain.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}
         /// Operation Id: TopLevelDomains_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Get details of a top-level domain. </remarks>
         public virtual Response<TopLevelDomainResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomainResource.Get");
@@ -137,7 +139,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets all legal agreements that user needs to accept before purchasing a domain.
+        /// Gets all legal agreements that user needs to accept before purchasing a domain.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}/listAgreements
         /// Operation Id: TopLevelDomains_ListAgreements
         /// </summary>
@@ -145,6 +147,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="agreementOption"/> is null. </exception>
         /// <returns> An async collection of <see cref="TldLegalAgreement" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Gets all legal agreements that user needs to accept before purchasing a domain. </remarks>
         public virtual AsyncPageable<TldLegalAgreement> GetAgreementsAsync(TopLevelDomainAgreementOption agreementOption, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(agreementOption, nameof(agreementOption));
@@ -183,7 +186,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets all legal agreements that user needs to accept before purchasing a domain.
+        /// Gets all legal agreements that user needs to accept before purchasing a domain.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}/listAgreements
         /// Operation Id: TopLevelDomains_ListAgreements
         /// </summary>
@@ -191,6 +194,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="agreementOption"/> is null. </exception>
         /// <returns> A collection of <see cref="TldLegalAgreement" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Gets all legal agreements that user needs to accept before purchasing a domain. </remarks>
         public virtual Pageable<TldLegalAgreement> GetAgreements(TopLevelDomainAgreementOption agreementOption, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(agreementOption, nameof(agreementOption));

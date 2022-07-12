@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary>
-        /// Create Or Update HybridIdentityMetadata.
+        /// Implements HybridIdentityMetadata PUT method.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}/hybridIdentityMetadata/{metadataName}
         /// Operation Id: HybridIdentityMetadata_Create
         /// </summary>
@@ -64,6 +64,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="metadataName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="metadataName"/> is null. </exception>
+        /// <remarks> Create Or Update HybridIdentityMetadata. </remarks>
         public virtual async Task<ArmOperation<HybridIdentityMetadataResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string metadataName, HybridIdentityMetadataData data = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(metadataName, nameof(metadataName));
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary>
-        /// Create Or Update HybridIdentityMetadata.
+        /// Implements HybridIdentityMetadata PUT method.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}/hybridIdentityMetadata/{metadataName}
         /// Operation Id: HybridIdentityMetadata_Create
         /// </summary>
@@ -96,6 +97,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="metadataName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="metadataName"/> is null. </exception>
+        /// <remarks> Create Or Update HybridIdentityMetadata. </remarks>
         public virtual ArmOperation<HybridIdentityMetadataResource> CreateOrUpdate(WaitUntil waitUntil, string metadataName, HybridIdentityMetadataData data = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(metadataName, nameof(metadataName));
@@ -118,7 +120,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary>
-        /// Implements HybridIdentityMetadata GET method.
+        /// Gets HybridIdentityMetadata.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}/hybridIdentityMetadata/{metadataName}
         /// Operation Id: HybridIdentityMetadata_Get
         /// </summary>
@@ -126,6 +128,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="metadataName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="metadataName"/> is null. </exception>
+        /// <remarks> Implements HybridIdentityMetadata GET method. </remarks>
         public virtual async Task<Response<HybridIdentityMetadataResource>> GetAsync(string metadataName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(metadataName, nameof(metadataName));
@@ -147,7 +150,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary>
-        /// Implements HybridIdentityMetadata GET method.
+        /// Gets HybridIdentityMetadata.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}/hybridIdentityMetadata/{metadataName}
         /// Operation Id: HybridIdentityMetadata_Get
         /// </summary>
@@ -155,6 +158,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="metadataName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="metadataName"/> is null. </exception>
+        /// <remarks> Implements HybridIdentityMetadata GET method. </remarks>
         public virtual Response<HybridIdentityMetadataResource> Get(string metadataName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(metadataName, nameof(metadataName));
@@ -176,12 +180,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary>
-        /// Returns the list of HybridIdentityMetadata of the given vm.
+        /// Implements GET HybridIdentityMetadata in a vm.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}/hybridIdentityMetadata
         /// Operation Id: HybridIdentityMetadata_ListByVm
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="HybridIdentityMetadataResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Returns the list of HybridIdentityMetadata of the given vm. </remarks>
         public virtual AsyncPageable<HybridIdentityMetadataResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<HybridIdentityMetadataResource>> FirstPageFunc(int? pageSizeHint)
@@ -218,12 +223,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary>
-        /// Returns the list of HybridIdentityMetadata of the given vm.
+        /// Implements GET HybridIdentityMetadata in a vm.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}/hybridIdentityMetadata
         /// Operation Id: HybridIdentityMetadata_ListByVm
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HybridIdentityMetadataResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Returns the list of HybridIdentityMetadata of the given vm. </remarks>
         public virtual Pageable<HybridIdentityMetadataResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<HybridIdentityMetadataResource> FirstPageFunc(int? pageSizeHint)
@@ -260,7 +266,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Gets HybridIdentityMetadata.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}/hybridIdentityMetadata/{metadataName}
         /// Operation Id: HybridIdentityMetadata_Get
         /// </summary>
@@ -268,6 +274,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="metadataName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="metadataName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string metadataName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(metadataName, nameof(metadataName));
@@ -287,7 +294,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Gets HybridIdentityMetadata.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}/hybridIdentityMetadata/{metadataName}
         /// Operation Id: HybridIdentityMetadata_Get
         /// </summary>
@@ -295,6 +302,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="metadataName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="metadataName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string metadataName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(metadataName, nameof(metadataName));

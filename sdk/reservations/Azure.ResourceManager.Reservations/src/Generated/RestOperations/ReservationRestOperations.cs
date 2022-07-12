@@ -60,16 +60,17 @@ namespace Azure.ResourceManager.Reservations
             return message;
         }
 
-        /// <summary>
-        /// Get Available Scopes for `Reservation`.
-        /// 
-        /// </summary>
+        /// <summary> Get Available Scopes for `Reservation`. </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="reservationId"> Id of the Reservation Item. </param>
         /// <param name="content"> The AvailableScopeContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/>, <paramref name="reservationId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks>
+        /// Get Available Scopes for `Reservation`.
+        /// 
+        /// </remarks>
         public async Task<Response> AvailableScopesAsync(string reservationOrderId, string reservationId, AvailableScopeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
@@ -87,16 +88,17 @@ namespace Azure.ResourceManager.Reservations
             }
         }
 
-        /// <summary>
-        /// Get Available Scopes for `Reservation`.
-        /// 
-        /// </summary>
+        /// <summary> Get Available Scopes for `Reservation`. </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="reservationId"> Id of the Reservation Item. </param>
         /// <param name="content"> The AvailableScopeContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/>, <paramref name="reservationId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks>
+        /// Get Available Scopes for `Reservation`.
+        /// 
+        /// </remarks>
         public Response AvailableScopes(string reservationOrderId, string reservationId, AvailableScopeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
@@ -135,12 +137,13 @@ namespace Azure.ResourceManager.Reservations
             return message;
         }
 
-        /// <summary> Split a `Reservation` into two `Reservation`s with specified quantity distribution. </summary>
+        /// <summary> Split the `Reservation`. </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="content"> Information needed to Split a reservation item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Split a `Reservation` into two `Reservation`s with specified quantity distribution. </remarks>
         public async Task<Response> SplitAsync(string reservationOrderId, SplitContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
@@ -158,12 +161,13 @@ namespace Azure.ResourceManager.Reservations
             }
         }
 
-        /// <summary> Split a `Reservation` into two `Reservation`s with specified quantity distribution. </summary>
+        /// <summary> Split the `Reservation`. </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="content"> Information needed to Split a reservation item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Split a `Reservation` into two `Reservation`s with specified quantity distribution. </remarks>
         public Response Split(string reservationOrderId, SplitContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
@@ -202,12 +206,13 @@ namespace Azure.ResourceManager.Reservations
             return message;
         }
 
-        /// <summary> Merge the specified `Reservation`s into a new `Reservation`. The two `Reservation`s being merged must have same properties. </summary>
+        /// <summary> Merges two `Reservation`s. </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="content"> Information needed for commercial request for a reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Merge the specified `Reservation`s into a new `Reservation`. The two `Reservation`s being merged must have same properties. </remarks>
         public async Task<Response> MergeAsync(string reservationOrderId, MergeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
@@ -225,12 +230,13 @@ namespace Azure.ResourceManager.Reservations
             }
         }
 
-        /// <summary> Merge the specified `Reservation`s into a new `Reservation`. The two `Reservation`s being merged must have same properties. </summary>
+        /// <summary> Merges two `Reservation`s. </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="content"> Information needed for commercial request for a reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Merge the specified `Reservation`s into a new `Reservation`. The two `Reservation`s being merged must have same properties. </remarks>
         public Response Merge(string reservationOrderId, MergeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
@@ -265,11 +271,12 @@ namespace Azure.ResourceManager.Reservations
             return message;
         }
 
-        /// <summary> List `Reservation`s within a single `ReservationOrder`. </summary>
+        /// <summary> Get `Reservation`s in a given reservation Order. </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List `Reservation`s within a single `ReservationOrder`. </remarks>
         public async Task<Response<ReservationList>> ListAsync(string reservationOrderId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
@@ -290,11 +297,12 @@ namespace Azure.ResourceManager.Reservations
             }
         }
 
-        /// <summary> List `Reservation`s within a single `ReservationOrder`. </summary>
+        /// <summary> Get `Reservation`s in a given reservation Order. </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List `Reservation`s within a single `ReservationOrder`. </remarks>
         public Response<ReservationList> List(string reservationOrderId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
@@ -337,13 +345,14 @@ namespace Azure.ResourceManager.Reservations
             return message;
         }
 
-        /// <summary> Get specific `Reservation` details. </summary>
+        /// <summary> Get `Reservation` details. </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="reservationId"> Id of the Reservation Item. </param>
         /// <param name="expand"> Supported value of this query is renewProperties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get specific `Reservation` details. </remarks>
         public async Task<Response<ReservationResponseData>> GetAsync(string reservationOrderId, string reservationId, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
@@ -367,13 +376,14 @@ namespace Azure.ResourceManager.Reservations
             }
         }
 
-        /// <summary> Get specific `Reservation` details. </summary>
+        /// <summary> Get `Reservation` details. </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="reservationId"> Id of the Reservation Item. </param>
         /// <param name="expand"> Supported value of this query is renewProperties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get specific `Reservation` details. </remarks>
         public Response<ReservationResponseData> Get(string reservationOrderId, string reservationId, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
@@ -419,13 +429,14 @@ namespace Azure.ResourceManager.Reservations
             return message;
         }
 
-        /// <summary> Updates the applied scopes of the `Reservation`. </summary>
+        /// <summary> Updates a `Reservation`. </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="reservationId"> Id of the Reservation Item. </param>
         /// <param name="patch"> Information needed to patch a reservation item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/>, <paramref name="reservationId"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Updates the applied scopes of the `Reservation`. </remarks>
         public async Task<Response> UpdateAsync(string reservationOrderId, string reservationId, ReservationResponsePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
@@ -444,13 +455,14 @@ namespace Azure.ResourceManager.Reservations
             }
         }
 
-        /// <summary> Updates the applied scopes of the `Reservation`. </summary>
+        /// <summary> Updates a `Reservation`. </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="reservationId"> Id of the Reservation Item. </param>
         /// <param name="patch"> Information needed to patch a reservation item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/>, <paramref name="reservationId"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Updates the applied scopes of the `Reservation`. </remarks>
         public Response Update(string reservationOrderId, string reservationId, ReservationResponsePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
@@ -488,12 +500,13 @@ namespace Azure.ResourceManager.Reservations
             return message;
         }
 
-        /// <summary> List of all the revisions for the `Reservation`. </summary>
+        /// <summary> Get `Reservation` revisions. </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="reservationId"> Id of the Reservation Item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List of all the revisions for the `Reservation`. </remarks>
         public async Task<Response<ReservationList>> ListRevisionsAsync(string reservationOrderId, string reservationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
@@ -515,12 +528,13 @@ namespace Azure.ResourceManager.Reservations
             }
         }
 
-        /// <summary> List of all the revisions for the `Reservation`. </summary>
+        /// <summary> Get `Reservation` revisions. </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="reservationId"> Id of the Reservation Item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List of all the revisions for the `Reservation`. </remarks>
         public Response<ReservationList> ListRevisions(string reservationOrderId, string reservationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
@@ -647,12 +661,13 @@ namespace Azure.ResourceManager.Reservations
             return message;
         }
 
-        /// <summary> List `Reservation`s within a single `ReservationOrder`. </summary>
+        /// <summary> Get `Reservation`s in a given reservation Order. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="reservationOrderId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List `Reservation`s within a single `ReservationOrder`. </remarks>
         public async Task<Response<ReservationList>> ListNextPageAsync(string nextLink, string reservationOrderId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -674,12 +689,13 @@ namespace Azure.ResourceManager.Reservations
             }
         }
 
-        /// <summary> List `Reservation`s within a single `ReservationOrder`. </summary>
+        /// <summary> Get `Reservation`s in a given reservation Order. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="reservationOrderId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List `Reservation`s within a single `ReservationOrder`. </remarks>
         public Response<ReservationList> ListNextPage(string nextLink, string reservationOrderId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -715,13 +731,14 @@ namespace Azure.ResourceManager.Reservations
             return message;
         }
 
-        /// <summary> List of all the revisions for the `Reservation`. </summary>
+        /// <summary> Get `Reservation` revisions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="reservationId"> Id of the Reservation Item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List of all the revisions for the `Reservation`. </remarks>
         public async Task<Response<ReservationList>> ListRevisionsNextPageAsync(string nextLink, string reservationOrderId, string reservationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -744,13 +761,14 @@ namespace Azure.ResourceManager.Reservations
             }
         }
 
-        /// <summary> List of all the revisions for the `Reservation`. </summary>
+        /// <summary> Get `Reservation` revisions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="reservationId"> Id of the Reservation Item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List of all the revisions for the `Reservation`. </remarks>
         public Response<ReservationList> ListRevisionsNextPage(string nextLink, string reservationOrderId, string reservationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));

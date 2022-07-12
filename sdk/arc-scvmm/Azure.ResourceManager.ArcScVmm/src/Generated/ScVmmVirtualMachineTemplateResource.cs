@@ -90,11 +90,12 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements VirtualMachineTemplate GET method.
+        /// Gets a VirtualMachineTemplate.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachineTemplates/{virtualMachineTemplateName}
         /// Operation Id: VirtualMachineTemplates_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Implements VirtualMachineTemplate GET method. </remarks>
         public virtual async Task<Response<ScVmmVirtualMachineTemplateResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _scVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics.CreateScope("ScVmmVirtualMachineTemplateResource.Get");
@@ -114,11 +115,12 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements VirtualMachineTemplate GET method.
+        /// Gets a VirtualMachineTemplate.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachineTemplates/{virtualMachineTemplateName}
         /// Operation Id: VirtualMachineTemplates_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Implements VirtualMachineTemplate GET method. </remarks>
         public virtual Response<ScVmmVirtualMachineTemplateResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _scVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics.CreateScope("ScVmmVirtualMachineTemplateResource.Get");
@@ -138,13 +140,14 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Deregisters the ScVmm VM Template from Azure.
+        /// Implements VirtualMachineTemplate DELETE method.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachineTemplates/{virtualMachineTemplateName}
         /// Operation Id: VirtualMachineTemplates_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="force"> Forces the resource to be deleted from azure. The corresponding CR would be attempted to be deleted too. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Deregisters the ScVmm VM Template from Azure. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? force = null, CancellationToken cancellationToken = default)
         {
             using var scope = _scVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics.CreateScope("ScVmmVirtualMachineTemplateResource.Delete");
@@ -165,13 +168,14 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Deregisters the ScVmm VM Template from Azure.
+        /// Implements VirtualMachineTemplate DELETE method.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachineTemplates/{virtualMachineTemplateName}
         /// Operation Id: VirtualMachineTemplates_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="force"> Forces the resource to be deleted from azure. The corresponding CR would be attempted to be deleted too. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Deregisters the ScVmm VM Template from Azure. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, bool? force = null, CancellationToken cancellationToken = default)
         {
             using var scope = _scVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics.CreateScope("ScVmmVirtualMachineTemplateResource.Delete");
@@ -192,7 +196,7 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Updates the VirtualMachineTemplate resource.
+        /// Implements the VirtualMachineTemplate PATCH method.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachineTemplates/{virtualMachineTemplateName}
         /// Operation Id: VirtualMachineTemplates_Update
         /// </summary>
@@ -200,6 +204,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="patch"> VirtualMachineTemplates patch details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        /// <remarks> Updates the VirtualMachineTemplate resource. </remarks>
         public virtual async Task<ArmOperation<ScVmmVirtualMachineTemplateResource>> UpdateAsync(WaitUntil waitUntil, ResourcePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
@@ -222,7 +227,7 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Updates the VirtualMachineTemplate resource.
+        /// Implements the VirtualMachineTemplate PATCH method.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachineTemplates/{virtualMachineTemplateName}
         /// Operation Id: VirtualMachineTemplates_Update
         /// </summary>
@@ -230,6 +235,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="patch"> VirtualMachineTemplates patch details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        /// <remarks> Updates the VirtualMachineTemplate resource. </remarks>
         public virtual ArmOperation<ScVmmVirtualMachineTemplateResource> Update(WaitUntil waitUntil, ResourcePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
@@ -252,7 +258,7 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Add a tag to the current resource.
+        /// Gets a VirtualMachineTemplate.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachineTemplates/{virtualMachineTemplateName}
         /// Operation Id: VirtualMachineTemplates_Get
         /// </summary>
@@ -260,6 +266,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        /// <remarks> Add a tag to the current resource. </remarks>
         public virtual async Task<Response<ScVmmVirtualMachineTemplateResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -283,7 +290,7 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Add a tag to the current resource.
+        /// Gets a VirtualMachineTemplate.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachineTemplates/{virtualMachineTemplateName}
         /// Operation Id: VirtualMachineTemplates_Get
         /// </summary>
@@ -291,6 +298,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        /// <remarks> Add a tag to the current resource. </remarks>
         public virtual Response<ScVmmVirtualMachineTemplateResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -314,13 +322,14 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Replace the tags on the resource with the given set.
+        /// Gets a VirtualMachineTemplate.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachineTemplates/{virtualMachineTemplateName}
         /// Operation Id: VirtualMachineTemplates_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        /// <remarks> Replace the tags on the resource with the given set. </remarks>
         public virtual async Task<Response<ScVmmVirtualMachineTemplateResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -344,13 +353,14 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Replace the tags on the resource with the given set.
+        /// Gets a VirtualMachineTemplate.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachineTemplates/{virtualMachineTemplateName}
         /// Operation Id: VirtualMachineTemplates_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        /// <remarks> Replace the tags on the resource with the given set. </remarks>
         public virtual Response<ScVmmVirtualMachineTemplateResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -374,13 +384,14 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Removes a tag by key from the resource.
+        /// Gets a VirtualMachineTemplate.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachineTemplates/{virtualMachineTemplateName}
         /// Operation Id: VirtualMachineTemplates_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <remarks> Removes a tag by key from the resource. </remarks>
         public virtual async Task<Response<ScVmmVirtualMachineTemplateResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -403,13 +414,14 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Removes a tag by key from the resource.
+        /// Gets a VirtualMachineTemplate.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachineTemplates/{virtualMachineTemplateName}
         /// Operation Id: VirtualMachineTemplates_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <remarks> Removes a tag by key from the resource. </remarks>
         public virtual Response<ScVmmVirtualMachineTemplateResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));

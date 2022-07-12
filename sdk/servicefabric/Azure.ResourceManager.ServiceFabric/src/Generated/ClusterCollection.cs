@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary>
-        /// Create or update a Service Fabric cluster resource with the specified name.
+        /// Creates or updates a Service Fabric cluster resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}
         /// Operation Id: Clusters_CreateOrUpdate
         /// </summary>
@@ -65,6 +65,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Create or update a Service Fabric cluster resource with the specified name. </remarks>
         public virtual async Task<ArmOperation<ClusterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string clusterName, ClusterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary>
-        /// Create or update a Service Fabric cluster resource with the specified name.
+        /// Creates or updates a Service Fabric cluster resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}
         /// Operation Id: Clusters_CreateOrUpdate
         /// </summary>
@@ -98,6 +99,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Create or update a Service Fabric cluster resource with the specified name. </remarks>
         public virtual ArmOperation<ClusterResource> CreateOrUpdate(WaitUntil waitUntil, string clusterName, ClusterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
@@ -121,7 +123,7 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary>
-        /// Get a Service Fabric cluster resource created or in the process of being created in the specified resource group.
+        /// Gets a Service Fabric cluster resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}
         /// Operation Id: Clusters_Get
         /// </summary>
@@ -129,6 +131,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
+        /// <remarks> Get a Service Fabric cluster resource created or in the process of being created in the specified resource group. </remarks>
         public virtual async Task<Response<ClusterResource>> GetAsync(string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
@@ -150,7 +153,7 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary>
-        /// Get a Service Fabric cluster resource created or in the process of being created in the specified resource group.
+        /// Gets a Service Fabric cluster resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}
         /// Operation Id: Clusters_Get
         /// </summary>
@@ -158,6 +161,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
+        /// <remarks> Get a Service Fabric cluster resource created or in the process of being created in the specified resource group. </remarks>
         public virtual Response<ClusterResource> Get(string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
@@ -179,12 +183,13 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary>
-        /// Gets all Service Fabric cluster resources created or in the process of being created in the resource group.
+        /// Gets the list of Service Fabric cluster resources created in the specified resource group.
         /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters
         /// Operation Id: Clusters_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Gets all Service Fabric cluster resources created or in the process of being created in the resource group. </remarks>
         public virtual AsyncPageable<ClusterResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ClusterResource>> FirstPageFunc(int? pageSizeHint)
@@ -206,12 +211,13 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary>
-        /// Gets all Service Fabric cluster resources created or in the process of being created in the resource group.
+        /// Gets the list of Service Fabric cluster resources created in the specified resource group.
         /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters
         /// Operation Id: Clusters_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Gets all Service Fabric cluster resources created or in the process of being created in the resource group. </remarks>
         public virtual Pageable<ClusterResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<ClusterResource> FirstPageFunc(int? pageSizeHint)
@@ -233,7 +239,7 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Gets a Service Fabric cluster resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}
         /// Operation Id: Clusters_Get
         /// </summary>
@@ -241,6 +247,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
@@ -260,7 +267,7 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Gets a Service Fabric cluster resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}
         /// Operation Id: Clusters_Get
         /// </summary>
@@ -268,6 +275,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));

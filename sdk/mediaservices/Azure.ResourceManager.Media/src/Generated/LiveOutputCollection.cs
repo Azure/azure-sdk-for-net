@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Creates a new live output.
+        /// Create Live Output
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}/liveOutputs/{liveOutputName}
         /// Operation Id: LiveOutputs_Create
         /// </summary>
@@ -64,6 +64,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="liveOutputName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="liveOutputName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Creates a new live output. </remarks>
         public virtual async Task<ArmOperation<LiveOutputResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string liveOutputName, LiveOutputData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(liveOutputName, nameof(liveOutputName));
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Creates a new live output.
+        /// Create Live Output
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}/liveOutputs/{liveOutputName}
         /// Operation Id: LiveOutputs_Create
         /// </summary>
@@ -97,6 +98,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="liveOutputName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="liveOutputName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Creates a new live output. </remarks>
         public virtual ArmOperation<LiveOutputResource> CreateOrUpdate(WaitUntil waitUntil, string liveOutputName, LiveOutputData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(liveOutputName, nameof(liveOutputName));
@@ -120,7 +122,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Gets a live output.
+        /// Get Live Output
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}/liveOutputs/{liveOutputName}
         /// Operation Id: LiveOutputs_Get
         /// </summary>
@@ -128,6 +130,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="liveOutputName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="liveOutputName"/> is null. </exception>
+        /// <remarks> Gets a live output. </remarks>
         public virtual async Task<Response<LiveOutputResource>> GetAsync(string liveOutputName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(liveOutputName, nameof(liveOutputName));
@@ -149,7 +152,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Gets a live output.
+        /// Get Live Output
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}/liveOutputs/{liveOutputName}
         /// Operation Id: LiveOutputs_Get
         /// </summary>
@@ -157,6 +160,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="liveOutputName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="liveOutputName"/> is null. </exception>
+        /// <remarks> Gets a live output. </remarks>
         public virtual Response<LiveOutputResource> Get(string liveOutputName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(liveOutputName, nameof(liveOutputName));
@@ -178,12 +182,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Lists the live outputs of a live event.
+        /// List Live Outputs
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}/liveOutputs
         /// Operation Id: LiveOutputs_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="LiveOutputResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Lists the live outputs of a live event. </remarks>
         public virtual AsyncPageable<LiveOutputResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<LiveOutputResource>> FirstPageFunc(int? pageSizeHint)
@@ -220,12 +225,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Lists the live outputs of a live event.
+        /// List Live Outputs
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}/liveOutputs
         /// Operation Id: LiveOutputs_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LiveOutputResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Lists the live outputs of a live event. </remarks>
         public virtual Pageable<LiveOutputResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<LiveOutputResource> FirstPageFunc(int? pageSizeHint)
@@ -262,7 +268,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get Live Output
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}/liveOutputs/{liveOutputName}
         /// Operation Id: LiveOutputs_Get
         /// </summary>
@@ -270,6 +276,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="liveOutputName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="liveOutputName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string liveOutputName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(liveOutputName, nameof(liveOutputName));
@@ -289,7 +296,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get Live Output
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}/liveOutputs/{liveOutputName}
         /// Operation Id: LiveOutputs_Get
         /// </summary>
@@ -297,6 +304,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="liveOutputName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="liveOutputName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string liveOutputName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(liveOutputName, nameof(liveOutputName));

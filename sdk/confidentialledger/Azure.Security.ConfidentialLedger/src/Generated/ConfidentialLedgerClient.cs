@@ -44,11 +44,13 @@ namespace Azure.Security.ConfidentialLedger
         {
         }
 
-        /// <summary> The constitution is a script that assesses and applies proposals from consortium members. </summary>
+        /// <summary> Gets the constitution used for governance. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
+        /// The constitution is a script that assesses and applies proposals from consortium members.
+        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -77,11 +79,13 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> The constitution is a script that assesses and applies proposals from consortium members. </summary>
+        /// <summary> Gets the constitution used for governance. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
+        /// The constitution is a script that assesses and applies proposals from consortium members.
+        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -110,11 +114,13 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> Consortium members can manage the Confidential Ledger. </summary>
+        /// <summary> Gets the consortium members. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
+        /// Consortium members can manage the Confidential Ledger.
+        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -147,11 +153,13 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> Consortium members can manage the Confidential Ledger. </summary>
+        /// <summary> Gets the consortium members. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
+        /// Consortium members can manage the Confidential Ledger.
+        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -184,11 +192,13 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> A quote is an SGX enclave measurement that can be used to verify the validity of a node and its enclave. </summary>
+        /// <summary> Gets quotes for all nodes of the Confidential Ledger. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
+        /// A quote is an SGX enclave measurement that can be used to verify the validity of a node and its enclave.
+        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -217,11 +227,13 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> A quote is an SGX enclave measurement that can be used to verify the validity of a node and its enclave. </summary>
+        /// <summary> Gets quotes for all nodes of the Confidential Ledger. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
+        /// A quote is an SGX enclave measurement that can be used to verify the validity of a node and its enclave.
+        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -250,11 +262,13 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> Collection ids are user-created collections of ledger entries. </summary>
+        /// <summary> Retrieves a list of collection ids present in the Confidential Ledger. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
+        /// Collection ids are user-created collections of ledger entries
+        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -282,11 +296,13 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> Collection ids are user-created collections of ledger entries. </summary>
+        /// <summary> Retrieves a list of collection ids present in the Confidential Ledger. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
+        /// Collection ids are user-created collections of ledger entries
+        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -314,7 +330,7 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> To return older ledger entries, the relevant sections of the ledger must be read from disk and validated. To prevent blocking within the enclave, the response will indicate whether the entry is ready and part of the response, or if the loading is still ongoing. </summary>
+        /// <summary> Gets the ledger entry at the specified transaction id. A collection id may optionally be specified to indicate the collection from which to fetch the value. </summary>
         /// <param name="transactionId"> Identifies a write transaction. </param>
         /// <param name="collectionId"> The collection id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -323,6 +339,8 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
+        /// To return older ledger entries, the relevant sections of the ledger must be read from disk and validated. To prevent blocking within the enclave, the response will indicate whether the entry is ready and part of the response, or if the loading is still ongoing.
+        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -357,7 +375,7 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> To return older ledger entries, the relevant sections of the ledger must be read from disk and validated. To prevent blocking within the enclave, the response will indicate whether the entry is ready and part of the response, or if the loading is still ongoing. </summary>
+        /// <summary> Gets the ledger entry at the specified transaction id. A collection id may optionally be specified to indicate the collection from which to fetch the value. </summary>
         /// <param name="transactionId"> Identifies a write transaction. </param>
         /// <param name="collectionId"> The collection id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -366,6 +384,8 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
+        /// To return older ledger entries, the relevant sections of the ledger must be read from disk and validated. To prevent blocking within the enclave, the response will indicate whether the entry is ready and part of the response, or if the loading is still ongoing.
+        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -408,6 +428,8 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
+        /// Gets a receipt certifying ledger contents at a particular transaction id.
+        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -465,6 +487,8 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
+        /// Gets a receipt certifying ledger contents at a particular transaction id.
+        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -522,6 +546,8 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
+        /// Gets the status of an entry identified by a transaction id.
+        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -560,6 +586,8 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
+        /// Gets the status of an entry identified by a transaction id.
+        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -590,12 +618,14 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> A collection id may optionally be specified. </summary>
+        /// <summary> Gets the current value available in the ledger. </summary>
         /// <param name="collectionId"> The collection id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
+        /// A collection id may optionally be specified.
+        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -625,12 +655,14 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> A collection id may optionally be specified. </summary>
+        /// <summary> Gets the current value available in the ledger. </summary>
         /// <param name="collectionId"> The collection id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
+        /// A collection id may optionally be specified.
+        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -666,6 +698,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <remarks> Deletes a user from the Confidential Ledger. </remarks>
         public virtual async Task<Response> DeleteUserAsync(string userId, RequestContext context = null)
         {
             Argument.AssertNotNull(userId, nameof(userId));
@@ -690,6 +723,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <remarks> Deletes a user from the Confidential Ledger. </remarks>
         public virtual Response DeleteUser(string userId, RequestContext context = null)
         {
             Argument.AssertNotNull(userId, nameof(userId));
@@ -715,6 +749,8 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
+        /// Gets a user.
+        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -752,6 +788,8 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
+        /// Gets a user.
+        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -782,7 +820,7 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> A JSON merge patch is applied for existing users. </summary>
+        /// <summary> Adds a user or updates a user&apos;s fields. </summary>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -790,6 +828,8 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
+        /// A JSON merge patch is applied for existing users
+        /// 
         /// Below is the JSON schema for the request and response payloads.
         /// 
         /// Request Body:
@@ -830,7 +870,7 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> A JSON merge patch is applied for existing users. </summary>
+        /// <summary> Adds a user or updates a user&apos;s fields. </summary>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -838,6 +878,8 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
+        /// A JSON merge patch is applied for existing users
+        /// 
         /// Below is the JSON schema for the request and response payloads.
         /// 
         /// Request Body:
@@ -878,7 +920,7 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> A collection id may optionally be specified. Only entries in the specified (or default) collection will be returned. </summary>
+        /// <summary> Gets ledger entries from a collection corresponding to a range. </summary>
         /// <param name="collectionId"> The collection id. </param>
         /// <param name="fromTransactionId"> Specify the first transaction ID in a range. </param>
         /// <param name="toTransactionId"> Specify the last transaction ID in a range. </param>
@@ -886,6 +928,8 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <remarks>
+        /// A collection id may optionally be specified. Only entries in the specified (or default) collection will be returned.
+        /// 
         /// Below is the JSON schema for one item in the pageable response.
         /// 
         /// Response Body:
@@ -921,7 +965,7 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> A collection id may optionally be specified. Only entries in the specified (or default) collection will be returned. </summary>
+        /// <summary> Gets ledger entries from a collection corresponding to a range. </summary>
         /// <param name="collectionId"> The collection id. </param>
         /// <param name="fromTransactionId"> Specify the first transaction ID in a range. </param>
         /// <param name="toTransactionId"> Specify the last transaction ID in a range. </param>
@@ -929,6 +973,8 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <remarks>
+        /// A collection id may optionally be specified. Only entries in the specified (or default) collection will be returned.
+        /// 
         /// Below is the JSON schema for one item in the pageable response.
         /// 
         /// Response Body:

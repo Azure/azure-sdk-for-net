@@ -89,11 +89,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a named add-on of an app.
+        /// Gets a named add-on of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/premieraddons/{premierAddOnName}
         /// Operation Id: WebApps_GetPremierAddOnSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Gets a named add-on of an app. </remarks>
         public virtual async Task<Response<SiteSlotPremierAddOnResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotPremierAddOnWebAppsClientDiagnostics.CreateScope("SiteSlotPremierAddOnResource.Get");
@@ -113,11 +114,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a named add-on of an app.
+        /// Gets a named add-on of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/premieraddons/{premierAddOnName}
         /// Operation Id: WebApps_GetPremierAddOnSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Gets a named add-on of an app. </remarks>
         public virtual Response<SiteSlotPremierAddOnResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotPremierAddOnWebAppsClientDiagnostics.CreateScope("SiteSlotPremierAddOnResource.Get");
@@ -137,12 +139,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Delete a premier add-on from an app.
+        /// Delete a premier add-on from an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/premieraddons/{premierAddOnName}
         /// Operation Id: WebApps_DeletePremierAddOnSlot
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Delete a premier add-on from an app. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotPremierAddOnWebAppsClientDiagnostics.CreateScope("SiteSlotPremierAddOnResource.Delete");
@@ -163,12 +166,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Delete a premier add-on from an app.
+        /// Delete a premier add-on from an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/premieraddons/{premierAddOnName}
         /// Operation Id: WebApps_DeletePremierAddOnSlot
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Delete a premier add-on from an app. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotPremierAddOnWebAppsClientDiagnostics.CreateScope("SiteSlotPremierAddOnResource.Delete");
@@ -189,13 +193,14 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Updates a named add-on of an app.
+        /// Updates a named add-on of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/premieraddons/{premierAddOnName}
         /// Operation Id: WebApps_UpdatePremierAddOnSlot
         /// </summary>
         /// <param name="premierAddOn"> A JSON representation of the edited premier add-on. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOn"/> is null. </exception>
+        /// <remarks> Description for Updates a named add-on of an app. </remarks>
         public virtual async Task<Response<SiteSlotPremierAddOnResource>> UpdateAsync(PremierAddOnPatchResource premierAddOn, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(premierAddOn, nameof(premierAddOn));
@@ -215,13 +220,14 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Updates a named add-on of an app.
+        /// Updates a named add-on of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/premieraddons/{premierAddOnName}
         /// Operation Id: WebApps_UpdatePremierAddOnSlot
         /// </summary>
         /// <param name="premierAddOn"> A JSON representation of the edited premier add-on. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOn"/> is null. </exception>
+        /// <remarks> Description for Updates a named add-on of an app. </remarks>
         public virtual Response<SiteSlotPremierAddOnResource> Update(PremierAddOnPatchResource premierAddOn, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(premierAddOn, nameof(premierAddOn));
@@ -241,7 +247,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Add a tag to the current resource.
+        /// Gets a named add-on of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/premieraddons/{premierAddOnName}
         /// Operation Id: WebApps_GetPremierAddOnSlot
         /// </summary>
@@ -249,6 +255,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        /// <remarks> Add a tag to the current resource. </remarks>
         public virtual async Task<Response<SiteSlotPremierAddOnResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -272,7 +279,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Add a tag to the current resource.
+        /// Gets a named add-on of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/premieraddons/{premierAddOnName}
         /// Operation Id: WebApps_GetPremierAddOnSlot
         /// </summary>
@@ -280,6 +287,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        /// <remarks> Add a tag to the current resource. </remarks>
         public virtual Response<SiteSlotPremierAddOnResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -303,13 +311,14 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Replace the tags on the resource with the given set.
+        /// Gets a named add-on of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/premieraddons/{premierAddOnName}
         /// Operation Id: WebApps_GetPremierAddOnSlot
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        /// <remarks> Replace the tags on the resource with the given set. </remarks>
         public virtual async Task<Response<SiteSlotPremierAddOnResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -333,13 +342,14 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Replace the tags on the resource with the given set.
+        /// Gets a named add-on of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/premieraddons/{premierAddOnName}
         /// Operation Id: WebApps_GetPremierAddOnSlot
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        /// <remarks> Replace the tags on the resource with the given set. </remarks>
         public virtual Response<SiteSlotPremierAddOnResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -363,13 +373,14 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Removes a tag by key from the resource.
+        /// Gets a named add-on of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/premieraddons/{premierAddOnName}
         /// Operation Id: WebApps_GetPremierAddOnSlot
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <remarks> Removes a tag by key from the resource. </remarks>
         public virtual async Task<Response<SiteSlotPremierAddOnResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -392,13 +403,14 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Removes a tag by key from the resource.
+        /// Gets a named add-on of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/premieraddons/{premierAddOnName}
         /// Operation Id: WebApps_GetPremierAddOnSlot
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <remarks> Removes a tag by key from the resource. </remarks>
         public virtual Response<SiteSlotPremierAddOnResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));

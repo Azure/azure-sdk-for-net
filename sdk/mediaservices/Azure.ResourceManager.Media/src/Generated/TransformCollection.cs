@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Creates or updates a new Transform.
+        /// Create or Update Transform
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}
         /// Operation Id: Transforms_CreateOrUpdate
         /// </summary>
@@ -64,6 +64,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="transformName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="transformName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Creates or updates a new Transform. </remarks>
         public virtual async Task<ArmOperation<TransformResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string transformName, TransformData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Creates or updates a new Transform.
+        /// Create or Update Transform
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}
         /// Operation Id: Transforms_CreateOrUpdate
         /// </summary>
@@ -97,6 +98,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="transformName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="transformName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Creates or updates a new Transform. </remarks>
         public virtual ArmOperation<TransformResource> CreateOrUpdate(WaitUntil waitUntil, string transformName, TransformData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
@@ -120,7 +122,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Gets a Transform.
+        /// Get Transform
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}
         /// Operation Id: Transforms_Get
         /// </summary>
@@ -128,6 +130,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="transformName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="transformName"/> is null. </exception>
+        /// <remarks> Gets a Transform. </remarks>
         public virtual async Task<Response<TransformResource>> GetAsync(string transformName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
@@ -149,7 +152,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Gets a Transform.
+        /// Get Transform
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}
         /// Operation Id: Transforms_Get
         /// </summary>
@@ -157,6 +160,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="transformName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="transformName"/> is null. </exception>
+        /// <remarks> Gets a Transform. </remarks>
         public virtual Response<TransformResource> Get(string transformName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
@@ -178,7 +182,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Lists the Transforms in the account.
+        /// List Transforms
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms
         /// Operation Id: Transforms_List
         /// </summary>
@@ -186,6 +190,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="orderby"> Specifies the key by which the result collection should be ordered. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="TransformResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Lists the Transforms in the account. </remarks>
         public virtual AsyncPageable<TransformResource> GetAllAsync(string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<TransformResource>> FirstPageFunc(int? pageSizeHint)
@@ -222,7 +227,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Lists the Transforms in the account.
+        /// List Transforms
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms
         /// Operation Id: Transforms_List
         /// </summary>
@@ -230,6 +235,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="orderby"> Specifies the key by which the result collection should be ordered. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="TransformResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Lists the Transforms in the account. </remarks>
         public virtual Pageable<TransformResource> GetAll(string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Page<TransformResource> FirstPageFunc(int? pageSizeHint)
@@ -266,7 +272,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get Transform
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}
         /// Operation Id: Transforms_Get
         /// </summary>
@@ -274,6 +280,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="transformName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="transformName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string transformName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
@@ -293,7 +300,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get Transform
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}
         /// Operation Id: Transforms_Get
         /// </summary>
@@ -301,6 +308,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="transformName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="transformName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string transformName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));

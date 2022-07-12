@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Create or update a Track in the asset
+        /// Create or update a Track
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}
         /// Operation Id: Tracks_CreateOrUpdate
         /// </summary>
@@ -64,6 +64,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="trackName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="trackName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Create or update a Track in the asset. </remarks>
         public virtual async Task<ArmOperation<MediaServiceAssetTrackResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string trackName, AssetTrackData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(trackName, nameof(trackName));
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Create or update a Track in the asset
+        /// Create or update a Track
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}
         /// Operation Id: Tracks_CreateOrUpdate
         /// </summary>
@@ -97,6 +98,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="trackName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="trackName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Create or update a Track in the asset. </remarks>
         public virtual ArmOperation<MediaServiceAssetTrackResource> CreateOrUpdate(WaitUntil waitUntil, string trackName, AssetTrackData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(trackName, nameof(trackName));
@@ -120,7 +122,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get the details of a Track in the Asset
+        /// Get a Track
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}
         /// Operation Id: Tracks_Get
         /// </summary>
@@ -128,6 +130,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="trackName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="trackName"/> is null. </exception>
+        /// <remarks> Get the details of a Track in the Asset. </remarks>
         public virtual async Task<Response<MediaServiceAssetTrackResource>> GetAsync(string trackName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(trackName, nameof(trackName));
@@ -149,7 +152,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get the details of a Track in the Asset
+        /// Get a Track
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}
         /// Operation Id: Tracks_Get
         /// </summary>
@@ -157,6 +160,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="trackName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="trackName"/> is null. </exception>
+        /// <remarks> Get the details of a Track in the Asset. </remarks>
         public virtual Response<MediaServiceAssetTrackResource> Get(string trackName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(trackName, nameof(trackName));
@@ -178,12 +182,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Lists the Tracks in the asset
+        /// List Tracks in the Asset
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks
         /// Operation Id: Tracks_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MediaServiceAssetTrackResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Lists the Tracks in the asset. </remarks>
         public virtual AsyncPageable<MediaServiceAssetTrackResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<MediaServiceAssetTrackResource>> FirstPageFunc(int? pageSizeHint)
@@ -205,12 +210,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Lists the Tracks in the asset
+        /// List Tracks in the Asset
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks
         /// Operation Id: Tracks_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MediaServiceAssetTrackResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Lists the Tracks in the asset. </remarks>
         public virtual Pageable<MediaServiceAssetTrackResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<MediaServiceAssetTrackResource> FirstPageFunc(int? pageSizeHint)
@@ -232,7 +238,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get a Track
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}
         /// Operation Id: Tracks_Get
         /// </summary>
@@ -240,6 +246,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="trackName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="trackName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string trackName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(trackName, nameof(trackName));
@@ -259,7 +266,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get a Track
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}
         /// Operation Id: Tracks_Get
         /// </summary>
@@ -267,6 +274,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="trackName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="trackName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string trackName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(trackName, nameof(trackName));

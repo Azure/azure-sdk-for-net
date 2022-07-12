@@ -87,11 +87,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a continuous web job by its ID for an app, or a deployment slot.
+        /// Gets a continuous web job by its ID for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs/{webJobName}
         /// Operation Id: WebApps_GetContinuousWebJob
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Gets a continuous web job by its ID for an app, or a deployment slot. </remarks>
         public virtual async Task<Response<SiteContinuousWebJobResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteContinuousWebJobWebAppsClientDiagnostics.CreateScope("SiteContinuousWebJobResource.Get");
@@ -111,11 +112,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a continuous web job by its ID for an app, or a deployment slot.
+        /// Gets a continuous web job by its ID for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs/{webJobName}
         /// Operation Id: WebApps_GetContinuousWebJob
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Gets a continuous web job by its ID for an app, or a deployment slot. </remarks>
         public virtual Response<SiteContinuousWebJobResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _siteContinuousWebJobWebAppsClientDiagnostics.CreateScope("SiteContinuousWebJobResource.Get");
@@ -135,12 +137,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Delete a continuous web job by its ID for an app, or a deployment slot.
+        /// Delete a continuous web job by its ID for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs/{webJobName}
         /// Operation Id: WebApps_DeleteContinuousWebJob
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Delete a continuous web job by its ID for an app, or a deployment slot. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _siteContinuousWebJobWebAppsClientDiagnostics.CreateScope("SiteContinuousWebJobResource.Delete");
@@ -161,12 +164,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Delete a continuous web job by its ID for an app, or a deployment slot.
+        /// Delete a continuous web job by its ID for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs/{webJobName}
         /// Operation Id: WebApps_DeleteContinuousWebJob
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Delete a continuous web job by its ID for an app, or a deployment slot. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _siteContinuousWebJobWebAppsClientDiagnostics.CreateScope("SiteContinuousWebJobResource.Delete");
@@ -187,11 +191,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Start a continuous web job for an app, or a deployment slot.
+        /// Start a continuous web job for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs/{webJobName}/start
         /// Operation Id: WebApps_StartContinuousWebJob
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Start a continuous web job for an app, or a deployment slot. </remarks>
         public virtual async Task<Response> StartContinuousWebJobAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteContinuousWebJobWebAppsClientDiagnostics.CreateScope("SiteContinuousWebJobResource.StartContinuousWebJob");
@@ -209,11 +214,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Start a continuous web job for an app, or a deployment slot.
+        /// Start a continuous web job for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs/{webJobName}/start
         /// Operation Id: WebApps_StartContinuousWebJob
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Start a continuous web job for an app, or a deployment slot. </remarks>
         public virtual Response StartContinuousWebJob(CancellationToken cancellationToken = default)
         {
             using var scope = _siteContinuousWebJobWebAppsClientDiagnostics.CreateScope("SiteContinuousWebJobResource.StartContinuousWebJob");
@@ -231,11 +237,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Stop a continuous web job for an app, or a deployment slot.
+        /// Stop a continuous web job for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs/{webJobName}/stop
         /// Operation Id: WebApps_StopContinuousWebJob
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Stop a continuous web job for an app, or a deployment slot. </remarks>
         public virtual async Task<Response> StopContinuousWebJobAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteContinuousWebJobWebAppsClientDiagnostics.CreateScope("SiteContinuousWebJobResource.StopContinuousWebJob");
@@ -253,11 +260,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Stop a continuous web job for an app, or a deployment slot.
+        /// Stop a continuous web job for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs/{webJobName}/stop
         /// Operation Id: WebApps_StopContinuousWebJob
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Stop a continuous web job for an app, or a deployment slot. </remarks>
         public virtual Response StopContinuousWebJob(CancellationToken cancellationToken = default)
         {
             using var scope = _siteContinuousWebJobWebAppsClientDiagnostics.CreateScope("SiteContinuousWebJobResource.StopContinuousWebJob");

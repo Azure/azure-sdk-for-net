@@ -36,6 +36,7 @@ namespace Azure.ResourceManager.FluidRelay
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="OperationResult" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List all operations provided by Microsoft.FluidRelay. </remarks>
         public static AsyncPageable<OperationResult> GetFluidRelayOperationsAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenantResource).GetFluidRelayOperationsAsync(cancellationToken);
@@ -49,6 +50,7 @@ namespace Azure.ResourceManager.FluidRelay
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OperationResult" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List all operations provided by Microsoft.FluidRelay. </remarks>
         public static Pageable<OperationResult> GetFluidRelayOperations(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenantResource).GetFluidRelayOperations(cancellationToken);
@@ -71,6 +73,7 @@ namespace Azure.ResourceManager.FluidRelay
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="FluidRelayServerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List all Fluid Relay servers in a subscription. </remarks>
         public static AsyncPageable<FluidRelayServerResource> GetFluidRelayServersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetFluidRelayServersAsync(cancellationToken);
@@ -84,6 +87,7 @@ namespace Azure.ResourceManager.FluidRelay
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FluidRelayServerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List all Fluid Relay servers in a subscription. </remarks>
         public static Pageable<FluidRelayServerResource> GetFluidRelayServers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetFluidRelayServers(cancellationToken);
@@ -116,6 +120,7 @@ namespace Azure.ResourceManager.FluidRelay
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="fluidRelayServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fluidRelayServerName"/> is null. </exception>
+        /// <remarks> Get a Fluid Relay server. </remarks>
         [ForwardsClientCalls]
         public static async Task<Response<FluidRelayServerResource>> GetFluidRelayServerAsync(this ResourceGroupResource resourceGroupResource, string fluidRelayServerName, CancellationToken cancellationToken = default)
         {
@@ -132,6 +137,7 @@ namespace Azure.ResourceManager.FluidRelay
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="fluidRelayServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fluidRelayServerName"/> is null. </exception>
+        /// <remarks> Get a Fluid Relay server. </remarks>
         [ForwardsClientCalls]
         public static Response<FluidRelayServerResource> GetFluidRelayServer(this ResourceGroupResource resourceGroupResource, string fluidRelayServerName, CancellationToken cancellationToken = default)
         {

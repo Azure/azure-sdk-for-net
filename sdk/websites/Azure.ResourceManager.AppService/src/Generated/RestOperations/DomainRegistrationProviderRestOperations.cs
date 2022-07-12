@@ -52,8 +52,9 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider. </summary>
+        /// <summary> Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider. </remarks>
         public async Task<Response<CsmOperationCollection>> ListOperationsAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateListOperationsRequest();
@@ -72,8 +73,9 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider. </summary>
+        /// <summary> Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider. </remarks>
         public Response<CsmOperationCollection> ListOperations(CancellationToken cancellationToken = default)
         {
             using var message = CreateListOperationsRequest();
@@ -106,10 +108,11 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider. </summary>
+        /// <summary> Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider. </remarks>
         public async Task<Response<CsmOperationCollection>> ListOperationsNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -130,10 +133,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider. </summary>
+        /// <summary> Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider. </remarks>
         public Response<CsmOperationCollection> ListOperationsNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));

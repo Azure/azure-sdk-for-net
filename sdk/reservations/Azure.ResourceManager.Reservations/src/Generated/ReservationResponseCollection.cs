@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Get specific `Reservation` details.
+        /// Get `Reservation` details.
         /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}
         /// Operation Id: Reservation_Get
         /// </summary>
@@ -63,6 +63,7 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationId"/> is null. </exception>
+        /// <remarks> Get specific `Reservation` details. </remarks>
         public virtual async Task<Response<ReservationResponseResource>> GetAsync(string reservationId, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
@@ -84,7 +85,7 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Get specific `Reservation` details.
+        /// Get `Reservation` details.
         /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}
         /// Operation Id: Reservation_Get
         /// </summary>
@@ -93,6 +94,7 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationId"/> is null. </exception>
+        /// <remarks> Get specific `Reservation` details. </remarks>
         public virtual Response<ReservationResponseResource> Get(string reservationId, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
@@ -114,12 +116,13 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// List `Reservation`s within a single `ReservationOrder`.
+        /// Get `Reservation`s in a given reservation Order
         /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations
         /// Operation Id: Reservation_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ReservationResponseResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List `Reservation`s within a single `ReservationOrder`. </remarks>
         public virtual AsyncPageable<ReservationResponseResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ReservationResponseResource>> FirstPageFunc(int? pageSizeHint)
@@ -156,12 +159,13 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// List `Reservation`s within a single `ReservationOrder`.
+        /// Get `Reservation`s in a given reservation Order
         /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations
         /// Operation Id: Reservation_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ReservationResponseResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List `Reservation`s within a single `ReservationOrder`. </remarks>
         public virtual Pageable<ReservationResponseResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<ReservationResponseResource> FirstPageFunc(int? pageSizeHint)
@@ -198,7 +202,7 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// List of all the revisions for the `Reservation`.
+        /// Get `Reservation` revisions.
         /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}/revisions
         /// Operation Id: Reservation_ListRevisions
         /// </summary>
@@ -207,6 +211,7 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentException"> <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationId"/> is null. </exception>
         /// <returns> An async collection of <see cref="ReservationResponseResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List of all the revisions for the `Reservation`. </remarks>
         public virtual AsyncPageable<ReservationResponseResource> GetRevisionsAsync(string reservationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
@@ -245,7 +250,7 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// List of all the revisions for the `Reservation`.
+        /// Get `Reservation` revisions.
         /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}/revisions
         /// Operation Id: Reservation_ListRevisions
         /// </summary>
@@ -254,6 +259,7 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentException"> <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationId"/> is null. </exception>
         /// <returns> A collection of <see cref="ReservationResponseResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List of all the revisions for the `Reservation`. </remarks>
         public virtual Pageable<ReservationResponseResource> GetRevisions(string reservationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
@@ -292,7 +298,7 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get `Reservation` details.
         /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}
         /// Operation Id: Reservation_Get
         /// </summary>
@@ -301,6 +307,7 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationId"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string reservationId, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
@@ -320,7 +327,7 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get `Reservation` details.
         /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}
         /// Operation Id: Reservation_Get
         /// </summary>
@@ -329,6 +336,7 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationId"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string reservationId, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));

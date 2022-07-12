@@ -87,11 +87,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the source control configuration of an app.
+        /// Gets the source control configuration of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sourcecontrols/web
         /// Operation Id: WebApps_GetSourceControlSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Gets the source control configuration of an app. </remarks>
         public virtual async Task<Response<SiteSlotSourcecontrolResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotSourcecontrolWebAppsClientDiagnostics.CreateScope("SiteSlotSourcecontrolResource.Get");
@@ -111,11 +112,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the source control configuration of an app.
+        /// Gets the source control configuration of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sourcecontrols/web
         /// Operation Id: WebApps_GetSourceControlSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Gets the source control configuration of an app. </remarks>
         public virtual Response<SiteSlotSourcecontrolResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotSourcecontrolWebAppsClientDiagnostics.CreateScope("SiteSlotSourcecontrolResource.Get");
@@ -135,13 +137,14 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Deletes the source control configuration of an app.
+        /// Deletes the source control configuration of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sourcecontrols/web
         /// Operation Id: WebApps_DeleteSourceControlSlot
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="additionalFlags"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Deletes the source control configuration of an app. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string additionalFlags = null, CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotSourcecontrolWebAppsClientDiagnostics.CreateScope("SiteSlotSourcecontrolResource.Delete");
@@ -162,13 +165,14 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Deletes the source control configuration of an app.
+        /// Deletes the source control configuration of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sourcecontrols/web
         /// Operation Id: WebApps_DeleteSourceControlSlot
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="additionalFlags"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Deletes the source control configuration of an app. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, string additionalFlags = null, CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotSourcecontrolWebAppsClientDiagnostics.CreateScope("SiteSlotSourcecontrolResource.Delete");
@@ -189,13 +193,14 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Updates the source control configuration of an app.
+        /// Updates the source control configuration of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sourcecontrols/web
         /// Operation Id: WebApps_UpdateSourceControlSlot
         /// </summary>
         /// <param name="data"> JSON representation of a SiteSourceControl object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        /// <remarks> Description for Updates the source control configuration of an app. </remarks>
         public virtual async Task<Response<SiteSlotSourcecontrolResource>> UpdateAsync(SiteSourceControlData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -215,13 +220,14 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Updates the source control configuration of an app.
+        /// Updates the source control configuration of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sourcecontrols/web
         /// Operation Id: WebApps_UpdateSourceControlSlot
         /// </summary>
         /// <param name="data"> JSON representation of a SiteSourceControl object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        /// <remarks> Description for Updates the source control configuration of an app. </remarks>
         public virtual Response<SiteSlotSourcecontrolResource> Update(SiteSourceControlData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -241,7 +247,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Updates the source control configuration of an app.
+        /// Updates the source control configuration of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sourcecontrols/web
         /// Operation Id: WebApps_CreateOrUpdateSourceControlSlot
         /// </summary>
@@ -249,6 +255,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> JSON representation of a SiteSourceControl object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        /// <remarks> Description for Updates the source control configuration of an app. </remarks>
         public virtual async Task<ArmOperation<SiteSlotSourcecontrolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SiteSourceControlData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -271,7 +278,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Updates the source control configuration of an app.
+        /// Updates the source control configuration of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sourcecontrols/web
         /// Operation Id: WebApps_CreateOrUpdateSourceControlSlot
         /// </summary>
@@ -279,6 +286,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> JSON representation of a SiteSourceControl object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        /// <remarks> Description for Updates the source control configuration of an app. </remarks>
         public virtual ArmOperation<SiteSlotSourcecontrolResource> CreateOrUpdate(WaitUntil waitUntil, SiteSourceControlData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));

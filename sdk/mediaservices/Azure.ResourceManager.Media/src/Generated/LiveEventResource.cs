@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Gets a live output.
+        /// Get Live Output
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}/liveOutputs/{liveOutputName}
         /// Operation Id: LiveOutputs_Get
         /// </summary>
@@ -104,6 +104,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="liveOutputName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="liveOutputName"/> is null. </exception>
+        /// <remarks> Gets a live output. </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<LiveOutputResource>> GetLiveOutputAsync(string liveOutputName, CancellationToken cancellationToken = default)
         {
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Gets a live output.
+        /// Get Live Output
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}/liveOutputs/{liveOutputName}
         /// Operation Id: LiveOutputs_Get
         /// </summary>
@@ -119,6 +120,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="liveOutputName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="liveOutputName"/> is null. </exception>
+        /// <remarks> Gets a live output. </remarks>
         [ForwardsClientCalls]
         public virtual Response<LiveOutputResource> GetLiveOutput(string liveOutputName, CancellationToken cancellationToken = default)
         {
@@ -126,11 +128,12 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Gets properties of a live event.
+        /// Get Live Event
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}
         /// Operation Id: LiveEvents_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Gets properties of a live event. </remarks>
         public virtual async Task<Response<LiveEventResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _liveEventClientDiagnostics.CreateScope("LiveEventResource.Get");
@@ -150,11 +153,12 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Gets properties of a live event.
+        /// Get Live Event
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}
         /// Operation Id: LiveEvents_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Gets properties of a live event. </remarks>
         public virtual Response<LiveEventResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _liveEventClientDiagnostics.CreateScope("LiveEventResource.Get");
@@ -174,12 +178,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Deletes a live event.
+        /// Delete Live Event
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}
         /// Operation Id: LiveEvents_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Deletes a live event. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _liveEventClientDiagnostics.CreateScope("LiveEventResource.Delete");
@@ -200,12 +205,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Deletes a live event.
+        /// Delete Live Event
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}
         /// Operation Id: LiveEvents_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Deletes a live event. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _liveEventClientDiagnostics.CreateScope("LiveEventResource.Delete");
@@ -286,12 +292,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// A live event is in StandBy state after allocation completes, and is ready to start.
+        /// Allocate resources for a live event
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}/allocate
         /// Operation Id: LiveEvents_Allocate
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> A live event is in StandBy state after allocation completes, and is ready to start. </remarks>
         public virtual async Task<ArmOperation> AllocateAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _liveEventClientDiagnostics.CreateScope("LiveEventResource.Allocate");
@@ -312,12 +319,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// A live event is in StandBy state after allocation completes, and is ready to start.
+        /// Allocate resources for a live event
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}/allocate
         /// Operation Id: LiveEvents_Allocate
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> A live event is in StandBy state after allocation completes, and is ready to start. </remarks>
         public virtual ArmOperation Allocate(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _liveEventClientDiagnostics.CreateScope("LiveEventResource.Allocate");
@@ -338,12 +346,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// A live event in Stopped or StandBy state will be in Running state after the start operation completes.
+        /// Start Live Event
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}/start
         /// Operation Id: LiveEvents_Start
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> A live event in Stopped or StandBy state will be in Running state after the start operation completes. </remarks>
         public virtual async Task<ArmOperation> StartAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _liveEventClientDiagnostics.CreateScope("LiveEventResource.Start");
@@ -364,12 +373,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// A live event in Stopped or StandBy state will be in Running state after the start operation completes.
+        /// Start Live Event
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}/start
         /// Operation Id: LiveEvents_Start
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> A live event in Stopped or StandBy state will be in Running state after the start operation completes. </remarks>
         public virtual ArmOperation Start(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _liveEventClientDiagnostics.CreateScope("LiveEventResource.Start");
@@ -390,7 +400,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Stops a running live event.
+        /// Stop Live Event
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}/stop
         /// Operation Id: LiveEvents_Stop
         /// </summary>
@@ -398,6 +408,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="content"> LiveEvent stop parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <remarks> Stops a running live event. </remarks>
         public virtual async Task<ArmOperation> StopAsync(WaitUntil waitUntil, LiveEventActionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -420,7 +431,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Stops a running live event.
+        /// Stop Live Event
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}/stop
         /// Operation Id: LiveEvents_Stop
         /// </summary>
@@ -428,6 +439,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="content"> LiveEvent stop parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <remarks> Stops a running live event. </remarks>
         public virtual ArmOperation Stop(WaitUntil waitUntil, LiveEventActionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -450,12 +462,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Resets an existing live event. All live outputs for the live event are deleted and the live event is stopped and will be started again. All assets used by the live outputs and streaming locators created on these assets are unaffected. 
+        /// Reset Live Event
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}/reset
         /// Operation Id: LiveEvents_Reset
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Resets an existing live event. All live outputs for the live event are deleted and the live event is stopped and will be started again. All assets used by the live outputs and streaming locators created on these assets are unaffected. </remarks>
         public virtual async Task<ArmOperation> ResetAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _liveEventClientDiagnostics.CreateScope("LiveEventResource.Reset");
@@ -476,12 +489,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Resets an existing live event. All live outputs for the live event are deleted and the live event is stopped and will be started again. All assets used by the live outputs and streaming locators created on these assets are unaffected. 
+        /// Reset Live Event
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}/reset
         /// Operation Id: LiveEvents_Reset
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Resets an existing live event. All live outputs for the live event are deleted and the live event is stopped and will be started again. All assets used by the live outputs and streaming locators created on these assets are unaffected. </remarks>
         public virtual ArmOperation Reset(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _liveEventClientDiagnostics.CreateScope("LiveEventResource.Reset");
@@ -502,7 +516,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Add a tag to the current resource.
+        /// Get Live Event
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}
         /// Operation Id: LiveEvents_Get
         /// </summary>
@@ -510,6 +524,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        /// <remarks> Add a tag to the current resource. </remarks>
         public virtual async Task<Response<LiveEventResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -533,7 +548,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Add a tag to the current resource.
+        /// Get Live Event
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}
         /// Operation Id: LiveEvents_Get
         /// </summary>
@@ -541,6 +556,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        /// <remarks> Add a tag to the current resource. </remarks>
         public virtual Response<LiveEventResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -564,13 +580,14 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Replace the tags on the resource with the given set.
+        /// Get Live Event
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}
         /// Operation Id: LiveEvents_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        /// <remarks> Replace the tags on the resource with the given set. </remarks>
         public virtual async Task<Response<LiveEventResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -594,13 +611,14 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Replace the tags on the resource with the given set.
+        /// Get Live Event
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}
         /// Operation Id: LiveEvents_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        /// <remarks> Replace the tags on the resource with the given set. </remarks>
         public virtual Response<LiveEventResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -624,13 +642,14 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Removes a tag by key from the resource.
+        /// Get Live Event
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}
         /// Operation Id: LiveEvents_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <remarks> Removes a tag by key from the resource. </remarks>
         public virtual async Task<Response<LiveEventResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -653,13 +672,14 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Removes a tag by key from the resource.
+        /// Get Live Event
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}
         /// Operation Id: LiveEvents_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <remarks> Removes a tag by key from the resource. </remarks>
         public virtual Response<LiveEventResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));

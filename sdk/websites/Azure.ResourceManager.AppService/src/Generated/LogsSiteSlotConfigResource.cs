@@ -87,11 +87,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the logging configuration of an app.
+        /// Gets the logging configuration of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/logs
         /// Operation Id: WebApps_GetDiagnosticLogsConfigurationSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Gets the logging configuration of an app. </remarks>
         public virtual async Task<Response<LogsSiteSlotConfigResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _logsSiteSlotConfigWebAppsClientDiagnostics.CreateScope("LogsSiteSlotConfigResource.Get");
@@ -111,11 +112,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the logging configuration of an app.
+        /// Gets the logging configuration of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/logs
         /// Operation Id: WebApps_GetDiagnosticLogsConfigurationSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Gets the logging configuration of an app. </remarks>
         public virtual Response<LogsSiteSlotConfigResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _logsSiteSlotConfigWebAppsClientDiagnostics.CreateScope("LogsSiteSlotConfigResource.Get");
@@ -135,7 +137,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Updates the logging configuration of an app.
+        /// Updates the logging configuration of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/logs
         /// Operation Id: WebApps_UpdateDiagnosticLogsConfigSlot
         /// </summary>
@@ -143,6 +145,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> A SiteLogsConfig JSON object that contains the logging configuration to change in the &quot;properties&quot; property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        /// <remarks> Description for Updates the logging configuration of an app. </remarks>
         public virtual async Task<ArmOperation<LogsSiteSlotConfigResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SiteLogsConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -165,7 +168,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Updates the logging configuration of an app.
+        /// Updates the logging configuration of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/logs
         /// Operation Id: WebApps_UpdateDiagnosticLogsConfigSlot
         /// </summary>
@@ -173,6 +176,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> A SiteLogsConfig JSON object that contains the logging configuration to change in the &quot;properties&quot; property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        /// <remarks> Description for Updates the logging configuration of an app. </remarks>
         public virtual ArmOperation<LogsSiteSlotConfigResource> CreateOrUpdate(WaitUntil waitUntil, SiteLogsConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));

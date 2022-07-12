@@ -87,11 +87,12 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Gets a Job.
+        /// Get Job
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}/jobs/{jobName}
         /// Operation Id: Jobs_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Gets a Job. </remarks>
         public virtual async Task<Response<JobResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _jobClientDiagnostics.CreateScope("JobResource.Get");
@@ -111,11 +112,12 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Gets a Job.
+        /// Get Job
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}/jobs/{jobName}
         /// Operation Id: Jobs_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Gets a Job. </remarks>
         public virtual Response<JobResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _jobClientDiagnostics.CreateScope("JobResource.Get");
@@ -135,12 +137,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Deletes a Job.
+        /// Delete Job
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}/jobs/{jobName}
         /// Operation Id: Jobs_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Deletes a Job. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _jobClientDiagnostics.CreateScope("JobResource.Delete");
@@ -161,12 +164,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Deletes a Job.
+        /// Delete Job
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}/jobs/{jobName}
         /// Operation Id: Jobs_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Deletes a Job. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _jobClientDiagnostics.CreateScope("JobResource.Delete");
@@ -187,13 +191,14 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Update is only supported for description and priority. Updating Priority will take effect when the Job state is Queued or Scheduled and depending on the timing the priority update may be ignored.
+        /// Update Job
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}/jobs/{jobName}
         /// Operation Id: Jobs_Update
         /// </summary>
         /// <param name="data"> The request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        /// <remarks> Update is only supported for description and priority. Updating Priority will take effect when the Job state is Queued or Scheduled and depending on the timing the priority update may be ignored. </remarks>
         public virtual async Task<Response<JobResource>> UpdateAsync(JobData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -213,13 +218,14 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Update is only supported for description and priority. Updating Priority will take effect when the Job state is Queued or Scheduled and depending on the timing the priority update may be ignored.
+        /// Update Job
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}/jobs/{jobName}
         /// Operation Id: Jobs_Update
         /// </summary>
         /// <param name="data"> The request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        /// <remarks> Update is only supported for description and priority. Updating Priority will take effect when the Job state is Queued or Scheduled and depending on the timing the priority update may be ignored. </remarks>
         public virtual Response<JobResource> Update(JobData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -239,11 +245,12 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Cancel a Job.
+        /// Cancel Job
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}/jobs/{jobName}/cancelJob
         /// Operation Id: Jobs_CancelJob
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Cancel a Job. </remarks>
         public virtual async Task<Response> CancelJobAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _jobClientDiagnostics.CreateScope("JobResource.CancelJob");
@@ -261,11 +268,12 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Cancel a Job.
+        /// Cancel Job
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}/jobs/{jobName}/cancelJob
         /// Operation Id: Jobs_CancelJob
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Cancel a Job. </remarks>
         public virtual Response CancelJob(CancellationToken cancellationToken = default)
         {
             using var scope = _jobClientDiagnostics.CreateScope("JobResource.CancelJob");

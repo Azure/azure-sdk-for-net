@@ -66,12 +66,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider
+        /// Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider
         /// Request Path: /providers/Microsoft.CertificateRegistration/operations
         /// Operation Id: CertificateRegistrationProvider_ListOperations
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CsmOperationDescription" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider. </remarks>
         public virtual AsyncPageable<CsmOperationDescription> GetOperationsCertificateRegistrationProvidersAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<CsmOperationDescription>> FirstPageFunc(int? pageSizeHint)
@@ -108,12 +109,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider
+        /// Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider
         /// Request Path: /providers/Microsoft.CertificateRegistration/operations
         /// Operation Id: CertificateRegistrationProvider_ListOperations
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CsmOperationDescription" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider. </remarks>
         public virtual Pageable<CsmOperationDescription> GetOperationsCertificateRegistrationProviders(CancellationToken cancellationToken = default)
         {
             Page<CsmOperationDescription> FirstPageFunc(int? pageSizeHint)
@@ -150,12 +152,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider
+        /// Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider
         /// Request Path: /providers/Microsoft.DomainRegistration/operations
         /// Operation Id: DomainRegistrationProvider_ListOperations
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CsmOperationDescription" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider. </remarks>
         public virtual AsyncPageable<CsmOperationDescription> GetOperationsDomainRegistrationProvidersAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<CsmOperationDescription>> FirstPageFunc(int? pageSizeHint)
@@ -192,12 +195,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider
+        /// Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider
         /// Request Path: /providers/Microsoft.DomainRegistration/operations
         /// Operation Id: DomainRegistrationProvider_ListOperations
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CsmOperationDescription" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider. </remarks>
         public virtual Pageable<CsmOperationDescription> GetOperationsDomainRegistrationProviders(CancellationToken cancellationToken = default)
         {
             Page<CsmOperationDescription> FirstPageFunc(int? pageSizeHint)
@@ -234,13 +238,14 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get available application frameworks and their versions
+        /// Get available application frameworks and their versions
         /// Request Path: /providers/Microsoft.Web/availableStacks
         /// Operation Id: Provider_GetAvailableStacks
         /// </summary>
         /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApplicationStackResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get available application frameworks and their versions. </remarks>
         public virtual AsyncPageable<ApplicationStackResource> GetAvailableStacksProvidersAsync(ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<ApplicationStackResource>> FirstPageFunc(int? pageSizeHint)
@@ -277,13 +282,14 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get available application frameworks and their versions
+        /// Get available application frameworks and their versions
         /// Request Path: /providers/Microsoft.Web/availableStacks
         /// Operation Id: Provider_GetAvailableStacks
         /// </summary>
         /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationStackResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get available application frameworks and their versions. </remarks>
         public virtual Pageable<ApplicationStackResource> GetAvailableStacksProviders(ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             Page<ApplicationStackResource> FirstPageFunc(int? pageSizeHint)
@@ -320,13 +326,14 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get available Function app frameworks and their versions
+        /// Get available Function app frameworks and their versions
         /// Request Path: /providers/Microsoft.Web/functionAppStacks
         /// Operation Id: Provider_GetFunctionAppStacks
         /// </summary>
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="FunctionAppStack" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get available Function app frameworks and their versions. </remarks>
         public virtual AsyncPageable<FunctionAppStack> GetFunctionAppStacksProvidersAsync(ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<FunctionAppStack>> FirstPageFunc(int? pageSizeHint)
@@ -363,13 +370,14 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get available Function app frameworks and their versions
+        /// Get available Function app frameworks and their versions
         /// Request Path: /providers/Microsoft.Web/functionAppStacks
         /// Operation Id: Provider_GetFunctionAppStacks
         /// </summary>
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FunctionAppStack" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get available Function app frameworks and their versions. </remarks>
         public virtual Pageable<FunctionAppStack> GetFunctionAppStacksProviders(ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             Page<FunctionAppStack> FirstPageFunc(int? pageSizeHint)
@@ -406,7 +414,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get available Function app frameworks and their versions for location
+        /// Get available Function app frameworks and their versions for location
         /// Request Path: /providers/Microsoft.Web/locations/{location}/functionAppStacks
         /// Operation Id: Provider_GetFunctionAppStacksForLocation
         /// </summary>
@@ -414,6 +422,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="FunctionAppStack" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get available Function app frameworks and their versions for location. </remarks>
         public virtual AsyncPageable<FunctionAppStack> GetFunctionAppStacksForLocationProvidersAsync(AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<FunctionAppStack>> FirstPageFunc(int? pageSizeHint)
@@ -450,7 +459,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get available Function app frameworks and their versions for location
+        /// Get available Function app frameworks and their versions for location
         /// Request Path: /providers/Microsoft.Web/locations/{location}/functionAppStacks
         /// Operation Id: Provider_GetFunctionAppStacksForLocation
         /// </summary>
@@ -458,6 +467,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FunctionAppStack" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get available Function app frameworks and their versions for location. </remarks>
         public virtual Pageable<FunctionAppStack> GetFunctionAppStacksForLocationProviders(AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             Page<FunctionAppStack> FirstPageFunc(int? pageSizeHint)
@@ -494,7 +504,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get available Web app frameworks and their versions for location
+        /// Get available Web app frameworks and their versions for location
         /// Request Path: /providers/Microsoft.Web/locations/{location}/webAppStacks
         /// Operation Id: Provider_GetWebAppStacksForLocation
         /// </summary>
@@ -502,6 +512,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="WebAppStack" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get available Web app frameworks and their versions for location. </remarks>
         public virtual AsyncPageable<WebAppStack> GetWebAppStacksForLocationProvidersAsync(AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<WebAppStack>> FirstPageFunc(int? pageSizeHint)
@@ -538,7 +549,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get available Web app frameworks and their versions for location
+        /// Get available Web app frameworks and their versions for location
         /// Request Path: /providers/Microsoft.Web/locations/{location}/webAppStacks
         /// Operation Id: Provider_GetWebAppStacksForLocation
         /// </summary>
@@ -546,6 +557,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WebAppStack" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get available Web app frameworks and their versions for location. </remarks>
         public virtual Pageable<WebAppStack> GetWebAppStacksForLocationProviders(AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             Page<WebAppStack> FirstPageFunc(int? pageSizeHint)
@@ -582,12 +594,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets all available operations for the Microsoft.Web resource provider. Also exposes resource metric definitions
+        /// Gets all available operations for the Microsoft.Web resource provider. Also exposes resource metric definitions
         /// Request Path: /providers/Microsoft.Web/operations
         /// Operation Id: Provider_ListOperations
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CsmOperationDescription" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Gets all available operations for the Microsoft.Web resource provider. Also exposes resource metric definitions. </remarks>
         public virtual AsyncPageable<CsmOperationDescription> GetOperationsProvidersAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<CsmOperationDescription>> FirstPageFunc(int? pageSizeHint)
@@ -624,12 +637,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets all available operations for the Microsoft.Web resource provider. Also exposes resource metric definitions
+        /// Gets all available operations for the Microsoft.Web resource provider. Also exposes resource metric definitions
         /// Request Path: /providers/Microsoft.Web/operations
         /// Operation Id: Provider_ListOperations
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CsmOperationDescription" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Gets all available operations for the Microsoft.Web resource provider. Also exposes resource metric definitions. </remarks>
         public virtual Pageable<CsmOperationDescription> GetOperationsProviders(CancellationToken cancellationToken = default)
         {
             Page<CsmOperationDescription> FirstPageFunc(int? pageSizeHint)
@@ -666,13 +680,14 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get available Web app frameworks and their versions
+        /// Get available Web app frameworks and their versions
         /// Request Path: /providers/Microsoft.Web/webAppStacks
         /// Operation Id: Provider_GetWebAppStacks
         /// </summary>
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="WebAppStack" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get available Web app frameworks and their versions. </remarks>
         public virtual AsyncPageable<WebAppStack> GetWebAppStacksProvidersAsync(ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<WebAppStack>> FirstPageFunc(int? pageSizeHint)
@@ -709,13 +724,14 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get available Web app frameworks and their versions
+        /// Get available Web app frameworks and their versions
         /// Request Path: /providers/Microsoft.Web/webAppStacks
         /// Operation Id: Provider_GetWebAppStacks
         /// </summary>
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WebAppStack" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get available Web app frameworks and their versions. </remarks>
         public virtual Pageable<WebAppStack> GetWebAppStacksProviders(ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             Page<WebAppStack> FirstPageFunc(int? pageSizeHint)

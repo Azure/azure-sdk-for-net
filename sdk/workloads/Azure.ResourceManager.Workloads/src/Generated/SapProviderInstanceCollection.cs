@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Creates a provider instance for the specified subscription, resource group, SAP monitor name, and resource name.
+        /// Creates a provider instance.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}/providerInstances/{providerInstanceName}
         /// Operation Id: ProviderInstances_Create
         /// </summary>
@@ -64,6 +64,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="providerInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerInstanceName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Creates a provider instance for the specified subscription, resource group, SAP monitor name, and resource name. </remarks>
         public virtual async Task<ArmOperation<SapProviderInstanceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string providerInstanceName, SapProviderInstanceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(providerInstanceName, nameof(providerInstanceName));
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Creates a provider instance for the specified subscription, resource group, SAP monitor name, and resource name.
+        /// Creates a provider instance.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}/providerInstances/{providerInstanceName}
         /// Operation Id: ProviderInstances_Create
         /// </summary>
@@ -97,6 +98,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="providerInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerInstanceName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Creates a provider instance for the specified subscription, resource group, SAP monitor name, and resource name. </remarks>
         public virtual ArmOperation<SapProviderInstanceResource> CreateOrUpdate(WaitUntil waitUntil, string providerInstanceName, SapProviderInstanceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(providerInstanceName, nameof(providerInstanceName));
@@ -120,7 +122,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Gets properties of a provider instance for the specified subscription, resource group, SAP monitor name, and resource name.
+        /// Gets properties of a provider instance.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}/providerInstances/{providerInstanceName}
         /// Operation Id: ProviderInstances_Get
         /// </summary>
@@ -128,6 +130,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="providerInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerInstanceName"/> is null. </exception>
+        /// <remarks> Gets properties of a provider instance for the specified subscription, resource group, SAP monitor name, and resource name. </remarks>
         public virtual async Task<Response<SapProviderInstanceResource>> GetAsync(string providerInstanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(providerInstanceName, nameof(providerInstanceName));
@@ -149,7 +152,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Gets properties of a provider instance for the specified subscription, resource group, SAP monitor name, and resource name.
+        /// Gets properties of a provider instance.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}/providerInstances/{providerInstanceName}
         /// Operation Id: ProviderInstances_Get
         /// </summary>
@@ -157,6 +160,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="providerInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerInstanceName"/> is null. </exception>
+        /// <remarks> Gets properties of a provider instance for the specified subscription, resource group, SAP monitor name, and resource name. </remarks>
         public virtual Response<SapProviderInstanceResource> Get(string providerInstanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(providerInstanceName, nameof(providerInstanceName));
@@ -178,12 +182,13 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Gets a list of provider instances in the specified SAP monitor. The operations returns various properties of each provider instances.
+        /// Gets a list of provider instances in the specified SAP monitor.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}/providerInstances
         /// Operation Id: ProviderInstances_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SapProviderInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Gets a list of provider instances in the specified SAP monitor. The operations returns various properties of each provider instances. </remarks>
         public virtual AsyncPageable<SapProviderInstanceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<SapProviderInstanceResource>> FirstPageFunc(int? pageSizeHint)
@@ -220,12 +225,13 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Gets a list of provider instances in the specified SAP monitor. The operations returns various properties of each provider instances.
+        /// Gets a list of provider instances in the specified SAP monitor.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}/providerInstances
         /// Operation Id: ProviderInstances_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SapProviderInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Gets a list of provider instances in the specified SAP monitor. The operations returns various properties of each provider instances. </remarks>
         public virtual Pageable<SapProviderInstanceResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<SapProviderInstanceResource> FirstPageFunc(int? pageSizeHint)
@@ -262,7 +268,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Gets properties of a provider instance.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}/providerInstances/{providerInstanceName}
         /// Operation Id: ProviderInstances_Get
         /// </summary>
@@ -270,6 +276,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="providerInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerInstanceName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string providerInstanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(providerInstanceName, nameof(providerInstanceName));
@@ -289,7 +296,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Gets properties of a provider instance.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}/providerInstances/{providerInstanceName}
         /// Operation Id: ProviderInstances_Get
         /// </summary>
@@ -297,6 +304,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="providerInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerInstanceName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string providerInstanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(providerInstanceName, nameof(providerInstanceName));

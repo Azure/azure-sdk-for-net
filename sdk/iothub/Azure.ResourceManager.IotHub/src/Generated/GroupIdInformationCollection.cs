@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get the specified private link resource for the given IotHub
+        /// Get the specified private link resource
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/iotHubs/{resourceName}/privateLinkResources/{groupId}
         /// Operation Id: PrivateLinkResources_Get
         /// </summary>
@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        /// <remarks> Get the specified private link resource for the given IotHub. </remarks>
         public virtual async Task<Response<GroupIdInformationResource>> GetAsync(string groupId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get the specified private link resource for the given IotHub
+        /// Get the specified private link resource
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/iotHubs/{resourceName}/privateLinkResources/{groupId}
         /// Operation Id: PrivateLinkResources_Get
         /// </summary>
@@ -91,6 +92,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        /// <remarks> Get the specified private link resource for the given IotHub. </remarks>
         public virtual Response<GroupIdInformationResource> Get(string groupId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
@@ -112,12 +114,13 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// List private link resources for the given IotHub
+        /// List private link resources
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/iotHubs/{resourceName}/privateLinkResources
         /// Operation Id: PrivateLinkResources_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="GroupIdInformationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List private link resources for the given IotHub. </remarks>
         public virtual AsyncPageable<GroupIdInformationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<GroupIdInformationResource>> FirstPageFunc(int? pageSizeHint)
@@ -139,12 +142,13 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// List private link resources for the given IotHub
+        /// List private link resources
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/iotHubs/{resourceName}/privateLinkResources
         /// Operation Id: PrivateLinkResources_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="GroupIdInformationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List private link resources for the given IotHub. </remarks>
         public virtual Pageable<GroupIdInformationResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<GroupIdInformationResource> FirstPageFunc(int? pageSizeHint)
@@ -166,7 +170,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get the specified private link resource
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/iotHubs/{resourceName}/privateLinkResources/{groupId}
         /// Operation Id: PrivateLinkResources_Get
         /// </summary>
@@ -174,6 +178,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string groupId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
@@ -193,7 +198,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get the specified private link resource
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/iotHubs/{resourceName}/privateLinkResources/{groupId}
         /// Operation Id: PrivateLinkResources_Get
         /// </summary>
@@ -201,6 +206,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string groupId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));

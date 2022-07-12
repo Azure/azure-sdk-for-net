@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return message;
         }
 
-        /// <summary> Create Or Update virtual network. </summary>
+        /// <summary> Implements virtual network PUT method. </summary>
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="virtualNetworkName"> Name of the virtual network resource. </param>
@@ -72,6 +72,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Create Or Update virtual network. </remarks>
         public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string virtualNetworkName, VirtualNetworkData data = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -90,7 +91,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
         }
 
-        /// <summary> Create Or Update virtual network. </summary>
+        /// <summary> Implements virtual network PUT method. </summary>
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="virtualNetworkName"> Name of the virtual network resource. </param>
@@ -98,6 +99,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Create Or Update virtual network. </remarks>
         public Response Create(string subscriptionId, string resourceGroupName, string virtualNetworkName, VirtualNetworkData data = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -136,13 +138,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return message;
         }
 
-        /// <summary> Implements virtual network GET method. </summary>
+        /// <summary> Gets a virtual network. </summary>
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="virtualNetworkName"> Name of the virtual network resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Implements virtual network GET method. </remarks>
         public async Task<Response<VirtualNetworkData>> GetAsync(string subscriptionId, string resourceGroupName, string virtualNetworkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -167,13 +170,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
         }
 
-        /// <summary> Implements virtual network GET method. </summary>
+        /// <summary> Gets a virtual network. </summary>
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="virtualNetworkName"> Name of the virtual network resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Implements virtual network GET method. </remarks>
         public Response<VirtualNetworkData> Get(string subscriptionId, string resourceGroupName, string virtualNetworkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -222,7 +226,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return message;
         }
 
-        /// <summary> API to update certain properties of the virtual network resource. </summary>
+        /// <summary> Updates a virtual network. </summary>
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="virtualNetworkName"> Name of the virtual network resource. </param>
@@ -230,6 +234,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> API to update certain properties of the virtual network resource. </remarks>
         public async Task<Response<VirtualNetworkData>> UpdateAsync(string subscriptionId, string resourceGroupName, string virtualNetworkName, ResourcePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -253,7 +258,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
         }
 
-        /// <summary> API to update certain properties of the virtual network resource. </summary>
+        /// <summary> Updates a virtual network. </summary>
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="virtualNetworkName"> Name of the virtual network resource. </param>
@@ -261,6 +266,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> API to update certain properties of the virtual network resource. </remarks>
         public Response<VirtualNetworkData> Update(string subscriptionId, string resourceGroupName, string virtualNetworkName, ResourcePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -308,7 +314,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return message;
         }
 
-        /// <summary> Implements virtual network DELETE method. </summary>
+        /// <summary> Deletes an virtual network. </summary>
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="virtualNetworkName"> Name of the virtual network resource. </param>
@@ -316,6 +322,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Implements virtual network DELETE method. </remarks>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string virtualNetworkName, bool? force = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -335,7 +342,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
         }
 
-        /// <summary> Implements virtual network DELETE method. </summary>
+        /// <summary> Deletes an virtual network. </summary>
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="virtualNetworkName"> Name of the virtual network resource. </param>
@@ -343,6 +350,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Implements virtual network DELETE method. </remarks>
         public Response Delete(string subscriptionId, string resourceGroupName, string virtualNetworkName, bool? force = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -379,11 +387,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return message;
         }
 
-        /// <summary> List of virtualNetworks in a subscription. </summary>
+        /// <summary> Implements GET virtualNetworks in a subscription. </summary>
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List of virtualNetworks in a subscription. </remarks>
         public async Task<Response<VirtualNetworksList>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -404,11 +413,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
         }
 
-        /// <summary> List of virtualNetworks in a subscription. </summary>
+        /// <summary> Implements GET virtualNetworks in a subscription. </summary>
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List of virtualNetworks in a subscription. </remarks>
         public Response<VirtualNetworksList> List(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -448,12 +458,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return message;
         }
 
-        /// <summary> List of virtualNetworks in a resource group. </summary>
+        /// <summary> Implements GET virtualNetworks in a resource group. </summary>
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List of virtualNetworks in a resource group. </remarks>
         public async Task<Response<VirtualNetworksList>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -475,12 +486,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
         }
 
-        /// <summary> List of virtualNetworks in a resource group. </summary>
+        /// <summary> Implements GET virtualNetworks in a resource group. </summary>
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List of virtualNetworks in a resource group. </remarks>
         public Response<VirtualNetworksList> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -516,12 +528,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return message;
         }
 
-        /// <summary> List of virtualNetworks in a subscription. </summary>
+        /// <summary> Implements GET virtualNetworks in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List of virtualNetworks in a subscription. </remarks>
         public async Task<Response<VirtualNetworksList>> ListNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -543,12 +556,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
         }
 
-        /// <summary> List of virtualNetworks in a subscription. </summary>
+        /// <summary> Implements GET virtualNetworks in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List of virtualNetworks in a subscription. </remarks>
         public Response<VirtualNetworksList> ListNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -584,13 +598,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return message;
         }
 
-        /// <summary> List of virtualNetworks in a resource group. </summary>
+        /// <summary> Implements GET virtualNetworks in a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List of virtualNetworks in a resource group. </remarks>
         public async Task<Response<VirtualNetworksList>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -613,13 +628,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
         }
 
-        /// <summary> List of virtualNetworks in a resource group. </summary>
+        /// <summary> Implements GET virtualNetworks in a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List of virtualNetworks in a resource group. </remarks>
         public Response<VirtualNetworksList> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));

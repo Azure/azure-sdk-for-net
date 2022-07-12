@@ -92,6 +92,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// Operation Id: Jobs_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Gets a Job by name/id. </remarks>
         public virtual async Task<Response<MachineLearningJobResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _machineLearningJobJobsClientDiagnostics.CreateScope("MachineLearningJobResource.Get");
@@ -116,6 +117,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// Operation Id: Jobs_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Gets a Job by name/id. </remarks>
         public virtual Response<MachineLearningJobResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _machineLearningJobJobsClientDiagnostics.CreateScope("MachineLearningJobResource.Get");
@@ -141,6 +143,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Deletes a Job (asynchronous). </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _machineLearningJobJobsClientDiagnostics.CreateScope("MachineLearningJobResource.Delete");
@@ -167,6 +170,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Deletes a Job (asynchronous). </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _machineLearningJobJobsClientDiagnostics.CreateScope("MachineLearningJobResource.Delete");
@@ -195,6 +199,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="data"> Job definition object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        /// <remarks> Creates and executes a Job. </remarks>
         public virtual async Task<ArmOperation<MachineLearningJobResource>> UpdateAsync(WaitUntil waitUntil, MachineLearningJobData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -225,6 +230,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="data"> Job definition object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        /// <remarks> Creates and executes a Job. </remarks>
         public virtual ArmOperation<MachineLearningJobResource> Update(WaitUntil waitUntil, MachineLearningJobData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -252,6 +258,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// Operation Id: Jobs_Cancel
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Cancels a Job. </remarks>
         public virtual async Task<Response> CancelAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _machineLearningJobJobsClientDiagnostics.CreateScope("MachineLearningJobResource.Cancel");
@@ -274,6 +281,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// Operation Id: Jobs_Cancel
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Cancels a Job. </remarks>
         public virtual Response Cancel(CancellationToken cancellationToken = default)
         {
             using var scope = _machineLearningJobJobsClientDiagnostics.CreateScope("MachineLearningJobResource.Cancel");

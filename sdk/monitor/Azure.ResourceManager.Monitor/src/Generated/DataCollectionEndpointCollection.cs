@@ -65,6 +65,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dataCollectionEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionEndpointName"/> is null. </exception>
+        /// <remarks> Creates or updates a data collection endpoint. </remarks>
         public virtual async Task<ArmOperation<DataCollectionEndpointResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dataCollectionEndpointName, DataCollectionEndpointData data = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataCollectionEndpointName, nameof(dataCollectionEndpointName));
@@ -97,6 +98,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dataCollectionEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionEndpointName"/> is null. </exception>
+        /// <remarks> Creates or updates a data collection endpoint. </remarks>
         public virtual ArmOperation<DataCollectionEndpointResource> CreateOrUpdate(WaitUntil waitUntil, string dataCollectionEndpointName, DataCollectionEndpointData data = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataCollectionEndpointName, nameof(dataCollectionEndpointName));
@@ -127,6 +129,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dataCollectionEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionEndpointName"/> is null. </exception>
+        /// <remarks> Returns the specified data collection endpoint. </remarks>
         public virtual async Task<Response<DataCollectionEndpointResource>> GetAsync(string dataCollectionEndpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataCollectionEndpointName, nameof(dataCollectionEndpointName));
@@ -156,6 +159,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dataCollectionEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionEndpointName"/> is null. </exception>
+        /// <remarks> Returns the specified data collection endpoint. </remarks>
         public virtual Response<DataCollectionEndpointResource> Get(string dataCollectionEndpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataCollectionEndpointName, nameof(dataCollectionEndpointName));
@@ -183,6 +187,7 @@ namespace Azure.ResourceManager.Monitor
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataCollectionEndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Lists all data collection endpoints in the specified resource group. </remarks>
         public virtual AsyncPageable<DataCollectionEndpointResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<DataCollectionEndpointResource>> FirstPageFunc(int? pageSizeHint)
@@ -225,6 +230,7 @@ namespace Azure.ResourceManager.Monitor
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataCollectionEndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Lists all data collection endpoints in the specified resource group. </remarks>
         public virtual Pageable<DataCollectionEndpointResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<DataCollectionEndpointResource> FirstPageFunc(int? pageSizeHint)
@@ -261,7 +267,7 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Returns the specified data collection endpoint.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionEndpoints/{dataCollectionEndpointName}
         /// Operation Id: DataCollectionEndpoints_Get
         /// </summary>
@@ -269,6 +275,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dataCollectionEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionEndpointName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string dataCollectionEndpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataCollectionEndpointName, nameof(dataCollectionEndpointName));
@@ -288,7 +295,7 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Returns the specified data collection endpoint.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionEndpoints/{dataCollectionEndpointName}
         /// Operation Id: DataCollectionEndpoints_Get
         /// </summary>
@@ -296,6 +303,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dataCollectionEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionEndpointName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string dataCollectionEndpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataCollectionEndpointName, nameof(dataCollectionEndpointName));

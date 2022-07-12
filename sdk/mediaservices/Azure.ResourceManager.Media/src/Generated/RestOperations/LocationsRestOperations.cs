@@ -60,13 +60,14 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Checks whether the Media Service resource name is available. </summary>
+        /// <summary> Check Name Availability. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="locationName"> Location name. </param>
         /// <param name="content"> The request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Checks whether the Media Service resource name is available. </remarks>
         public async Task<Response<EntityNameAvailabilityCheckOutput>> CheckNameAvailabilityAsync(string subscriptionId, string locationName, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -89,13 +90,14 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Checks whether the Media Service resource name is available. </summary>
+        /// <summary> Check Name Availability. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="locationName"> Location name. </param>
         /// <param name="content"> The request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Checks whether the Media Service resource name is available. </remarks>
         public Response<EntityNameAvailabilityCheckOutput> CheckNameAvailability(string subscriptionId, string locationName, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));

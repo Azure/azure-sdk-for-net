@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get site detector response
+        /// Get site detector response
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/detectors/{detectorName}
         /// Operation Id: Diagnostics_GetSiteDetectorResponse
         /// </summary>
@@ -95,6 +95,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="endTime"> End Time. </param>
         /// <param name="timeGrain"> Time Grain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Get site detector response. </remarks>
         public virtual async Task<Response<SiteDetectorResource>> GetAsync(DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
             using var scope = _siteDetectorDiagnosticsClientDiagnostics.CreateScope("SiteDetectorResource.Get");
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get site detector response
+        /// Get site detector response
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/detectors/{detectorName}
         /// Operation Id: Diagnostics_GetSiteDetectorResponse
         /// </summary>
@@ -122,6 +123,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="endTime"> End Time. </param>
         /// <param name="timeGrain"> Time Grain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Get site detector response. </remarks>
         public virtual Response<SiteDetectorResource> Get(DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
             using var scope = _siteDetectorDiagnosticsClientDiagnostics.CreateScope("SiteDetectorResource.Get");

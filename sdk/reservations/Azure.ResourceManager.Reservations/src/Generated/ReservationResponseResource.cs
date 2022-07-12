@@ -88,12 +88,13 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Get specific `Reservation` details.
+        /// Get `Reservation` details.
         /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}
         /// Operation Id: Reservation_Get
         /// </summary>
         /// <param name="expand"> Supported value of this query is renewProperties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get specific `Reservation` details. </remarks>
         public virtual async Task<Response<ReservationResponseResource>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _reservationResponseReservationClientDiagnostics.CreateScope("ReservationResponseResource.Get");
@@ -113,12 +114,13 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Get specific `Reservation` details.
+        /// Get `Reservation` details.
         /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}
         /// Operation Id: Reservation_Get
         /// </summary>
         /// <param name="expand"> Supported value of this query is renewProperties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get specific `Reservation` details. </remarks>
         public virtual Response<ReservationResponseResource> Get(string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _reservationResponseReservationClientDiagnostics.CreateScope("ReservationResponseResource.Get");
@@ -138,7 +140,7 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Updates the applied scopes of the `Reservation`.
+        /// Updates a `Reservation`.
         /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}
         /// Operation Id: Reservation_Update
         /// </summary>
@@ -146,6 +148,7 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="patch"> Information needed to patch a reservation item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        /// <remarks> Updates the applied scopes of the `Reservation`. </remarks>
         public virtual async Task<ArmOperation<ReservationResponseResource>> UpdateAsync(WaitUntil waitUntil, ReservationResponsePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
@@ -168,7 +171,7 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Updates the applied scopes of the `Reservation`.
+        /// Updates a `Reservation`.
         /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}
         /// Operation Id: Reservation_Update
         /// </summary>
@@ -176,6 +179,7 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="patch"> Information needed to patch a reservation item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        /// <remarks> Updates the applied scopes of the `Reservation`. </remarks>
         public virtual ArmOperation<ReservationResponseResource> Update(WaitUntil waitUntil, ReservationResponsePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
@@ -199,7 +203,6 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Get Available Scopes for `Reservation`.
-        /// 
         /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}/availableScopes
         /// Operation Id: Reservation_AvailableScopes
         /// </summary>
@@ -207,6 +210,10 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="content"> The AvailableScopeContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <remarks>
+        /// Get Available Scopes for `Reservation`.
+        /// 
+        /// </remarks>
         public virtual async Task<ArmOperation<AvailableScopeProperties>> AvailableScopesAsync(WaitUntil waitUntil, AvailableScopeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -230,7 +237,6 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Get Available Scopes for `Reservation`.
-        /// 
         /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}/availableScopes
         /// Operation Id: Reservation_AvailableScopes
         /// </summary>
@@ -238,6 +244,10 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="content"> The AvailableScopeContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <remarks>
+        /// Get Available Scopes for `Reservation`.
+        /// 
+        /// </remarks>
         public virtual ArmOperation<AvailableScopeProperties> AvailableScopes(WaitUntil waitUntil, AvailableScopeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));

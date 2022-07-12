@@ -64,6 +64,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="storageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Create or update storage for a managedEnvironment. </remarks>
         public virtual async Task<ArmOperation<ManagedEnvironmentStorageResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string storageName, ManagedEnvironmentStorageData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageName, nameof(storageName));
@@ -97,6 +98,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="storageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Create or update storage for a managedEnvironment. </remarks>
         public virtual ArmOperation<ManagedEnvironmentStorageResource> CreateOrUpdate(WaitUntil waitUntil, string storageName, ManagedEnvironmentStorageData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageName, nameof(storageName));
@@ -128,6 +130,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="storageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> is null. </exception>
+        /// <remarks> Get storage for a managedEnvironment. </remarks>
         public virtual async Task<Response<ManagedEnvironmentStorageResource>> GetAsync(string storageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageName, nameof(storageName));
@@ -157,6 +160,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="storageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> is null. </exception>
+        /// <remarks> Get storage for a managedEnvironment. </remarks>
         public virtual Response<ManagedEnvironmentStorageResource> Get(string storageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageName, nameof(storageName));
@@ -184,6 +188,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagedEnvironmentStorageResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Get all storages for a managedEnvironment. </remarks>
         public virtual AsyncPageable<ManagedEnvironmentStorageResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ManagedEnvironmentStorageResource>> FirstPageFunc(int? pageSizeHint)
@@ -211,6 +216,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedEnvironmentStorageResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Get all storages for a managedEnvironment. </remarks>
         public virtual Pageable<ManagedEnvironmentStorageResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<ManagedEnvironmentStorageResource> FirstPageFunc(int? pageSizeHint)
@@ -232,7 +238,7 @@ namespace Azure.ResourceManager.Applications.Containers
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get storage for a managedEnvironment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/storages/{storageName}
         /// Operation Id: ManagedEnvironmentsStorages_Get
         /// </summary>
@@ -240,6 +246,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="storageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string storageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageName, nameof(storageName));
@@ -259,7 +266,7 @@ namespace Azure.ResourceManager.Applications.Containers
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get storage for a managedEnvironment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/storages/{storageName}
         /// Operation Id: ManagedEnvironmentsStorages_Get
         /// </summary>
@@ -267,6 +274,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="storageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string storageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageName, nameof(storageName));

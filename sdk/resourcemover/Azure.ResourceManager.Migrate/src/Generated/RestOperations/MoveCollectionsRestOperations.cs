@@ -854,11 +854,12 @@ namespace Azure.ResourceManager.Migrate
             return message;
         }
 
-        /// <summary> Get all the Move Collections in the subscription. </summary>
+        /// <summary> Get all Move Collections. </summary>
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get all the Move Collections in the subscription. </remarks>
         public async Task<Response<MoveCollectionResultList>> ListMoveCollectionsBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -879,11 +880,12 @@ namespace Azure.ResourceManager.Migrate
             }
         }
 
-        /// <summary> Get all the Move Collections in the subscription. </summary>
+        /// <summary> Get all Move Collections. </summary>
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get all the Move Collections in the subscription. </remarks>
         public Response<MoveCollectionResultList> ListMoveCollectionsBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -923,12 +925,13 @@ namespace Azure.ResourceManager.Migrate
             return message;
         }
 
-        /// <summary> Get all the Move Collections in the resource group. </summary>
+        /// <summary> Get all Move Collections. </summary>
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get all the Move Collections in the resource group. </remarks>
         public async Task<Response<MoveCollectionResultList>> ListMoveCollectionsByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -950,12 +953,13 @@ namespace Azure.ResourceManager.Migrate
             }
         }
 
-        /// <summary> Get all the Move Collections in the resource group. </summary>
+        /// <summary> Get all Move Collections. </summary>
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get all the Move Collections in the resource group. </remarks>
         public Response<MoveCollectionResultList> ListMoveCollectionsByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1075,12 +1079,13 @@ namespace Azure.ResourceManager.Migrate
             return message;
         }
 
-        /// <summary> Get all the Move Collections in the subscription. </summary>
+        /// <summary> Get all Move Collections. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get all the Move Collections in the subscription. </remarks>
         public async Task<Response<MoveCollectionResultList>> ListMoveCollectionsBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -1102,12 +1107,13 @@ namespace Azure.ResourceManager.Migrate
             }
         }
 
-        /// <summary> Get all the Move Collections in the subscription. </summary>
+        /// <summary> Get all Move Collections. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get all the Move Collections in the subscription. </remarks>
         public Response<MoveCollectionResultList> ListMoveCollectionsBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -1143,13 +1149,14 @@ namespace Azure.ResourceManager.Migrate
             return message;
         }
 
-        /// <summary> Get all the Move Collections in the resource group. </summary>
+        /// <summary> Get all Move Collections. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get all the Move Collections in the resource group. </remarks>
         public async Task<Response<MoveCollectionResultList>> ListMoveCollectionsByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -1172,13 +1179,14 @@ namespace Azure.ResourceManager.Migrate
             }
         }
 
-        /// <summary> Get all the Move Collections in the resource group. </summary>
+        /// <summary> Get all Move Collections. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get all the Move Collections in the resource group. </remarks>
         public Response<MoveCollectionResultList> ListMoveCollectionsByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));

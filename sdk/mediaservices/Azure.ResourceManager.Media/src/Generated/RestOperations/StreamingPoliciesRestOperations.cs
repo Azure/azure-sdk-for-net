@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Lists the Streaming Policies in the account. </summary>
+        /// <summary> List Streaming Policies. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -80,6 +80,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Lists the Streaming Policies in the account. </remarks>
         public async Task<Response<Models.StreamingPolicyCollection>> ListAsync(string subscriptionId, string resourceGroupName, string accountName, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -102,7 +103,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Lists the Streaming Policies in the account. </summary>
+        /// <summary> List Streaming Policies. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -112,6 +113,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Lists the Streaming Policies in the account. </remarks>
         public Response<Models.StreamingPolicyCollection> List(string subscriptionId, string resourceGroupName, string accountName, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -156,7 +158,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Get the details of a Streaming Policy in the Media Services account. </summary>
+        /// <summary> Get a Streaming Policy. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -164,6 +166,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get the details of a Streaming Policy in the Media Services account. </remarks>
         public async Task<Response<StreamingPolicyData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string streamingPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -189,7 +192,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Get the details of a Streaming Policy in the Media Services account. </summary>
+        /// <summary> Get a Streaming Policy. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -197,6 +200,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get the details of a Streaming Policy in the Media Services account. </remarks>
         public Response<StreamingPolicyData> Get(string subscriptionId, string resourceGroupName, string accountName, string streamingPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -248,7 +252,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Create a Streaming Policy in the Media Services account. </summary>
+        /// <summary> Create a Streaming Policy. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -257,6 +261,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="streamingPolicyName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Create a Streaming Policy in the Media Services account. </remarks>
         public async Task<Response<StreamingPolicyData>> CreateAsync(string subscriptionId, string resourceGroupName, string accountName, string streamingPolicyName, StreamingPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -281,7 +286,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Create a Streaming Policy in the Media Services account. </summary>
+        /// <summary> Create a Streaming Policy. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -290,6 +295,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="streamingPolicyName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Create a Streaming Policy in the Media Services account. </remarks>
         public Response<StreamingPolicyData> Create(string subscriptionId, string resourceGroupName, string accountName, string streamingPolicyName, StreamingPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -336,7 +342,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Deletes a Streaming Policy in the Media Services account. </summary>
+        /// <summary> Delete a Streaming Policy. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -344,6 +350,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Deletes a Streaming Policy in the Media Services account. </remarks>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string accountName, string streamingPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -363,7 +370,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Deletes a Streaming Policy in the Media Services account. </summary>
+        /// <summary> Delete a Streaming Policy. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -371,6 +378,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Deletes a Streaming Policy in the Media Services account. </remarks>
         public Response Delete(string subscriptionId, string resourceGroupName, string accountName, string streamingPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -404,7 +412,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Lists the Streaming Policies in the account. </summary>
+        /// <summary> List Streaming Policies. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
@@ -415,6 +423,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Lists the Streaming Policies in the account. </remarks>
         public async Task<Response<Models.StreamingPolicyCollection>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -438,7 +447,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Lists the Streaming Policies in the account. </summary>
+        /// <summary> List Streaming Policies. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
@@ -449,6 +458,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Lists the Streaming Policies in the account. </remarks>
         public Response<Models.StreamingPolicyCollection> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get Diagnostics Category
+        /// Get Diagnostics Category
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}
         /// Operation Id: Diagnostics_GetSiteDiagnosticCategorySlot
         /// </summary>
@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diagnosticCategory"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticCategory"/> is null. </exception>
+        /// <remarks> Description for Get Diagnostics Category. </remarks>
         public virtual async Task<Response<SiteSlotDiagnosticResource>> GetAsync(string diagnosticCategory, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diagnosticCategory, nameof(diagnosticCategory));
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get Diagnostics Category
+        /// Get Diagnostics Category
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}
         /// Operation Id: Diagnostics_GetSiteDiagnosticCategorySlot
         /// </summary>
@@ -91,6 +92,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diagnosticCategory"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticCategory"/> is null. </exception>
+        /// <remarks> Description for Get Diagnostics Category. </remarks>
         public virtual Response<SiteSlotDiagnosticResource> Get(string diagnosticCategory, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diagnosticCategory, nameof(diagnosticCategory));
@@ -112,12 +114,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get Diagnostics Categories
+        /// Get Diagnostics Categories
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics
         /// Operation Id: Diagnostics_ListSiteDiagnosticCategoriesSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SiteSlotDiagnosticResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get Diagnostics Categories. </remarks>
         public virtual AsyncPageable<SiteSlotDiagnosticResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<SiteSlotDiagnosticResource>> FirstPageFunc(int? pageSizeHint)
@@ -154,12 +157,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get Diagnostics Categories
+        /// Get Diagnostics Categories
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics
         /// Operation Id: Diagnostics_ListSiteDiagnosticCategoriesSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SiteSlotDiagnosticResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get Diagnostics Categories. </remarks>
         public virtual Pageable<SiteSlotDiagnosticResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<SiteSlotDiagnosticResource> FirstPageFunc(int? pageSizeHint)
@@ -196,7 +200,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get Diagnostics Category
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}
         /// Operation Id: Diagnostics_GetSiteDiagnosticCategorySlot
         /// </summary>
@@ -204,6 +208,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diagnosticCategory"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticCategory"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string diagnosticCategory, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diagnosticCategory, nameof(diagnosticCategory));
@@ -223,7 +228,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get Diagnostics Category
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}
         /// Operation Id: Diagnostics_GetSiteDiagnosticCategorySlot
         /// </summary>
@@ -231,6 +236,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diagnosticCategory"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticCategory"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string diagnosticCategory, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diagnosticCategory, nameof(diagnosticCategory));

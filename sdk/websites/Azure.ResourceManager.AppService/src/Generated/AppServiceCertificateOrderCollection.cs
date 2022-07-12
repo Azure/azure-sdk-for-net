@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Create or update a certificate purchase order.
+        /// Create or update a certificate purchase order.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
         /// Operation Id: AppServiceCertificateOrders_CreateOrUpdate
         /// </summary>
@@ -65,6 +65,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="certificateOrderName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateOrderName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Description for Create or update a certificate purchase order. </remarks>
         public virtual async Task<ArmOperation<AppServiceCertificateOrderResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string certificateOrderName, AppServiceCertificateOrderData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateOrderName, nameof(certificateOrderName));
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Create or update a certificate purchase order.
+        /// Create or update a certificate purchase order.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
         /// Operation Id: AppServiceCertificateOrders_CreateOrUpdate
         /// </summary>
@@ -98,6 +99,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="certificateOrderName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateOrderName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Description for Create or update a certificate purchase order. </remarks>
         public virtual ArmOperation<AppServiceCertificateOrderResource> CreateOrUpdate(WaitUntil waitUntil, string certificateOrderName, AppServiceCertificateOrderData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateOrderName, nameof(certificateOrderName));
@@ -121,7 +123,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get a certificate order.
+        /// Get a certificate order.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
         /// Operation Id: AppServiceCertificateOrders_Get
         /// </summary>
@@ -129,6 +131,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="certificateOrderName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateOrderName"/> is null. </exception>
+        /// <remarks> Description for Get a certificate order. </remarks>
         public virtual async Task<Response<AppServiceCertificateOrderResource>> GetAsync(string certificateOrderName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateOrderName, nameof(certificateOrderName));
@@ -150,7 +153,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get a certificate order.
+        /// Get a certificate order.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
         /// Operation Id: AppServiceCertificateOrders_Get
         /// </summary>
@@ -158,6 +161,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="certificateOrderName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateOrderName"/> is null. </exception>
+        /// <remarks> Description for Get a certificate order. </remarks>
         public virtual Response<AppServiceCertificateOrderResource> Get(string certificateOrderName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateOrderName, nameof(certificateOrderName));
@@ -179,12 +183,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get certificate orders in a resource group.
+        /// Get certificate orders in a resource group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders
         /// Operation Id: AppServiceCertificateOrders_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AppServiceCertificateOrderResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get certificate orders in a resource group. </remarks>
         public virtual AsyncPageable<AppServiceCertificateOrderResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<AppServiceCertificateOrderResource>> FirstPageFunc(int? pageSizeHint)
@@ -221,12 +226,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get certificate orders in a resource group.
+        /// Get certificate orders in a resource group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders
         /// Operation Id: AppServiceCertificateOrders_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppServiceCertificateOrderResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get certificate orders in a resource group. </remarks>
         public virtual Pageable<AppServiceCertificateOrderResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<AppServiceCertificateOrderResource> FirstPageFunc(int? pageSizeHint)
@@ -263,7 +269,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get a certificate order.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
         /// Operation Id: AppServiceCertificateOrders_Get
         /// </summary>
@@ -271,6 +277,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="certificateOrderName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateOrderName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string certificateOrderName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateOrderName, nameof(certificateOrderName));
@@ -290,7 +297,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get a certificate order.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
         /// Operation Id: AppServiceCertificateOrders_Get
         /// </summary>
@@ -298,6 +305,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="certificateOrderName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateOrderName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string certificateOrderName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateOrderName, nameof(certificateOrderName));

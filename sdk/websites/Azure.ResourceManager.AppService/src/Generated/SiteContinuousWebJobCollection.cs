@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a continuous web job by its ID for an app, or a deployment slot.
+        /// Gets a continuous web job by its ID for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs/{webJobName}
         /// Operation Id: WebApps_GetContinuousWebJob
         /// </summary>
@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
+        /// <remarks> Description for Gets a continuous web job by its ID for an app, or a deployment slot. </remarks>
         public virtual async Task<Response<SiteContinuousWebJobResource>> GetAsync(string webJobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(webJobName, nameof(webJobName));
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a continuous web job by its ID for an app, or a deployment slot.
+        /// Gets a continuous web job by its ID for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs/{webJobName}
         /// Operation Id: WebApps_GetContinuousWebJob
         /// </summary>
@@ -91,6 +92,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
+        /// <remarks> Description for Gets a continuous web job by its ID for an app, or a deployment slot. </remarks>
         public virtual Response<SiteContinuousWebJobResource> Get(string webJobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(webJobName, nameof(webJobName));
@@ -112,12 +114,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for List continuous web jobs for an app, or a deployment slot.
+        /// List continuous web jobs for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs
         /// Operation Id: WebApps_ListContinuousWebJobs
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SiteContinuousWebJobResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for List continuous web jobs for an app, or a deployment slot. </remarks>
         public virtual AsyncPageable<SiteContinuousWebJobResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<SiteContinuousWebJobResource>> FirstPageFunc(int? pageSizeHint)
@@ -154,12 +157,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for List continuous web jobs for an app, or a deployment slot.
+        /// List continuous web jobs for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs
         /// Operation Id: WebApps_ListContinuousWebJobs
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SiteContinuousWebJobResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for List continuous web jobs for an app, or a deployment slot. </remarks>
         public virtual Pageable<SiteContinuousWebJobResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<SiteContinuousWebJobResource> FirstPageFunc(int? pageSizeHint)
@@ -196,7 +200,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Gets a continuous web job by its ID for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs/{webJobName}
         /// Operation Id: WebApps_GetContinuousWebJob
         /// </summary>
@@ -204,6 +208,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string webJobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(webJobName, nameof(webJobName));
@@ -223,7 +228,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Gets a continuous web job by its ID for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs/{webJobName}
         /// Operation Id: WebApps_GetContinuousWebJob
         /// </summary>
@@ -231,6 +236,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string webJobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(webJobName, nameof(webJobName));

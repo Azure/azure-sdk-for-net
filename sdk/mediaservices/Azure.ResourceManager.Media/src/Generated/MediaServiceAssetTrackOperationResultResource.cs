@@ -87,11 +87,12 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get asset track operation result.
+        /// Get operation result.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}/operationResults/{operationId}
         /// Operation Id: OperationResults_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get asset track operation result. </remarks>
         public virtual async Task<Response<MediaServiceAssetTrackOperationResultResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _mediaServiceAssetTrackOperationResultOperationResultsClientDiagnostics.CreateScope("MediaServiceAssetTrackOperationResultResource.Get");
@@ -111,11 +112,12 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get asset track operation result.
+        /// Get operation result.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}/operationResults/{operationId}
         /// Operation Id: OperationResults_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get asset track operation result. </remarks>
         public virtual Response<MediaServiceAssetTrackOperationResultResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _mediaServiceAssetTrackOperationResultOperationResultsClientDiagnostics.CreateScope("MediaServiceAssetTrackOperationResultResource.Get");

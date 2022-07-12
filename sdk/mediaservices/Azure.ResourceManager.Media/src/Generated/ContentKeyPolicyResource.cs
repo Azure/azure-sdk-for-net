@@ -88,11 +88,12 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get the details of a Content Key Policy in the Media Services account
+        /// Get a Content Key Policy
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/contentKeyPolicies/{contentKeyPolicyName}
         /// Operation Id: ContentKeyPolicies_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get the details of a Content Key Policy in the Media Services account. </remarks>
         public virtual async Task<Response<ContentKeyPolicyResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _contentKeyPolicyClientDiagnostics.CreateScope("ContentKeyPolicyResource.Get");
@@ -112,11 +113,12 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get the details of a Content Key Policy in the Media Services account
+        /// Get a Content Key Policy
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/contentKeyPolicies/{contentKeyPolicyName}
         /// Operation Id: ContentKeyPolicies_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get the details of a Content Key Policy in the Media Services account. </remarks>
         public virtual Response<ContentKeyPolicyResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _contentKeyPolicyClientDiagnostics.CreateScope("ContentKeyPolicyResource.Get");
@@ -136,12 +138,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Deletes a Content Key Policy in the Media Services account
+        /// Delete a Content Key Policy
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/contentKeyPolicies/{contentKeyPolicyName}
         /// Operation Id: ContentKeyPolicies_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Deletes a Content Key Policy in the Media Services account. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _contentKeyPolicyClientDiagnostics.CreateScope("ContentKeyPolicyResource.Delete");
@@ -162,12 +165,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Deletes a Content Key Policy in the Media Services account
+        /// Delete a Content Key Policy
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/contentKeyPolicies/{contentKeyPolicyName}
         /// Operation Id: ContentKeyPolicies_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Deletes a Content Key Policy in the Media Services account. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _contentKeyPolicyClientDiagnostics.CreateScope("ContentKeyPolicyResource.Delete");
@@ -188,13 +192,14 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Updates an existing Content Key Policy in the Media Services account
+        /// Update a Content Key Policy
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/contentKeyPolicies/{contentKeyPolicyName}
         /// Operation Id: ContentKeyPolicies_Update
         /// </summary>
         /// <param name="data"> The request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        /// <remarks> Updates an existing Content Key Policy in the Media Services account. </remarks>
         public virtual async Task<Response<ContentKeyPolicyResource>> UpdateAsync(ContentKeyPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -214,13 +219,14 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Updates an existing Content Key Policy in the Media Services account
+        /// Update a Content Key Policy
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/contentKeyPolicies/{contentKeyPolicyName}
         /// Operation Id: ContentKeyPolicies_Update
         /// </summary>
         /// <param name="data"> The request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        /// <remarks> Updates an existing Content Key Policy in the Media Services account. </remarks>
         public virtual Response<ContentKeyPolicyResource> Update(ContentKeyPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -240,11 +246,12 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get a Content Key Policy including secret values
+        /// Get a Content Key Policy with secrets
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/contentKeyPolicies/{contentKeyPolicyName}/getPolicyPropertiesWithSecrets
         /// Operation Id: ContentKeyPolicies_GetPolicyPropertiesWithSecrets
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get a Content Key Policy including secret values. </remarks>
         public virtual async Task<Response<ContentKeyPolicyProperties>> GetPolicyPropertiesWithSecretsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _contentKeyPolicyClientDiagnostics.CreateScope("ContentKeyPolicyResource.GetPolicyPropertiesWithSecrets");
@@ -262,11 +269,12 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get a Content Key Policy including secret values
+        /// Get a Content Key Policy with secrets
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/contentKeyPolicies/{contentKeyPolicyName}/getPolicyPropertiesWithSecrets
         /// Operation Id: ContentKeyPolicies_GetPolicyPropertiesWithSecrets
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get a Content Key Policy including secret values. </remarks>
         public virtual Response<ContentKeyPolicyProperties> GetPolicyPropertiesWithSecrets(CancellationToken cancellationToken = default)
         {
             using var scope = _contentKeyPolicyClientDiagnostics.CreateScope("ContentKeyPolicyResource.GetPolicyPropertiesWithSecrets");

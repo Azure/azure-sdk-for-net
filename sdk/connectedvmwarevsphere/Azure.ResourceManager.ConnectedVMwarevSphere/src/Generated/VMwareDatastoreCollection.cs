@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary>
-        /// Create Or Update datastore.
+        /// Implements datastore PUT method.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/datastores/{datastoreName}
         /// Operation Id: Datastores_Create
         /// </summary>
@@ -65,6 +65,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="datastoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="datastoreName"/> is null. </exception>
+        /// <remarks> Create Or Update datastore. </remarks>
         public virtual async Task<ArmOperation<VMwareDatastoreResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string datastoreName, VMwareDatastoreData data = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(datastoreName, nameof(datastoreName));
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary>
-        /// Create Or Update datastore.
+        /// Implements datastore PUT method.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/datastores/{datastoreName}
         /// Operation Id: Datastores_Create
         /// </summary>
@@ -97,6 +98,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="datastoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="datastoreName"/> is null. </exception>
+        /// <remarks> Create Or Update datastore. </remarks>
         public virtual ArmOperation<VMwareDatastoreResource> CreateOrUpdate(WaitUntil waitUntil, string datastoreName, VMwareDatastoreData data = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(datastoreName, nameof(datastoreName));
@@ -119,7 +121,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary>
-        /// Implements datastore GET method.
+        /// Gets a datastore.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/datastores/{datastoreName}
         /// Operation Id: Datastores_Get
         /// </summary>
@@ -127,6 +129,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="datastoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="datastoreName"/> is null. </exception>
+        /// <remarks> Implements datastore GET method. </remarks>
         public virtual async Task<Response<VMwareDatastoreResource>> GetAsync(string datastoreName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(datastoreName, nameof(datastoreName));
@@ -148,7 +151,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary>
-        /// Implements datastore GET method.
+        /// Gets a datastore.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/datastores/{datastoreName}
         /// Operation Id: Datastores_Get
         /// </summary>
@@ -156,6 +159,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="datastoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="datastoreName"/> is null. </exception>
+        /// <remarks> Implements datastore GET method. </remarks>
         public virtual Response<VMwareDatastoreResource> Get(string datastoreName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(datastoreName, nameof(datastoreName));
@@ -177,12 +181,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary>
-        /// List of datastores in a resource group.
+        /// Implements GET datastores in a resource group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/datastores
         /// Operation Id: Datastores_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VMwareDatastoreResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List of datastores in a resource group. </remarks>
         public virtual AsyncPageable<VMwareDatastoreResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<VMwareDatastoreResource>> FirstPageFunc(int? pageSizeHint)
@@ -219,12 +224,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary>
-        /// List of datastores in a resource group.
+        /// Implements GET datastores in a resource group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/datastores
         /// Operation Id: Datastores_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VMwareDatastoreResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List of datastores in a resource group. </remarks>
         public virtual Pageable<VMwareDatastoreResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<VMwareDatastoreResource> FirstPageFunc(int? pageSizeHint)
@@ -261,7 +267,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Gets a datastore.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/datastores/{datastoreName}
         /// Operation Id: Datastores_Get
         /// </summary>
@@ -269,6 +275,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="datastoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="datastoreName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string datastoreName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(datastoreName, nameof(datastoreName));
@@ -288,7 +295,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Gets a datastore.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/datastores/{datastoreName}
         /// Operation Id: Datastores_Get
         /// </summary>
@@ -296,6 +303,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="datastoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="datastoreName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string datastoreName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(datastoreName, nameof(datastoreName));

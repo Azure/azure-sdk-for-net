@@ -88,11 +88,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Retrieve a Hybrid Connection in use in an App Service plan.
+        /// Retrieve a Hybrid Connection in use in an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
         /// Operation Id: AppServicePlans_GetHybridConnection
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Retrieve a Hybrid Connection in use in an App Service plan. </remarks>
         public virtual async Task<Response<ServerfarmHybridConnectionNamespaceRelayResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _serverfarmHybridConnectionNamespaceRelayAppServicePlansClientDiagnostics.CreateScope("ServerfarmHybridConnectionNamespaceRelayResource.Get");
@@ -112,11 +113,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Retrieve a Hybrid Connection in use in an App Service plan.
+        /// Retrieve a Hybrid Connection in use in an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
         /// Operation Id: AppServicePlans_GetHybridConnection
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Retrieve a Hybrid Connection in use in an App Service plan. </remarks>
         public virtual Response<ServerfarmHybridConnectionNamespaceRelayResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _serverfarmHybridConnectionNamespaceRelayAppServicePlansClientDiagnostics.CreateScope("ServerfarmHybridConnectionNamespaceRelayResource.Get");
@@ -136,12 +138,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Delete a Hybrid Connection in use in an App Service plan.
+        /// Delete a Hybrid Connection in use in an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
         /// Operation Id: AppServicePlans_DeleteHybridConnection
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Delete a Hybrid Connection in use in an App Service plan. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _serverfarmHybridConnectionNamespaceRelayAppServicePlansClientDiagnostics.CreateScope("ServerfarmHybridConnectionNamespaceRelayResource.Delete");
@@ -162,12 +165,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Delete a Hybrid Connection in use in an App Service plan.
+        /// Delete a Hybrid Connection in use in an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
         /// Operation Id: AppServicePlans_DeleteHybridConnection
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Delete a Hybrid Connection in use in an App Service plan. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _serverfarmHybridConnectionNamespaceRelayAppServicePlansClientDiagnostics.CreateScope("ServerfarmHybridConnectionNamespaceRelayResource.Delete");
@@ -188,11 +192,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get the send key name and value of a Hybrid Connection.
+        /// Get the send key name and value of a Hybrid Connection.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}/listKeys
         /// Operation Id: AppServicePlans_ListHybridConnectionKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Get the send key name and value of a Hybrid Connection. </remarks>
         public virtual async Task<Response<HybridConnectionKey>> GetHybridConnectionKeysAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _serverfarmHybridConnectionNamespaceRelayAppServicePlansClientDiagnostics.CreateScope("ServerfarmHybridConnectionNamespaceRelayResource.GetHybridConnectionKeys");
@@ -210,11 +215,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get the send key name and value of a Hybrid Connection.
+        /// Get the send key name and value of a Hybrid Connection.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}/listKeys
         /// Operation Id: AppServicePlans_ListHybridConnectionKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Get the send key name and value of a Hybrid Connection. </remarks>
         public virtual Response<HybridConnectionKey> GetHybridConnectionKeys(CancellationToken cancellationToken = default)
         {
             using var scope = _serverfarmHybridConnectionNamespaceRelayAppServicePlansClientDiagnostics.CreateScope("ServerfarmHybridConnectionNamespaceRelayResource.GetHybridConnectionKeys");
@@ -232,12 +238,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get all apps that use a Hybrid Connection in an App Service Plan.
+        /// Get all apps that use a Hybrid Connection in an App Service Plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}/sites
         /// Operation Id: AppServicePlans_ListWebAppsByHybridConnection
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get all apps that use a Hybrid Connection in an App Service Plan. </remarks>
         public virtual AsyncPageable<string> GetWebAppsByHybridConnectionAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<string>> FirstPageFunc(int? pageSizeHint)
@@ -274,12 +281,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get all apps that use a Hybrid Connection in an App Service Plan.
+        /// Get all apps that use a Hybrid Connection in an App Service Plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}/sites
         /// Operation Id: AppServicePlans_ListWebAppsByHybridConnection
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get all apps that use a Hybrid Connection in an App Service Plan. </remarks>
         public virtual Pageable<string> GetWebAppsByHybridConnection(CancellationToken cancellationToken = default)
         {
             Page<string> FirstPageFunc(int? pageSizeHint)

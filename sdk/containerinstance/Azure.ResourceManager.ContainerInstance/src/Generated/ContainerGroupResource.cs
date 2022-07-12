@@ -94,11 +94,12 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Gets the properties of the specified container group in the specified subscription and resource group. The operation returns the properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes.
+        /// Get the properties of the specified container group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}
         /// Operation Id: ContainerGroups_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Gets the properties of the specified container group in the specified subscription and resource group. The operation returns the properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes. </remarks>
         public virtual async Task<Response<ContainerGroupResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _containerGroupClientDiagnostics.CreateScope("ContainerGroupResource.Get");
@@ -118,11 +119,12 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Gets the properties of the specified container group in the specified subscription and resource group. The operation returns the properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes.
+        /// Get the properties of the specified container group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}
         /// Operation Id: ContainerGroups_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Gets the properties of the specified container group in the specified subscription and resource group. The operation returns the properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes. </remarks>
         public virtual Response<ContainerGroupResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _containerGroupClientDiagnostics.CreateScope("ContainerGroupResource.Get");
@@ -142,12 +144,13 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Delete the specified container group in the specified subscription and resource group. The operation does not delete other resources provided by the user, such as volumes.
+        /// Delete the specified container group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}
         /// Operation Id: ContainerGroups_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Delete the specified container group in the specified subscription and resource group. The operation does not delete other resources provided by the user, such as volumes. </remarks>
         public virtual async Task<ArmOperation<ContainerGroupResource>> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _containerGroupClientDiagnostics.CreateScope("ContainerGroupResource.Delete");
@@ -168,12 +171,13 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Delete the specified container group in the specified subscription and resource group. The operation does not delete other resources provided by the user, such as volumes.
+        /// Delete the specified container group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}
         /// Operation Id: ContainerGroups_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Delete the specified container group in the specified subscription and resource group. The operation does not delete other resources provided by the user, such as volumes. </remarks>
         public virtual ArmOperation<ContainerGroupResource> Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _containerGroupClientDiagnostics.CreateScope("ContainerGroupResource.Delete");
@@ -194,13 +198,14 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Updates container group tags with specified values.
+        /// Update container groups.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}
         /// Operation Id: ContainerGroups_Update
         /// </summary>
         /// <param name="patch"> The container group resource with just the tags to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        /// <remarks> Updates container group tags with specified values. </remarks>
         public virtual async Task<Response<ContainerGroupResource>> UpdateAsync(ContainerGroupPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
@@ -220,13 +225,14 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Updates container group tags with specified values.
+        /// Update container groups.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}
         /// Operation Id: ContainerGroups_Update
         /// </summary>
         /// <param name="patch"> The container group resource with just the tags to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        /// <remarks> Updates container group tags with specified values. </remarks>
         public virtual Response<ContainerGroupResource> Update(ContainerGroupPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
@@ -246,12 +252,13 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Restarts all containers in a container group in place. If container image has updates, new image will be downloaded.
+        /// Restarts all containers in a container group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/restart
         /// Operation Id: ContainerGroups_Restart
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Restarts all containers in a container group in place. If container image has updates, new image will be downloaded. </remarks>
         public virtual async Task<ArmOperation> RestartAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _containerGroupClientDiagnostics.CreateScope("ContainerGroupResource.Restart");
@@ -272,12 +279,13 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Restarts all containers in a container group in place. If container image has updates, new image will be downloaded.
+        /// Restarts all containers in a container group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/restart
         /// Operation Id: ContainerGroups_Restart
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Restarts all containers in a container group in place. If container image has updates, new image will be downloaded. </remarks>
         public virtual ArmOperation Restart(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _containerGroupClientDiagnostics.CreateScope("ContainerGroupResource.Restart");
@@ -298,11 +306,12 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Stops all containers in a container group. Compute resources will be deallocated and billing will stop.
+        /// Stops all containers in a container group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/stop
         /// Operation Id: ContainerGroups_Stop
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Stops all containers in a container group. Compute resources will be deallocated and billing will stop. </remarks>
         public virtual async Task<Response> StopAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _containerGroupClientDiagnostics.CreateScope("ContainerGroupResource.Stop");
@@ -320,11 +329,12 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Stops all containers in a container group. Compute resources will be deallocated and billing will stop.
+        /// Stops all containers in a container group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/stop
         /// Operation Id: ContainerGroups_Stop
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Stops all containers in a container group. Compute resources will be deallocated and billing will stop. </remarks>
         public virtual Response Stop(CancellationToken cancellationToken = default)
         {
             using var scope = _containerGroupClientDiagnostics.CreateScope("ContainerGroupResource.Stop");
@@ -342,12 +352,13 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Starts all containers in a container group. Compute resources will be allocated and billing will start.
+        /// Starts all containers in a container group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/start
         /// Operation Id: ContainerGroups_Start
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Starts all containers in a container group. Compute resources will be allocated and billing will start. </remarks>
         public virtual async Task<ArmOperation> StartAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _containerGroupClientDiagnostics.CreateScope("ContainerGroupResource.Start");
@@ -368,12 +379,13 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Starts all containers in a container group. Compute resources will be allocated and billing will start.
+        /// Starts all containers in a container group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/start
         /// Operation Id: ContainerGroups_Start
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Starts all containers in a container group. Compute resources will be allocated and billing will start. </remarks>
         public virtual ArmOperation Start(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _containerGroupClientDiagnostics.CreateScope("ContainerGroupResource.Start");
@@ -394,12 +406,13 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Gets all the network dependencies for this container group to allow complete control of network setting and configuration. For container groups, this will always be an empty list.
+        /// Get all network dependencies for container group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/outboundNetworkDependenciesEndpoints
         /// Operation Id: ContainerGroups_GetOutboundNetworkDependenciesEndpoints
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Gets all the network dependencies for this container group to allow complete control of network setting and configuration. For container groups, this will always be an empty list. </remarks>
         public virtual AsyncPageable<string> GetOutboundNetworkDependenciesEndpointsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<string>> FirstPageFunc(int? pageSizeHint)
@@ -421,12 +434,13 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Gets all the network dependencies for this container group to allow complete control of network setting and configuration. For container groups, this will always be an empty list.
+        /// Get all network dependencies for container group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/outboundNetworkDependenciesEndpoints
         /// Operation Id: ContainerGroups_GetOutboundNetworkDependenciesEndpoints
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Gets all the network dependencies for this container group to allow complete control of network setting and configuration. For container groups, this will always be an empty list. </remarks>
         public virtual Pageable<string> GetOutboundNetworkDependenciesEndpoints(CancellationToken cancellationToken = default)
         {
             Page<string> FirstPageFunc(int? pageSizeHint)
@@ -448,7 +462,7 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Get the logs for a specified container instance in a specified resource group and container group.
+        /// Get the logs for a specified container instance.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/containers/{containerName}/logs
         /// Operation Id: Containers_ListLogs
         /// </summary>
@@ -458,6 +472,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
+        /// <remarks> Get the logs for a specified container instance in a specified resource group and container group. </remarks>
         public virtual async Task<Response<ContainerLogs>> GetLogsContainerAsync(string containerName, int? tail = null, bool? timestamps = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
@@ -477,7 +492,7 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Get the logs for a specified container instance in a specified resource group and container group.
+        /// Get the logs for a specified container instance.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/containers/{containerName}/logs
         /// Operation Id: Containers_ListLogs
         /// </summary>
@@ -487,6 +502,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
+        /// <remarks> Get the logs for a specified container instance in a specified resource group and container group. </remarks>
         public virtual Response<ContainerLogs> GetLogsContainer(string containerName, int? tail = null, bool? timestamps = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
@@ -506,7 +522,7 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Executes a command for a specific container instance in a specified resource group and container group.
+        /// Executes a command in a specific container instance.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/containers/{containerName}/exec
         /// Operation Id: Containers_ExecuteCommand
         /// </summary>
@@ -515,6 +531,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="content"/> is null. </exception>
+        /// <remarks> Executes a command for a specific container instance in a specified resource group and container group. </remarks>
         public virtual async Task<Response<ContainerExecResult>> ExecuteCommandContainerAsync(string containerName, ContainerExecContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
@@ -535,7 +552,7 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Executes a command for a specific container instance in a specified resource group and container group.
+        /// Executes a command in a specific container instance.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/containers/{containerName}/exec
         /// Operation Id: Containers_ExecuteCommand
         /// </summary>
@@ -544,6 +561,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="content"/> is null. </exception>
+        /// <remarks> Executes a command for a specific container instance in a specified resource group and container group. </remarks>
         public virtual Response<ContainerExecResult> ExecuteCommandContainer(string containerName, ContainerExecContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
@@ -564,7 +582,7 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Attach to the output stream of a specific container instance in a specified resource group and container group.
+        /// Attach to the output of a specific container instance.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/containers/{containerName}/attach
         /// Operation Id: Containers_Attach
         /// </summary>
@@ -572,6 +590,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
+        /// <remarks> Attach to the output stream of a specific container instance in a specified resource group and container group. </remarks>
         public virtual async Task<Response<ContainerAttachResult>> AttachContainerAsync(string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
@@ -591,7 +610,7 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Attach to the output stream of a specific container instance in a specified resource group and container group.
+        /// Attach to the output of a specific container instance.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/containers/{containerName}/attach
         /// Operation Id: Containers_Attach
         /// </summary>
@@ -599,6 +618,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
+        /// <remarks> Attach to the output stream of a specific container instance in a specified resource group and container group. </remarks>
         public virtual Response<ContainerAttachResult> AttachContainer(string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
@@ -618,7 +638,7 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Add a tag to the current resource.
+        /// Get the properties of the specified container group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}
         /// Operation Id: ContainerGroups_Get
         /// </summary>
@@ -626,6 +646,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        /// <remarks> Add a tag to the current resource. </remarks>
         public virtual async Task<Response<ContainerGroupResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -649,7 +670,7 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Add a tag to the current resource.
+        /// Get the properties of the specified container group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}
         /// Operation Id: ContainerGroups_Get
         /// </summary>
@@ -657,6 +678,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        /// <remarks> Add a tag to the current resource. </remarks>
         public virtual Response<ContainerGroupResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -680,13 +702,14 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Replace the tags on the resource with the given set.
+        /// Get the properties of the specified container group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}
         /// Operation Id: ContainerGroups_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        /// <remarks> Replace the tags on the resource with the given set. </remarks>
         public virtual async Task<Response<ContainerGroupResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -710,13 +733,14 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Replace the tags on the resource with the given set.
+        /// Get the properties of the specified container group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}
         /// Operation Id: ContainerGroups_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        /// <remarks> Replace the tags on the resource with the given set. </remarks>
         public virtual Response<ContainerGroupResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -740,13 +764,14 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Removes a tag by key from the resource.
+        /// Get the properties of the specified container group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}
         /// Operation Id: ContainerGroups_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <remarks> Removes a tag by key from the resource. </remarks>
         public virtual async Task<Response<ContainerGroupResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -769,13 +794,14 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Removes a tag by key from the resource.
+        /// Get the properties of the specified container group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}
         /// Operation Id: ContainerGroups_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <remarks> Removes a tag by key from the resource. </remarks>
         public virtual Response<ContainerGroupResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));

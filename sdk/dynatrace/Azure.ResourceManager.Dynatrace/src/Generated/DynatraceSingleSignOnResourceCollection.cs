@@ -64,6 +64,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Create a DynatraceSingleSignOnResource. </remarks>
         public virtual async Task<ArmOperation<DynatraceSingleSignOnResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string configurationName, DynatraceSingleSignOnResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
@@ -97,6 +98,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Create a DynatraceSingleSignOnResource. </remarks>
         public virtual ArmOperation<DynatraceSingleSignOnResource> CreateOrUpdate(WaitUntil waitUntil, string configurationName, DynatraceSingleSignOnResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
@@ -128,6 +130,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <remarks> Get a DynatraceSingleSignOnResource. </remarks>
         public virtual async Task<Response<DynatraceSingleSignOnResource>> GetAsync(string configurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
@@ -157,6 +160,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <remarks> Get a DynatraceSingleSignOnResource. </remarks>
         public virtual Response<DynatraceSingleSignOnResource> Get(string configurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
@@ -184,6 +188,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DynatraceSingleSignOnResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List all DynatraceSingleSignOnResource by monitorName. </remarks>
         public virtual AsyncPageable<DynatraceSingleSignOnResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<DynatraceSingleSignOnResource>> FirstPageFunc(int? pageSizeHint)
@@ -226,6 +231,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DynatraceSingleSignOnResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List all DynatraceSingleSignOnResource by monitorName. </remarks>
         public virtual Pageable<DynatraceSingleSignOnResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<DynatraceSingleSignOnResource> FirstPageFunc(int? pageSizeHint)
@@ -262,7 +268,7 @@ namespace Azure.ResourceManager.Dynatrace
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get a DynatraceSingleSignOnResource
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}/singleSignOnConfigurations/{configurationName}
         /// Operation Id: SingleSignOn_Get
         /// </summary>
@@ -270,6 +276,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string configurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
@@ -289,7 +296,7 @@ namespace Azure.ResourceManager.Dynatrace
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get a DynatraceSingleSignOnResource
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}/singleSignOnConfigurations/{configurationName}
         /// Operation Id: SingleSignOn_Get
         /// </summary>
@@ -297,6 +304,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string configurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));

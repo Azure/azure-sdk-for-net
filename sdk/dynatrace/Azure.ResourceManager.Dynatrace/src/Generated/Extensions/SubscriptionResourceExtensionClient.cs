@@ -50,6 +50,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MonitorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List all MonitorResource by subscriptionId. </remarks>
         public virtual AsyncPageable<MonitorResource> GetMonitorResourcesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<MonitorResource>> FirstPageFunc(int? pageSizeHint)
@@ -92,6 +93,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MonitorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List all MonitorResource by subscriptionId. </remarks>
         public virtual Pageable<MonitorResource> GetMonitorResources(CancellationToken cancellationToken = default)
         {
             Page<MonitorResource> FirstPageFunc(int? pageSizeHint)

@@ -87,11 +87,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a snapshot of the configuration of an app at a previous point in time.
+        /// Gets a snapshot of the configuration of an app at a previous point in time.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web/snapshots/{snapshotId}
         /// Operation Id: WebApps_GetConfigurationSnapshotSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Gets a snapshot of the configuration of an app at a previous point in time. </remarks>
         public virtual async Task<Response<SiteSlotConfigSnapshotResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotConfigSnapshotWebAppsClientDiagnostics.CreateScope("SiteSlotConfigSnapshotResource.Get");
@@ -111,11 +112,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a snapshot of the configuration of an app at a previous point in time.
+        /// Gets a snapshot of the configuration of an app at a previous point in time.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web/snapshots/{snapshotId}
         /// Operation Id: WebApps_GetConfigurationSnapshotSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Gets a snapshot of the configuration of an app at a previous point in time. </remarks>
         public virtual Response<SiteSlotConfigSnapshotResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotConfigSnapshotWebAppsClientDiagnostics.CreateScope("SiteSlotConfigSnapshotResource.Get");
@@ -135,11 +137,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Reverts the configuration of an app to a previous snapshot.
+        /// Reverts the configuration of an app to a previous snapshot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web/snapshots/{snapshotId}/recover
         /// Operation Id: WebApps_RecoverSiteConfigurationSnapshotSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Reverts the configuration of an app to a previous snapshot. </remarks>
         public virtual async Task<Response> RecoverSiteConfigurationSnapshotSlotAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotConfigSnapshotWebAppsClientDiagnostics.CreateScope("SiteSlotConfigSnapshotResource.RecoverSiteConfigurationSnapshotSlot");
@@ -157,11 +160,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Reverts the configuration of an app to a previous snapshot.
+        /// Reverts the configuration of an app to a previous snapshot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web/snapshots/{snapshotId}/recover
         /// Operation Id: WebApps_RecoverSiteConfigurationSnapshotSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Reverts the configuration of an app to a previous snapshot. </remarks>
         public virtual Response RecoverSiteConfigurationSnapshotSlot(CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotConfigSnapshotWebAppsClientDiagnostics.CreateScope("SiteSlotConfigSnapshotResource.RecoverSiteConfigurationSnapshotSlot");

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Onboards the ScVmm availability set as an Azure resource.
+        /// Implements AvailabilitySets PUT method.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/availabilitySets/{availabilitySetName}
         /// Operation Id: AvailabilitySets_CreateOrUpdate
         /// </summary>
@@ -65,6 +65,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="availabilitySetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="availabilitySetName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Onboards the ScVmm availability set as an Azure resource. </remarks>
         public virtual async Task<ArmOperation<ScVmmAvailabilitySetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string availabilitySetName, ScVmmAvailabilitySetData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(availabilitySetName, nameof(availabilitySetName));
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Onboards the ScVmm availability set as an Azure resource.
+        /// Implements AvailabilitySets PUT method.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/availabilitySets/{availabilitySetName}
         /// Operation Id: AvailabilitySets_CreateOrUpdate
         /// </summary>
@@ -98,6 +99,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="availabilitySetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="availabilitySetName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Onboards the ScVmm availability set as an Azure resource. </remarks>
         public virtual ArmOperation<ScVmmAvailabilitySetResource> CreateOrUpdate(WaitUntil waitUntil, string availabilitySetName, ScVmmAvailabilitySetData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(availabilitySetName, nameof(availabilitySetName));
@@ -121,7 +123,7 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements AvailabilitySet GET method.
+        /// Gets an AvailabilitySet.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/availabilitySets/{availabilitySetName}
         /// Operation Id: AvailabilitySets_Get
         /// </summary>
@@ -129,6 +131,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="availabilitySetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="availabilitySetName"/> is null. </exception>
+        /// <remarks> Implements AvailabilitySet GET method. </remarks>
         public virtual async Task<Response<ScVmmAvailabilitySetResource>> GetAsync(string availabilitySetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(availabilitySetName, nameof(availabilitySetName));
@@ -150,7 +153,7 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements AvailabilitySet GET method.
+        /// Gets an AvailabilitySet.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/availabilitySets/{availabilitySetName}
         /// Operation Id: AvailabilitySets_Get
         /// </summary>
@@ -158,6 +161,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="availabilitySetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="availabilitySetName"/> is null. </exception>
+        /// <remarks> Implements AvailabilitySet GET method. </remarks>
         public virtual Response<ScVmmAvailabilitySetResource> Get(string availabilitySetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(availabilitySetName, nameof(availabilitySetName));
@@ -179,12 +183,13 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// List of AvailabilitySets in a resource group.
+        /// Implements GET AvailabilitySets in a resource group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/availabilitySets
         /// Operation Id: AvailabilitySets_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ScVmmAvailabilitySetResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List of AvailabilitySets in a resource group. </remarks>
         public virtual AsyncPageable<ScVmmAvailabilitySetResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ScVmmAvailabilitySetResource>> FirstPageFunc(int? pageSizeHint)
@@ -221,12 +226,13 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// List of AvailabilitySets in a resource group.
+        /// Implements GET AvailabilitySets in a resource group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/availabilitySets
         /// Operation Id: AvailabilitySets_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ScVmmAvailabilitySetResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List of AvailabilitySets in a resource group. </remarks>
         public virtual Pageable<ScVmmAvailabilitySetResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<ScVmmAvailabilitySetResource> FirstPageFunc(int? pageSizeHint)
@@ -263,7 +269,7 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Gets an AvailabilitySet.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/availabilitySets/{availabilitySetName}
         /// Operation Id: AvailabilitySets_Get
         /// </summary>
@@ -271,6 +277,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="availabilitySetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="availabilitySetName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string availabilitySetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(availabilitySetName, nameof(availabilitySetName));
@@ -290,7 +297,7 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Gets an AvailabilitySet.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/availabilitySets/{availabilitySetName}
         /// Operation Id: AvailabilitySets_Get
         /// </summary>
@@ -298,6 +305,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="availabilitySetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="availabilitySetName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string availabilitySetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(availabilitySetName, nameof(availabilitySetName));

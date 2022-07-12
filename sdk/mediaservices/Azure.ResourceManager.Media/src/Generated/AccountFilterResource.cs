@@ -87,11 +87,12 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get the details of an Account Filter in the Media Services account.
+        /// Get an Account Filter.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/accountFilters/{filterName}
         /// Operation Id: AccountFilters_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get the details of an Account Filter in the Media Services account. </remarks>
         public virtual async Task<Response<AccountFilterResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _accountFilterClientDiagnostics.CreateScope("AccountFilterResource.Get");
@@ -111,11 +112,12 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get the details of an Account Filter in the Media Services account.
+        /// Get an Account Filter.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/accountFilters/{filterName}
         /// Operation Id: AccountFilters_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get the details of an Account Filter in the Media Services account. </remarks>
         public virtual Response<AccountFilterResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _accountFilterClientDiagnostics.CreateScope("AccountFilterResource.Get");
@@ -135,12 +137,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Deletes an Account Filter in the Media Services account.
+        /// Delete an Account Filter.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/accountFilters/{filterName}
         /// Operation Id: AccountFilters_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Deletes an Account Filter in the Media Services account. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _accountFilterClientDiagnostics.CreateScope("AccountFilterResource.Delete");
@@ -161,12 +164,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Deletes an Account Filter in the Media Services account.
+        /// Delete an Account Filter.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/accountFilters/{filterName}
         /// Operation Id: AccountFilters_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Deletes an Account Filter in the Media Services account. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _accountFilterClientDiagnostics.CreateScope("AccountFilterResource.Delete");
@@ -187,13 +191,14 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Updates an existing Account Filter in the Media Services account.
+        /// Update an Account Filter
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/accountFilters/{filterName}
         /// Operation Id: AccountFilters_Update
         /// </summary>
         /// <param name="data"> The request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        /// <remarks> Updates an existing Account Filter in the Media Services account. </remarks>
         public virtual async Task<Response<AccountFilterResource>> UpdateAsync(AccountFilterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -213,13 +218,14 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Updates an existing Account Filter in the Media Services account.
+        /// Update an Account Filter
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/accountFilters/{filterName}
         /// Operation Id: AccountFilters_Update
         /// </summary>
         /// <param name="data"> The request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        /// <remarks> Updates an existing Account Filter in the Media Services account. </remarks>
         public virtual Response<AccountFilterResource> Update(AccountFilterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));

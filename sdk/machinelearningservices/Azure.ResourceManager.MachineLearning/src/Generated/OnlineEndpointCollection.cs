@@ -65,6 +65,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Create or update Online Endpoint (asynchronous). </remarks>
         public virtual async Task<ArmOperation<OnlineEndpointResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string endpointName, OnlineEndpointData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
@@ -98,6 +99,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Create or update Online Endpoint (asynchronous). </remarks>
         public virtual ArmOperation<OnlineEndpointResource> CreateOrUpdate(WaitUntil waitUntil, string endpointName, OnlineEndpointData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
@@ -129,6 +131,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        /// <remarks> Get Online Endpoint. </remarks>
         public virtual async Task<Response<OnlineEndpointResource>> GetAsync(string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
@@ -158,6 +161,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        /// <remarks> Get Online Endpoint. </remarks>
         public virtual Response<OnlineEndpointResource> Get(string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
@@ -192,6 +196,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="orderBy"> The option to order the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="OnlineEndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List Online Endpoints. </remarks>
         public virtual AsyncPageable<OnlineEndpointResource> GetAllAsync(string name = null, int? count = null, EndpointComputeType? computeType = null, string skip = null, string tags = null, string properties = null, OrderString? orderBy = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<OnlineEndpointResource>> FirstPageFunc(int? pageSizeHint)
@@ -241,6 +246,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="orderBy"> The option to order the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OnlineEndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List Online Endpoints. </remarks>
         public virtual Pageable<OnlineEndpointResource> GetAll(string name = null, int? count = null, EndpointComputeType? computeType = null, string skip = null, string tags = null, string properties = null, OrderString? orderBy = null, CancellationToken cancellationToken = default)
         {
             Page<OnlineEndpointResource> FirstPageFunc(int? pageSizeHint)
@@ -277,7 +283,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get Online Endpoint.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/onlineEndpoints/{endpointName}
         /// Operation Id: OnlineEndpoints_Get
         /// </summary>
@@ -285,6 +291,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
@@ -304,7 +311,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get Online Endpoint.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/onlineEndpoints/{endpointName}
         /// Operation Id: OnlineEndpoints_Get
         /// </summary>
@@ -312,6 +319,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));

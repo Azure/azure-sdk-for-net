@@ -57,13 +57,14 @@ namespace Azure.ResourceManager.Resources
             return message;
         }
 
-        /// <summary> This operation allows deleting a value from the list of predefined values for an existing predefined tag name. The value being deleted must not be in use as a tag value for the given tag name for any resource. </summary>
+        /// <summary> Deletes a predefined tag value for a predefined tag name. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="tagName"> The name of the tag. </param>
         /// <param name="tagValue"> The value of the tag to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="tagName"/> or <paramref name="tagValue"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="tagName"/> or <paramref name="tagValue"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> This operation allows deleting a value from the list of predefined values for an existing predefined tag name. The value being deleted must not be in use as a tag value for the given tag name for any resource. </remarks>
         public async Task<Response> DeleteValueAsync(string subscriptionId, string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -82,13 +83,14 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> This operation allows deleting a value from the list of predefined values for an existing predefined tag name. The value being deleted must not be in use as a tag value for the given tag name for any resource. </summary>
+        /// <summary> Deletes a predefined tag value for a predefined tag name. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="tagName"> The name of the tag. </param>
         /// <param name="tagValue"> The value of the tag to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="tagName"/> or <paramref name="tagValue"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="tagName"/> or <paramref name="tagValue"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> This operation allows deleting a value from the list of predefined values for an existing predefined tag name. The value being deleted must not be in use as a tag value for the given tag name for any resource. </remarks>
         public Response DeleteValue(string subscriptionId, string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -127,13 +129,14 @@ namespace Azure.ResourceManager.Resources
             return message;
         }
 
-        /// <summary> This operation allows adding a value to the list of predefined values for an existing predefined tag name. A tag value can have a maximum of 256 characters. </summary>
+        /// <summary> Creates a predefined value for a predefined tag name. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="tagName"> The name of the tag. </param>
         /// <param name="tagValue"> The value of the tag to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="tagName"/> or <paramref name="tagValue"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="tagName"/> or <paramref name="tagValue"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> This operation allows adding a value to the list of predefined values for an existing predefined tag name. A tag value can have a maximum of 256 characters. </remarks>
         public async Task<Response<PredefinedTagValue>> CreateOrUpdateValueAsync(string subscriptionId, string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -157,13 +160,14 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> This operation allows adding a value to the list of predefined values for an existing predefined tag name. A tag value can have a maximum of 256 characters. </summary>
+        /// <summary> Creates a predefined value for a predefined tag name. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="tagName"> The name of the tag. </param>
         /// <param name="tagValue"> The value of the tag to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="tagName"/> or <paramref name="tagValue"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="tagName"/> or <paramref name="tagValue"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> This operation allows adding a value to the list of predefined values for an existing predefined tag name. A tag value can have a maximum of 256 characters. </remarks>
         public Response<PredefinedTagValue> CreateOrUpdateValue(string subscriptionId, string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -205,12 +209,13 @@ namespace Azure.ResourceManager.Resources
             return message;
         }
 
-        /// <summary> This operation allows adding a name to the list of predefined tag names for the given subscription. A tag name can have a maximum of 512 characters and is case-insensitive. Tag names cannot have the following prefixes which are reserved for Azure use: &apos;microsoft&apos;, &apos;azure&apos;, &apos;windows&apos;. </summary>
+        /// <summary> Creates a predefined tag name. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="tagName"> The name of the tag to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="tagName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="tagName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> This operation allows adding a name to the list of predefined tag names for the given subscription. A tag name can have a maximum of 512 characters and is case-insensitive. Tag names cannot have the following prefixes which are reserved for Azure use: &apos;microsoft&apos;, &apos;azure&apos;, &apos;windows&apos;. </remarks>
         public async Task<Response<PredefinedTag>> CreateOrUpdateAsync(string subscriptionId, string tagName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -233,12 +238,13 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> This operation allows adding a name to the list of predefined tag names for the given subscription. A tag name can have a maximum of 512 characters and is case-insensitive. Tag names cannot have the following prefixes which are reserved for Azure use: &apos;microsoft&apos;, &apos;azure&apos;, &apos;windows&apos;. </summary>
+        /// <summary> Creates a predefined tag name. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="tagName"> The name of the tag to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="tagName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="tagName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> This operation allows adding a name to the list of predefined tag names for the given subscription. A tag name can have a maximum of 512 characters and is case-insensitive. Tag names cannot have the following prefixes which are reserved for Azure use: &apos;microsoft&apos;, &apos;azure&apos;, &apos;windows&apos;. </remarks>
         public Response<PredefinedTag> CreateOrUpdate(string subscriptionId, string tagName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -279,12 +285,13 @@ namespace Azure.ResourceManager.Resources
             return message;
         }
 
-        /// <summary> This operation allows deleting a name from the list of predefined tag names for the given subscription. The name being deleted must not be in use as a tag name for any resource. All predefined values for the given name must have already been deleted. </summary>
+        /// <summary> Deletes a predefined tag name. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="tagName"> The name of the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="tagName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="tagName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> This operation allows deleting a name from the list of predefined tag names for the given subscription. The name being deleted must not be in use as a tag name for any resource. All predefined values for the given name must have already been deleted. </remarks>
         public async Task<Response> DeleteAsync(string subscriptionId, string tagName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -302,12 +309,13 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> This operation allows deleting a name from the list of predefined tag names for the given subscription. The name being deleted must not be in use as a tag name for any resource. All predefined values for the given name must have already been deleted. </summary>
+        /// <summary> Deletes a predefined tag name. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="tagName"> The name of the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="tagName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="tagName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> This operation allows deleting a name from the list of predefined tag names for the given subscription. The name being deleted must not be in use as a tag name for any resource. All predefined values for the given name must have already been deleted. </remarks>
         public Response Delete(string subscriptionId, string tagName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -342,11 +350,12 @@ namespace Azure.ResourceManager.Resources
             return message;
         }
 
-        /// <summary> This operation performs a union of predefined tags, resource tags, resource group tags and subscription tags, and returns a summary of usage for each tag name and value under the given subscription. In case of a large number of tags, this operation may return a previously cached result. </summary>
+        /// <summary> Gets a summary of tag usage under the subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> This operation performs a union of predefined tags, resource tags, resource group tags and subscription tags, and returns a summary of usage for each tag name and value under the given subscription. In case of a large number of tags, this operation may return a previously cached result. </remarks>
         public async Task<Response<PredefinedTagsListResult>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -367,11 +376,12 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> This operation performs a union of predefined tags, resource tags, resource group tags and subscription tags, and returns a summary of usage for each tag name and value under the given subscription. In case of a large number of tags, this operation may return a previously cached result. </summary>
+        /// <summary> Gets a summary of tag usage under the subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> This operation performs a union of predefined tags, resource tags, resource group tags and subscription tags, and returns a summary of usage for each tag name and value under the given subscription. In case of a large number of tags, this operation may return a previously cached result. </remarks>
         public Response<PredefinedTagsListResult> List(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -413,11 +423,12 @@ namespace Azure.ResourceManager.Resources
             return message;
         }
 
-        /// <summary> This operation allows adding or replacing the entire set of tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags. </summary>
+        /// <summary> Creates or updates the entire set of tags on a resource or subscription. </summary>
         /// <param name="scope"> The resource scope. </param>
         /// <param name="data"> The TagResource to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> This operation allows adding or replacing the entire set of tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags. </remarks>
         public async Task<Response<TagResourceData>> CreateOrUpdateAtScopeAsync(string scope, TagResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
@@ -439,11 +450,12 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> This operation allows adding or replacing the entire set of tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags. </summary>
+        /// <summary> Creates or updates the entire set of tags on a resource or subscription. </summary>
         /// <param name="scope"> The resource scope. </param>
         /// <param name="data"> The TagResource to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> This operation allows adding or replacing the entire set of tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags. </remarks>
         public Response<TagResourceData> CreateOrUpdateAtScope(string scope, TagResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
@@ -486,11 +498,12 @@ namespace Azure.ResourceManager.Resources
             return message;
         }
 
-        /// <summary> This operation allows replacing, merging or selectively deleting tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags at the end of the operation. The &apos;replace&apos; option replaces the entire set of existing tags with a new set. The &apos;merge&apos; option allows adding tags with new names and updating the values of tags with existing names. The &apos;delete&apos; option allows selectively deleting tags based on given names or name/value pairs. </summary>
+        /// <summary> Selectively updates the set of tags on a resource or subscription. </summary>
         /// <param name="scope"> The resource scope. </param>
         /// <param name="patch"> The TagResourcePatch to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="patch"/> is null. </exception>
+        /// <remarks> This operation allows replacing, merging or selectively deleting tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags at the end of the operation. The &apos;replace&apos; option replaces the entire set of existing tags with a new set. The &apos;merge&apos; option allows adding tags with new names and updating the values of tags with existing names. The &apos;delete&apos; option allows selectively deleting tags based on given names or name/value pairs. </remarks>
         public async Task<Response<TagResourceData>> UpdateAtScopeAsync(string scope, TagResourcePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
@@ -512,11 +525,12 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> This operation allows replacing, merging or selectively deleting tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags at the end of the operation. The &apos;replace&apos; option replaces the entire set of existing tags with a new set. The &apos;merge&apos; option allows adding tags with new names and updating the values of tags with existing names. The &apos;delete&apos; option allows selectively deleting tags based on given names or name/value pairs. </summary>
+        /// <summary> Selectively updates the set of tags on a resource or subscription. </summary>
         /// <param name="scope"> The resource scope. </param>
         /// <param name="patch"> The TagResourcePatch to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="patch"/> is null. </exception>
+        /// <remarks> This operation allows replacing, merging or selectively deleting tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags at the end of the operation. The &apos;replace&apos; option replaces the entire set of existing tags with a new set. The &apos;merge&apos; option allows adding tags with new names and updating the values of tags with existing names. The &apos;delete&apos; option allows selectively deleting tags based on given names or name/value pairs. </remarks>
         public Response<TagResourceData> UpdateAtScope(string scope, TagResourcePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
@@ -559,6 +573,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="scope"> The resource scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <remarks> Gets the entire set of tags on a resource or subscription. </remarks>
         public async Task<Response<TagResourceData>> GetAtScopeAsync(string scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
@@ -585,6 +600,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="scope"> The resource scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <remarks> Gets the entire set of tags on a resource or subscription. </remarks>
         public Response<TagResourceData> GetAtScope(string scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
@@ -628,6 +644,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="scope"> The resource scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <remarks> Deletes the entire set of tags on a resource or subscription. </remarks>
         public async Task<Response> DeleteAtScopeAsync(string scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
@@ -647,6 +664,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="scope"> The resource scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <remarks> Deletes the entire set of tags on a resource or subscription. </remarks>
         public Response DeleteAtScope(string scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
@@ -676,12 +694,13 @@ namespace Azure.ResourceManager.Resources
             return message;
         }
 
-        /// <summary> This operation performs a union of predefined tags, resource tags, resource group tags and subscription tags, and returns a summary of usage for each tag name and value under the given subscription. In case of a large number of tags, this operation may return a previously cached result. </summary>
+        /// <summary> Gets a summary of tag usage under the subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> This operation performs a union of predefined tags, resource tags, resource group tags and subscription tags, and returns a summary of usage for each tag name and value under the given subscription. In case of a large number of tags, this operation may return a previously cached result. </remarks>
         public async Task<Response<PredefinedTagsListResult>> ListNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -703,12 +722,13 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> This operation performs a union of predefined tags, resource tags, resource group tags and subscription tags, and returns a summary of usage for each tag name and value under the given subscription. In case of a large number of tags, this operation may return a previously cached result. </summary>
+        /// <summary> Gets a summary of tag usage under the subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> This operation performs a union of predefined tags, resource tags, resource group tags and subscription tags, and returns a summary of usage for each tag name and value under the given subscription. In case of a large number of tags, this operation may return a previously cached result. </remarks>
         public Response<PredefinedTagsListResult> ListNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));

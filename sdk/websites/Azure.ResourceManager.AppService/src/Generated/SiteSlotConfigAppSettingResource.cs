@@ -87,11 +87,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the config reference and status of an app
+        /// Gets the config reference and status of an app
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/appsettings/{appSettingKey}
         /// Operation Id: WebApps_GetAppSettingKeyVaultReferenceSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Gets the config reference and status of an app. </remarks>
         public virtual async Task<Response<SiteSlotConfigAppSettingResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotConfigAppSettingWebAppsClientDiagnostics.CreateScope("SiteSlotConfigAppSettingResource.Get");
@@ -111,11 +112,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the config reference and status of an app
+        /// Gets the config reference and status of an app
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/appsettings/{appSettingKey}
         /// Operation Id: WebApps_GetAppSettingKeyVaultReferenceSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Gets the config reference and status of an app. </remarks>
         public virtual Response<SiteSlotConfigAppSettingResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotConfigAppSettingWebAppsClientDiagnostics.CreateScope("SiteSlotConfigAppSettingResource.Get");

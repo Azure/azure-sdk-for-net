@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates a new web, mobile, or API app in an existing resource group, or updates an existing app.
+        /// Creates a new web, mobile, or API app in an existing resource group, or updates an existing app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
         /// Operation Id: WebApps_CreateOrUpdateSlot
         /// </summary>
@@ -64,6 +64,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="slot"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Description for Creates a new web, mobile, or API app in an existing resource group, or updates an existing app. </remarks>
         public virtual async Task<ArmOperation<SiteSlotResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string slot, WebSiteData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates a new web, mobile, or API app in an existing resource group, or updates an existing app.
+        /// Creates a new web, mobile, or API app in an existing resource group, or updates an existing app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
         /// Operation Id: WebApps_CreateOrUpdateSlot
         /// </summary>
@@ -97,6 +98,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="slot"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Description for Creates a new web, mobile, or API app in an existing resource group, or updates an existing app. </remarks>
         public virtual ArmOperation<SiteSlotResource> CreateOrUpdate(WaitUntil waitUntil, string slot, WebSiteData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
@@ -120,7 +122,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the details of a web, mobile, or API app.
+        /// Gets the details of a web, mobile, or API app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
         /// Operation Id: WebApps_GetSlot
         /// </summary>
@@ -128,6 +130,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="slot"/> is null. </exception>
+        /// <remarks> Description for Gets the details of a web, mobile, or API app. </remarks>
         public virtual async Task<Response<SiteSlotResource>> GetAsync(string slot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
@@ -149,7 +152,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the details of a web, mobile, or API app.
+        /// Gets the details of a web, mobile, or API app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
         /// Operation Id: WebApps_GetSlot
         /// </summary>
@@ -157,6 +160,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="slot"/> is null. </exception>
+        /// <remarks> Description for Gets the details of a web, mobile, or API app. </remarks>
         public virtual Response<SiteSlotResource> Get(string slot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
@@ -178,12 +182,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets an app&apos;s deployment slots.
+        /// Gets an app&apos;s deployment slots.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots
         /// Operation Id: WebApps_ListSlots
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SiteSlotResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Gets an app&apos;s deployment slots. </remarks>
         public virtual AsyncPageable<SiteSlotResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<SiteSlotResource>> FirstPageFunc(int? pageSizeHint)
@@ -220,12 +225,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets an app&apos;s deployment slots.
+        /// Gets an app&apos;s deployment slots.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots
         /// Operation Id: WebApps_ListSlots
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SiteSlotResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Gets an app&apos;s deployment slots. </remarks>
         public virtual Pageable<SiteSlotResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<SiteSlotResource> FirstPageFunc(int? pageSizeHint)
@@ -262,7 +268,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Gets the details of a web, mobile, or API app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
         /// Operation Id: WebApps_GetSlot
         /// </summary>
@@ -270,6 +276,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="slot"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string slot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
@@ -289,7 +296,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Gets the details of a web, mobile, or API app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
         /// Operation Id: WebApps_GetSlot
         /// </summary>
@@ -297,6 +304,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="slot"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string slot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));

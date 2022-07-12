@@ -58,6 +58,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="resourceUri"> The identifier of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
+        /// <remarks> Lists associations for the specified resource. </remarks>
         public async Task<Response<DataCollectionRuleAssociationProxyOnlyResourceListResult>> ListByResourceAsync(string resourceUri, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
@@ -82,6 +83,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="resourceUri"> The identifier of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
+        /// <remarks> Lists associations for the specified resource. </remarks>
         public Response<DataCollectionRuleAssociationProxyOnlyResourceListResult> ListByResource(string resourceUri, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
@@ -130,6 +132,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dataCollectionRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dataCollectionRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Lists associations for the specified data collection rule. </remarks>
         public async Task<Response<DataCollectionRuleAssociationProxyOnlyResourceListResult>> ListByRuleAsync(string subscriptionId, string resourceGroupName, string dataCollectionRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -159,6 +162,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dataCollectionRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dataCollectionRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Lists associations for the specified data collection rule. </remarks>
         public Response<DataCollectionRuleAssociationProxyOnlyResourceListResult> ListByRule(string subscriptionId, string resourceGroupName, string dataCollectionRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -205,6 +209,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="associationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Returns the specified association. </remarks>
         public async Task<Response<DataCollectionRuleAssociationData>> GetAsync(string resourceUri, string associationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
@@ -234,6 +239,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="associationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Returns the specified association. </remarks>
         public Response<DataCollectionRuleAssociationData> Get(string resourceUri, string associationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
@@ -289,6 +295,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="associationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Creates or updates an association. </remarks>
         public async Task<Response<DataCollectionRuleAssociationData>> CreateAsync(string resourceUri, string associationName, DataCollectionRuleAssociationData data = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
@@ -318,6 +325,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="associationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Creates or updates an association. </remarks>
         public Response<DataCollectionRuleAssociationData> Create(string resourceUri, string associationName, DataCollectionRuleAssociationData data = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
@@ -364,6 +372,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="associationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Deletes an association. </remarks>
         public async Task<Response> DeleteAsync(string resourceUri, string associationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
@@ -387,6 +396,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="associationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Deletes an association. </remarks>
         public Response Delete(string resourceUri, string associationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
@@ -423,6 +433,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="resourceUri"> The identifier of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceUri"/> is null. </exception>
+        /// <remarks> Lists associations for the specified resource. </remarks>
         public async Task<Response<DataCollectionRuleAssociationProxyOnlyResourceListResult>> ListByResourceNextPageAsync(string nextLink, string resourceUri, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -449,6 +460,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="resourceUri"> The identifier of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceUri"/> is null. </exception>
+        /// <remarks> Lists associations for the specified resource. </remarks>
         public Response<DataCollectionRuleAssociationProxyOnlyResourceListResult> ListByResourceNextPage(string nextLink, string resourceUri, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -492,6 +504,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dataCollectionRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dataCollectionRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Lists associations for the specified data collection rule. </remarks>
         public async Task<Response<DataCollectionRuleAssociationProxyOnlyResourceListResult>> ListByRuleNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string dataCollectionRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -523,6 +536,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dataCollectionRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dataCollectionRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Lists associations for the specified data collection rule. </remarks>
         public Response<DataCollectionRuleAssociationProxyOnlyResourceListResult> ListByRuleNextPage(string nextLink, string subscriptionId, string resourceGroupName, string dataCollectionRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));

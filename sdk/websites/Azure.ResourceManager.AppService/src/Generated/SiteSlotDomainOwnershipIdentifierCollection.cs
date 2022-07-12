@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates a domain ownership identifier for web app, or updates an existing ownership identifier.
+        /// Creates a domain ownership identifier for web app, or updates an existing ownership identifier.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}
         /// Operation Id: WebApps_CreateOrUpdateDomainOwnershipIdentifierSlot
         /// </summary>
@@ -64,6 +64,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainOwnershipIdentifierName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainOwnershipIdentifierName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Description for Creates a domain ownership identifier for web app, or updates an existing ownership identifier. </remarks>
         public virtual async Task<ArmOperation<SiteSlotDomainOwnershipIdentifierResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string domainOwnershipIdentifierName, IdentifierData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainOwnershipIdentifierName, nameof(domainOwnershipIdentifierName));
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates a domain ownership identifier for web app, or updates an existing ownership identifier.
+        /// Creates a domain ownership identifier for web app, or updates an existing ownership identifier.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}
         /// Operation Id: WebApps_CreateOrUpdateDomainOwnershipIdentifierSlot
         /// </summary>
@@ -97,6 +98,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainOwnershipIdentifierName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainOwnershipIdentifierName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Description for Creates a domain ownership identifier for web app, or updates an existing ownership identifier. </remarks>
         public virtual ArmOperation<SiteSlotDomainOwnershipIdentifierResource> CreateOrUpdate(WaitUntil waitUntil, string domainOwnershipIdentifierName, IdentifierData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainOwnershipIdentifierName, nameof(domainOwnershipIdentifierName));
@@ -120,7 +122,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get domain ownership identifier for web app.
+        /// Get domain ownership identifier for web app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}
         /// Operation Id: WebApps_GetDomainOwnershipIdentifierSlot
         /// </summary>
@@ -128,6 +130,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainOwnershipIdentifierName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainOwnershipIdentifierName"/> is null. </exception>
+        /// <remarks> Description for Get domain ownership identifier for web app. </remarks>
         public virtual async Task<Response<SiteSlotDomainOwnershipIdentifierResource>> GetAsync(string domainOwnershipIdentifierName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainOwnershipIdentifierName, nameof(domainOwnershipIdentifierName));
@@ -149,7 +152,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get domain ownership identifier for web app.
+        /// Get domain ownership identifier for web app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}
         /// Operation Id: WebApps_GetDomainOwnershipIdentifierSlot
         /// </summary>
@@ -157,6 +160,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainOwnershipIdentifierName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainOwnershipIdentifierName"/> is null. </exception>
+        /// <remarks> Description for Get domain ownership identifier for web app. </remarks>
         public virtual Response<SiteSlotDomainOwnershipIdentifierResource> Get(string domainOwnershipIdentifierName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainOwnershipIdentifierName, nameof(domainOwnershipIdentifierName));
@@ -178,12 +182,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Lists ownership identifiers for domain associated with web app.
+        /// Lists ownership identifiers for domain associated with web app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers
         /// Operation Id: WebApps_ListDomainOwnershipIdentifiersSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SiteSlotDomainOwnershipIdentifierResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Lists ownership identifiers for domain associated with web app. </remarks>
         public virtual AsyncPageable<SiteSlotDomainOwnershipIdentifierResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<SiteSlotDomainOwnershipIdentifierResource>> FirstPageFunc(int? pageSizeHint)
@@ -220,12 +225,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Lists ownership identifiers for domain associated with web app.
+        /// Lists ownership identifiers for domain associated with web app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers
         /// Operation Id: WebApps_ListDomainOwnershipIdentifiersSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SiteSlotDomainOwnershipIdentifierResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Lists ownership identifiers for domain associated with web app. </remarks>
         public virtual Pageable<SiteSlotDomainOwnershipIdentifierResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<SiteSlotDomainOwnershipIdentifierResource> FirstPageFunc(int? pageSizeHint)
@@ -262,7 +268,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get domain ownership identifier for web app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}
         /// Operation Id: WebApps_GetDomainOwnershipIdentifierSlot
         /// </summary>
@@ -270,6 +276,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainOwnershipIdentifierName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainOwnershipIdentifierName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string domainOwnershipIdentifierName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainOwnershipIdentifierName, nameof(domainOwnershipIdentifierName));
@@ -289,7 +296,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get domain ownership identifier for web app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}
         /// Operation Id: WebApps_GetDomainOwnershipIdentifierSlot
         /// </summary>
@@ -297,6 +304,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainOwnershipIdentifierName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainOwnershipIdentifierName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string domainOwnershipIdentifierName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainOwnershipIdentifierName, nameof(domainOwnershipIdentifierName));

@@ -102,6 +102,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> is null. </exception>
+        /// <remarks> Get a replica for a Container App Revision. </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<ContainerAppReplicaResource>> GetContainerAppReplicaAsync(string replicaName, CancellationToken cancellationToken = default)
         {
@@ -117,6 +118,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> is null. </exception>
+        /// <remarks> Get a replica for a Container App Revision. </remarks>
         [ForwardsClientCalls]
         public virtual Response<ContainerAppReplicaResource> GetContainerAppReplica(string replicaName, CancellationToken cancellationToken = default)
         {
@@ -129,6 +131,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// Operation Id: ContainerAppsRevisions_GetRevision
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get a revision of a Container App. </remarks>
         public virtual async Task<Response<ContainerAppRevisionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _containerAppRevisionContainerAppsRevisionsClientDiagnostics.CreateScope("ContainerAppRevisionResource.Get");
@@ -153,6 +156,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// Operation Id: ContainerAppsRevisions_GetRevision
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get a revision of a Container App. </remarks>
         public virtual Response<ContainerAppRevisionResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _containerAppRevisionContainerAppsRevisionsClientDiagnostics.CreateScope("ContainerAppRevisionResource.Get");
@@ -177,6 +181,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// Operation Id: ContainerAppsRevisions_ActivateRevision
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Activates a revision for a Container App. </remarks>
         public virtual async Task<Response> ActivateRevisionAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _containerAppRevisionContainerAppsRevisionsClientDiagnostics.CreateScope("ContainerAppRevisionResource.ActivateRevision");
@@ -199,6 +204,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// Operation Id: ContainerAppsRevisions_ActivateRevision
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Activates a revision for a Container App. </remarks>
         public virtual Response ActivateRevision(CancellationToken cancellationToken = default)
         {
             using var scope = _containerAppRevisionContainerAppsRevisionsClientDiagnostics.CreateScope("ContainerAppRevisionResource.ActivateRevision");
@@ -221,6 +227,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// Operation Id: ContainerAppsRevisions_DeactivateRevision
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Deactivates a revision for a Container App. </remarks>
         public virtual async Task<Response> DeactivateRevisionAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _containerAppRevisionContainerAppsRevisionsClientDiagnostics.CreateScope("ContainerAppRevisionResource.DeactivateRevision");
@@ -243,6 +250,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// Operation Id: ContainerAppsRevisions_DeactivateRevision
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Deactivates a revision for a Container App. </remarks>
         public virtual Response DeactivateRevision(CancellationToken cancellationToken = default)
         {
             using var scope = _containerAppRevisionContainerAppsRevisionsClientDiagnostics.CreateScope("ContainerAppRevisionResource.DeactivateRevision");
@@ -265,6 +273,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// Operation Id: ContainerAppsRevisions_RestartRevision
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Restarts a revision for a Container App. </remarks>
         public virtual async Task<Response> RestartRevisionAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _containerAppRevisionContainerAppsRevisionsClientDiagnostics.CreateScope("ContainerAppRevisionResource.RestartRevision");
@@ -287,6 +296,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// Operation Id: ContainerAppsRevisions_RestartRevision
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Restarts a revision for a Container App. </remarks>
         public virtual Response RestartRevision(CancellationToken cancellationToken = default)
         {
             using var scope = _containerAppRevisionContainerAppsRevisionsClientDiagnostics.CreateScope("ContainerAppRevisionResource.RestartRevision");

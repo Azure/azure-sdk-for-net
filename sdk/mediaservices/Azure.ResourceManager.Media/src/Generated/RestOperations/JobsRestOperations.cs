@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Lists all of the Jobs for the Transform. </summary>
+        /// <summary> List Jobs. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -78,6 +78,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="transformName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="transformName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Lists all of the Jobs for the Transform. </remarks>
         public async Task<Response<Models.JobCollection>> ListAsync(string subscriptionId, string resourceGroupName, string accountName, string transformName, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Lists all of the Jobs for the Transform. </summary>
+        /// <summary> List Jobs. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -111,6 +112,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="transformName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="transformName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Lists all of the Jobs for the Transform. </remarks>
         public Response<Models.JobCollection> List(string subscriptionId, string resourceGroupName, string accountName, string transformName, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -158,7 +160,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Gets a Job. </summary>
+        /// <summary> Get Job. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -167,6 +169,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="transformName"/> or <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="transformName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Gets a Job. </remarks>
         public async Task<Response<JobData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string transformName, string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -193,7 +196,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Gets a Job. </summary>
+        /// <summary> Get Job. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -202,6 +205,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="transformName"/> or <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="transformName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Gets a Job. </remarks>
         public Response<JobData> Get(string subscriptionId, string resourceGroupName, string accountName, string transformName, string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -256,7 +260,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Creates a Job. </summary>
+        /// <summary> Create Job. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -266,6 +270,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="transformName"/>, <paramref name="jobName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="transformName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Creates a Job. </remarks>
         public async Task<Response<JobData>> CreateAsync(string subscriptionId, string resourceGroupName, string accountName, string transformName, string jobName, JobData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -291,7 +296,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Creates a Job. </summary>
+        /// <summary> Create Job. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -301,6 +306,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="transformName"/>, <paramref name="jobName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="transformName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Creates a Job. </remarks>
         public Response<JobData> Create(string subscriptionId, string resourceGroupName, string accountName, string transformName, string jobName, JobData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -350,7 +356,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Deletes a Job. </summary>
+        /// <summary> Delete Job. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -359,6 +365,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="transformName"/> or <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="transformName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Deletes a Job. </remarks>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string accountName, string transformName, string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -379,7 +386,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Deletes a Job. </summary>
+        /// <summary> Delete Job. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -388,6 +395,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="transformName"/> or <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="transformName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Deletes a Job. </remarks>
         public Response Delete(string subscriptionId, string resourceGroupName, string accountName, string transformName, string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -436,7 +444,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Update is only supported for description and priority. Updating Priority will take effect when the Job state is Queued or Scheduled and depending on the timing the priority update may be ignored. </summary>
+        /// <summary> Update Job. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -446,6 +454,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="transformName"/>, <paramref name="jobName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="transformName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Update is only supported for description and priority. Updating Priority will take effect when the Job state is Queued or Scheduled and depending on the timing the priority update may be ignored. </remarks>
         public async Task<Response<JobData>> UpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string transformName, string jobName, JobData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -471,7 +480,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Update is only supported for description and priority. Updating Priority will take effect when the Job state is Queued or Scheduled and depending on the timing the priority update may be ignored. </summary>
+        /// <summary> Update Job. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -481,6 +490,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="transformName"/>, <paramref name="jobName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="transformName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Update is only supported for description and priority. Updating Priority will take effect when the Job state is Queued or Scheduled and depending on the timing the priority update may be ignored. </remarks>
         public Response<JobData> Update(string subscriptionId, string resourceGroupName, string accountName, string transformName, string jobName, JobData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -531,7 +541,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Cancel a Job. </summary>
+        /// <summary> Cancel Job. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -540,6 +550,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="transformName"/> or <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="transformName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Cancel a Job. </remarks>
         public async Task<Response> CancelJobAsync(string subscriptionId, string resourceGroupName, string accountName, string transformName, string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -559,7 +570,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Cancel a Job. </summary>
+        /// <summary> Cancel Job. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -568,6 +579,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="transformName"/> or <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="transformName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Cancel a Job. </remarks>
         public Response CancelJob(string subscriptionId, string resourceGroupName, string accountName, string transformName, string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -601,7 +613,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Lists all of the Jobs for the Transform. </summary>
+        /// <summary> List Jobs. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
@@ -612,6 +624,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="transformName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="transformName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Lists all of the Jobs for the Transform. </remarks>
         public async Task<Response<Models.JobCollection>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string transformName, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -636,7 +649,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Lists all of the Jobs for the Transform. </summary>
+        /// <summary> List Jobs. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
@@ -647,6 +660,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="transformName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="transformName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Lists all of the Jobs for the Transform. </remarks>
         public Response<Models.JobCollection> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string transformName, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));

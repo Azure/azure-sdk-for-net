@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Create a deployment for an app, or a deployment slot.
+        /// Create a deployment for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/deployments/{id}
         /// Operation Id: WebApps_CreateDeployment
         /// </summary>
@@ -64,6 +64,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Description for Create a deployment for an app, or a deployment slot. </remarks>
         public virtual async Task<ArmOperation<SiteDeploymentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string id, DeploymentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Create a deployment for an app, or a deployment slot.
+        /// Create a deployment for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/deployments/{id}
         /// Operation Id: WebApps_CreateDeployment
         /// </summary>
@@ -97,6 +98,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Description for Create a deployment for an app, or a deployment slot. </remarks>
         public virtual ArmOperation<SiteDeploymentResource> CreateOrUpdate(WaitUntil waitUntil, string id, DeploymentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -120,7 +122,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get a deployment by its ID for an app, or a deployment slot.
+        /// Get a deployment by its ID for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/deployments/{id}
         /// Operation Id: WebApps_GetDeployment
         /// </summary>
@@ -128,6 +130,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <remarks> Description for Get a deployment by its ID for an app, or a deployment slot. </remarks>
         public virtual async Task<Response<SiteDeploymentResource>> GetAsync(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -149,7 +152,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get a deployment by its ID for an app, or a deployment slot.
+        /// Get a deployment by its ID for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/deployments/{id}
         /// Operation Id: WebApps_GetDeployment
         /// </summary>
@@ -157,6 +160,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <remarks> Description for Get a deployment by its ID for an app, or a deployment slot. </remarks>
         public virtual Response<SiteDeploymentResource> Get(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -178,12 +182,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for List deployments for an app, or a deployment slot.
+        /// List deployments for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/deployments
         /// Operation Id: WebApps_ListDeployments
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SiteDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for List deployments for an app, or a deployment slot. </remarks>
         public virtual AsyncPageable<SiteDeploymentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<SiteDeploymentResource>> FirstPageFunc(int? pageSizeHint)
@@ -220,12 +225,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for List deployments for an app, or a deployment slot.
+        /// List deployments for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/deployments
         /// Operation Id: WebApps_ListDeployments
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SiteDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for List deployments for an app, or a deployment slot. </remarks>
         public virtual Pageable<SiteDeploymentResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<SiteDeploymentResource> FirstPageFunc(int? pageSizeHint)
@@ -262,7 +268,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get a deployment by its ID for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/deployments/{id}
         /// Operation Id: WebApps_GetDeployment
         /// </summary>
@@ -270,6 +276,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -289,7 +296,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get a deployment by its ID for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/deployments/{id}
         /// Operation Id: WebApps_GetDeployment
         /// </summary>
@@ -297,6 +304,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));

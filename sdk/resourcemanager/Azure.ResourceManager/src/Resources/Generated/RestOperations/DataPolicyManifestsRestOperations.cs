@@ -53,11 +53,12 @@ namespace Azure.ResourceManager.Resources
             return message;
         }
 
-        /// <summary> This operation retrieves the data policy manifest with the given policy mode. </summary>
+        /// <summary> Retrieves a data policy manifest. </summary>
         /// <param name="policyMode"> The policy mode of the data policy manifest to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyMode"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="policyMode"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> This operation retrieves the data policy manifest with the given policy mode. </remarks>
         public async Task<Response<DataPolicyManifestData>> GetByPolicyModeAsync(string policyMode, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyMode, nameof(policyMode));
@@ -80,11 +81,12 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> This operation retrieves the data policy manifest with the given policy mode. </summary>
+        /// <summary> Retrieves a data policy manifest. </summary>
         /// <param name="policyMode"> The policy mode of the data policy manifest to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyMode"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="policyMode"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> This operation retrieves the data policy manifest with the given policy mode. </remarks>
         public Response<DataPolicyManifestData> GetByPolicyMode(string policyMode, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyMode, nameof(policyMode));
@@ -126,9 +128,10 @@ namespace Azure.ResourceManager.Resources
             return message;
         }
 
-        /// <summary> This operation retrieves a list of all the data policy manifests that match the optional given $filter. Valid values for $filter are: &quot;$filter=namespace eq &apos;{0}&apos;&quot;. If $filter is not provided, the unfiltered list includes all data policy manifests for data resource types. If $filter=namespace is provided, the returned list only includes all data policy manifests that have a namespace matching the provided value. </summary>
+        /// <summary> Retrieves data policy manifests. </summary>
         /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: &quot;namespace eq &apos;{value}&apos;&quot;. If $filter is not provided, no filtering is performed. If $filter=namespace eq &apos;{value}&apos; is provided, the returned list only includes all data policy manifests that have a namespace matching the provided value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> This operation retrieves a list of all the data policy manifests that match the optional given $filter. Valid values for $filter are: &quot;$filter=namespace eq &apos;{0}&apos;&quot;. If $filter is not provided, the unfiltered list includes all data policy manifests for data resource types. If $filter=namespace is provided, the returned list only includes all data policy manifests that have a namespace matching the provided value. </remarks>
         public async Task<Response<DataPolicyManifestListResult>> ListAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest(filter);
@@ -147,9 +150,10 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> This operation retrieves a list of all the data policy manifests that match the optional given $filter. Valid values for $filter are: &quot;$filter=namespace eq &apos;{0}&apos;&quot;. If $filter is not provided, the unfiltered list includes all data policy manifests for data resource types. If $filter=namespace is provided, the returned list only includes all data policy manifests that have a namespace matching the provided value. </summary>
+        /// <summary> Retrieves data policy manifests. </summary>
         /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: &quot;namespace eq &apos;{value}&apos;&quot;. If $filter is not provided, no filtering is performed. If $filter=namespace eq &apos;{value}&apos; is provided, the returned list only includes all data policy manifests that have a namespace matching the provided value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> This operation retrieves a list of all the data policy manifests that match the optional given $filter. Valid values for $filter are: &quot;$filter=namespace eq &apos;{0}&apos;&quot;. If $filter is not provided, the unfiltered list includes all data policy manifests for data resource types. If $filter=namespace is provided, the returned list only includes all data policy manifests that have a namespace matching the provided value. </remarks>
         public Response<DataPolicyManifestListResult> List(string filter = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest(filter);
@@ -182,11 +186,12 @@ namespace Azure.ResourceManager.Resources
             return message;
         }
 
-        /// <summary> This operation retrieves a list of all the data policy manifests that match the optional given $filter. Valid values for $filter are: &quot;$filter=namespace eq &apos;{0}&apos;&quot;. If $filter is not provided, the unfiltered list includes all data policy manifests for data resource types. If $filter=namespace is provided, the returned list only includes all data policy manifests that have a namespace matching the provided value. </summary>
+        /// <summary> Retrieves data policy manifests. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: &quot;namespace eq &apos;{value}&apos;&quot;. If $filter is not provided, no filtering is performed. If $filter=namespace eq &apos;{value}&apos; is provided, the returned list only includes all data policy manifests that have a namespace matching the provided value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> This operation retrieves a list of all the data policy manifests that match the optional given $filter. Valid values for $filter are: &quot;$filter=namespace eq &apos;{0}&apos;&quot;. If $filter is not provided, the unfiltered list includes all data policy manifests for data resource types. If $filter=namespace is provided, the returned list only includes all data policy manifests that have a namespace matching the provided value. </remarks>
         public async Task<Response<DataPolicyManifestListResult>> ListNextPageAsync(string nextLink, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -207,11 +212,12 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> This operation retrieves a list of all the data policy manifests that match the optional given $filter. Valid values for $filter are: &quot;$filter=namespace eq &apos;{0}&apos;&quot;. If $filter is not provided, the unfiltered list includes all data policy manifests for data resource types. If $filter=namespace is provided, the returned list only includes all data policy manifests that have a namespace matching the provided value. </summary>
+        /// <summary> Retrieves data policy manifests. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: &quot;namespace eq &apos;{value}&apos;&quot;. If $filter is not provided, no filtering is performed. If $filter=namespace eq &apos;{value}&apos; is provided, the returned list only includes all data policy manifests that have a namespace matching the provided value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> This operation retrieves a list of all the data policy manifests that match the optional given $filter. Valid values for $filter are: &quot;$filter=namespace eq &apos;{0}&apos;&quot;. If $filter is not provided, the unfiltered list includes all data policy manifests for data resource types. If $filter=namespace is provided, the returned list only includes all data policy manifests that have a namespace matching the provided value. </remarks>
         public Response<DataPolicyManifestListResult> ListNextPage(string nextLink, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));

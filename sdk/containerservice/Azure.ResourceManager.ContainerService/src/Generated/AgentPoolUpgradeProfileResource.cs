@@ -92,6 +92,7 @@ namespace Azure.ResourceManager.ContainerService
         /// Operation Id: AgentPools_GetUpgradeProfile
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Gets the upgrade profile for an agent pool. </remarks>
         public virtual async Task<Response<AgentPoolUpgradeProfileResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _agentPoolUpgradeProfileAgentPoolsClientDiagnostics.CreateScope("AgentPoolUpgradeProfileResource.Get");
@@ -116,6 +117,7 @@ namespace Azure.ResourceManager.ContainerService
         /// Operation Id: AgentPools_GetUpgradeProfile
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Gets the upgrade profile for an agent pool. </remarks>
         public virtual Response<AgentPoolUpgradeProfileResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _agentPoolUpgradeProfileAgentPoolsClientDiagnostics.CreateScope("AgentPoolUpgradeProfileResource.Get");

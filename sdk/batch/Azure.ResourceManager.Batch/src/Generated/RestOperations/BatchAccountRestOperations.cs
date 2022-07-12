@@ -589,7 +589,7 @@ namespace Azure.ResourceManager.Batch
             return message;
         }
 
-        /// <summary> This operation applies only to Batch accounts with allowedAuthenticationModes containing &apos;SharedKey&apos;. If the Batch account doesn&apos;t contain &apos;SharedKey&apos; in its allowedAuthenticationMode, clients cannot use shared keys to authenticate, and must use another allowedAuthenticationModes instead. In this case, regenerating the keys will fail. </summary>
+        /// <summary> Regenerates the specified account key for the Batch account. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the Batch account. </param>
         /// <param name="accountName"> The name of the Batch account. </param>
@@ -597,6 +597,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> This operation applies only to Batch accounts with allowedAuthenticationModes containing &apos;SharedKey&apos;. If the Batch account doesn&apos;t contain &apos;SharedKey&apos; in its allowedAuthenticationMode, clients cannot use shared keys to authenticate, and must use another allowedAuthenticationModes instead. In this case, regenerating the keys will fail. </remarks>
         public async Task<Response<BatchAccountKeys>> RegenerateKeyAsync(string subscriptionId, string resourceGroupName, string accountName, BatchAccountRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -620,7 +621,7 @@ namespace Azure.ResourceManager.Batch
             }
         }
 
-        /// <summary> This operation applies only to Batch accounts with allowedAuthenticationModes containing &apos;SharedKey&apos;. If the Batch account doesn&apos;t contain &apos;SharedKey&apos; in its allowedAuthenticationMode, clients cannot use shared keys to authenticate, and must use another allowedAuthenticationModes instead. In this case, regenerating the keys will fail. </summary>
+        /// <summary> Regenerates the specified account key for the Batch account. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the Batch account. </param>
         /// <param name="accountName"> The name of the Batch account. </param>
@@ -628,6 +629,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> This operation applies only to Batch accounts with allowedAuthenticationModes containing &apos;SharedKey&apos;. If the Batch account doesn&apos;t contain &apos;SharedKey&apos; in its allowedAuthenticationMode, clients cannot use shared keys to authenticate, and must use another allowedAuthenticationModes instead. In this case, regenerating the keys will fail. </remarks>
         public Response<BatchAccountKeys> RegenerateKey(string subscriptionId, string resourceGroupName, string accountName, BatchAccountRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -672,13 +674,14 @@ namespace Azure.ResourceManager.Batch
             return message;
         }
 
-        /// <summary> This operation applies only to Batch accounts with allowedAuthenticationModes containing &apos;SharedKey&apos;. If the Batch account doesn&apos;t contain &apos;SharedKey&apos; in its allowedAuthenticationMode, clients cannot use shared keys to authenticate, and must use another allowedAuthenticationModes instead. In this case, getting the keys will fail. </summary>
+        /// <summary> Gets the account keys for the specified Batch account. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the Batch account. </param>
         /// <param name="accountName"> The name of the Batch account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> This operation applies only to Batch accounts with allowedAuthenticationModes containing &apos;SharedKey&apos;. If the Batch account doesn&apos;t contain &apos;SharedKey&apos; in its allowedAuthenticationMode, clients cannot use shared keys to authenticate, and must use another allowedAuthenticationModes instead. In this case, getting the keys will fail. </remarks>
         public async Task<Response<BatchAccountKeys>> GetKeysAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -701,13 +704,14 @@ namespace Azure.ResourceManager.Batch
             }
         }
 
-        /// <summary> This operation applies only to Batch accounts with allowedAuthenticationModes containing &apos;SharedKey&apos;. If the Batch account doesn&apos;t contain &apos;SharedKey&apos; in its allowedAuthenticationMode, clients cannot use shared keys to authenticate, and must use another allowedAuthenticationModes instead. In this case, getting the keys will fail. </summary>
+        /// <summary> Gets the account keys for the specified Batch account. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the Batch account. </param>
         /// <param name="accountName"> The name of the Batch account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> This operation applies only to Batch accounts with allowedAuthenticationModes containing &apos;SharedKey&apos;. If the Batch account doesn&apos;t contain &apos;SharedKey&apos; in its allowedAuthenticationMode, clients cannot use shared keys to authenticate, and must use another allowedAuthenticationModes instead. In this case, getting the keys will fail. </remarks>
         public Response<BatchAccountKeys> GetKeys(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));

@@ -28,156 +28,168 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// List of VmmServers in a subscription.
+        /// Implements GET VmmServers in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/vmmServers
         /// Operation Id: VmmServers_ListBySubscription
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ScVmmServerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List of VmmServers in a subscription. </remarks>
         public static AsyncPageable<ScVmmServerResource> GetScVmmServersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetScVmmServersAsync(cancellationToken);
         }
 
         /// <summary>
-        /// List of VmmServers in a subscription.
+        /// Implements GET VmmServers in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/vmmServers
         /// Operation Id: VmmServers_ListBySubscription
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ScVmmServerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List of VmmServers in a subscription. </remarks>
         public static Pageable<ScVmmServerResource> GetScVmmServers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetScVmmServers(cancellationToken);
         }
 
         /// <summary>
-        /// List of Clouds in a subscription.
+        /// Implements GET Clouds in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/clouds
         /// Operation Id: Clouds_ListBySubscription
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ScVmmCloudResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List of Clouds in a subscription. </remarks>
         public static AsyncPageable<ScVmmCloudResource> GetScVmmCloudsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetScVmmCloudsAsync(cancellationToken);
         }
 
         /// <summary>
-        /// List of Clouds in a subscription.
+        /// Implements GET Clouds in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/clouds
         /// Operation Id: Clouds_ListBySubscription
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ScVmmCloudResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List of Clouds in a subscription. </remarks>
         public static Pageable<ScVmmCloudResource> GetScVmmClouds(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetScVmmClouds(cancellationToken);
         }
 
         /// <summary>
-        /// List of VirtualNetworks in a subscription.
+        /// Implements GET VirtualNetworks in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/virtualNetworks
         /// Operation Id: VirtualNetworks_ListBySubscription
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ScVmmVirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List of VirtualNetworks in a subscription. </remarks>
         public static AsyncPageable<ScVmmVirtualNetworkResource> GetScVmmVirtualNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetScVmmVirtualNetworksAsync(cancellationToken);
         }
 
         /// <summary>
-        /// List of VirtualNetworks in a subscription.
+        /// Implements GET VirtualNetworks in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/virtualNetworks
         /// Operation Id: VirtualNetworks_ListBySubscription
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ScVmmVirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List of VirtualNetworks in a subscription. </remarks>
         public static Pageable<ScVmmVirtualNetworkResource> GetScVmmVirtualNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetScVmmVirtualNetworks(cancellationToken);
         }
 
         /// <summary>
-        /// List of VirtualMachines in a subscription.
+        /// Implements GET VirtualMachines in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/virtualMachines
         /// Operation Id: VirtualMachines_ListBySubscription
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ScVmmVirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List of VirtualMachines in a subscription. </remarks>
         public static AsyncPageable<ScVmmVirtualMachineResource> GetScVmmVirtualMachinesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetScVmmVirtualMachinesAsync(cancellationToken);
         }
 
         /// <summary>
-        /// List of VirtualMachines in a subscription.
+        /// Implements GET VirtualMachines in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/virtualMachines
         /// Operation Id: VirtualMachines_ListBySubscription
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ScVmmVirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List of VirtualMachines in a subscription. </remarks>
         public static Pageable<ScVmmVirtualMachineResource> GetScVmmVirtualMachines(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetScVmmVirtualMachines(cancellationToken);
         }
 
         /// <summary>
-        /// List of VirtualMachineTemplates in a subscription.
+        /// Implements GET VirtualMachineTemplates in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/virtualMachineTemplates
         /// Operation Id: VirtualMachineTemplates_ListBySubscription
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ScVmmVirtualMachineTemplateResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List of VirtualMachineTemplates in a subscription. </remarks>
         public static AsyncPageable<ScVmmVirtualMachineTemplateResource> GetScVmmVirtualMachineTemplatesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetScVmmVirtualMachineTemplatesAsync(cancellationToken);
         }
 
         /// <summary>
-        /// List of VirtualMachineTemplates in a subscription.
+        /// Implements GET VirtualMachineTemplates in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/virtualMachineTemplates
         /// Operation Id: VirtualMachineTemplates_ListBySubscription
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ScVmmVirtualMachineTemplateResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List of VirtualMachineTemplates in a subscription. </remarks>
         public static Pageable<ScVmmVirtualMachineTemplateResource> GetScVmmVirtualMachineTemplates(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetScVmmVirtualMachineTemplates(cancellationToken);
         }
 
         /// <summary>
-        /// List of AvailabilitySets in a subscription.
+        /// Implements GET AvailabilitySets in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/availabilitySets
         /// Operation Id: AvailabilitySets_ListBySubscription
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ScVmmAvailabilitySetResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List of AvailabilitySets in a subscription. </remarks>
         public static AsyncPageable<ScVmmAvailabilitySetResource> GetScVmmAvailabilitySetsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetScVmmAvailabilitySetsAsync(cancellationToken);
         }
 
         /// <summary>
-        /// List of AvailabilitySets in a subscription.
+        /// Implements GET AvailabilitySets in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/availabilitySets
         /// Operation Id: AvailabilitySets_ListBySubscription
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ScVmmAvailabilitySetResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List of AvailabilitySets in a subscription. </remarks>
         public static Pageable<ScVmmAvailabilitySetResource> GetScVmmAvailabilitySets(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetScVmmAvailabilitySets(cancellationToken);
@@ -201,7 +213,7 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements VMMServer GET method.
+        /// Gets a VMMServer.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}
         /// Operation Id: VmmServers_Get
         /// </summary>
@@ -210,6 +222,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vmmServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmmServerName"/> is null. </exception>
+        /// <remarks> Implements VMMServer GET method. </remarks>
         [ForwardsClientCalls]
         public static async Task<Response<ScVmmServerResource>> GetScVmmServerAsync(this ResourceGroupResource resourceGroupResource, string vmmServerName, CancellationToken cancellationToken = default)
         {
@@ -217,7 +230,7 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements VMMServer GET method.
+        /// Gets a VMMServer.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}
         /// Operation Id: VmmServers_Get
         /// </summary>
@@ -226,6 +239,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vmmServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmmServerName"/> is null. </exception>
+        /// <remarks> Implements VMMServer GET method. </remarks>
         [ForwardsClientCalls]
         public static Response<ScVmmServerResource> GetScVmmServer(this ResourceGroupResource resourceGroupResource, string vmmServerName, CancellationToken cancellationToken = default)
         {
@@ -241,7 +255,7 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements Cloud GET method.
+        /// Gets a Cloud.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/clouds/{cloudName}
         /// Operation Id: Clouds_Get
         /// </summary>
@@ -250,6 +264,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="cloudName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudName"/> is null. </exception>
+        /// <remarks> Implements Cloud GET method. </remarks>
         [ForwardsClientCalls]
         public static async Task<Response<ScVmmCloudResource>> GetScVmmCloudAsync(this ResourceGroupResource resourceGroupResource, string cloudName, CancellationToken cancellationToken = default)
         {
@@ -257,7 +272,7 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements Cloud GET method.
+        /// Gets a Cloud.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/clouds/{cloudName}
         /// Operation Id: Clouds_Get
         /// </summary>
@@ -266,6 +281,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="cloudName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudName"/> is null. </exception>
+        /// <remarks> Implements Cloud GET method. </remarks>
         [ForwardsClientCalls]
         public static Response<ScVmmCloudResource> GetScVmmCloud(this ResourceGroupResource resourceGroupResource, string cloudName, CancellationToken cancellationToken = default)
         {
@@ -281,7 +297,7 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements VirtualNetwork GET method.
+        /// Gets a VirtualNetwork.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualNetworks/{virtualNetworkName}
         /// Operation Id: VirtualNetworks_Get
         /// </summary>
@@ -290,6 +306,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
+        /// <remarks> Implements VirtualNetwork GET method. </remarks>
         [ForwardsClientCalls]
         public static async Task<Response<ScVmmVirtualNetworkResource>> GetScVmmVirtualNetworkAsync(this ResourceGroupResource resourceGroupResource, string virtualNetworkName, CancellationToken cancellationToken = default)
         {
@@ -297,7 +314,7 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements VirtualNetwork GET method.
+        /// Gets a VirtualNetwork.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualNetworks/{virtualNetworkName}
         /// Operation Id: VirtualNetworks_Get
         /// </summary>
@@ -306,6 +323,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
+        /// <remarks> Implements VirtualNetwork GET method. </remarks>
         [ForwardsClientCalls]
         public static Response<ScVmmVirtualNetworkResource> GetScVmmVirtualNetwork(this ResourceGroupResource resourceGroupResource, string virtualNetworkName, CancellationToken cancellationToken = default)
         {
@@ -321,7 +339,7 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements VirtualMachine GET method.
+        /// Gets a VirtualMachine.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachines/{virtualMachineName}
         /// Operation Id: VirtualMachines_Get
         /// </summary>
@@ -330,6 +348,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
+        /// <remarks> Implements VirtualMachine GET method. </remarks>
         [ForwardsClientCalls]
         public static async Task<Response<ScVmmVirtualMachineResource>> GetScVmmVirtualMachineAsync(this ResourceGroupResource resourceGroupResource, string virtualMachineName, CancellationToken cancellationToken = default)
         {
@@ -337,7 +356,7 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements VirtualMachine GET method.
+        /// Gets a VirtualMachine.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachines/{virtualMachineName}
         /// Operation Id: VirtualMachines_Get
         /// </summary>
@@ -346,6 +365,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
+        /// <remarks> Implements VirtualMachine GET method. </remarks>
         [ForwardsClientCalls]
         public static Response<ScVmmVirtualMachineResource> GetScVmmVirtualMachine(this ResourceGroupResource resourceGroupResource, string virtualMachineName, CancellationToken cancellationToken = default)
         {
@@ -361,7 +381,7 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements VirtualMachineTemplate GET method.
+        /// Gets a VirtualMachineTemplate.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachineTemplates/{virtualMachineTemplateName}
         /// Operation Id: VirtualMachineTemplates_Get
         /// </summary>
@@ -370,6 +390,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualMachineTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineTemplateName"/> is null. </exception>
+        /// <remarks> Implements VirtualMachineTemplate GET method. </remarks>
         [ForwardsClientCalls]
         public static async Task<Response<ScVmmVirtualMachineTemplateResource>> GetScVmmVirtualMachineTemplateAsync(this ResourceGroupResource resourceGroupResource, string virtualMachineTemplateName, CancellationToken cancellationToken = default)
         {
@@ -377,7 +398,7 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements VirtualMachineTemplate GET method.
+        /// Gets a VirtualMachineTemplate.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachineTemplates/{virtualMachineTemplateName}
         /// Operation Id: VirtualMachineTemplates_Get
         /// </summary>
@@ -386,6 +407,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualMachineTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineTemplateName"/> is null. </exception>
+        /// <remarks> Implements VirtualMachineTemplate GET method. </remarks>
         [ForwardsClientCalls]
         public static Response<ScVmmVirtualMachineTemplateResource> GetScVmmVirtualMachineTemplate(this ResourceGroupResource resourceGroupResource, string virtualMachineTemplateName, CancellationToken cancellationToken = default)
         {
@@ -401,7 +423,7 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements AvailabilitySet GET method.
+        /// Gets an AvailabilitySet.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/availabilitySets/{availabilitySetName}
         /// Operation Id: AvailabilitySets_Get
         /// </summary>
@@ -410,6 +432,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="availabilitySetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="availabilitySetName"/> is null. </exception>
+        /// <remarks> Implements AvailabilitySet GET method. </remarks>
         [ForwardsClientCalls]
         public static async Task<Response<ScVmmAvailabilitySetResource>> GetScVmmAvailabilitySetAsync(this ResourceGroupResource resourceGroupResource, string availabilitySetName, CancellationToken cancellationToken = default)
         {
@@ -417,7 +440,7 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements AvailabilitySet GET method.
+        /// Gets an AvailabilitySet.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/availabilitySets/{availabilitySetName}
         /// Operation Id: AvailabilitySets_Get
         /// </summary>
@@ -426,6 +449,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="availabilitySetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="availabilitySetName"/> is null. </exception>
+        /// <remarks> Implements AvailabilitySet GET method. </remarks>
         [ForwardsClientCalls]
         public static Response<ScVmmAvailabilitySetResource> GetScVmmAvailabilitySet(this ResourceGroupResource resourceGroupResource, string availabilitySetName, CancellationToken cancellationToken = default)
         {

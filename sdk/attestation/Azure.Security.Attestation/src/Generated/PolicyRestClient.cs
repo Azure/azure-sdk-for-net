@@ -56,6 +56,7 @@ namespace Azure.Security.Attestation
         /// <summary> Retrieves the current policy for an attestation type. </summary>
         /// <param name="attestationType"> Specifies the trusted execution environment to be used to validate the evidence. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Retrieves the current policy for an attestation type. </remarks>
         public async Task<Response<PolicyResponse>> GetAsync(AttestationType attestationType, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetRequest(attestationType);
@@ -77,6 +78,7 @@ namespace Azure.Security.Attestation
         /// <summary> Retrieves the current policy for an attestation type. </summary>
         /// <param name="attestationType"> Specifies the trusted execution environment to be used to validate the evidence. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Retrieves the current policy for an attestation type. </remarks>
         public Response<PolicyResponse> Get(AttestationType attestationType, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetRequest(attestationType);
@@ -117,6 +119,7 @@ namespace Azure.Security.Attestation
         /// <param name="newAttestationPolicy"> JWT Expressing the new policy whose body is a StoredAttestationPolicy object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="newAttestationPolicy"/> is null. </exception>
+        /// <remarks> Sets the policy for a given attestation type. </remarks>
         public async Task<Response<PolicyResponse>> SetAsync(AttestationType attestationType, string newAttestationPolicy, CancellationToken cancellationToken = default)
         {
             if (newAttestationPolicy == null)
@@ -145,6 +148,7 @@ namespace Azure.Security.Attestation
         /// <param name="newAttestationPolicy"> JWT Expressing the new policy whose body is a StoredAttestationPolicy object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="newAttestationPolicy"/> is null. </exception>
+        /// <remarks> Sets the policy for a given attestation type. </remarks>
         public Response<PolicyResponse> Set(AttestationType attestationType, string newAttestationPolicy, CancellationToken cancellationToken = default)
         {
             if (newAttestationPolicy == null)
@@ -191,6 +195,7 @@ namespace Azure.Security.Attestation
         /// <param name="policyJws"> JSON Web Signature with an empty policy document. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyJws"/> is null. </exception>
+        /// <remarks> Resets the attestation policy for the specified tenant and reverts to the default policy. </remarks>
         public async Task<Response<PolicyResponse>> ResetAsync(AttestationType attestationType, string policyJws, CancellationToken cancellationToken = default)
         {
             if (policyJws == null)
@@ -219,6 +224,7 @@ namespace Azure.Security.Attestation
         /// <param name="policyJws"> JSON Web Signature with an empty policy document. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyJws"/> is null. </exception>
+        /// <remarks> Resets the attestation policy for the specified tenant and reverts to the default policy. </remarks>
         public Response<PolicyResponse> Reset(AttestationType attestationType, string policyJws, CancellationToken cancellationToken = default)
         {
             if (policyJws == null)

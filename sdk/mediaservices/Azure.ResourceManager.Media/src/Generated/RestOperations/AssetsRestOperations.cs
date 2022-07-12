@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> List Assets in the Media Services account with optional filtering and ordering. </summary>
+        /// <summary> List Assets. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -80,6 +80,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List Assets in the Media Services account with optional filtering and ordering. </remarks>
         public async Task<Response<Models.AssetCollection>> ListAsync(string subscriptionId, string resourceGroupName, string accountName, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -102,7 +103,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> List Assets in the Media Services account with optional filtering and ordering. </summary>
+        /// <summary> List Assets. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -112,6 +113,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List Assets in the Media Services account with optional filtering and ordering. </remarks>
         public Response<Models.AssetCollection> List(string subscriptionId, string resourceGroupName, string accountName, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -156,7 +158,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Get the details of an Asset in the Media Services account. </summary>
+        /// <summary> Get an Asset. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -164,6 +166,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="assetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get the details of an Asset in the Media Services account. </remarks>
         public async Task<Response<AssetData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string assetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -189,7 +192,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Get the details of an Asset in the Media Services account. </summary>
+        /// <summary> Get an Asset. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -197,6 +200,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="assetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get the details of an Asset in the Media Services account. </remarks>
         public Response<AssetData> Get(string subscriptionId, string resourceGroupName, string accountName, string assetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -248,7 +252,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Creates or updates an Asset in the Media Services account. </summary>
+        /// <summary> Create or update an Asset. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -257,6 +261,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="assetName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Creates or updates an Asset in the Media Services account. </remarks>
         public async Task<Response<AssetData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string assetName, AssetData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -282,7 +287,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Creates or updates an Asset in the Media Services account. </summary>
+        /// <summary> Create or update an Asset. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -291,6 +296,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="assetName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Creates or updates an Asset in the Media Services account. </remarks>
         public Response<AssetData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string accountName, string assetName, AssetData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -338,7 +344,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Deletes an Asset in the Media Services account. </summary>
+        /// <summary> Delete an Asset. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -346,6 +352,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="assetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Deletes an Asset in the Media Services account. </remarks>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string accountName, string assetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -365,7 +372,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Deletes an Asset in the Media Services account. </summary>
+        /// <summary> Delete an Asset. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -373,6 +380,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="assetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Deletes an Asset in the Media Services account. </remarks>
         public Response Delete(string subscriptionId, string resourceGroupName, string accountName, string assetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -418,7 +426,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Updates an existing Asset in the Media Services account. </summary>
+        /// <summary> Update an Asset. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -427,6 +435,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="assetName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Updates an existing Asset in the Media Services account. </remarks>
         public async Task<Response<AssetData>> UpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string assetName, AssetData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -451,7 +460,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Updates an existing Asset in the Media Services account. </summary>
+        /// <summary> Update an Asset. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -460,6 +469,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="assetName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Updates an existing Asset in the Media Services account. </remarks>
         public Response<AssetData> Update(string subscriptionId, string resourceGroupName, string accountName, string assetName, AssetData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -511,7 +521,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Lists storage container URLs with shared access signatures (SAS) for uploading and downloading Asset content. The signatures are derived from the storage account keys. </summary>
+        /// <summary> List the Asset URLs. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -520,6 +530,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="assetName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Lists storage container URLs with shared access signatures (SAS) for uploading and downloading Asset content. The signatures are derived from the storage account keys. </remarks>
         public async Task<Response<AssetContainerSas>> ListContainerSasAsync(string subscriptionId, string resourceGroupName, string accountName, string assetName, ListContainerSasContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -544,7 +555,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Lists storage container URLs with shared access signatures (SAS) for uploading and downloading Asset content. The signatures are derived from the storage account keys. </summary>
+        /// <summary> List the Asset URLs. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -553,6 +564,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="assetName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Lists storage container URLs with shared access signatures (SAS) for uploading and downloading Asset content. The signatures are derived from the storage account keys. </remarks>
         public Response<AssetContainerSas> ListContainerSas(string subscriptionId, string resourceGroupName, string accountName, string assetName, ListContainerSasContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -600,7 +612,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Gets the Asset storage encryption keys used to decrypt content created by version 2 of the Media Services API. </summary>
+        /// <summary> Gets the Asset storage key. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -608,6 +620,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="assetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Gets the Asset storage encryption keys used to decrypt content created by version 2 of the Media Services API. </remarks>
         public async Task<Response<StorageEncryptedAssetDecryptionData>> GetEncryptionKeyAsync(string subscriptionId, string resourceGroupName, string accountName, string assetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -631,7 +644,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Gets the Asset storage encryption keys used to decrypt content created by version 2 of the Media Services API. </summary>
+        /// <summary> Gets the Asset storage key. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -639,6 +652,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="assetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Gets the Asset storage encryption keys used to decrypt content created by version 2 of the Media Services API. </remarks>
         public Response<StorageEncryptedAssetDecryptionData> GetEncryptionKey(string subscriptionId, string resourceGroupName, string accountName, string assetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -685,7 +699,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Lists Streaming Locators which are associated with this asset. </summary>
+        /// <summary> List Streaming Locators. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -693,6 +707,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="assetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Lists Streaming Locators which are associated with this asset. </remarks>
         public async Task<Response<ListStreamingLocatorsResponse>> ListStreamingLocatorsAsync(string subscriptionId, string resourceGroupName, string accountName, string assetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -716,7 +731,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Lists Streaming Locators which are associated with this asset. </summary>
+        /// <summary> List Streaming Locators. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -724,6 +739,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="assetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Lists Streaming Locators which are associated with this asset. </remarks>
         public Response<ListStreamingLocatorsResponse> ListStreamingLocators(string subscriptionId, string resourceGroupName, string accountName, string assetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -761,7 +777,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> List Assets in the Media Services account with optional filtering and ordering. </summary>
+        /// <summary> List Assets. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
@@ -772,6 +788,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List Assets in the Media Services account with optional filtering and ordering. </remarks>
         public async Task<Response<Models.AssetCollection>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -795,7 +812,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> List Assets in the Media Services account with optional filtering and ordering. </summary>
+        /// <summary> List Assets. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
@@ -806,6 +823,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List Assets in the Media Services account with optional filtering and ordering. </remarks>
         public Response<Models.AssetCollection> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));

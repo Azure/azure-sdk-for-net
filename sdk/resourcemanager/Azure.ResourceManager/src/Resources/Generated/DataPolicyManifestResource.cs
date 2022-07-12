@@ -87,11 +87,12 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// This operation retrieves the data policy manifest with the given policy mode.
+        /// Retrieves a data policy manifest.
         /// Request Path: /providers/Microsoft.Authorization/dataPolicyManifests/{policyMode}
         /// Operation Id: DataPolicyManifests_GetByPolicyMode
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> This operation retrieves the data policy manifest with the given policy mode. </remarks>
         public virtual async Task<Response<DataPolicyManifestResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _dataPolicyManifestClientDiagnostics.CreateScope("DataPolicyManifestResource.Get");
@@ -111,11 +112,12 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// This operation retrieves the data policy manifest with the given policy mode.
+        /// Retrieves a data policy manifest.
         /// Request Path: /providers/Microsoft.Authorization/dataPolicyManifests/{policyMode}
         /// Operation Id: DataPolicyManifests_GetByPolicyMode
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> This operation retrieves the data policy manifest with the given policy mode. </remarks>
         public virtual Response<DataPolicyManifestResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _dataPolicyManifestClientDiagnostics.CreateScope("DataPolicyManifestResource.Get");

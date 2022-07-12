@@ -88,11 +88,12 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get the details of a Streaming Locator in the Media Services account
+        /// Get a Streaming Locator
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/streamingLocators/{streamingLocatorName}
         /// Operation Id: StreamingLocators_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get the details of a Streaming Locator in the Media Services account. </remarks>
         public virtual async Task<Response<StreamingLocatorResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _streamingLocatorClientDiagnostics.CreateScope("StreamingLocatorResource.Get");
@@ -112,11 +113,12 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get the details of a Streaming Locator in the Media Services account
+        /// Get a Streaming Locator
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/streamingLocators/{streamingLocatorName}
         /// Operation Id: StreamingLocators_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get the details of a Streaming Locator in the Media Services account. </remarks>
         public virtual Response<StreamingLocatorResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _streamingLocatorClientDiagnostics.CreateScope("StreamingLocatorResource.Get");
@@ -136,12 +138,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Deletes a Streaming Locator in the Media Services account
+        /// Delete a Streaming Locator
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/streamingLocators/{streamingLocatorName}
         /// Operation Id: StreamingLocators_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Deletes a Streaming Locator in the Media Services account. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _streamingLocatorClientDiagnostics.CreateScope("StreamingLocatorResource.Delete");
@@ -162,12 +165,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Deletes a Streaming Locator in the Media Services account
+        /// Delete a Streaming Locator
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/streamingLocators/{streamingLocatorName}
         /// Operation Id: StreamingLocators_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Deletes a Streaming Locator in the Media Services account. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _streamingLocatorClientDiagnostics.CreateScope("StreamingLocatorResource.Delete");
@@ -188,7 +192,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Create a Streaming Locator in the Media Services account
+        /// Create a Streaming Locator
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/streamingLocators/{streamingLocatorName}
         /// Operation Id: StreamingLocators_Create
         /// </summary>
@@ -196,6 +200,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="data"> The request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        /// <remarks> Create a Streaming Locator in the Media Services account. </remarks>
         public virtual async Task<ArmOperation<StreamingLocatorResource>> UpdateAsync(WaitUntil waitUntil, StreamingLocatorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -218,7 +223,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Create a Streaming Locator in the Media Services account
+        /// Create a Streaming Locator
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/streamingLocators/{streamingLocatorName}
         /// Operation Id: StreamingLocators_Create
         /// </summary>
@@ -226,6 +231,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="data"> The request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        /// <remarks> Create a Streaming Locator in the Media Services account. </remarks>
         public virtual ArmOperation<StreamingLocatorResource> Update(WaitUntil waitUntil, StreamingLocatorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -248,11 +254,12 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// List Content Keys used by this Streaming Locator
+        /// List Content Keys
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/streamingLocators/{streamingLocatorName}/listContentKeys
         /// Operation Id: StreamingLocators_ListContentKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List Content Keys used by this Streaming Locator. </remarks>
         public virtual async Task<Response<ListContentKeysResponse>> GetContentKeysAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _streamingLocatorClientDiagnostics.CreateScope("StreamingLocatorResource.GetContentKeys");
@@ -270,11 +277,12 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// List Content Keys used by this Streaming Locator
+        /// List Content Keys
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/streamingLocators/{streamingLocatorName}/listContentKeys
         /// Operation Id: StreamingLocators_ListContentKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List Content Keys used by this Streaming Locator. </remarks>
         public virtual Response<ListContentKeysResponse> GetContentKeys(CancellationToken cancellationToken = default)
         {
             using var scope = _streamingLocatorClientDiagnostics.CreateScope("StreamingLocatorResource.GetContentKeys");
@@ -292,11 +300,12 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// List Paths supported by this Streaming Locator
+        /// List Paths
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/streamingLocators/{streamingLocatorName}/listPaths
         /// Operation Id: StreamingLocators_ListPaths
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List Paths supported by this Streaming Locator. </remarks>
         public virtual async Task<Response<ListPathsResponse>> GetPathsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _streamingLocatorClientDiagnostics.CreateScope("StreamingLocatorResource.GetPaths");
@@ -314,11 +323,12 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// List Paths supported by this Streaming Locator
+        /// List Paths
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/streamingLocators/{streamingLocatorName}/listPaths
         /// Operation Id: StreamingLocators_ListPaths
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List Paths supported by this Streaming Locator. </remarks>
         public virtual Response<ListPathsResponse> GetPaths(CancellationToken cancellationToken = default)
         {
             using var scope = _streamingLocatorClientDiagnostics.CreateScope("StreamingLocatorResource.GetPaths");

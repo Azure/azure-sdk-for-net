@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="revisionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="revisionName"/> is null. </exception>
+        /// <remarks> Get a revision of a Container App. </remarks>
         public virtual async Task<Response<ContainerAppRevisionResource>> GetAsync(string revisionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(revisionName, nameof(revisionName));
@@ -91,6 +92,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="revisionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="revisionName"/> is null. </exception>
+        /// <remarks> Get a revision of a Container App. </remarks>
         public virtual Response<ContainerAppRevisionResource> Get(string revisionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(revisionName, nameof(revisionName));
@@ -119,6 +121,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ContainerAppRevisionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Get the Revisions for a given Container App. </remarks>
         public virtual AsyncPageable<ContainerAppRevisionResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<ContainerAppRevisionResource>> FirstPageFunc(int? pageSizeHint)
@@ -162,6 +165,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContainerAppRevisionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Get the Revisions for a given Container App. </remarks>
         public virtual Pageable<ContainerAppRevisionResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             Page<ContainerAppRevisionResource> FirstPageFunc(int? pageSizeHint)
@@ -198,7 +202,7 @@ namespace Azure.ResourceManager.Applications.Containers
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get a revision of a Container App.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}
         /// Operation Id: ContainerAppsRevisions_GetRevision
         /// </summary>
@@ -206,6 +210,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="revisionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="revisionName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string revisionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(revisionName, nameof(revisionName));
@@ -225,7 +230,7 @@ namespace Azure.ResourceManager.Applications.Containers
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get a revision of a Container App.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}
         /// Operation Id: ContainerAppsRevisions_GetRevision
         /// </summary>
@@ -233,6 +238,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="revisionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="revisionName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string revisionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(revisionName, nameof(revisionName));

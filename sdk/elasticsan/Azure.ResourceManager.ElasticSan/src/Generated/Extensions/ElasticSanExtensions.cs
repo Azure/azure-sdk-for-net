@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="filter"> Specify $filter=&apos;location eq &lt;location&gt;&apos; to filter on location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourceTypeSku" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List all the available Skus in the region and information related to them. </remarks>
         public static AsyncPageable<ResourceTypeSku> GetSkusAsync(this TenantResource tenantResource, string filter = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenantResource).GetSkusAsync(filter, cancellationToken);
@@ -51,6 +52,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="filter"> Specify $filter=&apos;location eq &lt;location&gt;&apos; to filter on location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceTypeSku" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List all the available Skus in the region and information related to them. </remarks>
         public static Pageable<ResourceTypeSku> GetSkus(this TenantResource tenantResource, string filter = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenantResource).GetSkus(filter, cancellationToken);

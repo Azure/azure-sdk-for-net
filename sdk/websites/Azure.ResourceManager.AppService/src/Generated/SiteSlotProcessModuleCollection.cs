@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get process information by its ID for a specific scaled-out instance in a web site.
+        /// Get process information by its ID for a specific scaled-out instance in a web site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/processes/{processId}/modules/{baseAddress}
         /// Operation Id: WebApps_GetProcessModuleSlot
         /// </summary>
@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="baseAddress"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="baseAddress"/> is null. </exception>
+        /// <remarks> Description for Get process information by its ID for a specific scaled-out instance in a web site. </remarks>
         public virtual async Task<Response<SiteSlotProcessModuleResource>> GetAsync(string baseAddress, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(baseAddress, nameof(baseAddress));
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get process information by its ID for a specific scaled-out instance in a web site.
+        /// Get process information by its ID for a specific scaled-out instance in a web site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/processes/{processId}/modules/{baseAddress}
         /// Operation Id: WebApps_GetProcessModuleSlot
         /// </summary>
@@ -91,6 +92,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="baseAddress"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="baseAddress"/> is null. </exception>
+        /// <remarks> Description for Get process information by its ID for a specific scaled-out instance in a web site. </remarks>
         public virtual Response<SiteSlotProcessModuleResource> Get(string baseAddress, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(baseAddress, nameof(baseAddress));
@@ -112,12 +114,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for List module information for a process by its ID for a specific scaled-out instance in a web site.
+        /// List module information for a process by its ID for a specific scaled-out instance in a web site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/processes/{processId}/modules
         /// Operation Id: WebApps_ListProcessModulesSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SiteSlotProcessModuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for List module information for a process by its ID for a specific scaled-out instance in a web site. </remarks>
         public virtual AsyncPageable<SiteSlotProcessModuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<SiteSlotProcessModuleResource>> FirstPageFunc(int? pageSizeHint)
@@ -154,12 +157,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for List module information for a process by its ID for a specific scaled-out instance in a web site.
+        /// List module information for a process by its ID for a specific scaled-out instance in a web site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/processes/{processId}/modules
         /// Operation Id: WebApps_ListProcessModulesSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SiteSlotProcessModuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for List module information for a process by its ID for a specific scaled-out instance in a web site. </remarks>
         public virtual Pageable<SiteSlotProcessModuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<SiteSlotProcessModuleResource> FirstPageFunc(int? pageSizeHint)
@@ -196,7 +200,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get process information by its ID for a specific scaled-out instance in a web site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/processes/{processId}/modules/{baseAddress}
         /// Operation Id: WebApps_GetProcessModuleSlot
         /// </summary>
@@ -204,6 +208,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="baseAddress"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="baseAddress"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string baseAddress, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(baseAddress, nameof(baseAddress));
@@ -223,7 +228,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get process information by its ID for a specific scaled-out instance in a web site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/processes/{processId}/modules/{baseAddress}
         /// Operation Id: WebApps_GetProcessModuleSlot
         /// </summary>
@@ -231,6 +236,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="baseAddress"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="baseAddress"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string baseAddress, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(baseAddress, nameof(baseAddress));

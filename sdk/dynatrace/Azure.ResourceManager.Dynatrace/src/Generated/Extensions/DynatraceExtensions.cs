@@ -35,6 +35,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MonitorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List all MonitorResource by subscriptionId. </remarks>
         public static AsyncPageable<MonitorResource> GetMonitorResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetMonitorResourcesAsync(cancellationToken);
@@ -48,6 +49,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MonitorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List all MonitorResource by subscriptionId. </remarks>
         public static Pageable<MonitorResource> GetMonitorResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetMonitorResources(cancellationToken);
@@ -80,6 +82,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
+        /// <remarks> Get a MonitorResource. </remarks>
         [ForwardsClientCalls]
         public static async Task<Response<MonitorResource>> GetMonitorResourceAsync(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
         {
@@ -96,6 +99,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
+        /// <remarks> Get a MonitorResource. </remarks>
         [ForwardsClientCalls]
         public static Response<MonitorResource> GetMonitorResource(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
         {

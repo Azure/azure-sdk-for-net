@@ -88,11 +88,12 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary>
-        /// Get a Service Fabric application type version resource created or in the process of being created in the Service Fabric application type name resource.
+        /// Gets a Service Fabric application type version resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}/applicationTypes/{applicationTypeName}/versions/{version}
         /// Operation Id: ApplicationTypeVersions_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get a Service Fabric application type version resource created or in the process of being created in the Service Fabric application type name resource. </remarks>
         public virtual async Task<Response<ApplicationTypeVersionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _applicationTypeVersionResourceApplicationTypeVersionsClientDiagnostics.CreateScope("ApplicationTypeVersionResource.Get");
@@ -112,11 +113,12 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary>
-        /// Get a Service Fabric application type version resource created or in the process of being created in the Service Fabric application type name resource.
+        /// Gets a Service Fabric application type version resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}/applicationTypes/{applicationTypeName}/versions/{version}
         /// Operation Id: ApplicationTypeVersions_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get a Service Fabric application type version resource created or in the process of being created in the Service Fabric application type name resource. </remarks>
         public virtual Response<ApplicationTypeVersionResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _applicationTypeVersionResourceApplicationTypeVersionsClientDiagnostics.CreateScope("ApplicationTypeVersionResource.Get");
@@ -136,12 +138,13 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary>
-        /// Delete a Service Fabric application type version resource with the specified name.
+        /// Deletes a Service Fabric application type version resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}/applicationTypes/{applicationTypeName}/versions/{version}
         /// Operation Id: ApplicationTypeVersions_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Delete a Service Fabric application type version resource with the specified name. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _applicationTypeVersionResourceApplicationTypeVersionsClientDiagnostics.CreateScope("ApplicationTypeVersionResource.Delete");
@@ -162,12 +165,13 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary>
-        /// Delete a Service Fabric application type version resource with the specified name.
+        /// Deletes a Service Fabric application type version resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}/applicationTypes/{applicationTypeName}/versions/{version}
         /// Operation Id: ApplicationTypeVersions_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Delete a Service Fabric application type version resource with the specified name. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _applicationTypeVersionResourceApplicationTypeVersionsClientDiagnostics.CreateScope("ApplicationTypeVersionResource.Delete");
@@ -188,7 +192,7 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary>
-        /// Create or update a Service Fabric application type version resource with the specified name.
+        /// Creates or updates a Service Fabric application type version resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}/applicationTypes/{applicationTypeName}/versions/{version}
         /// Operation Id: ApplicationTypeVersions_CreateOrUpdate
         /// </summary>
@@ -196,6 +200,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="data"> The application type version resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        /// <remarks> Create or update a Service Fabric application type version resource with the specified name. </remarks>
         public virtual async Task<ArmOperation<ApplicationTypeVersionResource>> UpdateAsync(WaitUntil waitUntil, ApplicationTypeVersionResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -218,7 +223,7 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary>
-        /// Create or update a Service Fabric application type version resource with the specified name.
+        /// Creates or updates a Service Fabric application type version resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}/applicationTypes/{applicationTypeName}/versions/{version}
         /// Operation Id: ApplicationTypeVersions_CreateOrUpdate
         /// </summary>
@@ -226,6 +231,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="data"> The application type version resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        /// <remarks> Create or update a Service Fabric application type version resource with the specified name. </remarks>
         public virtual ArmOperation<ApplicationTypeVersionResource> Update(WaitUntil waitUntil, ApplicationTypeVersionResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -248,7 +254,7 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary>
-        /// Add a tag to the current resource.
+        /// Gets a Service Fabric application type version resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}/applicationTypes/{applicationTypeName}/versions/{version}
         /// Operation Id: ApplicationTypeVersions_Get
         /// </summary>
@@ -256,6 +262,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        /// <remarks> Add a tag to the current resource. </remarks>
         public virtual async Task<Response<ApplicationTypeVersionResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -279,7 +286,7 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary>
-        /// Add a tag to the current resource.
+        /// Gets a Service Fabric application type version resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}/applicationTypes/{applicationTypeName}/versions/{version}
         /// Operation Id: ApplicationTypeVersions_Get
         /// </summary>
@@ -287,6 +294,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        /// <remarks> Add a tag to the current resource. </remarks>
         public virtual Response<ApplicationTypeVersionResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -310,13 +318,14 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary>
-        /// Replace the tags on the resource with the given set.
+        /// Gets a Service Fabric application type version resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}/applicationTypes/{applicationTypeName}/versions/{version}
         /// Operation Id: ApplicationTypeVersions_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        /// <remarks> Replace the tags on the resource with the given set. </remarks>
         public virtual async Task<Response<ApplicationTypeVersionResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -340,13 +349,14 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary>
-        /// Replace the tags on the resource with the given set.
+        /// Gets a Service Fabric application type version resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}/applicationTypes/{applicationTypeName}/versions/{version}
         /// Operation Id: ApplicationTypeVersions_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        /// <remarks> Replace the tags on the resource with the given set. </remarks>
         public virtual Response<ApplicationTypeVersionResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -370,13 +380,14 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary>
-        /// Removes a tag by key from the resource.
+        /// Gets a Service Fabric application type version resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}/applicationTypes/{applicationTypeName}/versions/{version}
         /// Operation Id: ApplicationTypeVersions_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <remarks> Removes a tag by key from the resource. </remarks>
         public virtual async Task<Response<ApplicationTypeVersionResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -399,13 +410,14 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary>
-        /// Removes a tag by key from the resource.
+        /// Gets a Service Fabric application type version resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}/applicationTypes/{applicationTypeName}/versions/{version}
         /// Operation Id: ApplicationTypeVersions_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <remarks> Removes a tag by key from the resource. </remarks>
         public virtual Response<ApplicationTypeVersionResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));

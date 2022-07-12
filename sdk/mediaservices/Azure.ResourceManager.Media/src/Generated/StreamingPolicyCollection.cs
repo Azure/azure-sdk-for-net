@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Create a Streaming Policy in the Media Services account
+        /// Create a Streaming Policy
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/streamingPolicies/{streamingPolicyName}
         /// Operation Id: StreamingPolicies_Create
         /// </summary>
@@ -64,6 +64,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="streamingPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="streamingPolicyName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Create a Streaming Policy in the Media Services account. </remarks>
         public virtual async Task<ArmOperation<StreamingPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string streamingPolicyName, StreamingPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(streamingPolicyName, nameof(streamingPolicyName));
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Create a Streaming Policy in the Media Services account
+        /// Create a Streaming Policy
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/streamingPolicies/{streamingPolicyName}
         /// Operation Id: StreamingPolicies_Create
         /// </summary>
@@ -97,6 +98,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="streamingPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="streamingPolicyName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Create a Streaming Policy in the Media Services account. </remarks>
         public virtual ArmOperation<StreamingPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string streamingPolicyName, StreamingPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(streamingPolicyName, nameof(streamingPolicyName));
@@ -120,7 +122,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get the details of a Streaming Policy in the Media Services account
+        /// Get a Streaming Policy
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/streamingPolicies/{streamingPolicyName}
         /// Operation Id: StreamingPolicies_Get
         /// </summary>
@@ -128,6 +130,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="streamingPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="streamingPolicyName"/> is null. </exception>
+        /// <remarks> Get the details of a Streaming Policy in the Media Services account. </remarks>
         public virtual async Task<Response<StreamingPolicyResource>> GetAsync(string streamingPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(streamingPolicyName, nameof(streamingPolicyName));
@@ -149,7 +152,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get the details of a Streaming Policy in the Media Services account
+        /// Get a Streaming Policy
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/streamingPolicies/{streamingPolicyName}
         /// Operation Id: StreamingPolicies_Get
         /// </summary>
@@ -157,6 +160,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="streamingPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="streamingPolicyName"/> is null. </exception>
+        /// <remarks> Get the details of a Streaming Policy in the Media Services account. </remarks>
         public virtual Response<StreamingPolicyResource> Get(string streamingPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(streamingPolicyName, nameof(streamingPolicyName));
@@ -178,7 +182,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Lists the Streaming Policies in the account
+        /// List Streaming Policies
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/streamingPolicies
         /// Operation Id: StreamingPolicies_List
         /// </summary>
@@ -187,6 +191,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="orderby"> Specifies the key by which the result collection should be ordered. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="StreamingPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Lists the Streaming Policies in the account. </remarks>
         public virtual AsyncPageable<StreamingPolicyResource> GetAllAsync(string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<StreamingPolicyResource>> FirstPageFunc(int? pageSizeHint)
@@ -223,7 +228,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Lists the Streaming Policies in the account
+        /// List Streaming Policies
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/streamingPolicies
         /// Operation Id: StreamingPolicies_List
         /// </summary>
@@ -232,6 +237,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="orderby"> Specifies the key by which the result collection should be ordered. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StreamingPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Lists the Streaming Policies in the account. </remarks>
         public virtual Pageable<StreamingPolicyResource> GetAll(string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Page<StreamingPolicyResource> FirstPageFunc(int? pageSizeHint)
@@ -268,7 +274,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get a Streaming Policy
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/streamingPolicies/{streamingPolicyName}
         /// Operation Id: StreamingPolicies_Get
         /// </summary>
@@ -276,6 +282,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="streamingPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="streamingPolicyName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string streamingPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(streamingPolicyName, nameof(streamingPolicyName));
@@ -295,7 +302,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get a Streaming Policy
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/streamingPolicies/{streamingPolicyName}
         /// Operation Id: StreamingPolicies_Get
         /// </summary>
@@ -303,6 +310,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="streamingPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="streamingPolicyName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string streamingPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(streamingPolicyName, nameof(streamingPolicyName));

@@ -89,11 +89,12 @@ namespace Azure.ResourceManager.AlertsManagement
         }
 
         /// <summary>
-        /// Get information related to a specific alert
+        /// Get a specific alert.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts/{alertId}
         /// Operation Id: Alerts_GetById
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get information related to a specific alert. </remarks>
         public virtual async Task<Response<ServiceAlertResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _serviceAlertAlertsClientDiagnostics.CreateScope("ServiceAlertResource.Get");
@@ -113,11 +114,12 @@ namespace Azure.ResourceManager.AlertsManagement
         }
 
         /// <summary>
-        /// Get information related to a specific alert
+        /// Get a specific alert.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts/{alertId}
         /// Operation Id: Alerts_GetById
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get information related to a specific alert. </remarks>
         public virtual Response<ServiceAlertResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _serviceAlertAlertsClientDiagnostics.CreateScope("ServiceAlertResource.Get");

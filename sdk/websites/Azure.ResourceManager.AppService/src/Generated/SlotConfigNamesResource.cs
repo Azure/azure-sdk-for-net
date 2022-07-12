@@ -87,11 +87,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the names of app settings and connection strings that stick to the slot (not swapped).
+        /// Gets the names of app settings and connection strings that stick to the slot (not swapped).
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/slotConfigNames
         /// Operation Id: WebApps_ListSlotConfigurationNames
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Gets the names of app settings and connection strings that stick to the slot (not swapped). </remarks>
         public virtual async Task<Response<SlotConfigNamesResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _slotConfigNamesResourceWebAppsClientDiagnostics.CreateScope("SlotConfigNamesResource.Get");
@@ -111,11 +112,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the names of app settings and connection strings that stick to the slot (not swapped).
+        /// Gets the names of app settings and connection strings that stick to the slot (not swapped).
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/slotConfigNames
         /// Operation Id: WebApps_ListSlotConfigurationNames
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Gets the names of app settings and connection strings that stick to the slot (not swapped). </remarks>
         public virtual Response<SlotConfigNamesResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _slotConfigNamesResourceWebAppsClientDiagnostics.CreateScope("SlotConfigNamesResource.Get");
@@ -135,7 +137,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Updates the names of application settings and connection string that remain with the slot during swap operation.
+        /// Updates the names of application settings and connection string that remain with the slot during swap operation.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/slotConfigNames
         /// Operation Id: WebApps_UpdateSlotConfigurationNames
         /// </summary>
@@ -143,6 +145,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> Names of application settings and connection strings. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        /// <remarks> Description for Updates the names of application settings and connection string that remain with the slot during swap operation. </remarks>
         public virtual async Task<ArmOperation<SlotConfigNamesResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SlotConfigNamesResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -165,7 +168,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Updates the names of application settings and connection string that remain with the slot during swap operation.
+        /// Updates the names of application settings and connection string that remain with the slot during swap operation.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/slotConfigNames
         /// Operation Id: WebApps_UpdateSlotConfigurationNames
         /// </summary>
@@ -173,6 +176,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> Names of application settings and connection strings. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        /// <remarks> Description for Updates the names of application settings and connection string that remain with the slot during swap operation. </remarks>
         public virtual ArmOperation<SlotConfigNamesResource> CreateOrUpdate(WaitUntil waitUntil, SlotConfigNamesResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));

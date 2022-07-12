@@ -90,11 +90,12 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements AvailabilitySet GET method.
+        /// Gets an AvailabilitySet.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/availabilitySets/{availabilitySetName}
         /// Operation Id: AvailabilitySets_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Implements AvailabilitySet GET method. </remarks>
         public virtual async Task<Response<ScVmmAvailabilitySetResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _scVmmAvailabilitySetAvailabilitySetsClientDiagnostics.CreateScope("ScVmmAvailabilitySetResource.Get");
@@ -114,11 +115,12 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements AvailabilitySet GET method.
+        /// Gets an AvailabilitySet.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/availabilitySets/{availabilitySetName}
         /// Operation Id: AvailabilitySets_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Implements AvailabilitySet GET method. </remarks>
         public virtual Response<ScVmmAvailabilitySetResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _scVmmAvailabilitySetAvailabilitySetsClientDiagnostics.CreateScope("ScVmmAvailabilitySetResource.Get");
@@ -138,13 +140,14 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Deregisters the ScVmm availability set from Azure.
+        /// Implements AvailabilitySet DELETE method.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/availabilitySets/{availabilitySetName}
         /// Operation Id: AvailabilitySets_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="force"> Forces the resource to be deleted from azure. The corresponding CR would be attempted to be deleted too. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Deregisters the ScVmm availability set from Azure. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? force = null, CancellationToken cancellationToken = default)
         {
             using var scope = _scVmmAvailabilitySetAvailabilitySetsClientDiagnostics.CreateScope("ScVmmAvailabilitySetResource.Delete");
@@ -165,13 +168,14 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Deregisters the ScVmm availability set from Azure.
+        /// Implements AvailabilitySet DELETE method.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/availabilitySets/{availabilitySetName}
         /// Operation Id: AvailabilitySets_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="force"> Forces the resource to be deleted from azure. The corresponding CR would be attempted to be deleted too. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Deregisters the ScVmm availability set from Azure. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, bool? force = null, CancellationToken cancellationToken = default)
         {
             using var scope = _scVmmAvailabilitySetAvailabilitySetsClientDiagnostics.CreateScope("ScVmmAvailabilitySetResource.Delete");
@@ -192,7 +196,7 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Updates the AvailabilitySets resource.
+        /// Implements the AvailabilitySets PATCH method.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/availabilitySets/{availabilitySetName}
         /// Operation Id: AvailabilitySets_Update
         /// </summary>
@@ -200,6 +204,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="patch"> AvailabilitySets patch payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        /// <remarks> Updates the AvailabilitySets resource. </remarks>
         public virtual async Task<ArmOperation<ScVmmAvailabilitySetResource>> UpdateAsync(WaitUntil waitUntil, ResourcePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
@@ -222,7 +227,7 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Updates the AvailabilitySets resource.
+        /// Implements the AvailabilitySets PATCH method.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/availabilitySets/{availabilitySetName}
         /// Operation Id: AvailabilitySets_Update
         /// </summary>
@@ -230,6 +235,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="patch"> AvailabilitySets patch payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        /// <remarks> Updates the AvailabilitySets resource. </remarks>
         public virtual ArmOperation<ScVmmAvailabilitySetResource> Update(WaitUntil waitUntil, ResourcePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
@@ -252,7 +258,7 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Add a tag to the current resource.
+        /// Gets an AvailabilitySet.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/availabilitySets/{availabilitySetName}
         /// Operation Id: AvailabilitySets_Get
         /// </summary>
@@ -260,6 +266,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        /// <remarks> Add a tag to the current resource. </remarks>
         public virtual async Task<Response<ScVmmAvailabilitySetResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -283,7 +290,7 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Add a tag to the current resource.
+        /// Gets an AvailabilitySet.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/availabilitySets/{availabilitySetName}
         /// Operation Id: AvailabilitySets_Get
         /// </summary>
@@ -291,6 +298,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        /// <remarks> Add a tag to the current resource. </remarks>
         public virtual Response<ScVmmAvailabilitySetResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -314,13 +322,14 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Replace the tags on the resource with the given set.
+        /// Gets an AvailabilitySet.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/availabilitySets/{availabilitySetName}
         /// Operation Id: AvailabilitySets_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        /// <remarks> Replace the tags on the resource with the given set. </remarks>
         public virtual async Task<Response<ScVmmAvailabilitySetResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -344,13 +353,14 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Replace the tags on the resource with the given set.
+        /// Gets an AvailabilitySet.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/availabilitySets/{availabilitySetName}
         /// Operation Id: AvailabilitySets_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        /// <remarks> Replace the tags on the resource with the given set. </remarks>
         public virtual Response<ScVmmAvailabilitySetResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -374,13 +384,14 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Removes a tag by key from the resource.
+        /// Gets an AvailabilitySet.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/availabilitySets/{availabilitySetName}
         /// Operation Id: AvailabilitySets_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <remarks> Removes a tag by key from the resource. </remarks>
         public virtual async Task<Response<ScVmmAvailabilitySetResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -403,13 +414,14 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Removes a tag by key from the resource.
+        /// Gets an AvailabilitySet.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/availabilitySets/{availabilitySetName}
         /// Operation Id: AvailabilitySets_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <remarks> Removes a tag by key from the resource. </remarks>
         public virtual Response<ScVmmAvailabilitySetResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));

@@ -87,11 +87,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets data around private site access enablement and authorized Virtual Networks that can access the site.
+        /// Gets data around private site access enablement and authorized Virtual Networks that can access the site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/privateAccess/virtualNetworks
         /// Operation Id: WebApps_GetPrivateAccess
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Gets data around private site access enablement and authorized Virtual Networks that can access the site. </remarks>
         public virtual async Task<Response<SitePrivateAccessResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _sitePrivateAccessWebAppsClientDiagnostics.CreateScope("SitePrivateAccessResource.Get");
@@ -111,11 +112,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets data around private site access enablement and authorized Virtual Networks that can access the site.
+        /// Gets data around private site access enablement and authorized Virtual Networks that can access the site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/privateAccess/virtualNetworks
         /// Operation Id: WebApps_GetPrivateAccess
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Gets data around private site access enablement and authorized Virtual Networks that can access the site. </remarks>
         public virtual Response<SitePrivateAccessResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _sitePrivateAccessWebAppsClientDiagnostics.CreateScope("SitePrivateAccessResource.Get");
@@ -135,7 +137,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Sets data around private site access enablement and authorized Virtual Networks that can access the site.
+        /// Sets data around private site access enablement and authorized Virtual Networks that can access the site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/privateAccess/virtualNetworks
         /// Operation Id: WebApps_PutPrivateAccessVnet
         /// </summary>
@@ -143,6 +145,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> The information for the private access. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        /// <remarks> Description for Sets data around private site access enablement and authorized Virtual Networks that can access the site. </remarks>
         public virtual async Task<ArmOperation<SitePrivateAccessResource>> CreateOrUpdateAsync(WaitUntil waitUntil, PrivateAccessData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -165,7 +168,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Sets data around private site access enablement and authorized Virtual Networks that can access the site.
+        /// Sets data around private site access enablement and authorized Virtual Networks that can access the site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/privateAccess/virtualNetworks
         /// Operation Id: WebApps_PutPrivateAccessVnet
         /// </summary>
@@ -173,6 +176,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> The information for the private access. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        /// <remarks> Description for Sets data around private site access enablement and authorized Virtual Networks that can access the site. </remarks>
         public virtual ArmOperation<SitePrivateAccessResource> CreateOrUpdate(WaitUntil waitUntil, PrivateAccessData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));

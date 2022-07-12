@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ServiceFabric
             return message;
         }
 
-        /// <summary> Get a Service Fabric application resource created or in the process of being created in the Service Fabric cluster resource. </summary>
+        /// <summary> Gets a Service Fabric application resource. </summary>
         /// <param name="subscriptionId"> The customer subscription identifier. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="clusterName"> The name of the cluster resource. </param>
@@ -67,6 +67,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get a Service Fabric application resource created or in the process of being created in the Service Fabric cluster resource. </remarks>
         public async Task<Response<ApplicationResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.ServiceFabric
             }
         }
 
-        /// <summary> Get a Service Fabric application resource created or in the process of being created in the Service Fabric cluster resource. </summary>
+        /// <summary> Gets a Service Fabric application resource. </summary>
         /// <param name="subscriptionId"> The customer subscription identifier. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="clusterName"> The name of the cluster resource. </param>
@@ -100,6 +101,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get a Service Fabric application resource created or in the process of being created in the Service Fabric cluster resource. </remarks>
         public Response<ApplicationResourceData> Get(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -151,7 +153,7 @@ namespace Azure.ResourceManager.ServiceFabric
             return message;
         }
 
-        /// <summary> Create or update a Service Fabric application resource with the specified name. </summary>
+        /// <summary> Creates or updates a Service Fabric application resource. </summary>
         /// <param name="subscriptionId"> The customer subscription identifier. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="clusterName"> The name of the cluster resource. </param>
@@ -160,6 +162,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Create or update a Service Fabric application resource with the specified name. </remarks>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, ApplicationResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -179,7 +182,7 @@ namespace Azure.ResourceManager.ServiceFabric
             }
         }
 
-        /// <summary> Create or update a Service Fabric application resource with the specified name. </summary>
+        /// <summary> Creates or updates a Service Fabric application resource. </summary>
         /// <param name="subscriptionId"> The customer subscription identifier. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="clusterName"> The name of the cluster resource. </param>
@@ -188,6 +191,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Create or update a Service Fabric application resource with the specified name. </remarks>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, ApplicationResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -233,7 +237,7 @@ namespace Azure.ResourceManager.ServiceFabric
             return message;
         }
 
-        /// <summary> Update a Service Fabric application resource with the specified name. </summary>
+        /// <summary> Updates a Service Fabric application resource. </summary>
         /// <param name="subscriptionId"> The customer subscription identifier. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="clusterName"> The name of the cluster resource. </param>
@@ -242,6 +246,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Update a Service Fabric application resource with the specified name. </remarks>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, ApplicationResourcePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -261,7 +266,7 @@ namespace Azure.ResourceManager.ServiceFabric
             }
         }
 
-        /// <summary> Update a Service Fabric application resource with the specified name. </summary>
+        /// <summary> Updates a Service Fabric application resource. </summary>
         /// <param name="subscriptionId"> The customer subscription identifier. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="clusterName"> The name of the cluster resource. </param>
@@ -270,6 +275,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Update a Service Fabric application resource with the specified name. </remarks>
         public Response Update(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, ApplicationResourcePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -311,7 +317,7 @@ namespace Azure.ResourceManager.ServiceFabric
             return message;
         }
 
-        /// <summary> Delete a Service Fabric application resource with the specified name. </summary>
+        /// <summary> Deletes a Service Fabric application resource. </summary>
         /// <param name="subscriptionId"> The customer subscription identifier. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="clusterName"> The name of the cluster resource. </param>
@@ -319,6 +325,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Delete a Service Fabric application resource with the specified name. </remarks>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -338,7 +345,7 @@ namespace Azure.ResourceManager.ServiceFabric
             }
         }
 
-        /// <summary> Delete a Service Fabric application resource with the specified name. </summary>
+        /// <summary> Deletes a Service Fabric application resource. </summary>
         /// <param name="subscriptionId"> The customer subscription identifier. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="clusterName"> The name of the cluster resource. </param>
@@ -346,6 +353,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Delete a Service Fabric application resource with the specified name. </remarks>
         public Response Delete(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -386,13 +394,14 @@ namespace Azure.ResourceManager.ServiceFabric
             return message;
         }
 
-        /// <summary> Gets all application resources created or in the process of being created in the Service Fabric cluster resource. </summary>
+        /// <summary> Gets the list of application resources created in the specified Service Fabric cluster resource. </summary>
         /// <param name="subscriptionId"> The customer subscription identifier. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="clusterName"> The name of the cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Gets all application resources created or in the process of being created in the Service Fabric cluster resource. </remarks>
         public async Task<Response<ApplicationResourceList>> ListAsync(string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -415,13 +424,14 @@ namespace Azure.ResourceManager.ServiceFabric
             }
         }
 
-        /// <summary> Gets all application resources created or in the process of being created in the Service Fabric cluster resource. </summary>
+        /// <summary> Gets the list of application resources created in the specified Service Fabric cluster resource. </summary>
         /// <param name="subscriptionId"> The customer subscription identifier. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="clusterName"> The name of the cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Gets all application resources created or in the process of being created in the Service Fabric cluster resource. </remarks>
         public Response<ApplicationResourceList> List(string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));

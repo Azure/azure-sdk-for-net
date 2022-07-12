@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a triggered web job&apos;s history by its ID for an app, , or a deployment slot.
+        /// Gets a triggered web job&apos;s history by its ID for an app, , or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}/history/{id}
         /// Operation Id: WebApps_GetTriggeredWebJobHistory
         /// </summary>
@@ -102,6 +102,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <remarks> Description for Gets a triggered web job&apos;s history by its ID for an app, , or a deployment slot. </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteSlotTriggeredWebJobHistoryResource>> GetSiteSlotTriggeredWebJobHistoryAsync(string id, CancellationToken cancellationToken = default)
         {
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a triggered web job&apos;s history by its ID for an app, , or a deployment slot.
+        /// Gets a triggered web job&apos;s history by its ID for an app, , or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}/history/{id}
         /// Operation Id: WebApps_GetTriggeredWebJobHistory
         /// </summary>
@@ -117,6 +118,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <remarks> Description for Gets a triggered web job&apos;s history by its ID for an app, , or a deployment slot. </remarks>
         [ForwardsClientCalls]
         public virtual Response<SiteSlotTriggeredWebJobHistoryResource> GetSiteSlotTriggeredWebJobHistory(string id, CancellationToken cancellationToken = default)
         {
@@ -124,11 +126,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a triggered web job by its ID for an app, or a deployment slot.
+        /// Gets a triggered web job by its ID for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}
         /// Operation Id: WebApps_GetTriggeredWebJob
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Gets a triggered web job by its ID for an app, or a deployment slot. </remarks>
         public virtual async Task<Response<SiteSlotTriggeredWebJobResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotTriggeredWebJobWebAppsClientDiagnostics.CreateScope("SiteSlotTriggeredWebJobResource.Get");
@@ -148,11 +151,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a triggered web job by its ID for an app, or a deployment slot.
+        /// Gets a triggered web job by its ID for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}
         /// Operation Id: WebApps_GetTriggeredWebJob
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Gets a triggered web job by its ID for an app, or a deployment slot. </remarks>
         public virtual Response<SiteSlotTriggeredWebJobResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotTriggeredWebJobWebAppsClientDiagnostics.CreateScope("SiteSlotTriggeredWebJobResource.Get");
@@ -172,12 +176,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Delete a triggered web job by its ID for an app, or a deployment slot.
+        /// Delete a triggered web job by its ID for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}
         /// Operation Id: WebApps_DeleteTriggeredWebJob
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Delete a triggered web job by its ID for an app, or a deployment slot. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotTriggeredWebJobWebAppsClientDiagnostics.CreateScope("SiteSlotTriggeredWebJobResource.Delete");
@@ -198,12 +203,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Delete a triggered web job by its ID for an app, or a deployment slot.
+        /// Delete a triggered web job by its ID for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}
         /// Operation Id: WebApps_DeleteTriggeredWebJob
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Delete a triggered web job by its ID for an app, or a deployment slot. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotTriggeredWebJobWebAppsClientDiagnostics.CreateScope("SiteSlotTriggeredWebJobResource.Delete");
@@ -224,11 +230,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Run a triggered web job for an app, or a deployment slot.
+        /// Run a triggered web job for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}/run
         /// Operation Id: WebApps_RunTriggeredWebJob
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Run a triggered web job for an app, or a deployment slot. </remarks>
         public virtual async Task<Response> RunAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotTriggeredWebJobWebAppsClientDiagnostics.CreateScope("SiteSlotTriggeredWebJobResource.Run");
@@ -246,11 +253,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Run a triggered web job for an app, or a deployment slot.
+        /// Run a triggered web job for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}/run
         /// Operation Id: WebApps_RunTriggeredWebJob
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Run a triggered web job for an app, or a deployment slot. </remarks>
         public virtual Response Run(CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotTriggeredWebJobWebAppsClientDiagnostics.CreateScope("SiteSlotTriggeredWebJobResource.Run");

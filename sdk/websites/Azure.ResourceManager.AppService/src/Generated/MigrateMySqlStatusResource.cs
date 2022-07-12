@@ -87,11 +87,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Returns the status of MySql in app migration, if one is active, and whether or not MySql in app is enabled
+        /// Returns the status of MySql in app migration, if one is active, and whether or not MySql in app is enabled
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/migratemysql/status
         /// Operation Id: WebApps_GetMigrateMySqlStatusSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Returns the status of MySql in app migration, if one is active, and whether or not MySql in app is enabled. </remarks>
         public virtual async Task<Response<MigrateMySqlStatusResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _migrateMySqlStatusWebAppsClientDiagnostics.CreateScope("MigrateMySqlStatusResource.Get");
@@ -111,11 +112,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Returns the status of MySql in app migration, if one is active, and whether or not MySql in app is enabled
+        /// Returns the status of MySql in app migration, if one is active, and whether or not MySql in app is enabled
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/migratemysql/status
         /// Operation Id: WebApps_GetMigrateMySqlStatusSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Returns the status of MySql in app migration, if one is active, and whether or not MySql in app is enabled. </remarks>
         public virtual Response<MigrateMySqlStatusResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _migrateMySqlStatusWebAppsClientDiagnostics.CreateScope("MigrateMySqlStatusResource.Get");

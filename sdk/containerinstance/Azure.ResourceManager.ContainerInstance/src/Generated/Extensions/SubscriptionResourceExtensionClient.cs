@@ -49,12 +49,13 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Get a list of container groups in the specified subscription. This operation returns properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes.
+        /// Get a list of container groups in the specified subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/containerGroups
         /// Operation Id: ContainerGroups_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ContainerGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Get a list of container groups in the specified subscription. This operation returns properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes. </remarks>
         public virtual AsyncPageable<ContainerGroupResource> GetContainerGroupsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ContainerGroupResource>> FirstPageFunc(int? pageSizeHint)
@@ -91,12 +92,13 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Get a list of container groups in the specified subscription. This operation returns properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes.
+        /// Get a list of container groups in the specified subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/containerGroups
         /// Operation Id: ContainerGroups_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContainerGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Get a list of container groups in the specified subscription. This operation returns properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes. </remarks>
         public virtual Pageable<ContainerGroupResource> GetContainerGroups(CancellationToken cancellationToken = default)
         {
             Page<ContainerGroupResource> FirstPageFunc(int? pageSizeHint)
@@ -189,13 +191,14 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Get the list of cached images on specific OS type for a subscription in a region.
+        /// Get the list of cached images.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/locations/{location}/cachedImages
         /// Operation Id: Location_ListCachedImages
         /// </summary>
         /// <param name="location"> The identifier for the physical azure location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CachedImages" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Get the list of cached images on specific OS type for a subscription in a region. </remarks>
         public virtual AsyncPageable<CachedImages> GetCachedImagesWithLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             async Task<Page<CachedImages>> FirstPageFunc(int? pageSizeHint)
@@ -232,13 +235,14 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Get the list of cached images on specific OS type for a subscription in a region.
+        /// Get the list of cached images.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/locations/{location}/cachedImages
         /// Operation Id: Location_ListCachedImages
         /// </summary>
         /// <param name="location"> The identifier for the physical azure location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CachedImages" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Get the list of cached images on specific OS type for a subscription in a region. </remarks>
         public virtual Pageable<CachedImages> GetCachedImagesWithLocation(AzureLocation location, CancellationToken cancellationToken = default)
         {
             Page<CachedImages> FirstPageFunc(int? pageSizeHint)
@@ -275,13 +279,14 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Get the list of CPU/memory/GPU capabilities of a region.
+        /// Get the list of capabilities of the location.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/locations/{location}/capabilities
         /// Operation Id: Location_ListCapabilities
         /// </summary>
         /// <param name="location"> The identifier for the physical azure location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ContainerInstanceCapabilities" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Get the list of CPU/memory/GPU capabilities of a region. </remarks>
         public virtual AsyncPageable<ContainerInstanceCapabilities> GetCapabilitiesWithLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             async Task<Page<ContainerInstanceCapabilities>> FirstPageFunc(int? pageSizeHint)
@@ -318,13 +323,14 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Get the list of CPU/memory/GPU capabilities of a region.
+        /// Get the list of capabilities of the location.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/locations/{location}/capabilities
         /// Operation Id: Location_ListCapabilities
         /// </summary>
         /// <param name="location"> The identifier for the physical azure location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContainerInstanceCapabilities" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Get the list of CPU/memory/GPU capabilities of a region. </remarks>
         public virtual Pageable<ContainerInstanceCapabilities> GetCapabilitiesWithLocation(AzureLocation location, CancellationToken cancellationToken = default)
         {
             Page<ContainerInstanceCapabilities> FirstPageFunc(int? pageSizeHint)

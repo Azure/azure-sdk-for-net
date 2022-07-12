@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary>
-        /// Create Or Update resourcePool.
+        /// Implements resourcePool PUT method.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/resourcePools/{resourcePoolName}
         /// Operation Id: ResourcePools_Create
         /// </summary>
@@ -65,6 +65,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourcePoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourcePoolName"/> is null. </exception>
+        /// <remarks> Create Or Update resourcePool. </remarks>
         public virtual async Task<ArmOperation<ResourcePoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string resourcePoolName, ResourcePoolData data = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourcePoolName, nameof(resourcePoolName));
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary>
-        /// Create Or Update resourcePool.
+        /// Implements resourcePool PUT method.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/resourcePools/{resourcePoolName}
         /// Operation Id: ResourcePools_Create
         /// </summary>
@@ -97,6 +98,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourcePoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourcePoolName"/> is null. </exception>
+        /// <remarks> Create Or Update resourcePool. </remarks>
         public virtual ArmOperation<ResourcePoolResource> CreateOrUpdate(WaitUntil waitUntil, string resourcePoolName, ResourcePoolData data = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourcePoolName, nameof(resourcePoolName));
@@ -119,7 +121,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary>
-        /// Implements resourcePool GET method.
+        /// Gets a resourcePool.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/resourcePools/{resourcePoolName}
         /// Operation Id: ResourcePools_Get
         /// </summary>
@@ -127,6 +129,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourcePoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourcePoolName"/> is null. </exception>
+        /// <remarks> Implements resourcePool GET method. </remarks>
         public virtual async Task<Response<ResourcePoolResource>> GetAsync(string resourcePoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourcePoolName, nameof(resourcePoolName));
@@ -148,7 +151,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary>
-        /// Implements resourcePool GET method.
+        /// Gets a resourcePool.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/resourcePools/{resourcePoolName}
         /// Operation Id: ResourcePools_Get
         /// </summary>
@@ -156,6 +159,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourcePoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourcePoolName"/> is null. </exception>
+        /// <remarks> Implements resourcePool GET method. </remarks>
         public virtual Response<ResourcePoolResource> Get(string resourcePoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourcePoolName, nameof(resourcePoolName));
@@ -177,12 +181,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary>
-        /// List of resourcePools in a resource group.
+        /// Implements GET resourcePools in a resource group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/resourcePools
         /// Operation Id: ResourcePools_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourcePoolResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List of resourcePools in a resource group. </remarks>
         public virtual AsyncPageable<ResourcePoolResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ResourcePoolResource>> FirstPageFunc(int? pageSizeHint)
@@ -219,12 +224,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary>
-        /// List of resourcePools in a resource group.
+        /// Implements GET resourcePools in a resource group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/resourcePools
         /// Operation Id: ResourcePools_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourcePoolResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List of resourcePools in a resource group. </remarks>
         public virtual Pageable<ResourcePoolResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<ResourcePoolResource> FirstPageFunc(int? pageSizeHint)
@@ -261,7 +267,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Gets a resourcePool.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/resourcePools/{resourcePoolName}
         /// Operation Id: ResourcePools_Get
         /// </summary>
@@ -269,6 +275,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourcePoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourcePoolName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string resourcePoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourcePoolName, nameof(resourcePoolName));
@@ -288,7 +295,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Gets a resourcePool.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/resourcePools/{resourcePoolName}
         /// Operation Id: ResourcePools_Get
         /// </summary>
@@ -296,6 +303,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourcePoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourcePoolName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string resourcePoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourcePoolName, nameof(resourcePoolName));

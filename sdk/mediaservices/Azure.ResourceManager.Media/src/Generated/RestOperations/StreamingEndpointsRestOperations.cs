@@ -58,13 +58,14 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Lists the streaming endpoints in the account. </summary>
+        /// <summary> List StreamingEndpoints. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Lists the streaming endpoints in the account. </remarks>
         public async Task<Response<StreamingEndpointListResult>> ListAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -87,13 +88,14 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Lists the streaming endpoints in the account. </summary>
+        /// <summary> List StreamingEndpoints. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Lists the streaming endpoints in the account. </remarks>
         public Response<StreamingEndpointListResult> List(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -138,7 +140,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Gets a streaming endpoint. </summary>
+        /// <summary> Get StreamingEndpoint. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -146,6 +148,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingEndpointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Gets a streaming endpoint. </remarks>
         public async Task<Response<StreamingEndpointData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string streamingEndpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -171,7 +174,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Gets a streaming endpoint. </summary>
+        /// <summary> Get StreamingEndpoint. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -179,6 +182,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingEndpointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Gets a streaming endpoint. </remarks>
         public Response<StreamingEndpointData> Get(string subscriptionId, string resourceGroupName, string accountName, string streamingEndpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -234,7 +238,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Creates a streaming endpoint. </summary>
+        /// <summary> Create StreamingEndpoint. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -244,6 +248,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="streamingEndpointName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Creates a streaming endpoint. </remarks>
         public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string accountName, string streamingEndpointName, StreamingEndpointData data, bool? autoStart = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -264,7 +269,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Creates a streaming endpoint. </summary>
+        /// <summary> Create StreamingEndpoint. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -274,6 +279,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="streamingEndpointName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Creates a streaming endpoint. </remarks>
         public Response Create(string subscriptionId, string resourceGroupName, string accountName, string streamingEndpointName, StreamingEndpointData data, bool? autoStart = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -320,7 +326,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Updates a existing streaming endpoint. </summary>
+        /// <summary> Update StreamingEndpoint. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -329,6 +335,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="streamingEndpointName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Updates a existing streaming endpoint. </remarks>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string streamingEndpointName, StreamingEndpointData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -349,7 +356,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Updates a existing streaming endpoint. </summary>
+        /// <summary> Update StreamingEndpoint. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -358,6 +365,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="streamingEndpointName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Updates a existing streaming endpoint. </remarks>
         public Response Update(string subscriptionId, string resourceGroupName, string accountName, string streamingEndpointName, StreamingEndpointData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -400,7 +408,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Deletes a streaming endpoint. </summary>
+        /// <summary> Delete StreamingEndpoint. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -408,6 +416,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingEndpointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Deletes a streaming endpoint. </remarks>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string accountName, string streamingEndpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -428,7 +437,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Deletes a streaming endpoint. </summary>
+        /// <summary> Delete StreamingEndpoint. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -436,6 +445,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingEndpointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Deletes a streaming endpoint. </remarks>
         public Response Delete(string subscriptionId, string resourceGroupName, string accountName, string streamingEndpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -479,7 +489,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> List streaming endpoint supported skus. </summary>
+        /// <summary> List StreamingEndpoint skus. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -487,6 +497,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingEndpointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List streaming endpoint supported skus. </remarks>
         public async Task<Response<StreamingEndpointSkuInfoListResult>> SkusAsync(string subscriptionId, string resourceGroupName, string accountName, string streamingEndpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -510,7 +521,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> List streaming endpoint supported skus. </summary>
+        /// <summary> List StreamingEndpoint skus. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -518,6 +529,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingEndpointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List streaming endpoint supported skus. </remarks>
         public Response<StreamingEndpointSkuInfoListResult> Skus(string subscriptionId, string resourceGroupName, string accountName, string streamingEndpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -564,7 +576,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Starts an existing streaming endpoint. </summary>
+        /// <summary> Start StreamingEndpoint. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -572,6 +584,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingEndpointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Starts an existing streaming endpoint. </remarks>
         public async Task<Response> StartAsync(string subscriptionId, string resourceGroupName, string accountName, string streamingEndpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -591,7 +604,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Starts an existing streaming endpoint. </summary>
+        /// <summary> Start StreamingEndpoint. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -599,6 +612,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingEndpointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Starts an existing streaming endpoint. </remarks>
         public Response Start(string subscriptionId, string resourceGroupName, string accountName, string streamingEndpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -641,7 +655,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Stops an existing streaming endpoint. </summary>
+        /// <summary> Stop StreamingEndpoint. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -649,6 +663,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingEndpointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Stops an existing streaming endpoint. </remarks>
         public async Task<Response> StopAsync(string subscriptionId, string resourceGroupName, string accountName, string streamingEndpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -668,7 +683,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Stops an existing streaming endpoint. </summary>
+        /// <summary> Stop StreamingEndpoint. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -676,6 +691,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingEndpointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Stops an existing streaming endpoint. </remarks>
         public Response Stop(string subscriptionId, string resourceGroupName, string accountName, string streamingEndpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -722,7 +738,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Scales an existing streaming endpoint. </summary>
+        /// <summary> Scale StreamingEndpoint. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -731,6 +747,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="streamingEndpointName"/> or <paramref name="streamingEntityScaleUnit"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Scales an existing streaming endpoint. </remarks>
         public async Task<Response> ScaleAsync(string subscriptionId, string resourceGroupName, string accountName, string streamingEndpointName, StreamingEntityScaleUnit streamingEntityScaleUnit, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -751,7 +768,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Scales an existing streaming endpoint. </summary>
+        /// <summary> Scale StreamingEndpoint. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -760,6 +777,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="streamingEndpointName"/> or <paramref name="streamingEntityScaleUnit"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Scales an existing streaming endpoint. </remarks>
         public Response Scale(string subscriptionId, string resourceGroupName, string accountName, string streamingEndpointName, StreamingEntityScaleUnit streamingEntityScaleUnit, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -794,7 +812,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Lists the streaming endpoints in the account. </summary>
+        /// <summary> List StreamingEndpoints. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
@@ -802,6 +820,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Lists the streaming endpoints in the account. </remarks>
         public async Task<Response<StreamingEndpointListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -825,7 +844,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Lists the streaming endpoints in the account. </summary>
+        /// <summary> List StreamingEndpoints. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
@@ -833,6 +852,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Lists the streaming endpoints in the account. </remarks>
         public Response<StreamingEndpointListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));

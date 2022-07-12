@@ -55,11 +55,12 @@ namespace Azure.ResourceManager.ContainerInstance
             return message;
         }
 
-        /// <summary> Get a list of container groups in the specified subscription. This operation returns properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes. </summary>
+        /// <summary> Get a list of container groups in the specified subscription. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get a list of container groups in the specified subscription. This operation returns properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes. </remarks>
         public async Task<Response<ContainerGroupListResult>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -80,11 +81,12 @@ namespace Azure.ResourceManager.ContainerInstance
             }
         }
 
-        /// <summary> Get a list of container groups in the specified subscription. This operation returns properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes. </summary>
+        /// <summary> Get a list of container groups in the specified subscription. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get a list of container groups in the specified subscription. This operation returns properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes. </remarks>
         public Response<ContainerGroupListResult> List(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -124,12 +126,13 @@ namespace Azure.ResourceManager.ContainerInstance
             return message;
         }
 
-        /// <summary> Get a list of container groups in a specified subscription and resource group. This operation returns properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes. </summary>
+        /// <summary> Get a list of container groups in the specified subscription and resource group. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get a list of container groups in a specified subscription and resource group. This operation returns properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes. </remarks>
         public async Task<Response<ContainerGroupListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -151,12 +154,13 @@ namespace Azure.ResourceManager.ContainerInstance
             }
         }
 
-        /// <summary> Get a list of container groups in a specified subscription and resource group. This operation returns properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes. </summary>
+        /// <summary> Get a list of container groups in the specified subscription and resource group. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get a list of container groups in a specified subscription and resource group. This operation returns properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes. </remarks>
         public Response<ContainerGroupListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -198,13 +202,14 @@ namespace Azure.ResourceManager.ContainerInstance
             return message;
         }
 
-        /// <summary> Gets the properties of the specified container group in the specified subscription and resource group. The operation returns the properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes. </summary>
+        /// <summary> Get the properties of the specified container group. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="containerGroupName"> The name of the container group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="containerGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="containerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Gets the properties of the specified container group in the specified subscription and resource group. The operation returns the properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes. </remarks>
         public async Task<Response<ContainerGroupData>> GetAsync(string subscriptionId, string resourceGroupName, string containerGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -229,13 +234,14 @@ namespace Azure.ResourceManager.ContainerInstance
             }
         }
 
-        /// <summary> Gets the properties of the specified container group in the specified subscription and resource group. The operation returns the properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes. </summary>
+        /// <summary> Get the properties of the specified container group. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="containerGroupName"> The name of the container group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="containerGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="containerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Gets the properties of the specified container group in the specified subscription and resource group. The operation returns the properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes. </remarks>
         public Response<ContainerGroupData> Get(string subscriptionId, string resourceGroupName, string containerGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -284,7 +290,7 @@ namespace Azure.ResourceManager.ContainerInstance
             return message;
         }
 
-        /// <summary> Create or update container groups with specified configurations. </summary>
+        /// <summary> Create or update container groups. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="containerGroupName"> The name of the container group. </param>
@@ -292,6 +298,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerGroupName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="containerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Create or update container groups with specified configurations. </remarks>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string containerGroupName, ContainerGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -311,7 +318,7 @@ namespace Azure.ResourceManager.ContainerInstance
             }
         }
 
-        /// <summary> Create or update container groups with specified configurations. </summary>
+        /// <summary> Create or update container groups. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="containerGroupName"> The name of the container group. </param>
@@ -319,6 +326,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerGroupName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="containerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Create or update container groups with specified configurations. </remarks>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string containerGroupName, ContainerGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -362,7 +370,7 @@ namespace Azure.ResourceManager.ContainerInstance
             return message;
         }
 
-        /// <summary> Updates container group tags with specified values. </summary>
+        /// <summary> Update container groups. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="containerGroupName"> The name of the container group. </param>
@@ -370,6 +378,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerGroupName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="containerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Updates container group tags with specified values. </remarks>
         public async Task<Response<ContainerGroupData>> UpdateAsync(string subscriptionId, string resourceGroupName, string containerGroupName, ContainerGroupPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -393,7 +402,7 @@ namespace Azure.ResourceManager.ContainerInstance
             }
         }
 
-        /// <summary> Updates container group tags with specified values. </summary>
+        /// <summary> Update container groups. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="containerGroupName"> The name of the container group. </param>
@@ -401,6 +410,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerGroupName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="containerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Updates container group tags with specified values. </remarks>
         public Response<ContainerGroupData> Update(string subscriptionId, string resourceGroupName, string containerGroupName, ContainerGroupPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -444,13 +454,14 @@ namespace Azure.ResourceManager.ContainerInstance
             return message;
         }
 
-        /// <summary> Delete the specified container group in the specified subscription and resource group. The operation does not delete other resources provided by the user, such as volumes. </summary>
+        /// <summary> Delete the specified container group. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="containerGroupName"> The name of the container group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="containerGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="containerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Delete the specified container group in the specified subscription and resource group. The operation does not delete other resources provided by the user, such as volumes. </remarks>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string containerGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -470,13 +481,14 @@ namespace Azure.ResourceManager.ContainerInstance
             }
         }
 
-        /// <summary> Delete the specified container group in the specified subscription and resource group. The operation does not delete other resources provided by the user, such as volumes. </summary>
+        /// <summary> Delete the specified container group. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="containerGroupName"> The name of the container group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="containerGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="containerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Delete the specified container group in the specified subscription and resource group. The operation does not delete other resources provided by the user, such as volumes. </remarks>
         public Response Delete(string subscriptionId, string resourceGroupName, string containerGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -517,13 +529,14 @@ namespace Azure.ResourceManager.ContainerInstance
             return message;
         }
 
-        /// <summary> Restarts all containers in a container group in place. If container image has updates, new image will be downloaded. </summary>
+        /// <summary> Restarts all containers in a container group. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="containerGroupName"> The name of the container group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="containerGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="containerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Restarts all containers in a container group in place. If container image has updates, new image will be downloaded. </remarks>
         public async Task<Response> RestartAsync(string subscriptionId, string resourceGroupName, string containerGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -541,13 +554,14 @@ namespace Azure.ResourceManager.ContainerInstance
             }
         }
 
-        /// <summary> Restarts all containers in a container group in place. If container image has updates, new image will be downloaded. </summary>
+        /// <summary> Restarts all containers in a container group. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="containerGroupName"> The name of the container group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="containerGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="containerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Restarts all containers in a container group in place. If container image has updates, new image will be downloaded. </remarks>
         public Response Restart(string subscriptionId, string resourceGroupName, string containerGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -586,13 +600,14 @@ namespace Azure.ResourceManager.ContainerInstance
             return message;
         }
 
-        /// <summary> Stops all containers in a container group. Compute resources will be deallocated and billing will stop. </summary>
+        /// <summary> Stops all containers in a container group. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="containerGroupName"> The name of the container group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="containerGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="containerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Stops all containers in a container group. Compute resources will be deallocated and billing will stop. </remarks>
         public async Task<Response> StopAsync(string subscriptionId, string resourceGroupName, string containerGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -610,13 +625,14 @@ namespace Azure.ResourceManager.ContainerInstance
             }
         }
 
-        /// <summary> Stops all containers in a container group. Compute resources will be deallocated and billing will stop. </summary>
+        /// <summary> Stops all containers in a container group. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="containerGroupName"> The name of the container group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="containerGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="containerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Stops all containers in a container group. Compute resources will be deallocated and billing will stop. </remarks>
         public Response Stop(string subscriptionId, string resourceGroupName, string containerGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -655,13 +671,14 @@ namespace Azure.ResourceManager.ContainerInstance
             return message;
         }
 
-        /// <summary> Starts all containers in a container group. Compute resources will be allocated and billing will start. </summary>
+        /// <summary> Starts all containers in a container group. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="containerGroupName"> The name of the container group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="containerGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="containerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Starts all containers in a container group. Compute resources will be allocated and billing will start. </remarks>
         public async Task<Response> StartAsync(string subscriptionId, string resourceGroupName, string containerGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -679,13 +696,14 @@ namespace Azure.ResourceManager.ContainerInstance
             }
         }
 
-        /// <summary> Starts all containers in a container group. Compute resources will be allocated and billing will start. </summary>
+        /// <summary> Starts all containers in a container group. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="containerGroupName"> The name of the container group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="containerGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="containerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Starts all containers in a container group. Compute resources will be allocated and billing will start. </remarks>
         public Response Start(string subscriptionId, string resourceGroupName, string containerGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -724,13 +742,14 @@ namespace Azure.ResourceManager.ContainerInstance
             return message;
         }
 
-        /// <summary> Gets all the network dependencies for this container group to allow complete control of network setting and configuration. For container groups, this will always be an empty list. </summary>
+        /// <summary> Get all network dependencies for container group. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="containerGroupName"> The name of the container group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="containerGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="containerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Gets all the network dependencies for this container group to allow complete control of network setting and configuration. For container groups, this will always be an empty list. </remarks>
         public async Task<Response<IReadOnlyList<string>>> GetOutboundNetworkDependenciesEndpointsAsync(string subscriptionId, string resourceGroupName, string containerGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -758,13 +777,14 @@ namespace Azure.ResourceManager.ContainerInstance
             }
         }
 
-        /// <summary> Gets all the network dependencies for this container group to allow complete control of network setting and configuration. For container groups, this will always be an empty list. </summary>
+        /// <summary> Get all network dependencies for container group. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="containerGroupName"> The name of the container group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="containerGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="containerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Gets all the network dependencies for this container group to allow complete control of network setting and configuration. For container groups, this will always be an empty list. </remarks>
         public Response<IReadOnlyList<string>> GetOutboundNetworkDependenciesEndpoints(string subscriptionId, string resourceGroupName, string containerGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -806,12 +826,13 @@ namespace Azure.ResourceManager.ContainerInstance
             return message;
         }
 
-        /// <summary> Get a list of container groups in the specified subscription. This operation returns properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes. </summary>
+        /// <summary> Get a list of container groups in the specified subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get a list of container groups in the specified subscription. This operation returns properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes. </remarks>
         public async Task<Response<ContainerGroupListResult>> ListNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -833,12 +854,13 @@ namespace Azure.ResourceManager.ContainerInstance
             }
         }
 
-        /// <summary> Get a list of container groups in the specified subscription. This operation returns properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes. </summary>
+        /// <summary> Get a list of container groups in the specified subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get a list of container groups in the specified subscription. This operation returns properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes. </remarks>
         public Response<ContainerGroupListResult> ListNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -874,13 +896,14 @@ namespace Azure.ResourceManager.ContainerInstance
             return message;
         }
 
-        /// <summary> Get a list of container groups in a specified subscription and resource group. This operation returns properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes. </summary>
+        /// <summary> Get a list of container groups in the specified subscription and resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get a list of container groups in a specified subscription and resource group. This operation returns properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes. </remarks>
         public async Task<Response<ContainerGroupListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -903,13 +926,14 @@ namespace Azure.ResourceManager.ContainerInstance
             }
         }
 
-        /// <summary> Get a list of container groups in a specified subscription and resource group. This operation returns properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes. </summary>
+        /// <summary> Get a list of container groups in the specified subscription and resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get a list of container groups in a specified subscription and resource group. This operation returns properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes. </remarks>
         public Response<ContainerGroupListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));

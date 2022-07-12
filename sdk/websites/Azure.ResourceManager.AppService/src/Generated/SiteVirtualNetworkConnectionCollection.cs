@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Adds a Virtual Network connection to an app or slot (PUT) or updates the connection properties (PATCH).
+        /// Adds a Virtual Network connection to an app or slot (PUT) or updates the connection properties (PATCH).
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}
         /// Operation Id: WebApps_CreateOrUpdateVnetConnection
         /// </summary>
@@ -64,6 +64,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Description for Adds a Virtual Network connection to an app or slot (PUT) or updates the connection properties (PATCH). </remarks>
         public virtual async Task<ArmOperation<SiteVirtualNetworkConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vnetName, VnetInfoResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Adds a Virtual Network connection to an app or slot (PUT) or updates the connection properties (PATCH).
+        /// Adds a Virtual Network connection to an app or slot (PUT) or updates the connection properties (PATCH).
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}
         /// Operation Id: WebApps_CreateOrUpdateVnetConnection
         /// </summary>
@@ -97,6 +98,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Description for Adds a Virtual Network connection to an app or slot (PUT) or updates the connection properties (PATCH). </remarks>
         public virtual ArmOperation<SiteVirtualNetworkConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string vnetName, VnetInfoResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
@@ -120,7 +122,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a virtual network the app (or deployment slot) is connected to by name.
+        /// Gets a virtual network the app (or deployment slot) is connected to by name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}
         /// Operation Id: WebApps_GetVnetConnection
         /// </summary>
@@ -128,6 +130,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
+        /// <remarks> Description for Gets a virtual network the app (or deployment slot) is connected to by name. </remarks>
         public virtual async Task<Response<SiteVirtualNetworkConnectionResource>> GetAsync(string vnetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
@@ -149,7 +152,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a virtual network the app (or deployment slot) is connected to by name.
+        /// Gets a virtual network the app (or deployment slot) is connected to by name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}
         /// Operation Id: WebApps_GetVnetConnection
         /// </summary>
@@ -157,6 +160,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
+        /// <remarks> Description for Gets a virtual network the app (or deployment slot) is connected to by name. </remarks>
         public virtual Response<SiteVirtualNetworkConnectionResource> Get(string vnetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
@@ -178,12 +182,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the virtual networks the app (or deployment slot) is connected to.
+        /// Gets the virtual networks the app (or deployment slot) is connected to.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections
         /// Operation Id: WebApps_ListVnetConnections
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SiteVirtualNetworkConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Gets the virtual networks the app (or deployment slot) is connected to. </remarks>
         public virtual AsyncPageable<SiteVirtualNetworkConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<SiteVirtualNetworkConnectionResource>> FirstPageFunc(int? pageSizeHint)
@@ -205,12 +210,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the virtual networks the app (or deployment slot) is connected to.
+        /// Gets the virtual networks the app (or deployment slot) is connected to.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections
         /// Operation Id: WebApps_ListVnetConnections
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SiteVirtualNetworkConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Gets the virtual networks the app (or deployment slot) is connected to. </remarks>
         public virtual Pageable<SiteVirtualNetworkConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<SiteVirtualNetworkConnectionResource> FirstPageFunc(int? pageSizeHint)
@@ -232,7 +238,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Gets a virtual network the app (or deployment slot) is connected to by name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}
         /// Operation Id: WebApps_GetVnetConnection
         /// </summary>
@@ -240,6 +246,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string vnetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
@@ -259,7 +266,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Gets a virtual network the app (or deployment slot) is connected to by name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}
         /// Operation Id: WebApps_GetVnetConnection
         /// </summary>
@@ -267,6 +274,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string vnetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));

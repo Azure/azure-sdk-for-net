@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Creates or updates a Media Services account
+        /// Create or update a Media Services account
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}
         /// Operation Id: Mediaservices_CreateOrUpdate
         /// </summary>
@@ -65,6 +65,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Creates or updates a Media Services account. </remarks>
         public virtual async Task<ArmOperation<MediaserviceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string accountName, MediaServiceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Creates or updates a Media Services account
+        /// Create or update a Media Services account
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}
         /// Operation Id: Mediaservices_CreateOrUpdate
         /// </summary>
@@ -98,6 +99,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Creates or updates a Media Services account. </remarks>
         public virtual ArmOperation<MediaserviceResource> CreateOrUpdate(WaitUntil waitUntil, string accountName, MediaServiceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
@@ -121,7 +123,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get the details of a Media Services account
+        /// Get a Media Services account
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}
         /// Operation Id: Mediaservices_Get
         /// </summary>
@@ -129,6 +131,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <remarks> Get the details of a Media Services account. </remarks>
         public virtual async Task<Response<MediaserviceResource>> GetAsync(string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
@@ -150,7 +153,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get the details of a Media Services account
+        /// Get a Media Services account
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}
         /// Operation Id: Mediaservices_Get
         /// </summary>
@@ -158,6 +161,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <remarks> Get the details of a Media Services account. </remarks>
         public virtual Response<MediaserviceResource> Get(string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
@@ -179,12 +183,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// List Media Services accounts in the resource group
+        /// List Media Services accounts
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices
         /// Operation Id: Mediaservices_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MediaserviceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List Media Services accounts in the resource group. </remarks>
         public virtual AsyncPageable<MediaserviceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<MediaserviceResource>> FirstPageFunc(int? pageSizeHint)
@@ -221,12 +226,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// List Media Services accounts in the resource group
+        /// List Media Services accounts
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices
         /// Operation Id: Mediaservices_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MediaserviceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List Media Services accounts in the resource group. </remarks>
         public virtual Pageable<MediaserviceResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<MediaserviceResource> FirstPageFunc(int? pageSizeHint)
@@ -263,7 +269,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get a Media Services account
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}
         /// Operation Id: Mediaservices_Get
         /// </summary>
@@ -271,6 +277,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
@@ -290,7 +297,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get a Media Services account
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}
         /// Operation Id: Mediaservices_Get
         /// </summary>
@@ -298,6 +305,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));

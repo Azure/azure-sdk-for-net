@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Create a new CommunicationService or update an existing CommunicationService.
+        /// Create Or Update
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}
         /// Operation Id: CommunicationServices_CreateOrUpdate
         /// </summary>
@@ -65,6 +65,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Create a new CommunicationService or update an existing CommunicationService. </remarks>
         public virtual async Task<ArmOperation<CommunicationServiceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string communicationServiceName, CommunicationServiceResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(communicationServiceName, nameof(communicationServiceName));
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Create a new CommunicationService or update an existing CommunicationService.
+        /// Create Or Update
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}
         /// Operation Id: CommunicationServices_CreateOrUpdate
         /// </summary>
@@ -98,6 +99,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Create a new CommunicationService or update an existing CommunicationService. </remarks>
         public virtual ArmOperation<CommunicationServiceResource> CreateOrUpdate(WaitUntil waitUntil, string communicationServiceName, CommunicationServiceResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(communicationServiceName, nameof(communicationServiceName));
@@ -121,7 +123,7 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Get the CommunicationService and its properties.
+        /// Get
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}
         /// Operation Id: CommunicationServices_Get
         /// </summary>
@@ -129,6 +131,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
+        /// <remarks> Get the CommunicationService and its properties. </remarks>
         public virtual async Task<Response<CommunicationServiceResource>> GetAsync(string communicationServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(communicationServiceName, nameof(communicationServiceName));
@@ -150,7 +153,7 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Get the CommunicationService and its properties.
+        /// Get
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}
         /// Operation Id: CommunicationServices_Get
         /// </summary>
@@ -158,6 +161,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
+        /// <remarks> Get the CommunicationService and its properties. </remarks>
         public virtual Response<CommunicationServiceResource> Get(string communicationServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(communicationServiceName, nameof(communicationServiceName));
@@ -179,12 +183,13 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Handles requests to list all resources in a resource group.
+        /// List By Resource Group
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices
         /// Operation Id: CommunicationServices_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CommunicationServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Handles requests to list all resources in a resource group. </remarks>
         public virtual AsyncPageable<CommunicationServiceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<CommunicationServiceResource>> FirstPageFunc(int? pageSizeHint)
@@ -221,12 +226,13 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Handles requests to list all resources in a resource group.
+        /// List By Resource Group
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices
         /// Operation Id: CommunicationServices_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CommunicationServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Handles requests to list all resources in a resource group. </remarks>
         public virtual Pageable<CommunicationServiceResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<CommunicationServiceResource> FirstPageFunc(int? pageSizeHint)
@@ -263,7 +269,7 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}
         /// Operation Id: CommunicationServices_Get
         /// </summary>
@@ -271,6 +277,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string communicationServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(communicationServiceName, nameof(communicationServiceName));
@@ -290,7 +297,7 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}
         /// Operation Id: CommunicationServices_Get
         /// </summary>
@@ -298,6 +305,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string communicationServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(communicationServiceName, nameof(communicationServiceName));

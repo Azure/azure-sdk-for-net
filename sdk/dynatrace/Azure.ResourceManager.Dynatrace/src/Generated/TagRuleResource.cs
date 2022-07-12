@@ -93,6 +93,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// Operation Id: TagRules_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get a TagRule. </remarks>
         public virtual async Task<Response<TagRuleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _tagRuleClientDiagnostics.CreateScope("TagRuleResource.Get");
@@ -117,6 +118,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// Operation Id: TagRules_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get a TagRule. </remarks>
         public virtual Response<TagRuleResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _tagRuleClientDiagnostics.CreateScope("TagRuleResource.Get");
@@ -142,6 +144,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Delete a TagRule. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _tagRuleClientDiagnostics.CreateScope("TagRuleResource.Delete");
@@ -168,6 +171,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Delete a TagRule. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _tagRuleClientDiagnostics.CreateScope("TagRuleResource.Delete");
@@ -195,6 +199,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        /// <remarks> Update a TagRule. </remarks>
         public virtual async Task<Response<TagRuleResource>> UpdateAsync(TagRulePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
@@ -221,6 +226,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        /// <remarks> Update a TagRule. </remarks>
         public virtual Response<TagRuleResource> Update(TagRulePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));

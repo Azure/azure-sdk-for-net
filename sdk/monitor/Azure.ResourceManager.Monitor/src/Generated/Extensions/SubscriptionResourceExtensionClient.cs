@@ -722,6 +722,7 @@ namespace Azure.ResourceManager.Monitor
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataCollectionEndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Lists all data collection endpoints in the specified subscription. </remarks>
         public virtual AsyncPageable<DataCollectionEndpointResource> GetDataCollectionEndpointsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<DataCollectionEndpointResource>> FirstPageFunc(int? pageSizeHint)
@@ -764,6 +765,7 @@ namespace Azure.ResourceManager.Monitor
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataCollectionEndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Lists all data collection endpoints in the specified subscription. </remarks>
         public virtual Pageable<DataCollectionEndpointResource> GetDataCollectionEndpoints(CancellationToken cancellationToken = default)
         {
             Page<DataCollectionEndpointResource> FirstPageFunc(int? pageSizeHint)
@@ -806,6 +808,7 @@ namespace Azure.ResourceManager.Monitor
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataCollectionRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Lists all data collection rules in the specified subscription. </remarks>
         public virtual AsyncPageable<DataCollectionRuleResource> GetDataCollectionRulesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<DataCollectionRuleResource>> FirstPageFunc(int? pageSizeHint)
@@ -848,6 +851,7 @@ namespace Azure.ResourceManager.Monitor
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataCollectionRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Lists all data collection rules in the specified subscription. </remarks>
         public virtual Pageable<DataCollectionRuleResource> GetDataCollectionRules(CancellationToken cancellationToken = default)
         {
             Page<DataCollectionRuleResource> FirstPageFunc(int? pageSizeHint)

@@ -87,11 +87,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get site extension information by its ID for a web site, or a deployment slot.
+        /// Get site extension information by its ID for a web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/siteextensions/{siteExtensionId}
         /// Operation Id: WebApps_GetSiteExtensionSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Get site extension information by its ID for a web site, or a deployment slot. </remarks>
         public virtual async Task<Response<SiteSlotSiteextensionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotSiteextensionWebAppsClientDiagnostics.CreateScope("SiteSlotSiteextensionResource.Get");
@@ -111,11 +112,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get site extension information by its ID for a web site, or a deployment slot.
+        /// Get site extension information by its ID for a web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/siteextensions/{siteExtensionId}
         /// Operation Id: WebApps_GetSiteExtensionSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Get site extension information by its ID for a web site, or a deployment slot. </remarks>
         public virtual Response<SiteSlotSiteextensionResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotSiteextensionWebAppsClientDiagnostics.CreateScope("SiteSlotSiteextensionResource.Get");
@@ -135,12 +137,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Remove a site extension from a web site, or a deployment slot.
+        /// Remove a site extension from a web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/siteextensions/{siteExtensionId}
         /// Operation Id: WebApps_DeleteSiteExtensionSlot
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Remove a site extension from a web site, or a deployment slot. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotSiteextensionWebAppsClientDiagnostics.CreateScope("SiteSlotSiteextensionResource.Delete");
@@ -161,12 +164,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Remove a site extension from a web site, or a deployment slot.
+        /// Remove a site extension from a web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/siteextensions/{siteExtensionId}
         /// Operation Id: WebApps_DeleteSiteExtensionSlot
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Remove a site extension from a web site, or a deployment slot. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotSiteextensionWebAppsClientDiagnostics.CreateScope("SiteSlotSiteextensionResource.Delete");
@@ -187,12 +191,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Install site extension on a web site, or a deployment slot.
+        /// Install site extension on a web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/siteextensions/{siteExtensionId}
         /// Operation Id: WebApps_InstallSiteExtensionSlot
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Install site extension on a web site, or a deployment slot. </remarks>
         public virtual async Task<ArmOperation<SiteSlotSiteextensionResource>> UpdateAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotSiteextensionWebAppsClientDiagnostics.CreateScope("SiteSlotSiteextensionResource.Update");
@@ -213,12 +218,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Install site extension on a web site, or a deployment slot.
+        /// Install site extension on a web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/siteextensions/{siteExtensionId}
         /// Operation Id: WebApps_InstallSiteExtensionSlot
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Install site extension on a web site, or a deployment slot. </remarks>
         public virtual ArmOperation<SiteSlotSiteextensionResource> Update(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotSiteextensionWebAppsClientDiagnostics.CreateScope("SiteSlotSiteextensionResource.Update");

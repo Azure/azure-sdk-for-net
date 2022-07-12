@@ -65,6 +65,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dataCollectionRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionRuleName"/> is null. </exception>
+        /// <remarks> Creates or updates a data collection rule. </remarks>
         public virtual async Task<ArmOperation<DataCollectionRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dataCollectionRuleName, DataCollectionRuleData data = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataCollectionRuleName, nameof(dataCollectionRuleName));
@@ -97,6 +98,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dataCollectionRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionRuleName"/> is null. </exception>
+        /// <remarks> Creates or updates a data collection rule. </remarks>
         public virtual ArmOperation<DataCollectionRuleResource> CreateOrUpdate(WaitUntil waitUntil, string dataCollectionRuleName, DataCollectionRuleData data = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataCollectionRuleName, nameof(dataCollectionRuleName));
@@ -127,6 +129,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dataCollectionRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionRuleName"/> is null. </exception>
+        /// <remarks> Returns the specified data collection rule. </remarks>
         public virtual async Task<Response<DataCollectionRuleResource>> GetAsync(string dataCollectionRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataCollectionRuleName, nameof(dataCollectionRuleName));
@@ -156,6 +159,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dataCollectionRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionRuleName"/> is null. </exception>
+        /// <remarks> Returns the specified data collection rule. </remarks>
         public virtual Response<DataCollectionRuleResource> Get(string dataCollectionRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataCollectionRuleName, nameof(dataCollectionRuleName));
@@ -183,6 +187,7 @@ namespace Azure.ResourceManager.Monitor
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataCollectionRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Lists all data collection rules in the specified resource group. </remarks>
         public virtual AsyncPageable<DataCollectionRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<DataCollectionRuleResource>> FirstPageFunc(int? pageSizeHint)
@@ -225,6 +230,7 @@ namespace Azure.ResourceManager.Monitor
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataCollectionRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Lists all data collection rules in the specified resource group. </remarks>
         public virtual Pageable<DataCollectionRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<DataCollectionRuleResource> FirstPageFunc(int? pageSizeHint)
@@ -261,7 +267,7 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Returns the specified data collection rule.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}
         /// Operation Id: DataCollectionRules_Get
         /// </summary>
@@ -269,6 +275,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dataCollectionRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionRuleName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string dataCollectionRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataCollectionRuleName, nameof(dataCollectionRuleName));
@@ -288,7 +295,7 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Returns the specified data collection rule.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}
         /// Operation Id: DataCollectionRules_Get
         /// </summary>
@@ -296,6 +303,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dataCollectionRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionRuleName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string dataCollectionRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataCollectionRuleName, nameof(dataCollectionRuleName));

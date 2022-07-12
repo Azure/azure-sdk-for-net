@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Creates a Job.
+        /// Create Job
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}/jobs/{jobName}
         /// Operation Id: Jobs_Create
         /// </summary>
@@ -64,6 +64,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Creates a Job. </remarks>
         public virtual async Task<ArmOperation<JobResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string jobName, JobData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Creates a Job.
+        /// Create Job
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}/jobs/{jobName}
         /// Operation Id: Jobs_Create
         /// </summary>
@@ -97,6 +98,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Creates a Job. </remarks>
         public virtual ArmOperation<JobResource> CreateOrUpdate(WaitUntil waitUntil, string jobName, JobData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
@@ -120,7 +122,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Gets a Job.
+        /// Get Job
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}/jobs/{jobName}
         /// Operation Id: Jobs_Get
         /// </summary>
@@ -128,6 +130,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <remarks> Gets a Job. </remarks>
         public virtual async Task<Response<JobResource>> GetAsync(string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
@@ -149,7 +152,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Gets a Job.
+        /// Get Job
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}/jobs/{jobName}
         /// Operation Id: Jobs_Get
         /// </summary>
@@ -157,6 +160,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <remarks> Gets a Job. </remarks>
         public virtual Response<JobResource> Get(string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
@@ -178,7 +182,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Lists all of the Jobs for the Transform.
+        /// List Jobs
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}/jobs
         /// Operation Id: Jobs_List
         /// </summary>
@@ -186,6 +190,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="orderby"> Specifies the key by which the result collection should be ordered. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="JobResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Lists all of the Jobs for the Transform. </remarks>
         public virtual AsyncPageable<JobResource> GetAllAsync(string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<JobResource>> FirstPageFunc(int? pageSizeHint)
@@ -222,7 +227,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Lists all of the Jobs for the Transform.
+        /// List Jobs
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}/jobs
         /// Operation Id: Jobs_List
         /// </summary>
@@ -230,6 +235,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="orderby"> Specifies the key by which the result collection should be ordered. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="JobResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Lists all of the Jobs for the Transform. </remarks>
         public virtual Pageable<JobResource> GetAll(string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Page<JobResource> FirstPageFunc(int? pageSizeHint)
@@ -266,7 +272,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get Job
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}/jobs/{jobName}
         /// Operation Id: Jobs_Get
         /// </summary>
@@ -274,6 +280,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
@@ -293,7 +300,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get Job
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}/jobs/{jobName}
         /// Operation Id: Jobs_Get
         /// </summary>
@@ -301,6 +308,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));

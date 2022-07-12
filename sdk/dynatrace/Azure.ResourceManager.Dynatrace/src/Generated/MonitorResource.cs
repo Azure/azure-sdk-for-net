@@ -105,6 +105,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
+        /// <remarks> Get a TagRule. </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<TagRuleResource>> GetTagRuleAsync(string ruleSetName, CancellationToken cancellationToken = default)
         {
@@ -120,6 +121,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
+        /// <remarks> Get a TagRule. </remarks>
         [ForwardsClientCalls]
         public virtual Response<TagRuleResource> GetTagRule(string ruleSetName, CancellationToken cancellationToken = default)
         {
@@ -142,6 +144,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <remarks> Get a DynatraceSingleSignOnResource. </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<DynatraceSingleSignOnResource>> GetDynatraceSingleSignOnResourceAsync(string configurationName, CancellationToken cancellationToken = default)
         {
@@ -157,6 +160,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <remarks> Get a DynatraceSingleSignOnResource. </remarks>
         [ForwardsClientCalls]
         public virtual Response<DynatraceSingleSignOnResource> GetDynatraceSingleSignOnResource(string configurationName, CancellationToken cancellationToken = default)
         {
@@ -169,6 +173,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// Operation Id: Monitors_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get a MonitorResource. </remarks>
         public virtual async Task<Response<MonitorResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _monitorResourceMonitorsClientDiagnostics.CreateScope("MonitorResource.Get");
@@ -193,6 +198,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// Operation Id: Monitors_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get a MonitorResource. </remarks>
         public virtual Response<MonitorResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _monitorResourceMonitorsClientDiagnostics.CreateScope("MonitorResource.Get");
@@ -218,6 +224,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Delete a MonitorResource. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _monitorResourceMonitorsClientDiagnostics.CreateScope("MonitorResource.Delete");
@@ -244,6 +251,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Delete a MonitorResource. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _monitorResourceMonitorsClientDiagnostics.CreateScope("MonitorResource.Delete");
@@ -271,6 +279,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        /// <remarks> Update a MonitorResource. </remarks>
         public virtual async Task<Response<MonitorResource>> UpdateAsync(MonitorResourcePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
@@ -297,6 +306,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        /// <remarks> Update a MonitorResource. </remarks>
         public virtual Response<MonitorResource> Update(MonitorResourcePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
@@ -321,6 +331,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// Operation Id: Monitors_GetAccountCredentials
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Gets the user account credentials for a Monitor. </remarks>
         public virtual async Task<Response<AccountInfoSecure>> GetAccountCredentialsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _monitorResourceMonitorsClientDiagnostics.CreateScope("MonitorResource.GetAccountCredentials");
@@ -343,6 +354,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// Operation Id: Monitors_GetAccountCredentials
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Gets the user account credentials for a Monitor. </remarks>
         public virtual Response<AccountInfoSecure> GetAccountCredentials(CancellationToken cancellationToken = default)
         {
             using var scope = _monitorResourceMonitorsClientDiagnostics.CreateScope("MonitorResource.GetAccountCredentials");
@@ -366,6 +378,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MonitoredResourceDetails" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List the resources currently being monitored by the Dynatrace monitor resource. </remarks>
         public virtual AsyncPageable<MonitoredResourceDetails> GetMonitoredResourcesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<MonitoredResourceDetails>> FirstPageFunc(int? pageSizeHint)
@@ -408,6 +421,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MonitoredResourceDetails" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List the resources currently being monitored by the Dynatrace monitor resource. </remarks>
         public virtual Pageable<MonitoredResourceDetails> GetMonitoredResources(CancellationToken cancellationToken = default)
         {
             Page<MonitoredResourceDetails> FirstPageFunc(int? pageSizeHint)
@@ -449,6 +463,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// Operation Id: Monitors_GetVMHostPayload
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Returns the payload that needs to be passed in the request body for installing Dynatrace agent on a VM. </remarks>
         public virtual async Task<Response<VmExtensionPayload>> GetVmHostPayloadAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _monitorResourceMonitorsClientDiagnostics.CreateScope("MonitorResource.GetVmHostPayload");
@@ -471,6 +486,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// Operation Id: Monitors_GetVMHostPayload
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Returns the payload that needs to be passed in the request body for installing Dynatrace agent on a VM. </remarks>
         public virtual Response<VmExtensionPayload> GetVmHostPayload(CancellationToken cancellationToken = default)
         {
             using var scope = _monitorResourceMonitorsClientDiagnostics.CreateScope("MonitorResource.GetVmHostPayload");
@@ -494,6 +510,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VmInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List the compute resources currently being monitored by the Dynatrace resource. </remarks>
         public virtual AsyncPageable<VmInfo> GetHostsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<VmInfo>> FirstPageFunc(int? pageSizeHint)
@@ -536,6 +553,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VmInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List the compute resources currently being monitored by the Dynatrace resource. </remarks>
         public virtual Pageable<VmInfo> GetHosts(CancellationToken cancellationToken = default)
         {
             Page<VmInfo> FirstPageFunc(int? pageSizeHint)
@@ -578,6 +596,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AppServiceInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Gets list of App Services with Dynatrace PaaS OneAgent enabled. </remarks>
         public virtual AsyncPageable<AppServiceInfo> GetAppServicesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<AppServiceInfo>> FirstPageFunc(int? pageSizeHint)
@@ -620,6 +639,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppServiceInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Gets list of App Services with Dynatrace PaaS OneAgent enabled. </remarks>
         public virtual Pageable<AppServiceInfo> GetAppServices(CancellationToken cancellationToken = default)
         {
             Page<AppServiceInfo> FirstPageFunc(int? pageSizeHint)
@@ -662,6 +682,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </summary>
         /// <param name="content"> The details of the get sso details request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Gets the SSO configuration details from the partner. </remarks>
         public virtual async Task<Response<SsoDetailsResult>> GetSsoDetailsAsync(SsoDetailsContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _monitorResourceMonitorsClientDiagnostics.CreateScope("MonitorResource.GetSsoDetails");
@@ -685,6 +706,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </summary>
         /// <param name="content"> The details of the get sso details request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Gets the SSO configuration details from the partner. </remarks>
         public virtual Response<SsoDetailsResult> GetSsoDetails(SsoDetailsContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _monitorResourceMonitorsClientDiagnostics.CreateScope("MonitorResource.GetSsoDetails");
@@ -710,6 +732,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> An async collection of <see cref="LinkableEnvironmentResult" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Gets all the Dynatrace environments that a user can link a azure resource to. </remarks>
         public virtual AsyncPageable<LinkableEnvironmentResult> GetLinkableEnvironmentsAsync(LinkableEnvironmentContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -756,6 +779,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="LinkableEnvironmentResult" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Gets all the Dynatrace environments that a user can link a azure resource to. </remarks>
         public virtual Pageable<LinkableEnvironmentResult> GetLinkableEnvironments(LinkableEnvironmentContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -794,7 +818,7 @@ namespace Azure.ResourceManager.Dynatrace
         }
 
         /// <summary>
-        /// Add a tag to the current resource.
+        /// Get a MonitorResource
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}
         /// Operation Id: Monitors_Get
         /// </summary>
@@ -802,6 +826,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        /// <remarks> Add a tag to the current resource. </remarks>
         public virtual async Task<Response<MonitorResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -825,7 +850,7 @@ namespace Azure.ResourceManager.Dynatrace
         }
 
         /// <summary>
-        /// Add a tag to the current resource.
+        /// Get a MonitorResource
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}
         /// Operation Id: Monitors_Get
         /// </summary>
@@ -833,6 +858,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        /// <remarks> Add a tag to the current resource. </remarks>
         public virtual Response<MonitorResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -856,13 +882,14 @@ namespace Azure.ResourceManager.Dynatrace
         }
 
         /// <summary>
-        /// Replace the tags on the resource with the given set.
+        /// Get a MonitorResource
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}
         /// Operation Id: Monitors_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        /// <remarks> Replace the tags on the resource with the given set. </remarks>
         public virtual async Task<Response<MonitorResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -886,13 +913,14 @@ namespace Azure.ResourceManager.Dynatrace
         }
 
         /// <summary>
-        /// Replace the tags on the resource with the given set.
+        /// Get a MonitorResource
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}
         /// Operation Id: Monitors_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        /// <remarks> Replace the tags on the resource with the given set. </remarks>
         public virtual Response<MonitorResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -916,13 +944,14 @@ namespace Azure.ResourceManager.Dynatrace
         }
 
         /// <summary>
-        /// Removes a tag by key from the resource.
+        /// Get a MonitorResource
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}
         /// Operation Id: Monitors_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <remarks> Removes a tag by key from the resource. </remarks>
         public virtual async Task<Response<MonitorResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -945,13 +974,14 @@ namespace Azure.ResourceManager.Dynatrace
         }
 
         /// <summary>
-        /// Removes a tag by key from the resource.
+        /// Get a MonitorResource
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}
         /// Operation Id: Monitors_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <remarks> Removes a tag by key from the resource. </remarks>
         public virtual Response<MonitorResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));

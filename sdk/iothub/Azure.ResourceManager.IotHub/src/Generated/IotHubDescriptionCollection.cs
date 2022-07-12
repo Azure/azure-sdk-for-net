@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Create or update the metadata of an Iot hub. The usual pattern to modify a property is to retrieve the IoT hub metadata and security metadata, and then combine them with the modified values in a new body to update the IoT hub. If certain properties are missing in the JSON, updating IoT Hub may cause these values to fallback to default, which may lead to unexpected behavior.
+        /// Create or update the metadata of an IoT hub.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}
         /// Operation Id: IotHubResource_CreateOrUpdate
         /// </summary>
@@ -66,6 +66,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Create or update the metadata of an Iot hub. The usual pattern to modify a property is to retrieve the IoT hub metadata and security metadata, and then combine them with the modified values in a new body to update the IoT hub. If certain properties are missing in the JSON, updating IoT Hub may cause these values to fallback to default, which may lead to unexpected behavior. </remarks>
         public virtual async Task<ArmOperation<IotHubDescriptionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string resourceName, IotHubDescriptionData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Create or update the metadata of an Iot hub. The usual pattern to modify a property is to retrieve the IoT hub metadata and security metadata, and then combine them with the modified values in a new body to update the IoT hub. If certain properties are missing in the JSON, updating IoT Hub may cause these values to fallback to default, which may lead to unexpected behavior.
+        /// Create or update the metadata of an IoT hub.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}
         /// Operation Id: IotHubResource_CreateOrUpdate
         /// </summary>
@@ -100,6 +101,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Create or update the metadata of an Iot hub. The usual pattern to modify a property is to retrieve the IoT hub metadata and security metadata, and then combine them with the modified values in a new body to update the IoT hub. If certain properties are missing in the JSON, updating IoT Hub may cause these values to fallback to default, which may lead to unexpected behavior. </remarks>
         public virtual ArmOperation<IotHubDescriptionResource> CreateOrUpdate(WaitUntil waitUntil, string resourceName, IotHubDescriptionData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
@@ -123,7 +125,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get the non-security related metadata of an IoT hub.
+        /// Get the non-security related metadata of an IoT hub
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}
         /// Operation Id: IotHubResource_Get
         /// </summary>
@@ -131,6 +133,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <remarks> Get the non-security related metadata of an IoT hub. </remarks>
         public virtual async Task<Response<IotHubDescriptionResource>> GetAsync(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
@@ -152,7 +155,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get the non-security related metadata of an IoT hub.
+        /// Get the non-security related metadata of an IoT hub
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}
         /// Operation Id: IotHubResource_Get
         /// </summary>
@@ -160,6 +163,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <remarks> Get the non-security related metadata of an IoT hub. </remarks>
         public virtual Response<IotHubDescriptionResource> Get(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
@@ -181,12 +185,13 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get all the IoT hubs in a resource group.
+        /// Get all the IoT hubs in a resource group
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs
         /// Operation Id: IotHubResource_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="IotHubDescriptionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Get all the IoT hubs in a resource group. </remarks>
         public virtual AsyncPageable<IotHubDescriptionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<IotHubDescriptionResource>> FirstPageFunc(int? pageSizeHint)
@@ -223,12 +228,13 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get all the IoT hubs in a resource group.
+        /// Get all the IoT hubs in a resource group
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs
         /// Operation Id: IotHubResource_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="IotHubDescriptionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Get all the IoT hubs in a resource group. </remarks>
         public virtual Pageable<IotHubDescriptionResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<IotHubDescriptionResource> FirstPageFunc(int? pageSizeHint)
@@ -265,7 +271,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get the non-security related metadata of an IoT hub
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}
         /// Operation Id: IotHubResource_Get
         /// </summary>
@@ -273,6 +279,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
@@ -292,7 +299,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get the non-security related metadata of an IoT hub
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}
         /// Operation Id: IotHubResource_Get
         /// </summary>
@@ -300,6 +307,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));

@@ -87,13 +87,14 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get a recommendation rule for an app.
+        /// Get a recommendation rule for an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendations/{name}
         /// Operation Id: Recommendations_GetRuleDetailsByHostingEnvironment
         /// </summary>
         /// <param name="updateSeen"> Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of the recommendation object. </param>
         /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don&apos;t need to specify it to query an active entry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Get a recommendation rule for an app. </remarks>
         public virtual async Task<Response<HostingEnvironmentRecommendationResource>> GetAsync(bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
         {
             using var scope = _hostingEnvironmentRecommendationRecommendationsClientDiagnostics.CreateScope("HostingEnvironmentRecommendationResource.Get");
@@ -113,13 +114,14 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get a recommendation rule for an app.
+        /// Get a recommendation rule for an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendations/{name}
         /// Operation Id: Recommendations_GetRuleDetailsByHostingEnvironment
         /// </summary>
         /// <param name="updateSeen"> Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of the recommendation object. </param>
         /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don&apos;t need to specify it to query an active entry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Get a recommendation rule for an app. </remarks>
         public virtual Response<HostingEnvironmentRecommendationResource> Get(bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
         {
             using var scope = _hostingEnvironmentRecommendationRecommendationsClientDiagnostics.CreateScope("HostingEnvironmentRecommendationResource.Get");
@@ -139,13 +141,14 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Disables the specific rule for a web site permanently.
+        /// Disables the specific rule for a web site permanently.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendations/{name}/disable
         /// Operation Id: Recommendations_DisableRecommendationForHostingEnvironment
         /// </summary>
         /// <param name="environmentName"> Site name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
+        /// <remarks> Description for Disables the specific rule for a web site permanently. </remarks>
         public virtual async Task<Response> DisableRecommendationForHostingEnvironmentAsync(string environmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(environmentName, nameof(environmentName));
@@ -165,13 +168,14 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Disables the specific rule for a web site permanently.
+        /// Disables the specific rule for a web site permanently.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendations/{name}/disable
         /// Operation Id: Recommendations_DisableRecommendationForHostingEnvironment
         /// </summary>
         /// <param name="environmentName"> Site name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
+        /// <remarks> Description for Disables the specific rule for a web site permanently. </remarks>
         public virtual Response DisableRecommendationForHostingEnvironment(string environmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(environmentName, nameof(environmentName));

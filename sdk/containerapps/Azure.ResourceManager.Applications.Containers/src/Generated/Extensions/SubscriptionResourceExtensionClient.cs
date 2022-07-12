@@ -54,6 +54,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ContainerAppResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Get the Container Apps in a given subscription. </remarks>
         public virtual AsyncPageable<ContainerAppResource> GetContainerAppsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ContainerAppResource>> FirstPageFunc(int? pageSizeHint)
@@ -96,6 +97,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContainerAppResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Get the Container Apps in a given subscription. </remarks>
         public virtual Pageable<ContainerAppResource> GetContainerApps(CancellationToken cancellationToken = default)
         {
             Page<ContainerAppResource> FirstPageFunc(int? pageSizeHint)
@@ -132,12 +134,13 @@ namespace Azure.ResourceManager.Applications.Containers
         }
 
         /// <summary>
-        /// Get all Managed Environments for a subscription.
+        /// Get all Environments for a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.App/managedEnvironments
         /// Operation Id: ManagedEnvironments_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagedEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Get all Managed Environments for a subscription. </remarks>
         public virtual AsyncPageable<ManagedEnvironmentResource> GetManagedEnvironmentsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ManagedEnvironmentResource>> FirstPageFunc(int? pageSizeHint)
@@ -174,12 +177,13 @@ namespace Azure.ResourceManager.Applications.Containers
         }
 
         /// <summary>
-        /// Get all Managed Environments for a subscription.
+        /// Get all Environments for a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.App/managedEnvironments
         /// Operation Id: ManagedEnvironments_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Get all Managed Environments for a subscription. </remarks>
         public virtual Pageable<ManagedEnvironmentResource> GetManagedEnvironments(CancellationToken cancellationToken = default)
         {
             Page<ManagedEnvironmentResource> FirstPageFunc(int? pageSizeHint)

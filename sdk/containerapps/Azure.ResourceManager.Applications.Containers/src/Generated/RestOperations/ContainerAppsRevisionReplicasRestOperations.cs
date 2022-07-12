@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/>, <paramref name="revisionName"/> or <paramref name="replicaName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/>, <paramref name="revisionName"/> or <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get a replica for a Container App Revision. </remarks>
         public async Task<Response<ContainerAppReplicaData>> GetReplicaAsync(string subscriptionId, string resourceGroupName, string containerAppName, string revisionName, string replicaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -105,6 +106,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/>, <paramref name="revisionName"/> or <paramref name="replicaName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/>, <paramref name="revisionName"/> or <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get a replica for a Container App Revision. </remarks>
         public Response<ContainerAppReplicaData> GetReplica(string subscriptionId, string resourceGroupName, string containerAppName, string revisionName, string replicaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -162,6 +164,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/> or <paramref name="revisionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/> or <paramref name="revisionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List replicas for a Container App Revision. </remarks>
         public async Task<Response<ReplicaCollection>> ListReplicasAsync(string subscriptionId, string resourceGroupName, string containerAppName, string revisionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -193,6 +196,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/> or <paramref name="revisionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/> or <paramref name="revisionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List replicas for a Container App Revision. </remarks>
         public Response<ReplicaCollection> ListReplicas(string subscriptionId, string resourceGroupName, string containerAppName, string revisionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Updates source control token
+        /// Updates source control token
         /// Request Path: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
         /// Operation Id: UpdateSourceControl
         /// </summary>
@@ -65,6 +65,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Description for Updates source control token. </remarks>
         public virtual async Task<ArmOperation<SourceControlResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string sourceControlType, SourceControlData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceControlType, nameof(sourceControlType));
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Updates source control token
+        /// Updates source control token
         /// Request Path: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
         /// Operation Id: UpdateSourceControl
         /// </summary>
@@ -98,6 +99,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Description for Updates source control token. </remarks>
         public virtual ArmOperation<SourceControlResource> CreateOrUpdate(WaitUntil waitUntil, string sourceControlType, SourceControlData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceControlType, nameof(sourceControlType));
@@ -121,7 +123,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets source control token
+        /// Gets source control token
         /// Request Path: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
         /// Operation Id: GetSourceControl
         /// </summary>
@@ -129,6 +131,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> is null. </exception>
+        /// <remarks> Description for Gets source control token. </remarks>
         public virtual async Task<Response<SourceControlResource>> GetAsync(string sourceControlType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceControlType, nameof(sourceControlType));
@@ -150,7 +153,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets source control token
+        /// Gets source control token
         /// Request Path: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
         /// Operation Id: GetSourceControl
         /// </summary>
@@ -158,6 +161,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> is null. </exception>
+        /// <remarks> Description for Gets source control token. </remarks>
         public virtual Response<SourceControlResource> Get(string sourceControlType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceControlType, nameof(sourceControlType));
@@ -179,12 +183,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the source controls available for Azure websites.
+        /// Gets the source controls available for Azure websites.
         /// Request Path: /providers/Microsoft.Web/sourcecontrols
         /// Operation Id: ListSourceControls
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SourceControlResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Gets the source controls available for Azure websites. </remarks>
         public virtual AsyncPageable<SourceControlResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<SourceControlResource>> FirstPageFunc(int? pageSizeHint)
@@ -221,12 +226,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the source controls available for Azure websites.
+        /// Gets the source controls available for Azure websites.
         /// Request Path: /providers/Microsoft.Web/sourcecontrols
         /// Operation Id: ListSourceControls
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SourceControlResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Gets the source controls available for Azure websites. </remarks>
         public virtual Pageable<SourceControlResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<SourceControlResource> FirstPageFunc(int? pageSizeHint)
@@ -263,7 +269,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Gets source control token
         /// Request Path: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
         /// Operation Id: GetSourceControl
         /// </summary>
@@ -271,6 +277,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string sourceControlType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceControlType, nameof(sourceControlType));
@@ -290,7 +297,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Gets source control token
         /// Request Path: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
         /// Operation Id: GetSourceControl
         /// </summary>
@@ -298,6 +305,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string sourceControlType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceControlType, nameof(sourceControlType));

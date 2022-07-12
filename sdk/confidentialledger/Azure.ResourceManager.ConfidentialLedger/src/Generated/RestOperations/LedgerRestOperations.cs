@@ -57,13 +57,14 @@ namespace Azure.ResourceManager.ConfidentialLedger
             return message;
         }
 
-        /// <summary> Retrieves the properties of a Confidential Ledger. </summary>
+        /// <summary> Retrieves information about a Confidential Ledger resource. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="ledgerName"> Name of the Confidential Ledger. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ledgerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ledgerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Retrieves the properties of a Confidential Ledger. </remarks>
         public async Task<Response<ConfidentialLedgerData>> GetAsync(string subscriptionId, string resourceGroupName, string ledgerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -88,13 +89,14 @@ namespace Azure.ResourceManager.ConfidentialLedger
             }
         }
 
-        /// <summary> Retrieves the properties of a Confidential Ledger. </summary>
+        /// <summary> Retrieves information about a Confidential Ledger resource. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="ledgerName"> Name of the Confidential Ledger. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ledgerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ledgerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Retrieves the properties of a Confidential Ledger. </remarks>
         public Response<ConfidentialLedgerData> Get(string subscriptionId, string resourceGroupName, string ledgerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -139,13 +141,14 @@ namespace Azure.ResourceManager.ConfidentialLedger
             return message;
         }
 
-        /// <summary> Deletes an existing Confidential Ledger. </summary>
+        /// <summary> Deletes a Confidential Ledger resource. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="ledgerName"> Name of the Confidential Ledger. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ledgerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ledgerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Deletes an existing Confidential Ledger. </remarks>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string ledgerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -165,13 +168,14 @@ namespace Azure.ResourceManager.ConfidentialLedger
             }
         }
 
-        /// <summary> Deletes an existing Confidential Ledger. </summary>
+        /// <summary> Deletes a Confidential Ledger resource. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="ledgerName"> Name of the Confidential Ledger. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ledgerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ledgerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Deletes an existing Confidential Ledger. </remarks>
         public Response Delete(string subscriptionId, string resourceGroupName, string ledgerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -215,7 +219,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
             return message;
         }
 
-        /// <summary> Creates a  Confidential Ledger with the specified ledger parameters. </summary>
+        /// <summary> Creates a  Confidential Ledger. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="ledgerName"> Name of the Confidential Ledger. </param>
@@ -223,6 +227,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ledgerName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ledgerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Creates a  Confidential Ledger with the specified ledger parameters. </remarks>
         public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string ledgerName, ConfidentialLedgerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -242,7 +247,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
             }
         }
 
-        /// <summary> Creates a  Confidential Ledger with the specified ledger parameters. </summary>
+        /// <summary> Creates a  Confidential Ledger. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="ledgerName"> Name of the Confidential Ledger. </param>
@@ -250,6 +255,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ledgerName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ledgerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Creates a  Confidential Ledger with the specified ledger parameters. </remarks>
         public Response Create(string subscriptionId, string resourceGroupName, string ledgerName, ConfidentialLedgerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -293,7 +299,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
             return message;
         }
 
-        /// <summary> Updates properties of Confidential Ledger. </summary>
+        /// <summary> Update Confidential Ledger properties. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="ledgerName"> Name of the Confidential Ledger. </param>
@@ -301,6 +307,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ledgerName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ledgerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Updates properties of Confidential Ledger. </remarks>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string ledgerName, ConfidentialLedgerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -320,7 +327,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
             }
         }
 
-        /// <summary> Updates properties of Confidential Ledger. </summary>
+        /// <summary> Update Confidential Ledger properties. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="ledgerName"> Name of the Confidential Ledger. </param>
@@ -328,6 +335,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ledgerName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ledgerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Updates properties of Confidential Ledger. </remarks>
         public Response Update(string subscriptionId, string resourceGroupName, string ledgerName, ConfidentialLedgerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -370,13 +378,14 @@ namespace Azure.ResourceManager.ConfidentialLedger
             return message;
         }
 
-        /// <summary> Retrieves the properties of all Confidential Ledgers. </summary>
+        /// <summary> Retrieves information about all Confidential Ledger resources under the given subscription and resource group. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq &apos;Public&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Retrieves the properties of all Confidential Ledgers. </remarks>
         public async Task<Response<ConfidentialLedgerList>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -398,13 +407,14 @@ namespace Azure.ResourceManager.ConfidentialLedger
             }
         }
 
-        /// <summary> Retrieves the properties of all Confidential Ledgers. </summary>
+        /// <summary> Retrieves information about all Confidential Ledger resources under the given subscription and resource group. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq &apos;Public&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Retrieves the properties of all Confidential Ledgers. </remarks>
         public Response<ConfidentialLedgerList> ListByResourceGroup(string subscriptionId, string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -447,12 +457,13 @@ namespace Azure.ResourceManager.ConfidentialLedger
             return message;
         }
 
-        /// <summary> Retrieves the properties of all Confidential Ledgers. </summary>
+        /// <summary> Retrieves information about all Confidential Ledger resources under the given subscription. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq &apos;Public&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Retrieves the properties of all Confidential Ledgers. </remarks>
         public async Task<Response<ConfidentialLedgerList>> ListBySubscriptionAsync(string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -473,12 +484,13 @@ namespace Azure.ResourceManager.ConfidentialLedger
             }
         }
 
-        /// <summary> Retrieves the properties of all Confidential Ledgers. </summary>
+        /// <summary> Retrieves information about all Confidential Ledger resources under the given subscription. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq &apos;Public&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Retrieves the properties of all Confidential Ledgers. </remarks>
         public Response<ConfidentialLedgerList> ListBySubscription(string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -513,7 +525,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
             return message;
         }
 
-        /// <summary> Retrieves the properties of all Confidential Ledgers. </summary>
+        /// <summary> Retrieves information about all Confidential Ledger resources under the given subscription and resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
@@ -521,6 +533,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Retrieves the properties of all Confidential Ledgers. </remarks>
         public async Task<Response<ConfidentialLedgerList>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -543,7 +556,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
             }
         }
 
-        /// <summary> Retrieves the properties of all Confidential Ledgers. </summary>
+        /// <summary> Retrieves information about all Confidential Ledger resources under the given subscription and resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
@@ -551,6 +564,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Retrieves the properties of all Confidential Ledgers. </remarks>
         public Response<ConfidentialLedgerList> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -587,13 +601,14 @@ namespace Azure.ResourceManager.ConfidentialLedger
             return message;
         }
 
-        /// <summary> Retrieves the properties of all Confidential Ledgers. </summary>
+        /// <summary> Retrieves information about all Confidential Ledger resources under the given subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq &apos;Public&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Retrieves the properties of all Confidential Ledgers. </remarks>
         public async Task<Response<ConfidentialLedgerList>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -615,13 +630,14 @@ namespace Azure.ResourceManager.ConfidentialLedger
             }
         }
 
-        /// <summary> Retrieves the properties of all Confidential Ledgers. </summary>
+        /// <summary> Retrieves information about all Confidential Ledger resources under the given subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq &apos;Public&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Retrieves the properties of all Confidential Ledgers. </remarks>
         public Response<ConfidentialLedgerList> ListBySubscriptionNextPage(string nextLink, string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));

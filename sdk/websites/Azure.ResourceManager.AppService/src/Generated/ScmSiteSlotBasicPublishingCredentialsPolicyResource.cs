@@ -87,11 +87,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Returns whether Scm basic auth is allowed on the site or not.
+        /// Returns whether Scm basic auth is allowed on the site or not.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/scm
         /// Operation Id: WebApps_GetScmAllowedSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Returns whether Scm basic auth is allowed on the site or not. </remarks>
         public virtual async Task<Response<ScmSiteSlotBasicPublishingCredentialsPolicyResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _scmSiteSlotBasicPublishingCredentialsPolicyWebAppsClientDiagnostics.CreateScope("ScmSiteSlotBasicPublishingCredentialsPolicyResource.Get");
@@ -111,11 +112,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Returns whether Scm basic auth is allowed on the site or not.
+        /// Returns whether Scm basic auth is allowed on the site or not.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/scm
         /// Operation Id: WebApps_GetScmAllowedSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Returns whether Scm basic auth is allowed on the site or not. </remarks>
         public virtual Response<ScmSiteSlotBasicPublishingCredentialsPolicyResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _scmSiteSlotBasicPublishingCredentialsPolicyWebAppsClientDiagnostics.CreateScope("ScmSiteSlotBasicPublishingCredentialsPolicyResource.Get");
@@ -135,7 +137,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Updates whether user publishing credentials are allowed on the site or not.
+        /// Updates whether user publishing credentials are allowed on the site or not.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/scm
         /// Operation Id: WebApps_UpdateScmAllowedSlot
         /// </summary>
@@ -143,6 +145,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        /// <remarks> Description for Updates whether user publishing credentials are allowed on the site or not. </remarks>
         public virtual async Task<ArmOperation<ScmSiteSlotBasicPublishingCredentialsPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, CsmPublishingCredentialsPoliciesEntityData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -165,7 +168,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Updates whether user publishing credentials are allowed on the site or not.
+        /// Updates whether user publishing credentials are allowed on the site or not.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/scm
         /// Operation Id: WebApps_UpdateScmAllowedSlot
         /// </summary>
@@ -173,6 +176,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        /// <remarks> Description for Updates whether user publishing credentials are allowed on the site or not. </remarks>
         public virtual ArmOperation<ScmSiteSlotBasicPublishingCredentialsPolicyResource> CreateOrUpdate(WaitUntil waitUntil, CsmPublishingCredentialsPoliciesEntityData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));

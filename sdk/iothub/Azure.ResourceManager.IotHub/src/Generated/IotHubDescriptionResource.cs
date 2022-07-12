@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get a consumer group from the Event Hub-compatible device-to-cloud endpoint for an IoT hub.
+        /// Get a consumer group from the Event Hub-compatible device-to-cloud endpoint for an IoT hub
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/eventHubEndpoints/{eventHubEndpointName}/ConsumerGroups/{name}
         /// Operation Id: IotHubResource_GetEventHubConsumerGroup
         /// </summary>
@@ -115,6 +115,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="eventHubEndpointName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventHubEndpointName"/> or <paramref name="name"/> is null. </exception>
+        /// <remarks> Get a consumer group from the Event Hub-compatible device-to-cloud endpoint for an IoT hub. </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<EventHubConsumerGroupInfoResource>> GetEventHubConsumerGroupInfoAsync(string eventHubEndpointName, string name, CancellationToken cancellationToken = default)
         {
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get a consumer group from the Event Hub-compatible device-to-cloud endpoint for an IoT hub.
+        /// Get a consumer group from the Event Hub-compatible device-to-cloud endpoint for an IoT hub
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/eventHubEndpoints/{eventHubEndpointName}/ConsumerGroups/{name}
         /// Operation Id: IotHubResource_GetEventHubConsumerGroup
         /// </summary>
@@ -131,6 +132,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="eventHubEndpointName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventHubEndpointName"/> or <paramref name="name"/> is null. </exception>
+        /// <remarks> Get a consumer group from the Event Hub-compatible device-to-cloud endpoint for an IoT hub. </remarks>
         [ForwardsClientCalls]
         public virtual Response<EventHubConsumerGroupInfoResource> GetEventHubConsumerGroupInfo(string eventHubEndpointName, string name, CancellationToken cancellationToken = default)
         {
@@ -145,7 +147,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Returns the certificate.
+        /// Get the certificate.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/certificates/{certificateName}
         /// Operation Id: Certificates_Get
         /// </summary>
@@ -153,6 +155,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        /// <remarks> Returns the certificate. </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<CertificateDescriptionResource>> GetCertificateDescriptionAsync(string certificateName, CancellationToken cancellationToken = default)
         {
@@ -160,7 +163,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Returns the certificate.
+        /// Get the certificate.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/certificates/{certificateName}
         /// Operation Id: Certificates_Get
         /// </summary>
@@ -168,6 +171,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        /// <remarks> Returns the certificate. </remarks>
         [ForwardsClientCalls]
         public virtual Response<CertificateDescriptionResource> GetCertificateDescription(string certificateName, CancellationToken cancellationToken = default)
         {
@@ -182,7 +186,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get the specified private link resource for the given IotHub
+        /// Get the specified private link resource
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/iotHubs/{resourceName}/privateLinkResources/{groupId}
         /// Operation Id: PrivateLinkResources_Get
         /// </summary>
@@ -190,6 +194,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        /// <remarks> Get the specified private link resource for the given IotHub. </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<GroupIdInformationResource>> GetGroupIdInformationAsync(string groupId, CancellationToken cancellationToken = default)
         {
@@ -197,7 +202,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get the specified private link resource for the given IotHub
+        /// Get the specified private link resource
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/iotHubs/{resourceName}/privateLinkResources/{groupId}
         /// Operation Id: PrivateLinkResources_Get
         /// </summary>
@@ -205,6 +210,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        /// <remarks> Get the specified private link resource for the given IotHub. </remarks>
         [ForwardsClientCalls]
         public virtual Response<GroupIdInformationResource> GetGroupIdInformation(string groupId, CancellationToken cancellationToken = default)
         {
@@ -219,7 +225,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get private endpoint connection properties
+        /// Get private endpoint connection
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/iotHubs/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}
         /// Operation Id: PrivateEndpointConnections_Get
         /// </summary>
@@ -227,6 +233,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <remarks> Get private endpoint connection properties. </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<IotHubPrivateEndpointConnectionResource>> GetIotHubPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -234,7 +241,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get private endpoint connection properties
+        /// Get private endpoint connection
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/iotHubs/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}
         /// Operation Id: PrivateEndpointConnections_Get
         /// </summary>
@@ -242,6 +249,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <remarks> Get private endpoint connection properties. </remarks>
         [ForwardsClientCalls]
         public virtual Response<IotHubPrivateEndpointConnectionResource> GetIotHubPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -249,11 +257,12 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get the non-security related metadata of an IoT hub.
+        /// Get the non-security related metadata of an IoT hub
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}
         /// Operation Id: IotHubResource_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get the non-security related metadata of an IoT hub. </remarks>
         public virtual async Task<Response<IotHubDescriptionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _iotHubDescriptionIotHubResourceClientDiagnostics.CreateScope("IotHubDescriptionResource.Get");
@@ -273,11 +282,12 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get the non-security related metadata of an IoT hub.
+        /// Get the non-security related metadata of an IoT hub
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}
         /// Operation Id: IotHubResource_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get the non-security related metadata of an IoT hub. </remarks>
         public virtual Response<IotHubDescriptionResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _iotHubDescriptionIotHubResourceClientDiagnostics.CreateScope("IotHubDescriptionResource.Get");
@@ -297,12 +307,13 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Delete an IoT hub.
+        /// Delete an IoT hub
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}
         /// Operation Id: IotHubResource_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Delete an IoT hub. </remarks>
         public virtual async Task<ArmOperation<IotHubDescriptionResource>> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _iotHubDescriptionIotHubResourceClientDiagnostics.CreateScope("IotHubDescriptionResource.Delete");
@@ -323,12 +334,13 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Delete an IoT hub.
+        /// Delete an IoT hub
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}
         /// Operation Id: IotHubResource_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Delete an IoT hub. </remarks>
         public virtual ArmOperation<IotHubDescriptionResource> Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _iotHubDescriptionIotHubResourceClientDiagnostics.CreateScope("IotHubDescriptionResource.Delete");
@@ -349,7 +361,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Update an existing IoT Hub tags. to update other fields use the CreateOrUpdate method
+        /// Update an existing IoT Hubs tags.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}
         /// Operation Id: IotHubResource_Update
         /// </summary>
@@ -357,6 +369,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="patch"> Updated tag information to set into the iot hub instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        /// <remarks> Update an existing IoT Hub tags. to update other fields use the CreateOrUpdate method. </remarks>
         public virtual async Task<ArmOperation<IotHubDescriptionResource>> UpdateAsync(WaitUntil waitUntil, IotHubDescriptionPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
@@ -379,7 +392,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Update an existing IoT Hub tags. to update other fields use the CreateOrUpdate method
+        /// Update an existing IoT Hubs tags.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}
         /// Operation Id: IotHubResource_Update
         /// </summary>
@@ -387,6 +400,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="patch"> Updated tag information to set into the iot hub instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        /// <remarks> Update an existing IoT Hub tags. to update other fields use the CreateOrUpdate method. </remarks>
         public virtual ArmOperation<IotHubDescriptionResource> Update(WaitUntil waitUntil, IotHubDescriptionPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
@@ -409,11 +423,12 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get the statistics from an IoT hub.
+        /// Get the statistics from an IoT hub
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/IotHubStats
         /// Operation Id: IotHubResource_GetStats
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get the statistics from an IoT hub. </remarks>
         public virtual async Task<Response<RegistryStatistics>> GetStatsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _iotHubDescriptionIotHubResourceClientDiagnostics.CreateScope("IotHubDescriptionResource.GetStats");
@@ -431,11 +446,12 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get the statistics from an IoT hub.
+        /// Get the statistics from an IoT hub
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/IotHubStats
         /// Operation Id: IotHubResource_GetStats
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get the statistics from an IoT hub. </remarks>
         public virtual Response<RegistryStatistics> GetStats(CancellationToken cancellationToken = default)
         {
             using var scope = _iotHubDescriptionIotHubResourceClientDiagnostics.CreateScope("IotHubDescriptionResource.GetStats");
@@ -453,12 +469,13 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get the list of valid SKUs for an IoT hub.
+        /// Get the list of valid SKUs for an IoT hub
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/skus
         /// Operation Id: IotHubResource_GetValidSkus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="IotHubSkuDescription" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Get the list of valid SKUs for an IoT hub. </remarks>
         public virtual AsyncPageable<IotHubSkuDescription> GetValidSkusAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<IotHubSkuDescription>> FirstPageFunc(int? pageSizeHint)
@@ -495,12 +512,13 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get the list of valid SKUs for an IoT hub.
+        /// Get the list of valid SKUs for an IoT hub
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/skus
         /// Operation Id: IotHubResource_GetValidSkus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="IotHubSkuDescription" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Get the list of valid SKUs for an IoT hub. </remarks>
         public virtual Pageable<IotHubSkuDescription> GetValidSkus(CancellationToken cancellationToken = default)
         {
             Page<IotHubSkuDescription> FirstPageFunc(int? pageSizeHint)
@@ -537,12 +555,13 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get a list of all the jobs in an IoT hub. For more information, see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry.
+        /// Get a list of all the jobs in an IoT hub. For more information, see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/jobs
         /// Operation Id: IotHubResource_ListJobs
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="JobResponse" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Get a list of all the jobs in an IoT hub. For more information, see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry. </remarks>
         public virtual AsyncPageable<JobResponse> GetJobsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<JobResponse>> FirstPageFunc(int? pageSizeHint)
@@ -579,12 +598,13 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get a list of all the jobs in an IoT hub. For more information, see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry.
+        /// Get a list of all the jobs in an IoT hub. For more information, see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/jobs
         /// Operation Id: IotHubResource_ListJobs
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="JobResponse" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Get a list of all the jobs in an IoT hub. For more information, see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry. </remarks>
         public virtual Pageable<JobResponse> GetJobs(CancellationToken cancellationToken = default)
         {
             Page<JobResponse> FirstPageFunc(int? pageSizeHint)
@@ -621,7 +641,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get the details of a job from an IoT hub. For more information, see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry.
+        /// Get the details of a job from an IoT hub. For more information, see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/jobs/{jobId}
         /// Operation Id: IotHubResource_GetJob
         /// </summary>
@@ -629,6 +649,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <remarks> Get the details of a job from an IoT hub. For more information, see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry. </remarks>
         public virtual async Task<Response<JobResponse>> GetJobAsync(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -648,7 +669,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get the details of a job from an IoT hub. For more information, see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry.
+        /// Get the details of a job from an IoT hub. For more information, see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/jobs/{jobId}
         /// Operation Id: IotHubResource_GetJob
         /// </summary>
@@ -656,6 +677,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <remarks> Get the details of a job from an IoT hub. For more information, see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry. </remarks>
         public virtual Response<JobResponse> GetJob(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -675,12 +697,13 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get the quota metrics for an IoT hub.
+        /// Get the quota metrics for an IoT hub
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/quotaMetrics
         /// Operation Id: IotHubResource_GetQuotaMetrics
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="IotHubQuotaMetricInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Get the quota metrics for an IoT hub. </remarks>
         public virtual AsyncPageable<IotHubQuotaMetricInfo> GetQuotaMetricsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<IotHubQuotaMetricInfo>> FirstPageFunc(int? pageSizeHint)
@@ -717,12 +740,13 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get the quota metrics for an IoT hub.
+        /// Get the quota metrics for an IoT hub
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/quotaMetrics
         /// Operation Id: IotHubResource_GetQuotaMetrics
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="IotHubQuotaMetricInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Get the quota metrics for an IoT hub. </remarks>
         public virtual Pageable<IotHubQuotaMetricInfo> GetQuotaMetrics(CancellationToken cancellationToken = default)
         {
             Page<IotHubQuotaMetricInfo> FirstPageFunc(int? pageSizeHint)
@@ -759,12 +783,13 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get the health for routing endpoints.
+        /// Get the health for routing endpoints
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{iotHubName}/routingEndpointsHealth
         /// Operation Id: IotHubResource_GetEndpointHealth
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EndpointHealthData" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Get the health for routing endpoints. </remarks>
         public virtual AsyncPageable<EndpointHealthData> GetEndpointHealthAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<EndpointHealthData>> FirstPageFunc(int? pageSizeHint)
@@ -801,12 +826,13 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get the health for routing endpoints.
+        /// Get the health for routing endpoints
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{iotHubName}/routingEndpointsHealth
         /// Operation Id: IotHubResource_GetEndpointHealth
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EndpointHealthData" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Get the health for routing endpoints. </remarks>
         public virtual Pageable<EndpointHealthData> GetEndpointHealth(CancellationToken cancellationToken = default)
         {
             Page<EndpointHealthData> FirstPageFunc(int? pageSizeHint)
@@ -843,13 +869,14 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Test all routes configured in this Iot Hub
+        /// Test all routes
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{iotHubName}/routing/routes/$testall
         /// Operation Id: IotHubResource_TestAllRoutes
         /// </summary>
         /// <param name="content"> Input for testing all routes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <remarks> Test all routes configured in this Iot Hub. </remarks>
         public virtual async Task<Response<IotHubTestAllRoutesResult>> TestAllRoutesAsync(TestAllRoutesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -869,13 +896,14 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Test all routes configured in this Iot Hub
+        /// Test all routes
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{iotHubName}/routing/routes/$testall
         /// Operation Id: IotHubResource_TestAllRoutes
         /// </summary>
         /// <param name="content"> Input for testing all routes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <remarks> Test all routes configured in this Iot Hub. </remarks>
         public virtual Response<IotHubTestAllRoutesResult> TestAllRoutes(TestAllRoutesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -895,13 +923,14 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Test the new route for this Iot Hub
+        /// Test the new route
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{iotHubName}/routing/routes/$testnew
         /// Operation Id: IotHubResource_TestRoute
         /// </summary>
         /// <param name="content"> Route that needs to be tested. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <remarks> Test the new route for this Iot Hub. </remarks>
         public virtual async Task<Response<IotHubTestRouteResult>> TestRouteAsync(IotHubTestRouteContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -921,13 +950,14 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Test the new route for this Iot Hub
+        /// Test the new route
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{iotHubName}/routing/routes/$testnew
         /// Operation Id: IotHubResource_TestRoute
         /// </summary>
         /// <param name="content"> Route that needs to be tested. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <remarks> Test the new route for this Iot Hub. </remarks>
         public virtual Response<IotHubTestRouteResult> TestRoute(IotHubTestRouteContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -947,12 +977,13 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get the security metadata for an IoT hub. For more information, see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-security.
+        /// Get the security metadata for an IoT hub. For more information, see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-security
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/listkeys
         /// Operation Id: IotHubResource_ListKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SharedAccessSignatureAuthorizationRule" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Get the security metadata for an IoT hub. For more information, see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-security. </remarks>
         public virtual AsyncPageable<SharedAccessSignatureAuthorizationRule> GetKeysAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<SharedAccessSignatureAuthorizationRule>> FirstPageFunc(int? pageSizeHint)
@@ -989,12 +1020,13 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get the security metadata for an IoT hub. For more information, see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-security.
+        /// Get the security metadata for an IoT hub. For more information, see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-security
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/listkeys
         /// Operation Id: IotHubResource_ListKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SharedAccessSignatureAuthorizationRule" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Get the security metadata for an IoT hub. For more information, see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-security. </remarks>
         public virtual Pageable<SharedAccessSignatureAuthorizationRule> GetKeys(CancellationToken cancellationToken = default)
         {
             Page<SharedAccessSignatureAuthorizationRule> FirstPageFunc(int? pageSizeHint)
@@ -1031,7 +1063,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get a shared access policy by name from an IoT hub. For more information, see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-security.
+        /// Get a shared access policy by name from an IoT hub. For more information, see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-security
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/IotHubKeys/{keyName}/listkeys
         /// Operation Id: IotHubResource_GetKeysForKeyName
         /// </summary>
@@ -1039,6 +1071,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
+        /// <remarks> Get a shared access policy by name from an IoT hub. For more information, see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-security. </remarks>
         public virtual async Task<Response<SharedAccessSignatureAuthorizationRule>> GetKeysForKeyNameAsync(string keyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
@@ -1058,7 +1091,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get a shared access policy by name from an IoT hub. For more information, see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-security.
+        /// Get a shared access policy by name from an IoT hub. For more information, see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-security
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/IotHubKeys/{keyName}/listkeys
         /// Operation Id: IotHubResource_GetKeysForKeyName
         /// </summary>
@@ -1066,6 +1099,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
+        /// <remarks> Get a shared access policy by name from an IoT hub. For more information, see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-security. </remarks>
         public virtual Response<SharedAccessSignatureAuthorizationRule> GetKeysForKeyName(string keyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
@@ -1085,13 +1119,14 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Exports all the device identities in the IoT hub identity registry to an Azure Storage blob container. For more information, see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities.
+        /// Exports all the device identities in the IoT hub identity registry to an Azure Storage blob container. For more information, see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/exportDevices
         /// Operation Id: IotHubResource_ExportDevices
         /// </summary>
         /// <param name="content"> The parameters that specify the export devices operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <remarks> Exports all the device identities in the IoT hub identity registry to an Azure Storage blob container. For more information, see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities. </remarks>
         public virtual async Task<Response<JobResponse>> ExportDevicesAsync(ExportDevicesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -1111,13 +1146,14 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Exports all the device identities in the IoT hub identity registry to an Azure Storage blob container. For more information, see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities.
+        /// Exports all the device identities in the IoT hub identity registry to an Azure Storage blob container. For more information, see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/exportDevices
         /// Operation Id: IotHubResource_ExportDevices
         /// </summary>
         /// <param name="content"> The parameters that specify the export devices operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <remarks> Exports all the device identities in the IoT hub identity registry to an Azure Storage blob container. For more information, see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities. </remarks>
         public virtual Response<JobResponse> ExportDevices(ExportDevicesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -1137,13 +1173,14 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Import, update, or delete device identities in the IoT hub identity registry from a blob. For more information, see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities.
+        /// Import, update, or delete device identities in the IoT hub identity registry from a blob. For more information, see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/importDevices
         /// Operation Id: IotHubResource_ImportDevices
         /// </summary>
         /// <param name="content"> The parameters that specify the import devices operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <remarks> Import, update, or delete device identities in the IoT hub identity registry from a blob. For more information, see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities. </remarks>
         public virtual async Task<Response<JobResponse>> ImportDevicesAsync(ImportDevicesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -1163,13 +1200,14 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Import, update, or delete device identities in the IoT hub identity registry from a blob. For more information, see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities.
+        /// Import, update, or delete device identities in the IoT hub identity registry from a blob. For more information, see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/importDevices
         /// Operation Id: IotHubResource_ImportDevices
         /// </summary>
         /// <param name="content"> The parameters that specify the import devices operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <remarks> Import, update, or delete device identities in the IoT hub identity registry from a blob. For more information, see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities. </remarks>
         public virtual Response<JobResponse> ImportDevices(ImportDevicesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -1189,7 +1227,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Manually initiate a failover for the IoT Hub to its secondary region. To learn more, see https://aka.ms/manualfailover
+        /// Manually initiate a failover for the IoT Hub to its secondary region
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{iotHubName}/failover
         /// Operation Id: IotHub_ManualFailover
         /// </summary>
@@ -1197,6 +1235,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="content"> Region to failover to. Must be the Azure paired region. Get the value from the secondary location in the locations property. To learn more, see https://aka.ms/manualfailover/region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <remarks> Manually initiate a failover for the IoT Hub to its secondary region. To learn more, see https://aka.ms/manualfailover. </remarks>
         public virtual async Task<ArmOperation> ManualFailoverIotHubAsync(WaitUntil waitUntil, FailoverContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -1219,7 +1258,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Manually initiate a failover for the IoT Hub to its secondary region. To learn more, see https://aka.ms/manualfailover
+        /// Manually initiate a failover for the IoT Hub to its secondary region
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{iotHubName}/failover
         /// Operation Id: IotHub_ManualFailover
         /// </summary>
@@ -1227,6 +1266,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="content"> Region to failover to. Must be the Azure paired region. Get the value from the secondary location in the locations property. To learn more, see https://aka.ms/manualfailover/region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <remarks> Manually initiate a failover for the IoT Hub to its secondary region. To learn more, see https://aka.ms/manualfailover. </remarks>
         public virtual ArmOperation ManualFailoverIotHub(WaitUntil waitUntil, FailoverContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -1249,7 +1289,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Add a tag to the current resource.
+        /// Get the non-security related metadata of an IoT hub
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}
         /// Operation Id: IotHubResource_Get
         /// </summary>
@@ -1257,6 +1297,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        /// <remarks> Add a tag to the current resource. </remarks>
         public virtual async Task<Response<IotHubDescriptionResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -1280,7 +1321,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Add a tag to the current resource.
+        /// Get the non-security related metadata of an IoT hub
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}
         /// Operation Id: IotHubResource_Get
         /// </summary>
@@ -1288,6 +1329,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        /// <remarks> Add a tag to the current resource. </remarks>
         public virtual Response<IotHubDescriptionResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -1311,13 +1353,14 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Replace the tags on the resource with the given set.
+        /// Get the non-security related metadata of an IoT hub
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}
         /// Operation Id: IotHubResource_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        /// <remarks> Replace the tags on the resource with the given set. </remarks>
         public virtual async Task<Response<IotHubDescriptionResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -1341,13 +1384,14 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Replace the tags on the resource with the given set.
+        /// Get the non-security related metadata of an IoT hub
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}
         /// Operation Id: IotHubResource_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        /// <remarks> Replace the tags on the resource with the given set. </remarks>
         public virtual Response<IotHubDescriptionResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -1371,13 +1415,14 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Removes a tag by key from the resource.
+        /// Get the non-security related metadata of an IoT hub
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}
         /// Operation Id: IotHubResource_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <remarks> Removes a tag by key from the resource. </remarks>
         public virtual async Task<Response<IotHubDescriptionResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -1400,13 +1445,14 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Removes a tag by key from the resource.
+        /// Get the non-security related metadata of an IoT hub
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}
         /// Operation Id: IotHubResource_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <remarks> Removes a tag by key from the resource. </remarks>
         public virtual Response<IotHubDescriptionResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));

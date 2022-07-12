@@ -58,12 +58,13 @@ namespace Azure.ResourceManager.Communication
             return message;
         }
 
-        /// <summary> Checks that the CommunicationService name is valid and is not already in use. </summary>
+        /// <summary> Check Name Availability. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Checks that the CommunicationService name is valid and is not already in use. </remarks>
         public async Task<Response<CommunicationServiceNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, CommunicationServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -85,12 +86,13 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        /// <summary> Checks that the CommunicationService name is valid and is not already in use. </summary>
+        /// <summary> Check Name Availability. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Checks that the CommunicationService name is valid and is not already in use. </remarks>
         public Response<CommunicationServiceNameAvailabilityResult> CheckNameAvailability(string subscriptionId, CommunicationServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -140,7 +142,7 @@ namespace Azure.ResourceManager.Communication
             return message;
         }
 
-        /// <summary> Links an Azure Notification Hub to this communication service. </summary>
+        /// <summary> Link Notification Hub. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
@@ -148,6 +150,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Links an Azure Notification Hub to this communication service. </remarks>
         public async Task<Response<LinkedNotificationHub>> LinkNotificationHubAsync(string subscriptionId, string resourceGroupName, string communicationServiceName, LinkNotificationHubContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -170,7 +173,7 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        /// <summary> Links an Azure Notification Hub to this communication service. </summary>
+        /// <summary> Link Notification Hub. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
@@ -178,6 +181,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Links an Azure Notification Hub to this communication service. </remarks>
         public Response<LinkedNotificationHub> LinkNotificationHub(string subscriptionId, string resourceGroupName, string communicationServiceName, LinkNotificationHubContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -217,11 +221,12 @@ namespace Azure.ResourceManager.Communication
             return message;
         }
 
-        /// <summary> Handles requests to list all resources in a subscription. </summary>
+        /// <summary> List By Subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Handles requests to list all resources in a subscription. </remarks>
         public async Task<Response<CommunicationServiceResourceList>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -242,11 +247,12 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        /// <summary> Handles requests to list all resources in a subscription. </summary>
+        /// <summary> List By Subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Handles requests to list all resources in a subscription. </remarks>
         public Response<CommunicationServiceResourceList> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -286,12 +292,13 @@ namespace Azure.ResourceManager.Communication
             return message;
         }
 
-        /// <summary> Handles requests to list all resources in a resource group. </summary>
+        /// <summary> List By Resource Group. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Handles requests to list all resources in a resource group. </remarks>
         public async Task<Response<CommunicationServiceResourceList>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -313,12 +320,13 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        /// <summary> Handles requests to list all resources in a resource group. </summary>
+        /// <summary> List By Resource Group. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Handles requests to list all resources in a resource group. </remarks>
         public Response<CommunicationServiceResourceList> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -364,7 +372,7 @@ namespace Azure.ResourceManager.Communication
             return message;
         }
 
-        /// <summary> Operation to update an existing CommunicationService. </summary>
+        /// <summary> Update. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
@@ -372,6 +380,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="communicationServiceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Operation to update an existing CommunicationService. </remarks>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string communicationServiceName, CommunicationServiceResourcePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -391,7 +400,7 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        /// <summary> Operation to update an existing CommunicationService. </summary>
+        /// <summary> Update. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
@@ -399,6 +408,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="communicationServiceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Operation to update an existing CommunicationService. </remarks>
         public Response Update(string subscriptionId, string resourceGroupName, string communicationServiceName, CommunicationServiceResourcePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -438,13 +448,14 @@ namespace Azure.ResourceManager.Communication
             return message;
         }
 
-        /// <summary> Get the CommunicationService and its properties. </summary>
+        /// <summary> Get. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get the CommunicationService and its properties. </remarks>
         public async Task<Response<CommunicationServiceResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string communicationServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -469,13 +480,14 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        /// <summary> Get the CommunicationService and its properties. </summary>
+        /// <summary> Get. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get the CommunicationService and its properties. </remarks>
         public Response<CommunicationServiceResourceData> Get(string subscriptionId, string resourceGroupName, string communicationServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -524,7 +536,7 @@ namespace Azure.ResourceManager.Communication
             return message;
         }
 
-        /// <summary> Create a new CommunicationService or update an existing CommunicationService. </summary>
+        /// <summary> Create Or Update. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
@@ -532,6 +544,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="communicationServiceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Create a new CommunicationService or update an existing CommunicationService. </remarks>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string communicationServiceName, CommunicationServiceResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -551,7 +564,7 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        /// <summary> Create a new CommunicationService or update an existing CommunicationService. </summary>
+        /// <summary> Create Or Update. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
@@ -559,6 +572,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="communicationServiceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Create a new CommunicationService or update an existing CommunicationService. </remarks>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string communicationServiceName, CommunicationServiceResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -598,13 +612,14 @@ namespace Azure.ResourceManager.Communication
             return message;
         }
 
-        /// <summary> Operation to delete a CommunicationService. </summary>
+        /// <summary> Delete. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Operation to delete a CommunicationService. </remarks>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string communicationServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -624,13 +639,14 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        /// <summary> Operation to delete a CommunicationService. </summary>
+        /// <summary> Delete. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Operation to delete a CommunicationService. </remarks>
         public Response Delete(string subscriptionId, string resourceGroupName, string communicationServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -671,13 +687,14 @@ namespace Azure.ResourceManager.Communication
             return message;
         }
 
-        /// <summary> Get the access keys of the CommunicationService resource. </summary>
+        /// <summary> List Keys. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get the access keys of the CommunicationService resource. </remarks>
         public async Task<Response<CommunicationServiceKeys>> ListKeysAsync(string subscriptionId, string resourceGroupName, string communicationServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -700,13 +717,14 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        /// <summary> Get the access keys of the CommunicationService resource. </summary>
+        /// <summary> List Keys. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get the access keys of the CommunicationService resource. </remarks>
         public Response<CommunicationServiceKeys> ListKeys(string subscriptionId, string resourceGroupName, string communicationServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -754,7 +772,7 @@ namespace Azure.ResourceManager.Communication
             return message;
         }
 
-        /// <summary> Regenerate CommunicationService access key. PrimaryKey and SecondaryKey cannot be regenerated at the same time. </summary>
+        /// <summary> Regenerate Key. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
@@ -762,6 +780,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="communicationServiceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Regenerate CommunicationService access key. PrimaryKey and SecondaryKey cannot be regenerated at the same time. </remarks>
         public async Task<Response> RegenerateKeyAsync(string subscriptionId, string resourceGroupName, string communicationServiceName, RegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -781,7 +800,7 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        /// <summary> Regenerate CommunicationService access key. PrimaryKey and SecondaryKey cannot be regenerated at the same time. </summary>
+        /// <summary> Regenerate Key. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
@@ -789,6 +808,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="communicationServiceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Regenerate CommunicationService access key. PrimaryKey and SecondaryKey cannot be regenerated at the same time. </remarks>
         public Response RegenerateKey(string subscriptionId, string resourceGroupName, string communicationServiceName, RegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -822,12 +842,13 @@ namespace Azure.ResourceManager.Communication
             return message;
         }
 
-        /// <summary> Handles requests to list all resources in a subscription. </summary>
+        /// <summary> List By Subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Handles requests to list all resources in a subscription. </remarks>
         public async Task<Response<CommunicationServiceResourceList>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -849,12 +870,13 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        /// <summary> Handles requests to list all resources in a subscription. </summary>
+        /// <summary> List By Subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Handles requests to list all resources in a subscription. </remarks>
         public Response<CommunicationServiceResourceList> ListBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -890,13 +912,14 @@ namespace Azure.ResourceManager.Communication
             return message;
         }
 
-        /// <summary> Handles requests to list all resources in a resource group. </summary>
+        /// <summary> List By Resource Group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Handles requests to list all resources in a resource group. </remarks>
         public async Task<Response<CommunicationServiceResourceList>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -919,13 +942,14 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        /// <summary> Handles requests to list all resources in a resource group. </summary>
+        /// <summary> List By Resource Group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Handles requests to list all resources in a resource group. </remarks>
         public Response<CommunicationServiceResourceList> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));

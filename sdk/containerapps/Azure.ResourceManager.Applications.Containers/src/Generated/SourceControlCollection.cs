@@ -64,6 +64,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Create or update the SourceControl for a Container App. </remarks>
         public virtual async Task<ArmOperation<SourceControlResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string sourceControlName, SourceControlData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceControlName, nameof(sourceControlName));
@@ -97,6 +98,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Create or update the SourceControl for a Container App. </remarks>
         public virtual ArmOperation<SourceControlResource> CreateOrUpdate(WaitUntil waitUntil, string sourceControlName, SourceControlData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceControlName, nameof(sourceControlName));
@@ -128,6 +130,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlName"/> is null. </exception>
+        /// <remarks> Get a SourceControl of a Container App. </remarks>
         public virtual async Task<Response<SourceControlResource>> GetAsync(string sourceControlName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceControlName, nameof(sourceControlName));
@@ -157,6 +160,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlName"/> is null. </exception>
+        /// <remarks> Get a SourceControl of a Container App. </remarks>
         public virtual Response<SourceControlResource> Get(string sourceControlName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceControlName, nameof(sourceControlName));
@@ -184,6 +188,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SourceControlResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Get the Container App SourceControls in a given resource group. </remarks>
         public virtual AsyncPageable<SourceControlResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<SourceControlResource>> FirstPageFunc(int? pageSizeHint)
@@ -226,6 +231,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SourceControlResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Get the Container App SourceControls in a given resource group. </remarks>
         public virtual Pageable<SourceControlResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<SourceControlResource> FirstPageFunc(int? pageSizeHint)
@@ -262,7 +268,7 @@ namespace Azure.ResourceManager.Applications.Containers
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get a SourceControl of a Container App.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/sourcecontrols/{sourceControlName}
         /// Operation Id: ContainerAppsSourceControls_Get
         /// </summary>
@@ -270,6 +276,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string sourceControlName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceControlName, nameof(sourceControlName));
@@ -289,7 +296,7 @@ namespace Azure.ResourceManager.Applications.Containers
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get a SourceControl of a Container App.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/sourcecontrols/{sourceControlName}
         /// Operation Id: ContainerAppsSourceControls_Get
         /// </summary>
@@ -297,6 +304,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string sourceControlName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceControlName, nameof(sourceControlName));

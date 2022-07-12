@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get process information by its ID for a specific scaled-out instance in a web site.
+        /// Get process information by its ID for a specific scaled-out instance in a web site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/processes/{processId}
         /// Operation Id: WebApps_GetInstanceProcessSlot
         /// </summary>
@@ -109,6 +109,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="processId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
+        /// <remarks> Description for Get process information by its ID for a specific scaled-out instance in a web site. </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteSlotInstanceProcessResource>> GetSiteSlotInstanceProcessAsync(string processId, CancellationToken cancellationToken = default)
         {
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get process information by its ID for a specific scaled-out instance in a web site.
+        /// Get process information by its ID for a specific scaled-out instance in a web site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/processes/{processId}
         /// Operation Id: WebApps_GetInstanceProcessSlot
         /// </summary>
@@ -124,6 +125,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="processId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
+        /// <remarks> Description for Get process information by its ID for a specific scaled-out instance in a web site. </remarks>
         [ForwardsClientCalls]
         public virtual Response<SiteSlotInstanceProcessResource> GetSiteSlotInstanceProcess(string processId, CancellationToken cancellationToken = default)
         {
@@ -131,11 +133,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets all scale-out instances of an app.
+        /// Gets all scale-out instances of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}
         /// Operation Id: WebApps_GetInstanceInfoSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Gets all scale-out instances of an app. </remarks>
         public virtual async Task<Response<SiteSlotInstanceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotInstanceWebAppsClientDiagnostics.CreateScope("SiteSlotInstanceResource.Get");
@@ -155,11 +158,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets all scale-out instances of an app.
+        /// Gets all scale-out instances of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}
         /// Operation Id: WebApps_GetInstanceInfoSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Gets all scale-out instances of an app. </remarks>
         public virtual Response<SiteSlotInstanceResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotInstanceWebAppsClientDiagnostics.CreateScope("SiteSlotInstanceResource.Get");

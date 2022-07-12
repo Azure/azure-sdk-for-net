@@ -54,11 +54,12 @@ namespace Azure.ResourceManager.Applications.Containers
             return message;
         }
 
-        /// <summary> Get all Managed Environments for a subscription. </summary>
+        /// <summary> Get all Environments for a subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get all Managed Environments for a subscription. </remarks>
         public async Task<Response<ManagedEnvironmentsCollection>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -79,11 +80,12 @@ namespace Azure.ResourceManager.Applications.Containers
             }
         }
 
-        /// <summary> Get all Managed Environments for a subscription. </summary>
+        /// <summary> Get all Environments for a subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get all Managed Environments for a subscription. </remarks>
         public Response<ManagedEnvironmentsCollection> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -123,12 +125,13 @@ namespace Azure.ResourceManager.Applications.Containers
             return message;
         }
 
-        /// <summary> Get all the Managed Environments in a resource group. </summary>
+        /// <summary> Get all the Environments in a resource group. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get all the Managed Environments in a resource group. </remarks>
         public async Task<Response<ManagedEnvironmentsCollection>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -150,12 +153,13 @@ namespace Azure.ResourceManager.Applications.Containers
             }
         }
 
-        /// <summary> Get all the Managed Environments in a resource group. </summary>
+        /// <summary> Get all the Environments in a resource group. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get all the Managed Environments in a resource group. </remarks>
         public Response<ManagedEnvironmentsCollection> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -197,13 +201,14 @@ namespace Azure.ResourceManager.Applications.Containers
             return message;
         }
 
-        /// <summary> Get the properties of a Managed Environment used to host container apps. </summary>
+        /// <summary> Get the properties of a Managed Environment. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="environmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get the properties of a Managed Environment used to host container apps. </remarks>
         public async Task<Response<ManagedEnvironmentData>> GetAsync(string subscriptionId, string resourceGroupName, string environmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -228,13 +233,14 @@ namespace Azure.ResourceManager.Applications.Containers
             }
         }
 
-        /// <summary> Get the properties of a Managed Environment used to host container apps. </summary>
+        /// <summary> Get the properties of a Managed Environment. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="environmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get the properties of a Managed Environment used to host container apps. </remarks>
         public Response<ManagedEnvironmentData> Get(string subscriptionId, string resourceGroupName, string environmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -283,7 +289,7 @@ namespace Azure.ResourceManager.Applications.Containers
             return message;
         }
 
-        /// <summary> Creates or updates a Managed Environment used to host container apps. </summary>
+        /// <summary> Creates or updates a Managed Environment. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Environment. </param>
@@ -291,6 +297,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Creates or updates a Managed Environment used to host container apps. </remarks>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string environmentName, ManagedEnvironmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -310,7 +317,7 @@ namespace Azure.ResourceManager.Applications.Containers
             }
         }
 
-        /// <summary> Creates or updates a Managed Environment used to host container apps. </summary>
+        /// <summary> Creates or updates a Managed Environment. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Environment. </param>
@@ -318,6 +325,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Creates or updates a Managed Environment used to host container apps. </remarks>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string environmentName, ManagedEnvironmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -357,13 +365,14 @@ namespace Azure.ResourceManager.Applications.Containers
             return message;
         }
 
-        /// <summary> Delete a Managed Environment if it does not have any container apps. </summary>
+        /// <summary> Delete a Managed Environment. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="environmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Delete a Managed Environment if it does not have any container apps. </remarks>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string environmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -383,13 +392,14 @@ namespace Azure.ResourceManager.Applications.Containers
             }
         }
 
-        /// <summary> Delete a Managed Environment if it does not have any container apps. </summary>
+        /// <summary> Delete a Managed Environment. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="environmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Delete a Managed Environment if it does not have any container apps. </remarks>
         public Response Delete(string subscriptionId, string resourceGroupName, string environmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -433,7 +443,7 @@ namespace Azure.ResourceManager.Applications.Containers
             return message;
         }
 
-        /// <summary> Patches a Managed Environment using JSON Merge Patch. </summary>
+        /// <summary> Update Managed Environment&apos;s properties. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Environment. </param>
@@ -441,6 +451,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Patches a Managed Environment using JSON Merge Patch. </remarks>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string environmentName, ManagedEnvironmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -459,7 +470,7 @@ namespace Azure.ResourceManager.Applications.Containers
             }
         }
 
-        /// <summary> Patches a Managed Environment using JSON Merge Patch. </summary>
+        /// <summary> Update Managed Environment&apos;s properties. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Environment. </param>
@@ -467,6 +478,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Patches a Managed Environment using JSON Merge Patch. </remarks>
         public Response Update(string subscriptionId, string resourceGroupName, string environmentName, ManagedEnvironmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -499,12 +511,13 @@ namespace Azure.ResourceManager.Applications.Containers
             return message;
         }
 
-        /// <summary> Get all Managed Environments for a subscription. </summary>
+        /// <summary> Get all Environments for a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get all Managed Environments for a subscription. </remarks>
         public async Task<Response<ManagedEnvironmentsCollection>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -526,12 +539,13 @@ namespace Azure.ResourceManager.Applications.Containers
             }
         }
 
-        /// <summary> Get all Managed Environments for a subscription. </summary>
+        /// <summary> Get all Environments for a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get all Managed Environments for a subscription. </remarks>
         public Response<ManagedEnvironmentsCollection> ListBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -567,13 +581,14 @@ namespace Azure.ResourceManager.Applications.Containers
             return message;
         }
 
-        /// <summary> Get all the Managed Environments in a resource group. </summary>
+        /// <summary> Get all the Environments in a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get all the Managed Environments in a resource group. </remarks>
         public async Task<Response<ManagedEnvironmentsCollection>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -596,13 +611,14 @@ namespace Azure.ResourceManager.Applications.Containers
             }
         }
 
-        /// <summary> Get all the Managed Environments in a resource group. </summary>
+        /// <summary> Get all the Environments in a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get all the Managed Environments in a resource group. </remarks>
         public Response<ManagedEnvironmentsCollection> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));

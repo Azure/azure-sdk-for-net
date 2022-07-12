@@ -57,13 +57,14 @@ namespace Azure.ResourceManager.ArcScVmm
             return message;
         }
 
-        /// <summary> Implements VirtualNetwork GET method. </summary>
+        /// <summary> Gets a VirtualNetwork. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkName"> Name of the VirtualNetwork. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Implements VirtualNetwork GET method. </remarks>
         public async Task<Response<ScVmmVirtualNetworkData>> GetAsync(string subscriptionId, string resourceGroupName, string virtualNetworkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -88,13 +89,14 @@ namespace Azure.ResourceManager.ArcScVmm
             }
         }
 
-        /// <summary> Implements VirtualNetwork GET method. </summary>
+        /// <summary> Gets a VirtualNetwork. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkName"> Name of the VirtualNetwork. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Implements VirtualNetwork GET method. </remarks>
         public Response<ScVmmVirtualNetworkData> Get(string subscriptionId, string resourceGroupName, string virtualNetworkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -143,7 +145,7 @@ namespace Azure.ResourceManager.ArcScVmm
             return message;
         }
 
-        /// <summary> Onboards the ScVmm virtual network as an Azure virtual network resource. </summary>
+        /// <summary> Implements VirtualNetworks PUT method. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkName"> Name of the VirtualNetwork. </param>
@@ -151,6 +153,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Onboards the ScVmm virtual network as an Azure virtual network resource. </remarks>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string virtualNetworkName, ScVmmVirtualNetworkData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -170,7 +173,7 @@ namespace Azure.ResourceManager.ArcScVmm
             }
         }
 
-        /// <summary> Onboards the ScVmm virtual network as an Azure virtual network resource. </summary>
+        /// <summary> Implements VirtualNetworks PUT method. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkName"> Name of the VirtualNetwork. </param>
@@ -178,6 +181,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Onboards the ScVmm virtual network as an Azure virtual network resource. </remarks>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string virtualNetworkName, ScVmmVirtualNetworkData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -221,7 +225,7 @@ namespace Azure.ResourceManager.ArcScVmm
             return message;
         }
 
-        /// <summary> Deregisters the ScVmm virtual network from Azure. </summary>
+        /// <summary> Implements VirtualNetwork DELETE method. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkName"> Name of the VirtualNetwork. </param>
@@ -229,6 +233,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Deregisters the ScVmm virtual network from Azure. </remarks>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string virtualNetworkName, bool? force = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -248,7 +253,7 @@ namespace Azure.ResourceManager.ArcScVmm
             }
         }
 
-        /// <summary> Deregisters the ScVmm virtual network from Azure. </summary>
+        /// <summary> Implements VirtualNetwork DELETE method. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkName"> Name of the VirtualNetwork. </param>
@@ -256,6 +261,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Deregisters the ScVmm virtual network from Azure. </remarks>
         public Response Delete(string subscriptionId, string resourceGroupName, string virtualNetworkName, bool? force = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -299,7 +305,7 @@ namespace Azure.ResourceManager.ArcScVmm
             return message;
         }
 
-        /// <summary> Updates the VirtualNetworks resource. </summary>
+        /// <summary> Implements the VirtualNetworks PATCH method. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkName"> Name of the VirtualNetwork. </param>
@@ -307,6 +313,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Updates the VirtualNetworks resource. </remarks>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string virtualNetworkName, ResourcePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -327,7 +334,7 @@ namespace Azure.ResourceManager.ArcScVmm
             }
         }
 
-        /// <summary> Updates the VirtualNetworks resource. </summary>
+        /// <summary> Implements the VirtualNetworks PATCH method. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkName"> Name of the VirtualNetwork. </param>
@@ -335,6 +342,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Updates the VirtualNetworks resource. </remarks>
         public Response Update(string subscriptionId, string resourceGroupName, string virtualNetworkName, ResourcePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -374,12 +382,13 @@ namespace Azure.ResourceManager.ArcScVmm
             return message;
         }
 
-        /// <summary> List of VirtualNetworks in a resource group. </summary>
+        /// <summary> Implements GET VirtualNetworks in a resource group. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List of VirtualNetworks in a resource group. </remarks>
         public async Task<Response<VirtualNetworkListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -401,12 +410,13 @@ namespace Azure.ResourceManager.ArcScVmm
             }
         }
 
-        /// <summary> List of VirtualNetworks in a resource group. </summary>
+        /// <summary> Implements GET VirtualNetworks in a resource group. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List of VirtualNetworks in a resource group. </remarks>
         public Response<VirtualNetworkListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -445,11 +455,12 @@ namespace Azure.ResourceManager.ArcScVmm
             return message;
         }
 
-        /// <summary> List of VirtualNetworks in a subscription. </summary>
+        /// <summary> Implements GET VirtualNetworks in a subscription. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List of VirtualNetworks in a subscription. </remarks>
         public async Task<Response<VirtualNetworkListResult>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -470,11 +481,12 @@ namespace Azure.ResourceManager.ArcScVmm
             }
         }
 
-        /// <summary> List of VirtualNetworks in a subscription. </summary>
+        /// <summary> Implements GET VirtualNetworks in a subscription. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List of VirtualNetworks in a subscription. </remarks>
         public Response<VirtualNetworkListResult> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -509,13 +521,14 @@ namespace Azure.ResourceManager.ArcScVmm
             return message;
         }
 
-        /// <summary> List of VirtualNetworks in a resource group. </summary>
+        /// <summary> Implements GET VirtualNetworks in a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List of VirtualNetworks in a resource group. </remarks>
         public async Task<Response<VirtualNetworkListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -538,13 +551,14 @@ namespace Azure.ResourceManager.ArcScVmm
             }
         }
 
-        /// <summary> List of VirtualNetworks in a resource group. </summary>
+        /// <summary> Implements GET VirtualNetworks in a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List of VirtualNetworks in a resource group. </remarks>
         public Response<VirtualNetworkListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -581,12 +595,13 @@ namespace Azure.ResourceManager.ArcScVmm
             return message;
         }
 
-        /// <summary> List of VirtualNetworks in a subscription. </summary>
+        /// <summary> Implements GET VirtualNetworks in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List of VirtualNetworks in a subscription. </remarks>
         public async Task<Response<VirtualNetworkListResult>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -608,12 +623,13 @@ namespace Azure.ResourceManager.ArcScVmm
             }
         }
 
-        /// <summary> List of VirtualNetworks in a subscription. </summary>
+        /// <summary> Implements GET VirtualNetworks in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List of VirtualNetworks in a subscription. </remarks>
         public Response<VirtualNetworkListResult> ListBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));

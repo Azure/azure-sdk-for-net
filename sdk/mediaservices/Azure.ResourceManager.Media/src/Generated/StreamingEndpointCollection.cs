@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Creates a streaming endpoint.
+        /// Create StreamingEndpoint
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints/{streamingEndpointName}
         /// Operation Id: StreamingEndpoints_Create
         /// </summary>
@@ -65,6 +65,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="streamingEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="streamingEndpointName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Creates a streaming endpoint. </remarks>
         public virtual async Task<ArmOperation<StreamingEndpointResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string streamingEndpointName, StreamingEndpointData data, bool? autoStart = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(streamingEndpointName, nameof(streamingEndpointName));
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Creates a streaming endpoint.
+        /// Create StreamingEndpoint
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints/{streamingEndpointName}
         /// Operation Id: StreamingEndpoints_Create
         /// </summary>
@@ -99,6 +100,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="streamingEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="streamingEndpointName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Creates a streaming endpoint. </remarks>
         public virtual ArmOperation<StreamingEndpointResource> CreateOrUpdate(WaitUntil waitUntil, string streamingEndpointName, StreamingEndpointData data, bool? autoStart = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(streamingEndpointName, nameof(streamingEndpointName));
@@ -122,7 +124,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Gets a streaming endpoint.
+        /// Get StreamingEndpoint
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints/{streamingEndpointName}
         /// Operation Id: StreamingEndpoints_Get
         /// </summary>
@@ -130,6 +132,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="streamingEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="streamingEndpointName"/> is null. </exception>
+        /// <remarks> Gets a streaming endpoint. </remarks>
         public virtual async Task<Response<StreamingEndpointResource>> GetAsync(string streamingEndpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(streamingEndpointName, nameof(streamingEndpointName));
@@ -151,7 +154,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Gets a streaming endpoint.
+        /// Get StreamingEndpoint
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints/{streamingEndpointName}
         /// Operation Id: StreamingEndpoints_Get
         /// </summary>
@@ -159,6 +162,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="streamingEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="streamingEndpointName"/> is null. </exception>
+        /// <remarks> Gets a streaming endpoint. </remarks>
         public virtual Response<StreamingEndpointResource> Get(string streamingEndpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(streamingEndpointName, nameof(streamingEndpointName));
@@ -180,12 +184,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Lists the streaming endpoints in the account.
+        /// List StreamingEndpoints
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints
         /// Operation Id: StreamingEndpoints_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="StreamingEndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Lists the streaming endpoints in the account. </remarks>
         public virtual AsyncPageable<StreamingEndpointResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<StreamingEndpointResource>> FirstPageFunc(int? pageSizeHint)
@@ -222,12 +227,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Lists the streaming endpoints in the account.
+        /// List StreamingEndpoints
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints
         /// Operation Id: StreamingEndpoints_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StreamingEndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Lists the streaming endpoints in the account. </remarks>
         public virtual Pageable<StreamingEndpointResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<StreamingEndpointResource> FirstPageFunc(int? pageSizeHint)
@@ -264,7 +270,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get StreamingEndpoint
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints/{streamingEndpointName}
         /// Operation Id: StreamingEndpoints_Get
         /// </summary>
@@ -272,6 +278,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="streamingEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="streamingEndpointName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string streamingEndpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(streamingEndpointName, nameof(streamingEndpointName));
@@ -291,7 +298,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get StreamingEndpoint
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints/{streamingEndpointName}
         /// Operation Id: StreamingEndpoints_Get
         /// </summary>
@@ -299,6 +306,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="streamingEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="streamingEndpointName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string streamingEndpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(streamingEndpointName, nameof(streamingEndpointName));

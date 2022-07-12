@@ -92,6 +92,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// Operation Id: EnvironmentVersions_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get version. </remarks>
         public virtual async Task<Response<EnvironmentVersionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _environmentVersionClientDiagnostics.CreateScope("EnvironmentVersionResource.Get");
@@ -116,6 +117,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// Operation Id: EnvironmentVersions_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get version. </remarks>
         public virtual Response<EnvironmentVersionResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _environmentVersionClientDiagnostics.CreateScope("EnvironmentVersionResource.Get");
@@ -141,6 +143,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Delete version. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _environmentVersionClientDiagnostics.CreateScope("EnvironmentVersionResource.Delete");
@@ -167,6 +170,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Delete version. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _environmentVersionClientDiagnostics.CreateScope("EnvironmentVersionResource.Delete");
@@ -195,6 +199,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="data"> Definition of EnvironmentVersion. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        /// <remarks> Creates or updates an EnvironmentVersion. </remarks>
         public virtual async Task<ArmOperation<EnvironmentVersionResource>> UpdateAsync(WaitUntil waitUntil, EnvironmentVersionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -225,6 +230,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="data"> Definition of EnvironmentVersion. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        /// <remarks> Creates or updates an EnvironmentVersion. </remarks>
         public virtual ArmOperation<EnvironmentVersionResource> Update(WaitUntil waitUntil, EnvironmentVersionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));

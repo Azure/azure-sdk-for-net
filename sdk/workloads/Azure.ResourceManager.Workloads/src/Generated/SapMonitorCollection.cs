@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Creates a SAP monitor for the specified subscription, resource group, and resource name.
+        /// Creates a SAP monitor.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}
         /// Operation Id: monitors_Create
         /// </summary>
@@ -65,6 +65,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Creates a SAP monitor for the specified subscription, resource group, and resource name. </remarks>
         public virtual async Task<ArmOperation<SapMonitorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string monitorName, SapMonitorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Creates a SAP monitor for the specified subscription, resource group, and resource name.
+        /// Creates a SAP monitor.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}
         /// Operation Id: monitors_Create
         /// </summary>
@@ -98,6 +99,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Creates a SAP monitor for the specified subscription, resource group, and resource name. </remarks>
         public virtual ArmOperation<SapMonitorResource> CreateOrUpdate(WaitUntil waitUntil, string monitorName, SapMonitorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
@@ -121,7 +123,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Gets properties of a SAP monitor for the specified subscription, resource group, and resource name.
+        /// Gets properties of a SAP monitor.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}
         /// Operation Id: monitors_Get
         /// </summary>
@@ -129,6 +131,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
+        /// <remarks> Gets properties of a SAP monitor for the specified subscription, resource group, and resource name. </remarks>
         public virtual async Task<Response<SapMonitorResource>> GetAsync(string monitorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
@@ -150,7 +153,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Gets properties of a SAP monitor for the specified subscription, resource group, and resource name.
+        /// Gets properties of a SAP monitor.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}
         /// Operation Id: monitors_Get
         /// </summary>
@@ -158,6 +161,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
+        /// <remarks> Gets properties of a SAP monitor for the specified subscription, resource group, and resource name. </remarks>
         public virtual Response<SapMonitorResource> Get(string monitorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
@@ -179,12 +183,13 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Gets a list of SAP monitors in the specified resource group.
+        /// Gets a list of SAP monitors
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors
         /// Operation Id: monitors_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SapMonitorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Gets a list of SAP monitors in the specified resource group. </remarks>
         public virtual AsyncPageable<SapMonitorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<SapMonitorResource>> FirstPageFunc(int? pageSizeHint)
@@ -221,12 +226,13 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Gets a list of SAP monitors in the specified resource group.
+        /// Gets a list of SAP monitors
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors
         /// Operation Id: monitors_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SapMonitorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Gets a list of SAP monitors in the specified resource group. </remarks>
         public virtual Pageable<SapMonitorResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<SapMonitorResource> FirstPageFunc(int? pageSizeHint)
@@ -263,7 +269,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Gets properties of a SAP monitor.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}
         /// Operation Id: monitors_Get
         /// </summary>
@@ -271,6 +277,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string monitorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
@@ -290,7 +297,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Gets properties of a SAP monitor.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}
         /// Operation Id: monitors_Get
         /// </summary>
@@ -298,6 +305,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string monitorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));

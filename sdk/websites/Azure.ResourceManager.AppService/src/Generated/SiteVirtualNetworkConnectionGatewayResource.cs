@@ -87,11 +87,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets an app&apos;s Virtual Network gateway.
+        /// Gets an app&apos;s Virtual Network gateway.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}
         /// Operation Id: WebApps_GetVnetConnectionGateway
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Gets an app&apos;s Virtual Network gateway. </remarks>
         public virtual async Task<Response<SiteVirtualNetworkConnectionGatewayResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteVirtualNetworkConnectionGatewayWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnectionGatewayResource.Get");
@@ -111,11 +112,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets an app&apos;s Virtual Network gateway.
+        /// Gets an app&apos;s Virtual Network gateway.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}
         /// Operation Id: WebApps_GetVnetConnectionGateway
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Gets an app&apos;s Virtual Network gateway. </remarks>
         public virtual Response<SiteVirtualNetworkConnectionGatewayResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _siteVirtualNetworkConnectionGatewayWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnectionGatewayResource.Get");
@@ -135,13 +137,14 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH).
+        /// Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH).
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}
         /// Operation Id: WebApps_UpdateVnetConnectionGateway
         /// </summary>
         /// <param name="data"> The properties to update this gateway with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        /// <remarks> Description for Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH). </remarks>
         public virtual async Task<Response<SiteVirtualNetworkConnectionGatewayResource>> UpdateAsync(VnetGatewayData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -161,13 +164,14 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH).
+        /// Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH).
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}
         /// Operation Id: WebApps_UpdateVnetConnectionGateway
         /// </summary>
         /// <param name="data"> The properties to update this gateway with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        /// <remarks> Description for Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH). </remarks>
         public virtual Response<SiteVirtualNetworkConnectionGatewayResource> Update(VnetGatewayData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));

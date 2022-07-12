@@ -58,13 +58,14 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Microsoft.CertificateRegistration to get the list of detectors for this RP. </summary>
+        /// <summary> Microsoft.CertificateRegistration to get the list of detectors for this RP. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> The certificate order name for which the response is needed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="certificateOrderName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="certificateOrderName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Description for Microsoft.CertificateRegistration to get the list of detectors for this RP. </remarks>
         public async Task<Response<DetectorResponseCollection>> ListAppServiceCertificateOrderDetectorResponseAsync(string subscriptionId, string resourceGroupName, string certificateOrderName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -87,13 +88,14 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Microsoft.CertificateRegistration to get the list of detectors for this RP. </summary>
+        /// <summary> Microsoft.CertificateRegistration to get the list of detectors for this RP. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> The certificate order name for which the response is needed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="certificateOrderName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="certificateOrderName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Description for Microsoft.CertificateRegistration to get the list of detectors for this RP. </remarks>
         public Response<DetectorResponseCollection> ListAppServiceCertificateOrderDetectorResponse(string subscriptionId, string resourceGroupName, string certificateOrderName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -150,7 +152,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Microsoft.CertificateRegistration call to get a detector response from App Lens. </summary>
+        /// <summary> Microsoft.CertificateRegistration call to get a detector response from App Lens. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> The certificate order name for which the response is needed. </param>
@@ -161,6 +163,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/> or <paramref name="detectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/> or <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Description for Microsoft.CertificateRegistration call to get a detector response from App Lens. </remarks>
         public async Task<Response<AppServiceDetectorData>> GetAppServiceCertificateOrderDetectorResponseAsync(string subscriptionId, string resourceGroupName, string certificateOrderName, string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -186,7 +189,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Microsoft.CertificateRegistration call to get a detector response from App Lens. </summary>
+        /// <summary> Microsoft.CertificateRegistration call to get a detector response from App Lens. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> The certificate order name for which the response is needed. </param>
@@ -197,6 +200,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/> or <paramref name="detectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/> or <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Description for Microsoft.CertificateRegistration call to get a detector response from App Lens. </remarks>
         public Response<AppServiceDetectorData> GetAppServiceCertificateOrderDetectorResponse(string subscriptionId, string resourceGroupName, string certificateOrderName, string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -236,7 +240,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Microsoft.CertificateRegistration to get the list of detectors for this RP. </summary>
+        /// <summary> Microsoft.CertificateRegistration to get the list of detectors for this RP. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -244,6 +248,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="certificateOrderName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="certificateOrderName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Description for Microsoft.CertificateRegistration to get the list of detectors for this RP. </remarks>
         public async Task<Response<DetectorResponseCollection>> ListAppServiceCertificateOrderDetectorResponseNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string certificateOrderName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -267,7 +272,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Microsoft.CertificateRegistration to get the list of detectors for this RP. </summary>
+        /// <summary> Microsoft.CertificateRegistration to get the list of detectors for this RP. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -275,6 +280,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="certificateOrderName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="certificateOrderName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Description for Microsoft.CertificateRegistration to get the list of detectors for this RP. </remarks>
         public Response<DetectorResponseCollection> ListAppServiceCertificateOrderDetectorResponseNextPage(string nextLink, string subscriptionId, string resourceGroupName, string certificateOrderName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));

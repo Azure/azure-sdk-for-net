@@ -87,11 +87,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get the maximum number of Hybrid Connections allowed in an App Service plan.
+        /// Get the maximum number of Hybrid Connections allowed in an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionPlanLimits/limit
         /// Operation Id: AppServicePlans_GetHybridConnectionPlanLimit
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Get the maximum number of Hybrid Connections allowed in an App Service plan. </remarks>
         public virtual async Task<Response<HybridConnectionLimitsResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _hybridConnectionLimitsAppServicePlansClientDiagnostics.CreateScope("HybridConnectionLimitsResource.Get");
@@ -111,11 +112,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get the maximum number of Hybrid Connections allowed in an App Service plan.
+        /// Get the maximum number of Hybrid Connections allowed in an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionPlanLimits/limit
         /// Operation Id: AppServicePlans_GetHybridConnectionPlanLimit
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Get the maximum number of Hybrid Connections allowed in an App Service plan. </remarks>
         public virtual Response<HybridConnectionLimitsResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _hybridConnectionLimitsAppServicePlansClientDiagnostics.CreateScope("HybridConnectionLimitsResource.Get");

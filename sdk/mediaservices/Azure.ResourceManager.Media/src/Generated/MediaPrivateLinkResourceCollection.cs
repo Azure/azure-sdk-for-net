@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get details of a group ID.
+        /// Get group ID.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/privateLinkResources/{name}
         /// Operation Id: PrivateLinkResources_Get
         /// </summary>
@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <remarks> Get details of a group ID. </remarks>
         public virtual async Task<Response<MediaPrivateLinkResource>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get details of a group ID.
+        /// Get group ID.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/privateLinkResources/{name}
         /// Operation Id: PrivateLinkResources_Get
         /// </summary>
@@ -91,6 +92,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <remarks> Get details of a group ID. </remarks>
         public virtual Response<MediaPrivateLinkResource> Get(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -112,12 +114,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// List supported group IDs.
+        /// Get list of group IDs.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/privateLinkResources
         /// Operation Id: PrivateLinkResources_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MediaPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List supported group IDs. </remarks>
         public virtual AsyncPageable<MediaPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<MediaPrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
@@ -139,12 +142,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// List supported group IDs.
+        /// Get list of group IDs.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/privateLinkResources
         /// Operation Id: PrivateLinkResources_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MediaPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List supported group IDs. </remarks>
         public virtual Pageable<MediaPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<MediaPrivateLinkResource> FirstPageFunc(int? pageSizeHint)
@@ -166,7 +170,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get group ID.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/privateLinkResources/{name}
         /// Operation Id: PrivateLinkResources_Get
         /// </summary>
@@ -174,6 +178,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -193,7 +198,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get group ID.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/privateLinkResources/{name}
         /// Operation Id: PrivateLinkResources_Get
         /// </summary>
@@ -201,6 +206,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));

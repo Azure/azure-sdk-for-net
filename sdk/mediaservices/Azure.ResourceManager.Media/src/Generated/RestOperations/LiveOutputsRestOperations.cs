@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Lists the live outputs of a live event. </summary>
+        /// <summary> List Live Outputs. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -68,6 +68,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="liveEventName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="liveEventName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Lists the live outputs of a live event. </remarks>
         public async Task<Response<LiveOutputListResult>> ListAsync(string subscriptionId, string resourceGroupName, string accountName, string liveEventName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Lists the live outputs of a live event. </summary>
+        /// <summary> List Live Outputs. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -99,6 +100,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="liveEventName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="liveEventName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Lists the live outputs of a live event. </remarks>
         public Response<LiveOutputListResult> List(string subscriptionId, string resourceGroupName, string accountName, string liveEventName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -146,7 +148,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Gets a live output. </summary>
+        /// <summary> Get Live Output. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -155,6 +157,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="liveEventName"/> or <paramref name="liveOutputName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="liveEventName"/> or <paramref name="liveOutputName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Gets a live output. </remarks>
         public async Task<Response<LiveOutputData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string liveEventName, string liveOutputName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -181,7 +184,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Gets a live output. </summary>
+        /// <summary> Get Live Output. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -190,6 +193,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="liveEventName"/> or <paramref name="liveOutputName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="liveEventName"/> or <paramref name="liveOutputName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Gets a live output. </remarks>
         public Response<LiveOutputData> Get(string subscriptionId, string resourceGroupName, string accountName, string liveEventName, string liveOutputName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -244,7 +248,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Creates a new live output. </summary>
+        /// <summary> Create Live Output. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -254,6 +258,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="liveEventName"/>, <paramref name="liveOutputName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="liveEventName"/> or <paramref name="liveOutputName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Creates a new live output. </remarks>
         public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string accountName, string liveEventName, string liveOutputName, LiveOutputData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -275,7 +280,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Creates a new live output. </summary>
+        /// <summary> Create Live Output. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -285,6 +290,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="liveEventName"/>, <paramref name="liveOutputName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="liveEventName"/> or <paramref name="liveOutputName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Creates a new live output. </remarks>
         public Response Create(string subscriptionId, string resourceGroupName, string accountName, string liveEventName, string liveOutputName, LiveOutputData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -330,7 +336,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Deletes a live output. Deleting a live output does not delete the asset the live output is writing to. </summary>
+        /// <summary> Delete Live Output. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -339,6 +345,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="liveEventName"/> or <paramref name="liveOutputName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="liveEventName"/> or <paramref name="liveOutputName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Deletes a live output. Deleting a live output does not delete the asset the live output is writing to. </remarks>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string accountName, string liveEventName, string liveOutputName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -360,7 +367,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Deletes a live output. Deleting a live output does not delete the asset the live output is writing to. </summary>
+        /// <summary> Delete Live Output. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -369,6 +376,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="liveEventName"/> or <paramref name="liveOutputName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="liveEventName"/> or <paramref name="liveOutputName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Deletes a live output. Deleting a live output does not delete the asset the live output is writing to. </remarks>
         public Response Delete(string subscriptionId, string resourceGroupName, string accountName, string liveEventName, string liveOutputName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -404,7 +412,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Lists the live outputs of a live event. </summary>
+        /// <summary> List Live Outputs. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
@@ -413,6 +421,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="liveEventName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="liveEventName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Lists the live outputs of a live event. </remarks>
         public async Task<Response<LiveOutputListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string liveEventName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -437,7 +446,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Lists the live outputs of a live event. </summary>
+        /// <summary> List Live Outputs. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
@@ -446,6 +455,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="liveEventName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="liveEventName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Lists the live outputs of a live event. </remarks>
         public Response<LiveOutputListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string liveEventName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));

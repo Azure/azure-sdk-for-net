@@ -100,6 +100,7 @@ namespace Azure.ResourceManager.ContainerService
         /// Operation Id: AgentPools_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Gets the specified managed cluster agent pool. </remarks>
         public virtual async Task<Response<AgentPoolResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _agentPoolClientDiagnostics.CreateScope("AgentPoolResource.Get");
@@ -124,6 +125,7 @@ namespace Azure.ResourceManager.ContainerService
         /// Operation Id: AgentPools_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Gets the specified managed cluster agent pool. </remarks>
         public virtual Response<AgentPoolResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _agentPoolClientDiagnostics.CreateScope("AgentPoolResource.Get");
@@ -149,6 +151,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Deletes an agent pool in the specified managed cluster. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _agentPoolClientDiagnostics.CreateScope("AgentPoolResource.Delete");
@@ -175,6 +178,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Deletes an agent pool in the specified managed cluster. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _agentPoolClientDiagnostics.CreateScope("AgentPoolResource.Delete");
@@ -203,6 +207,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="data"> The agent pool to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        /// <remarks> Creates or updates an agent pool in the specified managed cluster. </remarks>
         public virtual async Task<ArmOperation<AgentPoolResource>> UpdateAsync(WaitUntil waitUntil, AgentPoolData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -233,6 +238,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="data"> The agent pool to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        /// <remarks> Creates or updates an agent pool in the specified managed cluster. </remarks>
         public virtual ArmOperation<AgentPoolResource> Update(WaitUntil waitUntil, AgentPoolData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -255,12 +261,13 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Upgrading the node image version of an agent pool applies the newest OS and runtime updates to the nodes. AKS provides one new image per week with the latest updates. For more details on node image versions, see: https://docs.microsoft.com/azure/aks/node-image-upgrade
+        /// Upgrades the node image version of an agent pool to the latest.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/agentPools/{agentPoolName}/upgradeNodeImageVersion
         /// Operation Id: AgentPools_UpgradeNodeImageVersion
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Upgrading the node image version of an agent pool applies the newest OS and runtime updates to the nodes. AKS provides one new image per week with the latest updates. For more details on node image versions, see: https://docs.microsoft.com/azure/aks/node-image-upgrade. </remarks>
         public virtual async Task<ArmOperation> UpgradeNodeImageVersionAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _agentPoolClientDiagnostics.CreateScope("AgentPoolResource.UpgradeNodeImageVersion");
@@ -281,12 +288,13 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Upgrading the node image version of an agent pool applies the newest OS and runtime updates to the nodes. AKS provides one new image per week with the latest updates. For more details on node image versions, see: https://docs.microsoft.com/azure/aks/node-image-upgrade
+        /// Upgrades the node image version of an agent pool to the latest.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/agentPools/{agentPoolName}/upgradeNodeImageVersion
         /// Operation Id: AgentPools_UpgradeNodeImageVersion
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Upgrading the node image version of an agent pool applies the newest OS and runtime updates to the nodes. AKS provides one new image per week with the latest updates. For more details on node image versions, see: https://docs.microsoft.com/azure/aks/node-image-upgrade. </remarks>
         public virtual ArmOperation UpgradeNodeImageVersion(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _agentPoolClientDiagnostics.CreateScope("AgentPoolResource.UpgradeNodeImageVersion");
@@ -307,7 +315,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Add a tag to the current resource.
+        /// Gets the specified managed cluster agent pool.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/agentPools/{agentPoolName}
         /// Operation Id: AgentPools_Get
         /// </summary>
@@ -315,6 +323,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        /// <remarks> Add a tag to the current resource. </remarks>
         public virtual async Task<Response<AgentPoolResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -338,7 +347,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Add a tag to the current resource.
+        /// Gets the specified managed cluster agent pool.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/agentPools/{agentPoolName}
         /// Operation Id: AgentPools_Get
         /// </summary>
@@ -346,6 +355,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        /// <remarks> Add a tag to the current resource. </remarks>
         public virtual Response<AgentPoolResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -369,13 +379,14 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Replace the tags on the resource with the given set.
+        /// Gets the specified managed cluster agent pool.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/agentPools/{agentPoolName}
         /// Operation Id: AgentPools_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        /// <remarks> Replace the tags on the resource with the given set. </remarks>
         public virtual async Task<Response<AgentPoolResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -399,13 +410,14 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Replace the tags on the resource with the given set.
+        /// Gets the specified managed cluster agent pool.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/agentPools/{agentPoolName}
         /// Operation Id: AgentPools_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        /// <remarks> Replace the tags on the resource with the given set. </remarks>
         public virtual Response<AgentPoolResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -429,13 +441,14 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Removes a tag by key from the resource.
+        /// Gets the specified managed cluster agent pool.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/agentPools/{agentPoolName}
         /// Operation Id: AgentPools_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <remarks> Removes a tag by key from the resource. </remarks>
         public virtual async Task<Response<AgentPoolResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -458,13 +471,14 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Removes a tag by key from the resource.
+        /// Gets the specified managed cluster agent pool.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/agentPools/{agentPoolName}
         /// Operation Id: AgentPools_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <remarks> Removes a tag by key from the resource. </remarks>
         public virtual Response<AgentPoolResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));

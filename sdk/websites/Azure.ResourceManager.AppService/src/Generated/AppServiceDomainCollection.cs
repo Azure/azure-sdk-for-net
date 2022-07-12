@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates or updates a domain.
+        /// Creates or updates a domain.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}
         /// Operation Id: Domains_CreateOrUpdate
         /// </summary>
@@ -65,6 +65,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Description for Creates or updates a domain. </remarks>
         public virtual async Task<ArmOperation<AppServiceDomainResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string domainName, AppServiceDomainData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates or updates a domain.
+        /// Creates or updates a domain.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}
         /// Operation Id: Domains_CreateOrUpdate
         /// </summary>
@@ -98,6 +99,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Description for Creates or updates a domain. </remarks>
         public virtual ArmOperation<AppServiceDomainResource> CreateOrUpdate(WaitUntil waitUntil, string domainName, AppServiceDomainData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
@@ -121,7 +123,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get a domain.
+        /// Get a domain.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}
         /// Operation Id: Domains_Get
         /// </summary>
@@ -129,6 +131,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
+        /// <remarks> Description for Get a domain. </remarks>
         public virtual async Task<Response<AppServiceDomainResource>> GetAsync(string domainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
@@ -150,7 +153,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get a domain.
+        /// Get a domain.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}
         /// Operation Id: Domains_Get
         /// </summary>
@@ -158,6 +161,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
+        /// <remarks> Description for Get a domain. </remarks>
         public virtual Response<AppServiceDomainResource> Get(string domainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
@@ -179,12 +183,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get all domains in a resource group.
+        /// Get all domains in a resource group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains
         /// Operation Id: Domains_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AppServiceDomainResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get all domains in a resource group. </remarks>
         public virtual AsyncPageable<AppServiceDomainResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<AppServiceDomainResource>> FirstPageFunc(int? pageSizeHint)
@@ -221,12 +226,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get all domains in a resource group.
+        /// Get all domains in a resource group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains
         /// Operation Id: Domains_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppServiceDomainResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get all domains in a resource group. </remarks>
         public virtual Pageable<AppServiceDomainResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<AppServiceDomainResource> FirstPageFunc(int? pageSizeHint)
@@ -263,7 +269,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get a domain.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}
         /// Operation Id: Domains_Get
         /// </summary>
@@ -271,6 +277,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string domainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
@@ -290,7 +297,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get a domain.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}
         /// Operation Id: Domains_Get
         /// </summary>
@@ -298,6 +305,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string domainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));

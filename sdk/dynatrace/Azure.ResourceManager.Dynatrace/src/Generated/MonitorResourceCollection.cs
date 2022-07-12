@@ -65,6 +65,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Create a MonitorResource. </remarks>
         public virtual async Task<ArmOperation<MonitorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string monitorName, MonitorResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
@@ -98,6 +99,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Create a MonitorResource. </remarks>
         public virtual ArmOperation<MonitorResource> CreateOrUpdate(WaitUntil waitUntil, string monitorName, MonitorResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
@@ -129,6 +131,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
+        /// <remarks> Get a MonitorResource. </remarks>
         public virtual async Task<Response<MonitorResource>> GetAsync(string monitorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
@@ -158,6 +161,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
+        /// <remarks> Get a MonitorResource. </remarks>
         public virtual Response<MonitorResource> Get(string monitorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
@@ -185,6 +189,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MonitorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List MonitorResource resources by resource group. </remarks>
         public virtual AsyncPageable<MonitorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<MonitorResource>> FirstPageFunc(int? pageSizeHint)
@@ -227,6 +232,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MonitorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List MonitorResource resources by resource group. </remarks>
         public virtual Pageable<MonitorResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<MonitorResource> FirstPageFunc(int? pageSizeHint)
@@ -263,7 +269,7 @@ namespace Azure.ResourceManager.Dynatrace
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get a MonitorResource
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}
         /// Operation Id: Monitors_Get
         /// </summary>
@@ -271,6 +277,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string monitorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
@@ -290,7 +297,7 @@ namespace Azure.ResourceManager.Dynatrace
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get a MonitorResource
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}
         /// Operation Id: Monitors_Get
         /// </summary>
@@ -298,6 +305,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string monitorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));

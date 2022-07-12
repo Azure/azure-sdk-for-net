@@ -87,11 +87,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get process information by its ID for a specific scaled-out instance in a web site.
+        /// Get process information by its ID for a specific scaled-out instance in a web site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/processes/{processId}/modules/{baseAddress}
         /// Operation Id: WebApps_GetProcessModuleSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Get process information by its ID for a specific scaled-out instance in a web site. </remarks>
         public virtual async Task<Response<SiteSlotProcessModuleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotProcessModuleWebAppsClientDiagnostics.CreateScope("SiteSlotProcessModuleResource.Get");
@@ -111,11 +112,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get process information by its ID for a specific scaled-out instance in a web site.
+        /// Get process information by its ID for a specific scaled-out instance in a web site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/processes/{processId}/modules/{baseAddress}
         /// Operation Id: WebApps_GetProcessModuleSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Get process information by its ID for a specific scaled-out instance in a web site. </remarks>
         public virtual Response<SiteSlotProcessModuleResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotProcessModuleWebAppsClientDiagnostics.CreateScope("SiteSlotProcessModuleResource.Get");

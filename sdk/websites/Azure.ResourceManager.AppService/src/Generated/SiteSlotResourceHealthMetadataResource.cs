@@ -87,11 +87,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the category of ResourceHealthMetadata to use for the given site
+        /// Gets the category of ResourceHealthMetadata to use for the given site
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/resourceHealthMetadata/default
         /// Operation Id: ResourceHealthMetadata_GetBySiteSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Gets the category of ResourceHealthMetadata to use for the given site. </remarks>
         public virtual async Task<Response<SiteSlotResourceHealthMetadataResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotResourceHealthMetadataResourceHealthMetadataClientDiagnostics.CreateScope("SiteSlotResourceHealthMetadataResource.Get");
@@ -111,11 +112,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the category of ResourceHealthMetadata to use for the given site
+        /// Gets the category of ResourceHealthMetadata to use for the given site
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/resourceHealthMetadata/default
         /// Operation Id: ResourceHealthMetadata_GetBySiteSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Gets the category of ResourceHealthMetadata to use for the given site. </remarks>
         public virtual Response<SiteSlotResourceHealthMetadataResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotResourceHealthMetadataResourceHealthMetadataClientDiagnostics.CreateScope("SiteSlotResourceHealthMetadataResource.Get");

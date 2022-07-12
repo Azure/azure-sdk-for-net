@@ -64,6 +64,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Creates a batch inference endpoint (asynchronous). </remarks>
         public virtual async Task<ArmOperation<BatchEndpointResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string endpointName, BatchEndpointData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
@@ -97,6 +98,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Creates a batch inference endpoint (asynchronous). </remarks>
         public virtual ArmOperation<BatchEndpointResource> CreateOrUpdate(WaitUntil waitUntil, string endpointName, BatchEndpointData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
@@ -128,6 +130,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        /// <remarks> Gets a batch inference endpoint by name. </remarks>
         public virtual async Task<Response<BatchEndpointResource>> GetAsync(string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
@@ -157,6 +160,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        /// <remarks> Gets a batch inference endpoint by name. </remarks>
         public virtual Response<BatchEndpointResource> Get(string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
@@ -186,6 +190,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BatchEndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Lists Batch inference endpoint in the workspace. </remarks>
         public virtual AsyncPageable<BatchEndpointResource> GetAllAsync(int? count = null, string skip = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<BatchEndpointResource>> FirstPageFunc(int? pageSizeHint)
@@ -230,6 +235,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BatchEndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Lists Batch inference endpoint in the workspace. </remarks>
         public virtual Pageable<BatchEndpointResource> GetAll(int? count = null, string skip = null, CancellationToken cancellationToken = default)
         {
             Page<BatchEndpointResource> FirstPageFunc(int? pageSizeHint)
@@ -266,7 +272,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Gets a batch inference endpoint by name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/batchEndpoints/{endpointName}
         /// Operation Id: BatchEndpoints_Get
         /// </summary>
@@ -274,6 +280,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
@@ -293,7 +300,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Gets a batch inference endpoint by name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/batchEndpoints/{endpointName}
         /// Operation Id: BatchEndpoints_Get
         /// </summary>
@@ -301,6 +308,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));

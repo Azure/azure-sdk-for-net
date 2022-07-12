@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get asset track operation result.
+        /// Get operation result.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}/operationResults/{operationId}
         /// Operation Id: OperationResults_Get
         /// </summary>
@@ -107,6 +107,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <remarks> Get asset track operation result. </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<MediaServiceAssetTrackOperationResultResource>> GetMediaServiceAssetTrackOperationResultAsync(string operationId, CancellationToken cancellationToken = default)
         {
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get asset track operation result.
+        /// Get operation result.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}/operationResults/{operationId}
         /// Operation Id: OperationResults_Get
         /// </summary>
@@ -122,6 +123,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <remarks> Get asset track operation result. </remarks>
         [ForwardsClientCalls]
         public virtual Response<MediaServiceAssetTrackOperationResultResource> GetMediaServiceAssetTrackOperationResult(string operationId, CancellationToken cancellationToken = default)
         {
@@ -129,11 +131,12 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get the details of a Track in the Asset
+        /// Get a Track
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}
         /// Operation Id: Tracks_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get the details of a Track in the Asset. </remarks>
         public virtual async Task<Response<MediaServiceAssetTrackResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _mediaServiceAssetTrackTracksClientDiagnostics.CreateScope("MediaServiceAssetTrackResource.Get");
@@ -153,11 +156,12 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get the details of a Track in the Asset
+        /// Get a Track
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}
         /// Operation Id: Tracks_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get the details of a Track in the Asset. </remarks>
         public virtual Response<MediaServiceAssetTrackResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _mediaServiceAssetTrackTracksClientDiagnostics.CreateScope("MediaServiceAssetTrackResource.Get");
@@ -177,12 +181,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Deletes a Track in the asset
+        /// Delete a Track
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}
         /// Operation Id: Tracks_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Deletes a Track in the asset. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _mediaServiceAssetTrackTracksClientDiagnostics.CreateScope("MediaServiceAssetTrackResource.Delete");
@@ -203,12 +208,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Deletes a Track in the asset
+        /// Delete a Track
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}
         /// Operation Id: Tracks_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Deletes a Track in the asset. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _mediaServiceAssetTrackTracksClientDiagnostics.CreateScope("MediaServiceAssetTrackResource.Delete");
@@ -229,7 +235,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Updates an existing Track in the asset
+        /// Update an Track
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}
         /// Operation Id: Tracks_Update
         /// </summary>
@@ -237,6 +243,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="data"> The request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        /// <remarks> Updates an existing Track in the asset. </remarks>
         public virtual async Task<ArmOperation<MediaServiceAssetTrackResource>> UpdateAsync(WaitUntil waitUntil, AssetTrackData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -259,7 +266,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Updates an existing Track in the asset
+        /// Update an Track
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}
         /// Operation Id: Tracks_Update
         /// </summary>
@@ -267,6 +274,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="data"> The request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        /// <remarks> Updates an existing Track in the asset. </remarks>
         public virtual ArmOperation<MediaServiceAssetTrackResource> Update(WaitUntil waitUntil, AssetTrackData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -289,12 +297,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Update the track data. Call this API after any changes are made to the track data stored in the asset container. For example, you have modified the WebVTT captions file in the Azure blob storage container for the asset, viewers will not see the new version of the captions unless this API is called. Note, the changes may not be reflected immediately. CDN cache may also need to be purged if applicable.
+        /// Update the track data
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}/updateTrackData
         /// Operation Id: Tracks_UpdateTrackData
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Update the track data. Call this API after any changes are made to the track data stored in the asset container. For example, you have modified the WebVTT captions file in the Azure blob storage container for the asset, viewers will not see the new version of the captions unless this API is called. Note, the changes may not be reflected immediately. CDN cache may also need to be purged if applicable. </remarks>
         public virtual async Task<ArmOperation> UpdateTrackDataAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _mediaServiceAssetTrackTracksClientDiagnostics.CreateScope("MediaServiceAssetTrackResource.UpdateTrackData");
@@ -315,12 +324,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Update the track data. Call this API after any changes are made to the track data stored in the asset container. For example, you have modified the WebVTT captions file in the Azure blob storage container for the asset, viewers will not see the new version of the captions unless this API is called. Note, the changes may not be reflected immediately. CDN cache may also need to be purged if applicable.
+        /// Update the track data
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}/updateTrackData
         /// Operation Id: Tracks_UpdateTrackData
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Update the track data. Call this API after any changes are made to the track data stored in the asset container. For example, you have modified the WebVTT captions file in the Azure blob storage container for the asset, viewers will not see the new version of the captions unless this API is called. Note, the changes may not be reflected immediately. CDN cache may also need to be purged if applicable. </remarks>
         public virtual ArmOperation UpdateTrackData(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _mediaServiceAssetTrackTracksClientDiagnostics.CreateScope("MediaServiceAssetTrackResource.UpdateTrackData");
@@ -341,7 +351,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get asset track operation status.
+        /// Get operation status.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}/operationStatuses/{operationId}
         /// Operation Id: OperationStatuses_Get
         /// </summary>
@@ -349,6 +359,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <remarks> Get asset track operation status. </remarks>
         public virtual async Task<Response<AssetTrackOperationStatus>> GetOperationStatusAsync(string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
@@ -368,7 +379,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get asset track operation status.
+        /// Get operation status.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}/operationStatuses/{operationId}
         /// Operation Id: OperationStatuses_Get
         /// </summary>
@@ -376,6 +387,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <remarks> Get asset track operation status. </remarks>
         public virtual Response<AssetTrackOperationStatus> GetOperationStatus(string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));

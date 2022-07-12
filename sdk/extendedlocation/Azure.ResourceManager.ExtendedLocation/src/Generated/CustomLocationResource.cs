@@ -90,11 +90,12 @@ namespace Azure.ResourceManager.ExtendedLocation
         }
 
         /// <summary>
-        /// Gets the details of the customLocation with a specified resource group and name.
+        /// Gets a Custom Location.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
         /// Operation Id: CustomLocations_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Gets the details of the customLocation with a specified resource group and name. </remarks>
         public virtual async Task<Response<CustomLocationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _customLocationClientDiagnostics.CreateScope("CustomLocationResource.Get");
@@ -114,11 +115,12 @@ namespace Azure.ResourceManager.ExtendedLocation
         }
 
         /// <summary>
-        /// Gets the details of the customLocation with a specified resource group and name.
+        /// Gets a Custom Location.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
         /// Operation Id: CustomLocations_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Gets the details of the customLocation with a specified resource group and name. </remarks>
         public virtual Response<CustomLocationResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _customLocationClientDiagnostics.CreateScope("CustomLocationResource.Get");
@@ -138,12 +140,13 @@ namespace Azure.ResourceManager.ExtendedLocation
         }
 
         /// <summary>
-        /// Deletes the Custom Location with the specified Resource Name, Resource Group, and Subscription Id.
+        /// Deletes a Custom Location.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
         /// Operation Id: CustomLocations_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Deletes the Custom Location with the specified Resource Name, Resource Group, and Subscription Id. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _customLocationClientDiagnostics.CreateScope("CustomLocationResource.Delete");
@@ -164,12 +167,13 @@ namespace Azure.ResourceManager.ExtendedLocation
         }
 
         /// <summary>
-        /// Deletes the Custom Location with the specified Resource Name, Resource Group, and Subscription Id.
+        /// Deletes a Custom Location.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
         /// Operation Id: CustomLocations_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Deletes the Custom Location with the specified Resource Name, Resource Group, and Subscription Id. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _customLocationClientDiagnostics.CreateScope("CustomLocationResource.Delete");
@@ -190,13 +194,14 @@ namespace Azure.ResourceManager.ExtendedLocation
         }
 
         /// <summary>
-        /// Updates a Custom Location with the specified Resource Name in the specified Resource Group and Subscription.
+        /// Updates a Custom Location.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
         /// Operation Id: CustomLocations_Update
         /// </summary>
         /// <param name="patch"> The updatable fields of an existing Custom Location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        /// <remarks> Updates a Custom Location with the specified Resource Name in the specified Resource Group and Subscription. </remarks>
         public virtual async Task<Response<CustomLocationResource>> UpdateAsync(CustomLocationPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
@@ -216,13 +221,14 @@ namespace Azure.ResourceManager.ExtendedLocation
         }
 
         /// <summary>
-        /// Updates a Custom Location with the specified Resource Name in the specified Resource Group and Subscription.
+        /// Updates a Custom Location.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
         /// Operation Id: CustomLocations_Update
         /// </summary>
         /// <param name="patch"> The updatable fields of an existing Custom Location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        /// <remarks> Updates a Custom Location with the specified Resource Name in the specified Resource Group and Subscription. </remarks>
         public virtual Response<CustomLocationResource> Update(CustomLocationPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
@@ -242,12 +248,13 @@ namespace Azure.ResourceManager.ExtendedLocation
         }
 
         /// <summary>
-        /// Gets the list of the Enabled Resource Types.
+        /// Gets the list of Enabled Resource Types.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}/enabledResourceTypes
         /// Operation Id: CustomLocations_ListEnabledResourceTypes
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EnabledResourceType" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Gets the list of the Enabled Resource Types. </remarks>
         public virtual AsyncPageable<EnabledResourceType> GetEnabledResourceTypesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<EnabledResourceType>> FirstPageFunc(int? pageSizeHint)
@@ -284,12 +291,13 @@ namespace Azure.ResourceManager.ExtendedLocation
         }
 
         /// <summary>
-        /// Gets the list of the Enabled Resource Types.
+        /// Gets the list of Enabled Resource Types.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}/enabledResourceTypes
         /// Operation Id: CustomLocations_ListEnabledResourceTypes
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EnabledResourceType" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Gets the list of the Enabled Resource Types. </remarks>
         public virtual Pageable<EnabledResourceType> GetEnabledResourceTypes(CancellationToken cancellationToken = default)
         {
             Page<EnabledResourceType> FirstPageFunc(int? pageSizeHint)
@@ -326,7 +334,7 @@ namespace Azure.ResourceManager.ExtendedLocation
         }
 
         /// <summary>
-        /// Add a tag to the current resource.
+        /// Gets a Custom Location.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
         /// Operation Id: CustomLocations_Get
         /// </summary>
@@ -334,6 +342,7 @@ namespace Azure.ResourceManager.ExtendedLocation
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        /// <remarks> Add a tag to the current resource. </remarks>
         public virtual async Task<Response<CustomLocationResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -357,7 +366,7 @@ namespace Azure.ResourceManager.ExtendedLocation
         }
 
         /// <summary>
-        /// Add a tag to the current resource.
+        /// Gets a Custom Location.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
         /// Operation Id: CustomLocations_Get
         /// </summary>
@@ -365,6 +374,7 @@ namespace Azure.ResourceManager.ExtendedLocation
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        /// <remarks> Add a tag to the current resource. </remarks>
         public virtual Response<CustomLocationResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -388,13 +398,14 @@ namespace Azure.ResourceManager.ExtendedLocation
         }
 
         /// <summary>
-        /// Replace the tags on the resource with the given set.
+        /// Gets a Custom Location.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
         /// Operation Id: CustomLocations_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        /// <remarks> Replace the tags on the resource with the given set. </remarks>
         public virtual async Task<Response<CustomLocationResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -418,13 +429,14 @@ namespace Azure.ResourceManager.ExtendedLocation
         }
 
         /// <summary>
-        /// Replace the tags on the resource with the given set.
+        /// Gets a Custom Location.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
         /// Operation Id: CustomLocations_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        /// <remarks> Replace the tags on the resource with the given set. </remarks>
         public virtual Response<CustomLocationResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -448,13 +460,14 @@ namespace Azure.ResourceManager.ExtendedLocation
         }
 
         /// <summary>
-        /// Removes a tag by key from the resource.
+        /// Gets a Custom Location.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
         /// Operation Id: CustomLocations_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <remarks> Removes a tag by key from the resource. </remarks>
         public virtual async Task<Response<CustomLocationResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -477,13 +490,14 @@ namespace Azure.ResourceManager.ExtendedLocation
         }
 
         /// <summary>
-        /// Removes a tag by key from the resource.
+        /// Gets a Custom Location.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
         /// Operation Id: CustomLocations_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <remarks> Removes a tag by key from the resource. </remarks>
         public virtual Response<CustomLocationResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));

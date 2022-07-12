@@ -59,6 +59,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <summary> List all the available Skus in the region and information related to them. </summary>
         /// <param name="filter"> Specify $filter=&apos;location eq &lt;location&gt;&apos; to filter on location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List all the available Skus in the region and information related to them. </remarks>
         public async Task<Response<SkuInformationList>> ListAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest(filter);
@@ -80,6 +81,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <summary> List all the available Skus in the region and information related to them. </summary>
         /// <param name="filter"> Specify $filter=&apos;location eq &lt;location&gt;&apos; to filter on location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List all the available Skus in the region and information related to them. </remarks>
         public Response<SkuInformationList> List(string filter = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest(filter);

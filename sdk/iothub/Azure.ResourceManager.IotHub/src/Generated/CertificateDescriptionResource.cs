@@ -88,11 +88,12 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Returns the certificate.
+        /// Get the certificate.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/certificates/{certificateName}
         /// Operation Id: Certificates_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Returns the certificate. </remarks>
         public virtual async Task<Response<CertificateDescriptionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _certificateDescriptionCertificatesClientDiagnostics.CreateScope("CertificateDescriptionResource.Get");
@@ -112,11 +113,12 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Returns the certificate.
+        /// Get the certificate.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/certificates/{certificateName}
         /// Operation Id: Certificates_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Returns the certificate. </remarks>
         public virtual Response<CertificateDescriptionResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _certificateDescriptionCertificatesClientDiagnostics.CreateScope("CertificateDescriptionResource.Get");
@@ -136,7 +138,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Deletes an existing X509 certificate or does nothing if it does not exist.
+        /// Delete an X509 certificate.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/certificates/{certificateName}
         /// Operation Id: Certificates_Delete
         /// </summary>
@@ -144,6 +146,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="ifMatch"> ETag of the Certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> is null. </exception>
+        /// <remarks> Deletes an existing X509 certificate or does nothing if it does not exist. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string ifMatch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(ifMatch, nameof(ifMatch));
@@ -166,7 +169,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Deletes an existing X509 certificate or does nothing if it does not exist.
+        /// Delete an X509 certificate.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/certificates/{certificateName}
         /// Operation Id: Certificates_Delete
         /// </summary>
@@ -174,6 +177,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="ifMatch"> ETag of the Certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> is null. </exception>
+        /// <remarks> Deletes an existing X509 certificate or does nothing if it does not exist. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, string ifMatch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(ifMatch, nameof(ifMatch));
@@ -196,7 +200,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Adds new or replaces existing certificate.
+        /// Upload the certificate to the IoT hub.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/certificates/{certificateName}
         /// Operation Id: Certificates_CreateOrUpdate
         /// </summary>
@@ -205,6 +209,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="ifMatch"> ETag of the Certificate. Do not specify for creating a brand new certificate. Required to update an existing certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        /// <remarks> Adds new or replaces existing certificate. </remarks>
         public virtual async Task<ArmOperation<CertificateDescriptionResource>> UpdateAsync(WaitUntil waitUntil, CertificateDescriptionData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -227,7 +232,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Adds new or replaces existing certificate.
+        /// Upload the certificate to the IoT hub.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/certificates/{certificateName}
         /// Operation Id: Certificates_CreateOrUpdate
         /// </summary>
@@ -236,6 +241,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="ifMatch"> ETag of the Certificate. Do not specify for creating a brand new certificate. Required to update an existing certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        /// <remarks> Adds new or replaces existing certificate. </remarks>
         public virtual ArmOperation<CertificateDescriptionResource> Update(WaitUntil waitUntil, CertificateDescriptionData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -258,13 +264,14 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Generates verification code for proof of possession flow. The verification code will be used to generate a leaf certificate.
+        /// Generate verification code for proof of possession flow.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/certificates/{certificateName}/generateVerificationCode
         /// Operation Id: Certificates_GenerateVerificationCode
         /// </summary>
         /// <param name="ifMatch"> ETag of the Certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> is null. </exception>
+        /// <remarks> Generates verification code for proof of possession flow. The verification code will be used to generate a leaf certificate. </remarks>
         public virtual async Task<Response<CertificateWithNonceDescription>> GenerateVerificationCodeAsync(string ifMatch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(ifMatch, nameof(ifMatch));
@@ -284,13 +291,14 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Generates verification code for proof of possession flow. The verification code will be used to generate a leaf certificate.
+        /// Generate verification code for proof of possession flow.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/certificates/{certificateName}/generateVerificationCode
         /// Operation Id: Certificates_GenerateVerificationCode
         /// </summary>
         /// <param name="ifMatch"> ETag of the Certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> is null. </exception>
+        /// <remarks> Generates verification code for proof of possession flow. The verification code will be used to generate a leaf certificate. </remarks>
         public virtual Response<CertificateWithNonceDescription> GenerateVerificationCode(string ifMatch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(ifMatch, nameof(ifMatch));
@@ -310,7 +318,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Verifies the certificate&apos;s private key possession by providing the leaf cert issued by the verifying pre uploaded certificate.
+        /// Verify certificate&apos;s private key possession.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/certificates/{certificateName}/verify
         /// Operation Id: Certificates_Verify
         /// </summary>
@@ -318,6 +326,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="certificateVerificationBody"> The name of the certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="certificateVerificationBody"/> is null. </exception>
+        /// <remarks> Verifies the certificate&apos;s private key possession by providing the leaf cert issued by the verifying pre uploaded certificate. </remarks>
         public virtual async Task<Response<CertificateDescriptionResource>> VerifyAsync(string ifMatch, CertificateVerificationDescription certificateVerificationBody, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(ifMatch, nameof(ifMatch));
@@ -338,7 +347,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Verifies the certificate&apos;s private key possession by providing the leaf cert issued by the verifying pre uploaded certificate.
+        /// Verify certificate&apos;s private key possession.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/certificates/{certificateName}/verify
         /// Operation Id: Certificates_Verify
         /// </summary>
@@ -346,6 +355,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="certificateVerificationBody"> The name of the certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="certificateVerificationBody"/> is null. </exception>
+        /// <remarks> Verifies the certificate&apos;s private key possession by providing the leaf cert issued by the verifying pre uploaded certificate. </remarks>
         public virtual Response<CertificateDescriptionResource> Verify(string ifMatch, CertificateVerificationDescription certificateVerificationBody, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(ifMatch, nameof(ifMatch));

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets source control token
+        /// Gets source control token
         /// Request Path: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
         /// Operation Id: GetSourceControl
         /// </summary>
@@ -54,6 +54,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> is null. </exception>
+        /// <remarks> Description for Gets source control token. </remarks>
         [ForwardsClientCalls]
         public static async Task<Response<SourceControlResource>> GetSourceControlAsync(this TenantResource tenantResource, string sourceControlType, CancellationToken cancellationToken = default)
         {
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets source control token
+        /// Gets source control token
         /// Request Path: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
         /// Operation Id: GetSourceControl
         /// </summary>
@@ -70,6 +71,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> is null. </exception>
+        /// <remarks> Description for Gets source control token. </remarks>
         [ForwardsClientCalls]
         public static Response<SourceControlResource> GetSourceControl(this TenantResource tenantResource, string sourceControlType, CancellationToken cancellationToken = default)
         {
@@ -77,59 +79,63 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider
+        /// Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider
         /// Request Path: /providers/Microsoft.CertificateRegistration/operations
         /// Operation Id: CertificateRegistrationProvider_ListOperations
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CsmOperationDescription" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider. </remarks>
         public static AsyncPageable<CsmOperationDescription> GetOperationsCertificateRegistrationProvidersAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenantResource).GetOperationsCertificateRegistrationProvidersAsync(cancellationToken);
         }
 
         /// <summary>
-        /// Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider
+        /// Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider
         /// Request Path: /providers/Microsoft.CertificateRegistration/operations
         /// Operation Id: CertificateRegistrationProvider_ListOperations
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CsmOperationDescription" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider. </remarks>
         public static Pageable<CsmOperationDescription> GetOperationsCertificateRegistrationProviders(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenantResource).GetOperationsCertificateRegistrationProviders(cancellationToken);
         }
 
         /// <summary>
-        /// Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider
+        /// Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider
         /// Request Path: /providers/Microsoft.DomainRegistration/operations
         /// Operation Id: DomainRegistrationProvider_ListOperations
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CsmOperationDescription" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider. </remarks>
         public static AsyncPageable<CsmOperationDescription> GetOperationsDomainRegistrationProvidersAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenantResource).GetOperationsDomainRegistrationProvidersAsync(cancellationToken);
         }
 
         /// <summary>
-        /// Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider
+        /// Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider
         /// Request Path: /providers/Microsoft.DomainRegistration/operations
         /// Operation Id: DomainRegistrationProvider_ListOperations
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CsmOperationDescription" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider. </remarks>
         public static Pageable<CsmOperationDescription> GetOperationsDomainRegistrationProviders(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenantResource).GetOperationsDomainRegistrationProviders(cancellationToken);
         }
 
         /// <summary>
-        /// Description for Get available application frameworks and their versions
+        /// Get available application frameworks and their versions
         /// Request Path: /providers/Microsoft.Web/availableStacks
         /// Operation Id: Provider_GetAvailableStacks
         /// </summary>
@@ -137,13 +143,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApplicationStackResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get available application frameworks and their versions. </remarks>
         public static AsyncPageable<ApplicationStackResource> GetAvailableStacksProvidersAsync(this TenantResource tenantResource, ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenantResource).GetAvailableStacksProvidersAsync(osTypeSelected, cancellationToken);
         }
 
         /// <summary>
-        /// Description for Get available application frameworks and their versions
+        /// Get available application frameworks and their versions
         /// Request Path: /providers/Microsoft.Web/availableStacks
         /// Operation Id: Provider_GetAvailableStacks
         /// </summary>
@@ -151,13 +158,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationStackResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get available application frameworks and their versions. </remarks>
         public static Pageable<ApplicationStackResource> GetAvailableStacksProviders(this TenantResource tenantResource, ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenantResource).GetAvailableStacksProviders(osTypeSelected, cancellationToken);
         }
 
         /// <summary>
-        /// Description for Get available Function app frameworks and their versions
+        /// Get available Function app frameworks and their versions
         /// Request Path: /providers/Microsoft.Web/functionAppStacks
         /// Operation Id: Provider_GetFunctionAppStacks
         /// </summary>
@@ -165,13 +173,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="FunctionAppStack" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get available Function app frameworks and their versions. </remarks>
         public static AsyncPageable<FunctionAppStack> GetFunctionAppStacksProvidersAsync(this TenantResource tenantResource, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenantResource).GetFunctionAppStacksProvidersAsync(stackOSType, cancellationToken);
         }
 
         /// <summary>
-        /// Description for Get available Function app frameworks and their versions
+        /// Get available Function app frameworks and their versions
         /// Request Path: /providers/Microsoft.Web/functionAppStacks
         /// Operation Id: Provider_GetFunctionAppStacks
         /// </summary>
@@ -179,13 +188,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FunctionAppStack" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get available Function app frameworks and their versions. </remarks>
         public static Pageable<FunctionAppStack> GetFunctionAppStacksProviders(this TenantResource tenantResource, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenantResource).GetFunctionAppStacksProviders(stackOSType, cancellationToken);
         }
 
         /// <summary>
-        /// Description for Get available Function app frameworks and their versions for location
+        /// Get available Function app frameworks and their versions for location
         /// Request Path: /providers/Microsoft.Web/locations/{location}/functionAppStacks
         /// Operation Id: Provider_GetFunctionAppStacksForLocation
         /// </summary>
@@ -194,13 +204,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="FunctionAppStack" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get available Function app frameworks and their versions for location. </remarks>
         public static AsyncPageable<FunctionAppStack> GetFunctionAppStacksForLocationProvidersAsync(this TenantResource tenantResource, AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenantResource).GetFunctionAppStacksForLocationProvidersAsync(location, stackOSType, cancellationToken);
         }
 
         /// <summary>
-        /// Description for Get available Function app frameworks and their versions for location
+        /// Get available Function app frameworks and their versions for location
         /// Request Path: /providers/Microsoft.Web/locations/{location}/functionAppStacks
         /// Operation Id: Provider_GetFunctionAppStacksForLocation
         /// </summary>
@@ -209,13 +220,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FunctionAppStack" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get available Function app frameworks and their versions for location. </remarks>
         public static Pageable<FunctionAppStack> GetFunctionAppStacksForLocationProviders(this TenantResource tenantResource, AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenantResource).GetFunctionAppStacksForLocationProviders(location, stackOSType, cancellationToken);
         }
 
         /// <summary>
-        /// Description for Get available Web app frameworks and their versions for location
+        /// Get available Web app frameworks and their versions for location
         /// Request Path: /providers/Microsoft.Web/locations/{location}/webAppStacks
         /// Operation Id: Provider_GetWebAppStacksForLocation
         /// </summary>
@@ -224,13 +236,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="WebAppStack" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get available Web app frameworks and their versions for location. </remarks>
         public static AsyncPageable<WebAppStack> GetWebAppStacksForLocationProvidersAsync(this TenantResource tenantResource, AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenantResource).GetWebAppStacksForLocationProvidersAsync(location, stackOSType, cancellationToken);
         }
 
         /// <summary>
-        /// Description for Get available Web app frameworks and their versions for location
+        /// Get available Web app frameworks and their versions for location
         /// Request Path: /providers/Microsoft.Web/locations/{location}/webAppStacks
         /// Operation Id: Provider_GetWebAppStacksForLocation
         /// </summary>
@@ -239,39 +252,42 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WebAppStack" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get available Web app frameworks and their versions for location. </remarks>
         public static Pageable<WebAppStack> GetWebAppStacksForLocationProviders(this TenantResource tenantResource, AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenantResource).GetWebAppStacksForLocationProviders(location, stackOSType, cancellationToken);
         }
 
         /// <summary>
-        /// Description for Gets all available operations for the Microsoft.Web resource provider. Also exposes resource metric definitions
+        /// Gets all available operations for the Microsoft.Web resource provider. Also exposes resource metric definitions
         /// Request Path: /providers/Microsoft.Web/operations
         /// Operation Id: Provider_ListOperations
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CsmOperationDescription" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Gets all available operations for the Microsoft.Web resource provider. Also exposes resource metric definitions. </remarks>
         public static AsyncPageable<CsmOperationDescription> GetOperationsProvidersAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenantResource).GetOperationsProvidersAsync(cancellationToken);
         }
 
         /// <summary>
-        /// Description for Gets all available operations for the Microsoft.Web resource provider. Also exposes resource metric definitions
+        /// Gets all available operations for the Microsoft.Web resource provider. Also exposes resource metric definitions
         /// Request Path: /providers/Microsoft.Web/operations
         /// Operation Id: Provider_ListOperations
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CsmOperationDescription" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Gets all available operations for the Microsoft.Web resource provider. Also exposes resource metric definitions. </remarks>
         public static Pageable<CsmOperationDescription> GetOperationsProviders(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenantResource).GetOperationsProviders(cancellationToken);
         }
 
         /// <summary>
-        /// Description for Get available Web app frameworks and their versions
+        /// Get available Web app frameworks and their versions
         /// Request Path: /providers/Microsoft.Web/webAppStacks
         /// Operation Id: Provider_GetWebAppStacks
         /// </summary>
@@ -279,13 +295,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="WebAppStack" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get available Web app frameworks and their versions. </remarks>
         public static AsyncPageable<WebAppStack> GetWebAppStacksProvidersAsync(this TenantResource tenantResource, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenantResource).GetWebAppStacksProvidersAsync(stackOSType, cancellationToken);
         }
 
         /// <summary>
-        /// Description for Get available Web app frameworks and their versions
+        /// Get available Web app frameworks and their versions
         /// Request Path: /providers/Microsoft.Web/webAppStacks
         /// Operation Id: Provider_GetWebAppStacks
         /// </summary>
@@ -293,6 +310,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WebAppStack" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get available Web app frameworks and their versions. </remarks>
         public static Pageable<WebAppStack> GetWebAppStacksProviders(this TenantResource tenantResource, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenantResource).GetWebAppStacksProviders(stackOSType, cancellationToken);
@@ -316,7 +334,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get details of a top-level domain.
+        /// Get details of a top-level domain.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}
         /// Operation Id: TopLevelDomains_Get
         /// </summary>
@@ -325,6 +343,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <remarks> Description for Get details of a top-level domain. </remarks>
         [ForwardsClientCalls]
         public static async Task<Response<TopLevelDomainResource>> GetTopLevelDomainAsync(this SubscriptionResource subscriptionResource, string name, CancellationToken cancellationToken = default)
         {
@@ -332,7 +351,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get details of a top-level domain.
+        /// Get details of a top-level domain.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}
         /// Operation Id: TopLevelDomains_Get
         /// </summary>
@@ -341,6 +360,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <remarks> Description for Get details of a top-level domain. </remarks>
         [ForwardsClientCalls]
         public static Response<TopLevelDomainResource> GetTopLevelDomain(this SubscriptionResource subscriptionResource, string name, CancellationToken cancellationToken = default)
         {
@@ -356,7 +376,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get deleted app for a subscription.
+        /// Get deleted app for a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
         /// Operation Id: Global_GetDeletedWebApp
         /// </summary>
@@ -365,6 +385,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
+        /// <remarks> Description for Get deleted app for a subscription. </remarks>
         [ForwardsClientCalls]
         public static async Task<Response<DeletedSiteResource>> GetDeletedSiteAsync(this SubscriptionResource subscriptionResource, string deletedSiteId, CancellationToken cancellationToken = default)
         {
@@ -372,7 +393,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get deleted app for a subscription.
+        /// Get deleted app for a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
         /// Operation Id: Global_GetDeletedWebApp
         /// </summary>
@@ -381,6 +402,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
+        /// <remarks> Description for Get deleted app for a subscription. </remarks>
         [ForwardsClientCalls]
         public static Response<DeletedSiteResource> GetDeletedSite(this SubscriptionResource subscriptionResource, string deletedSiteId, CancellationToken cancellationToken = default)
         {
@@ -388,33 +410,35 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for List all certificate orders in a subscription.
+        /// List all certificate orders in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.CertificateRegistration/certificateOrders
         /// Operation Id: AppServiceCertificateOrders_List
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AppServiceCertificateOrderResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for List all certificate orders in a subscription. </remarks>
         public static AsyncPageable<AppServiceCertificateOrderResource> GetAppServiceCertificateOrdersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetAppServiceCertificateOrdersAsync(cancellationToken);
         }
 
         /// <summary>
-        /// Description for List all certificate orders in a subscription.
+        /// List all certificate orders in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.CertificateRegistration/certificateOrders
         /// Operation Id: AppServiceCertificateOrders_List
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppServiceCertificateOrderResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for List all certificate orders in a subscription. </remarks>
         public static Pageable<AppServiceCertificateOrderResource> GetAppServiceCertificateOrders(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetAppServiceCertificateOrders(cancellationToken);
         }
 
         /// <summary>
-        /// Description for Validate information for a certificate order.
+        /// Validate information for a certificate order.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.CertificateRegistration/validateCertificateRegistrationInformation
         /// Operation Id: AppServiceCertificateOrders_ValidatePurchaseInformation
         /// </summary>
@@ -422,6 +446,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> Information for a certificate order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        /// <remarks> Description for Validate information for a certificate order. </remarks>
         public static async Task<Response> ValidatePurchaseInformationAppServiceCertificateOrderAsync(this SubscriptionResource subscriptionResource, AppServiceCertificateOrderData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -430,7 +455,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Validate information for a certificate order.
+        /// Validate information for a certificate order.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.CertificateRegistration/validateCertificateRegistrationInformation
         /// Operation Id: AppServiceCertificateOrders_ValidatePurchaseInformation
         /// </summary>
@@ -438,6 +463,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> Information for a certificate order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        /// <remarks> Description for Validate information for a certificate order. </remarks>
         public static Response ValidatePurchaseInformationAppServiceCertificateOrder(this SubscriptionResource subscriptionResource, AppServiceCertificateOrderData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -446,7 +472,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Check if a domain is available for registration.
+        /// Check if a domain is available for registration.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/checkDomainAvailability
         /// Operation Id: Domains_CheckAvailability
         /// </summary>
@@ -454,6 +480,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="identifier"> Name of the domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="identifier"/> is null. </exception>
+        /// <remarks> Description for Check if a domain is available for registration. </remarks>
         public static async Task<Response<DomainAvailabilityCheckResult>> CheckAvailabilityDomainAsync(this SubscriptionResource subscriptionResource, NameIdentifier identifier, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(identifier, nameof(identifier));
@@ -462,7 +489,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Check if a domain is available for registration.
+        /// Check if a domain is available for registration.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/checkDomainAvailability
         /// Operation Id: Domains_CheckAvailability
         /// </summary>
@@ -470,6 +497,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="identifier"> Name of the domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="identifier"/> is null. </exception>
+        /// <remarks> Description for Check if a domain is available for registration. </remarks>
         public static Response<DomainAvailabilityCheckResult> CheckAvailabilityDomain(this SubscriptionResource subscriptionResource, NameIdentifier identifier, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(identifier, nameof(identifier));
@@ -478,57 +506,61 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get all domains in a subscription.
+        /// Get all domains in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/domains
         /// Operation Id: Domains_List
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AppServiceDomainResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get all domains in a subscription. </remarks>
         public static AsyncPageable<AppServiceDomainResource> GetAppServiceDomainsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetAppServiceDomainsAsync(cancellationToken);
         }
 
         /// <summary>
-        /// Description for Get all domains in a subscription.
+        /// Get all domains in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/domains
         /// Operation Id: Domains_List
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppServiceDomainResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get all domains in a subscription. </remarks>
         public static Pageable<AppServiceDomainResource> GetAppServiceDomains(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetAppServiceDomains(cancellationToken);
         }
 
         /// <summary>
-        /// Description for Generate a single sign-on request for the domain management portal.
+        /// Generate a single sign-on request for the domain management portal.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/generateSsoRequest
         /// Operation Id: Domains_GetControlCenterSsoRequest
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Generate a single sign-on request for the domain management portal. </remarks>
         public static async Task<Response<DomainControlCenterSsoRequest>> GetControlCenterSsoRequestDomainAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return await GetExtensionClient(subscriptionResource).GetControlCenterSsoRequestDomainAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Description for Generate a single sign-on request for the domain management portal.
+        /// Generate a single sign-on request for the domain management portal.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/generateSsoRequest
         /// Operation Id: Domains_GetControlCenterSsoRequest
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Generate a single sign-on request for the domain management portal. </remarks>
         public static Response<DomainControlCenterSsoRequest> GetControlCenterSsoRequestDomain(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetControlCenterSsoRequestDomain(cancellationToken);
         }
 
         /// <summary>
-        /// Description for Get domain name recommendations based on keywords.
+        /// Get domain name recommendations based on keywords.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/listDomainRecommendations
         /// Operation Id: Domains_ListRecommendations
         /// </summary>
@@ -537,6 +569,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> An async collection of <see cref="NameIdentifier" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get domain name recommendations based on keywords. </remarks>
         public static AsyncPageable<NameIdentifier> GetRecommendationsDomainsAsync(this SubscriptionResource subscriptionResource, DomainRecommendationSearchContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -545,7 +578,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get domain name recommendations based on keywords.
+        /// Get domain name recommendations based on keywords.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/listDomainRecommendations
         /// Operation Id: Domains_ListRecommendations
         /// </summary>
@@ -554,6 +587,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="NameIdentifier" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get domain name recommendations based on keywords. </remarks>
         public static Pageable<NameIdentifier> GetRecommendationsDomains(this SubscriptionResource subscriptionResource, DomainRecommendationSearchContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -562,33 +596,35 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get all App Service Environments for a subscription.
+        /// Get all App Service Environments for a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/hostingEnvironments
         /// Operation Id: AppServiceEnvironments_List
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AppServiceEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get all App Service Environments for a subscription. </remarks>
         public static AsyncPageable<AppServiceEnvironmentResource> GetAppServiceEnvironmentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetAppServiceEnvironmentsAsync(cancellationToken);
         }
 
         /// <summary>
-        /// Description for Get all App Service Environments for a subscription.
+        /// Get all App Service Environments for a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/hostingEnvironments
         /// Operation Id: AppServiceEnvironments_List
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppServiceEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get all App Service Environments for a subscription. </remarks>
         public static Pageable<AppServiceEnvironmentResource> GetAppServiceEnvironments(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetAppServiceEnvironments(cancellationToken);
         }
 
         /// <summary>
-        /// Description for Get all App Service plans for a subscription.
+        /// Get all App Service plans for a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/serverfarms
         /// Operation Id: AppServicePlans_List
         /// </summary>
@@ -599,13 +635,14 @@ namespace Azure.ResourceManager.AppService
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AppServicePlanResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get all App Service plans for a subscription. </remarks>
         public static AsyncPageable<AppServicePlanResource> GetAppServicePlansAsync(this SubscriptionResource subscriptionResource, bool? detailed = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetAppServicePlansAsync(detailed, cancellationToken);
         }
 
         /// <summary>
-        /// Description for Get all App Service plans for a subscription.
+        /// Get all App Service plans for a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/serverfarms
         /// Operation Id: AppServicePlans_List
         /// </summary>
@@ -616,13 +653,14 @@ namespace Azure.ResourceManager.AppService
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppServicePlanResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get all App Service plans for a subscription. </remarks>
         public static Pageable<AppServicePlanResource> GetAppServicePlans(this SubscriptionResource subscriptionResource, bool? detailed = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetAppServicePlans(detailed, cancellationToken);
         }
 
         /// <summary>
-        /// Description for Get all certificates for a subscription.
+        /// Get all certificates for a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/certificates
         /// Operation Id: Certificates_List
         /// </summary>
@@ -630,13 +668,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=KeyVaultId eq &apos;KeyVaultId&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CertificateResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get all certificates for a subscription. </remarks>
         public static AsyncPageable<CertificateResource> GetCertificatesAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetCertificatesAsync(filter, cancellationToken);
         }
 
         /// <summary>
-        /// Description for Get all certificates for a subscription.
+        /// Get all certificates for a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/certificates
         /// Operation Id: Certificates_List
         /// </summary>
@@ -644,13 +683,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=KeyVaultId eq &apos;KeyVaultId&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CertificateResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get all certificates for a subscription. </remarks>
         public static Pageable<CertificateResource> GetCertificates(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetCertificates(filter, cancellationToken);
         }
 
         /// <summary>
-        /// Description for Get all deleted apps for a subscription at location
+        /// Get all deleted apps for a subscription at location
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/deletedSites
         /// Operation Id: DeletedWebApps_ListByLocation
         /// </summary>
@@ -658,13 +698,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DeletedSiteResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get all deleted apps for a subscription at location. </remarks>
         public static AsyncPageable<DeletedSiteResource> GetDeletedSitesByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetDeletedSitesByLocationAsync(location, cancellationToken);
         }
 
         /// <summary>
-        /// Description for Get all deleted apps for a subscription at location
+        /// Get all deleted apps for a subscription at location
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/deletedSites
         /// Operation Id: DeletedWebApps_ListByLocation
         /// </summary>
@@ -672,13 +713,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeletedSiteResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get all deleted apps for a subscription at location. </remarks>
         public static Pageable<DeletedSiteResource> GetDeletedSitesByLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetDeletedSitesByLocation(location, cancellationToken);
         }
 
         /// <summary>
-        /// Description for Get deleted app for a subscription at location.
+        /// Get deleted app for a subscription at location.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/deletedSites/{deletedSiteId}
         /// Operation Id: DeletedWebApps_GetDeletedWebAppByLocation
         /// </summary>
@@ -688,6 +730,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
+        /// <remarks> Description for Get deleted app for a subscription at location. </remarks>
         public static async Task<Response<DeletedSiteResource>> GetDeletedWebAppByLocationDeletedWebAppAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string deletedSiteId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deletedSiteId, nameof(deletedSiteId));
@@ -696,7 +739,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get deleted app for a subscription at location.
+        /// Get deleted app for a subscription at location.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/deletedSites/{deletedSiteId}
         /// Operation Id: DeletedWebApps_GetDeletedWebAppByLocation
         /// </summary>
@@ -706,6 +749,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
+        /// <remarks> Description for Get deleted app for a subscription at location. </remarks>
         public static Response<DeletedSiteResource> GetDeletedWebAppByLocationDeletedWebApp(this SubscriptionResource subscriptionResource, AzureLocation location, string deletedSiteId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deletedSiteId, nameof(deletedSiteId));
@@ -714,7 +758,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets an operation in a subscription and given region
+        /// Gets an operation in a subscription and given region
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/operations/{operationId}
         /// Operation Id: Global_GetSubscriptionOperationWithAsyncResponse
         /// </summary>
@@ -724,6 +768,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <remarks> Description for Gets an operation in a subscription and given region. </remarks>
         public static async Task<Response> GetSubscriptionOperationWithAsyncResponseGlobalAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
@@ -732,7 +777,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets an operation in a subscription and given region
+        /// Gets an operation in a subscription and given region
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/operations/{operationId}
         /// Operation Id: Global_GetSubscriptionOperationWithAsyncResponse
         /// </summary>
@@ -742,6 +787,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <remarks> Description for Gets an operation in a subscription and given region. </remarks>
         public static Response GetSubscriptionOperationWithAsyncResponseGlobal(this SubscriptionResource subscriptionResource, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
@@ -750,33 +796,35 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get all Kubernetes Environments for a subscription.
+        /// Get all Kubernetes Environments for a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/kubeEnvironments
         /// Operation Id: KubeEnvironments_ListBySubscription
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="KubeEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get all Kubernetes Environments for a subscription. </remarks>
         public static AsyncPageable<KubeEnvironmentResource> GetKubeEnvironmentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetKubeEnvironmentsAsync(cancellationToken);
         }
 
         /// <summary>
-        /// Description for Get all Kubernetes Environments for a subscription.
+        /// Get all Kubernetes Environments for a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/kubeEnvironments
         /// Operation Id: KubeEnvironments_ListBySubscription
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="KubeEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get all Kubernetes Environments for a subscription. </remarks>
         public static Pageable<KubeEnvironmentResource> GetKubeEnvironments(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetKubeEnvironments(cancellationToken);
         }
 
         /// <summary>
-        /// Description for Get available application frameworks and their versions
+        /// Get available application frameworks and their versions
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/availableStacks
         /// Operation Id: Provider_GetAvailableStacksOnPrem
         /// </summary>
@@ -784,13 +832,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApplicationStackResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get available application frameworks and their versions. </remarks>
         public static AsyncPageable<ApplicationStackResource> GetAvailableStacksOnPremProvidersAsync(this SubscriptionResource subscriptionResource, ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetAvailableStacksOnPremProvidersAsync(osTypeSelected, cancellationToken);
         }
 
         /// <summary>
-        /// Description for Get available application frameworks and their versions
+        /// Get available application frameworks and their versions
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/availableStacks
         /// Operation Id: Provider_GetAvailableStacksOnPrem
         /// </summary>
@@ -798,13 +847,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationStackResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get available application frameworks and their versions. </remarks>
         public static Pageable<ApplicationStackResource> GetAvailableStacksOnPremProviders(this SubscriptionResource subscriptionResource, ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetAvailableStacksOnPremProviders(osTypeSelected, cancellationToken);
         }
 
         /// <summary>
-        /// Description for List all recommendations for a subscription.
+        /// List all recommendations for a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/recommendations
         /// Operation Id: Recommendations_List
         /// </summary>
@@ -813,13 +863,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos; and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[PT1H|PT1M|P1D]. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AppServiceRecommendation" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for List all recommendations for a subscription. </remarks>
         public static AsyncPageable<AppServiceRecommendation> GetRecommendationsAsync(this SubscriptionResource subscriptionResource, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetRecommendationsAsync(featured, filter, cancellationToken);
         }
 
         /// <summary>
-        /// Description for List all recommendations for a subscription.
+        /// List all recommendations for a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/recommendations
         /// Operation Id: Recommendations_List
         /// </summary>
@@ -828,37 +879,40 @@ namespace Azure.ResourceManager.AppService
         /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos; and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[PT1H|PT1M|P1D]. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppServiceRecommendation" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for List all recommendations for a subscription. </remarks>
         public static Pageable<AppServiceRecommendation> GetRecommendations(this SubscriptionResource subscriptionResource, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetRecommendations(featured, filter, cancellationToken);
         }
 
         /// <summary>
-        /// Description for Reset all recommendation opt-out settings for a subscription.
+        /// Reset all recommendation opt-out settings for a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/recommendations/reset
         /// Operation Id: Recommendations_ResetAllFilters
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Reset all recommendation opt-out settings for a subscription. </remarks>
         public static async Task<Response> ResetAllFiltersRecommendationAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return await GetExtensionClient(subscriptionResource).ResetAllFiltersRecommendationAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Description for Reset all recommendation opt-out settings for a subscription.
+        /// Reset all recommendation opt-out settings for a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/recommendations/reset
         /// Operation Id: Recommendations_ResetAllFilters
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Reset all recommendation opt-out settings for a subscription. </remarks>
         public static Response ResetAllFiltersRecommendation(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).ResetAllFiltersRecommendation(cancellationToken);
         }
 
         /// <summary>
-        /// Description for Disables the specified rule so it will not apply to a subscription in the future.
+        /// Disables the specified rule so it will not apply to a subscription in the future.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/recommendations/{name}/disable
         /// Operation Id: Recommendations_DisableRecommendationForSubscription
         /// </summary>
@@ -867,6 +921,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <remarks> Description for Disables the specified rule so it will not apply to a subscription in the future. </remarks>
         public static async Task<Response> DisableRecommendationForSubscriptionRecommendationAsync(this SubscriptionResource subscriptionResource, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -875,7 +930,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Disables the specified rule so it will not apply to a subscription in the future.
+        /// Disables the specified rule so it will not apply to a subscription in the future.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/recommendations/{name}/disable
         /// Operation Id: Recommendations_DisableRecommendationForSubscription
         /// </summary>
@@ -884,6 +939,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <remarks> Description for Disables the specified rule so it will not apply to a subscription in the future. </remarks>
         public static Response DisableRecommendationForSubscriptionRecommendation(this SubscriptionResource subscriptionResource, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -892,33 +948,35 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for List all ResourceHealthMetadata for all sites in the subscription.
+        /// List all ResourceHealthMetadata for all sites in the subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/resourceHealthMetadata
         /// Operation Id: ResourceHealthMetadata_List
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SiteResourceHealthMetadataResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for List all ResourceHealthMetadata for all sites in the subscription. </remarks>
         public static AsyncPageable<SiteResourceHealthMetadataResource> GetAllResourceHealthMetadataAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetAllResourceHealthMetadataAsync(cancellationToken);
         }
 
         /// <summary>
-        /// Description for List all ResourceHealthMetadata for all sites in the subscription.
+        /// List all ResourceHealthMetadata for all sites in the subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/resourceHealthMetadata
         /// Operation Id: ResourceHealthMetadata_List
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SiteResourceHealthMetadataResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for List all ResourceHealthMetadata for all sites in the subscription. </remarks>
         public static Pageable<SiteResourceHealthMetadataResource> GetAllResourceHealthMetadata(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetAllResourceHealthMetadata(cancellationToken);
         }
 
         /// <summary>
-        /// Description for Gets a list of meters for a given location.
+        /// Gets a list of meters for a given location.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/billingMeters
         /// Operation Id: ListBillingMeters
         /// </summary>
@@ -927,13 +985,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="osType"> App Service OS type meters used for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BillingMeter" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Gets a list of meters for a given location. </remarks>
         public static AsyncPageable<BillingMeter> GetBillingMetersAsync(this SubscriptionResource subscriptionResource, string billingLocation = null, string osType = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetBillingMetersAsync(billingLocation, osType, cancellationToken);
         }
 
         /// <summary>
-        /// Description for Gets a list of meters for a given location.
+        /// Gets a list of meters for a given location.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/billingMeters
         /// Operation Id: ListBillingMeters
         /// </summary>
@@ -942,13 +1001,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="osType"> App Service OS type meters used for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BillingMeter" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Gets a list of meters for a given location. </remarks>
         public static Pageable<BillingMeter> GetBillingMeters(this SubscriptionResource subscriptionResource, string billingLocation = null, string osType = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetBillingMeters(billingLocation, osType, cancellationToken);
         }
 
         /// <summary>
-        /// Description for Check if a resource name is available.
+        /// Check if a resource name is available.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/checknameavailability
         /// Operation Id: CheckNameAvailability
         /// </summary>
@@ -956,6 +1016,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="content"> Name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <remarks> Description for Check if a resource name is available. </remarks>
         public static async Task<Response<ResourceNameAvailability>> CheckAppServiceNameAvailabilityAsync(this SubscriptionResource subscriptionResource, ResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -964,7 +1025,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Check if a resource name is available.
+        /// Check if a resource name is available.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/checknameavailability
         /// Operation Id: CheckNameAvailability
         /// </summary>
@@ -972,6 +1033,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="content"> Name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <remarks> Description for Check if a resource name is available. </remarks>
         public static Response<ResourceNameAvailability> CheckAppServiceNameAvailability(this SubscriptionResource subscriptionResource, ResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -980,31 +1042,33 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets list of available geo regions plus ministamps
+        /// Gets list of available geo regions plus ministamps
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deploymentLocations
         /// Operation Id: GetSubscriptionDeploymentLocations
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Gets list of available geo regions plus ministamps. </remarks>
         public static async Task<Response<DeploymentLocations>> GetSubscriptionDeploymentLocationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return await GetExtensionClient(subscriptionResource).GetSubscriptionDeploymentLocationsAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Description for Gets list of available geo regions plus ministamps
+        /// Gets list of available geo regions plus ministamps
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deploymentLocations
         /// Operation Id: GetSubscriptionDeploymentLocations
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Gets list of available geo regions plus ministamps. </remarks>
         public static Response<DeploymentLocations> GetSubscriptionDeploymentLocations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetSubscriptionDeploymentLocations(cancellationToken);
         }
 
         /// <summary>
-        /// Description for Get a list of available geographical regions.
+        /// Get a list of available geographical regions.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/geoRegions
         /// Operation Id: ListGeoRegions
         /// </summary>
@@ -1015,13 +1079,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="linuxDynamicWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Linux Consumption Workers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="GeoRegion" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get a list of available geographical regions. </remarks>
         public static AsyncPageable<GeoRegion> GetGeoRegionsAsync(this SubscriptionResource subscriptionResource, AppServiceSkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetGeoRegionsAsync(sku, linuxWorkersEnabled, xenonWorkersEnabled, linuxDynamicWorkersEnabled, cancellationToken);
         }
 
         /// <summary>
-        /// Description for Get a list of available geographical regions.
+        /// Get a list of available geographical regions.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/geoRegions
         /// Operation Id: ListGeoRegions
         /// </summary>
@@ -1032,13 +1097,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="linuxDynamicWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Linux Consumption Workers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="GeoRegion" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get a list of available geographical regions. </remarks>
         public static Pageable<GeoRegion> GetGeoRegions(this SubscriptionResource subscriptionResource, AppServiceSkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetGeoRegions(sku, linuxWorkersEnabled, xenonWorkersEnabled, linuxDynamicWorkersEnabled, cancellationToken);
         }
 
         /// <summary>
-        /// Description for List all apps that are assigned to a hostname.
+        /// List all apps that are assigned to a hostname.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/listSitesAssignedToHostName
         /// Operation Id: ListSiteIdentifiersAssignedToHostName
         /// </summary>
@@ -1047,6 +1113,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nameIdentifier"/> is null. </exception>
         /// <returns> An async collection of <see cref="SiteDomainOwnershipIdentifierResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for List all apps that are assigned to a hostname. </remarks>
         public static AsyncPageable<SiteDomainOwnershipIdentifierResource> GetSiteIdentifiersAssignedToHostNameAsync(this SubscriptionResource subscriptionResource, NameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nameIdentifier, nameof(nameIdentifier));
@@ -1055,7 +1122,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for List all apps that are assigned to a hostname.
+        /// List all apps that are assigned to a hostname.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/listSitesAssignedToHostName
         /// Operation Id: ListSiteIdentifiersAssignedToHostName
         /// </summary>
@@ -1064,6 +1131,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nameIdentifier"/> is null. </exception>
         /// <returns> A collection of <see cref="SiteDomainOwnershipIdentifierResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for List all apps that are assigned to a hostname. </remarks>
         public static Pageable<SiteDomainOwnershipIdentifierResource> GetSiteIdentifiersAssignedToHostName(this SubscriptionResource subscriptionResource, NameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nameIdentifier, nameof(nameIdentifier));
@@ -1072,57 +1140,61 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for List all premier add-on offers.
+        /// List all premier add-on offers.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/premieraddonoffers
         /// Operation Id: ListPremierAddOnOffers
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PremierAddOnOffer" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for List all premier add-on offers. </remarks>
         public static AsyncPageable<PremierAddOnOffer> GetPremierAddOnOffersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetPremierAddOnOffersAsync(cancellationToken);
         }
 
         /// <summary>
-        /// Description for List all premier add-on offers.
+        /// List all premier add-on offers.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/premieraddonoffers
         /// Operation Id: ListPremierAddOnOffers
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PremierAddOnOffer" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for List all premier add-on offers. </remarks>
         public static Pageable<PremierAddOnOffer> GetPremierAddOnOffers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetPremierAddOnOffers(cancellationToken);
         }
 
         /// <summary>
-        /// Description for List all SKUs.
+        /// List all SKUs.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/skus
         /// Operation Id: ListSkus
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for List all SKUs. </remarks>
         public static async Task<Response<SkuInfos>> GetSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return await GetExtensionClient(subscriptionResource).GetSkusAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Description for List all SKUs.
+        /// List all SKUs.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/skus
         /// Operation Id: ListSkus
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for List all SKUs. </remarks>
         public static Response<SkuInfos> GetSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetSkus(cancellationToken);
         }
 
         /// <summary>
-        /// Description for Verifies if this VNET is compatible with an App Service Environment by analyzing the Network Security Group rules.
+        /// Verifies if this VNET is compatible with an App Service Environment by analyzing the Network Security Group rules.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/verifyHostingEnvironmentVnet
         /// Operation Id: VerifyHostingEnvironmentVnet
         /// </summary>
@@ -1130,6 +1202,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="content"> VNET information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <remarks> Description for Verifies if this VNET is compatible with an App Service Environment by analyzing the Network Security Group rules. </remarks>
         public static async Task<Response<VnetValidationFailureDetails>> VerifyHostingEnvironmentVnetAsync(this SubscriptionResource subscriptionResource, VnetContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -1138,7 +1211,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Verifies if this VNET is compatible with an App Service Environment by analyzing the Network Security Group rules.
+        /// Verifies if this VNET is compatible with an App Service Environment by analyzing the Network Security Group rules.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/verifyHostingEnvironmentVnet
         /// Operation Id: VerifyHostingEnvironmentVnet
         /// </summary>
@@ -1146,6 +1219,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="content"> VNET information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <remarks> Description for Verifies if this VNET is compatible with an App Service Environment by analyzing the Network Security Group rules. </remarks>
         public static Response<VnetValidationFailureDetails> VerifyHostingEnvironmentVnet(this SubscriptionResource subscriptionResource, VnetContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -1154,7 +1228,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Generates a preview workflow file for the static site
+        /// Generates a preview workflow file for the static site
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/previewStaticSiteWorkflowFile
         /// Operation Id: StaticSites_PreviewWorkflow
         /// </summary>
@@ -1163,6 +1237,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="content"> A JSON representation of the StaticSitesWorkflowPreviewRequest properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <remarks> Description for Generates a preview workflow file for the static site. </remarks>
         public static async Task<Response<StaticSitesWorkflowPreview>> PreviewWorkflowStaticSiteAsync(this SubscriptionResource subscriptionResource, AzureLocation location, StaticSitesWorkflowPreviewContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -1171,7 +1246,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Generates a preview workflow file for the static site
+        /// Generates a preview workflow file for the static site
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/previewStaticSiteWorkflowFile
         /// Operation Id: StaticSites_PreviewWorkflow
         /// </summary>
@@ -1180,6 +1255,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="content"> A JSON representation of the StaticSitesWorkflowPreviewRequest properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <remarks> Description for Generates a preview workflow file for the static site. </remarks>
         public static Response<StaticSitesWorkflowPreview> PreviewWorkflowStaticSite(this SubscriptionResource subscriptionResource, AzureLocation location, StaticSitesWorkflowPreviewContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -1188,52 +1264,56 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get all Static Sites for a subscription.
+        /// Get all Static Sites for a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/staticSites
         /// Operation Id: StaticSites_List
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="StaticSiteARMResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get all Static Sites for a subscription. </remarks>
         public static AsyncPageable<StaticSiteARMResource> GetStaticSiteARMResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetStaticSiteARMResourcesAsync(cancellationToken);
         }
 
         /// <summary>
-        /// Description for Get all Static Sites for a subscription.
+        /// Get all Static Sites for a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/staticSites
         /// Operation Id: StaticSites_List
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StaticSiteARMResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get all Static Sites for a subscription. </remarks>
         public static Pageable<StaticSiteARMResource> GetStaticSiteARMResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetStaticSiteARMResources(cancellationToken);
         }
 
         /// <summary>
-        /// Description for Get all apps for a subscription.
+        /// Get all apps for a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/sites
         /// Operation Id: WebApps_List
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="WebSiteResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get all apps for a subscription. </remarks>
         public static AsyncPageable<WebSiteResource> GetWebSitesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetWebSitesAsync(cancellationToken);
         }
 
         /// <summary>
-        /// Description for Get all apps for a subscription.
+        /// Get all apps for a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/sites
         /// Operation Id: WebApps_List
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WebSiteResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get all apps for a subscription. </remarks>
         public static Pageable<WebSiteResource> GetWebSites(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetWebSites(cancellationToken);
@@ -1257,7 +1337,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get a certificate order.
+        /// Get a certificate order.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
         /// Operation Id: AppServiceCertificateOrders_Get
         /// </summary>
@@ -1266,6 +1346,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="certificateOrderName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateOrderName"/> is null. </exception>
+        /// <remarks> Description for Get a certificate order. </remarks>
         [ForwardsClientCalls]
         public static async Task<Response<AppServiceCertificateOrderResource>> GetAppServiceCertificateOrderAsync(this ResourceGroupResource resourceGroupResource, string certificateOrderName, CancellationToken cancellationToken = default)
         {
@@ -1273,7 +1354,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get a certificate order.
+        /// Get a certificate order.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
         /// Operation Id: AppServiceCertificateOrders_Get
         /// </summary>
@@ -1282,6 +1363,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="certificateOrderName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateOrderName"/> is null. </exception>
+        /// <remarks> Description for Get a certificate order. </remarks>
         [ForwardsClientCalls]
         public static Response<AppServiceCertificateOrderResource> GetAppServiceCertificateOrder(this ResourceGroupResource resourceGroupResource, string certificateOrderName, CancellationToken cancellationToken = default)
         {
@@ -1297,7 +1379,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get a domain.
+        /// Get a domain.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}
         /// Operation Id: Domains_Get
         /// </summary>
@@ -1306,6 +1388,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
+        /// <remarks> Description for Get a domain. </remarks>
         [ForwardsClientCalls]
         public static async Task<Response<AppServiceDomainResource>> GetAppServiceDomainAsync(this ResourceGroupResource resourceGroupResource, string domainName, CancellationToken cancellationToken = default)
         {
@@ -1313,7 +1396,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get a domain.
+        /// Get a domain.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}
         /// Operation Id: Domains_Get
         /// </summary>
@@ -1322,6 +1405,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
+        /// <remarks> Description for Get a domain. </remarks>
         [ForwardsClientCalls]
         public static Response<AppServiceDomainResource> GetAppServiceDomain(this ResourceGroupResource resourceGroupResource, string domainName, CancellationToken cancellationToken = default)
         {
@@ -1337,7 +1421,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get the properties of an App Service Environment.
+        /// Get the properties of an App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
         /// Operation Id: AppServiceEnvironments_Get
         /// </summary>
@@ -1346,6 +1430,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <remarks> Description for Get the properties of an App Service Environment. </remarks>
         [ForwardsClientCalls]
         public static async Task<Response<AppServiceEnvironmentResource>> GetAppServiceEnvironmentAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
@@ -1353,7 +1438,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get the properties of an App Service Environment.
+        /// Get the properties of an App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
         /// Operation Id: AppServiceEnvironments_Get
         /// </summary>
@@ -1362,6 +1447,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <remarks> Description for Get the properties of an App Service Environment. </remarks>
         [ForwardsClientCalls]
         public static Response<AppServiceEnvironmentResource> GetAppServiceEnvironment(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
@@ -1377,7 +1463,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get an App Service plan.
+        /// Get an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
         /// Operation Id: AppServicePlans_Get
         /// </summary>
@@ -1386,6 +1472,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <remarks> Description for Get an App Service plan. </remarks>
         [ForwardsClientCalls]
         public static async Task<Response<AppServicePlanResource>> GetAppServicePlanAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
@@ -1393,7 +1480,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get an App Service plan.
+        /// Get an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
         /// Operation Id: AppServicePlans_Get
         /// </summary>
@@ -1402,6 +1489,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <remarks> Description for Get an App Service plan. </remarks>
         [ForwardsClientCalls]
         public static Response<AppServicePlanResource> GetAppServicePlan(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
@@ -1417,7 +1505,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get a certificate.
+        /// Get a certificate.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/certificates/{name}
         /// Operation Id: Certificates_Get
         /// </summary>
@@ -1426,6 +1514,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <remarks> Description for Get a certificate. </remarks>
         [ForwardsClientCalls]
         public static async Task<Response<CertificateResource>> GetCertificateAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
@@ -1433,7 +1522,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get a certificate.
+        /// Get a certificate.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/certificates/{name}
         /// Operation Id: Certificates_Get
         /// </summary>
@@ -1442,6 +1531,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <remarks> Description for Get a certificate. </remarks>
         [ForwardsClientCalls]
         public static Response<CertificateResource> GetCertificate(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
@@ -1457,7 +1547,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get the properties of a Kubernetes Environment.
+        /// Get the properties of a Kubernetes Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
         /// Operation Id: KubeEnvironments_Get
         /// </summary>
@@ -1466,6 +1556,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <remarks> Description for Get the properties of a Kubernetes Environment. </remarks>
         [ForwardsClientCalls]
         public static async Task<Response<KubeEnvironmentResource>> GetKubeEnvironmentAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
@@ -1473,7 +1564,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get the properties of a Kubernetes Environment.
+        /// Get the properties of a Kubernetes Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
         /// Operation Id: KubeEnvironments_Get
         /// </summary>
@@ -1482,6 +1573,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <remarks> Description for Get the properties of a Kubernetes Environment. </remarks>
         [ForwardsClientCalls]
         public static Response<KubeEnvironmentResource> GetKubeEnvironment(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
@@ -1497,7 +1589,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the details of a static site.
+        /// Gets the details of a static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
         /// Operation Id: StaticSites_GetStaticSite
         /// </summary>
@@ -1506,6 +1598,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <remarks> Description for Gets the details of a static site. </remarks>
         [ForwardsClientCalls]
         public static async Task<Response<StaticSiteARMResource>> GetStaticSiteARMResourceAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
@@ -1513,7 +1606,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the details of a static site.
+        /// Gets the details of a static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
         /// Operation Id: StaticSites_GetStaticSite
         /// </summary>
@@ -1522,6 +1615,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <remarks> Description for Gets the details of a static site. </remarks>
         [ForwardsClientCalls]
         public static Response<StaticSiteARMResource> GetStaticSiteARMResource(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
@@ -1537,7 +1631,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the details of a web, mobile, or API app.
+        /// Gets the details of a web, mobile, or API app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
         /// Operation Id: WebApps_Get
         /// </summary>
@@ -1546,6 +1640,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <remarks> Description for Gets the details of a web, mobile, or API app. </remarks>
         [ForwardsClientCalls]
         public static async Task<Response<WebSiteResource>> GetWebSiteAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
@@ -1553,7 +1648,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the details of a web, mobile, or API app.
+        /// Gets the details of a web, mobile, or API app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
         /// Operation Id: WebApps_Get
         /// </summary>
@@ -1562,6 +1657,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <remarks> Description for Gets the details of a web, mobile, or API app. </remarks>
         [ForwardsClientCalls]
         public static Response<WebSiteResource> GetWebSite(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
@@ -1569,33 +1665,35 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for List all ResourceHealthMetadata for all sites in the resource group in the subscription.
+        /// List all ResourceHealthMetadata for all sites in the resource group in the subscription.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/resourceHealthMetadata
         /// Operation Id: ResourceHealthMetadata_ListByResourceGroup
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SiteResourceHealthMetadataResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for List all ResourceHealthMetadata for all sites in the resource group in the subscription. </remarks>
         public static AsyncPageable<SiteResourceHealthMetadataResource> GetAllResourceHealthMetadataByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(resourceGroupResource).GetAllResourceHealthMetadataByResourceGroupAsync(cancellationToken);
         }
 
         /// <summary>
-        /// Description for List all ResourceHealthMetadata for all sites in the resource group in the subscription.
+        /// List all ResourceHealthMetadata for all sites in the resource group in the subscription.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/resourceHealthMetadata
         /// Operation Id: ResourceHealthMetadata_ListByResourceGroup
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SiteResourceHealthMetadataResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for List all ResourceHealthMetadata for all sites in the resource group in the subscription. </remarks>
         public static Pageable<SiteResourceHealthMetadataResource> GetAllResourceHealthMetadataByResourceGroup(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(resourceGroupResource).GetAllResourceHealthMetadataByResourceGroup(cancellationToken);
         }
 
         /// <summary>
-        /// Description for Move resources between resource groups.
+        /// Move resources between resource groups.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/moveResources
         /// Operation Id: Move
         /// </summary>
@@ -1603,6 +1701,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="moveResourceEnvelope"/> is null. </exception>
+        /// <remarks> Description for Move resources between resource groups. </remarks>
         public static async Task<Response> MoveAsync(this ResourceGroupResource resourceGroupResource, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(moveResourceEnvelope, nameof(moveResourceEnvelope));
@@ -1611,7 +1710,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Move resources between resource groups.
+        /// Move resources between resource groups.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/moveResources
         /// Operation Id: Move
         /// </summary>
@@ -1619,6 +1718,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="moveResourceEnvelope"/> is null. </exception>
+        /// <remarks> Description for Move resources between resource groups. </remarks>
         public static Response Move(this ResourceGroupResource resourceGroupResource, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(moveResourceEnvelope, nameof(moveResourceEnvelope));
@@ -1627,7 +1727,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Validate if a resource can be created.
+        /// Validate if a resource can be created.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/validate
         /// Operation Id: Validate
         /// </summary>
@@ -1635,6 +1735,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="content"> Request with the resources to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <remarks> Description for Validate if a resource can be created. </remarks>
         public static async Task<Response<ValidateResponse>> ValidateAsync(this ResourceGroupResource resourceGroupResource, ValidateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -1643,7 +1744,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Validate if a resource can be created.
+        /// Validate if a resource can be created.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/validate
         /// Operation Id: Validate
         /// </summary>
@@ -1651,6 +1752,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="content"> Request with the resources to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <remarks> Description for Validate if a resource can be created. </remarks>
         public static Response<ValidateResponse> Validate(this ResourceGroupResource resourceGroupResource, ValidateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -1659,7 +1761,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Validate whether a resource can be moved.
+        /// Validate whether a resource can be moved.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/validateMoveResources
         /// Operation Id: ValidateMove
         /// </summary>
@@ -1667,6 +1769,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="moveResourceEnvelope"/> is null. </exception>
+        /// <remarks> Description for Validate whether a resource can be moved. </remarks>
         public static async Task<Response> ValidateMoveAsync(this ResourceGroupResource resourceGroupResource, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(moveResourceEnvelope, nameof(moveResourceEnvelope));
@@ -1675,7 +1778,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Validate whether a resource can be moved.
+        /// Validate whether a resource can be moved.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/validateMoveResources
         /// Operation Id: ValidateMove
         /// </summary>
@@ -1683,6 +1786,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="moveResourceEnvelope"/> is null. </exception>
+        /// <remarks> Description for Validate whether a resource can be moved. </remarks>
         public static Response ValidateMove(this ResourceGroupResource resourceGroupResource, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(moveResourceEnvelope, nameof(moveResourceEnvelope));

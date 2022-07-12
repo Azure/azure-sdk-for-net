@@ -65,6 +65,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Creates or updates a managed cluster. </remarks>
         public virtual async Task<ArmOperation<ManagedClusterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string resourceName, ManagedClusterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
@@ -98,6 +99,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Creates or updates a managed cluster. </remarks>
         public virtual ArmOperation<ManagedClusterResource> CreateOrUpdate(WaitUntil waitUntil, string resourceName, ManagedClusterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
@@ -129,6 +131,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <remarks> Gets a managed cluster. </remarks>
         public virtual async Task<Response<ManagedClusterResource>> GetAsync(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
@@ -158,6 +161,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <remarks> Gets a managed cluster. </remarks>
         public virtual Response<ManagedClusterResource> Get(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
@@ -185,6 +189,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagedClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Lists managed clusters in the specified subscription and resource group. </remarks>
         public virtual AsyncPageable<ManagedClusterResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ManagedClusterResource>> FirstPageFunc(int? pageSizeHint)
@@ -227,6 +232,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Lists managed clusters in the specified subscription and resource group. </remarks>
         public virtual Pageable<ManagedClusterResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<ManagedClusterResource> FirstPageFunc(int? pageSizeHint)
@@ -263,7 +269,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Gets a managed cluster.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}
         /// Operation Id: ManagedClusters_Get
         /// </summary>
@@ -271,6 +277,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
@@ -290,7 +297,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Gets a managed cluster.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}
         /// Operation Id: ManagedClusters_Get
         /// </summary>
@@ -298,6 +305,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));

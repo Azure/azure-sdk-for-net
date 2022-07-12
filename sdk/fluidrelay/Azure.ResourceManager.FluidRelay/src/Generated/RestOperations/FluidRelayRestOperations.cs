@@ -54,6 +54,7 @@ namespace Azure.ResourceManager.FluidRelay
 
         /// <summary> List all operations provided by Microsoft.FluidRelay. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List all operations provided by Microsoft.FluidRelay. </remarks>
         public async Task<Response<OperationListResult>> ListAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest();
@@ -74,6 +75,7 @@ namespace Azure.ResourceManager.FluidRelay
 
         /// <summary> List all operations provided by Microsoft.FluidRelay. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List all operations provided by Microsoft.FluidRelay. </remarks>
         public Response<OperationListResult> List(CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest();
@@ -110,6 +112,7 @@ namespace Azure.ResourceManager.FluidRelay
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> List all operations provided by Microsoft.FluidRelay. </remarks>
         public async Task<Response<OperationListResult>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -134,6 +137,7 @@ namespace Azure.ResourceManager.FluidRelay
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> List all operations provided by Microsoft.FluidRelay. </remarks>
         public Response<OperationListResult> ListNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));

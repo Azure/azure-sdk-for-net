@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Retrieve a Hybrid Connection in use in an App Service plan.
+        /// Retrieve a Hybrid Connection in use in an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
         /// Operation Id: AppServicePlans_GetHybridConnection
         /// </summary>
@@ -107,6 +107,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
+        /// <remarks> Description for Retrieve a Hybrid Connection in use in an App Service plan. </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<ServerfarmHybridConnectionNamespaceRelayResource>> GetServerfarmHybridConnectionNamespaceRelayAsync(string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Retrieve a Hybrid Connection in use in an App Service plan.
+        /// Retrieve a Hybrid Connection in use in an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
         /// Operation Id: AppServicePlans_GetHybridConnection
         /// </summary>
@@ -123,6 +124,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
+        /// <remarks> Description for Retrieve a Hybrid Connection in use in an App Service plan. </remarks>
         [ForwardsClientCalls]
         public virtual Response<ServerfarmHybridConnectionNamespaceRelayResource> GetServerfarmHybridConnectionNamespaceRelay(string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
@@ -144,7 +146,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get a Virtual Network associated with an App Service plan.
+        /// Get a Virtual Network associated with an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}
         /// Operation Id: AppServicePlans_GetVnetFromServerFarm
         /// </summary>
@@ -152,6 +154,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
+        /// <remarks> Description for Get a Virtual Network associated with an App Service plan. </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<ServerfarmVirtualNetworkConnectionResource>> GetServerfarmVirtualNetworkConnectionAsync(string vnetName, CancellationToken cancellationToken = default)
         {
@@ -159,7 +162,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get a Virtual Network associated with an App Service plan.
+        /// Get a Virtual Network associated with an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}
         /// Operation Id: AppServicePlans_GetVnetFromServerFarm
         /// </summary>
@@ -167,6 +170,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
+        /// <remarks> Description for Get a Virtual Network associated with an App Service plan. </remarks>
         [ForwardsClientCalls]
         public virtual Response<ServerfarmVirtualNetworkConnectionResource> GetServerfarmVirtualNetworkConnection(string vnetName, CancellationToken cancellationToken = default)
         {
@@ -174,11 +178,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get an App Service plan.
+        /// Get an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
         /// Operation Id: AppServicePlans_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Get an App Service plan. </remarks>
         public virtual async Task<Response<AppServicePlanResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.Get");
@@ -198,11 +203,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get an App Service plan.
+        /// Get an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
         /// Operation Id: AppServicePlans_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Get an App Service plan. </remarks>
         public virtual Response<AppServicePlanResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.Get");
@@ -222,12 +228,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Delete an App Service plan.
+        /// Delete an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
         /// Operation Id: AppServicePlans_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Delete an App Service plan. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.Delete");
@@ -248,12 +255,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Delete an App Service plan.
+        /// Delete an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
         /// Operation Id: AppServicePlans_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Delete an App Service plan. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.Delete");
@@ -274,13 +282,14 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates or updates an App Service Plan.
+        /// Creates or updates an App Service Plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
         /// Operation Id: AppServicePlans_Update
         /// </summary>
         /// <param name="patch"> Details of the App Service plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        /// <remarks> Description for Creates or updates an App Service Plan. </remarks>
         public virtual async Task<Response<AppServicePlanResource>> UpdateAsync(AppServicePlanPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
@@ -300,13 +309,14 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates or updates an App Service Plan.
+        /// Creates or updates an App Service Plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
         /// Operation Id: AppServicePlans_Update
         /// </summary>
         /// <param name="patch"> Details of the App Service plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        /// <remarks> Description for Creates or updates an App Service Plan. </remarks>
         public virtual Response<AppServicePlanResource> Update(AppServicePlanPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
@@ -326,12 +336,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for List all capabilities of an App Service plan.
+        /// List all capabilities of an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/capabilities
         /// Operation Id: AppServicePlans_ListCapabilities
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="Capability" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for List all capabilities of an App Service plan. </remarks>
         public virtual AsyncPageable<Capability> GetCapabilitiesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<Capability>> FirstPageFunc(int? pageSizeHint)
@@ -353,12 +364,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for List all capabilities of an App Service plan.
+        /// List all capabilities of an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/capabilities
         /// Operation Id: AppServicePlans_ListCapabilities
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="Capability" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for List all capabilities of an App Service plan. </remarks>
         public virtual Pageable<Capability> GetCapabilities(CancellationToken cancellationToken = default)
         {
             Page<Capability> FirstPageFunc(int? pageSizeHint)
@@ -380,12 +392,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Retrieve all Hybrid Connections in use in an App Service plan.
+        /// Retrieve all Hybrid Connections in use in an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionRelays
         /// Operation Id: AppServicePlans_ListHybridConnections
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ServerfarmHybridConnectionNamespaceRelayResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Retrieve all Hybrid Connections in use in an App Service plan. </remarks>
         public virtual AsyncPageable<ServerfarmHybridConnectionNamespaceRelayResource> GetHybridConnectionsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ServerfarmHybridConnectionNamespaceRelayResource>> FirstPageFunc(int? pageSizeHint)
@@ -422,12 +435,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Retrieve all Hybrid Connections in use in an App Service plan.
+        /// Retrieve all Hybrid Connections in use in an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionRelays
         /// Operation Id: AppServicePlans_ListHybridConnections
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ServerfarmHybridConnectionNamespaceRelayResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Retrieve all Hybrid Connections in use in an App Service plan. </remarks>
         public virtual Pageable<ServerfarmHybridConnectionNamespaceRelayResource> GetHybridConnections(CancellationToken cancellationToken = default)
         {
             Page<ServerfarmHybridConnectionNamespaceRelayResource> FirstPageFunc(int? pageSizeHint)
@@ -464,12 +478,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Restart all apps in an App Service plan.
+        /// Restart all apps in an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/restartSites
         /// Operation Id: AppServicePlans_RestartWebApps
         /// </summary>
         /// <param name="softRestart"> Specify &lt;code&gt;true&lt;/code&gt; to perform a soft restart, applies the configuration settings and restarts the apps if necessary. The default is &lt;code&gt;false&lt;/code&gt;, which always restarts and reprovisions the apps. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Restart all apps in an App Service plan. </remarks>
         public virtual async Task<Response> RestartWebAppsAsync(bool? softRestart = null, CancellationToken cancellationToken = default)
         {
             using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.RestartWebApps");
@@ -487,12 +502,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Restart all apps in an App Service plan.
+        /// Restart all apps in an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/restartSites
         /// Operation Id: AppServicePlans_RestartWebApps
         /// </summary>
         /// <param name="softRestart"> Specify &lt;code&gt;true&lt;/code&gt; to perform a soft restart, applies the configuration settings and restarts the apps if necessary. The default is &lt;code&gt;false&lt;/code&gt;, which always restarts and reprovisions the apps. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Restart all apps in an App Service plan. </remarks>
         public virtual Response RestartWebApps(bool? softRestart = null, CancellationToken cancellationToken = default)
         {
             using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.RestartWebApps");
@@ -510,7 +526,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get all apps associated with an App Service plan.
+        /// Get all apps associated with an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/sites
         /// Operation Id: AppServicePlans_ListWebApps
         /// </summary>
@@ -519,6 +535,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="top"> List page size. If specified, results are paged. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="WebSiteResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get all apps associated with an App Service plan. </remarks>
         public virtual AsyncPageable<WebSiteResource> GetWebAppsAsync(string skipToken = null, string filter = null, string top = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<WebSiteResource>> FirstPageFunc(int? pageSizeHint)
@@ -555,7 +572,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get all apps associated with an App Service plan.
+        /// Get all apps associated with an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/sites
         /// Operation Id: AppServicePlans_ListWebApps
         /// </summary>
@@ -564,6 +581,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="top"> List page size. If specified, results are paged. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WebSiteResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get all apps associated with an App Service plan. </remarks>
         public virtual Pageable<WebSiteResource> GetWebApps(string skipToken = null, string filter = null, string top = null, CancellationToken cancellationToken = default)
         {
             Page<WebSiteResource> FirstPageFunc(int? pageSizeHint)
@@ -600,11 +618,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets all selectable SKUs for a given App Service Plan
+        /// Gets all selectable SKUs for a given App Service Plan
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/skus
         /// Operation Id: AppServicePlans_GetServerFarmSkus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Gets all selectable SKUs for a given App Service Plan. </remarks>
         public virtual async Task<Response<BinaryData>> GetServerFarmSkusAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.GetServerFarmSkus");
@@ -622,11 +641,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets all selectable SKUs for a given App Service Plan
+        /// Gets all selectable SKUs for a given App Service Plan
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/skus
         /// Operation Id: AppServicePlans_GetServerFarmSkus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Gets all selectable SKUs for a given App Service Plan. </remarks>
         public virtual Response<BinaryData> GetServerFarmSkus(CancellationToken cancellationToken = default)
         {
             using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.GetServerFarmSkus");
@@ -644,13 +664,14 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets server farm usage information
+        /// Gets server farm usage information
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/usages
         /// Operation Id: AppServicePlans_ListUsages
         /// </summary>
         /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(name.value eq &apos;Metric1&apos; or name.value eq &apos;Metric2&apos;). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CsmUsageQuota" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Gets server farm usage information. </remarks>
         public virtual AsyncPageable<CsmUsageQuota> GetUsagesAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<CsmUsageQuota>> FirstPageFunc(int? pageSizeHint)
@@ -687,13 +708,14 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets server farm usage information
+        /// Gets server farm usage information
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/usages
         /// Operation Id: AppServicePlans_ListUsages
         /// </summary>
         /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(name.value eq &apos;Metric1&apos; or name.value eq &apos;Metric2&apos;). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CsmUsageQuota" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Gets server farm usage information. </remarks>
         public virtual Pageable<CsmUsageQuota> GetUsages(string filter = null, CancellationToken cancellationToken = default)
         {
             Page<CsmUsageQuota> FirstPageFunc(int? pageSizeHint)
@@ -730,7 +752,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Reboot a worker machine in an App Service plan.
+        /// Reboot a worker machine in an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/workers/{workerName}/reboot
         /// Operation Id: AppServicePlans_RebootWorker
         /// </summary>
@@ -738,6 +760,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workerName"/> is null. </exception>
+        /// <remarks> Description for Reboot a worker machine in an App Service plan. </remarks>
         public virtual async Task<Response> RebootWorkerAsync(string workerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workerName, nameof(workerName));
@@ -757,7 +780,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Reboot a worker machine in an App Service plan.
+        /// Reboot a worker machine in an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/workers/{workerName}/reboot
         /// Operation Id: AppServicePlans_RebootWorker
         /// </summary>
@@ -765,6 +788,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workerName"/> is null. </exception>
+        /// <remarks> Description for Reboot a worker machine in an App Service plan. </remarks>
         public virtual Response RebootWorker(string workerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workerName, nameof(workerName));
@@ -784,7 +808,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Add a tag to the current resource.
+        /// Get an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
         /// Operation Id: AppServicePlans_Get
         /// </summary>
@@ -792,6 +816,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        /// <remarks> Add a tag to the current resource. </remarks>
         public virtual async Task<Response<AppServicePlanResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -815,7 +840,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Add a tag to the current resource.
+        /// Get an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
         /// Operation Id: AppServicePlans_Get
         /// </summary>
@@ -823,6 +848,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        /// <remarks> Add a tag to the current resource. </remarks>
         public virtual Response<AppServicePlanResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -846,13 +872,14 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Replace the tags on the resource with the given set.
+        /// Get an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
         /// Operation Id: AppServicePlans_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        /// <remarks> Replace the tags on the resource with the given set. </remarks>
         public virtual async Task<Response<AppServicePlanResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -876,13 +903,14 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Replace the tags on the resource with the given set.
+        /// Get an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
         /// Operation Id: AppServicePlans_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        /// <remarks> Replace the tags on the resource with the given set. </remarks>
         public virtual Response<AppServicePlanResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -906,13 +934,14 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Removes a tag by key from the resource.
+        /// Get an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
         /// Operation Id: AppServicePlans_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <remarks> Removes a tag by key from the resource. </remarks>
         public virtual async Task<Response<AppServicePlanResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -935,13 +964,14 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Removes a tag by key from the resource.
+        /// Get an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
         /// Operation Id: AppServicePlans_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <remarks> Removes a tag by key from the resource. </remarks>
         public virtual Response<AppServicePlanResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));

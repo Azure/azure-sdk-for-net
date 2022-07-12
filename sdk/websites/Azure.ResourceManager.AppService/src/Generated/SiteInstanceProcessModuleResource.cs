@@ -87,11 +87,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get process information by its ID for a specific scaled-out instance in a web site.
+        /// Get process information by its ID for a specific scaled-out instance in a web site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/processes/{processId}/modules/{baseAddress}
         /// Operation Id: WebApps_GetInstanceProcessModule
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Get process information by its ID for a specific scaled-out instance in a web site. </remarks>
         public virtual async Task<Response<SiteInstanceProcessModuleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteInstanceProcessModuleWebAppsClientDiagnostics.CreateScope("SiteInstanceProcessModuleResource.Get");
@@ -111,11 +112,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get process information by its ID for a specific scaled-out instance in a web site.
+        /// Get process information by its ID for a specific scaled-out instance in a web site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/processes/{processId}/modules/{baseAddress}
         /// Operation Id: WebApps_GetInstanceProcessModule
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Get process information by its ID for a specific scaled-out instance in a web site. </remarks>
         public virtual Response<SiteInstanceProcessModuleResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _siteInstanceProcessModuleWebAppsClientDiagnostics.CreateScope("SiteInstanceProcessModuleResource.Get");

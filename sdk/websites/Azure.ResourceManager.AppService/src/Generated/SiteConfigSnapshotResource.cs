@@ -87,11 +87,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a snapshot of the configuration of an app at a previous point in time.
+        /// Gets a snapshot of the configuration of an app at a previous point in time.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/web/snapshots/{snapshotId}
         /// Operation Id: WebApps_GetConfigurationSnapshot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Gets a snapshot of the configuration of an app at a previous point in time. </remarks>
         public virtual async Task<Response<SiteConfigSnapshotResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteConfigSnapshotWebAppsClientDiagnostics.CreateScope("SiteConfigSnapshotResource.Get");
@@ -111,11 +112,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a snapshot of the configuration of an app at a previous point in time.
+        /// Gets a snapshot of the configuration of an app at a previous point in time.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/web/snapshots/{snapshotId}
         /// Operation Id: WebApps_GetConfigurationSnapshot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Gets a snapshot of the configuration of an app at a previous point in time. </remarks>
         public virtual Response<SiteConfigSnapshotResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _siteConfigSnapshotWebAppsClientDiagnostics.CreateScope("SiteConfigSnapshotResource.Get");
@@ -135,11 +137,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Reverts the configuration of an app to a previous snapshot.
+        /// Reverts the configuration of an app to a previous snapshot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/web/snapshots/{snapshotId}/recover
         /// Operation Id: WebApps_RecoverSiteConfigurationSnapshot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Reverts the configuration of an app to a previous snapshot. </remarks>
         public virtual async Task<Response> RecoverSiteConfigurationSnapshotAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteConfigSnapshotWebAppsClientDiagnostics.CreateScope("SiteConfigSnapshotResource.RecoverSiteConfigurationSnapshot");
@@ -157,11 +160,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Reverts the configuration of an app to a previous snapshot.
+        /// Reverts the configuration of an app to a previous snapshot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/web/snapshots/{snapshotId}/recover
         /// Operation Id: WebApps_RecoverSiteConfigurationSnapshot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Reverts the configuration of an app to a previous snapshot. </remarks>
         public virtual Response RecoverSiteConfigurationSnapshot(CancellationToken cancellationToken = default)
         {
             using var scope = _siteConfigSnapshotWebAppsClientDiagnostics.CreateScope("SiteConfigSnapshotResource.RecoverSiteConfigurationSnapshot");

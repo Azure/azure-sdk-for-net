@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.PostgreSql
         }
 
         /// <summary>
-        /// Updates private endpoint connection with the specified tags.
+        /// Updates tags on private endpoint connection.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/servers/{serverName}/privateEndpointConnections/{privateEndpointConnectionName}
         /// Operation Id: PrivateEndpointConnections_UpdateTags
         /// </summary>
@@ -196,6 +196,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <param name="patch"> Parameters supplied to the Update private endpoint connection Tags operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        /// <remarks> Updates private endpoint connection with the specified tags. </remarks>
         public virtual async Task<ArmOperation<PostgreSqlPrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, PostgreSqlPrivateEndpointConnectionPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
@@ -218,7 +219,7 @@ namespace Azure.ResourceManager.PostgreSql
         }
 
         /// <summary>
-        /// Updates private endpoint connection with the specified tags.
+        /// Updates tags on private endpoint connection.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/servers/{serverName}/privateEndpointConnections/{privateEndpointConnectionName}
         /// Operation Id: PrivateEndpointConnections_UpdateTags
         /// </summary>
@@ -226,6 +227,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <param name="patch"> Parameters supplied to the Update private endpoint connection Tags operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        /// <remarks> Updates private endpoint connection with the specified tags. </remarks>
         public virtual ArmOperation<PostgreSqlPrivateEndpointConnectionResource> Update(WaitUntil waitUntil, PostgreSqlPrivateEndpointConnectionPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));

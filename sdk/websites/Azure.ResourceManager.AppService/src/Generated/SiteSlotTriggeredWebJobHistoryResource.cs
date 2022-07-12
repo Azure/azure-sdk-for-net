@@ -87,11 +87,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a triggered web job&apos;s history by its ID for an app, , or a deployment slot.
+        /// Gets a triggered web job&apos;s history by its ID for an app, , or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}/history/{id}
         /// Operation Id: WebApps_GetTriggeredWebJobHistory
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Gets a triggered web job&apos;s history by its ID for an app, , or a deployment slot. </remarks>
         public virtual async Task<Response<SiteSlotTriggeredWebJobHistoryResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics.CreateScope("SiteSlotTriggeredWebJobHistoryResource.Get");
@@ -111,11 +112,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a triggered web job&apos;s history by its ID for an app, , or a deployment slot.
+        /// Gets a triggered web job&apos;s history by its ID for an app, , or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}/history/{id}
         /// Operation Id: WebApps_GetTriggeredWebJobHistory
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Gets a triggered web job&apos;s history by its ID for an app, , or a deployment slot. </remarks>
         public virtual Response<SiteSlotTriggeredWebJobHistoryResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics.CreateScope("SiteSlotTriggeredWebJobHistoryResource.Get");

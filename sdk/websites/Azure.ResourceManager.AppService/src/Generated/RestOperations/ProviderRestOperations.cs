@@ -56,9 +56,10 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get available application frameworks and their versions. </summary>
+        /// <summary> Get available application frameworks and their versions. </summary>
         /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Get available application frameworks and their versions. </remarks>
         public async Task<Response<ApplicationStackCollection>> GetAvailableStacksAsync(ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetAvailableStacksRequest(osTypeSelected);
@@ -77,9 +78,10 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get available application frameworks and their versions. </summary>
+        /// <summary> Get available application frameworks and their versions. </summary>
         /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Get available application frameworks and their versions. </remarks>
         public Response<ApplicationStackCollection> GetAvailableStacks(ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetAvailableStacksRequest(osTypeSelected);
@@ -117,9 +119,10 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get available Function app frameworks and their versions. </summary>
+        /// <summary> Get available Function app frameworks and their versions. </summary>
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Get available Function app frameworks and their versions. </remarks>
         public async Task<Response<FunctionAppStackCollection>> GetFunctionAppStacksAsync(ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetFunctionAppStacksRequest(stackOSType);
@@ -138,9 +141,10 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get available Function app frameworks and their versions. </summary>
+        /// <summary> Get available Function app frameworks and their versions. </summary>
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Get available Function app frameworks and their versions. </remarks>
         public Response<FunctionAppStackCollection> GetFunctionAppStacks(ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetFunctionAppStacksRequest(stackOSType);
@@ -180,10 +184,11 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get available Function app frameworks and their versions for location. </summary>
+        /// <summary> Get available Function app frameworks and their versions for location. </summary>
         /// <param name="location"> Function App stack location. </param>
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Get available Function app frameworks and their versions for location. </remarks>
         public async Task<Response<FunctionAppStackCollection>> GetFunctionAppStacksForLocationAsync(AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetFunctionAppStacksForLocationRequest(location, stackOSType);
@@ -202,10 +207,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get available Function app frameworks and their versions for location. </summary>
+        /// <summary> Get available Function app frameworks and their versions for location. </summary>
         /// <param name="location"> Function App stack location. </param>
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Get available Function app frameworks and their versions for location. </remarks>
         public Response<FunctionAppStackCollection> GetFunctionAppStacksForLocation(AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetFunctionAppStacksForLocationRequest(location, stackOSType);
@@ -245,10 +251,11 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get available Web app frameworks and their versions for location. </summary>
+        /// <summary> Get available Web app frameworks and their versions for location. </summary>
         /// <param name="location"> Web App stack location. </param>
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Get available Web app frameworks and their versions for location. </remarks>
         public async Task<Response<WebAppStackCollection>> GetWebAppStacksForLocationAsync(AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetWebAppStacksForLocationRequest(location, stackOSType);
@@ -267,10 +274,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get available Web app frameworks and their versions for location. </summary>
+        /// <summary> Get available Web app frameworks and their versions for location. </summary>
         /// <param name="location"> Web App stack location. </param>
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Get available Web app frameworks and their versions for location. </remarks>
         public Response<WebAppStackCollection> GetWebAppStacksForLocation(AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetWebAppStacksForLocationRequest(location, stackOSType);
@@ -304,8 +312,9 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets all available operations for the Microsoft.Web resource provider. Also exposes resource metric definitions. </summary>
+        /// <summary> Gets all available operations for the Microsoft.Web resource provider. Also exposes resource metric definitions. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Gets all available operations for the Microsoft.Web resource provider. Also exposes resource metric definitions. </remarks>
         public async Task<Response<CsmOperationCollection>> ListOperationsAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateListOperationsRequest();
@@ -324,8 +333,9 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets all available operations for the Microsoft.Web resource provider. Also exposes resource metric definitions. </summary>
+        /// <summary> Gets all available operations for the Microsoft.Web resource provider. Also exposes resource metric definitions. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Gets all available operations for the Microsoft.Web resource provider. Also exposes resource metric definitions. </remarks>
         public Response<CsmOperationCollection> ListOperations(CancellationToken cancellationToken = default)
         {
             using var message = CreateListOperationsRequest();
@@ -363,9 +373,10 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get available Web app frameworks and their versions. </summary>
+        /// <summary> Get available Web app frameworks and their versions. </summary>
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Get available Web app frameworks and their versions. </remarks>
         public async Task<Response<WebAppStackCollection>> GetWebAppStacksAsync(ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetWebAppStacksRequest(stackOSType);
@@ -384,9 +395,10 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get available Web app frameworks and their versions. </summary>
+        /// <summary> Get available Web app frameworks and their versions. </summary>
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Get available Web app frameworks and their versions. </remarks>
         public Response<WebAppStackCollection> GetWebAppStacks(ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetWebAppStacksRequest(stackOSType);
@@ -426,12 +438,13 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get available application frameworks and their versions. </summary>
+        /// <summary> Get available application frameworks and their versions. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Description for Get available application frameworks and their versions. </remarks>
         public async Task<Response<ApplicationStackCollection>> GetAvailableStacksOnPremAsync(string subscriptionId, ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -452,12 +465,13 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get available application frameworks and their versions. </summary>
+        /// <summary> Get available application frameworks and their versions. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Description for Get available application frameworks and their versions. </remarks>
         public Response<ApplicationStackCollection> GetAvailableStacksOnPrem(string subscriptionId, ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -492,11 +506,12 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get available application frameworks and their versions. </summary>
+        /// <summary> Get available application frameworks and their versions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> Description for Get available application frameworks and their versions. </remarks>
         public async Task<Response<ApplicationStackCollection>> GetAvailableStacksNextPageAsync(string nextLink, ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -517,11 +532,12 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get available application frameworks and their versions. </summary>
+        /// <summary> Get available application frameworks and their versions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> Description for Get available application frameworks and their versions. </remarks>
         public Response<ApplicationStackCollection> GetAvailableStacksNextPage(string nextLink, ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -556,11 +572,12 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get available Function app frameworks and their versions. </summary>
+        /// <summary> Get available Function app frameworks and their versions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> Description for Get available Function app frameworks and their versions. </remarks>
         public async Task<Response<FunctionAppStackCollection>> GetFunctionAppStacksNextPageAsync(string nextLink, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -581,11 +598,12 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get available Function app frameworks and their versions. </summary>
+        /// <summary> Get available Function app frameworks and their versions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> Description for Get available Function app frameworks and their versions. </remarks>
         public Response<FunctionAppStackCollection> GetFunctionAppStacksNextPage(string nextLink, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -620,12 +638,13 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get available Function app frameworks and their versions for location. </summary>
+        /// <summary> Get available Function app frameworks and their versions for location. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="location"> Function App stack location. </param>
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> Description for Get available Function app frameworks and their versions for location. </remarks>
         public async Task<Response<FunctionAppStackCollection>> GetFunctionAppStacksForLocationNextPageAsync(string nextLink, AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -646,12 +665,13 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get available Function app frameworks and their versions for location. </summary>
+        /// <summary> Get available Function app frameworks and their versions for location. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="location"> Function App stack location. </param>
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> Description for Get available Function app frameworks and their versions for location. </remarks>
         public Response<FunctionAppStackCollection> GetFunctionAppStacksForLocationNextPage(string nextLink, AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -686,12 +706,13 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get available Web app frameworks and their versions for location. </summary>
+        /// <summary> Get available Web app frameworks and their versions for location. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="location"> Web App stack location. </param>
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> Description for Get available Web app frameworks and their versions for location. </remarks>
         public async Task<Response<WebAppStackCollection>> GetWebAppStacksForLocationNextPageAsync(string nextLink, AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -712,12 +733,13 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get available Web app frameworks and their versions for location. </summary>
+        /// <summary> Get available Web app frameworks and their versions for location. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="location"> Web App stack location. </param>
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> Description for Get available Web app frameworks and their versions for location. </remarks>
         public Response<WebAppStackCollection> GetWebAppStacksForLocationNextPage(string nextLink, AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -752,10 +774,11 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets all available operations for the Microsoft.Web resource provider. Also exposes resource metric definitions. </summary>
+        /// <summary> Gets all available operations for the Microsoft.Web resource provider. Also exposes resource metric definitions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> Description for Gets all available operations for the Microsoft.Web resource provider. Also exposes resource metric definitions. </remarks>
         public async Task<Response<CsmOperationCollection>> ListOperationsNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -776,10 +799,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets all available operations for the Microsoft.Web resource provider. Also exposes resource metric definitions. </summary>
+        /// <summary> Gets all available operations for the Microsoft.Web resource provider. Also exposes resource metric definitions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> Description for Gets all available operations for the Microsoft.Web resource provider. Also exposes resource metric definitions. </remarks>
         public Response<CsmOperationCollection> ListOperationsNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -814,11 +838,12 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get available Web app frameworks and their versions. </summary>
+        /// <summary> Get available Web app frameworks and their versions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> Description for Get available Web app frameworks and their versions. </remarks>
         public async Task<Response<WebAppStackCollection>> GetWebAppStacksNextPageAsync(string nextLink, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -839,11 +864,12 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get available Web app frameworks and their versions. </summary>
+        /// <summary> Get available Web app frameworks and their versions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> Description for Get available Web app frameworks and their versions. </remarks>
         public Response<WebAppStackCollection> GetWebAppStacksNextPage(string nextLink, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -878,13 +904,14 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get available application frameworks and their versions. </summary>
+        /// <summary> Get available application frameworks and their versions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Description for Get available application frameworks and their versions. </remarks>
         public async Task<Response<ApplicationStackCollection>> GetAvailableStacksOnPremNextPageAsync(string nextLink, string subscriptionId, ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -906,13 +933,14 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get available application frameworks and their versions. </summary>
+        /// <summary> Get available application frameworks and their versions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Description for Get available application frameworks and their versions. </remarks>
         public Response<ApplicationStackCollection> GetAvailableStacksOnPremNextPage(string nextLink, string subscriptionId, ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));

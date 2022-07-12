@@ -101,6 +101,7 @@ namespace Azure.ResourceManager.Monitor
         /// Operation Id: DataCollectionRules_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Returns the specified data collection rule. </remarks>
         public virtual async Task<Response<DataCollectionRuleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _dataCollectionRuleClientDiagnostics.CreateScope("DataCollectionRuleResource.Get");
@@ -125,6 +126,7 @@ namespace Azure.ResourceManager.Monitor
         /// Operation Id: DataCollectionRules_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Returns the specified data collection rule. </remarks>
         public virtual Response<DataCollectionRuleResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _dataCollectionRuleClientDiagnostics.CreateScope("DataCollectionRuleResource.Get");
@@ -150,6 +152,7 @@ namespace Azure.ResourceManager.Monitor
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Deletes a data collection rule. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _dataCollectionRuleClientDiagnostics.CreateScope("DataCollectionRuleResource.Delete");
@@ -176,6 +179,7 @@ namespace Azure.ResourceManager.Monitor
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Deletes a data collection rule. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _dataCollectionRuleClientDiagnostics.CreateScope("DataCollectionRuleResource.Delete");
@@ -203,6 +207,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="body"> The payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Updates part of a data collection rule. </remarks>
         public virtual async Task<Response<DataCollectionRuleResource>> UpdateAsync(ResourceForUpdate body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
@@ -229,6 +234,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="body"> The payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Updates part of a data collection rule. </remarks>
         public virtual Response<DataCollectionRuleResource> Update(ResourceForUpdate body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
@@ -254,6 +260,7 @@ namespace Azure.ResourceManager.Monitor
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataCollectionRuleAssociationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Lists associations for the specified data collection rule. </remarks>
         public virtual AsyncPageable<DataCollectionRuleAssociationResource> GetDataCollectionRuleAssociationsByRuleAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<DataCollectionRuleAssociationResource>> FirstPageFunc(int? pageSizeHint)
@@ -296,6 +303,7 @@ namespace Azure.ResourceManager.Monitor
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataCollectionRuleAssociationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Lists associations for the specified data collection rule. </remarks>
         public virtual Pageable<DataCollectionRuleAssociationResource> GetDataCollectionRuleAssociationsByRule(CancellationToken cancellationToken = default)
         {
             Page<DataCollectionRuleAssociationResource> FirstPageFunc(int? pageSizeHint)
@@ -332,7 +340,7 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// Add a tag to the current resource.
+        /// Returns the specified data collection rule.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}
         /// Operation Id: DataCollectionRules_Get
         /// </summary>
@@ -340,6 +348,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        /// <remarks> Add a tag to the current resource. </remarks>
         public virtual async Task<Response<DataCollectionRuleResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -363,7 +372,7 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// Add a tag to the current resource.
+        /// Returns the specified data collection rule.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}
         /// Operation Id: DataCollectionRules_Get
         /// </summary>
@@ -371,6 +380,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        /// <remarks> Add a tag to the current resource. </remarks>
         public virtual Response<DataCollectionRuleResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -394,13 +404,14 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// Replace the tags on the resource with the given set.
+        /// Returns the specified data collection rule.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}
         /// Operation Id: DataCollectionRules_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        /// <remarks> Replace the tags on the resource with the given set. </remarks>
         public virtual async Task<Response<DataCollectionRuleResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -424,13 +435,14 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// Replace the tags on the resource with the given set.
+        /// Returns the specified data collection rule.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}
         /// Operation Id: DataCollectionRules_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        /// <remarks> Replace the tags on the resource with the given set. </remarks>
         public virtual Response<DataCollectionRuleResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -454,13 +466,14 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// Removes a tag by key from the resource.
+        /// Returns the specified data collection rule.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}
         /// Operation Id: DataCollectionRules_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <remarks> Removes a tag by key from the resource. </remarks>
         public virtual async Task<Response<DataCollectionRuleResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -483,13 +496,14 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// Removes a tag by key from the resource.
+        /// Returns the specified data collection rule.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dataCollectionRuleName}
         /// Operation Id: DataCollectionRules_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <remarks> Removes a tag by key from the resource. </remarks>
         public virtual Response<DataCollectionRuleResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));

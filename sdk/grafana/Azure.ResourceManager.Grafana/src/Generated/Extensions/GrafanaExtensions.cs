@@ -35,6 +35,7 @@ namespace Azure.ResourceManager.Grafana
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagedGrafanaResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List all resources of workspaces for Grafana under the specified subscription. </remarks>
         public static AsyncPageable<ManagedGrafanaResource> GetManagedGrafanasAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetManagedGrafanasAsync(cancellationToken);
@@ -48,6 +49,7 @@ namespace Azure.ResourceManager.Grafana
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedGrafanaResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List all resources of workspaces for Grafana under the specified subscription. </remarks>
         public static Pageable<ManagedGrafanaResource> GetManagedGrafanas(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetManagedGrafanas(cancellationToken);
@@ -80,6 +82,7 @@ namespace Azure.ResourceManager.Grafana
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <remarks> Get the properties of a specific workspace for Grafana resource. </remarks>
         [ForwardsClientCalls]
         public static async Task<Response<ManagedGrafanaResource>> GetManagedGrafanaAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
@@ -96,6 +99,7 @@ namespace Azure.ResourceManager.Grafana
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <remarks> Get the properties of a specific workspace for Grafana resource. </remarks>
         [ForwardsClientCalls]
         public static Response<ManagedGrafanaResource> GetManagedGrafana(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {

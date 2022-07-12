@@ -49,12 +49,13 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary>
-        /// Gets all Service Fabric cluster resources created or in the process of being created in the subscription.
+        /// Gets the list of Service Fabric cluster resources created in the specified subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/clusters
         /// Operation Id: Clusters_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Gets all Service Fabric cluster resources created or in the process of being created in the subscription. </remarks>
         public virtual AsyncPageable<ClusterResource> GetClustersAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ClusterResource>> FirstPageFunc(int? pageSizeHint)
@@ -76,12 +77,13 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary>
-        /// Gets all Service Fabric cluster resources created or in the process of being created in the subscription.
+        /// Gets the list of Service Fabric cluster resources created in the specified subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/clusters
         /// Operation Id: Clusters_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Gets all Service Fabric cluster resources created or in the process of being created in the subscription. </remarks>
         public virtual Pageable<ClusterResource> GetClusters(CancellationToken cancellationToken = default)
         {
             Page<ClusterResource> FirstPageFunc(int? pageSizeHint)
@@ -103,7 +105,7 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary>
-        /// Gets information about an available Service Fabric cluster code version.
+        /// Gets information about a Service Fabric cluster code version available in the specified location.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/clusterVersions/{clusterVersion}
         /// Operation Id: ClusterVersions_Get
         /// </summary>
@@ -111,6 +113,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="clusterVersion"> The cluster code version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ClusterCodeVersionsResult" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Gets information about an available Service Fabric cluster code version. </remarks>
         public virtual AsyncPageable<ClusterCodeVersionsResult> GetClusterVersionsAsync(AzureLocation location, string clusterVersion, CancellationToken cancellationToken = default)
         {
             async Task<Page<ClusterCodeVersionsResult>> FirstPageFunc(int? pageSizeHint)
@@ -132,7 +135,7 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary>
-        /// Gets information about an available Service Fabric cluster code version.
+        /// Gets information about a Service Fabric cluster code version available in the specified location.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/clusterVersions/{clusterVersion}
         /// Operation Id: ClusterVersions_Get
         /// </summary>
@@ -140,6 +143,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="clusterVersion"> The cluster code version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ClusterCodeVersionsResult" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Gets information about an available Service Fabric cluster code version. </remarks>
         public virtual Pageable<ClusterCodeVersionsResult> GetClusterVersions(AzureLocation location, string clusterVersion, CancellationToken cancellationToken = default)
         {
             Page<ClusterCodeVersionsResult> FirstPageFunc(int? pageSizeHint)
@@ -161,7 +165,7 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary>
-        /// Gets information about an available Service Fabric cluster code version by environment.
+        /// Gets information about a Service Fabric cluster code version available for the specified environment.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/environments/{environment}/clusterVersions/{clusterVersion}
         /// Operation Id: ClusterVersions_GetByEnvironment
         /// </summary>
@@ -170,6 +174,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="clusterVersion"> The cluster code version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ClusterCodeVersionsResult" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Gets information about an available Service Fabric cluster code version by environment. </remarks>
         public virtual AsyncPageable<ClusterCodeVersionsResult> GetClusterVersionsByEnvironmentAsync(AzureLocation location, ClusterVersionsEnvironment environment, string clusterVersion, CancellationToken cancellationToken = default)
         {
             async Task<Page<ClusterCodeVersionsResult>> FirstPageFunc(int? pageSizeHint)
@@ -191,7 +196,7 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary>
-        /// Gets information about an available Service Fabric cluster code version by environment.
+        /// Gets information about a Service Fabric cluster code version available for the specified environment.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/environments/{environment}/clusterVersions/{clusterVersion}
         /// Operation Id: ClusterVersions_GetByEnvironment
         /// </summary>
@@ -200,6 +205,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="clusterVersion"> The cluster code version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ClusterCodeVersionsResult" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Gets information about an available Service Fabric cluster code version by environment. </remarks>
         public virtual Pageable<ClusterCodeVersionsResult> GetClusterVersionsByEnvironment(AzureLocation location, ClusterVersionsEnvironment environment, string clusterVersion, CancellationToken cancellationToken = default)
         {
             Page<ClusterCodeVersionsResult> FirstPageFunc(int? pageSizeHint)
@@ -221,13 +227,14 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary>
-        /// Gets all available code versions for Service Fabric cluster resources by location.
+        /// Gets the list of Service Fabric cluster code versions available for the specified location.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/clusterVersions
         /// Operation Id: ClusterVersions_List
         /// </summary>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ClusterCodeVersionsResult" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Gets all available code versions for Service Fabric cluster resources by location. </remarks>
         public virtual AsyncPageable<ClusterCodeVersionsResult> GetClusterVersionsAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             async Task<Page<ClusterCodeVersionsResult>> FirstPageFunc(int? pageSizeHint)
@@ -249,13 +256,14 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary>
-        /// Gets all available code versions for Service Fabric cluster resources by location.
+        /// Gets the list of Service Fabric cluster code versions available for the specified location.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/clusterVersions
         /// Operation Id: ClusterVersions_List
         /// </summary>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ClusterCodeVersionsResult" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Gets all available code versions for Service Fabric cluster resources by location. </remarks>
         public virtual Pageable<ClusterCodeVersionsResult> GetClusterVersions(AzureLocation location, CancellationToken cancellationToken = default)
         {
             Page<ClusterCodeVersionsResult> FirstPageFunc(int? pageSizeHint)
@@ -277,7 +285,7 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary>
-        /// Gets all available code versions for Service Fabric cluster resources by environment.
+        /// Gets the list of Service Fabric cluster code versions available for the specified environment.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/environments/{environment}/clusterVersions
         /// Operation Id: ClusterVersions_ListByEnvironment
         /// </summary>
@@ -285,6 +293,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="environment"> The operating system of the cluster. The default means all. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ClusterCodeVersionsResult" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Gets all available code versions for Service Fabric cluster resources by environment. </remarks>
         public virtual AsyncPageable<ClusterCodeVersionsResult> GetClusterVersionsByEnvironmentAsync(AzureLocation location, ClusterVersionsEnvironment environment, CancellationToken cancellationToken = default)
         {
             async Task<Page<ClusterCodeVersionsResult>> FirstPageFunc(int? pageSizeHint)
@@ -306,7 +315,7 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary>
-        /// Gets all available code versions for Service Fabric cluster resources by environment.
+        /// Gets the list of Service Fabric cluster code versions available for the specified environment.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/environments/{environment}/clusterVersions
         /// Operation Id: ClusterVersions_ListByEnvironment
         /// </summary>
@@ -314,6 +323,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="environment"> The operating system of the cluster. The default means all. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ClusterCodeVersionsResult" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Gets all available code versions for Service Fabric cluster resources by environment. </remarks>
         public virtual Pageable<ClusterCodeVersionsResult> GetClusterVersionsByEnvironment(AzureLocation location, ClusterVersionsEnvironment environment, CancellationToken cancellationToken = default)
         {
             Page<ClusterCodeVersionsResult> FirstPageFunc(int? pageSizeHint)

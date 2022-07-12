@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Install site extension on a web site, or a deployment slot.
+        /// Install site extension on a web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions/{siteExtensionId}
         /// Operation Id: WebApps_InstallSiteExtension
         /// </summary>
@@ -63,6 +63,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="siteExtensionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
+        /// <remarks> Description for Install site extension on a web site, or a deployment slot. </remarks>
         public virtual async Task<ArmOperation<SiteSiteextensionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string siteExtensionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteExtensionId, nameof(siteExtensionId));
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Install site extension on a web site, or a deployment slot.
+        /// Install site extension on a web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions/{siteExtensionId}
         /// Operation Id: WebApps_InstallSiteExtension
         /// </summary>
@@ -94,6 +95,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="siteExtensionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
+        /// <remarks> Description for Install site extension on a web site, or a deployment slot. </remarks>
         public virtual ArmOperation<SiteSiteextensionResource> CreateOrUpdate(WaitUntil waitUntil, string siteExtensionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteExtensionId, nameof(siteExtensionId));
@@ -116,7 +118,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get site extension information by its ID for a web site, or a deployment slot.
+        /// Get site extension information by its ID for a web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions/{siteExtensionId}
         /// Operation Id: WebApps_GetSiteExtension
         /// </summary>
@@ -124,6 +126,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="siteExtensionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
+        /// <remarks> Description for Get site extension information by its ID for a web site, or a deployment slot. </remarks>
         public virtual async Task<Response<SiteSiteextensionResource>> GetAsync(string siteExtensionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteExtensionId, nameof(siteExtensionId));
@@ -145,7 +148,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get site extension information by its ID for a web site, or a deployment slot.
+        /// Get site extension information by its ID for a web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions/{siteExtensionId}
         /// Operation Id: WebApps_GetSiteExtension
         /// </summary>
@@ -153,6 +156,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="siteExtensionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
+        /// <remarks> Description for Get site extension information by its ID for a web site, or a deployment slot. </remarks>
         public virtual Response<SiteSiteextensionResource> Get(string siteExtensionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteExtensionId, nameof(siteExtensionId));
@@ -174,12 +178,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get list of siteextensions for a web site, or a deployment slot.
+        /// Get list of siteextensions for a web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions
         /// Operation Id: WebApps_ListSiteExtensions
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SiteSiteextensionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get list of siteextensions for a web site, or a deployment slot. </remarks>
         public virtual AsyncPageable<SiteSiteextensionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<SiteSiteextensionResource>> FirstPageFunc(int? pageSizeHint)
@@ -216,12 +221,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get list of siteextensions for a web site, or a deployment slot.
+        /// Get list of siteextensions for a web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions
         /// Operation Id: WebApps_ListSiteExtensions
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SiteSiteextensionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Get list of siteextensions for a web site, or a deployment slot. </remarks>
         public virtual Pageable<SiteSiteextensionResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<SiteSiteextensionResource> FirstPageFunc(int? pageSizeHint)
@@ -258,7 +264,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get site extension information by its ID for a web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions/{siteExtensionId}
         /// Operation Id: WebApps_GetSiteExtension
         /// </summary>
@@ -266,6 +272,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="siteExtensionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string siteExtensionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteExtensionId, nameof(siteExtensionId));
@@ -285,7 +292,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get site extension information by its ID for a web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions/{siteExtensionId}
         /// Operation Id: WebApps_GetSiteExtension
         /// </summary>
@@ -293,6 +300,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="siteExtensionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string siteExtensionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteExtensionId, nameof(siteExtensionId));

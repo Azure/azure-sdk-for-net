@@ -87,11 +87,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a hybrid connection configuration by its name.
+        /// Gets a hybrid connection configuration by its name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}
         /// Operation Id: WebApps_GetRelayServiceConnectionSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Gets a hybrid connection configuration by its name. </remarks>
         public virtual async Task<Response<SiteSlotHybridconnectionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotHybridconnectionWebAppsClientDiagnostics.CreateScope("SiteSlotHybridconnectionResource.Get");
@@ -111,11 +112,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a hybrid connection configuration by its name.
+        /// Gets a hybrid connection configuration by its name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}
         /// Operation Id: WebApps_GetRelayServiceConnectionSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Gets a hybrid connection configuration by its name. </remarks>
         public virtual Response<SiteSlotHybridconnectionResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotHybridconnectionWebAppsClientDiagnostics.CreateScope("SiteSlotHybridconnectionResource.Get");
@@ -135,12 +137,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Deletes a relay service connection by its name.
+        /// Deletes a relay service connection by its name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}
         /// Operation Id: WebApps_DeleteRelayServiceConnectionSlot
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Deletes a relay service connection by its name. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotHybridconnectionWebAppsClientDiagnostics.CreateScope("SiteSlotHybridconnectionResource.Delete");
@@ -161,12 +164,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Deletes a relay service connection by its name.
+        /// Deletes a relay service connection by its name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}
         /// Operation Id: WebApps_DeleteRelayServiceConnectionSlot
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Deletes a relay service connection by its name. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotHybridconnectionWebAppsClientDiagnostics.CreateScope("SiteSlotHybridconnectionResource.Delete");
@@ -187,13 +191,14 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates a new hybrid connection configuration (PUT), or updates an existing one (PATCH).
+        /// Creates a new hybrid connection configuration (PUT), or updates an existing one (PATCH).
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}
         /// Operation Id: WebApps_UpdateRelayServiceConnectionSlot
         /// </summary>
         /// <param name="data"> Details of the hybrid connection configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        /// <remarks> Description for Creates a new hybrid connection configuration (PUT), or updates an existing one (PATCH). </remarks>
         public virtual async Task<Response<SiteSlotHybridconnectionResource>> UpdateAsync(RelayServiceConnectionEntityData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -213,13 +218,14 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates a new hybrid connection configuration (PUT), or updates an existing one (PATCH).
+        /// Creates a new hybrid connection configuration (PUT), or updates an existing one (PATCH).
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}
         /// Operation Id: WebApps_UpdateRelayServiceConnectionSlot
         /// </summary>
         /// <param name="data"> Details of the hybrid connection configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        /// <remarks> Description for Creates a new hybrid connection configuration (PUT), or updates an existing one (PATCH). </remarks>
         public virtual Response<SiteSlotHybridconnectionResource> Update(RelayServiceConnectionEntityData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));

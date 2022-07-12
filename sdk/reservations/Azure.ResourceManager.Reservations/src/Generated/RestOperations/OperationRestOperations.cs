@@ -52,8 +52,9 @@ namespace Azure.ResourceManager.Reservations
             return message;
         }
 
-        /// <summary> List all the operations. </summary>
+        /// <summary> Get operations. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List all the operations. </remarks>
         public async Task<Response<OperationList>> ListAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest();
@@ -72,8 +73,9 @@ namespace Azure.ResourceManager.Reservations
             }
         }
 
-        /// <summary> List all the operations. </summary>
+        /// <summary> Get operations. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List all the operations. </remarks>
         public Response<OperationList> List(CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest();
@@ -106,10 +108,11 @@ namespace Azure.ResourceManager.Reservations
             return message;
         }
 
-        /// <summary> List all the operations. </summary>
+        /// <summary> Get operations. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> List all the operations. </remarks>
         public async Task<Response<OperationList>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -130,10 +133,11 @@ namespace Azure.ResourceManager.Reservations
             }
         }
 
-        /// <summary> List all the operations. </summary>
+        /// <summary> Get operations. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> List all the operations. </remarks>
         public Response<OperationList> ListNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));

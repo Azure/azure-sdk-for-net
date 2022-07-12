@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the details of the user provided function app registered with a static site build
+        /// Gets the details of the user provided function app registered with a static site build
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/userProvidedFunctionApps/{functionAppName}
         /// Operation Id: StaticSites_GetUserProvidedFunctionAppForStaticSiteBuild
         /// </summary>
@@ -103,6 +103,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> is null. </exception>
+        /// <remarks> Description for Gets the details of the user provided function app registered with a static site build. </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<StaticSiteBuildUserProvidedFunctionAppResource>> GetStaticSiteBuildUserProvidedFunctionAppAsync(string functionAppName, CancellationToken cancellationToken = default)
         {
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the details of the user provided function app registered with a static site build
+        /// Gets the details of the user provided function app registered with a static site build
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/userProvidedFunctionApps/{functionAppName}
         /// Operation Id: StaticSites_GetUserProvidedFunctionAppForStaticSiteBuild
         /// </summary>
@@ -118,6 +119,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> is null. </exception>
+        /// <remarks> Description for Gets the details of the user provided function app registered with a static site build. </remarks>
         [ForwardsClientCalls]
         public virtual Response<StaticSiteBuildUserProvidedFunctionAppResource> GetStaticSiteBuildUserProvidedFunctionApp(string functionAppName, CancellationToken cancellationToken = default)
         {
@@ -125,11 +127,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the details of a static site build.
+        /// Gets the details of a static site build.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}
         /// Operation Id: StaticSites_GetStaticSiteBuild
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Gets the details of a static site build. </remarks>
         public virtual async Task<Response<StaticSiteBuildARMResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _staticSiteBuildARMResourceStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildARMResource.Get");
@@ -149,11 +152,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the details of a static site build.
+        /// Gets the details of a static site build.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}
         /// Operation Id: StaticSites_GetStaticSiteBuild
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Gets the details of a static site build. </remarks>
         public virtual Response<StaticSiteBuildARMResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _staticSiteBuildARMResourceStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildARMResource.Get");
@@ -173,12 +177,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Deletes a static site build.
+        /// Deletes a static site build.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}
         /// Operation Id: StaticSites_DeleteStaticSiteBuild
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Deletes a static site build. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _staticSiteBuildARMResourceStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildARMResource.Delete");
@@ -199,12 +204,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Deletes a static site build.
+        /// Deletes a static site build.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}
         /// Operation Id: StaticSites_DeleteStaticSiteBuild
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Deletes a static site build. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _staticSiteBuildARMResourceStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildARMResource.Delete");
@@ -225,13 +231,14 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates or updates the app settings of a static site build.
+        /// Creates or updates the app settings of a static site build.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/config/appsettings
         /// Operation Id: StaticSites_CreateOrUpdateStaticSiteBuildAppSettings
         /// </summary>
         /// <param name="appSettings"> The dictionary containing the static site app settings to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="appSettings"/> is null. </exception>
+        /// <remarks> Description for Creates or updates the app settings of a static site build. </remarks>
         public virtual async Task<Response<StringDictionary>> CreateOrUpdateStaticSiteBuildAppSettingsAsync(StringDictionary appSettings, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(appSettings, nameof(appSettings));
@@ -251,13 +258,14 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates or updates the app settings of a static site build.
+        /// Creates or updates the app settings of a static site build.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/config/appsettings
         /// Operation Id: StaticSites_CreateOrUpdateStaticSiteBuildAppSettings
         /// </summary>
         /// <param name="appSettings"> The dictionary containing the static site app settings to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="appSettings"/> is null. </exception>
+        /// <remarks> Description for Creates or updates the app settings of a static site build. </remarks>
         public virtual Response<StringDictionary> CreateOrUpdateStaticSiteBuildAppSettings(StringDictionary appSettings, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(appSettings, nameof(appSettings));
@@ -277,13 +285,14 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates or updates the function app settings of a static site build.
+        /// Creates or updates the function app settings of a static site build.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/config/functionappsettings
         /// Operation Id: StaticSites_CreateOrUpdateStaticSiteBuildFunctionAppSettings
         /// </summary>
         /// <param name="appSettings"> The dictionary containing the static site function app settings to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="appSettings"/> is null. </exception>
+        /// <remarks> Description for Creates or updates the function app settings of a static site build. </remarks>
         public virtual async Task<Response<StringDictionary>> CreateOrUpdateStaticSiteBuildFunctionAppSettingsAsync(StringDictionary appSettings, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(appSettings, nameof(appSettings));
@@ -303,13 +312,14 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates or updates the function app settings of a static site build.
+        /// Creates or updates the function app settings of a static site build.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/config/functionappsettings
         /// Operation Id: StaticSites_CreateOrUpdateStaticSiteBuildFunctionAppSettings
         /// </summary>
         /// <param name="appSettings"> The dictionary containing the static site function app settings to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="appSettings"/> is null. </exception>
+        /// <remarks> Description for Creates or updates the function app settings of a static site build. </remarks>
         public virtual Response<StringDictionary> CreateOrUpdateStaticSiteBuildFunctionAppSettings(StringDictionary appSettings, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(appSettings, nameof(appSettings));
@@ -329,12 +339,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the functions of a particular static site build.
+        /// Gets the functions of a particular static site build.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/functions
         /// Operation Id: StaticSites_ListStaticSiteBuildFunctions
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="StaticSiteFunctionOverviewARMResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Gets the functions of a particular static site build. </remarks>
         public virtual AsyncPageable<StaticSiteFunctionOverviewARMResource> GetStaticSiteBuildFunctionsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<StaticSiteFunctionOverviewARMResource>> FirstPageFunc(int? pageSizeHint)
@@ -371,12 +382,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the functions of a particular static site build.
+        /// Gets the functions of a particular static site build.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/functions
         /// Operation Id: StaticSites_ListStaticSiteBuildFunctions
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StaticSiteFunctionOverviewARMResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for Gets the functions of a particular static site build. </remarks>
         public virtual Pageable<StaticSiteFunctionOverviewARMResource> GetStaticSiteBuildFunctions(CancellationToken cancellationToken = default)
         {
             Page<StaticSiteFunctionOverviewARMResource> FirstPageFunc(int? pageSizeHint)
@@ -413,11 +425,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the application settings of a static site build.
+        /// Gets the application settings of a static site build.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/listAppSettings
         /// Operation Id: StaticSites_ListStaticSiteBuildAppSettings
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Gets the application settings of a static site build. </remarks>
         public virtual async Task<Response<StringDictionary>> GetStaticSiteBuildAppSettingsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _staticSiteBuildARMResourceStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildARMResource.GetStaticSiteBuildAppSettings");
@@ -435,11 +448,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the application settings of a static site build.
+        /// Gets the application settings of a static site build.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/listAppSettings
         /// Operation Id: StaticSites_ListStaticSiteBuildAppSettings
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Gets the application settings of a static site build. </remarks>
         public virtual Response<StringDictionary> GetStaticSiteBuildAppSettings(CancellationToken cancellationToken = default)
         {
             using var scope = _staticSiteBuildARMResourceStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildARMResource.GetStaticSiteBuildAppSettings");
@@ -457,11 +471,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the application settings of a static site build.
+        /// Gets the application settings of a static site build.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/listFunctionAppSettings
         /// Operation Id: StaticSites_ListStaticSiteBuildFunctionAppSettings
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Gets the application settings of a static site build. </remarks>
         public virtual async Task<Response<StringDictionary>> GetStaticSiteBuildFunctionAppSettingsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _staticSiteBuildARMResourceStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildARMResource.GetStaticSiteBuildFunctionAppSettings");
@@ -479,11 +494,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the application settings of a static site build.
+        /// Gets the application settings of a static site build.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/listFunctionAppSettings
         /// Operation Id: StaticSites_ListStaticSiteBuildFunctionAppSettings
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Gets the application settings of a static site build. </remarks>
         public virtual Response<StringDictionary> GetStaticSiteBuildFunctionAppSettings(CancellationToken cancellationToken = default)
         {
             using var scope = _staticSiteBuildARMResourceStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildARMResource.GetStaticSiteBuildFunctionAppSettings");
@@ -501,7 +517,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Deploys zipped content to a specific environment of a static site.
+        /// Deploys zipped content to a specific environment of a static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/zipdeploy
         /// Operation Id: StaticSites_CreateZipDeploymentForStaticSiteBuild
         /// </summary>
@@ -509,6 +525,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="staticSiteZipDeploymentEnvelope"> A JSON representation of the StaticSiteZipDeployment properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="staticSiteZipDeploymentEnvelope"/> is null. </exception>
+        /// <remarks> Description for Deploys zipped content to a specific environment of a static site. </remarks>
         public virtual async Task<ArmOperation> CreateZipDeploymentForStaticSiteBuildAsync(WaitUntil waitUntil, StaticSiteZipDeploymentARMResource staticSiteZipDeploymentEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(staticSiteZipDeploymentEnvelope, nameof(staticSiteZipDeploymentEnvelope));
@@ -531,7 +548,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Deploys zipped content to a specific environment of a static site.
+        /// Deploys zipped content to a specific environment of a static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/zipdeploy
         /// Operation Id: StaticSites_CreateZipDeploymentForStaticSiteBuild
         /// </summary>
@@ -539,6 +556,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="staticSiteZipDeploymentEnvelope"> A JSON representation of the StaticSiteZipDeployment properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="staticSiteZipDeploymentEnvelope"/> is null. </exception>
+        /// <remarks> Description for Deploys zipped content to a specific environment of a static site. </remarks>
         public virtual ArmOperation CreateZipDeploymentForStaticSiteBuild(WaitUntil waitUntil, StaticSiteZipDeploymentARMResource staticSiteZipDeploymentEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(staticSiteZipDeploymentEnvelope, nameof(staticSiteZipDeploymentEnvelope));

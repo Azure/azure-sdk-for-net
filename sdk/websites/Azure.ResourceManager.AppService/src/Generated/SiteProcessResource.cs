@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get process information by its ID for a specific scaled-out instance in a web site.
+        /// Get process information by its ID for a specific scaled-out instance in a web site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/processes/{processId}/modules/{baseAddress}
         /// Operation Id: WebApps_GetProcessModule
         /// </summary>
@@ -104,6 +104,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="baseAddress"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="baseAddress"/> is null. </exception>
+        /// <remarks> Description for Get process information by its ID for a specific scaled-out instance in a web site. </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteProcessModuleResource>> GetSiteProcessModuleAsync(string baseAddress, CancellationToken cancellationToken = default)
         {
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get process information by its ID for a specific scaled-out instance in a web site.
+        /// Get process information by its ID for a specific scaled-out instance in a web site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/processes/{processId}/modules/{baseAddress}
         /// Operation Id: WebApps_GetProcessModule
         /// </summary>
@@ -119,6 +120,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="baseAddress"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="baseAddress"/> is null. </exception>
+        /// <remarks> Description for Get process information by its ID for a specific scaled-out instance in a web site. </remarks>
         [ForwardsClientCalls]
         public virtual Response<SiteProcessModuleResource> GetSiteProcessModule(string baseAddress, CancellationToken cancellationToken = default)
         {
@@ -126,11 +128,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get process information by its ID for a specific scaled-out instance in a web site.
+        /// Get process information by its ID for a specific scaled-out instance in a web site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/processes/{processId}
         /// Operation Id: WebApps_GetProcess
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Get process information by its ID for a specific scaled-out instance in a web site. </remarks>
         public virtual async Task<Response<SiteProcessResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteProcessWebAppsClientDiagnostics.CreateScope("SiteProcessResource.Get");
@@ -150,11 +153,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get process information by its ID for a specific scaled-out instance in a web site.
+        /// Get process information by its ID for a specific scaled-out instance in a web site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/processes/{processId}
         /// Operation Id: WebApps_GetProcess
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Get process information by its ID for a specific scaled-out instance in a web site. </remarks>
         public virtual Response<SiteProcessResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _siteProcessWebAppsClientDiagnostics.CreateScope("SiteProcessResource.Get");
@@ -174,12 +178,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Terminate a process by its ID for a web site, or a deployment slot, or specific scaled-out instance in a web site.
+        /// Terminate a process by its ID for a web site, or a deployment slot, or specific scaled-out instance in a web site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/processes/{processId}
         /// Operation Id: WebApps_DeleteProcess
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Terminate a process by its ID for a web site, or a deployment slot, or specific scaled-out instance in a web site. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _siteProcessWebAppsClientDiagnostics.CreateScope("SiteProcessResource.Delete");
@@ -200,12 +205,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Terminate a process by its ID for a web site, or a deployment slot, or specific scaled-out instance in a web site.
+        /// Terminate a process by its ID for a web site, or a deployment slot, or specific scaled-out instance in a web site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/processes/{processId}
         /// Operation Id: WebApps_DeleteProcess
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Terminate a process by its ID for a web site, or a deployment slot, or specific scaled-out instance in a web site. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _siteProcessWebAppsClientDiagnostics.CreateScope("SiteProcessResource.Delete");
@@ -226,11 +232,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get a memory dump of a process by its ID for a specific scaled-out instance in a web site.
+        /// Get a memory dump of a process by its ID for a specific scaled-out instance in a web site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/processes/{processId}/dump
         /// Operation Id: WebApps_GetProcessDump
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Get a memory dump of a process by its ID for a specific scaled-out instance in a web site. </remarks>
         public virtual async Task<Response<Stream>> GetProcessDumpAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteProcessWebAppsClientDiagnostics.CreateScope("SiteProcessResource.GetProcessDump");
@@ -248,11 +255,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get a memory dump of a process by its ID for a specific scaled-out instance in a web site.
+        /// Get a memory dump of a process by its ID for a specific scaled-out instance in a web site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/processes/{processId}/dump
         /// Operation Id: WebApps_GetProcessDump
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Get a memory dump of a process by its ID for a specific scaled-out instance in a web site. </remarks>
         public virtual Response<Stream> GetProcessDump(CancellationToken cancellationToken = default)
         {
             using var scope = _siteProcessWebAppsClientDiagnostics.CreateScope("SiteProcessResource.GetProcessDump");
@@ -270,12 +278,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for List the threads in a process by its ID for a specific scaled-out instance in a web site.
+        /// List the threads in a process by its ID for a specific scaled-out instance in a web site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/processes/{processId}/threads
         /// Operation Id: WebApps_ListProcessThreads
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ProcessThreadInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for List the threads in a process by its ID for a specific scaled-out instance in a web site. </remarks>
         public virtual AsyncPageable<ProcessThreadInfo> GetProcessThreadsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ProcessThreadInfo>> FirstPageFunc(int? pageSizeHint)
@@ -312,12 +321,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for List the threads in a process by its ID for a specific scaled-out instance in a web site.
+        /// List the threads in a process by its ID for a specific scaled-out instance in a web site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/processes/{processId}/threads
         /// Operation Id: WebApps_ListProcessThreads
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ProcessThreadInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Description for List the threads in a process by its ID for a specific scaled-out instance in a web site. </remarks>
         public virtual Pageable<ProcessThreadInfo> GetProcessThreads(CancellationToken cancellationToken = default)
         {
             Page<ProcessThreadInfo> FirstPageFunc(int? pageSizeHint)

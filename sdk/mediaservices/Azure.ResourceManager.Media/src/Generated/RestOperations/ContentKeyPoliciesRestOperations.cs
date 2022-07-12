@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Lists the Content Key Policies in the account. </summary>
+        /// <summary> List Content Key Policies. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -80,6 +80,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Lists the Content Key Policies in the account. </remarks>
         public async Task<Response<Models.ContentKeyPolicyCollection>> ListAsync(string subscriptionId, string resourceGroupName, string accountName, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -102,7 +103,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Lists the Content Key Policies in the account. </summary>
+        /// <summary> List Content Key Policies. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -112,6 +113,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Lists the Content Key Policies in the account. </remarks>
         public Response<Models.ContentKeyPolicyCollection> List(string subscriptionId, string resourceGroupName, string accountName, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -156,7 +158,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Get the details of a Content Key Policy in the Media Services account. </summary>
+        /// <summary> Get a Content Key Policy. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -164,6 +166,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="contentKeyPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="contentKeyPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get the details of a Content Key Policy in the Media Services account. </remarks>
         public async Task<Response<ContentKeyPolicyData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string contentKeyPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -189,7 +192,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Get the details of a Content Key Policy in the Media Services account. </summary>
+        /// <summary> Get a Content Key Policy. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -197,6 +200,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="contentKeyPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="contentKeyPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get the details of a Content Key Policy in the Media Services account. </remarks>
         public Response<ContentKeyPolicyData> Get(string subscriptionId, string resourceGroupName, string accountName, string contentKeyPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -248,7 +252,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Create or update a Content Key Policy in the Media Services account. </summary>
+        /// <summary> Create or update an Content Key Policy. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -257,6 +261,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="contentKeyPolicyName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="contentKeyPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Create or update a Content Key Policy in the Media Services account. </remarks>
         public async Task<Response<ContentKeyPolicyData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string contentKeyPolicyName, ContentKeyPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -282,7 +287,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Create or update a Content Key Policy in the Media Services account. </summary>
+        /// <summary> Create or update an Content Key Policy. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -291,6 +296,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="contentKeyPolicyName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="contentKeyPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Create or update a Content Key Policy in the Media Services account. </remarks>
         public Response<ContentKeyPolicyData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string accountName, string contentKeyPolicyName, ContentKeyPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -338,7 +344,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Deletes a Content Key Policy in the Media Services account. </summary>
+        /// <summary> Delete a Content Key Policy. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -346,6 +352,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="contentKeyPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="contentKeyPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Deletes a Content Key Policy in the Media Services account. </remarks>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string accountName, string contentKeyPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -365,7 +372,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Deletes a Content Key Policy in the Media Services account. </summary>
+        /// <summary> Delete a Content Key Policy. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -373,6 +380,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="contentKeyPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="contentKeyPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Deletes a Content Key Policy in the Media Services account. </remarks>
         public Response Delete(string subscriptionId, string resourceGroupName, string accountName, string contentKeyPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -418,7 +426,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Updates an existing Content Key Policy in the Media Services account. </summary>
+        /// <summary> Update a Content Key Policy. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -427,6 +435,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="contentKeyPolicyName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="contentKeyPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Updates an existing Content Key Policy in the Media Services account. </remarks>
         public async Task<Response<ContentKeyPolicyData>> UpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string contentKeyPolicyName, ContentKeyPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -451,7 +460,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Updates an existing Content Key Policy in the Media Services account. </summary>
+        /// <summary> Update a Content Key Policy. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -460,6 +469,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="contentKeyPolicyName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="contentKeyPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Updates an existing Content Key Policy in the Media Services account. </remarks>
         public Response<ContentKeyPolicyData> Update(string subscriptionId, string resourceGroupName, string accountName, string contentKeyPolicyName, ContentKeyPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -507,7 +517,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Get a Content Key Policy including secret values. </summary>
+        /// <summary> Get a Content Key Policy with secrets. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -515,6 +525,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="contentKeyPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="contentKeyPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get a Content Key Policy including secret values. </remarks>
         public async Task<Response<ContentKeyPolicyProperties>> GetPolicyPropertiesWithSecretsAsync(string subscriptionId, string resourceGroupName, string accountName, string contentKeyPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -538,7 +549,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Get a Content Key Policy including secret values. </summary>
+        /// <summary> Get a Content Key Policy with secrets. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -546,6 +557,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="contentKeyPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="contentKeyPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get a Content Key Policy including secret values. </remarks>
         public Response<ContentKeyPolicyProperties> GetPolicyPropertiesWithSecrets(string subscriptionId, string resourceGroupName, string accountName, string contentKeyPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -583,7 +595,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Lists the Content Key Policies in the account. </summary>
+        /// <summary> List Content Key Policies. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
@@ -594,6 +606,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Lists the Content Key Policies in the account. </remarks>
         public async Task<Response<Models.ContentKeyPolicyCollection>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -617,7 +630,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Lists the Content Key Policies in the account. </summary>
+        /// <summary> List Content Key Policies. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
@@ -628,6 +641,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Lists the Content Key Policies in the account. </remarks>
         public Response<Models.ContentKeyPolicyCollection> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));

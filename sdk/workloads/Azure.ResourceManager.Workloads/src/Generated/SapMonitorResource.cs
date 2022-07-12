@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Gets properties of a provider instance for the specified subscription, resource group, SAP monitor name, and resource name.
+        /// Gets properties of a provider instance.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}/providerInstances/{providerInstanceName}
         /// Operation Id: ProviderInstances_Get
         /// </summary>
@@ -106,6 +106,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="providerInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerInstanceName"/> is null. </exception>
+        /// <remarks> Gets properties of a provider instance for the specified subscription, resource group, SAP monitor name, and resource name. </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<SapProviderInstanceResource>> GetSapProviderInstanceAsync(string providerInstanceName, CancellationToken cancellationToken = default)
         {
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Gets properties of a provider instance for the specified subscription, resource group, SAP monitor name, and resource name.
+        /// Gets properties of a provider instance.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}/providerInstances/{providerInstanceName}
         /// Operation Id: ProviderInstances_Get
         /// </summary>
@@ -121,6 +122,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="providerInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerInstanceName"/> is null. </exception>
+        /// <remarks> Gets properties of a provider instance for the specified subscription, resource group, SAP monitor name, and resource name. </remarks>
         [ForwardsClientCalls]
         public virtual Response<SapProviderInstanceResource> GetSapProviderInstance(string providerInstanceName, CancellationToken cancellationToken = default)
         {
@@ -128,11 +130,12 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Gets properties of a SAP monitor for the specified subscription, resource group, and resource name.
+        /// Gets properties of a SAP monitor.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}
         /// Operation Id: monitors_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Gets properties of a SAP monitor for the specified subscription, resource group, and resource name. </remarks>
         public virtual async Task<Response<SapMonitorResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _sapMonitormonitorsClientDiagnostics.CreateScope("SapMonitorResource.Get");
@@ -152,11 +155,12 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Gets properties of a SAP monitor for the specified subscription, resource group, and resource name.
+        /// Gets properties of a SAP monitor.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}
         /// Operation Id: monitors_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Gets properties of a SAP monitor for the specified subscription, resource group, and resource name. </remarks>
         public virtual Response<SapMonitorResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _sapMonitormonitorsClientDiagnostics.CreateScope("SapMonitorResource.Get");
@@ -176,12 +180,13 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Deletes a SAP monitor with the specified subscription, resource group, and SAP monitor name.
+        /// Deletes a SAP monitor.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}
         /// Operation Id: monitors_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Deletes a SAP monitor with the specified subscription, resource group, and SAP monitor name. </remarks>
         public virtual async Task<ArmOperation<OperationStatusResult>> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _sapMonitormonitorsClientDiagnostics.CreateScope("SapMonitorResource.Delete");
@@ -202,12 +207,13 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Deletes a SAP monitor with the specified subscription, resource group, and SAP monitor name.
+        /// Deletes a SAP monitor.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}
         /// Operation Id: monitors_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Deletes a SAP monitor with the specified subscription, resource group, and SAP monitor name. </remarks>
         public virtual ArmOperation<OperationStatusResult> Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _sapMonitormonitorsClientDiagnostics.CreateScope("SapMonitorResource.Delete");
@@ -228,13 +234,14 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Patches the Tags field of a SAP monitor for the specified subscription, resource group, and SAP monitor name.
+        /// Patches the Tags field of a SAP monitor.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}
         /// Operation Id: monitors_Update
         /// </summary>
         /// <param name="patch"> Request body that only contains the new Tags field. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        /// <remarks> Patches the Tags field of a SAP monitor for the specified subscription, resource group, and SAP monitor name. </remarks>
         public virtual async Task<Response<SapMonitorResource>> UpdateAsync(SapMonitorPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
@@ -254,13 +261,14 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Patches the Tags field of a SAP monitor for the specified subscription, resource group, and SAP monitor name.
+        /// Patches the Tags field of a SAP monitor.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}
         /// Operation Id: monitors_Update
         /// </summary>
         /// <param name="patch"> Request body that only contains the new Tags field. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        /// <remarks> Patches the Tags field of a SAP monitor for the specified subscription, resource group, and SAP monitor name. </remarks>
         public virtual Response<SapMonitorResource> Update(SapMonitorPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
@@ -280,7 +288,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Add a tag to the current resource.
+        /// Gets properties of a SAP monitor.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}
         /// Operation Id: monitors_Get
         /// </summary>
@@ -288,6 +296,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        /// <remarks> Add a tag to the current resource. </remarks>
         public virtual async Task<Response<SapMonitorResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -311,7 +320,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Add a tag to the current resource.
+        /// Gets properties of a SAP monitor.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}
         /// Operation Id: monitors_Get
         /// </summary>
@@ -319,6 +328,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        /// <remarks> Add a tag to the current resource. </remarks>
         public virtual Response<SapMonitorResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -342,13 +352,14 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Replace the tags on the resource with the given set.
+        /// Gets properties of a SAP monitor.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}
         /// Operation Id: monitors_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        /// <remarks> Replace the tags on the resource with the given set. </remarks>
         public virtual async Task<Response<SapMonitorResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -372,13 +383,14 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Replace the tags on the resource with the given set.
+        /// Gets properties of a SAP monitor.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}
         /// Operation Id: monitors_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        /// <remarks> Replace the tags on the resource with the given set. </remarks>
         public virtual Response<SapMonitorResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -402,13 +414,14 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Removes a tag by key from the resource.
+        /// Gets properties of a SAP monitor.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}
         /// Operation Id: monitors_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <remarks> Removes a tag by key from the resource. </remarks>
         public virtual async Task<Response<SapMonitorResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -431,13 +444,14 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Removes a tag by key from the resource.
+        /// Gets properties of a SAP monitor.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}
         /// Operation Id: monitors_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <remarks> Removes a tag by key from the resource. </remarks>
         public virtual Response<SapMonitorResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));

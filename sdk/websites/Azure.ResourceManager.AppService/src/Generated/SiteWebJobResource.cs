@@ -87,11 +87,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get webjob information for an app, or a deployment slot.
+        /// Get webjob information for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/webjobs/{webJobName}
         /// Operation Id: WebApps_GetWebJob
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Get webjob information for an app, or a deployment slot. </remarks>
         public virtual async Task<Response<SiteWebJobResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteWebJobWebAppsClientDiagnostics.CreateScope("SiteWebJobResource.Get");
@@ -111,11 +112,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get webjob information for an app, or a deployment slot.
+        /// Get webjob information for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/webjobs/{webJobName}
         /// Operation Id: WebApps_GetWebJob
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Get webjob information for an app, or a deployment slot. </remarks>
         public virtual Response<SiteWebJobResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _siteWebJobWebAppsClientDiagnostics.CreateScope("SiteWebJobResource.Get");

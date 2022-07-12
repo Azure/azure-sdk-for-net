@@ -50,6 +50,7 @@ namespace Azure.ResourceManager.Grafana
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagedGrafanaResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List all resources of workspaces for Grafana under the specified subscription. </remarks>
         public virtual AsyncPageable<ManagedGrafanaResource> GetManagedGrafanasAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ManagedGrafanaResource>> FirstPageFunc(int? pageSizeHint)
@@ -92,6 +93,7 @@ namespace Azure.ResourceManager.Grafana
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedGrafanaResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> List all resources of workspaces for Grafana under the specified subscription. </remarks>
         public virtual Pageable<ManagedGrafanaResource> GetManagedGrafanas(CancellationToken cancellationToken = default)
         {
             Page<ManagedGrafanaResource> FirstPageFunc(int? pageSizeHint)

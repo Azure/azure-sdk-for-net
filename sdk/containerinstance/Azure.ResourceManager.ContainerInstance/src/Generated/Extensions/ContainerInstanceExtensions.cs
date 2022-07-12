@@ -29,26 +29,28 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Get a list of container groups in the specified subscription. This operation returns properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes.
+        /// Get a list of container groups in the specified subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/containerGroups
         /// Operation Id: ContainerGroups_List
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ContainerGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Get a list of container groups in the specified subscription. This operation returns properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes. </remarks>
         public static AsyncPageable<ContainerGroupResource> GetContainerGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetContainerGroupsAsync(cancellationToken);
         }
 
         /// <summary>
-        /// Get a list of container groups in the specified subscription. This operation returns properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes.
+        /// Get a list of container groups in the specified subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/containerGroups
         /// Operation Id: ContainerGroups_List
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContainerGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Get a list of container groups in the specified subscription. This operation returns properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes. </remarks>
         public static Pageable<ContainerGroupResource> GetContainerGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetContainerGroups(cancellationToken);
@@ -83,7 +85,7 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Get the list of cached images on specific OS type for a subscription in a region.
+        /// Get the list of cached images.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/locations/{location}/cachedImages
         /// Operation Id: Location_ListCachedImages
         /// </summary>
@@ -91,13 +93,14 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="location"> The identifier for the physical azure location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CachedImages" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Get the list of cached images on specific OS type for a subscription in a region. </remarks>
         public static AsyncPageable<CachedImages> GetCachedImagesWithLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetCachedImagesWithLocationAsync(location, cancellationToken);
         }
 
         /// <summary>
-        /// Get the list of cached images on specific OS type for a subscription in a region.
+        /// Get the list of cached images.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/locations/{location}/cachedImages
         /// Operation Id: Location_ListCachedImages
         /// </summary>
@@ -105,13 +108,14 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="location"> The identifier for the physical azure location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CachedImages" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Get the list of cached images on specific OS type for a subscription in a region. </remarks>
         public static Pageable<CachedImages> GetCachedImagesWithLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetCachedImagesWithLocation(location, cancellationToken);
         }
 
         /// <summary>
-        /// Get the list of CPU/memory/GPU capabilities of a region.
+        /// Get the list of capabilities of the location.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/locations/{location}/capabilities
         /// Operation Id: Location_ListCapabilities
         /// </summary>
@@ -119,13 +123,14 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="location"> The identifier for the physical azure location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ContainerInstanceCapabilities" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Get the list of CPU/memory/GPU capabilities of a region. </remarks>
         public static AsyncPageable<ContainerInstanceCapabilities> GetCapabilitiesWithLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetCapabilitiesWithLocationAsync(location, cancellationToken);
         }
 
         /// <summary>
-        /// Get the list of CPU/memory/GPU capabilities of a region.
+        /// Get the list of capabilities of the location.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/locations/{location}/capabilities
         /// Operation Id: Location_ListCapabilities
         /// </summary>
@@ -133,6 +138,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="location"> The identifier for the physical azure location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContainerInstanceCapabilities" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Get the list of CPU/memory/GPU capabilities of a region. </remarks>
         public static Pageable<ContainerInstanceCapabilities> GetCapabilitiesWithLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetCapabilitiesWithLocation(location, cancellationToken);
@@ -156,7 +162,7 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Gets the properties of the specified container group in the specified subscription and resource group. The operation returns the properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes.
+        /// Get the properties of the specified container group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}
         /// Operation Id: ContainerGroups_Get
         /// </summary>
@@ -165,6 +171,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="containerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerGroupName"/> is null. </exception>
+        /// <remarks> Gets the properties of the specified container group in the specified subscription and resource group. The operation returns the properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes. </remarks>
         [ForwardsClientCalls]
         public static async Task<Response<ContainerGroupResource>> GetContainerGroupAsync(this ResourceGroupResource resourceGroupResource, string containerGroupName, CancellationToken cancellationToken = default)
         {
@@ -172,7 +179,7 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Gets the properties of the specified container group in the specified subscription and resource group. The operation returns the properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes.
+        /// Get the properties of the specified container group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}
         /// Operation Id: ContainerGroups_Get
         /// </summary>
@@ -181,6 +188,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="containerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerGroupName"/> is null. </exception>
+        /// <remarks> Gets the properties of the specified container group in the specified subscription and resource group. The operation returns the properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes. </remarks>
         [ForwardsClientCalls]
         public static Response<ContainerGroupResource> GetContainerGroup(this ResourceGroupResource resourceGroupResource, string containerGroupName, CancellationToken cancellationToken = default)
         {

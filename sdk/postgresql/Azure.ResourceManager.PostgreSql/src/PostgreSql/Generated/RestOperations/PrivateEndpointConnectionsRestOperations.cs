@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.PostgreSql
             return message;
         }
 
-        /// <summary> Updates private endpoint connection with the specified tags. </summary>
+        /// <summary> Updates tags on private endpoint connection. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serverName"> The name of the server. </param>
@@ -322,6 +322,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="privateEndpointConnectionName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Updates private endpoint connection with the specified tags. </remarks>
         public async Task<Response> UpdateTagsAsync(string subscriptionId, string resourceGroupName, string serverName, string privateEndpointConnectionName, PostgreSqlPrivateEndpointConnectionPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -341,7 +342,7 @@ namespace Azure.ResourceManager.PostgreSql
             }
         }
 
-        /// <summary> Updates private endpoint connection with the specified tags. </summary>
+        /// <summary> Updates tags on private endpoint connection. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serverName"> The name of the server. </param>
@@ -350,6 +351,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="privateEndpointConnectionName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Updates private endpoint connection with the specified tags. </remarks>
         public Response UpdateTags(string subscriptionId, string resourceGroupName, string serverName, string privateEndpointConnectionName, PostgreSqlPrivateEndpointConnectionPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));

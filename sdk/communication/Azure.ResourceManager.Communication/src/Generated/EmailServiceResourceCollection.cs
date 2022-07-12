@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Create a new EmailService or update an existing EmailService.
+        /// Create Or Update
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}
         /// Operation Id: EmailServices_CreateOrUpdate
         /// </summary>
@@ -65,6 +65,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="emailServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="emailServiceName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Create a new EmailService or update an existing EmailService. </remarks>
         public virtual async Task<ArmOperation<EmailServiceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string emailServiceName, EmailServiceResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Create a new EmailService or update an existing EmailService.
+        /// Create Or Update
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}
         /// Operation Id: EmailServices_CreateOrUpdate
         /// </summary>
@@ -98,6 +99,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="emailServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="emailServiceName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Create a new EmailService or update an existing EmailService. </remarks>
         public virtual ArmOperation<EmailServiceResource> CreateOrUpdate(WaitUntil waitUntil, string emailServiceName, EmailServiceResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
@@ -121,7 +123,7 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Get the EmailService and its properties.
+        /// Get
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}
         /// Operation Id: EmailServices_Get
         /// </summary>
@@ -129,6 +131,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="emailServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="emailServiceName"/> is null. </exception>
+        /// <remarks> Get the EmailService and its properties. </remarks>
         public virtual async Task<Response<EmailServiceResource>> GetAsync(string emailServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
@@ -150,7 +153,7 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Get the EmailService and its properties.
+        /// Get
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}
         /// Operation Id: EmailServices_Get
         /// </summary>
@@ -158,6 +161,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="emailServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="emailServiceName"/> is null. </exception>
+        /// <remarks> Get the EmailService and its properties. </remarks>
         public virtual Response<EmailServiceResource> Get(string emailServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
@@ -179,12 +183,13 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Handles requests to list all resources in a resource group.
+        /// List By Resource Group
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices
         /// Operation Id: EmailServices_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EmailServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Handles requests to list all resources in a resource group. </remarks>
         public virtual AsyncPageable<EmailServiceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<EmailServiceResource>> FirstPageFunc(int? pageSizeHint)
@@ -221,12 +226,13 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Handles requests to list all resources in a resource group.
+        /// List By Resource Group
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices
         /// Operation Id: EmailServices_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EmailServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> Handles requests to list all resources in a resource group. </remarks>
         public virtual Pageable<EmailServiceResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<EmailServiceResource> FirstPageFunc(int? pageSizeHint)
@@ -263,7 +269,7 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}
         /// Operation Id: EmailServices_Get
         /// </summary>
@@ -271,6 +277,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="emailServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="emailServiceName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string emailServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
@@ -290,7 +297,7 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}
         /// Operation Id: EmailServices_Get
         /// </summary>
@@ -298,6 +305,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="emailServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="emailServiceName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string emailServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));

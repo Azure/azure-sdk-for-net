@@ -64,6 +64,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Updates a private endpoint connection. </remarks>
         public virtual async Task<ArmOperation<ContainerServicePrivateEndpointConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateEndpointConnectionName, ContainerServicePrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
@@ -97,6 +98,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
+        /// <remarks> Updates a private endpoint connection. </remarks>
         public virtual ArmOperation<ContainerServicePrivateEndpointConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string privateEndpointConnectionName, ContainerServicePrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
@@ -120,7 +122,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// To learn more about private clusters, see: https://docs.microsoft.com/azure/aks/private-clusters
+        /// Gets the specified private endpoint connection.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}
         /// Operation Id: PrivateEndpointConnections_Get
         /// </summary>
@@ -128,6 +130,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <remarks> To learn more about private clusters, see: https://docs.microsoft.com/azure/aks/private-clusters. </remarks>
         public virtual async Task<Response<ContainerServicePrivateEndpointConnectionResource>> GetAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
@@ -149,7 +152,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// To learn more about private clusters, see: https://docs.microsoft.com/azure/aks/private-clusters
+        /// Gets the specified private endpoint connection.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}
         /// Operation Id: PrivateEndpointConnections_Get
         /// </summary>
@@ -157,6 +160,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <remarks> To learn more about private clusters, see: https://docs.microsoft.com/azure/aks/private-clusters. </remarks>
         public virtual Response<ContainerServicePrivateEndpointConnectionResource> Get(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
@@ -178,12 +182,13 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// To learn more about private clusters, see: https://docs.microsoft.com/azure/aks/private-clusters
+        /// Gets a list of private endpoint connections in the specified managed cluster.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/privateEndpointConnections
         /// Operation Id: PrivateEndpointConnections_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ContainerServicePrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> To learn more about private clusters, see: https://docs.microsoft.com/azure/aks/private-clusters. </remarks>
         public virtual AsyncPageable<ContainerServicePrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ContainerServicePrivateEndpointConnectionResource>> FirstPageFunc(int? pageSizeHint)
@@ -205,12 +210,13 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// To learn more about private clusters, see: https://docs.microsoft.com/azure/aks/private-clusters
+        /// Gets a list of private endpoint connections in the specified managed cluster.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/privateEndpointConnections
         /// Operation Id: PrivateEndpointConnections_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContainerServicePrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <remarks> To learn more about private clusters, see: https://docs.microsoft.com/azure/aks/private-clusters. </remarks>
         public virtual Pageable<ContainerServicePrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<ContainerServicePrivateEndpointConnectionResource> FirstPageFunc(int? pageSizeHint)
@@ -232,7 +238,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Gets the specified private endpoint connection.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}
         /// Operation Id: PrivateEndpointConnections_Get
         /// </summary>
@@ -240,6 +246,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
@@ -259,7 +266,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Gets the specified private endpoint connection.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}
         /// Operation Id: PrivateEndpointConnections_Get
         /// </summary>
@@ -267,6 +274,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));

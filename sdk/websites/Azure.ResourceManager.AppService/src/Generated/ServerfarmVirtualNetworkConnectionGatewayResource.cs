@@ -87,11 +87,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get a Virtual Network gateway.
+        /// Get a Virtual Network gateway.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}
         /// Operation Id: AppServicePlans_GetVnetGateway
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Get a Virtual Network gateway. </remarks>
         public virtual async Task<Response<ServerfarmVirtualNetworkConnectionGatewayResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _serverfarmVirtualNetworkConnectionGatewayAppServicePlansClientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnectionGatewayResource.Get");
@@ -111,11 +112,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get a Virtual Network gateway.
+        /// Get a Virtual Network gateway.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}
         /// Operation Id: AppServicePlans_GetVnetGateway
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Description for Get a Virtual Network gateway. </remarks>
         public virtual Response<ServerfarmVirtualNetworkConnectionGatewayResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _serverfarmVirtualNetworkConnectionGatewayAppServicePlansClientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnectionGatewayResource.Get");
@@ -135,7 +137,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Update a Virtual Network gateway.
+        /// Update a Virtual Network gateway.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}
         /// Operation Id: AppServicePlans_UpdateVnetGateway
         /// </summary>
@@ -143,6 +145,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> Definition of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        /// <remarks> Description for Update a Virtual Network gateway. </remarks>
         public virtual async Task<ArmOperation<ServerfarmVirtualNetworkConnectionGatewayResource>> UpdateAsync(WaitUntil waitUntil, VnetGatewayData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -165,7 +168,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Update a Virtual Network gateway.
+        /// Update a Virtual Network gateway.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}
         /// Operation Id: AppServicePlans_UpdateVnetGateway
         /// </summary>
@@ -173,6 +176,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> Definition of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        /// <remarks> Description for Update a Virtual Network gateway. </remarks>
         public virtual ArmOperation<ServerfarmVirtualNetworkConnectionGatewayResource> Update(WaitUntil waitUntil, VnetGatewayData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
