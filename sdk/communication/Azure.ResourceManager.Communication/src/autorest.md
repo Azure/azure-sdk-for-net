@@ -57,7 +57,7 @@ rename-mapping:
   NameAvailabilityParameters: CommunicationServiceNameAvailabilityContent
   TaggedResource: CommunicationAcceptTags
   DomainResource: CommunicationDomainResource
-  CheckNameAvailabilityRequest: CommunicationNameAvailabilityRequestContent
+  CheckNameAvailabilityRequest: CommunicationNameAvailabilityContent
   CheckNameAvailabilityResponse: CommunicationNameAvailabilityResult
   CheckNameAvailabilityReason: CommunicationNameAvailabilityReason
   CheckNameAvailabilityResponse.nameAvailable: IsNameAvailable

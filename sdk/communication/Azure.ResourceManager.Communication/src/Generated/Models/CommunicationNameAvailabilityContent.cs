@@ -10,10 +10,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.Communication.Models
 {
     /// <summary> The check availability request body. </summary>
-    public partial class CommunicationNameAvailabilityRequestContent
+    public partial class CommunicationNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of CommunicationNameAvailabilityRequestContent. </summary>
-        public CommunicationNameAvailabilityRequestContent()
+        /// <summary> Initializes a new instance of CommunicationNameAvailabilityContent. </summary>
+        public CommunicationNameAvailabilityContent()
         {
         }
 
