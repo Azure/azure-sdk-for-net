@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 using Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.TestFramework;
 
 using Xunit;
@@ -27,7 +28,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
         /// This test validates that when an app instrumented with the AzureMonitorExporter receives an HTTP request,
         /// A TelemetryItem is created matching that request.
         /// </summary>
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/24362")]
+        [Fact]
         public async Task ProofOfConcept()
         {
             string testValue = Guid.NewGuid().ToString();
@@ -40,8 +41,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
 
             // Shutdown
             response.EnsureSuccessStatusCode();
-            Task.Delay(100).Wait(); //TODO: HOW TO REMOVE THIS WAIT?
-            this.factory.ForceFlush();
+            this.factory.WaitForActivityExport();
 
             // Assert
             Assert.True(this.factory.TelemetryItems.Any(), "test project did not capture telemetry");
