@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
                 Location = "westus2",
                 PrivateLinkServiceConnections =
                 {
-                    new PrivateLinkServiceConnection()
+                    new NetworkPrivateLinkServiceConnection()
                     {
                         Name = privateEndPointName,
                         PrivateLinkServiceId = _webPubSub.Data.Id,
