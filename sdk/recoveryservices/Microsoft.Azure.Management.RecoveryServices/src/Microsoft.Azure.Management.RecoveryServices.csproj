@@ -9,7 +9,7 @@
 		<AssemblyName>Microsoft.Azure.Management.RecoveryServices</AssemblyName>
 		<Version>4.3.2-preview</Version>
 		<PackageTags>Management.RecoveryServices;Azure RecoveryServices;</PackageTags>
-		<PackageReleaseNotes>Adding support for User Assigned Identity and Customer Managed Keys for Microsoft.RecoveryServices/Vaults</PackageReleaseNotes>
+		<PackageReleaseNotes>Adding support for 2022-04-01 api version for Microsoft.RecoveryServices/Vaults</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
