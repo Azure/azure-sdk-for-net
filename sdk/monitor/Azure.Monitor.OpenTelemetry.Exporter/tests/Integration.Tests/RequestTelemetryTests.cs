@@ -17,11 +17,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
     {
         private readonly OpenTelemetryWebApplicationFactory<AspNetCoreWebApp.Startup> factory;
         private readonly ITestOutputHelper output;
+        private readonly TelemetryItemOutputHelper telemetryOutput;
 
         public RequestTelemetryTests(OpenTelemetryWebApplicationFactory<AspNetCoreWebApp.Startup> factory, ITestOutputHelper output)
         {
             this.factory = factory;
             this.output = output;
+            this.telemetryOutput = new TelemetryItemOutputHelper(output);
         }
 
         /// <summary>
@@ -47,16 +49,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
             // Assert
             Assert.True(this.factory.TelemetryItems.Any(), "test project did not capture telemetry");
             var telemetryItem = this.factory.TelemetryItems.Single();
+            telemetryOutput.Write(telemetryItem);
 
-            output.WriteLine($"Name: {telemetryItem.Name}");
             Assert.Equal("Request", telemetryItem.Name);
-            Assert.Equal(nameof(RequestData), telemetryItem.Data.BaseType);
 
-            output.WriteLine($"Tags: {telemetryItem.Tags.Count}");
-            foreach (var tag in telemetryItem.Tags)
-            {
-                output.WriteLine($"\t{tag.Key}: {tag.Value}");
-            }
             Assert.Contains("ai.operation.id", telemetryItem.Tags.Keys);
             Assert.Contains("ai.user.userAgent", telemetryItem.Tags.Keys);
             Assert.Contains("ai.operation.name", telemetryItem.Tags.Keys);
@@ -65,8 +61,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
             Assert.Contains("ai.cloud.roleInstance", telemetryItem.Tags.Keys);
             Assert.Contains("ai.internal.sdkVersion", telemetryItem.Tags.Keys);
 
+            Assert.Equal(nameof(RequestData), telemetryItem.Data.BaseType);
             var requestData = (RequestData)telemetryItem.Data.BaseData;
-            output.WriteLine($"Url: {requestData.Url}");
             Assert.Equal("200", requestData.ResponseCode);
             Assert.Equal(request.AbsoluteUri, requestData.Url);
         }
