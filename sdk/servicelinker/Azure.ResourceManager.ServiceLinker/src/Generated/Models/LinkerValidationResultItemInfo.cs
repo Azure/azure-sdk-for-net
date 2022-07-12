@@ -8,20 +8,20 @@
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary> The validation item for a linker. </summary>
-    public partial class ValidationResultItemData
+    public partial class LinkerValidationResultItemInfo
     {
-        /// <summary> Initializes a new instance of ValidationResultItemData. </summary>
-        internal ValidationResultItemData()
+        /// <summary> Initializes a new instance of LinkerValidationResultItemInfo. </summary>
+        internal LinkerValidationResultItemInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ValidationResultItemData. </summary>
+        /// <summary> Initializes a new instance of LinkerValidationResultItemInfo. </summary>
         /// <param name="name"> The validation item name. </param>
         /// <param name="description"> The display name of validation item. </param>
         /// <param name="result"> The result of validation. </param>
         /// <param name="errorMessage"> The error message of validation result. </param>
         /// <param name="errorCode"> The error code of validation result. </param>
-        internal ValidationResultItemData(string name, string description, ValidationResultStatus? result, string errorMessage, string errorCode)
+        internal LinkerValidationResultItemInfo(string name, string description, LinkerValidationResultStatus? result, string errorMessage, string errorCode)
         {
             Name = name;
             Description = description;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> The display name of validation item. </summary>
         public string Description { get; }
         /// <summary> The result of validation. </summary>
-        public ValidationResultStatus? Result { get; }
+        public LinkerValidationResultStatus? Result { get; }
         /// <summary> The error message of validation result. </summary>
         public string ErrorMessage { get; }
         /// <summary> The error code of validation result. </summary>

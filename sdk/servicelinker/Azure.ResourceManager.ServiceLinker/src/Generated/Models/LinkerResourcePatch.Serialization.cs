@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 writer.WritePropertyName("clientType");
                 writer.WriteStringValue(ClientType.Value.ToString());
             }
-            if (Optional.IsDefined(VNetSolution))
+            if (Optional.IsDefined(VnetSolution))
             {
-                if (VNetSolution != null)
+                if (VnetSolution != null)
                 {
                     writer.WritePropertyName("vNetSolution");
-                    writer.WriteObjectValue(VNetSolution);
+                    writer.WriteObjectValue(VnetSolution);
                 }
                 else
                 {

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    internal partial class VNetSolution : IUtf8JsonSerializable
+    internal partial class VnetSolution : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             writer.WriteEndObject();
         }
 
-        internal static VNetSolution DeserializeVNetSolution(JsonElement element)
+        internal static VnetSolution DeserializeVnetSolution(JsonElement element)
         {
-            Optional<VNetSolutionType?> type = default;
+            Optional<VnetSolutionType?> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -42,11 +42,11 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                         type = null;
                         continue;
                     }
-                    type = new VNetSolutionType(property.Value.GetString());
+                    type = new VnetSolutionType(property.Value.GetString());
                     continue;
                 }
             }
-            return new VNetSolution(Optional.ToNullable(type));
+            return new VnetSolution(Optional.ToNullable(type));
         }
     }
 }

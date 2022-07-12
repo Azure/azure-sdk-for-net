@@ -36,16 +36,16 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </param>
         /// <param name="clientType"> The application client type. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
-        /// <param name="vNetSolution"> The VNet solution. </param>
+        /// <param name="vnetSolution"> The VNet solution. </param>
         /// <param name="secretStore"> An option to store secret value in secure place. </param>
         /// <param name="scope"> connection scope in source service. </param>
-        internal LinkerResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TargetServiceBaseInfo targetService, AuthBaseInfo authInfo, LinkerClientType? clientType, string provisioningState, VNetSolution vNetSolution, LinkerSecretStore secretStore, string scope) : base(id, name, resourceType, systemData)
+        internal LinkerResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TargetServiceBaseInfo targetService, AuthBaseInfo authInfo, LinkerClientType? clientType, string provisioningState, VnetSolution vnetSolution, LinkerSecretStore secretStore, string scope) : base(id, name, resourceType, systemData)
         {
             TargetService = targetService;
             AuthInfo = authInfo;
             ClientType = clientType;
             ProvisioningState = provisioningState;
-            VNetSolution = vNetSolution;
+            VnetSolution = vnetSolution;
             SecretStore = secretStore;
             Scope = scope;
         }
@@ -67,16 +67,16 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <summary> The provisioning state. </summary>
         public string ProvisioningState { get; }
         /// <summary> The VNet solution. </summary>
-        internal VNetSolution VNetSolution { get; set; }
+        internal VnetSolution VnetSolution { get; set; }
         /// <summary> Type of VNet solution. </summary>
-        public VNetSolutionType? SolutionType
+        public VnetSolutionType? SolutionType
         {
-            get => VNetSolution is null ? default : VNetSolution.SolutionType;
+            get => VnetSolution is null ? default : VnetSolution.SolutionType;
             set
             {
-                if (VNetSolution is null)
-                    VNetSolution = new VNetSolution();
-                VNetSolution.SolutionType = value;
+                if (VnetSolution is null)
+                    VnetSolution = new VnetSolution();
+                VnetSolution.SolutionType = value;
             }
         }
 
