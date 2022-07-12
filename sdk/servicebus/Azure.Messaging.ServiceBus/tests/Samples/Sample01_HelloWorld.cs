@@ -265,6 +265,26 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         }
 
         /// <summary>
+        /// Connect to the service using a custom endpoint address/>.
+        /// </summary>
+        public void ConnectUsingCustomEndpoint()
+        {
+            #region Snippet:ServiceBusCustomEndpoint
+            // Connect to the service using a custom endpoint
+            string connectionString = "<connection_string>";
+            string customEndpoint = "<custom_endpoint";
+
+            var options = new ServiceBusClientOptions
+            {
+                CustomEndpointAddress = new Uri(customEndpoint)
+            };
+
+            // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
+            ServiceBusClient client = new ServiceBusClient(connectionString, options);
+            #endregion
+        }
+
+        /// <summary>
         /// Shows how to use <see cref="ServiceBusFailureReason"/> in <see cref="ServiceBusException"/>.
         /// </summary>
         public void ServiceBusExceptionFailureReasonUsage()
