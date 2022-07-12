@@ -105,6 +105,9 @@ directive:
   - from: webpubsub.json
     where: $.definitions.ScaleType
     transform: $['x-ms-enum'].name = 'WebPubSubScaleType'
+  - from: webpubsub.json
+    where: $.definitions.KeyType
+    transform: $['x-ms-enum'].name = 'WebPubSubKeyType'
 
   # Change type to ResourceIdentifier
   - from: webpubsub.json
@@ -117,7 +120,7 @@ directive:
     where: $.definitions.SignalRServiceUsage.properties.id
     transform: $['x-ms-format'] = 'arm-id'
 
-  # Rename some class names of  boolean types
+  # Rename some class names of boolean types
   - from: webpubsub.json
     where: $.definitions.WebPubSubTlsSettings.properties.clientCertEnabled
     transform: $["x-ms-client-name"] = 'isClientCertEnabled'
