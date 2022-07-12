@@ -113,7 +113,7 @@ function generate-markdown-table($readmeFolder, $readmeName, $packageInfo, $moni
   $tableContent = ""
   # Here is the table, the versioned value will
   foreach ($pkg in $packageInfo) {
-    $repositoryLink = $RepositoryUri
+    $repositoryLink = "$RepositoryUri/$($pkg.Package)"
     if (Test-Path "Function:$GetRepositoryLinkFn") {
       $repositoryLink = &$GetRepositoryLinkFn -packageInfo $pkg
     }
