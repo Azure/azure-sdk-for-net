@@ -12,6 +12,8 @@
 - Renamed `CopyAuthorization.ExpirationDateTime` to `ExpiresOn`.
 - Renamed `DocumentModelInfo` to `DocumentModelSummary`.
 - Removed `DocumentCaption` and `DocumentFootnote` features.
+- Renamed parameter `analyzeDocumentOptions` to `options` in the `StartAnalyzeDocument` and `StartAnalyzeDocumentFromUri` methods.
+- Renamed parameter `buildModelOptions` to `options` in the `StartBuildModel` method.
 - `FormRecognizerClientOptions.Audience` and `DocumentAnalysisClientOptions.Audience` now default to `null`.
 - In the `DocumentAnalysis` namespace, `CopyModelOperation.PercentCompleted` and `BuildModelOperation.PercentCompleted` now throw an `InvalidOperationException` if called before a call to `UpdateStatus`.
 
