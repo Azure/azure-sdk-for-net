@@ -1009,13 +1009,7 @@ namespace Azure.Storage.Blobs.Specialized
         {
             return AppendBlockInternal(
                 content,
-                transactionalContentHash != default
-                    ? new UploadTransferValidationOptions()
-                    {
-                        Algorithm = ValidationAlgorithm.MD5,
-                        PrecalculatedChecksum = transactionalContentHash
-                    }
-                    : default,
+                transactionalContentHash.ToValidationOptions(),
                 conditions,
                 progressHandler,
                 false, // async
@@ -1078,13 +1072,7 @@ namespace Azure.Storage.Blobs.Specialized
         {
             return await AppendBlockInternal(
                 content,
-                transactionalContentHash != default
-                    ? new UploadTransferValidationOptions()
-                    {
-                        Algorithm = ValidationAlgorithm.MD5,
-                        PrecalculatedChecksum = transactionalContentHash
-                    }
-                    : default,
+                transactionalContentHash.ToValidationOptions(),
                 conditions,
                 progressHandler,
                 true, // async

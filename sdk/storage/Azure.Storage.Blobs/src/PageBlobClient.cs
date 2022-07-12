@@ -1114,13 +1114,7 @@ namespace Azure.Storage.Blobs.Specialized
             return UploadPagesInternal(
                 content,
                 offset,
-                transactionalContentHash != default
-                    ? new UploadTransferValidationOptions()
-                    {
-                        Algorithm = ValidationAlgorithm.MD5,
-                        PrecalculatedChecksum = transactionalContentHash
-                    }
-                    : default,
+                transactionalContentHash.ToValidationOptions(),
                 conditions,
                 progressHandler,
                 false, // async

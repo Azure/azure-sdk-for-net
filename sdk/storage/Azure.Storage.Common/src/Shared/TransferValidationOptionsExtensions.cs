@@ -28,7 +28,9 @@ namespace Azure.Storage
                 ? new DownloadTransferValidationOptions
                 {
                     Algorithm = ValidationAlgorithm.MD5,
-                    Validate = false // legacy arg forced users to validate the hash themselves
+                    // legacy arg forced users to validate the hash themselves
+                    // maintain this behavior to avoid perf hit of double-validation
+                    Validate = false
                 }
                 : default;
     }

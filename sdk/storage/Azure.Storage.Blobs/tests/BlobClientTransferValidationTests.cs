@@ -5,10 +5,9 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Test;
-using Moq;
-using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Tests
 {
@@ -36,7 +35,7 @@ namespace Azure.Storage.Blobs.Tests
             return Task.FromResult(InstrumentClient(container.GetBlobClient(resourceName ?? GetNewResourceName())));
         }
 
-        protected async override Task<Stream> OpenWriteAsync(
+        protected override async Task<Stream> OpenWriteAsync(
             BlobClient client,
             UploadTransferValidationOptions validationOptions,
             int internalBufferSize)

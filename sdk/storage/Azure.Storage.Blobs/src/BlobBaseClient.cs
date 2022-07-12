@@ -944,12 +944,7 @@ namespace Azure.Storage.Blobs.Specialized
             Response<BlobDownloadStreamingResult> response = await DownloadStreamingDirect(
                 range,
                 conditions,
-                rangeGetContentHash
-                    ? new DownloadTransferValidationOptions()
-                    {
-                        Algorithm = ValidationAlgorithm.MD5
-                    }
-                    : default,
+                rangeGetContentHash.ToValidationOptions(),
                 progressHandler: default,
                 $"{nameof(BlobBaseClient)}.{nameof(Download)}",
                 async,
@@ -1179,12 +1174,7 @@ namespace Azure.Storage.Blobs.Specialized
             return DownloadStreamingDirect(
                 range,
                 conditions,
-                rangeGetContentHash
-                    ? new DownloadTransferValidationOptions()
-                    {
-                        Algorithm = ValidationAlgorithm.MD5
-                    }
-                    : default,
+                rangeGetContentHash.ToValidationOptions(),
                 progressHandler,
                 $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
                 false, // async
@@ -1257,12 +1247,7 @@ namespace Azure.Storage.Blobs.Specialized
             return await DownloadStreamingDirect(
                 range,
                 conditions,
-                rangeGetContentHash
-                    ? new DownloadTransferValidationOptions()
-                    {
-                        Algorithm = ValidationAlgorithm.MD5
-                    }
-                    : default,
+                rangeGetContentHash.ToValidationOptions(),
                 progressHandler,
                 $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
                 true, // async
