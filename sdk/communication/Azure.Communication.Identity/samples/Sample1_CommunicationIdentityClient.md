@@ -63,6 +63,25 @@ Console.WriteLine($"Token: {token}");
 Console.WriteLine($"Expires On: {expiresOn}");
 ```
 
+It's also possible to create token with custom expiration. Bounds are 1 - 24 hours. Default expiration is 24 hours.
+
+The `GetToken` function accepts the following parameters wrapped into the `GetTokenOptions` option bag:
+- `CommunicationUser` The CommunicationUserIdentifier for whom to get a token.
+- `Scopes` The scopes that the token should have.
+- `ExpiresInMinutes` Optional custom validity period of the token within [60,1440] minutes range. If not provided, the default value of 1440 minutes (24 hours) will be used.
+
+```C# Snippet:CreateCommunicationTokenWithCustomExpiration
+GetTokenOptions tokenOptions = new GetTokenOptions(user, scopes: new[] { CommunicationTokenScope.Chat })
+{
+    ExpiresInMinutes = new TimeSpan(0, 60, 0),
+};
+Response<AccessToken> tokenResponse = client.GetToken(tokenOptions);
+string token = tokenResponse.Value.Token;
+DateTimeOffset expiresOn = tokenResponse.Value.ExpiresOn;
+Console.WriteLine($"Token: {token}");
+Console.WriteLine($"Expires On: {expiresOn}");
+```
+
 ## Exchange an Azure AD access token of a Teams User for a Communication Identity access token
 
 The `CommunicationIdentityClient` can be used to exchange an Azure AD access token of a Teams user for a new Communication Identity access token with a matching expiration time.

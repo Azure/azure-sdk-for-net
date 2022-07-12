@@ -92,6 +92,25 @@ Console.WriteLine($"Token: {token}");
 Console.WriteLine($"Expires On: {expiresOn}");
 ```
 
+It's also possible to create token with custom expiration. Bounds are 1 - 24 hours. Default expiration is 24 hours.
+
+The `GetTokenAsync` function accepts the following parameters wrapped into the `GetTokenOptions` option bag:
+- `CommunicationUser` The CommunicationUserIdentifier for whom to get a token.
+- `Scopes` The scopes that the token should have.
+- `ExpiresInMinutes` Optional custom validity period of the token within [60,1440] minutes range. If not provided, the default value of 1440 minutes (24 hours) will be used.
+
+```C# Snippet:CreateCommunicationTokenAsyncWithCustomExpiration
+GetTokenOptions tokenOptions = new GetTokenOptions(user, scopes: new[] { CommunicationTokenScope.Chat })
+{
+    ExpiresInMinutes = new TimeSpan(0, 60, 0),
+};
+Response<AccessToken> tokenResponse = await client.GetTokenAsync(tokenOptions);
+string token = tokenResponse.Value.Token;
+DateTimeOffset expiresOn = tokenResponse.Value.ExpiresOn;
+Console.WriteLine($"Token: {token}");
+Console.WriteLine($"Expires On: {expiresOn}");
+```
+
 ### Creating a user and a token in the same request
 ```C# Snippet:CreateCommunicationUserAndToken
 Response<CommunicationUserIdentifierAndToken> response = await client.CreateUserAndTokenAsync(scopes: new[] { CommunicationTokenScope.Chat });

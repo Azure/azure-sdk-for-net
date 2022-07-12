@@ -1,5 +1,12 @@
 # Release History
 
+## 1.2.0
+### Features Added
+- Added support for token custom expiration:
+    - Added `GetToken(GetTokenOptions getTokenOptions, CancellationToken cancellationToken = default)` and `GetTokenAsync(GetTokenOptions getTokenOptions, CancellationToken cancellationToken = default)` methods that provide the ability to create token with custom expiration.
+    - Added `GetTokenOptions` options bag to contain arguments used to get a token.
+    - Added a new API version `ServiceVersion.V2022_10_01` that is now the default API version.
+
 ## 1.1.0 (Unreleased)
 
 ### Features Added

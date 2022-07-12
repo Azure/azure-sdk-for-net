@@ -33,7 +33,7 @@ namespace Azure.Communication.Identity
         /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public CommunicationIdentityRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2022-06-01")
+        public CommunicationIdentityRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2022-10-01")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -322,7 +322,7 @@ namespace Azure.Communication.Identity
             }
         }
 
-        internal HttpMessage CreateIssueAccessTokenRequest(string id, IEnumerable<CommunicationTokenScope> scopes)
+        internal HttpMessage CreateIssueAccessTokenRequest(string id, IEnumerable<CommunicationTokenScope> scopes, int? expiresInMinutes)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -336,7 +336,10 @@ namespace Azure.Communication.Identity
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new CommunicationIdentityAccessTokenRequest(scopes.ToList());
+            var model = new CommunicationIdentityAccessTokenRequest(scopes.ToList())
+            {
+                ExpiresInMinutes = expiresInMinutes
+            };
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
@@ -346,9 +349,10 @@ namespace Azure.Communication.Identity
         /// <summary> Issue a new token for an identity. </summary>
         /// <param name="id"> Identifier of the identity to issue token for. </param>
         /// <param name="scopes"> List of scopes attached to the token. </param>
+        /// <param name="expiresInMinutes"> Optional custom validity period of the token within [60,1440] minutes range. If not provided, the default value of 1440 minutes (24 hours) will be used. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="scopes"/> is null. </exception>
-        public async Task<Response<CommunicationIdentityAccessToken>> IssueAccessTokenAsync(string id, IEnumerable<CommunicationTokenScope> scopes, CancellationToken cancellationToken = default)
+        public async Task<Response<CommunicationIdentityAccessToken>> IssueAccessTokenAsync(string id, IEnumerable<CommunicationTokenScope> scopes, int? expiresInMinutes = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -359,7 +363,7 @@ namespace Azure.Communication.Identity
                 throw new ArgumentNullException(nameof(scopes));
             }
 
-            using var message = CreateIssueAccessTokenRequest(id, scopes);
+            using var message = CreateIssueAccessTokenRequest(id, scopes, expiresInMinutes);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -378,9 +382,10 @@ namespace Azure.Communication.Identity
         /// <summary> Issue a new token for an identity. </summary>
         /// <param name="id"> Identifier of the identity to issue token for. </param>
         /// <param name="scopes"> List of scopes attached to the token. </param>
+        /// <param name="expiresInMinutes"> Optional custom validity period of the token within [60,1440] minutes range. If not provided, the default value of 1440 minutes (24 hours) will be used. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="scopes"/> is null. </exception>
-        public Response<CommunicationIdentityAccessToken> IssueAccessToken(string id, IEnumerable<CommunicationTokenScope> scopes, CancellationToken cancellationToken = default)
+        public Response<CommunicationIdentityAccessToken> IssueAccessToken(string id, IEnumerable<CommunicationTokenScope> scopes, int? expiresInMinutes = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -391,7 +396,7 @@ namespace Azure.Communication.Identity
                 throw new ArgumentNullException(nameof(scopes));
             }
 
-            using var message = CreateIssueAccessTokenRequest(id, scopes);
+            using var message = CreateIssueAccessTokenRequest(id, scopes, expiresInMinutes);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
