@@ -28,5 +28,5 @@ extends:
     ServiceDirectory: extendedlocation
     ArtifactName: packages
     Artifacts:
-    - name: Azure.ResourceManager.ExtendedLocation
-      safeName: AzureResourceManagerExtendedLocation
+    - name: Azure.ResourceManager.ExtendedLocations
+      safeName: AzureResourceManagerExtendedLocations
