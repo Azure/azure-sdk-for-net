@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Reflection;
+using System.Windows.Forms;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Authorization;
 using Moq;
@@ -79,11 +80,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
         {
             var credential = new Mock<ServiceBusTokenCredential>(Mock.Of<TokenCredential>());
             var fakeConnection = "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake";
+            var fakeEndpoint = new Uri("sb://not-real.com");
 
             var options = new ServiceBusClientOptions
             {
                 TransportType = ServiceBusTransportType.AmqpWebSockets,
-                WebProxy = Mock.Of<IWebProxy>()
+                WebProxy = Mock.Of<IWebProxy>(),
+                CustomEndpointAddress = fakeEndpoint
             };
 
             yield return new object[] { new ReadableOptionsMock(fakeConnection, options), options, "connection string" };
