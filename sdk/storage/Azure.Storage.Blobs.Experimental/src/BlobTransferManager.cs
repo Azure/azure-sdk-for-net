@@ -39,6 +39,15 @@ namespace Azure.Storage.Blobs.Experimental
         [ThreadStatic]
         private static bool _currentThreadIsProcessingJobChunk;
 
+        // Mutex for the thread managing processing Jobs to Jobs
+        private static SemaphoreSlim _channelJobSemaphore = new SemaphoreSlim(1,1);
+
+        // Mutex for the thread managing processing Job Parts tp Job Chunks
+        private static SemaphoreSlim _channelJobPartSemaphore = new SemaphoreSlim(1, 1);
+
+        // Mutex for the thread managing processing Job Part
+        private static SemaphoreSlim _channelJobChunkSemaphore = new SemaphoreSlim(1, 1);
+
         // This value can fluctuate depending on if we've reached max capacity
         // Future capability for it to flucate based on throttling and bandwidth
         private int _maxDownloaders;
@@ -803,25 +812,30 @@ namespace Azure.Storage.Blobs.Experimental
         // Inform the Reader that there's work to be executed for this Channel.
         private async Task NotifyOfPendingJobProcessing()
         {
-            // Note that the current thread is now processing work items.
-            // This is necessary to enable inlining of tasks into this thread.
-            _currentThreadIsProcessingJob = true;
-            try
+            if (_channelJobSemaphore.CurrentCount == 0)
             {
-                // Process all available items in the queue.
-                while (_jobsToProcessChannel.Reader.TryRead(out BlobTransferJobInternal item))
+                // Note that the current thread is now processing work items.
+                // This is necessary to enable inlining of tasks into this thread.
+                _currentThreadIsProcessingJob = true;
+                try
                 {
-                    // Execute the task we pulled out of the queue
-                    await foreach (BlobJobPartInternal partItem in item.ProcessJobToJobPartAsync().ConfigureAwait(false))
+
+                    _channelJobSemaphore.AvailableWaitHandle.WaitOne();
+                    // Process all available items in the queue.
+                    while (_jobsToProcessChannel.Reader.TryRead(out BlobTransferJobInternal item))
                     {
-                        await QueueJobPartAsync(partItem).ConfigureAwait(false);
+                        // Execute the task we pulled out of the queue
+                        await foreach (BlobJobPartInternal partItem in item.ProcessJobToJobPartAsync().ConfigureAwait(false))
+                        {
+                            await QueueJobPartAsync(partItem).ConfigureAwait(false);
+                        }
                     }
                 }
-            }
-            // We're done processing items on the current thread
-            finally
-            {
-                _currentThreadIsProcessingJob = false;
+                // We're done processing items on the current thread
+                finally
+                {
+                    _currentThreadIsProcessingJob = false;
+                }
             }
         }
         #endregion Job Channel Management
@@ -883,9 +897,6 @@ namespace Azure.Storage.Blobs.Experimental
 
         private async Task NotifyOfPendingJobChunkProcessing()
         {
-            // Note that the current thread is now processing work items.
-            // This is necessary to enable inlining of tasks into this thread.
-            _currentThreadIsProcessingJobChunk = true;
             try
             {
                 // Process all available items in the queue.
