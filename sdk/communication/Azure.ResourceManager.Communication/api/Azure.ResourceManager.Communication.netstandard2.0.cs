@@ -182,6 +182,12 @@ namespace Azure.ResourceManager.Communication.Models
         public Azure.ResourceManager.Communication.Models.UserEngagementTracking? UserEngagementTracking { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> ValidSenderUsernames { get { throw null; } }
     }
+    public partial class CommunicationNameAvailabilityContent
+    {
+        public CommunicationNameAvailabilityContent() { }
+        public string Name { get { throw null; } set { } }
+        public Azure.Core.ResourceType? ResourceType { get { throw null; } set { } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CommunicationNameAvailabilityReason : System.IEquatable<Azure.ResourceManager.Communication.Models.CommunicationNameAvailabilityReason>
     {
@@ -199,12 +205,6 @@ namespace Azure.ResourceManager.Communication.Models
         public static implicit operator Azure.ResourceManager.Communication.Models.CommunicationNameAvailabilityReason (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Communication.Models.CommunicationNameAvailabilityReason left, Azure.ResourceManager.Communication.Models.CommunicationNameAvailabilityReason right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class CommunicationNameAvailabilityRequestContent
-    {
-        public CommunicationNameAvailabilityRequestContent() { }
-        public string Name { get { throw null; } set { } }
-        public Azure.Core.ResourceType? ResourceType { get { throw null; } set { } }
     }
     public partial class CommunicationNameAvailabilityResult
     {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Communication.Models
         Primary = 0,
         Secondary = 1,
     }
-    public partial class CommunicationServiceNameAvailabilityContent : Azure.ResourceManager.Communication.Models.CommunicationNameAvailabilityRequestContent
+    public partial class CommunicationServiceNameAvailabilityContent : Azure.ResourceManager.Communication.Models.CommunicationNameAvailabilityContent
     {
         public CommunicationServiceNameAvailabilityContent() { }
     }
