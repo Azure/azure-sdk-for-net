@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
         {
         }
 
-        private async Task<RoleEligibilityScheduleInstanceCollection> RoleEligibilityScheduleInstanceCollectionAsync()
+        private async Task<RoleEligibilityScheduleInstanceCollection> GetRoleEligibilityScheduleInstanceCollectionAsync()
         {
             var resourceGroup = await CreateResourceGroupAsync();
             return resourceGroup.GetRoleEligibilityScheduleInstances();
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
         [Test]
         public async Task Get()
         {
-            var collection = await RoleEligibilityScheduleInstanceCollectionAsync();
+            var collection = await GetRoleEligibilityScheduleInstanceCollectionAsync();
             var roleEligibilityScheduleInstances = await collection.GetAllAsync().ToEnumerableAsync();
             var roleEligibilityScheduleInstance1 = roleEligibilityScheduleInstances.FirstOrDefault();
             if (roleEligibilityScheduleInstance1 != null)
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
         [Test]
         public async Task GetAll()
         {
-            var collection = await RoleEligibilityScheduleInstanceCollectionAsync();
+            var collection = await GetRoleEligibilityScheduleInstanceCollectionAsync();
             var roleEligibilityScheduleInstances = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.GreaterOrEqual(roleEligibilityScheduleInstances.Count, 0);
         }
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
         [Test]
         public async Task Exists()
         {
-            var collection = await RoleEligibilityScheduleInstanceCollectionAsync();
+            var collection = await GetRoleEligibilityScheduleInstanceCollectionAsync();
             var roleEligibilityScheduleInstances = await collection.GetAllAsync().ToEnumerableAsync();
             var roleEligibilityScheduleInstance = roleEligibilityScheduleInstances.FirstOrDefault();
             if (roleEligibilityScheduleInstance != null)
