@@ -441,6 +441,8 @@ namespace Azure.ResourceManager.Models
         public Azure.Core.ResourceType ResourceType { get { throw null; } }
         public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    [System.ObsoleteAttribute("This type is obsolete and will be removed in a future release.", false)]
     public partial class SystemAssignedServiceIdentity
     {
         public SystemAssignedServiceIdentity(Azure.ResourceManager.Models.SystemAssignedServiceIdentityType systemAssignedServiceIdentityType) { }
@@ -448,6 +450,8 @@ namespace Azure.ResourceManager.Models
         public Azure.ResourceManager.Models.SystemAssignedServiceIdentityType SystemAssignedServiceIdentityType { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    [System.ObsoleteAttribute("This type is obsolete and will be removed in a future release.", false)]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SystemAssignedServiceIdentityType : System.IEquatable<Azure.ResourceManager.Models.SystemAssignedServiceIdentityType>
     {
