@@ -7,12 +7,14 @@
 
 using System;
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class TagDescriptionContractData : IUtf8JsonSerializable
+    public partial class TagDescriptionContractData : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -130,6 +132,108 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             return new TagDescriptionContractData(id, name, type, systemData.Value, description.Value, externalDocsUrl.Value, externalDocsDescription.Value, tagId.Value, displayName.Value);
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "TagDescriptionContract");
+            if (Optional.IsDefined(Description))
+            {
+                writer.WriteStartElement("description");
+                writer.WriteValue(Description);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ExternalDocsUri))
+            {
+                writer.WriteStartElement("externalDocsUrl");
+                writer.WriteValue(ExternalDocsUri);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ExternalDocsDescription))
+            {
+                writer.WriteStartElement("externalDocsDescription");
+                writer.WriteValue(ExternalDocsDescription);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(TagId))
+            {
+                writer.WriteStartElement("tagId");
+                writer.WriteValue(TagId);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WriteStartElement("displayName");
+                writer.WriteValue(DisplayName);
+                writer.WriteEndElement();
+            }
+            writer.WriteStartElement("id");
+            writer.WriteValue(Id);
+            writer.WriteEndElement();
+            writer.WriteStartElement("name");
+            writer.WriteValue(Name);
+            writer.WriteEndElement();
+            writer.WriteStartElement("type");
+            writer.WriteValue(ResourceType);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(SystemData))
+            {
+                writer.WriteStartElement("systemData");
+                writer.WriteValue(SystemData);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static TagDescriptionContractData DeserializeTagDescriptionContractData(XElement element)
+        {
+            string description = default;
+            Uri externalDocsUri = default;
+            string externalDocsDescription = default;
+            string tagId = default;
+            string displayName = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
+            if (element.Element("description") is XElement descriptionElement)
+            {
+                description = (string)descriptionElement;
+            }
+            if (element.Element("externalDocsUrl") is XElement externalDocsUrlElement)
+            {
+                externalDocsUri = new Uri((string)externalDocsUrlElement)
+                ;
+            }
+            if (element.Element("externalDocsDescription") is XElement externalDocsDescriptionElement)
+            {
+                externalDocsDescription = (string)externalDocsDescriptionElement;
+            }
+            if (element.Element("tagId") is XElement tagIdElement)
+            {
+                tagId = (string)tagIdElement;
+            }
+            if (element.Element("displayName") is XElement displayNameElement)
+            {
+                displayName = (string)displayNameElement;
+            }
+            if (element.Element("id") is XElement idElement)
+            {
+                id = new ResourceIdentifier((string)idElement);
+            }
+            if (element.Element("name") is XElement nameElement)
+            {
+                name = (string)nameElement;
+            }
+            if (element.Element("type") is XElement typeElement)
+            {
+                resourceType = (string)typeElement;
+            }
+            if (element.Element("systemData") is XElement systemDataElement)
+            {
+                systemData = systemDataElement.(null);
+            }
+            return new TagDescriptionContractData(id, name, resourceType, systemData, description, externalDocsUri, externalDocsDescription, tagId, displayName);
         }
     }
 }

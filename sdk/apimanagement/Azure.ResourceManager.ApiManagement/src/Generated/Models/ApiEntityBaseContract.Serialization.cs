@@ -7,6 +7,7 @@
 
 using System;
 using System.Text.Json;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -154,6 +155,87 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new ApiEntityBaseContract(description.Value, authenticationSettings.Value, subscriptionKeyParameterNames.Value, Optional.ToNullable(type), apiRevision.Value, apiVersion.Value, Optional.ToNullable(isCurrent), Optional.ToNullable(isOnline), apiRevisionDescription.Value, apiVersionDescription.Value, apiVersionSetId.Value, Optional.ToNullable(subscriptionRequired), termsOfServiceUrl.Value, contact.Value, license.Value);
+        }
+
+        internal static ApiEntityBaseContract DeserializeApiEntityBaseContract(XElement element)
+        {
+            string description = default;
+            AuthenticationSettingsContract authenticationSettings = default;
+            SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = default;
+            ApiType? apiType = default;
+            string apiRevision = default;
+            string apiVersion = default;
+            bool? isCurrent = default;
+            bool? isOnline = default;
+            string apiRevisionDescription = default;
+            string apiVersionDescription = default;
+            string apiVersionSetId = default;
+            bool? subscriptionRequired = default;
+            Uri termsOfServiceUri = default;
+            ApiContactInformation contact = default;
+            ApiLicenseInformation license = default;
+            if (element.Element("description") is XElement descriptionElement)
+            {
+                description = (string)descriptionElement;
+            }
+            if (element.Element("authenticationSettings") is XElement authenticationSettingsElement)
+            {
+                authenticationSettings = AuthenticationSettingsContract.DeserializeAuthenticationSettingsContract(authenticationSettingsElement);
+            }
+            if (element.Element("subscriptionKeyParameterNames") is XElement subscriptionKeyParameterNamesElement)
+            {
+                subscriptionKeyParameterNames = SubscriptionKeyParameterNamesContract.DeserializeSubscriptionKeyParameterNamesContract(subscriptionKeyParameterNamesElement);
+            }
+            if (element.Element("type") is XElement typeElement)
+            {
+                apiType = new ApiType(typeElement.Value);
+            }
+            if (element.Element("apiRevision") is XElement apiRevisionElement)
+            {
+                apiRevision = (string)apiRevisionElement;
+            }
+            if (element.Element("apiVersion") is XElement apiVersionElement)
+            {
+                apiVersion = (string)apiVersionElement;
+            }
+            if (element.Element("isCurrent") is XElement isCurrentElement)
+            {
+                isCurrent = (bool?)isCurrentElement;
+            }
+            if (element.Element("isOnline") is XElement isOnlineElement)
+            {
+                isOnline = (bool?)isOnlineElement;
+            }
+            if (element.Element("apiRevisionDescription") is XElement apiRevisionDescriptionElement)
+            {
+                apiRevisionDescription = (string)apiRevisionDescriptionElement;
+            }
+            if (element.Element("apiVersionDescription") is XElement apiVersionDescriptionElement)
+            {
+                apiVersionDescription = (string)apiVersionDescriptionElement;
+            }
+            if (element.Element("apiVersionSetId") is XElement apiVersionSetIdElement)
+            {
+                apiVersionSetId = (string)apiVersionSetIdElement;
+            }
+            if (element.Element("subscriptionRequired") is XElement subscriptionRequiredElement)
+            {
+                subscriptionRequired = (bool?)subscriptionRequiredElement;
+            }
+            if (element.Element("termsOfServiceUrl") is XElement termsOfServiceUrlElement)
+            {
+                termsOfServiceUri = new Uri((string)termsOfServiceUrlElement)
+                ;
+            }
+            if (element.Element("contact") is XElement contactElement)
+            {
+                contact = ApiContactInformation.DeserializeApiContactInformation(contactElement);
+            }
+            if (element.Element("license") is XElement licenseElement)
+            {
+                license = ApiLicenseInformation.DeserializeApiLicenseInformation(licenseElement);
+            }
+            return new ApiEntityBaseContract(description, authenticationSettings, subscriptionKeyParameterNames, apiType, apiRevision, apiVersion, isCurrent, isOnline, apiRevisionDescription, apiVersionDescription, apiVersionSetId, subscriptionRequired, termsOfServiceUri, contact, license);
         }
     }
 }

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DnsResolver.Models;
 using Azure.ResourceManager.Models;
@@ -44,7 +43,7 @@ namespace Azure.ResourceManager.DnsResolver
 
         internal static VirtualNetworkLinkData DeserializeVirtualNetworkLinkData(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<string> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -56,12 +55,7 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
+                    etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -137,7 +131,7 @@ namespace Azure.ResourceManager.DnsResolver
                     continue;
                 }
             }
-            return new VirtualNetworkLinkData(id, name, type, systemData.Value, Optional.ToNullable(etag), virtualNetwork, Optional.ToDictionary(metadata), Optional.ToNullable(provisioningState));
+            return new VirtualNetworkLinkData(id, name, type, systemData.Value, etag.Value, virtualNetwork, Optional.ToDictionary(metadata), Optional.ToNullable(provisioningState));
         }
     }
 }

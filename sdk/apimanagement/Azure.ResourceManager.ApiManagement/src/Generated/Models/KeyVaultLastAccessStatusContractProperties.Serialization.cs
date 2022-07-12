@@ -7,11 +7,13 @@
 
 using System;
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class KeyVaultLastAccessStatusContractProperties : IUtf8JsonSerializable
+    public partial class KeyVaultLastAccessStatusContractProperties : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -63,6 +65,50 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new KeyVaultLastAccessStatusContractProperties(code.Value, message.Value, Optional.ToNullable(timeStampUtc));
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "KeyVaultLastAccessStatusContractProperties");
+            if (Optional.IsDefined(Code))
+            {
+                writer.WriteStartElement("code");
+                writer.WriteValue(Code);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Message))
+            {
+                writer.WriteStartElement("message");
+                writer.WriteValue(Message);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(TimeStampUtc))
+            {
+                writer.WriteStartElement("timeStampUtc");
+                writer.WriteValue(TimeStampUtc.Value, "O");
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static KeyVaultLastAccessStatusContractProperties DeserializeKeyVaultLastAccessStatusContractProperties(XElement element)
+        {
+            string code = default;
+            string message = default;
+            DateTimeOffset? timeStampUtc = default;
+            if (element.Element("code") is XElement codeElement)
+            {
+                code = (string)codeElement;
+            }
+            if (element.Element("message") is XElement messageElement)
+            {
+                message = (string)messageElement;
+            }
+            if (element.Element("timeStampUtc") is XElement timeStampUtcElement)
+            {
+                timeStampUtc = timeStampUtcElement.GetDateTimeOffsetValue("O");
+            }
+            return new KeyVaultLastAccessStatusContractProperties(code, message, timeStampUtc);
         }
     }
 }

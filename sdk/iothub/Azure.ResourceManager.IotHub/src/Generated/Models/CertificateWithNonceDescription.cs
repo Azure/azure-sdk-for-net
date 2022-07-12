@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -25,16 +24,16 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The description of an X509 CA Certificate including the challenge nonce issued for the Proof-Of-Possession flow. </param>
-        /// <param name="etag"> The entity tag. </param>
-        internal CertificateWithNonceDescription(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CertificatePropertiesWithNonce properties, ETag? etag) : base(id, name, resourceType, systemData)
+        /// <param name="eTagEtag"> The entity tag. </param>
+        internal CertificateWithNonceDescription(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CertificatePropertiesWithNonce properties, string eTagEtag) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
-            ETag = etag;
+            ETagEtag = eTagEtag;
         }
 
         /// <summary> The description of an X509 CA Certificate including the challenge nonce issued for the Proof-Of-Possession flow. </summary>
         public CertificatePropertiesWithNonce Properties { get; }
         /// <summary> The entity tag. </summary>
-        public ETag? ETag { get; }
+        public string ETagEtag { get; }
     }
 }

@@ -7,11 +7,13 @@
 
 using System;
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ParameterExampleContract : IUtf8JsonSerializable
+    public partial class ParameterExampleContract : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -78,6 +80,61 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new ParameterExampleContract(summary.Value, description.Value, value.Value, externalValue.Value);
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "ParameterExampleContract");
+            if (Optional.IsDefined(Summary))
+            {
+                writer.WriteStartElement("summary");
+                writer.WriteValue(Summary);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WriteStartElement("description");
+                writer.WriteValue(Description);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Value))
+            {
+                writer.WriteStartElement("value");
+                writer.WriteValue(Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ExternalValue))
+            {
+                writer.WriteStartElement("externalValue");
+                writer.WriteValue(ExternalValue);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static ParameterExampleContract DeserializeParameterExampleContract(XElement element)
+        {
+            string summary = default;
+            string description = default;
+            BinaryData value = default;
+            string externalValue = default;
+            if (element.Element("summary") is XElement summaryElement)
+            {
+                summary = (string)summaryElement;
+            }
+            if (element.Element("description") is XElement descriptionElement)
+            {
+                description = (string)descriptionElement;
+            }
+            if (element.Element("value") is XElement valueElement)
+            {
+                value = valueElement.(null);
+            }
+            if (element.Element("externalValue") is XElement externalValueElement)
+            {
+                externalValue = (string)externalValueElement;
+            }
+            return new ParameterExampleContract(summary, description, value, externalValue);
         }
     }
 }

@@ -6,11 +6,13 @@
 #nullable disable
 
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ApiManagementPrivateLinkServiceConnectionState : IUtf8JsonSerializable
+    public partial class ApiManagementPrivateLinkServiceConnectionState : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -62,6 +64,50 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new ApiManagementPrivateLinkServiceConnectionState(Optional.ToNullable(status), description.Value, actionsRequired.Value);
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "ApiManagementPrivateLinkServiceConnectionState");
+            if (Optional.IsDefined(Status))
+            {
+                writer.WriteStartElement("status");
+                writer.WriteValue(Status.Value.ToString());
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WriteStartElement("description");
+                writer.WriteValue(Description);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ActionsRequired))
+            {
+                writer.WriteStartElement("actionsRequired");
+                writer.WriteValue(ActionsRequired);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static ApiManagementPrivateLinkServiceConnectionState DeserializeApiManagementPrivateLinkServiceConnectionState(XElement element)
+        {
+            ApiManagementPrivateEndpointServiceConnectionStatus? status = default;
+            string description = default;
+            string actionsRequired = default;
+            if (element.Element("status") is XElement statusElement)
+            {
+                status = new ApiManagementPrivateEndpointServiceConnectionStatus(statusElement.Value);
+            }
+            if (element.Element("description") is XElement descriptionElement)
+            {
+                description = (string)descriptionElement;
+            }
+            if (element.Element("actionsRequired") is XElement actionsRequiredElement)
+            {
+                actionsRequired = (string)actionsRequiredElement;
+            }
+            return new ApiManagementPrivateLinkServiceConnectionState(status, description, actionsRequired);
         }
     }
 }

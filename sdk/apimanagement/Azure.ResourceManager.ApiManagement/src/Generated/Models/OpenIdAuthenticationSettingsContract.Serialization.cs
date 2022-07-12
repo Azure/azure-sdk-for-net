@@ -7,11 +7,13 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class OpenIdAuthenticationSettingsContract : IUtf8JsonSerializable
+    public partial class OpenIdAuthenticationSettingsContract : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -62,6 +64,44 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new OpenIdAuthenticationSettingsContract(openidProviderId.Value, Optional.ToList(bearerTokenSendingMethods));
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "OpenIdAuthenticationSettingsContract");
+            if (Optional.IsDefined(OpenidProviderId))
+            {
+                writer.WriteStartElement("openidProviderId");
+                writer.WriteValue(OpenidProviderId);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsCollectionDefined(BearerTokenSendingMethods))
+            {
+                foreach (var item in BearerTokenSendingMethods)
+                {
+                    writer.WriteStartElement("BearerTokenSendingMethodContract");
+                    writer.WriteValue(item.ToString());
+                    writer.WriteEndElement();
+                }
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static OpenIdAuthenticationSettingsContract DeserializeOpenIdAuthenticationSettingsContract(XElement element)
+        {
+            string openidProviderId = default;
+            IList<BearerTokenSendingMethodContract> bearerTokenSendingMethods = default;
+            if (element.Element("openidProviderId") is XElement openidProviderIdElement)
+            {
+                openidProviderId = (string)openidProviderIdElement;
+            }
+            var array = new List<BearerTokenSendingMethodContract>();
+            foreach (var e in element.Elements("BearerTokenSendingMethodContract"))
+            {
+                array.Add(new BearerTokenSendingMethodContract(e.Value));
+            }
+            bearerTokenSendingMethods = array;
+            return new OpenIdAuthenticationSettingsContract(openidProviderId, bearerTokenSendingMethods);
         }
     }
 }

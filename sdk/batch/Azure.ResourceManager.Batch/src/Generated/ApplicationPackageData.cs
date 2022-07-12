@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Batch.Models;
 using Azure.ResourceManager.Models;
@@ -31,15 +30,15 @@ namespace Azure.ResourceManager.Batch
         /// <param name="storageUri"> The URL for the application package in Azure Storage. </param>
         /// <param name="storageUrlExpiry"> The UTC time at which the Azure Storage URL will expire. </param>
         /// <param name="lastActivationOn"> The time at which the package was last activated, if the package is active. </param>
-        /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
-        internal ApplicationPackageData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, PackageState? state, string format, Uri storageUri, DateTimeOffset? storageUrlExpiry, DateTimeOffset? lastActivationOn, ETag? etag) : base(id, name, resourceType, systemData)
+        /// <param name="eTagEtag"> The ETag of the resource, used for concurrency statements. </param>
+        internal ApplicationPackageData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, PackageState? state, string format, Uri storageUri, DateTimeOffset? storageUrlExpiry, DateTimeOffset? lastActivationOn, string eTagEtag) : base(id, name, resourceType, systemData)
         {
             State = state;
             Format = format;
             StorageUri = storageUri;
             StorageUrlExpiry = storageUrlExpiry;
             LastActivationOn = lastActivationOn;
-            ETag = etag;
+            ETagEtag = eTagEtag;
         }
 
         /// <summary> The current state of the application package. </summary>
@@ -53,6 +52,6 @@ namespace Azure.ResourceManager.Batch
         /// <summary> The time at which the package was last activated, if the package is active. </summary>
         public DateTimeOffset? LastActivationOn { get; }
         /// <summary> The ETag of the resource, used for concurrency statements. </summary>
-        public ETag? ETag { get; }
+        public string ETagEtag { get; }
     }
 }

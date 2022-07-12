@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -26,7 +25,7 @@ namespace Azure.ResourceManager.Batch
 
         internal static BatchPrivateLinkResourceData DeserializeBatchPrivateLinkResourceData(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<string> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -38,12 +37,7 @@ namespace Azure.ResourceManager.Batch
             {
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
+                    etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -119,7 +113,7 @@ namespace Azure.ResourceManager.Batch
                     continue;
                 }
             }
-            return new BatchPrivateLinkResourceData(id, name, type, systemData.Value, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames), Optional.ToNullable(etag));
+            return new BatchPrivateLinkResourceData(id, name, type, systemData.Value, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames), etag.Value);
         }
     }
 }

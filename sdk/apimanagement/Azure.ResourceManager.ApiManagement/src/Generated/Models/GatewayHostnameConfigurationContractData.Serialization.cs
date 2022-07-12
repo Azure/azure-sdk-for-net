@@ -6,12 +6,14 @@
 #nullable disable
 
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class GatewayHostnameConfigurationContractData : IUtf8JsonSerializable
+    public partial class GatewayHostnameConfigurationContractData : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -155,6 +157,118 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             return new GatewayHostnameConfigurationContractData(id, name, type, systemData.Value, hostname.Value, certificateId.Value, Optional.ToNullable(negotiateClientCertificate), Optional.ToNullable(tls10Enabled), Optional.ToNullable(tls11Enabled), Optional.ToNullable(http2Enabled));
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "GatewayHostnameConfigurationContract");
+            if (Optional.IsDefined(Hostname))
+            {
+                writer.WriteStartElement("hostname");
+                writer.WriteValue(Hostname);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(CertificateId))
+            {
+                writer.WriteStartElement("certificateId");
+                writer.WriteValue(CertificateId);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(NegotiateClientCertificate))
+            {
+                writer.WriteStartElement("negotiateClientCertificate");
+                writer.WriteValue(NegotiateClientCertificate.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Tls10Enabled))
+            {
+                writer.WriteStartElement("tls10Enabled");
+                writer.WriteValue(Tls10Enabled.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Tls11Enabled))
+            {
+                writer.WriteStartElement("tls11Enabled");
+                writer.WriteValue(Tls11Enabled.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Http2Enabled))
+            {
+                writer.WriteStartElement("http2Enabled");
+                writer.WriteValue(Http2Enabled.Value);
+                writer.WriteEndElement();
+            }
+            writer.WriteStartElement("id");
+            writer.WriteValue(Id);
+            writer.WriteEndElement();
+            writer.WriteStartElement("name");
+            writer.WriteValue(Name);
+            writer.WriteEndElement();
+            writer.WriteStartElement("type");
+            writer.WriteValue(ResourceType);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(SystemData))
+            {
+                writer.WriteStartElement("systemData");
+                writer.WriteValue(SystemData);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static GatewayHostnameConfigurationContractData DeserializeGatewayHostnameConfigurationContractData(XElement element)
+        {
+            string hostname = default;
+            string certificateId = default;
+            bool? negotiateClientCertificate = default;
+            bool? tls10Enabled = default;
+            bool? tls11Enabled = default;
+            bool? http2Enabled = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
+            if (element.Element("hostname") is XElement hostnameElement)
+            {
+                hostname = (string)hostnameElement;
+            }
+            if (element.Element("certificateId") is XElement certificateIdElement)
+            {
+                certificateId = (string)certificateIdElement;
+            }
+            if (element.Element("negotiateClientCertificate") is XElement negotiateClientCertificateElement)
+            {
+                negotiateClientCertificate = (bool?)negotiateClientCertificateElement;
+            }
+            if (element.Element("tls10Enabled") is XElement tls10EnabledElement)
+            {
+                tls10Enabled = (bool?)tls10EnabledElement;
+            }
+            if (element.Element("tls11Enabled") is XElement tls11EnabledElement)
+            {
+                tls11Enabled = (bool?)tls11EnabledElement;
+            }
+            if (element.Element("http2Enabled") is XElement http2EnabledElement)
+            {
+                http2Enabled = (bool?)http2EnabledElement;
+            }
+            if (element.Element("id") is XElement idElement)
+            {
+                id = new ResourceIdentifier((string)idElement);
+            }
+            if (element.Element("name") is XElement nameElement)
+            {
+                name = (string)nameElement;
+            }
+            if (element.Element("type") is XElement typeElement)
+            {
+                resourceType = (string)typeElement;
+            }
+            if (element.Element("systemData") is XElement systemDataElement)
+            {
+                systemData = systemDataElement.(null);
+            }
+            return new GatewayHostnameConfigurationContractData(id, name, resourceType, systemData, hostname, certificateId, negotiateClientCertificate, tls10Enabled, tls11Enabled, http2Enabled);
         }
     }
 }

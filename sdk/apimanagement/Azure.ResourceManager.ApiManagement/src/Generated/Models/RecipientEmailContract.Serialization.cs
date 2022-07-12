@@ -6,12 +6,14 @@
 #nullable disable
 
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class RecipientEmailContract : IUtf8JsonSerializable
+    public partial class RecipientEmailContract : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -80,6 +82,63 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new RecipientEmailContract(id, name, type, systemData.Value, email.Value);
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "RecipientEmailContract");
+            if (Optional.IsDefined(Email))
+            {
+                writer.WriteStartElement("email");
+                writer.WriteValue(Email);
+                writer.WriteEndElement();
+            }
+            writer.WriteStartElement("id");
+            writer.WriteValue(Id);
+            writer.WriteEndElement();
+            writer.WriteStartElement("name");
+            writer.WriteValue(Name);
+            writer.WriteEndElement();
+            writer.WriteStartElement("type");
+            writer.WriteValue(ResourceType);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(SystemData))
+            {
+                writer.WriteStartElement("systemData");
+                writer.WriteValue(SystemData);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static RecipientEmailContract DeserializeRecipientEmailContract(XElement element)
+        {
+            string email = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
+            if (element.Element("email") is XElement emailElement)
+            {
+                email = (string)emailElement;
+            }
+            if (element.Element("id") is XElement idElement)
+            {
+                id = new ResourceIdentifier((string)idElement);
+            }
+            if (element.Element("name") is XElement nameElement)
+            {
+                name = (string)nameElement;
+            }
+            if (element.Element("type") is XElement typeElement)
+            {
+                resourceType = (string)typeElement;
+            }
+            if (element.Element("systemData") is XElement systemDataElement)
+            {
+                systemData = systemDataElement.(null);
+            }
+            return new RecipientEmailContract(id, name, resourceType, systemData, email);
         }
     }
 }

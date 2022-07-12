@@ -16,21 +16,21 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of RequiredTraffic. </summary>
         internal RequiredTraffic()
         {
-            IPs = new ChangeTrackingList<string>();
+            IPsIps = new ChangeTrackingList<string>();
             Fqdns = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of RequiredTraffic. </summary>
         /// <param name="protocol"> The protocol of required traffic. </param>
         /// <param name="port"> The port of required traffic. </param>
-        /// <param name="ips"> The ip list of required traffic. </param>
+        /// <param name="iPsIps"> The ip list of required traffic. </param>
         /// <param name="fqdns"> The FQDN list of required traffic. </param>
         /// <param name="direction"> The direction of required traffic. </param>
-        internal RequiredTraffic(string protocol, int? port, IReadOnlyList<string> ips, IReadOnlyList<string> fqdns, TrafficDirection? direction)
+        internal RequiredTraffic(string protocol, int? port, IReadOnlyList<string> iPsIps, IReadOnlyList<string> fqdns, TrafficDirection? direction)
         {
             Protocol = protocol;
             Port = port;
-            IPs = ips;
+            IPsIps = iPsIps;
             Fqdns = fqdns;
             Direction = direction;
         }
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> The port of required traffic. </summary>
         public int? Port { get; }
         /// <summary> The ip list of required traffic. </summary>
-        public IReadOnlyList<string> IPs { get; }
+        public IReadOnlyList<string> IPsIps { get; }
         /// <summary> The FQDN list of required traffic. </summary>
         public IReadOnlyList<string> Fqdns { get; }
         /// <summary> The direction of required traffic. </summary>

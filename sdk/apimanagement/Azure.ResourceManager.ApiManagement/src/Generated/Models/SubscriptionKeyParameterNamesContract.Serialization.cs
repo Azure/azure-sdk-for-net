@@ -6,11 +6,13 @@
 #nullable disable
 
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class SubscriptionKeyParameterNamesContract : IUtf8JsonSerializable
+    public partial class SubscriptionKeyParameterNamesContract : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -46,6 +48,39 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new SubscriptionKeyParameterNamesContract(header.Value, query.Value);
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "SubscriptionKeyParameterNamesContract");
+            if (Optional.IsDefined(Header))
+            {
+                writer.WriteStartElement("header");
+                writer.WriteValue(Header);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Query))
+            {
+                writer.WriteStartElement("query");
+                writer.WriteValue(Query);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static SubscriptionKeyParameterNamesContract DeserializeSubscriptionKeyParameterNamesContract(XElement element)
+        {
+            string header = default;
+            string query = default;
+            if (element.Element("header") is XElement headerElement)
+            {
+                header = (string)headerElement;
+            }
+            if (element.Element("query") is XElement queryElement)
+            {
+                query = (string)queryElement;
+            }
+            return new SubscriptionKeyParameterNamesContract(header, query);
         }
     }
 }

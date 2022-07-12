@@ -7,13 +7,15 @@
 
 using System;
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class IssueContractData : IUtf8JsonSerializable
+    public partial class IssueContractData : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -147,6 +149,118 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             return new IssueContractData(id, name, type, systemData.Value, Optional.ToNullable(createdDate), Optional.ToNullable(state), apiId.Value, title.Value, description.Value, userId.Value);
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "IssueContract");
+            if (Optional.IsDefined(CreatedOn))
+            {
+                writer.WriteStartElement("createdDate");
+                writer.WriteValue(CreatedOn.Value, "O");
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(State))
+            {
+                writer.WriteStartElement("state");
+                writer.WriteValue(State.Value.ToString());
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ApiId))
+            {
+                writer.WriteStartElement("apiId");
+                writer.WriteValue(ApiId);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Title))
+            {
+                writer.WriteStartElement("title");
+                writer.WriteValue(Title);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WriteStartElement("description");
+                writer.WriteValue(Description);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(UserId))
+            {
+                writer.WriteStartElement("userId");
+                writer.WriteValue(UserId);
+                writer.WriteEndElement();
+            }
+            writer.WriteStartElement("id");
+            writer.WriteValue(Id);
+            writer.WriteEndElement();
+            writer.WriteStartElement("name");
+            writer.WriteValue(Name);
+            writer.WriteEndElement();
+            writer.WriteStartElement("type");
+            writer.WriteValue(ResourceType);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(SystemData))
+            {
+                writer.WriteStartElement("systemData");
+                writer.WriteValue(SystemData);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static IssueContractData DeserializeIssueContractData(XElement element)
+        {
+            DateTimeOffset? createdOn = default;
+            State? state = default;
+            string apiId = default;
+            string title = default;
+            string description = default;
+            string userId = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
+            if (element.Element("createdDate") is XElement createdDateElement)
+            {
+                createdOn = createdDateElement.GetDateTimeOffsetValue("O");
+            }
+            if (element.Element("state") is XElement stateElement)
+            {
+                state = new State(stateElement.Value);
+            }
+            if (element.Element("apiId") is XElement apiIdElement)
+            {
+                apiId = (string)apiIdElement;
+            }
+            if (element.Element("title") is XElement titleElement)
+            {
+                title = (string)titleElement;
+            }
+            if (element.Element("description") is XElement descriptionElement)
+            {
+                description = (string)descriptionElement;
+            }
+            if (element.Element("userId") is XElement userIdElement)
+            {
+                userId = (string)userIdElement;
+            }
+            if (element.Element("id") is XElement idElement)
+            {
+                id = new ResourceIdentifier((string)idElement);
+            }
+            if (element.Element("name") is XElement nameElement)
+            {
+                name = (string)nameElement;
+            }
+            if (element.Element("type") is XElement typeElement)
+            {
+                resourceType = (string)typeElement;
+            }
+            if (element.Element("systemData") is XElement systemDataElement)
+            {
+                systemData = systemDataElement.(null);
+            }
+            return new IssueContractData(id, name, resourceType, systemData, createdOn, state, apiId, title, description, userId);
         }
     }
 }

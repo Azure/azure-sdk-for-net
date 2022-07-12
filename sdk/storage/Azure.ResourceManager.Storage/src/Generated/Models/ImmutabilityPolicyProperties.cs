@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
@@ -21,15 +20,15 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Initializes a new instance of ImmutabilityPolicyProperties. </summary>
-        /// <param name="etag"> ImmutabilityPolicy Etag. </param>
+        /// <param name="eTagEtag"> ImmutabilityPolicy Etag. </param>
         /// <param name="updateHistory"> The ImmutabilityPolicy update history of the blob container. </param>
         /// <param name="immutabilityPeriodSinceCreationInDays"> The immutability period for the blobs in the container since the policy creation, in days. </param>
         /// <param name="state"> The ImmutabilityPolicy state of a blob container, possible values include: Locked and Unlocked. </param>
         /// <param name="allowProtectedAppendWrites"> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to an append blob while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. </param>
         /// <param name="allowProtectedAppendWritesAll"> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to both &apos;Append and Bock Blobs&apos; while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. The &apos;allowProtectedAppendWrites&apos; and &apos;allowProtectedAppendWritesAll&apos; properties are mutually exclusive. </param>
-        internal ImmutabilityPolicyProperties(ETag? etag, IReadOnlyList<UpdateHistoryProperty> updateHistory, int? immutabilityPeriodSinceCreationInDays, ImmutabilityPolicyState? state, bool? allowProtectedAppendWrites, bool? allowProtectedAppendWritesAll)
+        internal ImmutabilityPolicyProperties(string eTagEtag, IReadOnlyList<UpdateHistoryProperty> updateHistory, int? immutabilityPeriodSinceCreationInDays, ImmutabilityPolicyState? state, bool? allowProtectedAppendWrites, bool? allowProtectedAppendWritesAll)
         {
-            ETag = etag;
+            ETagEtag = eTagEtag;
             UpdateHistory = updateHistory;
             ImmutabilityPeriodSinceCreationInDays = immutabilityPeriodSinceCreationInDays;
             State = state;
@@ -38,7 +37,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> ImmutabilityPolicy Etag. </summary>
-        public ETag? ETag { get; }
+        public string ETagEtag { get; }
         /// <summary> The ImmutabilityPolicy update history of the blob container. </summary>
         public IReadOnlyList<UpdateHistoryProperty> UpdateHistory { get; }
         /// <summary> The immutability period for the blobs in the container since the policy creation, in days. </summary>

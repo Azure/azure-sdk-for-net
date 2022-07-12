@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -36,6 +37,26 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new OperationResultLogItemContract(objectType.Value, action.Value, objectKey.Value);
+        }
+
+        internal static OperationResultLogItemContract DeserializeOperationResultLogItemContract(XElement element)
+        {
+            string objectType = default;
+            string action = default;
+            string objectKey = default;
+            if (element.Element("objectType") is XElement objectTypeElement)
+            {
+                objectType = (string)objectTypeElement;
+            }
+            if (element.Element("action") is XElement actionElement)
+            {
+                action = (string)actionElement;
+            }
+            if (element.Element("objectKey") is XElement objectKeyElement)
+            {
+                objectKey = (string)objectKeyElement;
+            }
+            return new OperationResultLogItemContract(objectType, action, objectKey);
         }
     }
 }

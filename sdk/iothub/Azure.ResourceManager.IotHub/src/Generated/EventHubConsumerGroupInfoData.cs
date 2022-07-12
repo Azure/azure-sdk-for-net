@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -28,16 +27,16 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The tags. </param>
-        /// <param name="etag"> The etag. </param>
-        internal EventHubConsumerGroupInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyDictionary<string, BinaryData> properties, ETag? etag) : base(id, name, resourceType, systemData)
+        /// <param name="eTagEtag"> The etag. </param>
+        internal EventHubConsumerGroupInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyDictionary<string, BinaryData> properties, string eTagEtag) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
-            ETag = etag;
+            ETagEtag = eTagEtag;
         }
 
         /// <summary> The tags. </summary>
         public IReadOnlyDictionary<string, BinaryData> Properties { get; }
         /// <summary> The etag. </summary>
-        public ETag? ETag { get; }
+        public string ETagEtag { get; }
     }
 }

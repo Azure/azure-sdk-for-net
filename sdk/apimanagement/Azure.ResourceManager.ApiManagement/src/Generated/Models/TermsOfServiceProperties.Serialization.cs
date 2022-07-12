@@ -6,11 +6,13 @@
 #nullable disable
 
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class TermsOfServiceProperties : IUtf8JsonSerializable
+    public partial class TermsOfServiceProperties : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -67,6 +69,50 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new TermsOfServiceProperties(text.Value, Optional.ToNullable(enabled), Optional.ToNullable(consentRequired));
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "TermsOfServiceProperties");
+            if (Optional.IsDefined(Text))
+            {
+                writer.WriteStartElement("text");
+                writer.WriteValue(Text);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Enabled))
+            {
+                writer.WriteStartElement("enabled");
+                writer.WriteValue(Enabled.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ConsentRequired))
+            {
+                writer.WriteStartElement("consentRequired");
+                writer.WriteValue(ConsentRequired.Value);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static TermsOfServiceProperties DeserializeTermsOfServiceProperties(XElement element)
+        {
+            string text = default;
+            bool? enabled = default;
+            bool? consentRequired = default;
+            if (element.Element("text") is XElement textElement)
+            {
+                text = (string)textElement;
+            }
+            if (element.Element("enabled") is XElement enabledElement)
+            {
+                enabled = (bool?)enabledElement;
+            }
+            if (element.Element("consentRequired") is XElement consentRequiredElement)
+            {
+                consentRequired = (bool?)consentRequiredElement;
+            }
+            return new TermsOfServiceProperties(text, enabled, consentRequired);
         }
     }
 }

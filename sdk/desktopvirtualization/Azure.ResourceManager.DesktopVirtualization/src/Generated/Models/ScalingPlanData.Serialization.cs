@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DesktopVirtualization.Models;
 using Azure.ResourceManager.Models;
@@ -112,7 +111,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             Optional<string> managedBy = default;
             Optional<string> kind = default;
-            Optional<ETag> etag = default;
+            Optional<string> etag = default;
             Optional<ResourceModelWithAllowedPropertySetIdentity> identity = default;
             Optional<ResourceModelWithAllowedPropertySetSku> sku = default;
             Optional<ArmPlan> plan = default;
@@ -144,12 +143,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 }
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
+                    etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("identity"))
@@ -305,7 +299,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     continue;
                 }
             }
-            return new ScalingPlanData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, objectId.Value, description.Value, friendlyName.Value, timeZone.Value, Optional.ToNullable(hostPoolType), exclusionTag.Value, Optional.ToList(schedules), Optional.ToList(hostPoolReferences), managedBy.Value, kind.Value, Optional.ToNullable(etag), identity.Value, sku.Value, plan);
+            return new ScalingPlanData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, objectId.Value, description.Value, friendlyName.Value, timeZone.Value, Optional.ToNullable(hostPoolType), exclusionTag.Value, Optional.ToList(schedules), Optional.ToList(hostPoolReferences), managedBy.Value, kind.Value, etag.Value, identity.Value, sku.Value, plan);
         }
     }
 }

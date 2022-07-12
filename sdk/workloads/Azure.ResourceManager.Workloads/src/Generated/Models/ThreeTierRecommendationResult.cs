@@ -18,15 +18,15 @@ namespace Azure.ResourceManager.Workloads.Models
 
         /// <summary> Initializes a new instance of ThreeTierRecommendationResult. </summary>
         /// <param name="deploymentType"> The deployment Type. </param>
-        /// <param name="dbVmSku"> The database VM SKU. </param>
+        /// <param name="dbDbVmSku"> The database VM SKU. </param>
         /// <param name="databaseInstanceCount"> The database server instance count. </param>
         /// <param name="centralServerVmSku"> The central server VM SKU. </param>
         /// <param name="centralServerInstanceCount"> The central server instance count. </param>
         /// <param name="applicationServerVmSku"> The application server VM SKU. </param>
         /// <param name="applicationServerInstanceCount"> The application server instance count. </param>
-        internal ThreeTierRecommendationResult(SapDeploymentType deploymentType, string dbVmSku, long? databaseInstanceCount, string centralServerVmSku, long? centralServerInstanceCount, string applicationServerVmSku, long? applicationServerInstanceCount) : base(deploymentType)
+        internal ThreeTierRecommendationResult(SapDeploymentType deploymentType, string dbDbVmSku, long? databaseInstanceCount, string centralServerVmSku, long? centralServerInstanceCount, string applicationServerVmSku, long? applicationServerInstanceCount) : base(deploymentType)
         {
-            DBVmSku = dbVmSku;
+            DBDbVmSku = dbDbVmSku;
             DatabaseInstanceCount = databaseInstanceCount;
             CentralServerVmSku = centralServerVmSku;
             CentralServerInstanceCount = centralServerInstanceCount;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Workloads.Models
         }
 
         /// <summary> The database VM SKU. </summary>
-        public string DBVmSku { get; }
+        public string DBDbVmSku { get; }
         /// <summary> The database server instance count. </summary>
         public long? DatabaseInstanceCount { get; }
         /// <summary> The central server VM SKU. </summary>

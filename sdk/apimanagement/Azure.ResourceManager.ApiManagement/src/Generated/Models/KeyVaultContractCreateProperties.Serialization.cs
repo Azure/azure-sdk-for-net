@@ -6,11 +6,13 @@
 #nullable disable
 
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class KeyVaultContractCreateProperties : IUtf8JsonSerializable
+    public partial class KeyVaultContractCreateProperties : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -46,6 +48,39 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new KeyVaultContractCreateProperties(secretIdentifier.Value, identityClientId.Value);
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "KeyVaultContractCreateProperties");
+            if (Optional.IsDefined(SecretIdentifier))
+            {
+                writer.WriteStartElement("secretIdentifier");
+                writer.WriteValue(SecretIdentifier);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(IdentityClientId))
+            {
+                writer.WriteStartElement("identityClientId");
+                writer.WriteValue(IdentityClientId);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static KeyVaultContractCreateProperties DeserializeKeyVaultContractCreateProperties(XElement element)
+        {
+            string secretIdentifier = default;
+            string identityClientId = default;
+            if (element.Element("secretIdentifier") is XElement secretIdentifierElement)
+            {
+                secretIdentifier = (string)secretIdentifierElement;
+            }
+            if (element.Element("identityClientId") is XElement identityClientIdElement)
+            {
+                identityClientId = (string)identityClientIdElement;
+            }
+            return new KeyVaultContractCreateProperties(secretIdentifier, identityClientId);
         }
     }
 }

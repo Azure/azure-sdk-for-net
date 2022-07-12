@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -200,6 +201,115 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new ApiTagResourceContractProperties(description.Value, authenticationSettings.Value, subscriptionKeyParameterNames.Value, Optional.ToNullable(type), apiRevision.Value, apiVersion.Value, Optional.ToNullable(isCurrent), Optional.ToNullable(isOnline), apiRevisionDescription.Value, apiVersionDescription.Value, apiVersionSetId.Value, Optional.ToNullable(subscriptionRequired), termsOfServiceUrl.Value, contact.Value, license.Value, id.Value, name.Value, serviceUrl.Value, path.Value, Optional.ToList(protocols));
+        }
+
+        internal static ApiTagResourceContractProperties DeserializeApiTagResourceContractProperties(XElement element)
+        {
+            string id = default;
+            string name = default;
+            Uri serviceUri = default;
+            string path = default;
+            string description = default;
+            AuthenticationSettingsContract authenticationSettings = default;
+            SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = default;
+            ApiType? apiType = default;
+            string apiRevision = default;
+            string apiVersion = default;
+            bool? isCurrent = default;
+            bool? isOnline = default;
+            string apiRevisionDescription = default;
+            string apiVersionDescription = default;
+            string apiVersionSetId = default;
+            bool? subscriptionRequired = default;
+            Uri termsOfServiceUri = default;
+            ApiContactInformation contact = default;
+            ApiLicenseInformation license = default;
+            IReadOnlyList<Protocol> protocols = default;
+            if (element.Element("id") is XElement idElement)
+            {
+                id = (string)idElement;
+            }
+            if (element.Element("name") is XElement nameElement)
+            {
+                name = (string)nameElement;
+            }
+            if (element.Element("serviceUrl") is XElement serviceUrlElement)
+            {
+                serviceUri = new Uri((string)serviceUrlElement)
+                ;
+            }
+            if (element.Element("path") is XElement pathElement)
+            {
+                path = (string)pathElement;
+            }
+            if (element.Element("description") is XElement descriptionElement)
+            {
+                description = (string)descriptionElement;
+            }
+            if (element.Element("authenticationSettings") is XElement authenticationSettingsElement)
+            {
+                authenticationSettings = AuthenticationSettingsContract.DeserializeAuthenticationSettingsContract(authenticationSettingsElement);
+            }
+            if (element.Element("subscriptionKeyParameterNames") is XElement subscriptionKeyParameterNamesElement)
+            {
+                subscriptionKeyParameterNames = SubscriptionKeyParameterNamesContract.DeserializeSubscriptionKeyParameterNamesContract(subscriptionKeyParameterNamesElement);
+            }
+            if (element.Element("type") is XElement typeElement)
+            {
+                apiType = new ApiType(typeElement.Value);
+            }
+            if (element.Element("apiRevision") is XElement apiRevisionElement)
+            {
+                apiRevision = (string)apiRevisionElement;
+            }
+            if (element.Element("apiVersion") is XElement apiVersionElement)
+            {
+                apiVersion = (string)apiVersionElement;
+            }
+            if (element.Element("isCurrent") is XElement isCurrentElement)
+            {
+                isCurrent = (bool?)isCurrentElement;
+            }
+            if (element.Element("isOnline") is XElement isOnlineElement)
+            {
+                isOnline = (bool?)isOnlineElement;
+            }
+            if (element.Element("apiRevisionDescription") is XElement apiRevisionDescriptionElement)
+            {
+                apiRevisionDescription = (string)apiRevisionDescriptionElement;
+            }
+            if (element.Element("apiVersionDescription") is XElement apiVersionDescriptionElement)
+            {
+                apiVersionDescription = (string)apiVersionDescriptionElement;
+            }
+            if (element.Element("apiVersionSetId") is XElement apiVersionSetIdElement)
+            {
+                apiVersionSetId = (string)apiVersionSetIdElement;
+            }
+            if (element.Element("subscriptionRequired") is XElement subscriptionRequiredElement)
+            {
+                subscriptionRequired = (bool?)subscriptionRequiredElement;
+            }
+            if (element.Element("termsOfServiceUrl") is XElement termsOfServiceUrlElement)
+            {
+                termsOfServiceUri = new Uri((string)termsOfServiceUrlElement)
+                ;
+            }
+            if (element.Element("contact") is XElement contactElement)
+            {
+                contact = ApiContactInformation.DeserializeApiContactInformation(contactElement);
+            }
+            if (element.Element("license") is XElement licenseElement)
+            {
+                license = ApiLicenseInformation.DeserializeApiLicenseInformation(licenseElement);
+            }
+            var array = new List<Protocol>();
+            foreach (var e in element.Elements("Protocol"))
+            {
+                array.Add(new Protocol(e.Value));
+            }
+            protocols = array;
+            return new ApiTagResourceContractProperties(description, authenticationSettings, subscriptionKeyParameterNames, apiType, apiRevision, apiVersion, isCurrent, isOnline, apiRevisionDescription, apiVersionDescription, apiVersionSetId, subscriptionRequired, termsOfServiceUri, contact, license, id, name, serviceUri, path, protocols);
         }
     }
 }

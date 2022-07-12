@@ -28,9 +28,9 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     case "Db2": return DB2ProviderInstanceProperties.DeserializeDB2ProviderInstanceProperties(element);
                     case "MsSqlServer": return MsSqlServerProviderInstanceProperties.DeserializeMsSqlServerProviderInstanceProperties(element);
-                    case "PrometheusHaCluster": return PrometheusHAClusterProviderInstanceProperties.DeserializePrometheusHAClusterProviderInstanceProperties(element);
+                    case "PrometheusHaCluster": return PrometheusHAHaClusterProviderInstanceProperties.DeserializePrometheusHAHaClusterProviderInstanceProperties(element);
                     case "PrometheusOS": return PrometheusOSProviderInstanceProperties.DeserializePrometheusOSProviderInstanceProperties(element);
-                    case "SapHana": return HanaDBProviderInstanceProperties.DeserializeHanaDBProviderInstanceProperties(element);
+                    case "SapHana": return HanaDBDbProviderInstanceProperties.DeserializeHanaDBDbProviderInstanceProperties(element);
                     case "SapNetWeaver": return SapNetWeaverProviderInstanceProperties.DeserializeSapNetWeaverProviderInstanceProperties(element);
                 }
             }

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -25,16 +24,16 @@ namespace Azure.ResourceManager.Batch
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="value"> A base64 encoded string that represents the content of a detector. </param>
-        /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
-        internal DetectorResponseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string value, ETag? etag) : base(id, name, resourceType, systemData)
+        /// <param name="eTagEtag"> The ETag of the resource, used for concurrency statements. </param>
+        internal DetectorResponseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string value, string eTagEtag) : base(id, name, resourceType, systemData)
         {
             Value = value;
-            ETag = etag;
+            ETagEtag = eTagEtag;
         }
 
         /// <summary> A base64 encoded string that represents the content of a detector. </summary>
         public string Value { get; set; }
         /// <summary> The ETag of the resource, used for concurrency statements. </summary>
-        public ETag? ETag { get; }
+        public string ETagEtag { get; }
     }
 }

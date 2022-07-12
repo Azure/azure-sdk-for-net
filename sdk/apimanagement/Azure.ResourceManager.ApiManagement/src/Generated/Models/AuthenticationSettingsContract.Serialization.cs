@@ -6,11 +6,13 @@
 #nullable disable
 
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class AuthenticationSettingsContract : IUtf8JsonSerializable
+    public partial class AuthenticationSettingsContract : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -56,6 +58,35 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new AuthenticationSettingsContract(oAuth2.Value, openid.Value);
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "AuthenticationSettingsContract");
+            if (Optional.IsDefined(OAuth2))
+            {
+                writer.WriteObjectValue(OAuth2, "oAuth2");
+            }
+            if (Optional.IsDefined(Openid))
+            {
+                writer.WriteObjectValue(Openid, "openid");
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static AuthenticationSettingsContract DeserializeAuthenticationSettingsContract(XElement element)
+        {
+            OAuth2AuthenticationSettingsContract oAuth2 = default;
+            OpenIdAuthenticationSettingsContract openid = default;
+            if (element.Element("oAuth2") is XElement oAuth2Element)
+            {
+                oAuth2 = OAuth2AuthenticationSettingsContract.DeserializeOAuth2AuthenticationSettingsContract(oAuth2Element);
+            }
+            if (element.Element("openid") is XElement openidElement)
+            {
+                openid = OpenIdAuthenticationSettingsContract.DeserializeOpenIdAuthenticationSettingsContract(openidElement);
+            }
+            return new AuthenticationSettingsContract(oAuth2, openid);
         }
     }
 }

@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             Optional<PolicyEnabledState> enabledState = default;
             Optional<PolicyMode> mode = default;
-            Optional<Uri> defaultRedirectUri = default;
+            Optional<Uri> defaultRedirectUrl = default;
             Optional<PolicySettingsDefaultCustomBlockResponseStatusCode?> defaultCustomBlockResponseStatusCode = default;
             Optional<BinaryData> defaultCustomBlockResponseBody = default;
             foreach (var property in element.EnumerateObject())
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        defaultRedirectUri = null;
+                        defaultRedirectUrl = null;
                         continue;
                     }
-                    defaultRedirectUri = new Uri(property.Value.GetString());
+                    defaultRedirectUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("defaultCustomBlockResponseStatusCode"))
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new WafPolicySettings(Optional.ToNullable(enabledState), Optional.ToNullable(mode), defaultRedirectUri.Value, Optional.ToNullable(defaultCustomBlockResponseStatusCode), defaultCustomBlockResponseBody.Value);
+            return new WafPolicySettings(Optional.ToNullable(enabledState), Optional.ToNullable(mode), defaultRedirectUrl.Value, Optional.ToNullable(defaultCustomBlockResponseStatusCode), defaultCustomBlockResponseBody.Value);
         }
     }
 }

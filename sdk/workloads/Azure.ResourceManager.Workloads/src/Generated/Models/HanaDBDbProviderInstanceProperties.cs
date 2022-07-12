@@ -10,35 +10,35 @@ using System;
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> Gets or sets the provider properties. </summary>
-    public partial class HanaDBProviderInstanceProperties : ProviderSpecificProperties
+    public partial class HanaDBDbProviderInstanceProperties : ProviderSpecificProperties
     {
-        /// <summary> Initializes a new instance of HanaDBProviderInstanceProperties. </summary>
-        public HanaDBProviderInstanceProperties()
+        /// <summary> Initializes a new instance of HanaDBDbProviderInstanceProperties. </summary>
+        public HanaDBDbProviderInstanceProperties()
         {
             ProviderType = "SapHana";
         }
 
-        /// <summary> Initializes a new instance of HanaDBProviderInstanceProperties. </summary>
+        /// <summary> Initializes a new instance of HanaDBDbProviderInstanceProperties. </summary>
         /// <param name="providerType"> The provider type. For example, the value can be SapHana. </param>
         /// <param name="hostname"> Gets or sets the target virtual machine size. </param>
-        /// <param name="dbName"> Gets or sets the hana database name. </param>
+        /// <param name="dbDbName"> Gets or sets the hana database name. </param>
         /// <param name="sqlPort"> Gets or sets the database sql port. </param>
         /// <param name="instanceNumber"> Gets or sets the database instance number. </param>
-        /// <param name="dbUsername"> Gets or sets the database user name. </param>
-        /// <param name="dbPassword"> Gets or sets the database password. </param>
-        /// <param name="dbPasswordUri"> Gets or sets the key vault URI to secret with the database password. </param>
-        /// <param name="dbSslCertificateUri"> Gets or sets the blob URI to SSL certificate for the DB. </param>
+        /// <param name="dbDbUsername"> Gets or sets the database user name. </param>
+        /// <param name="dbDbPassword"> Gets or sets the database password. </param>
+        /// <param name="dbDbPasswordUri"> Gets or sets the key vault URI to secret with the database password. </param>
+        /// <param name="dbDbSslCertificateUri"> Gets or sets the blob URI to SSL certificate for the DB. </param>
         /// <param name="sslHostNameInCertificate"> Gets or sets the hostname(s) in the SSL certificate. </param>
-        internal HanaDBProviderInstanceProperties(string providerType, string hostname, string dbName, string sqlPort, string instanceNumber, string dbUsername, string dbPassword, Uri dbPasswordUri, Uri dbSslCertificateUri, string sslHostNameInCertificate) : base(providerType)
+        internal HanaDBDbProviderInstanceProperties(string providerType, string hostname, string dbDbName, string sqlPort, string instanceNumber, string dbDbUsername, string dbDbPassword, Uri dbDbPasswordUri, Uri dbDbSslCertificateUri, string sslHostNameInCertificate) : base(providerType)
         {
             Hostname = hostname;
-            DBName = dbName;
+            DBDbName = dbDbName;
             SqlPort = sqlPort;
             InstanceNumber = instanceNumber;
-            DBUsername = dbUsername;
-            DBPassword = dbPassword;
-            DBPasswordUri = dbPasswordUri;
-            DBSslCertificateUri = dbSslCertificateUri;
+            DBDbUsername = dbDbUsername;
+            DBDbPassword = dbDbPassword;
+            DBDbPasswordUri = dbDbPasswordUri;
+            DBDbSslCertificateUri = dbDbSslCertificateUri;
             SslHostNameInCertificate = sslHostNameInCertificate;
             ProviderType = providerType ?? "SapHana";
         }
@@ -46,19 +46,19 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Gets or sets the target virtual machine size. </summary>
         public string Hostname { get; set; }
         /// <summary> Gets or sets the hana database name. </summary>
-        public string DBName { get; set; }
+        public string DBDbName { get; set; }
         /// <summary> Gets or sets the database sql port. </summary>
         public string SqlPort { get; set; }
         /// <summary> Gets or sets the database instance number. </summary>
         public string InstanceNumber { get; set; }
         /// <summary> Gets or sets the database user name. </summary>
-        public string DBUsername { get; set; }
+        public string DBDbUsername { get; set; }
         /// <summary> Gets or sets the database password. </summary>
-        public string DBPassword { get; set; }
+        public string DBDbPassword { get; set; }
         /// <summary> Gets or sets the key vault URI to secret with the database password. </summary>
-        public Uri DBPasswordUri { get; set; }
+        public Uri DBDbPasswordUri { get; set; }
         /// <summary> Gets or sets the blob URI to SSL certificate for the DB. </summary>
-        public Uri DBSslCertificateUri { get; set; }
+        public Uri DBDbSslCertificateUri { get; set; }
         /// <summary> Gets or sets the hostname(s) in the SSL certificate. </summary>
         public string SslHostNameInCertificate { get; set; }
     }

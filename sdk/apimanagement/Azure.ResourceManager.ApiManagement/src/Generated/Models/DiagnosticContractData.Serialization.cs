@@ -6,13 +6,15 @@
 #nullable disable
 
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class DiagnosticContractData : IUtf8JsonSerializable
+    public partial class DiagnosticContractData : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -79,7 +81,7 @@ namespace Azure.ResourceManager.ApiManagement
             Optional<SamplingSettings> sampling = default;
             Optional<PipelineDiagnosticSettings> frontend = default;
             Optional<PipelineDiagnosticSettings> backend = default;
-            Optional<bool> logClientIP = default;
+            Optional<bool> logClientIp = default;
             Optional<HttpCorrelationProtocol> httpCorrelationProtocol = default;
             Optional<Verbosity> verbosity = default;
             Optional<OperationNameFormat> operationNameFormat = default;
@@ -171,7 +173,7 @@ namespace Azure.ResourceManager.ApiManagement
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            logClientIP = property0.Value.GetBoolean();
+                            logClientIp = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("httpCorrelationProtocol"))
@@ -208,7 +210,146 @@ namespace Azure.ResourceManager.ApiManagement
                     continue;
                 }
             }
-            return new DiagnosticContractData(id, name, type, systemData.Value, Optional.ToNullable(alwaysLog), loggerId.Value, sampling.Value, frontend.Value, backend.Value, Optional.ToNullable(logClientIP), Optional.ToNullable(httpCorrelationProtocol), Optional.ToNullable(verbosity), Optional.ToNullable(operationNameFormat));
+            return new DiagnosticContractData(id, name, type, systemData.Value, Optional.ToNullable(alwaysLog), loggerId.Value, sampling.Value, frontend.Value, backend.Value, Optional.ToNullable(logClientIp), Optional.ToNullable(httpCorrelationProtocol), Optional.ToNullable(verbosity), Optional.ToNullable(operationNameFormat));
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "DiagnosticContract");
+            if (Optional.IsDefined(AlwaysLog))
+            {
+                writer.WriteStartElement("alwaysLog");
+                writer.WriteValue(AlwaysLog.Value.ToString());
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(LoggerId))
+            {
+                writer.WriteStartElement("loggerId");
+                writer.WriteValue(LoggerId);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Sampling))
+            {
+                writer.WriteObjectValue(Sampling, "sampling");
+            }
+            if (Optional.IsDefined(Frontend))
+            {
+                writer.WriteObjectValue(Frontend, "frontend");
+            }
+            if (Optional.IsDefined(Backend))
+            {
+                writer.WriteObjectValue(Backend, "backend");
+            }
+            if (Optional.IsDefined(LogClientIP))
+            {
+                writer.WriteStartElement("logClientIp");
+                writer.WriteValue(LogClientIP.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(HttpCorrelationProtocol))
+            {
+                writer.WriteStartElement("httpCorrelationProtocol");
+                writer.WriteValue(HttpCorrelationProtocol.Value.ToString());
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Verbosity))
+            {
+                writer.WriteStartElement("verbosity");
+                writer.WriteValue(Verbosity.Value.ToString());
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(OperationNameFormat))
+            {
+                writer.WriteStartElement("operationNameFormat");
+                writer.WriteValue(OperationNameFormat.Value.ToString());
+                writer.WriteEndElement();
+            }
+            writer.WriteStartElement("id");
+            writer.WriteValue(Id);
+            writer.WriteEndElement();
+            writer.WriteStartElement("name");
+            writer.WriteValue(Name);
+            writer.WriteEndElement();
+            writer.WriteStartElement("type");
+            writer.WriteValue(ResourceType);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(SystemData))
+            {
+                writer.WriteStartElement("systemData");
+                writer.WriteValue(SystemData);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static DiagnosticContractData DeserializeDiagnosticContractData(XElement element)
+        {
+            AlwaysLog? alwaysLog = default;
+            string loggerId = default;
+            SamplingSettings sampling = default;
+            PipelineDiagnosticSettings frontend = default;
+            PipelineDiagnosticSettings backend = default;
+            bool? logClientIP = default;
+            HttpCorrelationProtocol? httpCorrelationProtocol = default;
+            Verbosity? verbosity = default;
+            OperationNameFormat? operationNameFormat = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
+            if (element.Element("alwaysLog") is XElement alwaysLogElement)
+            {
+                alwaysLog = new AlwaysLog(alwaysLogElement.Value);
+            }
+            if (element.Element("loggerId") is XElement loggerIdElement)
+            {
+                loggerId = (string)loggerIdElement;
+            }
+            if (element.Element("sampling") is XElement samplingElement)
+            {
+                sampling = SamplingSettings.DeserializeSamplingSettings(samplingElement);
+            }
+            if (element.Element("frontend") is XElement frontendElement)
+            {
+                frontend = PipelineDiagnosticSettings.DeserializePipelineDiagnosticSettings(frontendElement);
+            }
+            if (element.Element("backend") is XElement backendElement)
+            {
+                backend = PipelineDiagnosticSettings.DeserializePipelineDiagnosticSettings(backendElement);
+            }
+            if (element.Element("logClientIp") is XElement logClientIpElement)
+            {
+                logClientIP = (bool?)logClientIpElement;
+            }
+            if (element.Element("httpCorrelationProtocol") is XElement httpCorrelationProtocolElement)
+            {
+                httpCorrelationProtocol = new HttpCorrelationProtocol(httpCorrelationProtocolElement.Value);
+            }
+            if (element.Element("verbosity") is XElement verbosityElement)
+            {
+                verbosity = new Verbosity(verbosityElement.Value);
+            }
+            if (element.Element("operationNameFormat") is XElement operationNameFormatElement)
+            {
+                operationNameFormat = new OperationNameFormat(operationNameFormatElement.Value);
+            }
+            if (element.Element("id") is XElement idElement)
+            {
+                id = new ResourceIdentifier((string)idElement);
+            }
+            if (element.Element("name") is XElement nameElement)
+            {
+                name = (string)nameElement;
+            }
+            if (element.Element("type") is XElement typeElement)
+            {
+                resourceType = (string)typeElement;
+            }
+            if (element.Element("systemData") is XElement systemDataElement)
+            {
+                systemData = systemDataElement.(null);
+            }
+            return new DiagnosticContractData(id, name, resourceType, systemData, alwaysLog, loggerId, sampling, frontend, backend, logClientIP, httpCorrelationProtocol, verbosity, operationNameFormat);
         }
     }
 }

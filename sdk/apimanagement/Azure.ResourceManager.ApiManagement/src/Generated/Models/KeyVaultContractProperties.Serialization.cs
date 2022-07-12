@@ -6,11 +6,13 @@
 #nullable disable
 
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class KeyVaultContractProperties : IUtf8JsonSerializable
+    public partial class KeyVaultContractProperties : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -62,6 +64,48 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new KeyVaultContractProperties(secretIdentifier.Value, identityClientId.Value, lastStatus.Value);
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "KeyVaultContractProperties");
+            if (Optional.IsDefined(LastStatus))
+            {
+                writer.WriteObjectValue(LastStatus, "lastStatus");
+            }
+            if (Optional.IsDefined(SecretIdentifier))
+            {
+                writer.WriteStartElement("secretIdentifier");
+                writer.WriteValue(SecretIdentifier);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(IdentityClientId))
+            {
+                writer.WriteStartElement("identityClientId");
+                writer.WriteValue(IdentityClientId);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static KeyVaultContractProperties DeserializeKeyVaultContractProperties(XElement element)
+        {
+            KeyVaultLastAccessStatusContractProperties lastStatus = default;
+            string secretIdentifier = default;
+            string identityClientId = default;
+            if (element.Element("lastStatus") is XElement lastStatusElement)
+            {
+                lastStatus = KeyVaultLastAccessStatusContractProperties.DeserializeKeyVaultLastAccessStatusContractProperties(lastStatusElement);
+            }
+            if (element.Element("secretIdentifier") is XElement secretIdentifierElement)
+            {
+                secretIdentifier = (string)secretIdentifierElement;
+            }
+            if (element.Element("identityClientId") is XElement identityClientIdElement)
+            {
+                identityClientId = (string)identityClientIdElement;
+            }
+            return new KeyVaultContractProperties(secretIdentifier, identityClientId, lastStatus);
         }
     }
 }

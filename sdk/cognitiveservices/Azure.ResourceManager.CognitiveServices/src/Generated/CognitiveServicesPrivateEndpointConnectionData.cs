@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.CognitiveServices.Models;
 using Azure.ResourceManager.Models;
@@ -27,12 +26,12 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Resource properties. </param>
         /// <param name="location"> The location of the private endpoint connection. </param>
-        /// <param name="etag"> Resource Etag. </param>
-        internal CognitiveServicesPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PrivateEndpointConnectionProperties properties, AzureLocation? location, ETag? etag) : base(id, name, resourceType, systemData)
+        /// <param name="eTagEtag"> Resource Etag. </param>
+        internal CognitiveServicesPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PrivateEndpointConnectionProperties properties, AzureLocation? location, string eTagEtag) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;
-            ETag = etag;
+            ETagEtag = eTagEtag;
         }
 
         /// <summary> Resource properties. </summary>
@@ -40,6 +39,6 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <summary> The location of the private endpoint connection. </summary>
         public AzureLocation? Location { get; set; }
         /// <summary> Resource Etag. </summary>
-        public ETag? ETag { get; }
+        public string ETagEtag { get; }
     }
 }

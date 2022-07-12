@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.Migrate.Models
         internal static LBFrontendIPConfigurationResourceSettings DeserializeLBFrontendIPConfigurationResourceSettings(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<string> privateIPAddress = default;
-            Optional<string> privateIPAllocationMethod = default;
+            Optional<string> privateIpAddress = default;
+            Optional<string> privateIpAllocationMethod = default;
             Optional<SubnetReference> subnet = default;
             Optional<string> zones = default;
             foreach (var property in element.EnumerateObject())
@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
                 if (property.NameEquals("privateIpAddress"))
                 {
-                    privateIPAddress = property.Value.GetString();
+                    privateIpAddress = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("privateIpAllocationMethod"))
                 {
-                    privateIPAllocationMethod = property.Value.GetString();
+                    privateIpAllocationMethod = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("subnet"))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Migrate.Models
                     continue;
                 }
             }
-            return new LBFrontendIPConfigurationResourceSettings(name.Value, privateIPAddress.Value, privateIPAllocationMethod.Value, subnet.Value, zones.Value);
+            return new LBFrontendIPConfigurationResourceSettings(name.Value, privateIpAddress.Value, privateIpAllocationMethod.Value, subnet.Value, zones.Value);
         }
     }
 }

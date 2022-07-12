@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.StreamAnalytics.Models;
 
@@ -64,7 +63,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             Optional<float> sizeWindow = default;
             Optional<Serialization> serialization = default;
             Optional<Diagnostics> diagnostics = default;
-            Optional<ETag> etag = default;
+            Optional<string> etag = default;
             Optional<IReadOnlyList<LastOutputEventTimestamp>> lastOutputEventTimestamps = default;
             Optional<OutputWatermarkProperties> watermarkSettings = default;
             foreach (var property in element.EnumerateObject())
@@ -140,12 +139,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                         }
                         if (property0.NameEquals("etag"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            etag = new ETag(property0.Value.GetString());
+                            etag = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("lastOutputEventTimestamps"))
@@ -177,7 +171,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                     continue;
                 }
             }
-            return new StreamingJobOutputData(id.Value, name.Value, type.Value, datasource.Value, timeWindow.Value, Optional.ToNullable(sizeWindow), serialization.Value, diagnostics.Value, Optional.ToNullable(etag), Optional.ToList(lastOutputEventTimestamps), watermarkSettings.Value);
+            return new StreamingJobOutputData(id.Value, name.Value, type.Value, datasource.Value, timeWindow.Value, Optional.ToNullable(sizeWindow), serialization.Value, diagnostics.Value, etag.Value, Optional.ToList(lastOutputEventTimestamps), watermarkSettings.Value);
         }
     }
 }

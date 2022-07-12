@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.HDInsight.Models;
 using Azure.ResourceManager.Models;
@@ -27,18 +26,18 @@ namespace Azure.ResourceManager.HDInsight
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> The ETag for the application. </param>
+        /// <param name="eTagEtag"> The ETag for the application. </param>
         /// <param name="tags"> The tags for the application. </param>
         /// <param name="properties"> The properties of the application. </param>
-        internal ApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> tags, ApplicationProperties properties) : base(id, name, resourceType, systemData)
+        internal ApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string eTagEtag, IDictionary<string, string> tags, ApplicationProperties properties) : base(id, name, resourceType, systemData)
         {
-            ETag = etag;
+            ETagEtag = eTagEtag;
             Tags = tags;
             Properties = properties;
         }
 
         /// <summary> The ETag for the application. </summary>
-        public ETag? ETag { get; set; }
+        public string ETagEtag { get; set; }
         /// <summary> The tags for the application. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The properties of the application. </summary>

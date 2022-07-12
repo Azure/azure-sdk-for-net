@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -29,16 +28,16 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="provisioningState"> The current deployment or provisioning state, which only appears in the response. </param>
-        /// <param name="etag"> Azure resource etag. </param>
-        internal ApplicationTypeResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="eTagEtag"> Azure resource etag. </param>
+        internal ApplicationTypeResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, string eTagEtag) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
-            ETag = etag;
+            ETagEtag = eTagEtag;
         }
 
         /// <summary> The current deployment or provisioning state, which only appears in the response. </summary>
         public string ProvisioningState { get; }
         /// <summary> Azure resource etag. </summary>
-        public ETag? ETag { get; }
+        public string ETagEtag { get; }
     }
 }

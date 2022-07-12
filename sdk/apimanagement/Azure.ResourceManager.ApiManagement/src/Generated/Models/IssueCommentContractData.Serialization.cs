@@ -7,12 +7,14 @@
 
 using System;
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class IssueCommentContractData : IUtf8JsonSerializable
+    public partial class IssueCommentContractData : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -108,6 +110,85 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             return new IssueCommentContractData(id, name, type, systemData.Value, text.Value, Optional.ToNullable(createdDate), userId.Value);
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "IssueCommentContract");
+            if (Optional.IsDefined(Text))
+            {
+                writer.WriteStartElement("text");
+                writer.WriteValue(Text);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(CreatedOn))
+            {
+                writer.WriteStartElement("createdDate");
+                writer.WriteValue(CreatedOn.Value, "O");
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(UserId))
+            {
+                writer.WriteStartElement("userId");
+                writer.WriteValue(UserId);
+                writer.WriteEndElement();
+            }
+            writer.WriteStartElement("id");
+            writer.WriteValue(Id);
+            writer.WriteEndElement();
+            writer.WriteStartElement("name");
+            writer.WriteValue(Name);
+            writer.WriteEndElement();
+            writer.WriteStartElement("type");
+            writer.WriteValue(ResourceType);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(SystemData))
+            {
+                writer.WriteStartElement("systemData");
+                writer.WriteValue(SystemData);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static IssueCommentContractData DeserializeIssueCommentContractData(XElement element)
+        {
+            string text = default;
+            DateTimeOffset? createdOn = default;
+            string userId = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
+            if (element.Element("text") is XElement textElement)
+            {
+                text = (string)textElement;
+            }
+            if (element.Element("createdDate") is XElement createdDateElement)
+            {
+                createdOn = createdDateElement.GetDateTimeOffsetValue("O");
+            }
+            if (element.Element("userId") is XElement userIdElement)
+            {
+                userId = (string)userIdElement;
+            }
+            if (element.Element("id") is XElement idElement)
+            {
+                id = new ResourceIdentifier((string)idElement);
+            }
+            if (element.Element("name") is XElement nameElement)
+            {
+                name = (string)nameElement;
+            }
+            if (element.Element("type") is XElement typeElement)
+            {
+                resourceType = (string)typeElement;
+            }
+            if (element.Element("systemData") is XElement systemDataElement)
+            {
+                systemData = systemDataElement.(null);
+            }
+            return new IssueCommentContractData(id, name, resourceType, systemData, text, createdOn, userId);
         }
     }
 }

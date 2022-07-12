@@ -64,11 +64,11 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
             Optional<bool> managed = default;
             Optional<bool> enableAzureRBAC = default;
-            Optional<IList<string>> adminGroupObjectIds = default;
-            Optional<string> clientAppId = default;
-            Optional<string> serverAppId = default;
+            Optional<IList<string>> adminGroupObjectIDs = default;
+            Optional<string> clientAppID = default;
+            Optional<string> serverAppID = default;
             Optional<string> serverAppSecret = default;
-            Optional<Guid> tenantId = default;
+            Optional<Guid> tenantID = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managed"))
@@ -103,17 +103,17 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         array.Add(item.GetString());
                     }
-                    adminGroupObjectIds = array;
+                    adminGroupObjectIDs = array;
                     continue;
                 }
                 if (property.NameEquals("clientAppID"))
                 {
-                    clientAppId = property.Value.GetString();
+                    clientAppID = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("serverAppID"))
                 {
-                    serverAppId = property.Value.GetString();
+                    serverAppID = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("serverAppSecret"))
@@ -128,11 +128,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    tenantId = property.Value.GetGuid();
+                    tenantID = property.Value.GetGuid();
                     continue;
                 }
             }
-            return new ManagedClusterAADProfile(Optional.ToNullable(managed), Optional.ToNullable(enableAzureRBAC), Optional.ToList(adminGroupObjectIds), clientAppId.Value, serverAppId.Value, serverAppSecret.Value, Optional.ToNullable(tenantId));
+            return new ManagedClusterAADProfile(Optional.ToNullable(managed), Optional.ToNullable(enableAzureRBAC), Optional.ToList(adminGroupObjectIDs), clientAppID.Value, serverAppID.Value, serverAppSecret.Value, Optional.ToNullable(tenantID));
         }
     }
 }

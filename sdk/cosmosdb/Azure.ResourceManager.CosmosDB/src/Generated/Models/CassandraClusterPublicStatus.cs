@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Initializes a new instance of CassandraClusterPublicStatus. </summary>
-        /// <param name="etag"></param>
+        /// <param name="eTag"></param>
         /// <param name="reaperStatus"></param>
         /// <param name="connectionErrors"> List relevant information about any connection errors to the Datacenters. </param>
         /// <param name="dataCenters"> List of the status of each datacenter in this cluster. </param>
-        internal CassandraClusterPublicStatus(ETag? etag, ManagedCassandraReaperStatus reaperStatus, IReadOnlyList<CassandraConnectionError> connectionErrors, IReadOnlyList<CassandraClusterPublicStatusDataCentersItem> dataCenters)
+        internal CassandraClusterPublicStatus(ETag? eTag, ManagedCassandraReaperStatus reaperStatus, IReadOnlyList<CassandraConnectionError> connectionErrors, IReadOnlyList<CassandraClusterPublicStatusDataCentersItem> dataCenters)
         {
-            ETag = etag;
+            ETag = eTag;
             ReaperStatus = reaperStatus;
             ConnectionErrors = connectionErrors;
             DataCenters = dataCenters;

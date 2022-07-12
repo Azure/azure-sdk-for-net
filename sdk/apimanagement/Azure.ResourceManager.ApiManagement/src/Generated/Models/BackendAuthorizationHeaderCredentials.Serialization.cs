@@ -6,11 +6,13 @@
 #nullable disable
 
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class BackendAuthorizationHeaderCredentials : IUtf8JsonSerializable
+    public partial class BackendAuthorizationHeaderCredentials : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -38,6 +40,33 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     parameter = property.Value.GetString();
                     continue;
                 }
+            }
+            return new BackendAuthorizationHeaderCredentials(scheme, parameter);
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "BackendAuthorizationHeaderCredentials");
+            writer.WriteStartElement("scheme");
+            writer.WriteValue(Scheme);
+            writer.WriteEndElement();
+            writer.WriteStartElement("parameter");
+            writer.WriteValue(Parameter);
+            writer.WriteEndElement();
+            writer.WriteEndElement();
+        }
+
+        internal static BackendAuthorizationHeaderCredentials DeserializeBackendAuthorizationHeaderCredentials(XElement element)
+        {
+            string scheme = default;
+            string parameter = default;
+            if (element.Element("scheme") is XElement schemeElement)
+            {
+                scheme = (string)schemeElement;
+            }
+            if (element.Element("parameter") is XElement parameterElement)
+            {
+                parameter = (string)parameterElement;
             }
             return new BackendAuthorizationHeaderCredentials(scheme, parameter);
         }

@@ -7,11 +7,13 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class BackendCredentialsContract : IUtf8JsonSerializable
+    public partial class BackendCredentialsContract : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -167,6 +169,112 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new BackendCredentialsContract(Optional.ToList(certificateIds), Optional.ToList(certificate), Optional.ToDictionary(query), Optional.ToDictionary(header), authorization.Value);
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "BackendCredentialsContract");
+            if (Optional.IsCollectionDefined(Query))
+            {
+                foreach (var pair in Query)
+                {
+                    foreach (var item in pair.Value)
+                    {
+                        writer.WriteStartElement("BackendCredentialsContractQueryItemsItem");
+                        writer.WriteValue(item);
+                        writer.WriteEndElement();
+                    }
+                }
+            }
+            if (Optional.IsCollectionDefined(Header))
+            {
+                foreach (var pair in Header)
+                {
+                    foreach (var item in pair.Value)
+                    {
+                        writer.WriteStartElement("BackendCredentialsContractHeaderItemsItem");
+                        writer.WriteValue(item);
+                        writer.WriteEndElement();
+                    }
+                }
+            }
+            if (Optional.IsDefined(Authorization))
+            {
+                writer.WriteObjectValue(Authorization, "authorization");
+            }
+            if (Optional.IsCollectionDefined(CertificateIds))
+            {
+                foreach (var item in CertificateIds)
+                {
+                    writer.WriteStartElement("BackendCredentialsContractCertificateIdsItem");
+                    writer.WriteValue(item);
+                    writer.WriteEndElement();
+                }
+            }
+            if (Optional.IsCollectionDefined(Certificate))
+            {
+                foreach (var item in Certificate)
+                {
+                    writer.WriteStartElement("BackendCredentialsContractCertificateItem");
+                    writer.WriteValue(item);
+                    writer.WriteEndElement();
+                }
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static BackendCredentialsContract DeserializeBackendCredentialsContract(XElement element)
+        {
+            IDictionary<string, IList<string>> query = default;
+            IDictionary<string, IList<string>> header = default;
+            BackendAuthorizationHeaderCredentials authorization = default;
+            IList<string> certificateIds = default;
+            IList<string> certificate = default;
+            if (element.Element("query") is XElement queryElement)
+            {
+                var dictionary = new Dictionary<string, IList<string>>();
+                foreach (var e in queryElement.Elements())
+                {
+                    var array = new List<string>();
+                    foreach (var e0 in e.Elements("BackendCredentialsContractQueryItemsItem"))
+                    {
+                        array.Add((string)e0);
+                    }
+                    dictionary.Add(e.Name.LocalName, array);
+                }
+                query = dictionary;
+            }
+            if (element.Element("header") is XElement headerElement)
+            {
+                var dictionary = new Dictionary<string, IList<string>>();
+                foreach (var e in headerElement.Elements())
+                {
+                    var array = new List<string>();
+                    foreach (var e0 in e.Elements("BackendCredentialsContractHeaderItemsItem"))
+                    {
+                        array.Add((string)e0);
+                    }
+                    dictionary.Add(e.Name.LocalName, array);
+                }
+                header = dictionary;
+            }
+            if (element.Element("authorization") is XElement authorizationElement)
+            {
+                authorization = BackendAuthorizationHeaderCredentials.DeserializeBackendAuthorizationHeaderCredentials(authorizationElement);
+            }
+            var array0 = new List<string>();
+            foreach (var e in element.Elements("BackendCredentialsContractCertificateIdsItem"))
+            {
+                array0.Add((string)e);
+            }
+            certificateIds = array0;
+            var array1 = new List<string>();
+            foreach (var e in element.Elements("BackendCredentialsContractCertificateItem"))
+            {
+                array1.Add((string)e);
+            }
+            certificate = array1;
+            return new BackendCredentialsContract(certificateIds, certificate, query, header, authorization);
         }
     }
 }

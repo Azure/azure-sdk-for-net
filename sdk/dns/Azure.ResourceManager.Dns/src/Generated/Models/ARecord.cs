@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Dns.Models
         }
 
         /// <summary> Initializes a new instance of ARecord. </summary>
-        /// <param name="ipv4Address"> The IPv4 address of this A record. </param>
-        internal ARecord(string ipv4Address)
+        /// <param name="iPv4Ipv4Address"> The IPv4 address of this A record. </param>
+        internal ARecord(string iPv4Ipv4Address)
         {
-            IPv4Address = ipv4Address;
+            IPv4Ipv4Address = iPv4Ipv4Address;
         }
 
         /// <summary> The IPv4 address of this A record. </summary>
-        public string IPv4Address { get; set; }
+        public string IPv4Ipv4Address { get; set; }
     }
 }

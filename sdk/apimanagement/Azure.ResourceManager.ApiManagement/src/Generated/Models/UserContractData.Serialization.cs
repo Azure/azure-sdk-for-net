@@ -8,13 +8,15 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class UserContractData : IUtf8JsonSerializable
+    public partial class UserContractData : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -190,6 +192,146 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             return new UserContractData(id, name, type, systemData.Value, Optional.ToNullable(state), note.Value, Optional.ToList(identities), firstName.Value, lastName.Value, email.Value, Optional.ToNullable(registrationDate), Optional.ToList(groups));
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "UserContract");
+            if (Optional.IsDefined(State))
+            {
+                writer.WriteStartElement("state");
+                writer.WriteValue(State.Value.ToString());
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Note))
+            {
+                writer.WriteStartElement("note");
+                writer.WriteValue(Note);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(FirstName))
+            {
+                writer.WriteStartElement("firstName");
+                writer.WriteValue(FirstName);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(LastName))
+            {
+                writer.WriteStartElement("lastName");
+                writer.WriteValue(LastName);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Email))
+            {
+                writer.WriteStartElement("email");
+                writer.WriteValue(Email);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(RegistrationOn))
+            {
+                writer.WriteStartElement("registrationDate");
+                writer.WriteValue(RegistrationOn.Value, "O");
+                writer.WriteEndElement();
+            }
+            writer.WriteStartElement("id");
+            writer.WriteValue(Id);
+            writer.WriteEndElement();
+            writer.WriteStartElement("name");
+            writer.WriteValue(Name);
+            writer.WriteEndElement();
+            writer.WriteStartElement("type");
+            writer.WriteValue(ResourceType);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(SystemData))
+            {
+                writer.WriteStartElement("systemData");
+                writer.WriteValue(SystemData);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsCollectionDefined(Identities))
+            {
+                foreach (var item in Identities)
+                {
+                    writer.WriteObjectValue(item, "UserIdentityContract");
+                }
+            }
+            if (Optional.IsCollectionDefined(Groups))
+            {
+                foreach (var item in Groups)
+                {
+                    writer.WriteObjectValue(item, "GroupContractProperties");
+                }
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static UserContractData DeserializeUserContractData(XElement element)
+        {
+            UserState? state = default;
+            string note = default;
+            string firstName = default;
+            string lastName = default;
+            string email = default;
+            DateTimeOffset? registrationOn = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
+            IList<UserIdentityContract> identities = default;
+            IReadOnlyList<GroupContractProperties> groups = default;
+            if (element.Element("state") is XElement stateElement)
+            {
+                state = new UserState(stateElement.Value);
+            }
+            if (element.Element("note") is XElement noteElement)
+            {
+                note = (string)noteElement;
+            }
+            if (element.Element("firstName") is XElement firstNameElement)
+            {
+                firstName = (string)firstNameElement;
+            }
+            if (element.Element("lastName") is XElement lastNameElement)
+            {
+                lastName = (string)lastNameElement;
+            }
+            if (element.Element("email") is XElement emailElement)
+            {
+                email = (string)emailElement;
+            }
+            if (element.Element("registrationDate") is XElement registrationDateElement)
+            {
+                registrationOn = registrationDateElement.GetDateTimeOffsetValue("O");
+            }
+            if (element.Element("id") is XElement idElement)
+            {
+                id = new ResourceIdentifier((string)idElement);
+            }
+            if (element.Element("name") is XElement nameElement)
+            {
+                name = (string)nameElement;
+            }
+            if (element.Element("type") is XElement typeElement)
+            {
+                resourceType = (string)typeElement;
+            }
+            if (element.Element("systemData") is XElement systemDataElement)
+            {
+                systemData = systemDataElement.(null);
+            }
+            var array = new List<UserIdentityContract>();
+            foreach (var e in element.Elements("UserIdentityContract"))
+            {
+                array.Add(UserIdentityContract.DeserializeUserIdentityContract(e));
+            }
+            identities = array;
+            var array0 = new List<GroupContractProperties>();
+            foreach (var e in element.Elements("GroupContractProperties"))
+            {
+                array0.Add(GroupContractProperties.DeserializeGroupContractProperties(e));
+            }
+            groups = array0;
+            return new UserContractData(id, name, resourceType, systemData, state, note, identities, firstName, lastName, email, registrationOn, groups);
         }
     }
 }

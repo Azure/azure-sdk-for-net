@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.HDInsight.Models;
 using Azure.ResourceManager.Models;
@@ -19,10 +18,10 @@ namespace Azure.ResourceManager.HDInsight
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (Optional.IsDefined(ETagEtag))
             {
                 writer.WritePropertyName("etag");
-                writer.WriteStringValue(ETag.Value.ToString());
+                writer.WriteStringValue(ETagEtag);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -45,7 +44,7 @@ namespace Azure.ResourceManager.HDInsight
 
         internal static ApplicationData DeserializeApplicationData(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<string> etag = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<ApplicationProperties> properties = default;
             ResourceIdentifier id = default;
@@ -56,12 +55,7 @@ namespace Azure.ResourceManager.HDInsight
             {
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
+                    etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -115,7 +109,7 @@ namespace Azure.ResourceManager.HDInsight
                     continue;
                 }
             }
-            return new ApplicationData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToDictionary(tags), properties.Value);
+            return new ApplicationData(id, name, type, systemData.Value, etag.Value, Optional.ToDictionary(tags), properties.Value);
         }
     }
 }

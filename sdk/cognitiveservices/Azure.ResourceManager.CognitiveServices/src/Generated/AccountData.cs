@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.CognitiveServices.Models;
 using Azure.ResourceManager.Models;
@@ -33,14 +32,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="sku"> The resource model definition representing SKU. </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <param name="properties"> Properties of Cognitive Services account. </param>
-        /// <param name="etag"> Resource Etag. </param>
-        internal AccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, CognitiveServicesSku sku, ManagedServiceIdentity identity, AccountProperties properties, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="eTagEtag"> Resource Etag. </param>
+        internal AccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, CognitiveServicesSku sku, ManagedServiceIdentity identity, AccountProperties properties, string eTagEtag) : base(id, name, resourceType, systemData, tags, location)
         {
             Kind = kind;
             Sku = sku;
             Identity = identity;
             Properties = properties;
-            ETag = etag;
+            ETagEtag = eTagEtag;
         }
 
         /// <summary> The Kind of the resource. </summary>
@@ -52,6 +51,6 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <summary> Properties of Cognitive Services account. </summary>
         public AccountProperties Properties { get; set; }
         /// <summary> Resource Etag. </summary>
-        public ETag? ETag { get; }
+        public string ETagEtag { get; }
     }
 }

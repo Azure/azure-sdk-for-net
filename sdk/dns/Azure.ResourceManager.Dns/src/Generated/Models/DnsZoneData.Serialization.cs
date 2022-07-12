@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Dns
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (Optional.IsDefined(ETagEtag))
             {
                 writer.WritePropertyName("etag");
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETagEtag);
             }
             if (Optional.IsCollectionDefined(Tags))
             {

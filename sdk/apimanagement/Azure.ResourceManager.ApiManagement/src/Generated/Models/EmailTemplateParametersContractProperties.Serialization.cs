@@ -6,11 +6,13 @@
 #nullable disable
 
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class EmailTemplateParametersContractProperties : IUtf8JsonSerializable
+    public partial class EmailTemplateParametersContractProperties : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -57,6 +59,50 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new EmailTemplateParametersContractProperties(name.Value, title.Value, description.Value);
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "EmailTemplateParametersContractProperties");
+            if (Optional.IsDefined(Name))
+            {
+                writer.WriteStartElement("name");
+                writer.WriteValue(Name);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Title))
+            {
+                writer.WriteStartElement("title");
+                writer.WriteValue(Title);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WriteStartElement("description");
+                writer.WriteValue(Description);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static EmailTemplateParametersContractProperties DeserializeEmailTemplateParametersContractProperties(XElement element)
+        {
+            string name = default;
+            string title = default;
+            string description = default;
+            if (element.Element("name") is XElement nameElement)
+            {
+                name = (string)nameElement;
+            }
+            if (element.Element("title") is XElement titleElement)
+            {
+                title = (string)titleElement;
+            }
+            if (element.Element("description") is XElement descriptionElement)
+            {
+                description = (string)descriptionElement;
+            }
+            return new EmailTemplateParametersContractProperties(name, title, description);
         }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -33,13 +32,13 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="provisioningState"> The current deployment or provisioning state, which only appears in the response. </param>
         /// <param name="appPackageUri"> The URL to the application package. </param>
         /// <param name="defaultParameterList"> List of application type parameters that can be overridden when creating or updating the application. </param>
-        /// <param name="etag"> Azure resource etag. </param>
-        internal ApplicationTypeVersionResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, Uri appPackageUri, IReadOnlyDictionary<string, string> defaultParameterList, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="eTagEtag"> Azure resource etag. </param>
+        internal ApplicationTypeVersionResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, Uri appPackageUri, IReadOnlyDictionary<string, string> defaultParameterList, string eTagEtag) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             AppPackageUri = appPackageUri;
             DefaultParameterList = defaultParameterList;
-            ETag = etag;
+            ETagEtag = eTagEtag;
         }
 
         /// <summary> The current deployment or provisioning state, which only appears in the response. </summary>
@@ -49,6 +48,6 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <summary> List of application type parameters that can be overridden when creating or updating the application. </summary>
         public IReadOnlyDictionary<string, string> DefaultParameterList { get; }
         /// <summary> Azure resource etag. </summary>
-        public ETag? ETag { get; }
+        public string ETagEtag { get; }
     }
 }

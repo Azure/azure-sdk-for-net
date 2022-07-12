@@ -7,11 +7,13 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class BackendServiceFabricClusterProperties : IUtf8JsonSerializable
+    public partial class BackendServiceFabricClusterProperties : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -133,6 +135,93 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new BackendServiceFabricClusterProperties(clientCertificateId.Value, clientCertificatethumbprint.Value, Optional.ToNullable(maxPartitionResolutionRetries), managementEndpoints, Optional.ToList(serverCertificateThumbprints), Optional.ToList(serverX509Names));
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "BackendServiceFabricClusterProperties");
+            if (Optional.IsDefined(ClientCertificateId))
+            {
+                writer.WriteStartElement("clientCertificateId");
+                writer.WriteValue(ClientCertificateId);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ClientCertificatethumbprint))
+            {
+                writer.WriteStartElement("clientCertificatethumbprint");
+                writer.WriteValue(ClientCertificatethumbprint);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(MaxPartitionResolutionRetries))
+            {
+                writer.WriteStartElement("maxPartitionResolutionRetries");
+                writer.WriteValue(MaxPartitionResolutionRetries.Value);
+                writer.WriteEndElement();
+            }
+            foreach (var item in ManagementEndpoints)
+            {
+                writer.WriteStartElement("BackendServiceFabricClusterPropertiesManagementEndpointsItem");
+                writer.WriteValue(item);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsCollectionDefined(ServerCertificateThumbprints))
+            {
+                foreach (var item in ServerCertificateThumbprints)
+                {
+                    writer.WriteStartElement("BackendServiceFabricClusterPropertiesServerCertificateThumbprintsItem");
+                    writer.WriteValue(item);
+                    writer.WriteEndElement();
+                }
+            }
+            if (Optional.IsCollectionDefined(ServerX509Names))
+            {
+                foreach (var item in ServerX509Names)
+                {
+                    writer.WriteObjectValue(item, "X509CertificateName");
+                }
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static BackendServiceFabricClusterProperties DeserializeBackendServiceFabricClusterProperties(XElement element)
+        {
+            string clientCertificateId = default;
+            string clientCertificatethumbprint = default;
+            int? maxPartitionResolutionRetries = default;
+            IList<string> managementEndpoints = default;
+            IList<string> serverCertificateThumbprints = default;
+            IList<X509CertificateName> serverX509Names = default;
+            if (element.Element("clientCertificateId") is XElement clientCertificateIdElement)
+            {
+                clientCertificateId = (string)clientCertificateIdElement;
+            }
+            if (element.Element("clientCertificatethumbprint") is XElement clientCertificatethumbprintElement)
+            {
+                clientCertificatethumbprint = (string)clientCertificatethumbprintElement;
+            }
+            if (element.Element("maxPartitionResolutionRetries") is XElement maxPartitionResolutionRetriesElement)
+            {
+                maxPartitionResolutionRetries = (int?)maxPartitionResolutionRetriesElement;
+            }
+            var array = new List<string>();
+            foreach (var e in element.Elements("BackendServiceFabricClusterPropertiesManagementEndpointsItem"))
+            {
+                array.Add((string)e);
+            }
+            managementEndpoints = array;
+            var array0 = new List<string>();
+            foreach (var e in element.Elements("BackendServiceFabricClusterPropertiesServerCertificateThumbprintsItem"))
+            {
+                array0.Add((string)e);
+            }
+            serverCertificateThumbprints = array0;
+            var array1 = new List<X509CertificateName>();
+            foreach (var e in element.Elements("X509CertificateName"))
+            {
+                array1.Add(X509CertificateName.DeserializeX509CertificateName(e));
+            }
+            serverX509Names = array1;
+            return new BackendServiceFabricClusterProperties(clientCertificateId, clientCertificatethumbprint, maxPartitionResolutionRetries, managementEndpoints, serverCertificateThumbprints, serverX509Names);
         }
     }
 }

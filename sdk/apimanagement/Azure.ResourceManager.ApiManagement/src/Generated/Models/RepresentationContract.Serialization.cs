@@ -7,11 +7,13 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class RepresentationContract : IUtf8JsonSerializable
+    public partial class RepresentationContract : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -108,6 +110,78 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new RepresentationContract(contentType, schemaId.Value, typeName.Value, Optional.ToList(formParameters), Optional.ToDictionary(examples));
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "RepresentationContract");
+            writer.WriteStartElement("contentType");
+            writer.WriteValue(ContentType);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(SchemaId))
+            {
+                writer.WriteStartElement("schemaId");
+                writer.WriteValue(SchemaId);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(TypeName))
+            {
+                writer.WriteStartElement("typeName");
+                writer.WriteValue(TypeName);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsCollectionDefined(Examples))
+            {
+                foreach (var pair in Examples)
+                {
+                    writer.WriteObjectValue(pair.Value, "ParameterExampleContract");
+                }
+            }
+            if (Optional.IsCollectionDefined(FormParameters))
+            {
+                foreach (var item in FormParameters)
+                {
+                    writer.WriteObjectValue(item, "ParameterContract");
+                }
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static RepresentationContract DeserializeRepresentationContract(XElement element)
+        {
+            string contentType = default;
+            string schemaId = default;
+            string typeName = default;
+            IDictionary<string, ParameterExampleContract> examples = default;
+            IList<ParameterContract> formParameters = default;
+            if (element.Element("contentType") is XElement contentTypeElement)
+            {
+                contentType = (string)contentTypeElement;
+            }
+            if (element.Element("schemaId") is XElement schemaIdElement)
+            {
+                schemaId = (string)schemaIdElement;
+            }
+            if (element.Element("typeName") is XElement typeNameElement)
+            {
+                typeName = (string)typeNameElement;
+            }
+            if (element.Element("examples") is XElement examplesElement)
+            {
+                var dictionary = new Dictionary<string, ParameterExampleContract>();
+                foreach (var e in examplesElement.Elements())
+                {
+                    dictionary.Add(e.Name.LocalName, ParameterExampleContract.DeserializeParameterExampleContract(e));
+                }
+                examples = dictionary;
+            }
+            var array = new List<ParameterContract>();
+            foreach (var e in element.Elements("ParameterContract"))
+            {
+                array.Add(ParameterContract.DeserializeParameterContract(e));
+            }
+            formParameters = array;
+            return new RepresentationContract(contentType, schemaId, typeName, formParameters, examples);
         }
     }
 }

@@ -7,13 +7,15 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class IdentityProviderContractData : IUtf8JsonSerializable
+    public partial class IdentityProviderContractData : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -201,6 +203,167 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             return new IdentityProviderContractData(id, name, type, systemData.Value, Optional.ToNullable(type0), signinTenant.Value, Optional.ToList(allowedTenants), authority.Value, signupPolicyName.Value, signinPolicyName.Value, profileEditingPolicyName.Value, passwordResetPolicyName.Value, clientId.Value, clientSecret.Value);
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "IdentityProviderContract");
+            if (Optional.IsDefined(TypePropertiesType))
+            {
+                writer.WriteStartElement("type");
+                writer.WriteValue(TypePropertiesType.Value.ToString());
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(SigninTenant))
+            {
+                writer.WriteStartElement("signinTenant");
+                writer.WriteValue(SigninTenant);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Authority))
+            {
+                writer.WriteStartElement("authority");
+                writer.WriteValue(Authority);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(SignupPolicyName))
+            {
+                writer.WriteStartElement("signupPolicyName");
+                writer.WriteValue(SignupPolicyName);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(SigninPolicyName))
+            {
+                writer.WriteStartElement("signinPolicyName");
+                writer.WriteValue(SigninPolicyName);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ProfileEditingPolicyName))
+            {
+                writer.WriteStartElement("profileEditingPolicyName");
+                writer.WriteValue(ProfileEditingPolicyName);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(PasswordResetPolicyName))
+            {
+                writer.WriteStartElement("passwordResetPolicyName");
+                writer.WriteValue(PasswordResetPolicyName);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ClientId))
+            {
+                writer.WriteStartElement("clientId");
+                writer.WriteValue(ClientId);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ClientSecret))
+            {
+                writer.WriteStartElement("clientSecret");
+                writer.WriteValue(ClientSecret);
+                writer.WriteEndElement();
+            }
+            writer.WriteStartElement("id");
+            writer.WriteValue(Id);
+            writer.WriteEndElement();
+            writer.WriteStartElement("name");
+            writer.WriteValue(Name);
+            writer.WriteEndElement();
+            writer.WriteStartElement("type");
+            writer.WriteValue(ResourceType);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(SystemData))
+            {
+                writer.WriteStartElement("systemData");
+                writer.WriteValue(SystemData);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsCollectionDefined(AllowedTenants))
+            {
+                foreach (var item in AllowedTenants)
+                {
+                    writer.WriteStartElement("IdentityProviderBaseParametersAllowedTenantsItem");
+                    writer.WriteValue(item);
+                    writer.WriteEndElement();
+                }
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static IdentityProviderContractData DeserializeIdentityProviderContractData(XElement element)
+        {
+            IdentityProviderType? typePropertiesType = default;
+            string signinTenant = default;
+            string authority = default;
+            string signupPolicyName = default;
+            string signinPolicyName = default;
+            string profileEditingPolicyName = default;
+            string passwordResetPolicyName = default;
+            string clientId = default;
+            string clientSecret = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
+            IList<string> allowedTenants = default;
+            if (element.Element("type") is XElement typeElement)
+            {
+                typePropertiesType = new IdentityProviderType(typeElement.Value);
+            }
+            if (element.Element("signinTenant") is XElement signinTenantElement)
+            {
+                signinTenant = (string)signinTenantElement;
+            }
+            if (element.Element("authority") is XElement authorityElement)
+            {
+                authority = (string)authorityElement;
+            }
+            if (element.Element("signupPolicyName") is XElement signupPolicyNameElement)
+            {
+                signupPolicyName = (string)signupPolicyNameElement;
+            }
+            if (element.Element("signinPolicyName") is XElement signinPolicyNameElement)
+            {
+                signinPolicyName = (string)signinPolicyNameElement;
+            }
+            if (element.Element("profileEditingPolicyName") is XElement profileEditingPolicyNameElement)
+            {
+                profileEditingPolicyName = (string)profileEditingPolicyNameElement;
+            }
+            if (element.Element("passwordResetPolicyName") is XElement passwordResetPolicyNameElement)
+            {
+                passwordResetPolicyName = (string)passwordResetPolicyNameElement;
+            }
+            if (element.Element("clientId") is XElement clientIdElement)
+            {
+                clientId = (string)clientIdElement;
+            }
+            if (element.Element("clientSecret") is XElement clientSecretElement)
+            {
+                clientSecret = (string)clientSecretElement;
+            }
+            if (element.Element("id") is XElement idElement)
+            {
+                id = new ResourceIdentifier((string)idElement);
+            }
+            if (element.Element("name") is XElement nameElement)
+            {
+                name = (string)nameElement;
+            }
+            if (element.Element("type") is XElement typeElement0)
+            {
+                resourceType = (string)typeElement0;
+            }
+            if (element.Element("systemData") is XElement systemDataElement)
+            {
+                systemData = systemDataElement.(null);
+            }
+            var array = new List<string>();
+            foreach (var e in element.Elements("IdentityProviderBaseParametersAllowedTenantsItem"))
+            {
+                array.Add((string)e);
+            }
+            allowedTenants = array;
+            return new IdentityProviderContractData(id, name, resourceType, systemData, typePropertiesType, signinTenant, allowedTenants, authority, signupPolicyName, signinPolicyName, profileEditingPolicyName, passwordResetPolicyName, clientId, clientSecret);
         }
     }
 }

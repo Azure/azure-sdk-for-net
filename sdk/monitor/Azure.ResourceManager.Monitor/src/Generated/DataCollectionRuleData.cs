@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
@@ -31,7 +30,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="kind"> The kind of the resource. </param>
-        /// <param name="etag"> Resource entity tag (ETag). </param>
+        /// <param name="eTagEtag"> Resource entity tag (ETag). </param>
         /// <param name="description"> Description of the data collection rule. </param>
         /// <param name="immutableId"> The immutable ID of this data collection rule. This property is READ-ONLY. </param>
         /// <param name="dataSources">
@@ -41,10 +40,10 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="destinations"> The specification of destinations. </param>
         /// <param name="dataFlows"> The specification of data flows. </param>
         /// <param name="provisioningState"> The resource provisioning state. </param>
-        internal DataCollectionRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, KnownDataCollectionRuleResourceKind? kind, ETag? etag, string description, string immutableId, DataCollectionRuleDataSources dataSources, DataCollectionRuleDestinations destinations, IList<DataFlow> dataFlows, KnownDataCollectionRuleProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        internal DataCollectionRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, KnownDataCollectionRuleResourceKind? kind, string eTagEtag, string description, string immutableId, DataCollectionRuleDataSources dataSources, DataCollectionRuleDestinations destinations, IList<DataFlow> dataFlows, KnownDataCollectionRuleProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             Kind = kind;
-            ETag = etag;
+            ETagEtag = eTagEtag;
             Description = description;
             ImmutableId = immutableId;
             DataSources = dataSources;
@@ -56,7 +55,7 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> The kind of the resource. </summary>
         public KnownDataCollectionRuleResourceKind? Kind { get; set; }
         /// <summary> Resource entity tag (ETag). </summary>
-        public ETag? ETag { get; }
+        public string ETagEtag { get; }
         /// <summary> Description of the data collection rule. </summary>
         public string Description { get; set; }
         /// <summary> The immutable ID of this data collection rule. This property is READ-ONLY. </summary>

@@ -6,11 +6,13 @@
 #nullable disable
 
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class DataMaskingEntity : IUtf8JsonSerializable
+    public partial class DataMaskingEntity : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -51,6 +53,39 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new DataMaskingEntity(value.Value, Optional.ToNullable(mode));
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "DataMaskingEntity");
+            if (Optional.IsDefined(Value))
+            {
+                writer.WriteStartElement("value");
+                writer.WriteValue(Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Mode))
+            {
+                writer.WriteStartElement("mode");
+                writer.WriteValue(Mode.Value.ToString());
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static DataMaskingEntity DeserializeDataMaskingEntity(XElement element)
+        {
+            string value = default;
+            DataMaskingMode? mode = default;
+            if (element.Element("value") is XElement valueElement)
+            {
+                value = (string)valueElement;
+            }
+            if (element.Element("mode") is XElement modeElement)
+            {
+                mode = new DataMaskingMode(modeElement.Value);
+            }
+            return new DataMaskingEntity(value, mode);
         }
     }
 }

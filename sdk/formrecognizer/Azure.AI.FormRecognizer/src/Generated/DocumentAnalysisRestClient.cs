@@ -1041,6 +1041,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendRawNextLink(nextLink, false);
+            uri.AppendQuery("api-version", "2022-06-30-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1109,6 +1110,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendRawNextLink(nextLink, false);
+            uri.AppendQuery("api-version", "2022-06-30-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

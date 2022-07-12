@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static NetworkConfiguration DeserializeNetworkConfiguration(JsonElement element)
         {
-            Optional<bool> isSecondaryIPEnabled = default;
+            Optional<bool> isSecondaryIpEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isSecondaryIpEnabled"))
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.Workloads.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    isSecondaryIPEnabled = property.Value.GetBoolean();
+                    isSecondaryIpEnabled = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new NetworkConfiguration(Optional.ToNullable(isSecondaryIPEnabled));
+            return new NetworkConfiguration(Optional.ToNullable(isSecondaryIpEnabled));
         }
     }
 }

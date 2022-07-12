@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.Models;
@@ -46,9 +45,9 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="runDimensions"> Dimensions emitted by Pipeline. </param>
         /// <param name="folder"> The folder that this Pipeline is in. If not specified, Pipeline will appear at the root level. </param>
         /// <param name="policy"> Pipeline Policy. </param>
-        /// <param name="eTag"> Etag identifies change in the resource. </param>
+        /// <param name="eTagEtag"> Etag identifies change in the resource. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal DataFactoryPipelineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, IList<DataFactoryPipelineActivity> activities, IDictionary<string, ParameterSpecification> parameters, IDictionary<string, VariableSpecification> variables, int? concurrency, IList<BinaryData> annotations, IDictionary<string, BinaryData> runDimensions, PipelineFolder folder, PipelinePolicy policy, ETag? eTag, IDictionary<string, BinaryData> additionalProperties) : base(id, name, resourceType, systemData)
+        internal DataFactoryPipelineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, IList<DataFactoryPipelineActivity> activities, IDictionary<string, ParameterSpecification> parameters, IDictionary<string, VariableSpecification> variables, int? concurrency, IList<BinaryData> annotations, IDictionary<string, BinaryData> runDimensions, PipelineFolder folder, PipelinePolicy policy, string eTagEtag, IDictionary<string, BinaryData> additionalProperties) : base(id, name, resourceType, systemData)
         {
             Description = description;
             Activities = activities;
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory
             RunDimensions = runDimensions;
             Folder = folder;
             Policy = policy;
-            ETag = eTag;
+            ETagEtag = eTagEtag;
             AdditionalProperties = additionalProperties;
         }
 
@@ -110,7 +109,7 @@ namespace Azure.ResourceManager.DataFactory
         }
 
         /// <summary> Etag identifies change in the resource. </summary>
-        public ETag? ETag { get; }
+        public string ETagEtag { get; }
         /// <summary> Additional Properties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }

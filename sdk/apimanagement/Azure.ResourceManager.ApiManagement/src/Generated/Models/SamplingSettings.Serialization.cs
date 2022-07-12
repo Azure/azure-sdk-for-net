@@ -6,11 +6,13 @@
 #nullable disable
 
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class SamplingSettings : IUtf8JsonSerializable
+    public partial class SamplingSettings : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -56,6 +58,39 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new SamplingSettings(Optional.ToNullable(samplingType), Optional.ToNullable(percentage));
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "SamplingSettings");
+            if (Optional.IsDefined(SamplingType))
+            {
+                writer.WriteStartElement("samplingType");
+                writer.WriteValue(SamplingType.Value.ToString());
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Percentage))
+            {
+                writer.WriteStartElement("percentage");
+                writer.WriteValue(Percentage.Value);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static SamplingSettings DeserializeSamplingSettings(XElement element)
+        {
+            SamplingType? samplingType = default;
+            double? percentage = default;
+            if (element.Element("samplingType") is XElement samplingTypeElement)
+            {
+                samplingType = new SamplingType(samplingTypeElement.Value);
+            }
+            if (element.Element("percentage") is XElement percentageElement)
+            {
+                percentage = (double?)percentageElement;
+            }
+            return new SamplingSettings(samplingType, percentage);
         }
     }
 }

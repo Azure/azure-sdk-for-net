@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.Models;
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory
         internal static DataFactoryGlobalParameterData DeserializeDataFactoryGlobalParameterData(JsonElement element)
         {
             IDictionary<string, GlobalParameterSpecification> properties = default;
-            Optional<ETag> etag = default;
+            Optional<string> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -52,12 +51,7 @@ namespace Azure.ResourceManager.DataFactory
                 }
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
+                    etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -86,7 +80,7 @@ namespace Azure.ResourceManager.DataFactory
                     continue;
                 }
             }
-            return new DataFactoryGlobalParameterData(id, name, type, systemData.Value, properties, Optional.ToNullable(etag));
+            return new DataFactoryGlobalParameterData(id, name, type, systemData.Value, properties, etag.Value);
         }
     }
 }

@@ -6,12 +6,14 @@
 #nullable disable
 
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class AssociationContract : IUtf8JsonSerializable
+    public partial class AssociationContract : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -85,6 +87,63 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new AssociationContract(id, name, type, systemData.Value, Optional.ToNullable(provisioningState));
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "AssociationContract");
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                writer.WriteStartElement("provisioningState");
+                writer.WriteValue(ProvisioningState.Value.ToString());
+                writer.WriteEndElement();
+            }
+            writer.WriteStartElement("id");
+            writer.WriteValue(Id);
+            writer.WriteEndElement();
+            writer.WriteStartElement("name");
+            writer.WriteValue(Name);
+            writer.WriteEndElement();
+            writer.WriteStartElement("type");
+            writer.WriteValue(ResourceType);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(SystemData))
+            {
+                writer.WriteStartElement("systemData");
+                writer.WriteValue(SystemData);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static AssociationContract DeserializeAssociationContract(XElement element)
+        {
+            ProvisioningState? provisioningState = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
+            if (element.Element("provisioningState") is XElement provisioningStateElement)
+            {
+                provisioningState = new ProvisioningState(provisioningStateElement.Value);
+            }
+            if (element.Element("id") is XElement idElement)
+            {
+                id = new ResourceIdentifier((string)idElement);
+            }
+            if (element.Element("name") is XElement nameElement)
+            {
+                name = (string)nameElement;
+            }
+            if (element.Element("type") is XElement typeElement)
+            {
+                resourceType = (string)typeElement;
+            }
+            if (element.Element("systemData") is XElement systemDataElement)
+            {
+                systemData = systemDataElement.(null);
+            }
+            return new AssociationContract(id, name, resourceType, systemData, provisioningState);
         }
     }
 }

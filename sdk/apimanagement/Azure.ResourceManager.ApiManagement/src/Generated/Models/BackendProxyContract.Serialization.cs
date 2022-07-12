@@ -7,11 +7,13 @@
 
 using System;
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class BackendProxyContract : IUtf8JsonSerializable
+    public partial class BackendProxyContract : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -55,6 +57,48 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new BackendProxyContract(url, username.Value, password.Value);
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "BackendProxyContract");
+            writer.WriteStartElement("url");
+            writer.WriteValue(Uri);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(Username))
+            {
+                writer.WriteStartElement("username");
+                writer.WriteValue(Username);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Password))
+            {
+                writer.WriteStartElement("password");
+                writer.WriteValue(Password);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static BackendProxyContract DeserializeBackendProxyContract(XElement element)
+        {
+            Uri uri = default;
+            string username = default;
+            string password = default;
+            if (element.Element("url") is XElement urlElement)
+            {
+                uri = new Uri((string)urlElement)
+                ;
+            }
+            if (element.Element("username") is XElement usernameElement)
+            {
+                username = (string)usernameElement;
+            }
+            if (element.Element("password") is XElement passwordElement)
+            {
+                password = (string)passwordElement;
+            }
+            return new BackendProxyContract(uri, username, password);
         }
     }
 }

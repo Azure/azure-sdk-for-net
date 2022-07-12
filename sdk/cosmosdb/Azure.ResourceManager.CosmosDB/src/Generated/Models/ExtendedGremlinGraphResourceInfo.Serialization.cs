@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -50,7 +49,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             Optional<string> rid = default;
             Optional<float> ts = default;
-            Optional<ETag> etag = default;
+            Optional<string> etag = default;
             string id = default;
             Optional<CosmosDBIndexingPolicy> indexingPolicy = default;
             Optional<ContainerPartitionKey> partitionKey = default;
@@ -76,12 +75,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (property.NameEquals("_etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
+                    etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -140,7 +134,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new ExtendedGremlinGraphResourceInfo(id, indexingPolicy.Value, partitionKey.Value, Optional.ToNullable(defaultTtl), uniqueKeyPolicy.Value, conflictResolutionPolicy.Value, rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
+            return new ExtendedGremlinGraphResourceInfo(id, indexingPolicy.Value, partitionKey.Value, Optional.ToNullable(defaultTtl), uniqueKeyPolicy.Value, conflictResolutionPolicy.Value, rid.Value, Optional.ToNullable(ts), etag.Value);
         }
     }
 }

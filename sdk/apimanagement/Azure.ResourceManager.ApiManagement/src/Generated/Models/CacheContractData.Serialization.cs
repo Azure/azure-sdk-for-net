@@ -6,12 +6,14 @@
 #nullable disable
 
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class CacheContractData : IUtf8JsonSerializable
+    public partial class CacheContractData : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -113,6 +115,96 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             return new CacheContractData(id, name, type, systemData.Value, description.Value, connectionString.Value, useFromLocation.Value, resourceId.Value);
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "CacheContract");
+            if (Optional.IsDefined(Description))
+            {
+                writer.WriteStartElement("description");
+                writer.WriteValue(Description);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ConnectionString))
+            {
+                writer.WriteStartElement("connectionString");
+                writer.WriteValue(ConnectionString);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(UseFromLocation))
+            {
+                writer.WriteStartElement("useFromLocation");
+                writer.WriteValue(UseFromLocation);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ResourceId))
+            {
+                writer.WriteStartElement("resourceId");
+                writer.WriteValue(ResourceId);
+                writer.WriteEndElement();
+            }
+            writer.WriteStartElement("id");
+            writer.WriteValue(Id);
+            writer.WriteEndElement();
+            writer.WriteStartElement("name");
+            writer.WriteValue(Name);
+            writer.WriteEndElement();
+            writer.WriteStartElement("type");
+            writer.WriteValue(ResourceType);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(SystemData))
+            {
+                writer.WriteStartElement("systemData");
+                writer.WriteValue(SystemData);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static CacheContractData DeserializeCacheContractData(XElement element)
+        {
+            string description = default;
+            string connectionString = default;
+            string useFromLocation = default;
+            string resourceId = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
+            if (element.Element("description") is XElement descriptionElement)
+            {
+                description = (string)descriptionElement;
+            }
+            if (element.Element("connectionString") is XElement connectionStringElement)
+            {
+                connectionString = (string)connectionStringElement;
+            }
+            if (element.Element("useFromLocation") is XElement useFromLocationElement)
+            {
+                useFromLocation = (string)useFromLocationElement;
+            }
+            if (element.Element("resourceId") is XElement resourceIdElement)
+            {
+                resourceId = (string)resourceIdElement;
+            }
+            if (element.Element("id") is XElement idElement)
+            {
+                id = new ResourceIdentifier((string)idElement);
+            }
+            if (element.Element("name") is XElement nameElement)
+            {
+                name = (string)nameElement;
+            }
+            if (element.Element("type") is XElement typeElement)
+            {
+                resourceType = (string)typeElement;
+            }
+            if (element.Element("systemData") is XElement systemDataElement)
+            {
+                systemData = systemDataElement.(null);
+            }
+            return new CacheContractData(id, name, resourceType, systemData, description, connectionString, useFromLocation, resourceId);
         }
     }
 }

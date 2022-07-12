@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static DedicatedHostGroupPropertiesAdditionalCapabilities DeserializeDedicatedHostGroupPropertiesAdditionalCapabilities(JsonElement element)
         {
-            Optional<bool> ultraSsdEnabled = default;
+            Optional<bool> ultraSSDEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ultraSSDEnabled"))
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    ultraSsdEnabled = property.Value.GetBoolean();
+                    ultraSSDEnabled = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new DedicatedHostGroupPropertiesAdditionalCapabilities(Optional.ToNullable(ultraSsdEnabled));
+            return new DedicatedHostGroupPropertiesAdditionalCapabilities(Optional.ToNullable(ultraSSDEnabled));
         }
     }
 }

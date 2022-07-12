@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.IotHub.Models;
 using Azure.ResourceManager.Models;
@@ -26,16 +25,16 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The description of an X509 CA Certificate. </param>
-        /// <param name="etag"> The entity tag. </param>
-        internal CertificateDescriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CertificateProperties properties, ETag? etag) : base(id, name, resourceType, systemData)
+        /// <param name="eTagEtag"> The entity tag. </param>
+        internal CertificateDescriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CertificateProperties properties, string eTagEtag) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
-            ETag = etag;
+            ETagEtag = eTagEtag;
         }
 
         /// <summary> The description of an X509 CA Certificate. </summary>
         public CertificateProperties Properties { get; set; }
         /// <summary> The entity tag. </summary>
-        public ETag? ETag { get; }
+        public string ETagEtag { get; }
     }
 }

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.Models;
@@ -43,11 +42,11 @@ namespace Azure.ResourceManager.DataFactory
         /// Please note <see cref="IntegrationRuntime"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ManagedIntegrationRuntime"/> and <see cref="SelfHostedIntegrationRuntime"/>.
         /// </param>
-        /// <param name="eTag"> Etag identifies change in the resource. </param>
-        internal IntegrationRuntimeResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IntegrationRuntime properties, ETag? eTag) : base(id, name, resourceType, systemData)
+        /// <param name="eTagEtag"> Etag identifies change in the resource. </param>
+        internal IntegrationRuntimeResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IntegrationRuntime properties, string eTagEtag) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
-            ETag = eTag;
+            ETagEtag = eTagEtag;
         }
 
         /// <summary>
@@ -57,6 +56,6 @@ namespace Azure.ResourceManager.DataFactory
         /// </summary>
         public IntegrationRuntime Properties { get; set; }
         /// <summary> Etag identifies change in the resource. </summary>
-        public ETag? ETag { get; }
+        public string ETagEtag { get; }
     }
 }

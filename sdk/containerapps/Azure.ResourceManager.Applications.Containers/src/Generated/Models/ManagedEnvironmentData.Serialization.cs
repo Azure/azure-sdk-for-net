@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Applications.Containers
             Optional<VnetConfiguration> vnetConfiguration = default;
             Optional<string> deploymentErrors = default;
             Optional<string> defaultDomain = default;
-            Optional<string> staticIP = default;
+            Optional<string> staticIp = default;
             Optional<AppLogsConfiguration> appLogsConfiguration = default;
             Optional<bool> zoneRedundant = default;
             foreach (var property in element.EnumerateObject())
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Applications.Containers
                         }
                         if (property0.NameEquals("staticIp"))
                         {
-                            staticIP = property0.Value.GetString();
+                            staticIp = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("appLogsConfiguration"))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Applications.Containers
                     continue;
                 }
             }
-            return new ManagedEnvironmentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), daprAIInstrumentationKey.Value, daprAIConnectionString.Value, vnetConfiguration.Value, deploymentErrors.Value, defaultDomain.Value, staticIP.Value, appLogsConfiguration.Value, Optional.ToNullable(zoneRedundant));
+            return new ManagedEnvironmentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), daprAIInstrumentationKey.Value, daprAIConnectionString.Value, vnetConfiguration.Value, deploymentErrors.Value, defaultDomain.Value, staticIp.Value, appLogsConfiguration.Value, Optional.ToNullable(zoneRedundant));
         }
     }
 }

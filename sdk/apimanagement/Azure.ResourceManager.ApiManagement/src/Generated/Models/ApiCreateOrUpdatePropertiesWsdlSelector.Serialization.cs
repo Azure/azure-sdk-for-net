@@ -6,11 +6,13 @@
 #nullable disable
 
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ApiCreateOrUpdatePropertiesWsdlSelector : IUtf8JsonSerializable
+    public partial class ApiCreateOrUpdatePropertiesWsdlSelector : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -46,6 +48,39 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new ApiCreateOrUpdatePropertiesWsdlSelector(wsdlServiceName.Value, wsdlEndpointName.Value);
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "ApiCreateOrUpdatePropertiesWsdlSelector");
+            if (Optional.IsDefined(WsdlServiceName))
+            {
+                writer.WriteStartElement("wsdlServiceName");
+                writer.WriteValue(WsdlServiceName);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(WsdlEndpointName))
+            {
+                writer.WriteStartElement("wsdlEndpointName");
+                writer.WriteValue(WsdlEndpointName);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static ApiCreateOrUpdatePropertiesWsdlSelector DeserializeApiCreateOrUpdatePropertiesWsdlSelector(XElement element)
+        {
+            string wsdlServiceName = default;
+            string wsdlEndpointName = default;
+            if (element.Element("wsdlServiceName") is XElement wsdlServiceNameElement)
+            {
+                wsdlServiceName = (string)wsdlServiceNameElement;
+            }
+            if (element.Element("wsdlEndpointName") is XElement wsdlEndpointNameElement)
+            {
+                wsdlEndpointName = (string)wsdlEndpointNameElement;
+            }
+            return new ApiCreateOrUpdatePropertiesWsdlSelector(wsdlServiceName, wsdlEndpointName);
         }
     }
 }

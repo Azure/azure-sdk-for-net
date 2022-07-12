@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
@@ -41,7 +40,7 @@ namespace Azure.ResourceManager.Monitor
 
         internal static DataCollectionRuleAssociationData DeserializeDataCollectionRuleAssociationData(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<string> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -54,12 +53,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
+                    etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -125,7 +119,7 @@ namespace Azure.ResourceManager.Monitor
                     continue;
                 }
             }
-            return new DataCollectionRuleAssociationData(id, name, type, systemData.Value, Optional.ToNullable(etag), description.Value, dataCollectionRuleId.Value, dataCollectionEndpointId.Value, Optional.ToNullable(provisioningState));
+            return new DataCollectionRuleAssociationData(id, name, type, systemData.Value, etag.Value, description.Value, dataCollectionRuleId.Value, dataCollectionEndpointId.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

@@ -18,16 +18,16 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="sapProduct"> Defines the SAP Product type. </param>
         /// <param name="deploymentType"> The deployment type. Eg: SingleServer/ThreeTier. </param>
         /// <param name="saps"> The SAP Application Performance Standard measurement. </param>
-        /// <param name="dbMemory"> The database memory configuration. </param>
+        /// <param name="dbDbMemory"> The database memory configuration. </param>
         /// <param name="databaseType"> The database type. </param>
-        public SapSizingRecommendationContent(AzureLocation appLocation, SapEnvironmentType environment, SapProductType sapProduct, SapDeploymentType deploymentType, long saps, long dbMemory, SapDatabaseType databaseType)
+        public SapSizingRecommendationContent(AzureLocation appLocation, SapEnvironmentType environment, SapProductType sapProduct, SapDeploymentType deploymentType, long saps, long dbDbMemory, SapDatabaseType databaseType)
         {
             AppLocation = appLocation;
             Environment = environment;
             SapProduct = sapProduct;
             DeploymentType = deploymentType;
             Saps = saps;
-            DBMemory = dbMemory;
+            DBDbMemory = dbDbMemory;
             DatabaseType = databaseType;
         }
 
@@ -42,11 +42,11 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> The SAP Application Performance Standard measurement. </summary>
         public long Saps { get; }
         /// <summary> The database memory configuration. </summary>
-        public long DBMemory { get; }
+        public long DBDbMemory { get; }
         /// <summary> The database type. </summary>
         public SapDatabaseType DatabaseType { get; }
         /// <summary> The DB scale method. </summary>
-        public SapDatabaseScaleMethod? DBScaleMethod { get; set; }
+        public SapDatabaseScaleMethod? DBDbScaleMethod { get; set; }
         /// <summary> The high availability type. </summary>
         public SapHighAvailabilityType? HighAvailabilityType { get; set; }
     }

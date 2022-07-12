@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.Models;
@@ -35,16 +34,16 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Managed private endpoint properties. </param>
-        /// <param name="eTag"> Etag identifies change in the resource. </param>
-        internal ManagedPrivateEndpointResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedPrivateEndpoint properties, ETag? eTag) : base(id, name, resourceType, systemData)
+        /// <param name="eTagEtag"> Etag identifies change in the resource. </param>
+        internal ManagedPrivateEndpointResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedPrivateEndpoint properties, string eTagEtag) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
-            ETag = eTag;
+            ETagEtag = eTagEtag;
         }
 
         /// <summary> Managed private endpoint properties. </summary>
         public ManagedPrivateEndpoint Properties { get; set; }
         /// <summary> Etag identifies change in the resource. </summary>
-        public ETag? ETag { get; }
+        public string ETagEtag { get; }
     }
 }

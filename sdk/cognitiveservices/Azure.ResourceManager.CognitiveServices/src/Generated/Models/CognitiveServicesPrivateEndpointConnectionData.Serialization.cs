@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.CognitiveServices.Models;
 using Azure.ResourceManager.Models;
@@ -35,7 +34,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Optional<PrivateEndpointConnectionProperties> properties = default;
             Optional<AzureLocation> location = default;
-            Optional<ETag> etag = default;
+            Optional<string> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -64,12 +63,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 }
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
+                    etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -98,7 +92,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     continue;
                 }
             }
-            return new CognitiveServicesPrivateEndpointConnectionData(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(location), Optional.ToNullable(etag));
+            return new CognitiveServicesPrivateEndpointConnectionData(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(location), etag.Value);
         }
     }
 }

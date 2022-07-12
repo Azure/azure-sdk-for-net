@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -17,7 +16,7 @@ namespace Azure.ResourceManager.IotHub.Models
         internal static CertificateWithNonceDescription DeserializeCertificateWithNonceDescription(JsonElement element)
         {
             Optional<CertificatePropertiesWithNonce> properties = default;
-            Optional<ETag> etag = default;
+            Optional<string> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -36,12 +35,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
+                    etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -70,7 +64,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     continue;
                 }
             }
-            return new CertificateWithNonceDescription(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(etag));
+            return new CertificateWithNonceDescription(id, name, type, systemData.Value, properties.Value, etag.Value);
         }
     }
 }

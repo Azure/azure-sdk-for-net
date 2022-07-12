@@ -7,13 +7,15 @@
 
 using System;
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class GlobalSchemaContractData : IUtf8JsonSerializable
+    public partial class GlobalSchemaContractData : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -138,6 +140,96 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             return new GlobalSchemaContractData(id, name, type, systemData.Value, Optional.ToNullable(schemaType), description.Value, value.Value, document.Value);
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "GlobalSchemaContract");
+            if (Optional.IsDefined(SchemaType))
+            {
+                writer.WriteStartElement("schemaType");
+                writer.WriteValue(SchemaType.Value.ToString());
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WriteStartElement("description");
+                writer.WriteValue(Description);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Value))
+            {
+                writer.WriteStartElement("value");
+                writer.WriteValue(Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Document))
+            {
+                writer.WriteStartElement("document");
+                writer.WriteValue(Document);
+                writer.WriteEndElement();
+            }
+            writer.WriteStartElement("id");
+            writer.WriteValue(Id);
+            writer.WriteEndElement();
+            writer.WriteStartElement("name");
+            writer.WriteValue(Name);
+            writer.WriteEndElement();
+            writer.WriteStartElement("type");
+            writer.WriteValue(ResourceType);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(SystemData))
+            {
+                writer.WriteStartElement("systemData");
+                writer.WriteValue(SystemData);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static GlobalSchemaContractData DeserializeGlobalSchemaContractData(XElement element)
+        {
+            SchemaType? schemaType = default;
+            string description = default;
+            BinaryData value = default;
+            BinaryData document = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
+            if (element.Element("schemaType") is XElement schemaTypeElement)
+            {
+                schemaType = new SchemaType(schemaTypeElement.Value);
+            }
+            if (element.Element("description") is XElement descriptionElement)
+            {
+                description = (string)descriptionElement;
+            }
+            if (element.Element("value") is XElement valueElement)
+            {
+                value = valueElement.(null);
+            }
+            if (element.Element("document") is XElement documentElement)
+            {
+                document = documentElement.(null);
+            }
+            if (element.Element("id") is XElement idElement)
+            {
+                id = new ResourceIdentifier((string)idElement);
+            }
+            if (element.Element("name") is XElement nameElement)
+            {
+                name = (string)nameElement;
+            }
+            if (element.Element("type") is XElement typeElement)
+            {
+                resourceType = (string)typeElement;
+            }
+            if (element.Element("systemData") is XElement systemDataElement)
+            {
+                systemData = systemDataElement.(null);
+            }
+            return new GlobalSchemaContractData(id, name, resourceType, systemData, schemaType, description, value, document);
         }
     }
 }

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -30,13 +29,13 @@ namespace Azure.ResourceManager.Batch
         /// <param name="groupId"> The group id is used to establish the private link connection. </param>
         /// <param name="requiredMembers"> The list of required members that are used to establish the private link connection. </param>
         /// <param name="requiredZoneNames"> The list of required zone names for the private DNS resource name. </param>
-        /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
-        internal BatchPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers, IReadOnlyList<string> requiredZoneNames, ETag? etag) : base(id, name, resourceType, systemData)
+        /// <param name="eTagEtag"> The ETag of the resource, used for concurrency statements. </param>
+        internal BatchPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers, IReadOnlyList<string> requiredZoneNames, string eTagEtag) : base(id, name, resourceType, systemData)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;
             RequiredZoneNames = requiredZoneNames;
-            ETag = etag;
+            ETagEtag = eTagEtag;
         }
 
         /// <summary> The group id is used to establish the private link connection. </summary>
@@ -46,6 +45,6 @@ namespace Azure.ResourceManager.Batch
         /// <summary> The list of required zone names for the private DNS resource name. </summary>
         public IReadOnlyList<string> RequiredZoneNames { get; }
         /// <summary> The ETag of the resource, used for concurrency statements. </summary>
-        public ETag? ETag { get; }
+        public string ETagEtag { get; }
     }
 }

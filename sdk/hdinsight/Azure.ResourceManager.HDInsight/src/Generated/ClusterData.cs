@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.HDInsight.Models;
 using Azure.ResourceManager.Models;
@@ -30,15 +29,15 @@ namespace Azure.ResourceManager.HDInsight
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> The ETag for the resource. </param>
+        /// <param name="eTagEtag"> The ETag for the resource. </param>
         /// <param name="zones"> The availability zones. </param>
         /// <param name="properties"> The properties of the cluster. </param>
         /// <param name="identity"> The identity of the cluster, if configured. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal ClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IReadOnlyList<string> zones, ClusterGetProperties properties, ClusterIdentity identity, IReadOnlyDictionary<string, string> tags, AzureLocation location) : base(id, name, resourceType, systemData)
+        internal ClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string eTagEtag, IReadOnlyList<string> zones, ClusterGetProperties properties, ClusterIdentity identity, IReadOnlyDictionary<string, string> tags, AzureLocation location) : base(id, name, resourceType, systemData)
         {
-            ETag = etag;
+            ETagEtag = eTagEtag;
             Zones = zones;
             Properties = properties;
             Identity = identity;
@@ -47,7 +46,7 @@ namespace Azure.ResourceManager.HDInsight
         }
 
         /// <summary> The ETag for the resource. </summary>
-        public ETag? ETag { get; }
+        public string ETagEtag { get; }
         /// <summary> The availability zones. </summary>
         public IReadOnlyList<string> Zones { get; }
         /// <summary> The properties of the cluster. </summary>

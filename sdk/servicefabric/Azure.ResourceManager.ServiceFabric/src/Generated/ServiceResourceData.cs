@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ServiceFabric.Models;
@@ -47,8 +46,8 @@ namespace Azure.ResourceManager.ServiceFabric
         /// </param>
         /// <param name="servicePackageActivationMode"> The activation Mode of the service package. </param>
         /// <param name="serviceDnsName"> Dns name used for the service. If this is specified, then the service can be accessed via its DNS name instead of service name. </param>
-        /// <param name="etag"> Azure resource etag. </param>
-        internal ServiceResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string placementConstraints, IList<ServiceCorrelationDescription> correlationScheme, IList<ServiceLoadMetricDescription> serviceLoadMetrics, IList<ServicePlacementPolicyDescription> servicePlacementPolicies, MoveCost? defaultMoveCost, string provisioningState, ServiceKind? serviceKind, string serviceTypeName, PartitionSchemeDescription partitionDescription, ArmServicePackageActivationMode? servicePackageActivationMode, string serviceDnsName, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="eTagEtag"> Azure resource etag. </param>
+        internal ServiceResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string placementConstraints, IList<ServiceCorrelationDescription> correlationScheme, IList<ServiceLoadMetricDescription> serviceLoadMetrics, IList<ServicePlacementPolicyDescription> servicePlacementPolicies, MoveCost? defaultMoveCost, string provisioningState, ServiceKind? serviceKind, string serviceTypeName, PartitionSchemeDescription partitionDescription, ArmServicePackageActivationMode? servicePackageActivationMode, string serviceDnsName, string eTagEtag) : base(id, name, resourceType, systemData, tags, location)
         {
             PlacementConstraints = placementConstraints;
             CorrelationScheme = correlationScheme;
@@ -61,7 +60,7 @@ namespace Azure.ResourceManager.ServiceFabric
             PartitionDescription = partitionDescription;
             ServicePackageActivationMode = servicePackageActivationMode;
             ServiceDnsName = serviceDnsName;
-            ETag = etag;
+            ETagEtag = eTagEtag;
         }
 
         /// <summary> The placement constraints as a string. Placement constraints are boolean expressions on node properties and allow for restricting a service to particular nodes based on the service requirements. For example, to place a service on nodes where NodeType is blue specify the following: &quot;NodeColor == blue)&quot;. </summary>
@@ -91,6 +90,6 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <summary> Dns name used for the service. If this is specified, then the service can be accessed via its DNS name instead of service name. </summary>
         public string ServiceDnsName { get; set; }
         /// <summary> Azure resource etag. </summary>
-        public ETag? ETag { get; }
+        public string ETagEtag { get; }
     }
 }

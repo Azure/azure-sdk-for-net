@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Monitor.Models
         internal static HttpRequestInfo DeserializeHttpRequestInfo(JsonElement element)
         {
             Optional<string> clientRequestId = default;
-            Optional<string> clientIPAddress = default;
+            Optional<string> clientIpAddress = default;
             Optional<string> method = default;
             Optional<Uri> uri = default;
             foreach (var property in element.EnumerateObject())
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("clientIpAddress"))
                 {
-                    clientIPAddress = property.Value.GetString();
+                    clientIpAddress = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("method"))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new HttpRequestInfo(clientRequestId.Value, clientIPAddress.Value, method.Value, uri.Value);
+            return new HttpRequestInfo(clientRequestId.Value, clientIpAddress.Value, method.Value, uri.Value);
         }
     }
 }

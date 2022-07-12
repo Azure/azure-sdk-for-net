@@ -7,13 +7,15 @@
 
 using System;
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class BackendContractData : IUtf8JsonSerializable
+    public partial class BackendContractData : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -200,6 +202,144 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             return new BackendContractData(id, name, type, systemData.Value, title.Value, description.Value, resourceId.Value, properties.Value, credentials.Value, proxy.Value, tls.Value, url.Value, Optional.ToNullable(protocol));
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "BackendContract");
+            if (Optional.IsDefined(Title))
+            {
+                writer.WriteStartElement("title");
+                writer.WriteValue(Title);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WriteStartElement("description");
+                writer.WriteValue(Description);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ResourceId))
+            {
+                writer.WriteStartElement("resourceId");
+                writer.WriteValue(ResourceId);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WriteObjectValue(Properties, "properties");
+            }
+            if (Optional.IsDefined(Credentials))
+            {
+                writer.WriteObjectValue(Credentials, "credentials");
+            }
+            if (Optional.IsDefined(Proxy))
+            {
+                writer.WriteObjectValue(Proxy, "proxy");
+            }
+            if (Optional.IsDefined(Tls))
+            {
+                writer.WriteObjectValue(Tls, "tls");
+            }
+            if (Optional.IsDefined(Uri))
+            {
+                writer.WriteStartElement("url");
+                writer.WriteValue(Uri);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Protocol))
+            {
+                writer.WriteStartElement("protocol");
+                writer.WriteValue(Protocol.Value.ToString());
+                writer.WriteEndElement();
+            }
+            writer.WriteStartElement("id");
+            writer.WriteValue(Id);
+            writer.WriteEndElement();
+            writer.WriteStartElement("name");
+            writer.WriteValue(Name);
+            writer.WriteEndElement();
+            writer.WriteStartElement("type");
+            writer.WriteValue(ResourceType);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(SystemData))
+            {
+                writer.WriteStartElement("systemData");
+                writer.WriteValue(SystemData);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static BackendContractData DeserializeBackendContractData(XElement element)
+        {
+            string title = default;
+            string description = default;
+            string resourceId = default;
+            BackendProperties properties = default;
+            BackendCredentialsContract credentials = default;
+            BackendProxyContract proxy = default;
+            BackendTlsProperties tls = default;
+            Uri uri = default;
+            BackendProtocol? protocol = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
+            if (element.Element("title") is XElement titleElement)
+            {
+                title = (string)titleElement;
+            }
+            if (element.Element("description") is XElement descriptionElement)
+            {
+                description = (string)descriptionElement;
+            }
+            if (element.Element("resourceId") is XElement resourceIdElement)
+            {
+                resourceId = (string)resourceIdElement;
+            }
+            if (element.Element("properties") is XElement propertiesElement)
+            {
+                properties = BackendProperties.DeserializeBackendProperties(propertiesElement);
+            }
+            if (element.Element("credentials") is XElement credentialsElement)
+            {
+                credentials = BackendCredentialsContract.DeserializeBackendCredentialsContract(credentialsElement);
+            }
+            if (element.Element("proxy") is XElement proxyElement)
+            {
+                proxy = BackendProxyContract.DeserializeBackendProxyContract(proxyElement);
+            }
+            if (element.Element("tls") is XElement tlsElement)
+            {
+                tls = BackendTlsProperties.DeserializeBackendTlsProperties(tlsElement);
+            }
+            if (element.Element("url") is XElement urlElement)
+            {
+                uri = new Uri((string)urlElement)
+                ;
+            }
+            if (element.Element("protocol") is XElement protocolElement)
+            {
+                protocol = new BackendProtocol(protocolElement.Value);
+            }
+            if (element.Element("id") is XElement idElement)
+            {
+                id = new ResourceIdentifier((string)idElement);
+            }
+            if (element.Element("name") is XElement nameElement)
+            {
+                name = (string)nameElement;
+            }
+            if (element.Element("type") is XElement typeElement)
+            {
+                resourceType = (string)typeElement;
+            }
+            if (element.Element("systemData") is XElement systemDataElement)
+            {
+                systemData = systemDataElement.(null);
+            }
+            return new BackendContractData(id, name, resourceType, systemData, title, description, resourceId, properties, credentials, proxy, tls, uri, protocol);
         }
     }
 }

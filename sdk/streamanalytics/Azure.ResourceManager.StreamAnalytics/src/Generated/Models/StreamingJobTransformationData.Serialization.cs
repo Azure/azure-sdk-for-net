@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics
@@ -56,7 +55,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             Optional<int> streamingUnits = default;
             Optional<IList<int>> validStreamingUnits = default;
             Optional<string> query = default;
-            Optional<ETag> etag = default;
+            Optional<string> etag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -115,19 +114,14 @@ namespace Azure.ResourceManager.StreamAnalytics
                         }
                         if (property0.NameEquals("etag"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            etag = new ETag(property0.Value.GetString());
+                            etag = property0.Value.GetString();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new StreamingJobTransformationData(id.Value, name.Value, type.Value, Optional.ToNullable(streamingUnits), Optional.ToList(validStreamingUnits), query.Value, Optional.ToNullable(etag));
+            return new StreamingJobTransformationData(id.Value, name.Value, type.Value, Optional.ToNullable(streamingUnits), Optional.ToList(validStreamingUnits), query.Value, etag.Value);
         }
     }
 }

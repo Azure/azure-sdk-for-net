@@ -6,11 +6,13 @@
 #nullable disable
 
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class X509CertificateName : IUtf8JsonSerializable
+    public partial class X509CertificateName : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -46,6 +48,39 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new X509CertificateName(name.Value, issuerCertificateThumbprint.Value);
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "X509CertificateName");
+            if (Optional.IsDefined(Name))
+            {
+                writer.WriteStartElement("name");
+                writer.WriteValue(Name);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(IssuerCertificateThumbprint))
+            {
+                writer.WriteStartElement("issuerCertificateThumbprint");
+                writer.WriteValue(IssuerCertificateThumbprint);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static X509CertificateName DeserializeX509CertificateName(XElement element)
+        {
+            string name = default;
+            string issuerCertificateThumbprint = default;
+            if (element.Element("name") is XElement nameElement)
+            {
+                name = (string)nameElement;
+            }
+            if (element.Element("issuerCertificateThumbprint") is XElement issuerCertificateThumbprintElement)
+            {
+                issuerCertificateThumbprint = (string)issuerCertificateThumbprintElement;
+            }
+            return new X509CertificateName(name, issuerCertificateThumbprint);
         }
     }
 }

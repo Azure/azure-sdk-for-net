@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DnsResolver.Models;
 using Azure.ResourceManager.Models;
@@ -46,7 +45,7 @@ namespace Azure.ResourceManager.DnsResolver
 
         internal static DnsResolverData DeserializeDnsResolverData(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<string> etag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -61,12 +60,7 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
+                    etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -162,7 +156,7 @@ namespace Azure.ResourceManager.DnsResolver
                     continue;
                 }
             }
-            return new DnsResolverData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), virtualNetwork, Optional.ToNullable(dnsResolverState), Optional.ToNullable(provisioningState), resourceGuid.Value);
+            return new DnsResolverData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, etag.Value, virtualNetwork, Optional.ToNullable(dnsResolverState), Optional.ToNullable(provisioningState), resourceGuid.Value);
         }
     }
 }

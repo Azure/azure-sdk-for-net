@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         internal static MultiSubnetIPConfiguration DeserializeMultiSubnetIPConfiguration(JsonElement element)
         {
-            PrivateIPAddress privateIPAddress = default;
+            PrivateIPAddress privateIpAddress = default;
             string sqlVirtualMachineInstance = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("privateIpAddress"))
                 {
-                    privateIPAddress = PrivateIPAddress.DeserializePrivateIPAddress(property.Value);
+                    privateIpAddress = PrivateIPAddress.DeserializePrivateIPAddress(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sqlVirtualMachineInstance"))
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     continue;
                 }
             }
-            return new MultiSubnetIPConfiguration(privateIPAddress, sqlVirtualMachineInstance);
+            return new MultiSubnetIPConfiguration(privateIpAddress, sqlVirtualMachineInstance);
         }
     }
 }

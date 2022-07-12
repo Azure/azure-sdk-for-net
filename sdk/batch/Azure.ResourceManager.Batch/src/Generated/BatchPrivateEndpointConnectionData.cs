@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Batch.Models;
 using Azure.ResourceManager.Models;
@@ -32,14 +31,14 @@ namespace Azure.ResourceManager.Batch
         /// <param name="privateEndpoint"> The private endpoint of the private endpoint connection. </param>
         /// <param name="groupIds"> The value has one and only one group id. </param>
         /// <param name="connectionState"> The private link service connection state of the private endpoint connection. </param>
-        /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
-        internal BatchPrivateEndpointConnectionData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, BatchPrivateEndpointConnectionProvisioningState? provisioningState, SubResource privateEndpoint, IReadOnlyList<string> groupIds, BatchPrivateLinkServiceConnectionState connectionState, ETag? etag) : base(id, name, resourceType, systemData)
+        /// <param name="eTagEtag"> The ETag of the resource, used for concurrency statements. </param>
+        internal BatchPrivateEndpointConnectionData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, BatchPrivateEndpointConnectionProvisioningState? provisioningState, SubResource privateEndpoint, IReadOnlyList<string> groupIds, BatchPrivateLinkServiceConnectionState connectionState, string eTagEtag) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             PrivateEndpoint = privateEndpoint;
             GroupIds = groupIds;
             ConnectionState = connectionState;
-            ETag = etag;
+            ETagEtag = eTagEtag;
         }
 
         /// <summary> The provisioning state of the private endpoint connection. </summary>
@@ -57,6 +56,6 @@ namespace Azure.ResourceManager.Batch
         /// <summary> The private link service connection state of the private endpoint connection. </summary>
         public BatchPrivateLinkServiceConnectionState ConnectionState { get; set; }
         /// <summary> The ETag of the resource, used for concurrency statements. </summary>
-        public ETag? ETag { get; }
+        public string ETagEtag { get; }
     }
 }

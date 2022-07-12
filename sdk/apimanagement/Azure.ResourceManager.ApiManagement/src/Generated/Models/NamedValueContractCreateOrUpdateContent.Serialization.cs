@@ -7,12 +7,14 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class NamedValueContractCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class NamedValueContractCreateOrUpdateContent : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -150,6 +152,110 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new NamedValueContractCreateOrUpdateContent(id, name, type, systemData.Value, Optional.ToList(tags), Optional.ToNullable(secret), displayName.Value, value.Value, keyVault.Value);
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "NamedValueContractCreateOrUpdateContent");
+            if (Optional.IsDefined(Secret))
+            {
+                writer.WriteStartElement("secret");
+                writer.WriteValue(Secret.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WriteStartElement("displayName");
+                writer.WriteValue(DisplayName);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Value))
+            {
+                writer.WriteStartElement("value");
+                writer.WriteValue(Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(KeyVault))
+            {
+                writer.WriteObjectValue(KeyVault, "keyVault");
+            }
+            writer.WriteStartElement("id");
+            writer.WriteValue(Id);
+            writer.WriteEndElement();
+            writer.WriteStartElement("name");
+            writer.WriteValue(Name);
+            writer.WriteEndElement();
+            writer.WriteStartElement("type");
+            writer.WriteValue(ResourceType);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(SystemData))
+            {
+                writer.WriteStartElement("systemData");
+                writer.WriteValue(SystemData);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                foreach (var item in Tags)
+                {
+                    writer.WriteStartElement("NamedValueEntityBaseParametersTagsItem");
+                    writer.WriteValue(item);
+                    writer.WriteEndElement();
+                }
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static NamedValueContractCreateOrUpdateContent DeserializeNamedValueContractCreateOrUpdateContent(XElement element)
+        {
+            bool? secret = default;
+            string displayName = default;
+            string value = default;
+            KeyVaultContractCreateProperties keyVault = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
+            IList<string> tags = default;
+            if (element.Element("secret") is XElement secretElement)
+            {
+                secret = (bool?)secretElement;
+            }
+            if (element.Element("displayName") is XElement displayNameElement)
+            {
+                displayName = (string)displayNameElement;
+            }
+            if (element.Element("value") is XElement valueElement)
+            {
+                value = (string)valueElement;
+            }
+            if (element.Element("keyVault") is XElement keyVaultElement)
+            {
+                keyVault = KeyVaultContractCreateProperties.DeserializeKeyVaultContractCreateProperties(keyVaultElement);
+            }
+            if (element.Element("id") is XElement idElement)
+            {
+                id = new ResourceIdentifier((string)idElement);
+            }
+            if (element.Element("name") is XElement nameElement)
+            {
+                name = (string)nameElement;
+            }
+            if (element.Element("type") is XElement typeElement)
+            {
+                resourceType = (string)typeElement;
+            }
+            if (element.Element("systemData") is XElement systemDataElement)
+            {
+                systemData = systemDataElement.(null);
+            }
+            var array = new List<string>();
+            foreach (var e in element.Elements("NamedValueEntityBaseParametersTagsItem"))
+            {
+                array.Add((string)e);
+            }
+            tags = array;
+            return new NamedValueContractCreateOrUpdateContent(id, name, resourceType, systemData, tags, secret, displayName, value, keyVault);
         }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.Models;
@@ -36,16 +35,16 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Properties of the global parameter. </param>
-        /// <param name="eTag"> Etag identifies change in the resource. </param>
-        internal DataFactoryGlobalParameterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, GlobalParameterSpecification> properties, ETag? eTag) : base(id, name, resourceType, systemData)
+        /// <param name="eTagEtag"> Etag identifies change in the resource. </param>
+        internal DataFactoryGlobalParameterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, GlobalParameterSpecification> properties, string eTagEtag) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
-            ETag = eTag;
+            ETagEtag = eTagEtag;
         }
 
         /// <summary> Properties of the global parameter. </summary>
         public IDictionary<string, GlobalParameterSpecification> Properties { get; }
         /// <summary> Etag identifies change in the resource. </summary>
-        public ETag? ETag { get; }
+        public string ETagEtag { get; }
     }
 }

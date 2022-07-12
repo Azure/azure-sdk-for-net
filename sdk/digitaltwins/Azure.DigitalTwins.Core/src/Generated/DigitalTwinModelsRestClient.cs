@@ -533,6 +533,7 @@ namespace Azure.DigitalTwins.Core
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             if (digitalTwinModelsListOptions?.MaxItemsPerPage != null)
             {

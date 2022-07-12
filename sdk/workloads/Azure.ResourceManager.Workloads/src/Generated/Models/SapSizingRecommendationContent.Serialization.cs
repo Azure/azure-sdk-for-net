@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WritePropertyName("saps");
             writer.WriteNumberValue(Saps);
             writer.WritePropertyName("dbMemory");
-            writer.WriteNumberValue(DBMemory);
+            writer.WriteNumberValue(DBDbMemory);
             writer.WritePropertyName("databaseType");
             writer.WriteStringValue(DatabaseType.ToString());
-            if (Optional.IsDefined(DBScaleMethod))
+            if (Optional.IsDefined(DBDbScaleMethod))
             {
                 writer.WritePropertyName("dbScaleMethod");
-                writer.WriteStringValue(DBScaleMethod.Value.ToString());
+                writer.WriteStringValue(DBDbScaleMethod.Value.ToString());
             }
             if (Optional.IsDefined(HighAvailabilityType))
             {

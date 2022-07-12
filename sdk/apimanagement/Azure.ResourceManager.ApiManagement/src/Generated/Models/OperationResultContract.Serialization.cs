@@ -8,12 +8,14 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class OperationResultContract : IUtf8JsonSerializable
+    public partial class OperationResultContract : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -173,6 +175,130 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new OperationResultContract(id, name, type, systemData.Value, id0.Value, Optional.ToNullable(status), Optional.ToNullable(started), Optional.ToNullable(updated), resultInfo.Value, error.Value, Optional.ToList(actionLog));
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "OperationResultContract");
+            if (Optional.IsDefined(IdPropertiesId))
+            {
+                writer.WriteStartElement("id");
+                writer.WriteValue(IdPropertiesId);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WriteStartElement("status");
+                writer.WriteValue(Status.Value.ToSerialString());
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Started))
+            {
+                writer.WriteStartElement("started");
+                writer.WriteValue(Started.Value, "O");
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Updated))
+            {
+                writer.WriteStartElement("updated");
+                writer.WriteValue(Updated.Value, "O");
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ResultInfo))
+            {
+                writer.WriteStartElement("resultInfo");
+                writer.WriteValue(ResultInfo);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Error))
+            {
+                writer.WriteObjectValue(Error, "error");
+            }
+            writer.WriteStartElement("id");
+            writer.WriteValue(Id);
+            writer.WriteEndElement();
+            writer.WriteStartElement("name");
+            writer.WriteValue(Name);
+            writer.WriteEndElement();
+            writer.WriteStartElement("type");
+            writer.WriteValue(ResourceType);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(SystemData))
+            {
+                writer.WriteStartElement("systemData");
+                writer.WriteValue(SystemData);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsCollectionDefined(ActionLog))
+            {
+                foreach (var item in ActionLog)
+                {
+                    writer.WriteObjectValue(item, "OperationResultLogItemContract");
+                }
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static OperationResultContract DeserializeOperationResultContract(XElement element)
+        {
+            string idPropertiesId = default;
+            AsyncOperationStatus? status = default;
+            DateTimeOffset? started = default;
+            DateTimeOffset? updated = default;
+            string resultInfo = default;
+            ErrorResponseBody error = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
+            IReadOnlyList<OperationResultLogItemContract> actionLog = default;
+            if (element.Element("id") is XElement idElement)
+            {
+                idPropertiesId = (string)idElement;
+            }
+            if (element.Element("status") is XElement statusElement)
+            {
+                status = statusElement.Value.ToAsyncOperationStatus();
+            }
+            if (element.Element("started") is XElement startedElement)
+            {
+                started = startedElement.GetDateTimeOffsetValue("O");
+            }
+            if (element.Element("updated") is XElement updatedElement)
+            {
+                updated = updatedElement.GetDateTimeOffsetValue("O");
+            }
+            if (element.Element("resultInfo") is XElement resultInfoElement)
+            {
+                resultInfo = (string)resultInfoElement;
+            }
+            if (element.Element("error") is XElement errorElement)
+            {
+                error = ErrorResponseBody.DeserializeErrorResponseBody(errorElement);
+            }
+            if (element.Element("id") is XElement idElement0)
+            {
+                id = new ResourceIdentifier((string)idElement0);
+            }
+            if (element.Element("name") is XElement nameElement)
+            {
+                name = (string)nameElement;
+            }
+            if (element.Element("type") is XElement typeElement)
+            {
+                resourceType = (string)typeElement;
+            }
+            if (element.Element("systemData") is XElement systemDataElement)
+            {
+                systemData = systemDataElement.(null);
+            }
+            var array = new List<OperationResultLogItemContract>();
+            foreach (var e in element.Elements("OperationResultLogItemContract"))
+            {
+                array.Add(OperationResultLogItemContract.DeserializeOperationResultLogItemContract(e));
+            }
+            actionLog = array;
+            return new OperationResultContract(id, name, resourceType, systemData, idPropertiesId, status, started, updated, resultInfo, error, actionLog);
         }
     }
 }

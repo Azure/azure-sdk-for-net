@@ -6,11 +6,13 @@
 #nullable disable
 
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ErrorFieldContract : IUtf8JsonSerializable
+    public partial class ErrorFieldContract : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -57,6 +59,50 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new ErrorFieldContract(code.Value, message.Value, target.Value);
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "ErrorFieldContract");
+            if (Optional.IsDefined(Code))
+            {
+                writer.WriteStartElement("code");
+                writer.WriteValue(Code);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Message))
+            {
+                writer.WriteStartElement("message");
+                writer.WriteValue(Message);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Target))
+            {
+                writer.WriteStartElement("target");
+                writer.WriteValue(Target);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static ErrorFieldContract DeserializeErrorFieldContract(XElement element)
+        {
+            string code = default;
+            string message = default;
+            string target = default;
+            if (element.Element("code") is XElement codeElement)
+            {
+                code = (string)codeElement;
+            }
+            if (element.Element("message") is XElement messageElement)
+            {
+                message = (string)messageElement;
+            }
+            if (element.Element("target") is XElement targetElement)
+            {
+                target = (string)targetElement;
+            }
+            return new ErrorFieldContract(code, message, target);
         }
     }
 }

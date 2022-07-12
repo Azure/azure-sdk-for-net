@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WritePropertyName("deploymentType");
             writer.WriteStringValue(DeploymentType.ToString());
             writer.WritePropertyName("dbVmSku");
-            writer.WriteStringValue(DBVmSku);
+            writer.WriteStringValue(DBDbVmSku);
             writer.WriteEndObject();
         }
     }

@@ -30,15 +30,15 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 writer.WritePropertyName("virtualNetworkId");
                 writer.WriteStringValue(VirtualNetworkId);
             }
-            if (Optional.IsDefined(IPv4AddressType))
+            if (Optional.IsDefined(IPv4Ipv4AddressType))
             {
                 writer.WritePropertyName("ipv4AddressType");
-                writer.WriteStringValue(IPv4AddressType.Value.ToString());
+                writer.WriteStringValue(IPv4Ipv4AddressType.Value.ToString());
             }
-            if (Optional.IsDefined(IPv6AddressType))
+            if (Optional.IsDefined(IPv6Ipv6AddressType))
             {
                 writer.WritePropertyName("ipv6AddressType");
-                writer.WriteStringValue(IPv6AddressType.Value.ToString());
+                writer.WriteStringValue(IPv6Ipv6AddressType.Value.ToString());
             }
             if (Optional.IsDefined(MacAddressType))
             {

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkFunction.Models;
@@ -31,20 +30,20 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="eTagEtag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="collectorPolicies"> Collector Policies for Azure Traffic Collector. </param>
         /// <param name="virtualHub"> The virtualHub to which the Azure Traffic Collector belongs. </param>
         /// <param name="provisioningState"> The provisioning state of the application rule collection resource. </param>
-        internal AzureTrafficCollectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IList<CollectorPolicyData> collectorPolicies, SubResource virtualHub, CollectorProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        internal AzureTrafficCollectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string eTagEtag, IList<CollectorPolicyData> collectorPolicies, SubResource virtualHub, CollectorProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
-            ETag = etag;
+            ETagEtag = eTagEtag;
             CollectorPolicies = collectorPolicies;
             VirtualHub = virtualHub;
             ProvisioningState = provisioningState;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? ETag { get; }
+        public string ETagEtag { get; }
         /// <summary> Collector Policies for Azure Traffic Collector. </summary>
         public IList<CollectorPolicyData> CollectorPolicies { get; }
         /// <summary> The virtualHub to which the Azure Traffic Collector belongs. </summary>

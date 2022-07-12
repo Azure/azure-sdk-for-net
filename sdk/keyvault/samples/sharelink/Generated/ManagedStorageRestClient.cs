@@ -1654,6 +1654,7 @@ namespace Azure.Security.KeyVault.Storage
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendRawNextLink(nextLink, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1723,6 +1724,7 @@ namespace Azure.Security.KeyVault.Storage
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendRawNextLink(nextLink, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1792,6 +1794,7 @@ namespace Azure.Security.KeyVault.Storage
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendRawNextLink(nextLink, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1871,6 +1874,7 @@ namespace Azure.Security.KeyVault.Storage
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendRawNextLink(nextLink, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

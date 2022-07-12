@@ -14,22 +14,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static ComputeInstanceConnectivityEndpoints DeserializeComputeInstanceConnectivityEndpoints(JsonElement element)
         {
-            Optional<string> publicIPAddress = default;
-            Optional<string> privateIPAddress = default;
+            Optional<string> publicIpAddress = default;
+            Optional<string> privateIpAddress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publicIpAddress"))
                 {
-                    publicIPAddress = property.Value.GetString();
+                    publicIpAddress = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("privateIpAddress"))
                 {
-                    privateIPAddress = property.Value.GetString();
+                    privateIpAddress = property.Value.GetString();
                     continue;
                 }
             }
-            return new ComputeInstanceConnectivityEndpoints(publicIPAddress.Value, privateIPAddress.Value);
+            return new ComputeInstanceConnectivityEndpoints(publicIpAddress.Value, privateIpAddress.Value);
         }
     }
 }

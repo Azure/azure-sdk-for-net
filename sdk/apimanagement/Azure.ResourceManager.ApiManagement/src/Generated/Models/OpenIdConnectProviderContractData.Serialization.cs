@@ -6,12 +6,14 @@
 #nullable disable
 
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class OpenIdConnectProviderContractData : IUtf8JsonSerializable
+    public partial class OpenIdConnectProviderContractData : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -124,6 +126,107 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             return new OpenIdConnectProviderContractData(id, name, type, systemData.Value, displayName.Value, description.Value, metadataEndpoint.Value, clientId.Value, clientSecret.Value);
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "OpenIdConnectProviderContract");
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WriteStartElement("displayName");
+                writer.WriteValue(DisplayName);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WriteStartElement("description");
+                writer.WriteValue(Description);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(MetadataEndpoint))
+            {
+                writer.WriteStartElement("metadataEndpoint");
+                writer.WriteValue(MetadataEndpoint);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ClientId))
+            {
+                writer.WriteStartElement("clientId");
+                writer.WriteValue(ClientId);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ClientSecret))
+            {
+                writer.WriteStartElement("clientSecret");
+                writer.WriteValue(ClientSecret);
+                writer.WriteEndElement();
+            }
+            writer.WriteStartElement("id");
+            writer.WriteValue(Id);
+            writer.WriteEndElement();
+            writer.WriteStartElement("name");
+            writer.WriteValue(Name);
+            writer.WriteEndElement();
+            writer.WriteStartElement("type");
+            writer.WriteValue(ResourceType);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(SystemData))
+            {
+                writer.WriteStartElement("systemData");
+                writer.WriteValue(SystemData);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static OpenIdConnectProviderContractData DeserializeOpenIdConnectProviderContractData(XElement element)
+        {
+            string displayName = default;
+            string description = default;
+            string metadataEndpoint = default;
+            string clientId = default;
+            string clientSecret = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
+            if (element.Element("displayName") is XElement displayNameElement)
+            {
+                displayName = (string)displayNameElement;
+            }
+            if (element.Element("description") is XElement descriptionElement)
+            {
+                description = (string)descriptionElement;
+            }
+            if (element.Element("metadataEndpoint") is XElement metadataEndpointElement)
+            {
+                metadataEndpoint = (string)metadataEndpointElement;
+            }
+            if (element.Element("clientId") is XElement clientIdElement)
+            {
+                clientId = (string)clientIdElement;
+            }
+            if (element.Element("clientSecret") is XElement clientSecretElement)
+            {
+                clientSecret = (string)clientSecretElement;
+            }
+            if (element.Element("id") is XElement idElement)
+            {
+                id = new ResourceIdentifier((string)idElement);
+            }
+            if (element.Element("name") is XElement nameElement)
+            {
+                name = (string)nameElement;
+            }
+            if (element.Element("type") is XElement typeElement)
+            {
+                resourceType = (string)typeElement;
+            }
+            if (element.Element("systemData") is XElement systemDataElement)
+            {
+                systemData = systemDataElement.(null);
+            }
+            return new OpenIdConnectProviderContractData(id, name, resourceType, systemData, displayName, description, metadataEndpoint, clientId, clientSecret);
         }
     }
 }

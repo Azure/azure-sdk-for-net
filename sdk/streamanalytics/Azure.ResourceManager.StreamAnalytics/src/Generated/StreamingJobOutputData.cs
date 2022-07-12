@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.StreamAnalytics.Models;
 
@@ -38,17 +37,17 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// The available derived classes include <see cref="AvroSerialization"/>, <see cref="CsvSerialization"/>, <see cref="CustomClrSerialization"/>, <see cref="JsonSerialization"/> and <see cref="ParquetSerialization"/>.
         /// </param>
         /// <param name="diagnostics"> Describes conditions applicable to the Input, Output, or the job overall, that warrant customer attention. </param>
-        /// <param name="etag"> The current entity tag for the output. This is an opaque string. You can use it to detect whether the resource has changed between requests. You can also use it in the If-Match or If-None-Match headers for write operations for optimistic concurrency. </param>
+        /// <param name="eTagEtag"> The current entity tag for the output. This is an opaque string. You can use it to detect whether the resource has changed between requests. You can also use it in the If-Match or If-None-Match headers for write operations for optimistic concurrency. </param>
         /// <param name="lastOutputEventTimestamps"> A list of the last output event times for each output partition. The index of the array corresponds to the partition number. </param>
         /// <param name="watermarkSettings"> Settings which determine whether to send watermarks to downstream. </param>
-        internal StreamingJobOutputData(string id, string name, string resourceType, OutputDataSource datasource, string timeWindow, float? sizeWindow, Serialization serialization, Diagnostics diagnostics, ETag? etag, IReadOnlyList<LastOutputEventTimestamp> lastOutputEventTimestamps, OutputWatermarkProperties watermarkSettings) : base(id, name, resourceType)
+        internal StreamingJobOutputData(string id, string name, string resourceType, OutputDataSource datasource, string timeWindow, float? sizeWindow, Serialization serialization, Diagnostics diagnostics, string eTagEtag, IReadOnlyList<LastOutputEventTimestamp> lastOutputEventTimestamps, OutputWatermarkProperties watermarkSettings) : base(id, name, resourceType)
         {
             Datasource = datasource;
             TimeWindow = timeWindow;
             SizeWindow = sizeWindow;
             Serialization = serialization;
             Diagnostics = diagnostics;
-            ETag = etag;
+            ETagEtag = eTagEtag;
             LastOutputEventTimestamps = lastOutputEventTimestamps;
             WatermarkSettings = watermarkSettings;
         }
@@ -78,7 +77,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         }
 
         /// <summary> The current entity tag for the output. This is an opaque string. You can use it to detect whether the resource has changed between requests. You can also use it in the If-Match or If-None-Match headers for write operations for optimistic concurrency. </summary>
-        public ETag? ETag { get; }
+        public string ETagEtag { get; }
         /// <summary> A list of the last output event times for each output partition. The index of the array corresponds to the partition number. </summary>
         public IReadOnlyList<LastOutputEventTimestamp> LastOutputEventTimestamps { get; }
         /// <summary> Settings which determine whether to send watermarks to downstream. </summary>

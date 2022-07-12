@@ -7,11 +7,13 @@
 
 using System;
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ApiContactInformation : IUtf8JsonSerializable
+    public partial class ApiContactInformation : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -63,6 +65,51 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new ApiContactInformation(name.Value, url.Value, email.Value);
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "ApiContactInformation");
+            if (Optional.IsDefined(Name))
+            {
+                writer.WriteStartElement("name");
+                writer.WriteValue(Name);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Uri))
+            {
+                writer.WriteStartElement("url");
+                writer.WriteValue(Uri);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Email))
+            {
+                writer.WriteStartElement("email");
+                writer.WriteValue(Email);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static ApiContactInformation DeserializeApiContactInformation(XElement element)
+        {
+            string name = default;
+            Uri uri = default;
+            string email = default;
+            if (element.Element("name") is XElement nameElement)
+            {
+                name = (string)nameElement;
+            }
+            if (element.Element("url") is XElement urlElement)
+            {
+                uri = new Uri((string)urlElement)
+                ;
+            }
+            if (element.Element("email") is XElement emailElement)
+            {
+                email = (string)emailElement;
+            }
+            return new ApiContactInformation(name, uri, email);
         }
     }
 }

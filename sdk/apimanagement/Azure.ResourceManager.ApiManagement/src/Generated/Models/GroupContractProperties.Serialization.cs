@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -58,6 +59,36 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new GroupContractProperties(displayName, description.Value, Optional.ToNullable(builtIn), Optional.ToNullable(type), externalId.Value);
+        }
+
+        internal static GroupContractProperties DeserializeGroupContractProperties(XElement element)
+        {
+            string displayName = default;
+            string description = default;
+            bool? builtIn = default;
+            GroupType? groupType = default;
+            string externalId = default;
+            if (element.Element("displayName") is XElement displayNameElement)
+            {
+                displayName = (string)displayNameElement;
+            }
+            if (element.Element("description") is XElement descriptionElement)
+            {
+                description = (string)descriptionElement;
+            }
+            if (element.Element("builtIn") is XElement builtInElement)
+            {
+                builtIn = (bool?)builtInElement;
+            }
+            if (element.Element("type") is XElement typeElement)
+            {
+                groupType = typeElement.Value.ToGroupType();
+            }
+            if (element.Element("externalId") is XElement externalIdElement)
+            {
+                externalId = (string)externalIdElement;
+            }
+            return new GroupContractProperties(displayName, description, builtIn, groupType, externalId);
         }
     }
 }

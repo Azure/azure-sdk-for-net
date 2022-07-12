@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static ApiManagementSkuCosts DeserializeApiManagementSkuCosts(JsonElement element)
         {
-            Optional<string> meterId = default;
+            Optional<string> meterID = default;
             Optional<long> quantity = default;
             Optional<string> extendedUnit = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("meterID"))
                 {
-                    meterId = property.Value.GetString();
+                    meterID = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("quantity"))
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new ApiManagementSkuCosts(meterId.Value, Optional.ToNullable(quantity), extendedUnit.Value);
+            return new ApiManagementSkuCosts(meterID.Value, Optional.ToNullable(quantity), extendedUnit.Value);
         }
     }
 }

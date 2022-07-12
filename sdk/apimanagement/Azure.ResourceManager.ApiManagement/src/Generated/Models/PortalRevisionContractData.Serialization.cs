@@ -7,13 +7,15 @@
 
 using System;
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class PortalRevisionContractData : IUtf8JsonSerializable
+    public partial class PortalRevisionContractData : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -137,6 +139,118 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             return new PortalRevisionContractData(id, name, type, systemData.Value, description.Value, statusDetails.Value, Optional.ToNullable(status), Optional.ToNullable(isCurrent), Optional.ToNullable(createdDateTime), Optional.ToNullable(updatedDateTime));
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "PortalRevisionContract");
+            if (Optional.IsDefined(Description))
+            {
+                writer.WriteStartElement("description");
+                writer.WriteValue(Description);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(StatusDetails))
+            {
+                writer.WriteStartElement("statusDetails");
+                writer.WriteValue(StatusDetails);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WriteStartElement("status");
+                writer.WriteValue(Status.Value.ToString());
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(IsCurrent))
+            {
+                writer.WriteStartElement("isCurrent");
+                writer.WriteValue(IsCurrent.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(CreatedOn))
+            {
+                writer.WriteStartElement("createdDateTime");
+                writer.WriteValue(CreatedOn.Value, "O");
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(UpdatedOn))
+            {
+                writer.WriteStartElement("updatedDateTime");
+                writer.WriteValue(UpdatedOn.Value, "O");
+                writer.WriteEndElement();
+            }
+            writer.WriteStartElement("id");
+            writer.WriteValue(Id);
+            writer.WriteEndElement();
+            writer.WriteStartElement("name");
+            writer.WriteValue(Name);
+            writer.WriteEndElement();
+            writer.WriteStartElement("type");
+            writer.WriteValue(ResourceType);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(SystemData))
+            {
+                writer.WriteStartElement("systemData");
+                writer.WriteValue(SystemData);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static PortalRevisionContractData DeserializePortalRevisionContractData(XElement element)
+        {
+            string description = default;
+            string statusDetails = default;
+            PortalRevisionStatus? status = default;
+            bool? isCurrent = default;
+            DateTimeOffset? createdOn = default;
+            DateTimeOffset? updatedOn = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
+            if (element.Element("description") is XElement descriptionElement)
+            {
+                description = (string)descriptionElement;
+            }
+            if (element.Element("statusDetails") is XElement statusDetailsElement)
+            {
+                statusDetails = (string)statusDetailsElement;
+            }
+            if (element.Element("status") is XElement statusElement)
+            {
+                status = new PortalRevisionStatus(statusElement.Value);
+            }
+            if (element.Element("isCurrent") is XElement isCurrentElement)
+            {
+                isCurrent = (bool?)isCurrentElement;
+            }
+            if (element.Element("createdDateTime") is XElement createdDateTimeElement)
+            {
+                createdOn = createdDateTimeElement.GetDateTimeOffsetValue("O");
+            }
+            if (element.Element("updatedDateTime") is XElement updatedDateTimeElement)
+            {
+                updatedOn = updatedDateTimeElement.GetDateTimeOffsetValue("O");
+            }
+            if (element.Element("id") is XElement idElement)
+            {
+                id = new ResourceIdentifier((string)idElement);
+            }
+            if (element.Element("name") is XElement nameElement)
+            {
+                name = (string)nameElement;
+            }
+            if (element.Element("type") is XElement typeElement)
+            {
+                resourceType = (string)typeElement;
+            }
+            if (element.Element("systemData") is XElement systemDataElement)
+            {
+                systemData = systemDataElement.(null);
+            }
+            return new PortalRevisionContractData(id, name, resourceType, systemData, description, statusDetails, status, isCurrent, createdOn, updatedOn);
         }
     }
 }

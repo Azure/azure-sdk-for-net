@@ -6,11 +6,13 @@
 #nullable disable
 
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    internal partial class BodyDiagnosticSettings : IUtf8JsonSerializable
+    internal partial class BodyDiagnosticSettings : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -40,6 +42,28 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new BodyDiagnosticSettings(Optional.ToNullable(bytes));
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "BodyDiagnosticSettings");
+            if (Optional.IsDefined(Bytes))
+            {
+                writer.WriteStartElement("bytes");
+                writer.WriteValue(Bytes.Value);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static BodyDiagnosticSettings DeserializeBodyDiagnosticSettings(XElement element)
+        {
+            int? bytes = default;
+            if (element.Element("bytes") is XElement bytesElement)
+            {
+                bytes = (int?)bytesElement;
+            }
+            return new BodyDiagnosticSettings(bytes);
         }
     }
 }

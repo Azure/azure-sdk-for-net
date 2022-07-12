@@ -409,6 +409,7 @@ namespace Azure.Security.KeyVault.Administration
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(vaultBaseUrl, false);
             uri.AppendRawNextLink(nextLink, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

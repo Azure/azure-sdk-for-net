@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -19,7 +18,7 @@ namespace Azure.ResourceManager.IotHub
         internal static EventHubConsumerGroupInfoData DeserializeEventHubConsumerGroupInfoData(JsonElement element)
         {
             Optional<IReadOnlyDictionary<string, BinaryData>> properties = default;
-            Optional<ETag> etag = default;
+            Optional<string> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -43,12 +42,7 @@ namespace Azure.ResourceManager.IotHub
                 }
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
+                    etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -77,7 +71,7 @@ namespace Azure.ResourceManager.IotHub
                     continue;
                 }
             }
-            return new EventHubConsumerGroupInfoData(id, name, type, systemData.Value, Optional.ToDictionary(properties), Optional.ToNullable(etag));
+            return new EventHubConsumerGroupInfoData(id, name, type, systemData.Value, Optional.ToDictionary(properties), etag.Value);
         }
     }
 }

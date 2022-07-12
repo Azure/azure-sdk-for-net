@@ -63,10 +63,10 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> deploymentErrors = default;
             Optional<bool> internalLoadBalancerEnabled = default;
             Optional<string> defaultDomain = default;
-            Optional<string> staticIP = default;
+            Optional<string> staticIp = default;
             Optional<ArcConfiguration> arcConfiguration = default;
             Optional<AppLogsConfiguration> appLogsConfiguration = default;
-            Optional<string> aksResourceId = default;
+            Optional<string> aksResourceID = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.AppService.Models
                         }
                         if (property0.NameEquals("staticIp"))
                         {
-                            staticIP = property0.Value.GetString();
+                            staticIp = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("arcConfiguration"))
@@ -165,14 +165,14 @@ namespace Azure.ResourceManager.AppService.Models
                         }
                         if (property0.NameEquals("aksResourceID"))
                         {
-                            aksResourceId = property0.Value.GetString();
+                            aksResourceID = property0.Value.GetString();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new KubeEnvironmentPatch(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), deploymentErrors.Value, Optional.ToNullable(internalLoadBalancerEnabled), defaultDomain.Value, staticIP.Value, arcConfiguration.Value, appLogsConfiguration.Value, aksResourceId.Value, kind.Value);
+            return new KubeEnvironmentPatch(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), deploymentErrors.Value, Optional.ToNullable(internalLoadBalancerEnabled), defaultDomain.Value, staticIp.Value, arcConfiguration.Value, appLogsConfiguration.Value, aksResourceID.Value, kind.Value);
         }
     }
 }

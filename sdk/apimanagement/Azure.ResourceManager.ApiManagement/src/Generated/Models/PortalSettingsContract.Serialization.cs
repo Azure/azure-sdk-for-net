@@ -7,12 +7,14 @@
 
 using System;
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class PortalSettingsContract : IUtf8JsonSerializable
+    public partial class PortalSettingsContract : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -161,6 +163,113 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new PortalSettingsContract(id, name, type, systemData.Value, url.Value, validationKey.Value, subscriptions.Value, userRegistration.Value, Optional.ToNullable(enabled), termsOfService.Value);
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "PortalSettingsContract");
+            if (Optional.IsDefined(Uri))
+            {
+                writer.WriteStartElement("url");
+                writer.WriteValue(Uri);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ValidationKey))
+            {
+                writer.WriteStartElement("validationKey");
+                writer.WriteValue(ValidationKey);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Subscriptions))
+            {
+                writer.WriteObjectValue(Subscriptions, "subscriptions");
+            }
+            if (Optional.IsDefined(UserRegistration))
+            {
+                writer.WriteObjectValue(UserRegistration, "userRegistration");
+            }
+            if (Optional.IsDefined(Enabled))
+            {
+                writer.WriteStartElement("enabled");
+                writer.WriteValue(Enabled.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(TermsOfService))
+            {
+                writer.WriteObjectValue(TermsOfService, "termsOfService");
+            }
+            writer.WriteStartElement("id");
+            writer.WriteValue(Id);
+            writer.WriteEndElement();
+            writer.WriteStartElement("name");
+            writer.WriteValue(Name);
+            writer.WriteEndElement();
+            writer.WriteStartElement("type");
+            writer.WriteValue(ResourceType);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(SystemData))
+            {
+                writer.WriteStartElement("systemData");
+                writer.WriteValue(SystemData);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static PortalSettingsContract DeserializePortalSettingsContract(XElement element)
+        {
+            Uri uri = default;
+            string validationKey = default;
+            SubscriptionsDelegationSettingsProperties subscriptions = default;
+            RegistrationDelegationSettingsProperties userRegistration = default;
+            bool? enabled = default;
+            TermsOfServiceProperties termsOfService = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
+            if (element.Element("url") is XElement urlElement)
+            {
+                uri = new Uri((string)urlElement)
+                ;
+            }
+            if (element.Element("validationKey") is XElement validationKeyElement)
+            {
+                validationKey = (string)validationKeyElement;
+            }
+            if (element.Element("subscriptions") is XElement subscriptionsElement)
+            {
+                subscriptions = SubscriptionsDelegationSettingsProperties.DeserializeSubscriptionsDelegationSettingsProperties(subscriptionsElement);
+            }
+            if (element.Element("userRegistration") is XElement userRegistrationElement)
+            {
+                userRegistration = RegistrationDelegationSettingsProperties.DeserializeRegistrationDelegationSettingsProperties(userRegistrationElement);
+            }
+            if (element.Element("enabled") is XElement enabledElement)
+            {
+                enabled = (bool?)enabledElement;
+            }
+            if (element.Element("termsOfService") is XElement termsOfServiceElement)
+            {
+                termsOfService = TermsOfServiceProperties.DeserializeTermsOfServiceProperties(termsOfServiceElement);
+            }
+            if (element.Element("id") is XElement idElement)
+            {
+                id = new ResourceIdentifier((string)idElement);
+            }
+            if (element.Element("name") is XElement nameElement)
+            {
+                name = (string)nameElement;
+            }
+            if (element.Element("type") is XElement typeElement)
+            {
+                resourceType = (string)typeElement;
+            }
+            if (element.Element("systemData") is XElement systemDataElement)
+            {
+                systemData = systemDataElement.(null);
+            }
+            return new PortalSettingsContract(id, name, resourceType, systemData, uri, validationKey, subscriptions, userRegistration, enabled, termsOfService);
         }
     }
 }

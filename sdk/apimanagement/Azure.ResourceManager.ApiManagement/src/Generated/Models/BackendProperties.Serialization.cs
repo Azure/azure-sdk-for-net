@@ -6,11 +6,13 @@
 #nullable disable
 
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    internal partial class BackendProperties : IUtf8JsonSerializable
+    internal partial class BackendProperties : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -40,6 +42,26 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new BackendProperties(serviceFabricCluster.Value);
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "BackendProperties");
+            if (Optional.IsDefined(ServiceFabricCluster))
+            {
+                writer.WriteObjectValue(ServiceFabricCluster, "serviceFabricCluster");
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static BackendProperties DeserializeBackendProperties(XElement element)
+        {
+            BackendServiceFabricClusterProperties serviceFabricCluster = default;
+            if (element.Element("serviceFabricCluster") is XElement serviceFabricClusterElement)
+            {
+                serviceFabricCluster = BackendServiceFabricClusterProperties.DeserializeBackendServiceFabricClusterProperties(serviceFabricClusterElement);
+            }
+            return new BackendProperties(serviceFabricCluster);
         }
     }
 }

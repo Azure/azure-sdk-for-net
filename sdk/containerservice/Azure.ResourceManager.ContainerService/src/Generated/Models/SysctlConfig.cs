@@ -23,17 +23,17 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="netCoreWmemDefault"> Sysctl setting net.core.wmem_default. </param>
         /// <param name="netCoreWmemMax"> Sysctl setting net.core.wmem_max. </param>
         /// <param name="netCoreOptmemMax"> Sysctl setting net.core.optmem_max. </param>
-        /// <param name="netIPv4TcpMaxSynBacklog"> Sysctl setting net.ipv4.tcp_max_syn_backlog. </param>
-        /// <param name="netIPv4TcpMaxTwBuckets"> Sysctl setting net.ipv4.tcp_max_tw_buckets. </param>
-        /// <param name="netIPv4TcpFinTimeout"> Sysctl setting net.ipv4.tcp_fin_timeout. </param>
-        /// <param name="netIPv4TcpKeepaliveTime"> Sysctl setting net.ipv4.tcp_keepalive_time. </param>
-        /// <param name="netIPv4TcpKeepaliveProbes"> Sysctl setting net.ipv4.tcp_keepalive_probes. </param>
-        /// <param name="netIPv4TcpkeepaliveIntvl"> Sysctl setting net.ipv4.tcp_keepalive_intvl. </param>
-        /// <param name="netIPv4TcpTwReuse"> Sysctl setting net.ipv4.tcp_tw_reuse. </param>
-        /// <param name="netIPv4IPLocalPortRange"> Sysctl setting net.ipv4.ip_local_port_range. </param>
-        /// <param name="netIPv4NeighDefaultGcThresh1"> Sysctl setting net.ipv4.neigh.default.gc_thresh1. </param>
-        /// <param name="netIPv4NeighDefaultGcThresh2"> Sysctl setting net.ipv4.neigh.default.gc_thresh2. </param>
-        /// <param name="netIPv4NeighDefaultGcThresh3"> Sysctl setting net.ipv4.neigh.default.gc_thresh3. </param>
+        /// <param name="netIPv4Ipv4TcpMaxSynBacklog"> Sysctl setting net.ipv4.tcp_max_syn_backlog. </param>
+        /// <param name="netIPv4Ipv4TcpMaxTwBuckets"> Sysctl setting net.ipv4.tcp_max_tw_buckets. </param>
+        /// <param name="netIPv4Ipv4TcpFinTimeout"> Sysctl setting net.ipv4.tcp_fin_timeout. </param>
+        /// <param name="netIPv4Ipv4TcpKeepaliveTime"> Sysctl setting net.ipv4.tcp_keepalive_time. </param>
+        /// <param name="netIPv4Ipv4TcpKeepaliveProbes"> Sysctl setting net.ipv4.tcp_keepalive_probes. </param>
+        /// <param name="netIPv4Ipv4TcpkeepaliveIntvl"> Sysctl setting net.ipv4.tcp_keepalive_intvl. </param>
+        /// <param name="netIPv4Ipv4TcpTwReuse"> Sysctl setting net.ipv4.tcp_tw_reuse. </param>
+        /// <param name="netIPv4Ipv4IPLocalPortRange"> Sysctl setting net.ipv4.ip_local_port_range. </param>
+        /// <param name="netIPv4Ipv4NeighDefaultGcThresh1"> Sysctl setting net.ipv4.neigh.default.gc_thresh1. </param>
+        /// <param name="netIPv4Ipv4NeighDefaultGcThresh2"> Sysctl setting net.ipv4.neigh.default.gc_thresh2. </param>
+        /// <param name="netIPv4Ipv4NeighDefaultGcThresh3"> Sysctl setting net.ipv4.neigh.default.gc_thresh3. </param>
         /// <param name="netNetfilterNfConntrackMax"> Sysctl setting net.netfilter.nf_conntrack_max. </param>
         /// <param name="netNetfilterNfConntrackBuckets"> Sysctl setting net.netfilter.nf_conntrack_buckets. </param>
         /// <param name="fsInotifyMaxUserWatches"> Sysctl setting fs.inotify.max_user_watches. </param>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="vmMaxMapCount"> Sysctl setting vm.max_map_count. </param>
         /// <param name="vmSwappiness"> Sysctl setting vm.swappiness. </param>
         /// <param name="vmVfsCachePressure"> Sysctl setting vm.vfs_cache_pressure. </param>
-        internal SysctlConfig(int? netCoreSomaxconn, int? netCoreNetdevMaxBacklog, int? netCoreRmemDefault, int? netCoreRmemMax, int? netCoreWmemDefault, int? netCoreWmemMax, int? netCoreOptmemMax, int? netIPv4TcpMaxSynBacklog, int? netIPv4TcpMaxTwBuckets, int? netIPv4TcpFinTimeout, int? netIPv4TcpKeepaliveTime, int? netIPv4TcpKeepaliveProbes, int? netIPv4TcpkeepaliveIntvl, bool? netIPv4TcpTwReuse, string netIPv4IPLocalPortRange, int? netIPv4NeighDefaultGcThresh1, int? netIPv4NeighDefaultGcThresh2, int? netIPv4NeighDefaultGcThresh3, int? netNetfilterNfConntrackMax, int? netNetfilterNfConntrackBuckets, int? fsInotifyMaxUserWatches, int? fsFileMax, int? fsAioMaxNr, int? fsNrOpen, int? kernelThreadsMax, int? vmMaxMapCount, int? vmSwappiness, int? vmVfsCachePressure)
+        internal SysctlConfig(int? netCoreSomaxconn, int? netCoreNetdevMaxBacklog, int? netCoreRmemDefault, int? netCoreRmemMax, int? netCoreWmemDefault, int? netCoreWmemMax, int? netCoreOptmemMax, int? netIPv4Ipv4TcpMaxSynBacklog, int? netIPv4Ipv4TcpMaxTwBuckets, int? netIPv4Ipv4TcpFinTimeout, int? netIPv4Ipv4TcpKeepaliveTime, int? netIPv4Ipv4TcpKeepaliveProbes, int? netIPv4Ipv4TcpkeepaliveIntvl, bool? netIPv4Ipv4TcpTwReuse, string netIPv4Ipv4IPLocalPortRange, int? netIPv4Ipv4NeighDefaultGcThresh1, int? netIPv4Ipv4NeighDefaultGcThresh2, int? netIPv4Ipv4NeighDefaultGcThresh3, int? netNetfilterNfConntrackMax, int? netNetfilterNfConntrackBuckets, int? fsInotifyMaxUserWatches, int? fsFileMax, int? fsAioMaxNr, int? fsNrOpen, int? kernelThreadsMax, int? vmMaxMapCount, int? vmSwappiness, int? vmVfsCachePressure)
         {
             NetCoreSomaxconn = netCoreSomaxconn;
             NetCoreNetdevMaxBacklog = netCoreNetdevMaxBacklog;
@@ -53,17 +53,17 @@ namespace Azure.ResourceManager.ContainerService.Models
             NetCoreWmemDefault = netCoreWmemDefault;
             NetCoreWmemMax = netCoreWmemMax;
             NetCoreOptmemMax = netCoreOptmemMax;
-            NetIPv4TcpMaxSynBacklog = netIPv4TcpMaxSynBacklog;
-            NetIPv4TcpMaxTwBuckets = netIPv4TcpMaxTwBuckets;
-            NetIPv4TcpFinTimeout = netIPv4TcpFinTimeout;
-            NetIPv4TcpKeepaliveTime = netIPv4TcpKeepaliveTime;
-            NetIPv4TcpKeepaliveProbes = netIPv4TcpKeepaliveProbes;
-            NetIPv4TcpkeepaliveIntvl = netIPv4TcpkeepaliveIntvl;
-            NetIPv4TcpTwReuse = netIPv4TcpTwReuse;
-            NetIPv4IPLocalPortRange = netIPv4IPLocalPortRange;
-            NetIPv4NeighDefaultGcThresh1 = netIPv4NeighDefaultGcThresh1;
-            NetIPv4NeighDefaultGcThresh2 = netIPv4NeighDefaultGcThresh2;
-            NetIPv4NeighDefaultGcThresh3 = netIPv4NeighDefaultGcThresh3;
+            NetIPv4Ipv4TcpMaxSynBacklog = netIPv4Ipv4TcpMaxSynBacklog;
+            NetIPv4Ipv4TcpMaxTwBuckets = netIPv4Ipv4TcpMaxTwBuckets;
+            NetIPv4Ipv4TcpFinTimeout = netIPv4Ipv4TcpFinTimeout;
+            NetIPv4Ipv4TcpKeepaliveTime = netIPv4Ipv4TcpKeepaliveTime;
+            NetIPv4Ipv4TcpKeepaliveProbes = netIPv4Ipv4TcpKeepaliveProbes;
+            NetIPv4Ipv4TcpkeepaliveIntvl = netIPv4Ipv4TcpkeepaliveIntvl;
+            NetIPv4Ipv4TcpTwReuse = netIPv4Ipv4TcpTwReuse;
+            NetIPv4Ipv4IPLocalPortRange = netIPv4Ipv4IPLocalPortRange;
+            NetIPv4Ipv4NeighDefaultGcThresh1 = netIPv4Ipv4NeighDefaultGcThresh1;
+            NetIPv4Ipv4NeighDefaultGcThresh2 = netIPv4Ipv4NeighDefaultGcThresh2;
+            NetIPv4Ipv4NeighDefaultGcThresh3 = netIPv4Ipv4NeighDefaultGcThresh3;
             NetNetfilterNfConntrackMax = netNetfilterNfConntrackMax;
             NetNetfilterNfConntrackBuckets = netNetfilterNfConntrackBuckets;
             FsInotifyMaxUserWatches = fsInotifyMaxUserWatches;
@@ -91,27 +91,27 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Sysctl setting net.core.optmem_max. </summary>
         public int? NetCoreOptmemMax { get; set; }
         /// <summary> Sysctl setting net.ipv4.tcp_max_syn_backlog. </summary>
-        public int? NetIPv4TcpMaxSynBacklog { get; set; }
+        public int? NetIPv4Ipv4TcpMaxSynBacklog { get; set; }
         /// <summary> Sysctl setting net.ipv4.tcp_max_tw_buckets. </summary>
-        public int? NetIPv4TcpMaxTwBuckets { get; set; }
+        public int? NetIPv4Ipv4TcpMaxTwBuckets { get; set; }
         /// <summary> Sysctl setting net.ipv4.tcp_fin_timeout. </summary>
-        public int? NetIPv4TcpFinTimeout { get; set; }
+        public int? NetIPv4Ipv4TcpFinTimeout { get; set; }
         /// <summary> Sysctl setting net.ipv4.tcp_keepalive_time. </summary>
-        public int? NetIPv4TcpKeepaliveTime { get; set; }
+        public int? NetIPv4Ipv4TcpKeepaliveTime { get; set; }
         /// <summary> Sysctl setting net.ipv4.tcp_keepalive_probes. </summary>
-        public int? NetIPv4TcpKeepaliveProbes { get; set; }
+        public int? NetIPv4Ipv4TcpKeepaliveProbes { get; set; }
         /// <summary> Sysctl setting net.ipv4.tcp_keepalive_intvl. </summary>
-        public int? NetIPv4TcpkeepaliveIntvl { get; set; }
+        public int? NetIPv4Ipv4TcpkeepaliveIntvl { get; set; }
         /// <summary> Sysctl setting net.ipv4.tcp_tw_reuse. </summary>
-        public bool? NetIPv4TcpTwReuse { get; set; }
+        public bool? NetIPv4Ipv4TcpTwReuse { get; set; }
         /// <summary> Sysctl setting net.ipv4.ip_local_port_range. </summary>
-        public string NetIPv4IPLocalPortRange { get; set; }
+        public string NetIPv4Ipv4IPLocalPortRange { get; set; }
         /// <summary> Sysctl setting net.ipv4.neigh.default.gc_thresh1. </summary>
-        public int? NetIPv4NeighDefaultGcThresh1 { get; set; }
+        public int? NetIPv4Ipv4NeighDefaultGcThresh1 { get; set; }
         /// <summary> Sysctl setting net.ipv4.neigh.default.gc_thresh2. </summary>
-        public int? NetIPv4NeighDefaultGcThresh2 { get; set; }
+        public int? NetIPv4Ipv4NeighDefaultGcThresh2 { get; set; }
         /// <summary> Sysctl setting net.ipv4.neigh.default.gc_thresh3. </summary>
-        public int? NetIPv4NeighDefaultGcThresh3 { get; set; }
+        public int? NetIPv4Ipv4NeighDefaultGcThresh3 { get; set; }
         /// <summary> Sysctl setting net.netfilter.nf_conntrack_max. </summary>
         public int? NetNetfilterNfConntrackMax { get; set; }
         /// <summary> Sysctl setting net.netfilter.nf_conntrack_buckets. </summary>

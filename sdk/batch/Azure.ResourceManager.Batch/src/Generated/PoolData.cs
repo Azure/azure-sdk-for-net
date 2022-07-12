@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Batch.Models;
 using Azure.ResourceManager.Models;
@@ -59,8 +58,8 @@ namespace Azure.ResourceManager.Batch
         /// <param name="applicationLicenses"> The list of application licenses must be a subset of available Batch service application licenses. If a license is requested which is not supported, pool creation will fail. </param>
         /// <param name="resizeOperationStatus"> Describes either the current operation (if the pool AllocationState is Resizing) or the previously completed operation (if the AllocationState is Steady). </param>
         /// <param name="mountConfiguration"> This supports Azure Files, NFS, CIFS/SMB, and Blobfuse. </param>
-        /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
-        internal PoolData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, BatchPoolIdentity identity, string displayName, DateTimeOffset? lastModified, DateTimeOffset? creationOn, PoolProvisioningState? provisioningState, DateTimeOffset? provisioningStateTransitionOn, AllocationState? allocationState, DateTimeOffset? allocationStateTransitionOn, string vmSize, DeploymentConfiguration deploymentConfiguration, int? currentDedicatedNodes, int? currentLowPriorityNodes, ScaleSettings scaleSettings, AutoScaleRun autoScaleRun, InterNodeCommunicationState? interNodeCommunication, NetworkConfiguration networkConfiguration, int? taskSlotsPerNode, TaskSchedulingPolicy taskSchedulingPolicy, IList<UserAccount> userAccounts, IList<MetadataItem> metadata, StartTask startTask, IList<CertificateReference> certificates, IList<ApplicationPackageReference> applicationPackages, IList<string> applicationLicenses, ResizeOperationStatus resizeOperationStatus, IList<MountConfiguration> mountConfiguration, ETag? etag) : base(id, name, resourceType, systemData)
+        /// <param name="eTagEtag"> The ETag of the resource, used for concurrency statements. </param>
+        internal PoolData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, BatchPoolIdentity identity, string displayName, DateTimeOffset? lastModified, DateTimeOffset? creationOn, PoolProvisioningState? provisioningState, DateTimeOffset? provisioningStateTransitionOn, AllocationState? allocationState, DateTimeOffset? allocationStateTransitionOn, string vmSize, DeploymentConfiguration deploymentConfiguration, int? currentDedicatedNodes, int? currentLowPriorityNodes, ScaleSettings scaleSettings, AutoScaleRun autoScaleRun, InterNodeCommunicationState? interNodeCommunication, NetworkConfiguration networkConfiguration, int? taskSlotsPerNode, TaskSchedulingPolicy taskSchedulingPolicy, IList<UserAccount> userAccounts, IList<MetadataItem> metadata, StartTask startTask, IList<CertificateReference> certificates, IList<ApplicationPackageReference> applicationPackages, IList<string> applicationLicenses, ResizeOperationStatus resizeOperationStatus, IList<MountConfiguration> mountConfiguration, string eTagEtag) : base(id, name, resourceType, systemData)
         {
             Identity = identity;
             DisplayName = displayName;
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.Batch
             ApplicationLicenses = applicationLicenses;
             ResizeOperationStatus = resizeOperationStatus;
             MountConfiguration = mountConfiguration;
-            ETag = etag;
+            ETagEtag = eTagEtag;
         }
 
         /// <summary> The type of identity used for the Batch Pool. </summary>
@@ -154,6 +153,6 @@ namespace Azure.ResourceManager.Batch
         /// <summary> This supports Azure Files, NFS, CIFS/SMB, and Blobfuse. </summary>
         public IList<MountConfiguration> MountConfiguration { get; }
         /// <summary> The ETag of the resource, used for concurrency statements. </summary>
-        public ETag? ETag { get; }
+        public string ETagEtag { get; }
     }
 }

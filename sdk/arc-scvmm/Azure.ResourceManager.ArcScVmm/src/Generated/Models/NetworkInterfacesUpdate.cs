@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         /// <summary> Gets or sets the ARM Id of the Microsoft.ScVmm/virtualNetwork resource to connect the nic. </summary>
         public string VirtualNetworkId { get; set; }
         /// <summary> Gets or sets the ipv4 address type. </summary>
-        public AllocationMethod? IPv4AddressType { get; set; }
+        public AllocationMethod? IPv4Ipv4AddressType { get; set; }
         /// <summary> Gets or sets the ipv6 address type. </summary>
-        public AllocationMethod? IPv6AddressType { get; set; }
+        public AllocationMethod? IPv6Ipv6AddressType { get; set; }
         /// <summary> Gets or sets the mac address type. </summary>
         public AllocationMethod? MacAddressType { get; set; }
         /// <summary> Gets or sets the nic id. </summary>

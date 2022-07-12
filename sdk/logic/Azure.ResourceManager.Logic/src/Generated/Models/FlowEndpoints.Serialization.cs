@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static FlowEndpoints DeserializeFlowEndpoints(JsonElement element)
         {
-            Optional<IList<IPAddress>> outgoingIPAddresses = default;
-            Optional<IList<IPAddress>> accessEndpointIPAddresses = default;
+            Optional<IList<IPAddress>> outgoingIpAddresses = default;
+            Optional<IList<IPAddress>> accessEndpointIpAddresses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("outgoingIpAddresses"))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         array.Add(IPAddress.DeserializeIPAddress(item));
                     }
-                    outgoingIPAddresses = array;
+                    outgoingIpAddresses = array;
                     continue;
                 }
                 if (property.NameEquals("accessEndpointIpAddresses"))
@@ -72,11 +72,11 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         array.Add(IPAddress.DeserializeIPAddress(item));
                     }
-                    accessEndpointIPAddresses = array;
+                    accessEndpointIpAddresses = array;
                     continue;
                 }
             }
-            return new FlowEndpoints(Optional.ToList(outgoingIPAddresses), Optional.ToList(accessEndpointIPAddresses));
+            return new FlowEndpoints(Optional.ToList(outgoingIpAddresses), Optional.ToList(accessEndpointIpAddresses));
         }
     }
 }

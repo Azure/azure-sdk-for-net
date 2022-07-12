@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ElasticSan.Models
             Optional<long> iopsPerBaseTiB = default;
             Optional<long> mbpsPerBaseTiB = default;
             Optional<long> maxIops = default;
-            Optional<long> maxMbps = default;
-            Optional<long> maxElasticSanVolumeGroupCount = default;
+            Optional<long> maxMBps = default;
+            Optional<long> maxVolumeGroupCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxSizeTiB"))
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    maxMbps = property.Value.GetInt64();
+                    maxMBps = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("maxVolumeGroupCount"))
@@ -101,11 +101,11 @@ namespace Azure.ResourceManager.ElasticSan.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    maxElasticSanVolumeGroupCount = property.Value.GetInt64();
+                    maxVolumeGroupCount = property.Value.GetInt64();
                     continue;
                 }
             }
-            return new SanTierInfo(Optional.ToNullable(maxSizeTiB), Optional.ToNullable(minSizeTiB), Optional.ToNullable(minIncrementSizeTiB), Optional.ToNullable(iopsPerBaseTiB), Optional.ToNullable(mbpsPerBaseTiB), Optional.ToNullable(maxIops), Optional.ToNullable(maxMbps), Optional.ToNullable(maxElasticSanVolumeGroupCount));
+            return new SanTierInfo(Optional.ToNullable(maxSizeTiB), Optional.ToNullable(minSizeTiB), Optional.ToNullable(minIncrementSizeTiB), Optional.ToNullable(iopsPerBaseTiB), Optional.ToNullable(mbpsPerBaseTiB), Optional.ToNullable(maxIops), Optional.ToNullable(maxMBps), Optional.ToNullable(maxVolumeGroupCount));
         }
     }
 }

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static FlowAccessControlConfigurationPolicy DeserializeFlowAccessControlConfigurationPolicy(JsonElement element)
         {
-            Optional<IList<IPAddressRange>> allowedCallerIPAddresses = default;
+            Optional<IList<IPAddressRange>> allowedCallerIpAddresses = default;
             Optional<OpenAuthenticationAccessPolicies> openAuthenticationPolicies = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         array.Add(IPAddressRange.DeserializeIPAddressRange(item));
                     }
-                    allowedCallerIPAddresses = array;
+                    allowedCallerIpAddresses = array;
                     continue;
                 }
                 if (property.NameEquals("openAuthenticationPolicies"))
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new FlowAccessControlConfigurationPolicy(Optional.ToList(allowedCallerIPAddresses), openAuthenticationPolicies.Value);
+            return new FlowAccessControlConfigurationPolicy(Optional.ToList(allowedCallerIpAddresses), openAuthenticationPolicies.Value);
         }
     }
 }

@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<BinaryData> useSystemTrustStore = default;
             Optional<BinaryData> allowHostNameCNMismatch = default;
             Optional<BinaryData> allowSelfSignedServerCert = default;
-            Optional<BinaryData> timeZoneId = default;
+            Optional<BinaryData> timeZoneID = default;
             Optional<BinaryData> encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            timeZoneId = BinaryData.FromString(property0.Value.GetRawText());
+                            timeZoneID = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"))
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new PrestoLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, host, serverVersion, catalog, port.Value, authenticationType, username.Value, password.Value, enableSsl.Value, trustedCertPath.Value, useSystemTrustStore.Value, allowHostNameCNMismatch.Value, allowSelfSignedServerCert.Value, timeZoneId.Value, encryptedCredential.Value);
+            return new PrestoLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, host, serverVersion, catalog, port.Value, authenticationType, username.Value, password.Value, enableSsl.Value, trustedCertPath.Value, useSystemTrustStore.Value, allowHostNameCNMismatch.Value, allowSelfSignedServerCert.Value, timeZoneID.Value, encryptedCredential.Value);
         }
     }
 }

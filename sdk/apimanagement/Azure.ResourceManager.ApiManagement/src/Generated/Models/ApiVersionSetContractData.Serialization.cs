@@ -6,13 +6,15 @@
 #nullable disable
 
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ApiVersionSetContractData : IUtf8JsonSerializable
+    public partial class ApiVersionSetContractData : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -130,6 +132,107 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             return new ApiVersionSetContractData(id, name, type, systemData.Value, description.Value, versionQueryName.Value, versionHeaderName.Value, displayName.Value, Optional.ToNullable(versioningScheme));
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "ApiVersionSetContract");
+            if (Optional.IsDefined(Description))
+            {
+                writer.WriteStartElement("description");
+                writer.WriteValue(Description);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(VersionQueryName))
+            {
+                writer.WriteStartElement("versionQueryName");
+                writer.WriteValue(VersionQueryName);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(VersionHeaderName))
+            {
+                writer.WriteStartElement("versionHeaderName");
+                writer.WriteValue(VersionHeaderName);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WriteStartElement("displayName");
+                writer.WriteValue(DisplayName);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(VersioningScheme))
+            {
+                writer.WriteStartElement("versioningScheme");
+                writer.WriteValue(VersioningScheme.Value.ToString());
+                writer.WriteEndElement();
+            }
+            writer.WriteStartElement("id");
+            writer.WriteValue(Id);
+            writer.WriteEndElement();
+            writer.WriteStartElement("name");
+            writer.WriteValue(Name);
+            writer.WriteEndElement();
+            writer.WriteStartElement("type");
+            writer.WriteValue(ResourceType);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(SystemData))
+            {
+                writer.WriteStartElement("systemData");
+                writer.WriteValue(SystemData);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static ApiVersionSetContractData DeserializeApiVersionSetContractData(XElement element)
+        {
+            string description = default;
+            string versionQueryName = default;
+            string versionHeaderName = default;
+            string displayName = default;
+            VersioningScheme? versioningScheme = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
+            if (element.Element("description") is XElement descriptionElement)
+            {
+                description = (string)descriptionElement;
+            }
+            if (element.Element("versionQueryName") is XElement versionQueryNameElement)
+            {
+                versionQueryName = (string)versionQueryNameElement;
+            }
+            if (element.Element("versionHeaderName") is XElement versionHeaderNameElement)
+            {
+                versionHeaderName = (string)versionHeaderNameElement;
+            }
+            if (element.Element("displayName") is XElement displayNameElement)
+            {
+                displayName = (string)displayNameElement;
+            }
+            if (element.Element("versioningScheme") is XElement versioningSchemeElement)
+            {
+                versioningScheme = new VersioningScheme(versioningSchemeElement.Value);
+            }
+            if (element.Element("id") is XElement idElement)
+            {
+                id = new ResourceIdentifier((string)idElement);
+            }
+            if (element.Element("name") is XElement nameElement)
+            {
+                name = (string)nameElement;
+            }
+            if (element.Element("type") is XElement typeElement)
+            {
+                resourceType = (string)typeElement;
+            }
+            if (element.Element("systemData") is XElement systemDataElement)
+            {
+                systemData = systemDataElement.(null);
+            }
+            return new ApiVersionSetContractData(id, name, resourceType, systemData, description, versionQueryName, versionHeaderName, displayName, versioningScheme);
         }
     }
 }

@@ -6,11 +6,13 @@
 #nullable disable
 
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class OAuth2AuthenticationSettingsContract : IUtf8JsonSerializable
+    public partial class OAuth2AuthenticationSettingsContract : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -46,6 +48,39 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new OAuth2AuthenticationSettingsContract(authorizationServerId.Value, scope.Value);
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "OAuth2AuthenticationSettingsContract");
+            if (Optional.IsDefined(AuthorizationServerId))
+            {
+                writer.WriteStartElement("authorizationServerId");
+                writer.WriteValue(AuthorizationServerId);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Scope))
+            {
+                writer.WriteStartElement("scope");
+                writer.WriteValue(Scope);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static OAuth2AuthenticationSettingsContract DeserializeOAuth2AuthenticationSettingsContract(XElement element)
+        {
+            string authorizationServerId = default;
+            string scope = default;
+            if (element.Element("authorizationServerId") is XElement authorizationServerIdElement)
+            {
+                authorizationServerId = (string)authorizationServerIdElement;
+            }
+            if (element.Element("scope") is XElement scopeElement)
+            {
+                scope = (string)scopeElement;
+            }
+            return new OAuth2AuthenticationSettingsContract(authorizationServerId, scope);
         }
     }
 }

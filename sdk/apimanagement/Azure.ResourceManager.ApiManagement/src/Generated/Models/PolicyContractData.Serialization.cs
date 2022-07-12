@@ -6,13 +6,15 @@
 #nullable disable
 
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class PolicyContractData : IUtf8JsonSerializable
+    public partial class PolicyContractData : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -97,6 +99,74 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             return new PolicyContractData(id, name, type, systemData.Value, value.Value, Optional.ToNullable(format));
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "PolicyContract");
+            if (Optional.IsDefined(Value))
+            {
+                writer.WriteStartElement("value");
+                writer.WriteValue(Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Format))
+            {
+                writer.WriteStartElement("format");
+                writer.WriteValue(Format.Value.ToString());
+                writer.WriteEndElement();
+            }
+            writer.WriteStartElement("id");
+            writer.WriteValue(Id);
+            writer.WriteEndElement();
+            writer.WriteStartElement("name");
+            writer.WriteValue(Name);
+            writer.WriteEndElement();
+            writer.WriteStartElement("type");
+            writer.WriteValue(ResourceType);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(SystemData))
+            {
+                writer.WriteStartElement("systemData");
+                writer.WriteValue(SystemData);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static PolicyContractData DeserializePolicyContractData(XElement element)
+        {
+            string value = default;
+            PolicyContentFormat? format = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
+            if (element.Element("value") is XElement valueElement)
+            {
+                value = (string)valueElement;
+            }
+            if (element.Element("format") is XElement formatElement)
+            {
+                format = new PolicyContentFormat(formatElement.Value);
+            }
+            if (element.Element("id") is XElement idElement)
+            {
+                id = new ResourceIdentifier((string)idElement);
+            }
+            if (element.Element("name") is XElement nameElement)
+            {
+                name = (string)nameElement;
+            }
+            if (element.Element("type") is XElement typeElement)
+            {
+                resourceType = (string)typeElement;
+            }
+            if (element.Element("systemData") is XElement systemDataElement)
+            {
+                systemData = systemDataElement.(null);
+            }
+            return new PolicyContractData(id, name, resourceType, systemData, value, format);
         }
     }
 }

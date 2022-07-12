@@ -7,11 +7,13 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class DataMasking : IUtf8JsonSerializable
+    public partial class DataMasking : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -77,6 +79,45 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new DataMasking(Optional.ToList(queryParams), Optional.ToList(headers));
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "DataMasking");
+            if (Optional.IsCollectionDefined(QueryParams))
+            {
+                foreach (var item in QueryParams)
+                {
+                    writer.WriteObjectValue(item, "DataMaskingEntity");
+                }
+            }
+            if (Optional.IsCollectionDefined(Headers))
+            {
+                foreach (var item in Headers)
+                {
+                    writer.WriteObjectValue(item, "DataMaskingEntity");
+                }
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static DataMasking DeserializeDataMasking(XElement element)
+        {
+            IList<DataMaskingEntity> queryParams = default;
+            IList<DataMaskingEntity> headers = default;
+            var array = new List<DataMaskingEntity>();
+            foreach (var e in element.Elements("DataMaskingEntity"))
+            {
+                array.Add(DataMaskingEntity.DeserializeDataMaskingEntity(e));
+            }
+            queryParams = array;
+            var array0 = new List<DataMaskingEntity>();
+            foreach (var e in element.Elements("DataMaskingEntity"))
+            {
+                array0.Add(DataMaskingEntity.DeserializeDataMaskingEntity(e));
+            }
+            headers = array0;
+            return new DataMasking(queryParams, headers);
         }
     }
 }

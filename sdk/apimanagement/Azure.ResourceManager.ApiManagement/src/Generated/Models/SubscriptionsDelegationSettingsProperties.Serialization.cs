@@ -6,11 +6,13 @@
 #nullable disable
 
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    internal partial class SubscriptionsDelegationSettingsProperties : IUtf8JsonSerializable
+    internal partial class SubscriptionsDelegationSettingsProperties : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -40,6 +42,28 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new SubscriptionsDelegationSettingsProperties(Optional.ToNullable(enabled));
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "SubscriptionsDelegationSettingsProperties");
+            if (Optional.IsDefined(Enabled))
+            {
+                writer.WriteStartElement("enabled");
+                writer.WriteValue(Enabled.Value);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static SubscriptionsDelegationSettingsProperties DeserializeSubscriptionsDelegationSettingsProperties(XElement element)
+        {
+            bool? enabled = default;
+            if (element.Element("enabled") is XElement enabledElement)
+            {
+                enabled = (bool?)enabledElement;
+            }
+            return new SubscriptionsDelegationSettingsProperties(enabled);
         }
     }
 }

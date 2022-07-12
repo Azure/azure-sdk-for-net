@@ -7,11 +7,13 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ParameterContract : IUtf8JsonSerializable
+    public partial class ParameterContract : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -154,6 +156,121 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new ParameterContract(name, description.Value, type, defaultValue.Value, Optional.ToNullable(required), Optional.ToList(values), schemaId.Value, typeName.Value, Optional.ToDictionary(examples));
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "ParameterContract");
+            writer.WriteStartElement("name");
+            writer.WriteValue(Name);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(Description))
+            {
+                writer.WriteStartElement("description");
+                writer.WriteValue(Description);
+                writer.WriteEndElement();
+            }
+            writer.WriteStartElement("type");
+            writer.WriteValue(ParameterContractType);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(DefaultValue))
+            {
+                writer.WriteStartElement("defaultValue");
+                writer.WriteValue(DefaultValue);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Required))
+            {
+                writer.WriteStartElement("required");
+                writer.WriteValue(Required.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(SchemaId))
+            {
+                writer.WriteStartElement("schemaId");
+                writer.WriteValue(SchemaId);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(TypeName))
+            {
+                writer.WriteStartElement("typeName");
+                writer.WriteValue(TypeName);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsCollectionDefined(Examples))
+            {
+                foreach (var pair in Examples)
+                {
+                    writer.WriteObjectValue(pair.Value, "ParameterExampleContract");
+                }
+            }
+            if (Optional.IsCollectionDefined(Values))
+            {
+                foreach (var item in Values)
+                {
+                    writer.WriteStartElement("ParameterContractValuesItem");
+                    writer.WriteValue(item);
+                    writer.WriteEndElement();
+                }
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static ParameterContract DeserializeParameterContract(XElement element)
+        {
+            string name = default;
+            string description = default;
+            string parameterContractType = default;
+            string defaultValue = default;
+            bool? required = default;
+            string schemaId = default;
+            string typeName = default;
+            IDictionary<string, ParameterExampleContract> examples = default;
+            IList<string> values = default;
+            if (element.Element("name") is XElement nameElement)
+            {
+                name = (string)nameElement;
+            }
+            if (element.Element("description") is XElement descriptionElement)
+            {
+                description = (string)descriptionElement;
+            }
+            if (element.Element("type") is XElement typeElement)
+            {
+                parameterContractType = (string)typeElement;
+            }
+            if (element.Element("defaultValue") is XElement defaultValueElement)
+            {
+                defaultValue = (string)defaultValueElement;
+            }
+            if (element.Element("required") is XElement requiredElement)
+            {
+                required = (bool?)requiredElement;
+            }
+            if (element.Element("schemaId") is XElement schemaIdElement)
+            {
+                schemaId = (string)schemaIdElement;
+            }
+            if (element.Element("typeName") is XElement typeNameElement)
+            {
+                typeName = (string)typeNameElement;
+            }
+            if (element.Element("examples") is XElement examplesElement)
+            {
+                var dictionary = new Dictionary<string, ParameterExampleContract>();
+                foreach (var e in examplesElement.Elements())
+                {
+                    dictionary.Add(e.Name.LocalName, ParameterExampleContract.DeserializeParameterExampleContract(e));
+                }
+                examples = dictionary;
+            }
+            var array = new List<string>();
+            foreach (var e in element.Elements("ParameterContractValuesItem"))
+            {
+                array.Add((string)e);
+            }
+            values = array;
+            return new ParameterContract(name, description, parameterContractType, defaultValue, required, values, schemaId, typeName, examples);
         }
     }
 }

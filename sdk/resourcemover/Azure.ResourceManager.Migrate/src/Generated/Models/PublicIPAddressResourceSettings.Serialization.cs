@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Migrate.Models
             Optional<IDictionary<string, string>> tags = default;
             Optional<string> domainNameLabel = default;
             Optional<string> fqdn = default;
-            Optional<string> publicIPAllocationMethod = default;
+            Optional<string> publicIpAllocationMethod = default;
             Optional<string> sku = default;
             Optional<string> zones = default;
             string resourceType = default;
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
                 if (property.NameEquals("publicIpAllocationMethod"))
                 {
-                    publicIPAllocationMethod = property.Value.GetString();
+                    publicIpAllocationMethod = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("sku"))
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Migrate.Models
                     continue;
                 }
             }
-            return new PublicIPAddressResourceSettings(resourceType, targetResourceName, Optional.ToDictionary(tags), domainNameLabel.Value, fqdn.Value, publicIPAllocationMethod.Value, sku.Value, zones.Value);
+            return new PublicIPAddressResourceSettings(resourceType, targetResourceName, Optional.ToDictionary(tags), domainNameLabel.Value, fqdn.Value, publicIpAllocationMethod.Value, sku.Value, zones.Value);
         }
     }
 }

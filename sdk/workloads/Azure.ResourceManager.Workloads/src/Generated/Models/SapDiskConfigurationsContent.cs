@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="sapProduct"> Defines the SAP Product type. </param>
         /// <param name="databaseType"> The database type. Eg: HANA, DB2, etc. </param>
         /// <param name="deploymentType"> The deployment type. Eg: SingleServer/ThreeTier. </param>
-        /// <param name="dbVmSku"> The VM SKU for database instance. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dbVmSku"/> is null. </exception>
-        public SapDiskConfigurationsContent(AzureLocation appLocation, SapEnvironmentType environment, SapProductType sapProduct, SapDatabaseType databaseType, SapDeploymentType deploymentType, string dbVmSku)
+        /// <param name="dbDbVmSku"> The VM SKU for database instance. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dbDbVmSku"/> is null. </exception>
+        public SapDiskConfigurationsContent(AzureLocation appLocation, SapEnvironmentType environment, SapProductType sapProduct, SapDatabaseType databaseType, SapDeploymentType deploymentType, string dbDbVmSku)
         {
-            if (dbVmSku == null)
+            if (dbDbVmSku == null)
             {
-                throw new ArgumentNullException(nameof(dbVmSku));
+                throw new ArgumentNullException(nameof(dbDbVmSku));
             }
 
             AppLocation = appLocation;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Workloads.Models
             SapProduct = sapProduct;
             DatabaseType = databaseType;
             DeploymentType = deploymentType;
-            DBVmSku = dbVmSku;
+            DBDbVmSku = dbDbVmSku;
         }
 
         /// <summary> The geo-location where the SAP resources will be created. </summary>
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> The deployment type. Eg: SingleServer/ThreeTier. </summary>
         public SapDeploymentType DeploymentType { get; }
         /// <summary> The VM SKU for database instance. </summary>
-        public string DBVmSku { get; }
+        public string DBDbVmSku { get; }
     }
 }

@@ -7,11 +7,13 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class HttpMessageDiagnostic : IUtf8JsonSerializable
+    public partial class HttpMessageDiagnostic : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -83,6 +85,51 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new HttpMessageDiagnostic(Optional.ToList(headers), body.Value, dataMasking.Value);
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "HttpMessageDiagnostic");
+            if (Optional.IsDefined(Body))
+            {
+                writer.WriteObjectValue(Body, "body");
+            }
+            if (Optional.IsDefined(DataMasking))
+            {
+                writer.WriteObjectValue(DataMasking, "dataMasking");
+            }
+            if (Optional.IsCollectionDefined(Headers))
+            {
+                foreach (var item in Headers)
+                {
+                    writer.WriteStartElement("HttpMessageDiagnosticHeadersItem");
+                    writer.WriteValue(item);
+                    writer.WriteEndElement();
+                }
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static HttpMessageDiagnostic DeserializeHttpMessageDiagnostic(XElement element)
+        {
+            BodyDiagnosticSettings body = default;
+            DataMasking dataMasking = default;
+            IList<string> headers = default;
+            if (element.Element("body") is XElement bodyElement)
+            {
+                body = BodyDiagnosticSettings.DeserializeBodyDiagnosticSettings(bodyElement);
+            }
+            if (element.Element("dataMasking") is XElement dataMaskingElement)
+            {
+                dataMasking = DataMasking.DeserializeDataMasking(dataMaskingElement);
+            }
+            var array = new List<string>();
+            foreach (var e in element.Elements("HttpMessageDiagnosticHeadersItem"))
+            {
+                array.Add((string)e);
+            }
+            headers = array;
+            return new HttpMessageDiagnostic(headers, body, dataMasking);
         }
     }
 }

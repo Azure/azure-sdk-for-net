@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.HDInsight.Models;
 using Azure.ResourceManager.Models;
@@ -18,7 +17,7 @@ namespace Azure.ResourceManager.HDInsight
     {
         internal static ClusterData DeserializeClusterData(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<string> etag = default;
             Optional<IReadOnlyList<string>> zones = default;
             Optional<ClusterGetProperties> properties = default;
             Optional<ClusterIdentity> identity = default;
@@ -32,12 +31,7 @@ namespace Azure.ResourceManager.HDInsight
             {
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
+                    etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("zones"))
@@ -121,7 +115,7 @@ namespace Azure.ResourceManager.HDInsight
                     continue;
                 }
             }
-            return new ClusterData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToList(zones), properties.Value, identity.Value, Optional.ToDictionary(tags), location);
+            return new ClusterData(id, name, type, systemData.Value, etag.Value, Optional.ToList(zones), properties.Value, identity.Value, Optional.ToDictionary(tags), location);
         }
     }
 }

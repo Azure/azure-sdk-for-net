@@ -7,12 +7,14 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ApiManagementPrivateLinkResourceData : IUtf8JsonSerializable
+    public partial class ApiManagementPrivateLinkResourceData : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -118,6 +120,95 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             return new ApiManagementPrivateLinkResourceData(id, name, type, systemData.Value, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames));
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "ApiManagementPrivateLinkResource");
+            if (Optional.IsDefined(GroupId))
+            {
+                writer.WriteStartElement("groupId");
+                writer.WriteValue(GroupId);
+                writer.WriteEndElement();
+            }
+            writer.WriteStartElement("id");
+            writer.WriteValue(Id);
+            writer.WriteEndElement();
+            writer.WriteStartElement("name");
+            writer.WriteValue(Name);
+            writer.WriteEndElement();
+            writer.WriteStartElement("type");
+            writer.WriteValue(ResourceType);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(SystemData))
+            {
+                writer.WriteStartElement("systemData");
+                writer.WriteValue(SystemData);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsCollectionDefined(RequiredMembers))
+            {
+                foreach (var item in RequiredMembers)
+                {
+                    writer.WriteStartElement("PrivateLinkResourcePropertiesRequiredMembersItem");
+                    writer.WriteValue(item);
+                    writer.WriteEndElement();
+                }
+            }
+            if (Optional.IsCollectionDefined(RequiredZoneNames))
+            {
+                foreach (var item in RequiredZoneNames)
+                {
+                    writer.WriteStartElement("PrivateLinkResourcePropertiesRequiredZoneNamesItem");
+                    writer.WriteValue(item);
+                    writer.WriteEndElement();
+                }
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static ApiManagementPrivateLinkResourceData DeserializeApiManagementPrivateLinkResourceData(XElement element)
+        {
+            string groupId = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
+            IReadOnlyList<string> requiredMembers = default;
+            IList<string> requiredZoneNames = default;
+            if (element.Element("groupId") is XElement groupIdElement)
+            {
+                groupId = (string)groupIdElement;
+            }
+            if (element.Element("id") is XElement idElement)
+            {
+                id = new ResourceIdentifier((string)idElement);
+            }
+            if (element.Element("name") is XElement nameElement)
+            {
+                name = (string)nameElement;
+            }
+            if (element.Element("type") is XElement typeElement)
+            {
+                resourceType = (string)typeElement;
+            }
+            if (element.Element("systemData") is XElement systemDataElement)
+            {
+                systemData = systemDataElement.(null);
+            }
+            var array = new List<string>();
+            foreach (var e in element.Elements("PrivateLinkResourcePropertiesRequiredMembersItem"))
+            {
+                array.Add((string)e);
+            }
+            requiredMembers = array;
+            var array0 = new List<string>();
+            foreach (var e in element.Elements("PrivateLinkResourcePropertiesRequiredZoneNamesItem"))
+            {
+                array0.Add((string)e);
+            }
+            requiredZoneNames = array0;
+            return new ApiManagementPrivateLinkResourceData(id, name, resourceType, systemData, groupId, requiredMembers, requiredZoneNames);
         }
     }
 }

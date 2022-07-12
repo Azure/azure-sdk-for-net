@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.DnsResolver.Models
         internal static IPConfiguration DeserializeIPConfiguration(JsonElement element)
         {
             Optional<WritableSubResource> subnet = default;
-            Optional<string> privateIPAddress = default;
-            Optional<IPAllocationMethod> privateIPAllocationMethod = default;
+            Optional<string> privateIpAddress = default;
+            Optional<IPAllocationMethod> privateIpAllocationMethod = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subnet"))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 }
                 if (property.NameEquals("privateIpAddress"))
                 {
-                    privateIPAddress = property.Value.GetString();
+                    privateIpAddress = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("privateIpAllocationMethod"))
@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.DnsResolver.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    privateIPAllocationMethod = new IPAllocationMethod(property.Value.GetString());
+                    privateIpAllocationMethod = new IPAllocationMethod(property.Value.GetString());
                     continue;
                 }
             }
-            return new IPConfiguration(subnet, privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod));
+            return new IPConfiguration(subnet, privateIpAddress.Value, Optional.ToNullable(privateIpAllocationMethod));
         }
     }
 }

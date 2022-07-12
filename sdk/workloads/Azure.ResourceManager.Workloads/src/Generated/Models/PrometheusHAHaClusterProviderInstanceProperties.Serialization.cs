@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class PrometheusHAClusterProviderInstanceProperties : IUtf8JsonSerializable
+    public partial class PrometheusHAHaClusterProviderInstanceProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteEndObject();
         }
 
-        internal static PrometheusHAClusterProviderInstanceProperties DeserializePrometheusHAClusterProviderInstanceProperties(JsonElement element)
+        internal static PrometheusHAHaClusterProviderInstanceProperties DeserializePrometheusHAHaClusterProviderInstanceProperties(JsonElement element)
         {
             Optional<Uri> prometheusUrl = default;
             Optional<string> hostname = default;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new PrometheusHAClusterProviderInstanceProperties(providerType, prometheusUrl.Value, hostname.Value, sid.Value, clusterName.Value);
+            return new PrometheusHAHaClusterProviderInstanceProperties(providerType, prometheusUrl.Value, hostname.Value, sid.Value, clusterName.Value);
         }
     }
 }

@@ -6,11 +6,13 @@
 #nullable disable
 
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class TokenBodyParameterContract : IUtf8JsonSerializable
+    public partial class TokenBodyParameterContract : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -38,6 +40,33 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     value = property.Value.GetString();
                     continue;
                 }
+            }
+            return new TokenBodyParameterContract(name, value);
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "TokenBodyParameterContract");
+            writer.WriteStartElement("name");
+            writer.WriteValue(Name);
+            writer.WriteEndElement();
+            writer.WriteStartElement("value");
+            writer.WriteValue(Value);
+            writer.WriteEndElement();
+            writer.WriteEndElement();
+        }
+
+        internal static TokenBodyParameterContract DeserializeTokenBodyParameterContract(XElement element)
+        {
+            string name = default;
+            string value = default;
+            if (element.Element("name") is XElement nameElement)
+            {
+                name = (string)nameElement;
+            }
+            if (element.Element("value") is XElement valueElement)
+            {
+                value = (string)valueElement;
             }
             return new TokenBodyParameterContract(name, value);
         }

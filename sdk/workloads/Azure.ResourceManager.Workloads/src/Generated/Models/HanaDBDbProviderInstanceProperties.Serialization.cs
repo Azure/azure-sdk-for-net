@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class HanaDBProviderInstanceProperties : IUtf8JsonSerializable
+    public partial class HanaDBDbProviderInstanceProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.Workloads.Models
                 writer.WritePropertyName("hostname");
                 writer.WriteStringValue(Hostname);
             }
-            if (Optional.IsDefined(DBName))
+            if (Optional.IsDefined(DBDbName))
             {
                 writer.WritePropertyName("dbName");
-                writer.WriteStringValue(DBName);
+                writer.WriteStringValue(DBDbName);
             }
             if (Optional.IsDefined(SqlPort))
             {
@@ -36,25 +36,25 @@ namespace Azure.ResourceManager.Workloads.Models
                 writer.WritePropertyName("instanceNumber");
                 writer.WriteStringValue(InstanceNumber);
             }
-            if (Optional.IsDefined(DBUsername))
+            if (Optional.IsDefined(DBDbUsername))
             {
                 writer.WritePropertyName("dbUsername");
-                writer.WriteStringValue(DBUsername);
+                writer.WriteStringValue(DBDbUsername);
             }
-            if (Optional.IsDefined(DBPassword))
+            if (Optional.IsDefined(DBDbPassword))
             {
                 writer.WritePropertyName("dbPassword");
-                writer.WriteStringValue(DBPassword);
+                writer.WriteStringValue(DBDbPassword);
             }
-            if (Optional.IsDefined(DBPasswordUri))
+            if (Optional.IsDefined(DBDbPasswordUri))
             {
                 writer.WritePropertyName("dbPasswordUri");
-                writer.WriteStringValue(DBPasswordUri.AbsoluteUri);
+                writer.WriteStringValue(DBDbPasswordUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(DBSslCertificateUri))
+            if (Optional.IsDefined(DBDbSslCertificateUri))
             {
                 writer.WritePropertyName("dbSslCertificateUri");
-                writer.WriteStringValue(DBSslCertificateUri.AbsoluteUri);
+                writer.WriteStringValue(DBDbSslCertificateUri.AbsoluteUri);
             }
             if (Optional.IsDefined(SslHostNameInCertificate))
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteEndObject();
         }
 
-        internal static HanaDBProviderInstanceProperties DeserializeHanaDBProviderInstanceProperties(JsonElement element)
+        internal static HanaDBDbProviderInstanceProperties DeserializeHanaDBDbProviderInstanceProperties(JsonElement element)
         {
             Optional<string> hostname = default;
             Optional<string> dbName = default;
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new HanaDBProviderInstanceProperties(providerType, hostname.Value, dbName.Value, sqlPort.Value, instanceNumber.Value, dbUsername.Value, dbPassword.Value, dbPasswordUri.Value, dbSslCertificateUri.Value, sslHostNameInCertificate.Value);
+            return new HanaDBDbProviderInstanceProperties(providerType, hostname.Value, dbName.Value, sqlPort.Value, instanceNumber.Value, dbUsername.Value, dbPassword.Value, dbPasswordUri.Value, dbSslCertificateUri.Value, sslHostNameInCertificate.Value);
         }
     }
 }

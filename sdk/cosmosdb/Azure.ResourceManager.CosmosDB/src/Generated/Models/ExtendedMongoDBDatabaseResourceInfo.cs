@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -28,9 +27,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="id"> Name of the Cosmos DB MongoDB database. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
-        /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
+        /// <param name="eTagEtag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        internal ExtendedMongoDBDatabaseResourceInfo(string id, string rid, float? timestamp, ETag? etag) : base(id)
+        internal ExtendedMongoDBDatabaseResourceInfo(string id, string rid, float? timestamp, string eTagEtag) : base(id)
         {
             if (id == null)
             {
@@ -39,7 +38,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
             Rid = rid;
             Timestamp = timestamp;
-            ETag = etag;
+            ETagEtag = eTagEtag;
         }
 
         /// <summary> A system generated property. A unique identifier. </summary>
@@ -47,6 +46,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> A system generated property that denotes the last updated timestamp of the resource. </summary>
         public float? Timestamp { get; }
         /// <summary> A system generated property representing the resource etag required for optimistic concurrency control. </summary>
-        public ETag? ETag { get; }
+        public string ETagEtag { get; }
     }
 }

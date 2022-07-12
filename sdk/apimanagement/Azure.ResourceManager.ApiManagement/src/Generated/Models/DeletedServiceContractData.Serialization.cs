@@ -7,12 +7,14 @@
 
 using System;
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class DeletedServiceContractData : IUtf8JsonSerializable
+    public partial class DeletedServiceContractData : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -124,6 +126,96 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             return new DeletedServiceContractData(id, name, type, systemData.Value, Optional.ToNullable(location), serviceId.Value, Optional.ToNullable(scheduledPurgeDate), Optional.ToNullable(deletionDate));
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "DeletedServiceContract");
+            if (Optional.IsDefined(Location))
+            {
+                writer.WriteStartElement("location");
+                writer.WriteValue(Location.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ServiceId))
+            {
+                writer.WriteStartElement("serviceId");
+                writer.WriteValue(ServiceId);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ScheduledPurgeOn))
+            {
+                writer.WriteStartElement("scheduledPurgeDate");
+                writer.WriteValue(ScheduledPurgeOn.Value, "O");
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(DeletionOn))
+            {
+                writer.WriteStartElement("deletionDate");
+                writer.WriteValue(DeletionOn.Value, "O");
+                writer.WriteEndElement();
+            }
+            writer.WriteStartElement("id");
+            writer.WriteValue(Id);
+            writer.WriteEndElement();
+            writer.WriteStartElement("name");
+            writer.WriteValue(Name);
+            writer.WriteEndElement();
+            writer.WriteStartElement("type");
+            writer.WriteValue(ResourceType);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(SystemData))
+            {
+                writer.WriteStartElement("systemData");
+                writer.WriteValue(SystemData);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static DeletedServiceContractData DeserializeDeletedServiceContractData(XElement element)
+        {
+            AzureLocation? location = default;
+            string serviceId = default;
+            DateTimeOffset? scheduledPurgeOn = default;
+            DateTimeOffset? deletionOn = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
+            if (element.Element("location") is XElement locationElement)
+            {
+                location = locationElement.(null);
+            }
+            if (element.Element("serviceId") is XElement serviceIdElement)
+            {
+                serviceId = (string)serviceIdElement;
+            }
+            if (element.Element("scheduledPurgeDate") is XElement scheduledPurgeDateElement)
+            {
+                scheduledPurgeOn = scheduledPurgeDateElement.GetDateTimeOffsetValue("O");
+            }
+            if (element.Element("deletionDate") is XElement deletionDateElement)
+            {
+                deletionOn = deletionDateElement.GetDateTimeOffsetValue("O");
+            }
+            if (element.Element("id") is XElement idElement)
+            {
+                id = new ResourceIdentifier((string)idElement);
+            }
+            if (element.Element("name") is XElement nameElement)
+            {
+                name = (string)nameElement;
+            }
+            if (element.Element("type") is XElement typeElement)
+            {
+                resourceType = (string)typeElement;
+            }
+            if (element.Element("systemData") is XElement systemDataElement)
+            {
+                systemData = systemDataElement.(null);
+            }
+            return new DeletedServiceContractData(id, name, resourceType, systemData, location, serviceId, scheduledPurgeOn, deletionOn);
         }
     }
 }

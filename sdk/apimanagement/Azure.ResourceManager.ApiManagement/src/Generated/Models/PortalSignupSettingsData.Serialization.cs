@@ -6,13 +6,15 @@
 #nullable disable
 
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class PortalSignupSettingsData : IUtf8JsonSerializable
+    public partial class PortalSignupSettingsData : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -102,6 +104,72 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             return new PortalSignupSettingsData(id, name, type, systemData.Value, Optional.ToNullable(enabled), termsOfService.Value);
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "PortalSignupSettings");
+            if (Optional.IsDefined(Enabled))
+            {
+                writer.WriteStartElement("enabled");
+                writer.WriteValue(Enabled.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(TermsOfService))
+            {
+                writer.WriteObjectValue(TermsOfService, "termsOfService");
+            }
+            writer.WriteStartElement("id");
+            writer.WriteValue(Id);
+            writer.WriteEndElement();
+            writer.WriteStartElement("name");
+            writer.WriteValue(Name);
+            writer.WriteEndElement();
+            writer.WriteStartElement("type");
+            writer.WriteValue(ResourceType);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(SystemData))
+            {
+                writer.WriteStartElement("systemData");
+                writer.WriteValue(SystemData);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static PortalSignupSettingsData DeserializePortalSignupSettingsData(XElement element)
+        {
+            bool? enabled = default;
+            TermsOfServiceProperties termsOfService = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
+            if (element.Element("enabled") is XElement enabledElement)
+            {
+                enabled = (bool?)enabledElement;
+            }
+            if (element.Element("termsOfService") is XElement termsOfServiceElement)
+            {
+                termsOfService = TermsOfServiceProperties.DeserializeTermsOfServiceProperties(termsOfServiceElement);
+            }
+            if (element.Element("id") is XElement idElement)
+            {
+                id = new ResourceIdentifier((string)idElement);
+            }
+            if (element.Element("name") is XElement nameElement)
+            {
+                name = (string)nameElement;
+            }
+            if (element.Element("type") is XElement typeElement)
+            {
+                resourceType = (string)typeElement;
+            }
+            if (element.Element("systemData") is XElement systemDataElement)
+            {
+                systemData = systemDataElement.(null);
+            }
+            return new PortalSignupSettingsData(id, name, resourceType, systemData, enabled, termsOfService);
         }
     }
 }

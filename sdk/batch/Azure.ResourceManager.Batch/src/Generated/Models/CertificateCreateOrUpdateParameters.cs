@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -29,15 +28,15 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="format"> The format of the certificate - either Pfx or Cer. If omitted, the default is Pfx. </param>
         /// <param name="data"> The maximum size is 10KB. </param>
         /// <param name="password"> This must not be specified if the certificate format is Cer. </param>
-        /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
-        internal CertificateCreateOrUpdateParameters(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string thumbprintAlgorithm, string thumbprint, CertificateFormat? format, string data, string password, ETag? etag) : base(id, name, resourceType, systemData)
+        /// <param name="eTagEtag"> The ETag of the resource, used for concurrency statements. </param>
+        internal CertificateCreateOrUpdateParameters(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string thumbprintAlgorithm, string thumbprint, CertificateFormat? format, string data, string password, string eTagEtag) : base(id, name, resourceType, systemData)
         {
             ThumbprintAlgorithm = thumbprintAlgorithm;
             Thumbprint = thumbprint;
             Format = format;
             Data = data;
             Password = password;
-            ETag = etag;
+            ETagEtag = eTagEtag;
         }
 
         /// <summary> This must match the first portion of the certificate name. Currently required to be &apos;SHA1&apos;. </summary>
@@ -51,6 +50,6 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> This must not be specified if the certificate format is Cer. </summary>
         public string Password { get; set; }
         /// <summary> The ETag of the resource, used for concurrency statements. </summary>
-        public ETag? ETag { get; }
+        public string ETagEtag { get; }
     }
 }

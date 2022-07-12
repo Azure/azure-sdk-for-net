@@ -8,13 +8,15 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ApiContractData : IUtf8JsonSerializable
+    public partial class ApiContractData : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -368,6 +370,280 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             return new ApiContractData(id, name, type, systemData.Value, description.Value, authenticationSettings.Value, subscriptionKeyParameterNames.Value, Optional.ToNullable(type0), apiRevision.Value, apiVersion.Value, Optional.ToNullable(isCurrent), Optional.ToNullable(isOnline), apiRevisionDescription.Value, apiVersionDescription.Value, apiVersionSetId.Value, Optional.ToNullable(subscriptionRequired), termsOfServiceUrl.Value, contact.Value, license.Value, sourceApiId.Value, displayName.Value, serviceUrl.Value, path.Value, Optional.ToList(protocols), apiVersionSet.Value);
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "ApiContract");
+            if (Optional.IsDefined(Description))
+            {
+                writer.WriteStartElement("description");
+                writer.WriteValue(Description);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(AuthenticationSettings))
+            {
+                writer.WriteObjectValue(AuthenticationSettings, "authenticationSettings");
+            }
+            if (Optional.IsDefined(SubscriptionKeyParameterNames))
+            {
+                writer.WriteObjectValue(SubscriptionKeyParameterNames, "subscriptionKeyParameterNames");
+            }
+            if (Optional.IsDefined(ApiType))
+            {
+                writer.WriteStartElement("type");
+                writer.WriteValue(ApiType.Value.ToString());
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ApiRevision))
+            {
+                writer.WriteStartElement("apiRevision");
+                writer.WriteValue(ApiRevision);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ApiVersion))
+            {
+                writer.WriteStartElement("apiVersion");
+                writer.WriteValue(ApiVersion);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(IsCurrent))
+            {
+                writer.WriteStartElement("isCurrent");
+                writer.WriteValue(IsCurrent.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(IsOnline))
+            {
+                writer.WriteStartElement("isOnline");
+                writer.WriteValue(IsOnline.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ApiRevisionDescription))
+            {
+                writer.WriteStartElement("apiRevisionDescription");
+                writer.WriteValue(ApiRevisionDescription);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ApiVersionDescription))
+            {
+                writer.WriteStartElement("apiVersionDescription");
+                writer.WriteValue(ApiVersionDescription);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ApiVersionSetId))
+            {
+                writer.WriteStartElement("apiVersionSetId");
+                writer.WriteValue(ApiVersionSetId);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(SubscriptionRequired))
+            {
+                writer.WriteStartElement("subscriptionRequired");
+                writer.WriteValue(SubscriptionRequired.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(TermsOfServiceUri))
+            {
+                writer.WriteStartElement("termsOfServiceUrl");
+                writer.WriteValue(TermsOfServiceUri);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Contact))
+            {
+                writer.WriteObjectValue(Contact, "contact");
+            }
+            if (Optional.IsDefined(License))
+            {
+                writer.WriteObjectValue(License, "license");
+            }
+            if (Optional.IsDefined(SourceApiId))
+            {
+                writer.WriteStartElement("sourceApiId");
+                writer.WriteValue(SourceApiId);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WriteStartElement("displayName");
+                writer.WriteValue(DisplayName);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ServiceUri))
+            {
+                writer.WriteStartElement("serviceUrl");
+                writer.WriteValue(ServiceUri);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Path))
+            {
+                writer.WriteStartElement("path");
+                writer.WriteValue(Path);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ApiVersionSet))
+            {
+                writer.WriteObjectValue(ApiVersionSet, "apiVersionSet");
+            }
+            writer.WriteStartElement("id");
+            writer.WriteValue(Id);
+            writer.WriteEndElement();
+            writer.WriteStartElement("name");
+            writer.WriteValue(Name);
+            writer.WriteEndElement();
+            writer.WriteStartElement("type");
+            writer.WriteValue(ResourceType);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(SystemData))
+            {
+                writer.WriteStartElement("systemData");
+                writer.WriteValue(SystemData);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsCollectionDefined(Protocols))
+            {
+                foreach (var item in Protocols)
+                {
+                    writer.WriteStartElement("Protocol");
+                    writer.WriteValue(item.ToString());
+                    writer.WriteEndElement();
+                }
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static ApiContractData DeserializeApiContractData(XElement element)
+        {
+            string description = default;
+            AuthenticationSettingsContract authenticationSettings = default;
+            SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = default;
+            ApiType? apiType = default;
+            string apiRevision = default;
+            string apiVersion = default;
+            bool? isCurrent = default;
+            bool? isOnline = default;
+            string apiRevisionDescription = default;
+            string apiVersionDescription = default;
+            string apiVersionSetId = default;
+            bool? subscriptionRequired = default;
+            Uri termsOfServiceUri = default;
+            ApiContactInformation contact = default;
+            ApiLicenseInformation license = default;
+            string sourceApiId = default;
+            string displayName = default;
+            Uri serviceUri = default;
+            string path = default;
+            ApiVersionSetContractDetails apiVersionSet = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
+            IList<Protocol> protocols = default;
+            if (element.Element("description") is XElement descriptionElement)
+            {
+                description = (string)descriptionElement;
+            }
+            if (element.Element("authenticationSettings") is XElement authenticationSettingsElement)
+            {
+                authenticationSettings = AuthenticationSettingsContract.DeserializeAuthenticationSettingsContract(authenticationSettingsElement);
+            }
+            if (element.Element("subscriptionKeyParameterNames") is XElement subscriptionKeyParameterNamesElement)
+            {
+                subscriptionKeyParameterNames = SubscriptionKeyParameterNamesContract.DeserializeSubscriptionKeyParameterNamesContract(subscriptionKeyParameterNamesElement);
+            }
+            if (element.Element("type") is XElement typeElement)
+            {
+                apiType = new ApiType(typeElement.Value);
+            }
+            if (element.Element("apiRevision") is XElement apiRevisionElement)
+            {
+                apiRevision = (string)apiRevisionElement;
+            }
+            if (element.Element("apiVersion") is XElement apiVersionElement)
+            {
+                apiVersion = (string)apiVersionElement;
+            }
+            if (element.Element("isCurrent") is XElement isCurrentElement)
+            {
+                isCurrent = (bool?)isCurrentElement;
+            }
+            if (element.Element("isOnline") is XElement isOnlineElement)
+            {
+                isOnline = (bool?)isOnlineElement;
+            }
+            if (element.Element("apiRevisionDescription") is XElement apiRevisionDescriptionElement)
+            {
+                apiRevisionDescription = (string)apiRevisionDescriptionElement;
+            }
+            if (element.Element("apiVersionDescription") is XElement apiVersionDescriptionElement)
+            {
+                apiVersionDescription = (string)apiVersionDescriptionElement;
+            }
+            if (element.Element("apiVersionSetId") is XElement apiVersionSetIdElement)
+            {
+                apiVersionSetId = (string)apiVersionSetIdElement;
+            }
+            if (element.Element("subscriptionRequired") is XElement subscriptionRequiredElement)
+            {
+                subscriptionRequired = (bool?)subscriptionRequiredElement;
+            }
+            if (element.Element("termsOfServiceUrl") is XElement termsOfServiceUrlElement)
+            {
+                termsOfServiceUri = new Uri((string)termsOfServiceUrlElement)
+                ;
+            }
+            if (element.Element("contact") is XElement contactElement)
+            {
+                contact = ApiContactInformation.DeserializeApiContactInformation(contactElement);
+            }
+            if (element.Element("license") is XElement licenseElement)
+            {
+                license = ApiLicenseInformation.DeserializeApiLicenseInformation(licenseElement);
+            }
+            if (element.Element("sourceApiId") is XElement sourceApiIdElement)
+            {
+                sourceApiId = (string)sourceApiIdElement;
+            }
+            if (element.Element("displayName") is XElement displayNameElement)
+            {
+                displayName = (string)displayNameElement;
+            }
+            if (element.Element("serviceUrl") is XElement serviceUrlElement)
+            {
+                serviceUri = new Uri((string)serviceUrlElement)
+                ;
+            }
+            if (element.Element("path") is XElement pathElement)
+            {
+                path = (string)pathElement;
+            }
+            if (element.Element("apiVersionSet") is XElement apiVersionSetElement)
+            {
+                apiVersionSet = ApiVersionSetContractDetails.DeserializeApiVersionSetContractDetails(apiVersionSetElement);
+            }
+            if (element.Element("id") is XElement idElement)
+            {
+                id = new ResourceIdentifier((string)idElement);
+            }
+            if (element.Element("name") is XElement nameElement)
+            {
+                name = (string)nameElement;
+            }
+            if (element.Element("type") is XElement typeElement0)
+            {
+                resourceType = (string)typeElement0;
+            }
+            if (element.Element("systemData") is XElement systemDataElement)
+            {
+                systemData = systemDataElement.(null);
+            }
+            var array = new List<Protocol>();
+            foreach (var e in element.Elements("Protocol"))
+            {
+                array.Add(new Protocol(e.Value));
+            }
+            protocols = array;
+            return new ApiContractData(id, name, resourceType, systemData, description, authenticationSettings, subscriptionKeyParameterNames, apiType, apiRevision, apiVersion, isCurrent, isOnline, apiRevisionDescription, apiVersionDescription, apiVersionSetId, subscriptionRequired, termsOfServiceUri, contact, license, sourceApiId, displayName, serviceUri, path, protocols, apiVersionSet);
         }
     }
 }

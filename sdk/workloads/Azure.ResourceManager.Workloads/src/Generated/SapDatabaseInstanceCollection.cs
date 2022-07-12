@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.Workloads
     /// </summary>
     public partial class SapDatabaseInstanceCollection : ArmCollection, IEnumerable<SapDatabaseInstanceResource>, IAsyncEnumerable<SapDatabaseInstanceResource>
     {
-        private readonly ClientDiagnostics _sapDatabaseInstanceSapDatabaseInstancesClientDiagnostics;
-        private readonly SAPDatabaseInstancesRestOperations _sapDatabaseInstanceSapDatabaseInstancesRestClient;
+        private readonly ClientDiagnostics _sapDatabaseInstanceSAPDatabaseInstancesClientDiagnostics;
+        private readonly SAPDatabaseInstancesRestOperations _sapDatabaseInstanceSAPDatabaseInstancesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SapDatabaseInstanceCollection"/> class for mocking. </summary>
         protected SapDatabaseInstanceCollection()
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SapDatabaseInstanceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _sapDatabaseInstanceSapDatabaseInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Workloads", SapDatabaseInstanceResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SapDatabaseInstanceResource.ResourceType, out string sapDatabaseInstanceSapDatabaseInstancesApiVersion);
-            _sapDatabaseInstanceSapDatabaseInstancesRestClient = new SAPDatabaseInstancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sapDatabaseInstanceSapDatabaseInstancesApiVersion);
+            _sapDatabaseInstanceSAPDatabaseInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Workloads", SapDatabaseInstanceResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SapDatabaseInstanceResource.ResourceType, out string sapDatabaseInstanceSAPDatabaseInstancesApiVersion);
+            _sapDatabaseInstanceSAPDatabaseInstancesRestClient = new SAPDatabaseInstancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sapDatabaseInstanceSAPDatabaseInstancesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -68,12 +68,12 @@ namespace Azure.ResourceManager.Workloads
         {
             Argument.AssertNotNullOrEmpty(databaseInstanceName, nameof(databaseInstanceName));
 
-            using var scope = _sapDatabaseInstanceSapDatabaseInstancesClientDiagnostics.CreateScope("SapDatabaseInstanceCollection.CreateOrUpdate");
+            using var scope = _sapDatabaseInstanceSAPDatabaseInstancesClientDiagnostics.CreateScope("SapDatabaseInstanceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _sapDatabaseInstanceSapDatabaseInstancesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseInstanceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadsArmOperation<SapDatabaseInstanceResource>(new SapDatabaseInstanceOperationSource(Client), _sapDatabaseInstanceSapDatabaseInstancesClientDiagnostics, Pipeline, _sapDatabaseInstanceSapDatabaseInstancesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseInstanceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _sapDatabaseInstanceSAPDatabaseInstancesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseInstanceName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new WorkloadsArmOperation<SapDatabaseInstanceResource>(new SapDatabaseInstanceOperationSource(Client), _sapDatabaseInstanceSAPDatabaseInstancesClientDiagnostics, Pipeline, _sapDatabaseInstanceSAPDatabaseInstancesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseInstanceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -100,12 +100,12 @@ namespace Azure.ResourceManager.Workloads
         {
             Argument.AssertNotNullOrEmpty(databaseInstanceName, nameof(databaseInstanceName));
 
-            using var scope = _sapDatabaseInstanceSapDatabaseInstancesClientDiagnostics.CreateScope("SapDatabaseInstanceCollection.CreateOrUpdate");
+            using var scope = _sapDatabaseInstanceSAPDatabaseInstancesClientDiagnostics.CreateScope("SapDatabaseInstanceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _sapDatabaseInstanceSapDatabaseInstancesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseInstanceName, data, cancellationToken);
-                var operation = new WorkloadsArmOperation<SapDatabaseInstanceResource>(new SapDatabaseInstanceOperationSource(Client), _sapDatabaseInstanceSapDatabaseInstancesClientDiagnostics, Pipeline, _sapDatabaseInstanceSapDatabaseInstancesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseInstanceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _sapDatabaseInstanceSAPDatabaseInstancesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseInstanceName, data, cancellationToken);
+                var operation = new WorkloadsArmOperation<SapDatabaseInstanceResource>(new SapDatabaseInstanceOperationSource(Client), _sapDatabaseInstanceSAPDatabaseInstancesClientDiagnostics, Pipeline, _sapDatabaseInstanceSAPDatabaseInstancesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseInstanceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -130,11 +130,11 @@ namespace Azure.ResourceManager.Workloads
         {
             Argument.AssertNotNullOrEmpty(databaseInstanceName, nameof(databaseInstanceName));
 
-            using var scope = _sapDatabaseInstanceSapDatabaseInstancesClientDiagnostics.CreateScope("SapDatabaseInstanceCollection.Get");
+            using var scope = _sapDatabaseInstanceSAPDatabaseInstancesClientDiagnostics.CreateScope("SapDatabaseInstanceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _sapDatabaseInstanceSapDatabaseInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseInstanceName, cancellationToken).ConfigureAwait(false);
+                var response = await _sapDatabaseInstanceSAPDatabaseInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseInstanceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SapDatabaseInstanceResource(Client, response.Value), response.GetRawResponse());
@@ -159,11 +159,11 @@ namespace Azure.ResourceManager.Workloads
         {
             Argument.AssertNotNullOrEmpty(databaseInstanceName, nameof(databaseInstanceName));
 
-            using var scope = _sapDatabaseInstanceSapDatabaseInstancesClientDiagnostics.CreateScope("SapDatabaseInstanceCollection.Get");
+            using var scope = _sapDatabaseInstanceSAPDatabaseInstancesClientDiagnostics.CreateScope("SapDatabaseInstanceCollection.Get");
             scope.Start();
             try
             {
-                var response = _sapDatabaseInstanceSapDatabaseInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseInstanceName, cancellationToken);
+                var response = _sapDatabaseInstanceSAPDatabaseInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseInstanceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SapDatabaseInstanceResource(Client, response.Value), response.GetRawResponse());
@@ -186,11 +186,11 @@ namespace Azure.ResourceManager.Workloads
         {
             async Task<Page<SapDatabaseInstanceResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _sapDatabaseInstanceSapDatabaseInstancesClientDiagnostics.CreateScope("SapDatabaseInstanceCollection.GetAll");
+                using var scope = _sapDatabaseInstanceSAPDatabaseInstancesClientDiagnostics.CreateScope("SapDatabaseInstanceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _sapDatabaseInstanceSapDatabaseInstancesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _sapDatabaseInstanceSAPDatabaseInstancesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new SapDatabaseInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -201,11 +201,11 @@ namespace Azure.ResourceManager.Workloads
             }
             async Task<Page<SapDatabaseInstanceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _sapDatabaseInstanceSapDatabaseInstancesClientDiagnostics.CreateScope("SapDatabaseInstanceCollection.GetAll");
+                using var scope = _sapDatabaseInstanceSAPDatabaseInstancesClientDiagnostics.CreateScope("SapDatabaseInstanceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _sapDatabaseInstanceSapDatabaseInstancesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _sapDatabaseInstanceSAPDatabaseInstancesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new SapDatabaseInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -228,11 +228,11 @@ namespace Azure.ResourceManager.Workloads
         {
             Page<SapDatabaseInstanceResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _sapDatabaseInstanceSapDatabaseInstancesClientDiagnostics.CreateScope("SapDatabaseInstanceCollection.GetAll");
+                using var scope = _sapDatabaseInstanceSAPDatabaseInstancesClientDiagnostics.CreateScope("SapDatabaseInstanceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _sapDatabaseInstanceSapDatabaseInstancesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _sapDatabaseInstanceSAPDatabaseInstancesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new SapDatabaseInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -243,11 +243,11 @@ namespace Azure.ResourceManager.Workloads
             }
             Page<SapDatabaseInstanceResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _sapDatabaseInstanceSapDatabaseInstancesClientDiagnostics.CreateScope("SapDatabaseInstanceCollection.GetAll");
+                using var scope = _sapDatabaseInstanceSAPDatabaseInstancesClientDiagnostics.CreateScope("SapDatabaseInstanceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _sapDatabaseInstanceSapDatabaseInstancesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _sapDatabaseInstanceSAPDatabaseInstancesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new SapDatabaseInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -272,11 +272,11 @@ namespace Azure.ResourceManager.Workloads
         {
             Argument.AssertNotNullOrEmpty(databaseInstanceName, nameof(databaseInstanceName));
 
-            using var scope = _sapDatabaseInstanceSapDatabaseInstancesClientDiagnostics.CreateScope("SapDatabaseInstanceCollection.Exists");
+            using var scope = _sapDatabaseInstanceSAPDatabaseInstancesClientDiagnostics.CreateScope("SapDatabaseInstanceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _sapDatabaseInstanceSapDatabaseInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseInstanceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _sapDatabaseInstanceSAPDatabaseInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseInstanceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -299,11 +299,11 @@ namespace Azure.ResourceManager.Workloads
         {
             Argument.AssertNotNullOrEmpty(databaseInstanceName, nameof(databaseInstanceName));
 
-            using var scope = _sapDatabaseInstanceSapDatabaseInstancesClientDiagnostics.CreateScope("SapDatabaseInstanceCollection.Exists");
+            using var scope = _sapDatabaseInstanceSAPDatabaseInstancesClientDiagnostics.CreateScope("SapDatabaseInstanceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _sapDatabaseInstanceSapDatabaseInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseInstanceName, cancellationToken: cancellationToken);
+                var response = _sapDatabaseInstanceSAPDatabaseInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseInstanceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.StreamAnalytics.Models;
@@ -48,7 +47,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         internal static StreamAnalyticsClusterData DeserializeStreamAnalyticsClusterData(JsonElement element)
         {
             Optional<ClusterSku> sku = default;
-            Optional<ETag> etag = default;
+            Optional<string> etag = default;
             Optional<ClusterProperties> properties = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -70,12 +69,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 }
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
+                    etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -134,7 +128,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                     continue;
                 }
             }
-            return new StreamAnalyticsClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(etag), properties.Value);
+            return new StreamAnalyticsClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, etag.Value, properties.Value);
         }
     }
 }

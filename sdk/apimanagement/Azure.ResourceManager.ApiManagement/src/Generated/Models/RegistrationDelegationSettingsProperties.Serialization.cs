@@ -6,11 +6,13 @@
 #nullable disable
 
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    internal partial class RegistrationDelegationSettingsProperties : IUtf8JsonSerializable
+    internal partial class RegistrationDelegationSettingsProperties : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -40,6 +42,28 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new RegistrationDelegationSettingsProperties(Optional.ToNullable(enabled));
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "RegistrationDelegationSettingsProperties");
+            if (Optional.IsDefined(Enabled))
+            {
+                writer.WriteStartElement("enabled");
+                writer.WriteValue(Enabled.Value);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static RegistrationDelegationSettingsProperties DeserializeRegistrationDelegationSettingsProperties(XElement element)
+        {
+            bool? enabled = default;
+            if (element.Element("enabled") is XElement enabledElement)
+            {
+                enabled = (bool?)enabledElement;
+            }
+            return new RegistrationDelegationSettingsProperties(enabled);
         }
     }
 }

@@ -36,21 +36,21 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="version"> Database version. </param>
         /// <param name="sku"> The name of the server SKU, e.g. Standard_D32s_v4. </param>
         /// <param name="tier"> Tier of the server SKU. </param>
-        /// <param name="haEnabled"> Whether to enable HA for the server. </param>
+        /// <param name="haHaEnabled"> Whether to enable HA for the server. </param>
         /// <param name="storageSku"> SKU name for database storage. </param>
         /// <param name="storageInGB"> Database storage size in GB. </param>
         /// <param name="storageIops"> Storage IOPS for the server. </param>
         /// <param name="backupRetentionDays"> Backup retention days for the server. </param>
         /// <param name="sslEnforcementEnabled"> Whether to enable SSL enforcement on the database. </param>
         /// <param name="serverResourceId"> Azure Database Server resource Id. </param>
-        internal DatabaseProfile(DatabaseType databaseType, string serverName, string version, string sku, DatabaseTier tier, HAEnabled? haEnabled, string storageSku, long? storageInGB, long? storageIops, int? backupRetentionDays, EnableSslEnforcement? sslEnforcementEnabled, ResourceIdentifier serverResourceId)
+        internal DatabaseProfile(DatabaseType databaseType, string serverName, string version, string sku, DatabaseTier tier, HAEnabled? haHaEnabled, string storageSku, long? storageInGB, long? storageIops, int? backupRetentionDays, EnableSslEnforcement? sslEnforcementEnabled, ResourceIdentifier serverResourceId)
         {
             DatabaseType = databaseType;
             ServerName = serverName;
             Version = version;
             Sku = sku;
             Tier = tier;
-            HAEnabled = haEnabled;
+            HAHaEnabled = haHaEnabled;
             StorageSku = storageSku;
             StorageInGB = storageInGB;
             StorageIops = storageIops;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Tier of the server SKU. </summary>
         public DatabaseTier Tier { get; set; }
         /// <summary> Whether to enable HA for the server. </summary>
-        public HAEnabled? HAEnabled { get; set; }
+        public HAEnabled? HAHaEnabled { get; set; }
         /// <summary> SKU name for database storage. </summary>
         public string StorageSku { get; set; }
         /// <summary> Database storage size in GB. </summary>

@@ -7,13 +7,15 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class EmailTemplateContractData : IUtf8JsonSerializable
+    public partial class EmailTemplateContractData : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -152,6 +154,121 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             return new EmailTemplateContractData(id, name, type, systemData.Value, subject.Value, body.Value, title.Value, description.Value, Optional.ToNullable(isDefault), Optional.ToList(parameters));
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "EmailTemplateContract");
+            if (Optional.IsDefined(Subject))
+            {
+                writer.WriteStartElement("subject");
+                writer.WriteValue(Subject);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Body))
+            {
+                writer.WriteStartElement("body");
+                writer.WriteValue(Body);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Title))
+            {
+                writer.WriteStartElement("title");
+                writer.WriteValue(Title);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WriteStartElement("description");
+                writer.WriteValue(Description);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(IsDefault))
+            {
+                writer.WriteStartElement("isDefault");
+                writer.WriteValue(IsDefault.Value);
+                writer.WriteEndElement();
+            }
+            writer.WriteStartElement("id");
+            writer.WriteValue(Id);
+            writer.WriteEndElement();
+            writer.WriteStartElement("name");
+            writer.WriteValue(Name);
+            writer.WriteEndElement();
+            writer.WriteStartElement("type");
+            writer.WriteValue(ResourceType);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(SystemData))
+            {
+                writer.WriteStartElement("systemData");
+                writer.WriteValue(SystemData);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsCollectionDefined(Parameters))
+            {
+                foreach (var item in Parameters)
+                {
+                    writer.WriteObjectValue(item, "EmailTemplateParametersContractProperties");
+                }
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static EmailTemplateContractData DeserializeEmailTemplateContractData(XElement element)
+        {
+            string subject = default;
+            string body = default;
+            string title = default;
+            string description = default;
+            bool? isDefault = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
+            IList<EmailTemplateParametersContractProperties> parameters = default;
+            if (element.Element("subject") is XElement subjectElement)
+            {
+                subject = (string)subjectElement;
+            }
+            if (element.Element("body") is XElement bodyElement)
+            {
+                body = (string)bodyElement;
+            }
+            if (element.Element("title") is XElement titleElement)
+            {
+                title = (string)titleElement;
+            }
+            if (element.Element("description") is XElement descriptionElement)
+            {
+                description = (string)descriptionElement;
+            }
+            if (element.Element("isDefault") is XElement isDefaultElement)
+            {
+                isDefault = (bool?)isDefaultElement;
+            }
+            if (element.Element("id") is XElement idElement)
+            {
+                id = new ResourceIdentifier((string)idElement);
+            }
+            if (element.Element("name") is XElement nameElement)
+            {
+                name = (string)nameElement;
+            }
+            if (element.Element("type") is XElement typeElement)
+            {
+                resourceType = (string)typeElement;
+            }
+            if (element.Element("systemData") is XElement systemDataElement)
+            {
+                systemData = systemDataElement.(null);
+            }
+            var array = new List<EmailTemplateParametersContractProperties>();
+            foreach (var e in element.Elements("EmailTemplateParametersContractProperties"))
+            {
+                array.Add(EmailTemplateParametersContractProperties.DeserializeEmailTemplateParametersContractProperties(e));
+            }
+            parameters = array;
+            return new EmailTemplateContractData(id, name, resourceType, systemData, subject, body, title, description, isDefault, parameters);
         }
     }
 }

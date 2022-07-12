@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.IotHub.Models;
 using Azure.ResourceManager.Models;
@@ -19,10 +18,10 @@ namespace Azure.ResourceManager.IotHub
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (Optional.IsDefined(ETagEtag))
             {
                 writer.WritePropertyName("etag");
-                writer.WriteStringValue(ETag.Value.ToString());
+                writer.WriteStringValue(ETagEtag);
             }
             if (Optional.IsDefined(Properties))
             {
@@ -54,7 +53,7 @@ namespace Azure.ResourceManager.IotHub
 
         internal static IotHubDescriptionData DeserializeIotHubDescriptionData(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<string> etag = default;
             Optional<IotHubProperties> properties = default;
             IotHubSkuInfo sku = default;
             Optional<ManagedServiceIdentity> identity = default;
@@ -68,12 +67,7 @@ namespace Azure.ResourceManager.IotHub
             {
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
+                    etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -147,7 +141,7 @@ namespace Azure.ResourceManager.IotHub
                     continue;
                 }
             }
-            return new IotHubDescriptionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), properties.Value, sku, identity);
+            return new IotHubDescriptionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, etag.Value, properties.Value, sku, identity);
         }
     }
 }

@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Workloads
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _sapApplicationServerInstanceSapApplicationServerInstancesClientDiagnostics;
-        private readonly SAPApplicationServerInstancesRestOperations _sapApplicationServerInstanceSapApplicationServerInstancesRestClient;
+        private readonly ClientDiagnostics _sapApplicationServerInstanceSAPApplicationServerInstancesClientDiagnostics;
+        private readonly SAPApplicationServerInstancesRestOperations _sapApplicationServerInstanceSAPApplicationServerInstancesRestClient;
         private readonly SapApplicationServerInstanceData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SapApplicationServerInstanceResource"/> class for mocking. </summary>
@@ -57,9 +57,9 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SapApplicationServerInstanceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _sapApplicationServerInstanceSapApplicationServerInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Workloads", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string sapApplicationServerInstanceSapApplicationServerInstancesApiVersion);
-            _sapApplicationServerInstanceSapApplicationServerInstancesRestClient = new SAPApplicationServerInstancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sapApplicationServerInstanceSapApplicationServerInstancesApiVersion);
+            _sapApplicationServerInstanceSAPApplicationServerInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Workloads", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string sapApplicationServerInstanceSAPApplicationServerInstancesApiVersion);
+            _sapApplicationServerInstanceSAPApplicationServerInstancesRestClient = new SAPApplicationServerInstancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sapApplicationServerInstanceSAPApplicationServerInstancesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SapApplicationServerInstanceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _sapApplicationServerInstanceSapApplicationServerInstancesClientDiagnostics.CreateScope("SapApplicationServerInstanceResource.Get");
+            using var scope = _sapApplicationServerInstanceSAPApplicationServerInstancesClientDiagnostics.CreateScope("SapApplicationServerInstanceResource.Get");
             scope.Start();
             try
             {
-                var response = await _sapApplicationServerInstanceSapApplicationServerInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _sapApplicationServerInstanceSAPApplicationServerInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SapApplicationServerInstanceResource(Client, response.Value), response.GetRawResponse());
@@ -121,11 +121,11 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SapApplicationServerInstanceResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _sapApplicationServerInstanceSapApplicationServerInstancesClientDiagnostics.CreateScope("SapApplicationServerInstanceResource.Get");
+            using var scope = _sapApplicationServerInstanceSAPApplicationServerInstancesClientDiagnostics.CreateScope("SapApplicationServerInstanceResource.Get");
             scope.Start();
             try
             {
-                var response = _sapApplicationServerInstanceSapApplicationServerInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _sapApplicationServerInstanceSAPApplicationServerInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SapApplicationServerInstanceResource(Client, response.Value), response.GetRawResponse());
@@ -146,12 +146,12 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<OperationStatusResult>> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _sapApplicationServerInstanceSapApplicationServerInstancesClientDiagnostics.CreateScope("SapApplicationServerInstanceResource.Delete");
+            using var scope = _sapApplicationServerInstanceSAPApplicationServerInstancesClientDiagnostics.CreateScope("SapApplicationServerInstanceResource.Delete");
             scope.Start();
             try
             {
-                var response = await _sapApplicationServerInstanceSapApplicationServerInstancesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadsArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _sapApplicationServerInstanceSapApplicationServerInstancesClientDiagnostics, Pipeline, _sapApplicationServerInstanceSapApplicationServerInstancesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _sapApplicationServerInstanceSAPApplicationServerInstancesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new WorkloadsArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _sapApplicationServerInstanceSAPApplicationServerInstancesClientDiagnostics, Pipeline, _sapApplicationServerInstanceSAPApplicationServerInstancesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -172,12 +172,12 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<OperationStatusResult> Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _sapApplicationServerInstanceSapApplicationServerInstancesClientDiagnostics.CreateScope("SapApplicationServerInstanceResource.Delete");
+            using var scope = _sapApplicationServerInstanceSAPApplicationServerInstancesClientDiagnostics.CreateScope("SapApplicationServerInstanceResource.Delete");
             scope.Start();
             try
             {
-                var response = _sapApplicationServerInstanceSapApplicationServerInstancesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new WorkloadsArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _sapApplicationServerInstanceSapApplicationServerInstancesClientDiagnostics, Pipeline, _sapApplicationServerInstanceSapApplicationServerInstancesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _sapApplicationServerInstanceSAPApplicationServerInstancesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new WorkloadsArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _sapApplicationServerInstanceSAPApplicationServerInstancesClientDiagnostics, Pipeline, _sapApplicationServerInstanceSAPApplicationServerInstancesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -202,12 +202,12 @@ namespace Azure.ResourceManager.Workloads
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _sapApplicationServerInstanceSapApplicationServerInstancesClientDiagnostics.CreateScope("SapApplicationServerInstanceResource.Update");
+            using var scope = _sapApplicationServerInstanceSAPApplicationServerInstancesClientDiagnostics.CreateScope("SapApplicationServerInstanceResource.Update");
             scope.Start();
             try
             {
-                var response = await _sapApplicationServerInstanceSapApplicationServerInstancesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadsArmOperation<SapApplicationServerInstanceResource>(new SapApplicationServerInstanceOperationSource(Client), _sapApplicationServerInstanceSapApplicationServerInstancesClientDiagnostics, Pipeline, _sapApplicationServerInstanceSapApplicationServerInstancesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _sapApplicationServerInstanceSAPApplicationServerInstancesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new WorkloadsArmOperation<SapApplicationServerInstanceResource>(new SapApplicationServerInstanceOperationSource(Client), _sapApplicationServerInstanceSAPApplicationServerInstancesClientDiagnostics, Pipeline, _sapApplicationServerInstanceSAPApplicationServerInstancesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -232,12 +232,12 @@ namespace Azure.ResourceManager.Workloads
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _sapApplicationServerInstanceSapApplicationServerInstancesClientDiagnostics.CreateScope("SapApplicationServerInstanceResource.Update");
+            using var scope = _sapApplicationServerInstanceSAPApplicationServerInstancesClientDiagnostics.CreateScope("SapApplicationServerInstanceResource.Update");
             scope.Start();
             try
             {
-                var response = _sapApplicationServerInstanceSapApplicationServerInstancesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new WorkloadsArmOperation<SapApplicationServerInstanceResource>(new SapApplicationServerInstanceOperationSource(Client), _sapApplicationServerInstanceSapApplicationServerInstancesClientDiagnostics, Pipeline, _sapApplicationServerInstanceSapApplicationServerInstancesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _sapApplicationServerInstanceSAPApplicationServerInstancesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                var operation = new WorkloadsArmOperation<SapApplicationServerInstanceResource>(new SapApplicationServerInstanceOperationSource(Client), _sapApplicationServerInstanceSAPApplicationServerInstancesClientDiagnostics, Pipeline, _sapApplicationServerInstanceSAPApplicationServerInstancesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -263,14 +263,14 @@ namespace Azure.ResourceManager.Workloads
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _sapApplicationServerInstanceSapApplicationServerInstancesClientDiagnostics.CreateScope("SapApplicationServerInstanceResource.AddTag");
+            using var scope = _sapApplicationServerInstanceSAPApplicationServerInstancesClientDiagnostics.CreateScope("SapApplicationServerInstanceResource.AddTag");
             scope.Start();
             try
             {
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues[key] = value;
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _sapApplicationServerInstanceSapApplicationServerInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _sapApplicationServerInstanceSAPApplicationServerInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new SapApplicationServerInstanceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -294,14 +294,14 @@ namespace Azure.ResourceManager.Workloads
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _sapApplicationServerInstanceSapApplicationServerInstancesClientDiagnostics.CreateScope("SapApplicationServerInstanceResource.AddTag");
+            using var scope = _sapApplicationServerInstanceSAPApplicationServerInstancesClientDiagnostics.CreateScope("SapApplicationServerInstanceResource.AddTag");
             scope.Start();
             try
             {
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues[key] = value;
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _sapApplicationServerInstanceSapApplicationServerInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var originalResponse = _sapApplicationServerInstanceSAPApplicationServerInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new SapApplicationServerInstanceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Workloads
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _sapApplicationServerInstanceSapApplicationServerInstancesClientDiagnostics.CreateScope("SapApplicationServerInstanceResource.SetTags");
+            using var scope = _sapApplicationServerInstanceSAPApplicationServerInstancesClientDiagnostics.CreateScope("SapApplicationServerInstanceResource.SetTags");
             scope.Start();
             try
             {
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Workloads
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _sapApplicationServerInstanceSapApplicationServerInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _sapApplicationServerInstanceSAPApplicationServerInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new SapApplicationServerInstanceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Workloads
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _sapApplicationServerInstanceSapApplicationServerInstancesClientDiagnostics.CreateScope("SapApplicationServerInstanceResource.SetTags");
+            using var scope = _sapApplicationServerInstanceSAPApplicationServerInstancesClientDiagnostics.CreateScope("SapApplicationServerInstanceResource.SetTags");
             scope.Start();
             try
             {
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Workloads
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _sapApplicationServerInstanceSapApplicationServerInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var originalResponse = _sapApplicationServerInstanceSAPApplicationServerInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new SapApplicationServerInstanceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -383,14 +383,14 @@ namespace Azure.ResourceManager.Workloads
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _sapApplicationServerInstanceSapApplicationServerInstancesClientDiagnostics.CreateScope("SapApplicationServerInstanceResource.RemoveTag");
+            using var scope = _sapApplicationServerInstanceSAPApplicationServerInstancesClientDiagnostics.CreateScope("SapApplicationServerInstanceResource.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.Remove(key);
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _sapApplicationServerInstanceSapApplicationServerInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _sapApplicationServerInstanceSAPApplicationServerInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new SapApplicationServerInstanceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -412,14 +412,14 @@ namespace Azure.ResourceManager.Workloads
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _sapApplicationServerInstanceSapApplicationServerInstancesClientDiagnostics.CreateScope("SapApplicationServerInstanceResource.RemoveTag");
+            using var scope = _sapApplicationServerInstanceSAPApplicationServerInstancesClientDiagnostics.CreateScope("SapApplicationServerInstanceResource.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues.Remove(key);
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _sapApplicationServerInstanceSapApplicationServerInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var originalResponse = _sapApplicationServerInstanceSAPApplicationServerInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new SapApplicationServerInstanceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)

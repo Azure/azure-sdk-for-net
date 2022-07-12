@@ -7,12 +7,14 @@
 
 using System;
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class TenantConfigurationSyncStateContract : IUtf8JsonSerializable
+    public partial class TenantConfigurationSyncStateContract : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -183,6 +185,140 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new TenantConfigurationSyncStateContract(id, name, type, systemData.Value, branch.Value, commitId.Value, Optional.ToNullable(isExport), Optional.ToNullable(isSynced), Optional.ToNullable(isGitEnabled), Optional.ToNullable(syncDate), Optional.ToNullable(configurationChangeDate), lastOperationId.Value);
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "TenantConfigurationSyncStateContract");
+            if (Optional.IsDefined(Branch))
+            {
+                writer.WriteStartElement("branch");
+                writer.WriteValue(Branch);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(CommitId))
+            {
+                writer.WriteStartElement("commitId");
+                writer.WriteValue(CommitId);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(IsExport))
+            {
+                writer.WriteStartElement("isExport");
+                writer.WriteValue(IsExport.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(IsSynced))
+            {
+                writer.WriteStartElement("isSynced");
+                writer.WriteValue(IsSynced.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(IsGitEnabled))
+            {
+                writer.WriteStartElement("isGitEnabled");
+                writer.WriteValue(IsGitEnabled.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(SyncOn))
+            {
+                writer.WriteStartElement("syncDate");
+                writer.WriteValue(SyncOn.Value, "O");
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ConfigurationChangeOn))
+            {
+                writer.WriteStartElement("configurationChangeDate");
+                writer.WriteValue(ConfigurationChangeOn.Value, "O");
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(LastOperationId))
+            {
+                writer.WriteStartElement("lastOperationId");
+                writer.WriteValue(LastOperationId);
+                writer.WriteEndElement();
+            }
+            writer.WriteStartElement("id");
+            writer.WriteValue(Id);
+            writer.WriteEndElement();
+            writer.WriteStartElement("name");
+            writer.WriteValue(Name);
+            writer.WriteEndElement();
+            writer.WriteStartElement("type");
+            writer.WriteValue(ResourceType);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(SystemData))
+            {
+                writer.WriteStartElement("systemData");
+                writer.WriteValue(SystemData);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static TenantConfigurationSyncStateContract DeserializeTenantConfigurationSyncStateContract(XElement element)
+        {
+            string branch = default;
+            string commitId = default;
+            bool? isExport = default;
+            bool? isSynced = default;
+            bool? isGitEnabled = default;
+            DateTimeOffset? syncOn = default;
+            DateTimeOffset? configurationChangeOn = default;
+            string lastOperationId = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
+            if (element.Element("branch") is XElement branchElement)
+            {
+                branch = (string)branchElement;
+            }
+            if (element.Element("commitId") is XElement commitIdElement)
+            {
+                commitId = (string)commitIdElement;
+            }
+            if (element.Element("isExport") is XElement isExportElement)
+            {
+                isExport = (bool?)isExportElement;
+            }
+            if (element.Element("isSynced") is XElement isSyncedElement)
+            {
+                isSynced = (bool?)isSyncedElement;
+            }
+            if (element.Element("isGitEnabled") is XElement isGitEnabledElement)
+            {
+                isGitEnabled = (bool?)isGitEnabledElement;
+            }
+            if (element.Element("syncDate") is XElement syncDateElement)
+            {
+                syncOn = syncDateElement.GetDateTimeOffsetValue("O");
+            }
+            if (element.Element("configurationChangeDate") is XElement configurationChangeDateElement)
+            {
+                configurationChangeOn = configurationChangeDateElement.GetDateTimeOffsetValue("O");
+            }
+            if (element.Element("lastOperationId") is XElement lastOperationIdElement)
+            {
+                lastOperationId = (string)lastOperationIdElement;
+            }
+            if (element.Element("id") is XElement idElement)
+            {
+                id = new ResourceIdentifier((string)idElement);
+            }
+            if (element.Element("name") is XElement nameElement)
+            {
+                name = (string)nameElement;
+            }
+            if (element.Element("type") is XElement typeElement)
+            {
+                resourceType = (string)typeElement;
+            }
+            if (element.Element("systemData") is XElement systemDataElement)
+            {
+                systemData = systemDataElement.(null);
+            }
+            return new TenantConfigurationSyncStateContract(id, name, resourceType, systemData, branch, commitId, isExport, isSynced, isGitEnabled, syncOn, configurationChangeOn, lastOperationId);
         }
     }
 }

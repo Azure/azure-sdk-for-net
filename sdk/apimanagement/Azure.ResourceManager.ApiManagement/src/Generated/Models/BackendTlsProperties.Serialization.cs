@@ -6,11 +6,13 @@
 #nullable disable
 
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class BackendTlsProperties : IUtf8JsonSerializable
+    public partial class BackendTlsProperties : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -56,6 +58,39 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new BackendTlsProperties(Optional.ToNullable(validateCertificateChain), Optional.ToNullable(validateCertificateName));
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "BackendTlsProperties");
+            if (Optional.IsDefined(ValidateCertificateChain))
+            {
+                writer.WriteStartElement("validateCertificateChain");
+                writer.WriteValue(ValidateCertificateChain.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ValidateCertificateName))
+            {
+                writer.WriteStartElement("validateCertificateName");
+                writer.WriteValue(ValidateCertificateName.Value);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static BackendTlsProperties DeserializeBackendTlsProperties(XElement element)
+        {
+            bool? validateCertificateChain = default;
+            bool? validateCertificateName = default;
+            if (element.Element("validateCertificateChain") is XElement validateCertificateChainElement)
+            {
+                validateCertificateChain = (bool?)validateCertificateChainElement;
+            }
+            if (element.Element("validateCertificateName") is XElement validateCertificateNameElement)
+            {
+                validateCertificateName = (bool?)validateCertificateNameElement;
+            }
+            return new BackendTlsProperties(validateCertificateChain, validateCertificateName);
         }
     }
 }

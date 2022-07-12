@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             Optional<string> rid = default;
             Optional<float> ts = default;
-            Optional<ETag> etag = default;
+            Optional<string> etag = default;
             Optional<int> throughput = default;
             Optional<AutoscaleSettingsResourceInfo> autoscaleSettings = default;
             Optional<string> minimumThroughput = default;
@@ -57,12 +56,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (property.NameEquals("_etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
+                    etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("throughput"))
@@ -96,7 +90,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new ExtendedThroughputSettingsResourceInfo(Optional.ToNullable(throughput), autoscaleSettings.Value, minimumThroughput.Value, offerReplacePending.Value, rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
+            return new ExtendedThroughputSettingsResourceInfo(Optional.ToNullable(throughput), autoscaleSettings.Value, minimumThroughput.Value, offerReplacePending.Value, rid.Value, Optional.ToNullable(ts), etag.Value);
         }
     }
 }

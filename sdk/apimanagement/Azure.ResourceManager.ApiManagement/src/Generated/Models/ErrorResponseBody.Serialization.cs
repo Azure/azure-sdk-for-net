@@ -7,11 +7,13 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ErrorResponseBody : IUtf8JsonSerializable
+    public partial class ErrorResponseBody : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -73,6 +75,53 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new ErrorResponseBody(code.Value, message.Value, Optional.ToList(details));
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "ErrorResponseBody");
+            if (Optional.IsDefined(Code))
+            {
+                writer.WriteStartElement("code");
+                writer.WriteValue(Code);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Message))
+            {
+                writer.WriteStartElement("message");
+                writer.WriteValue(Message);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsCollectionDefined(Details))
+            {
+                foreach (var item in Details)
+                {
+                    writer.WriteObjectValue(item, "ErrorFieldContract");
+                }
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static ErrorResponseBody DeserializeErrorResponseBody(XElement element)
+        {
+            string code = default;
+            string message = default;
+            IList<ErrorFieldContract> details = default;
+            if (element.Element("code") is XElement codeElement)
+            {
+                code = (string)codeElement;
+            }
+            if (element.Element("message") is XElement messageElement)
+            {
+                message = (string)messageElement;
+            }
+            var array = new List<ErrorFieldContract>();
+            foreach (var e in element.Elements("ErrorFieldContract"))
+            {
+                array.Add(ErrorFieldContract.DeserializeErrorFieldContract(e));
+            }
+            details = array;
+            return new ErrorResponseBody(code, message, details);
         }
     }
 }

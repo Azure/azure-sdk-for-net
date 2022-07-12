@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.CognitiveServices.Models;
 using Azure.ResourceManager.Models;
@@ -25,16 +24,16 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> Resource Etag. </param>
+        /// <param name="eTagEtag"> Resource Etag. </param>
         /// <param name="properties"> Properties of Cognitive Services account deployment. </param>
-        internal DeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, DeploymentProperties properties) : base(id, name, resourceType, systemData)
+        internal DeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string eTagEtag, DeploymentProperties properties) : base(id, name, resourceType, systemData)
         {
-            ETag = etag;
+            ETagEtag = eTagEtag;
             Properties = properties;
         }
 
         /// <summary> Resource Etag. </summary>
-        public ETag? ETag { get; }
+        public string ETagEtag { get; }
         /// <summary> Properties of Cognitive Services account deployment. </summary>
         public DeploymentProperties Properties { get; set; }
     }

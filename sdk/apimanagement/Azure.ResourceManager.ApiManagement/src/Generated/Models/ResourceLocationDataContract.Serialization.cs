@@ -6,11 +6,13 @@
 #nullable disable
 
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ResourceLocationDataContract : IUtf8JsonSerializable
+    public partial class ResourceLocationDataContract : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -65,6 +67,58 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new ResourceLocationDataContract(name, city.Value, district.Value, countryOrRegion.Value);
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "ResourceLocationDataContract");
+            writer.WriteStartElement("name");
+            writer.WriteValue(Name);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(City))
+            {
+                writer.WriteStartElement("city");
+                writer.WriteValue(City);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(District))
+            {
+                writer.WriteStartElement("district");
+                writer.WriteValue(District);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(CountryOrRegion))
+            {
+                writer.WriteStartElement("countryOrRegion");
+                writer.WriteValue(CountryOrRegion);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static ResourceLocationDataContract DeserializeResourceLocationDataContract(XElement element)
+        {
+            string name = default;
+            string city = default;
+            string district = default;
+            string countryOrRegion = default;
+            if (element.Element("name") is XElement nameElement)
+            {
+                name = (string)nameElement;
+            }
+            if (element.Element("city") is XElement cityElement)
+            {
+                city = (string)cityElement;
+            }
+            if (element.Element("district") is XElement districtElement)
+            {
+                district = (string)districtElement;
+            }
+            if (element.Element("countryOrRegion") is XElement countryOrRegionElement)
+            {
+                countryOrRegion = (string)countryOrRegionElement;
+            }
+            return new ResourceLocationDataContract(name, city, district, countryOrRegion);
         }
     }
 }

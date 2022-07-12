@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<string> type = default;
             Optional<string> groupId = default;
             Optional<IList<string>> requiredMembers = default;
-            Optional<string> privateLinkServiceId = default;
+            Optional<string> privateLinkServiceID = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (property.NameEquals("privateLinkServiceID"))
                 {
-                    privateLinkServiceId = property.Value.GetString();
+                    privateLinkServiceID = property.Value.GetString();
                     continue;
                 }
             }
-            return new ContainerServicePrivateLinkResource(id.Value, name.Value, type.Value, groupId.Value, Optional.ToList(requiredMembers), privateLinkServiceId.Value);
+            return new ContainerServicePrivateLinkResource(id.Value, name.Value, type.Value, groupId.Value, Optional.ToList(requiredMembers), privateLinkServiceID.Value);
         }
     }
 }

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
@@ -25,14 +24,14 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> Resource entity tag (ETag). </param>
+        /// <param name="eTagEtag"> Resource entity tag (ETag). </param>
         /// <param name="description"> Description of the association. </param>
         /// <param name="dataCollectionRuleId"> The resource ID of the data collection rule that is to be associated. </param>
         /// <param name="dataCollectionEndpointId"> The resource ID of the data collection endpoint that is to be associated. </param>
         /// <param name="provisioningState"> The resource provisioning state. </param>
-        internal DataCollectionRuleAssociationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string description, string dataCollectionRuleId, string dataCollectionEndpointId, KnownDataCollectionRuleAssociationProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal DataCollectionRuleAssociationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string eTagEtag, string description, string dataCollectionRuleId, string dataCollectionEndpointId, KnownDataCollectionRuleAssociationProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
-            ETag = etag;
+            ETagEtag = eTagEtag;
             Description = description;
             DataCollectionRuleId = dataCollectionRuleId;
             DataCollectionEndpointId = dataCollectionEndpointId;
@@ -40,7 +39,7 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary> Resource entity tag (ETag). </summary>
-        public ETag? ETag { get; }
+        public string ETagEtag { get; }
         /// <summary> Description of the association. </summary>
         public string Description { get; set; }
         /// <summary> The resource ID of the data collection rule that is to be associated. </summary>

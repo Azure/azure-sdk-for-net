@@ -21,21 +21,21 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("deliveryRegion");
                 writer.WriteStringValue(DeliveryRegion);
             }
-            if (Optional.IsCollectionDefined(IPv4Addresses))
+            if (Optional.IsCollectionDefined(IPv4Ipv4Addresses))
             {
                 writer.WritePropertyName("ipv4Addresses");
                 writer.WriteStartArray();
-                foreach (var item in IPv4Addresses)
+                foreach (var item in IPv4Ipv4Addresses)
                 {
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IPv6Addresses))
+            if (Optional.IsCollectionDefined(IPv6Ipv6Addresses))
             {
                 writer.WritePropertyName("ipv6Addresses");
                 writer.WriteStartArray();
-                foreach (var item in IPv6Addresses)
+                foreach (var item in IPv6Ipv6Addresses)
                 {
                     writer.WriteObjectValue(item);
                 }

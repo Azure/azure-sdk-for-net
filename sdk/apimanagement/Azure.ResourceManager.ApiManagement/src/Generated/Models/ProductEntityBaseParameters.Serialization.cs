@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -74,6 +75,41 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new ProductEntityBaseParameters(description.Value, terms.Value, Optional.ToNullable(subscriptionRequired), Optional.ToNullable(approvalRequired), Optional.ToNullable(subscriptionsLimit), Optional.ToNullable(state));
+        }
+
+        internal static ProductEntityBaseParameters DeserializeProductEntityBaseParameters(XElement element)
+        {
+            string description = default;
+            string terms = default;
+            bool? subscriptionRequired = default;
+            bool? approvalRequired = default;
+            int? subscriptionsLimit = default;
+            ProductState? state = default;
+            if (element.Element("description") is XElement descriptionElement)
+            {
+                description = (string)descriptionElement;
+            }
+            if (element.Element("terms") is XElement termsElement)
+            {
+                terms = (string)termsElement;
+            }
+            if (element.Element("subscriptionRequired") is XElement subscriptionRequiredElement)
+            {
+                subscriptionRequired = (bool?)subscriptionRequiredElement;
+            }
+            if (element.Element("approvalRequired") is XElement approvalRequiredElement)
+            {
+                approvalRequired = (bool?)approvalRequiredElement;
+            }
+            if (element.Element("subscriptionsLimit") is XElement subscriptionsLimitElement)
+            {
+                subscriptionsLimit = (int?)subscriptionsLimitElement;
+            }
+            if (element.Element("state") is XElement stateElement)
+            {
+                state = stateElement.Value.ToProductState();
+            }
+            return new ProductEntityBaseParameters(description, terms, subscriptionRequired, approvalRequired, subscriptionsLimit, state);
         }
     }
 }

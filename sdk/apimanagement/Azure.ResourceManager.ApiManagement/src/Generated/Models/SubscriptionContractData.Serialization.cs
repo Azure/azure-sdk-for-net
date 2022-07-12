@@ -7,13 +7,15 @@
 
 using System;
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class SubscriptionContractData : IUtf8JsonSerializable
+    public partial class SubscriptionContractData : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -244,6 +246,195 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             return new SubscriptionContractData(id, name, type, systemData.Value, ownerId.Value, scope.Value, displayName.Value, Optional.ToNullable(state), Optional.ToNullable(createdDate), Optional.ToNullable(startDate), Optional.ToNullable(expirationDate), Optional.ToNullable(endDate), Optional.ToNullable(notificationDate), primaryKey.Value, secondaryKey.Value, stateComment.Value, Optional.ToNullable(allowTracing));
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "SubscriptionContract");
+            if (Optional.IsDefined(OwnerId))
+            {
+                writer.WriteStartElement("ownerId");
+                writer.WriteValue(OwnerId);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Scope))
+            {
+                writer.WriteStartElement("scope");
+                writer.WriteValue(Scope);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WriteStartElement("displayName");
+                writer.WriteValue(DisplayName);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(State))
+            {
+                writer.WriteStartElement("state");
+                writer.WriteValue(State.Value.ToSerialString());
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(CreatedOn))
+            {
+                writer.WriteStartElement("createdDate");
+                writer.WriteValue(CreatedOn.Value, "O");
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(StartOn))
+            {
+                writer.WriteStartElement("startDate");
+                writer.WriteValue(StartOn.Value, "O");
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ExpirationOn))
+            {
+                writer.WriteStartElement("expirationDate");
+                writer.WriteValue(ExpirationOn.Value, "O");
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(EndOn))
+            {
+                writer.WriteStartElement("endDate");
+                writer.WriteValue(EndOn.Value, "O");
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(NotificationOn))
+            {
+                writer.WriteStartElement("notificationDate");
+                writer.WriteValue(NotificationOn.Value, "O");
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(PrimaryKey))
+            {
+                writer.WriteStartElement("primaryKey");
+                writer.WriteValue(PrimaryKey);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(SecondaryKey))
+            {
+                writer.WriteStartElement("secondaryKey");
+                writer.WriteValue(SecondaryKey);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(StateComment))
+            {
+                writer.WriteStartElement("stateComment");
+                writer.WriteValue(StateComment);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(AllowTracing))
+            {
+                writer.WriteStartElement("allowTracing");
+                writer.WriteValue(AllowTracing.Value);
+                writer.WriteEndElement();
+            }
+            writer.WriteStartElement("id");
+            writer.WriteValue(Id);
+            writer.WriteEndElement();
+            writer.WriteStartElement("name");
+            writer.WriteValue(Name);
+            writer.WriteEndElement();
+            writer.WriteStartElement("type");
+            writer.WriteValue(ResourceType);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(SystemData))
+            {
+                writer.WriteStartElement("systemData");
+                writer.WriteValue(SystemData);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static SubscriptionContractData DeserializeSubscriptionContractData(XElement element)
+        {
+            string ownerId = default;
+            string scope = default;
+            string displayName = default;
+            SubscriptionState? state = default;
+            DateTimeOffset? createdOn = default;
+            DateTimeOffset? startOn = default;
+            DateTimeOffset? expirationOn = default;
+            DateTimeOffset? endOn = default;
+            DateTimeOffset? notificationOn = default;
+            string primaryKey = default;
+            string secondaryKey = default;
+            string stateComment = default;
+            bool? allowTracing = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
+            if (element.Element("ownerId") is XElement ownerIdElement)
+            {
+                ownerId = (string)ownerIdElement;
+            }
+            if (element.Element("scope") is XElement scopeElement)
+            {
+                scope = (string)scopeElement;
+            }
+            if (element.Element("displayName") is XElement displayNameElement)
+            {
+                displayName = (string)displayNameElement;
+            }
+            if (element.Element("state") is XElement stateElement)
+            {
+                state = stateElement.Value.ToSubscriptionState();
+            }
+            if (element.Element("createdDate") is XElement createdDateElement)
+            {
+                createdOn = createdDateElement.GetDateTimeOffsetValue("O");
+            }
+            if (element.Element("startDate") is XElement startDateElement)
+            {
+                startOn = startDateElement.GetDateTimeOffsetValue("O");
+            }
+            if (element.Element("expirationDate") is XElement expirationDateElement)
+            {
+                expirationOn = expirationDateElement.GetDateTimeOffsetValue("O");
+            }
+            if (element.Element("endDate") is XElement endDateElement)
+            {
+                endOn = endDateElement.GetDateTimeOffsetValue("O");
+            }
+            if (element.Element("notificationDate") is XElement notificationDateElement)
+            {
+                notificationOn = notificationDateElement.GetDateTimeOffsetValue("O");
+            }
+            if (element.Element("primaryKey") is XElement primaryKeyElement)
+            {
+                primaryKey = (string)primaryKeyElement;
+            }
+            if (element.Element("secondaryKey") is XElement secondaryKeyElement)
+            {
+                secondaryKey = (string)secondaryKeyElement;
+            }
+            if (element.Element("stateComment") is XElement stateCommentElement)
+            {
+                stateComment = (string)stateCommentElement;
+            }
+            if (element.Element("allowTracing") is XElement allowTracingElement)
+            {
+                allowTracing = (bool?)allowTracingElement;
+            }
+            if (element.Element("id") is XElement idElement)
+            {
+                id = new ResourceIdentifier((string)idElement);
+            }
+            if (element.Element("name") is XElement nameElement)
+            {
+                name = (string)nameElement;
+            }
+            if (element.Element("type") is XElement typeElement)
+            {
+                resourceType = (string)typeElement;
+            }
+            if (element.Element("systemData") is XElement systemDataElement)
+            {
+                systemData = systemDataElement.(null);
+            }
+            return new SubscriptionContractData(id, name, resourceType, systemData, ownerId, scope, displayName, state, createdOn, startOn, expirationOn, endOn, notificationOn, primaryKey, secondaryKey, stateComment, allowTracing);
         }
     }
 }

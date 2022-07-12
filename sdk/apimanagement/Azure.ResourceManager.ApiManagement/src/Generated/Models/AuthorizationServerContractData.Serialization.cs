@@ -7,13 +7,15 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class AuthorizationServerContractData : IUtf8JsonSerializable
+    public partial class AuthorizationServerContractData : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -327,6 +329,251 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             return new AuthorizationServerContractData(id, name, type, systemData.Value, description.Value, Optional.ToList(authorizationMethods), Optional.ToList(clientAuthenticationMethod), Optional.ToList(tokenBodyParameters), tokenEndpoint.Value, Optional.ToNullable(supportState), defaultScope.Value, Optional.ToList(bearerTokenSendingMethods), resourceOwnerUsername.Value, resourceOwnerPassword.Value, displayName.Value, clientRegistrationEndpoint.Value, authorizationEndpoint.Value, Optional.ToList(grantTypes), clientId.Value, clientSecret.Value);
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "AuthorizationServerContract");
+            if (Optional.IsDefined(Description))
+            {
+                writer.WriteStartElement("description");
+                writer.WriteValue(Description);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(TokenEndpoint))
+            {
+                writer.WriteStartElement("tokenEndpoint");
+                writer.WriteValue(TokenEndpoint);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(SupportState))
+            {
+                writer.WriteStartElement("supportState");
+                writer.WriteValue(SupportState.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(DefaultScope))
+            {
+                writer.WriteStartElement("defaultScope");
+                writer.WriteValue(DefaultScope);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ResourceOwnerUsername))
+            {
+                writer.WriteStartElement("resourceOwnerUsername");
+                writer.WriteValue(ResourceOwnerUsername);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ResourceOwnerPassword))
+            {
+                writer.WriteStartElement("resourceOwnerPassword");
+                writer.WriteValue(ResourceOwnerPassword);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WriteStartElement("displayName");
+                writer.WriteValue(DisplayName);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ClientRegistrationEndpoint))
+            {
+                writer.WriteStartElement("clientRegistrationEndpoint");
+                writer.WriteValue(ClientRegistrationEndpoint);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(AuthorizationEndpoint))
+            {
+                writer.WriteStartElement("authorizationEndpoint");
+                writer.WriteValue(AuthorizationEndpoint);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ClientId))
+            {
+                writer.WriteStartElement("clientId");
+                writer.WriteValue(ClientId);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ClientSecret))
+            {
+                writer.WriteStartElement("clientSecret");
+                writer.WriteValue(ClientSecret);
+                writer.WriteEndElement();
+            }
+            writer.WriteStartElement("id");
+            writer.WriteValue(Id);
+            writer.WriteEndElement();
+            writer.WriteStartElement("name");
+            writer.WriteValue(Name);
+            writer.WriteEndElement();
+            writer.WriteStartElement("type");
+            writer.WriteValue(ResourceType);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(SystemData))
+            {
+                writer.WriteStartElement("systemData");
+                writer.WriteValue(SystemData);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsCollectionDefined(AuthorizationMethods))
+            {
+                foreach (var item in AuthorizationMethods)
+                {
+                    writer.WriteStartElement("AuthorizationMethod");
+                    writer.WriteValue(item.ToSerialString());
+                    writer.WriteEndElement();
+                }
+            }
+            if (Optional.IsCollectionDefined(ClientAuthenticationMethod))
+            {
+                foreach (var item in ClientAuthenticationMethod)
+                {
+                    writer.WriteStartElement("ClientAuthenticationMethod");
+                    writer.WriteValue(item.ToString());
+                    writer.WriteEndElement();
+                }
+            }
+            if (Optional.IsCollectionDefined(TokenBodyParameters))
+            {
+                foreach (var item in TokenBodyParameters)
+                {
+                    writer.WriteObjectValue(item, "TokenBodyParameterContract");
+                }
+            }
+            if (Optional.IsCollectionDefined(BearerTokenSendingMethods))
+            {
+                foreach (var item in BearerTokenSendingMethods)
+                {
+                    writer.WriteStartElement("BearerTokenSendingMethodMode");
+                    writer.WriteValue(item.ToString());
+                    writer.WriteEndElement();
+                }
+            }
+            if (Optional.IsCollectionDefined(GrantTypes))
+            {
+                foreach (var item in GrantTypes)
+                {
+                    writer.WriteStartElement("GrantType");
+                    writer.WriteValue(item.ToString());
+                    writer.WriteEndElement();
+                }
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static AuthorizationServerContractData DeserializeAuthorizationServerContractData(XElement element)
+        {
+            string description = default;
+            string tokenEndpoint = default;
+            bool? supportState = default;
+            string defaultScope = default;
+            string resourceOwnerUsername = default;
+            string resourceOwnerPassword = default;
+            string displayName = default;
+            string clientRegistrationEndpoint = default;
+            string authorizationEndpoint = default;
+            string clientId = default;
+            string clientSecret = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
+            IList<AuthorizationMethod> authorizationMethods = default;
+            IList<ClientAuthenticationMethod> clientAuthenticationMethod = default;
+            IList<TokenBodyParameterContract> tokenBodyParameters = default;
+            IList<BearerTokenSendingMethodMode> bearerTokenSendingMethods = default;
+            IList<GrantType> grantTypes = default;
+            if (element.Element("description") is XElement descriptionElement)
+            {
+                description = (string)descriptionElement;
+            }
+            if (element.Element("tokenEndpoint") is XElement tokenEndpointElement)
+            {
+                tokenEndpoint = (string)tokenEndpointElement;
+            }
+            if (element.Element("supportState") is XElement supportStateElement)
+            {
+                supportState = (bool?)supportStateElement;
+            }
+            if (element.Element("defaultScope") is XElement defaultScopeElement)
+            {
+                defaultScope = (string)defaultScopeElement;
+            }
+            if (element.Element("resourceOwnerUsername") is XElement resourceOwnerUsernameElement)
+            {
+                resourceOwnerUsername = (string)resourceOwnerUsernameElement;
+            }
+            if (element.Element("resourceOwnerPassword") is XElement resourceOwnerPasswordElement)
+            {
+                resourceOwnerPassword = (string)resourceOwnerPasswordElement;
+            }
+            if (element.Element("displayName") is XElement displayNameElement)
+            {
+                displayName = (string)displayNameElement;
+            }
+            if (element.Element("clientRegistrationEndpoint") is XElement clientRegistrationEndpointElement)
+            {
+                clientRegistrationEndpoint = (string)clientRegistrationEndpointElement;
+            }
+            if (element.Element("authorizationEndpoint") is XElement authorizationEndpointElement)
+            {
+                authorizationEndpoint = (string)authorizationEndpointElement;
+            }
+            if (element.Element("clientId") is XElement clientIdElement)
+            {
+                clientId = (string)clientIdElement;
+            }
+            if (element.Element("clientSecret") is XElement clientSecretElement)
+            {
+                clientSecret = (string)clientSecretElement;
+            }
+            if (element.Element("id") is XElement idElement)
+            {
+                id = new ResourceIdentifier((string)idElement);
+            }
+            if (element.Element("name") is XElement nameElement)
+            {
+                name = (string)nameElement;
+            }
+            if (element.Element("type") is XElement typeElement)
+            {
+                resourceType = (string)typeElement;
+            }
+            if (element.Element("systemData") is XElement systemDataElement)
+            {
+                systemData = systemDataElement.(null);
+            }
+            var array = new List<AuthorizationMethod>();
+            foreach (var e in element.Elements("AuthorizationMethod"))
+            {
+                array.Add(e.Value.ToAuthorizationMethod());
+            }
+            authorizationMethods = array;
+            var array0 = new List<ClientAuthenticationMethod>();
+            foreach (var e in element.Elements("ClientAuthenticationMethod"))
+            {
+                array0.Add(new ClientAuthenticationMethod(e.Value));
+            }
+            clientAuthenticationMethod = array0;
+            var array1 = new List<TokenBodyParameterContract>();
+            foreach (var e in element.Elements("TokenBodyParameterContract"))
+            {
+                array1.Add(TokenBodyParameterContract.DeserializeTokenBodyParameterContract(e));
+            }
+            tokenBodyParameters = array1;
+            var array2 = new List<BearerTokenSendingMethodMode>();
+            foreach (var e in element.Elements("BearerTokenSendingMethodMode"))
+            {
+                array2.Add(new BearerTokenSendingMethodMode(e.Value));
+            }
+            bearerTokenSendingMethods = array2;
+            var array3 = new List<GrantType>();
+            foreach (var e in element.Elements("GrantType"))
+            {
+                array3.Add(new GrantType(e.Value));
+            }
+            grantTypes = array3;
+            return new AuthorizationServerContractData(id, name, resourceType, systemData, description, authorizationMethods, clientAuthenticationMethod, tokenBodyParameters, tokenEndpoint, supportState, defaultScope, bearerTokenSendingMethods, resourceOwnerUsername, resourceOwnerPassword, displayName, clientRegistrationEndpoint, authorizationEndpoint, grantTypes, clientId, clientSecret);
         }
     }
 }

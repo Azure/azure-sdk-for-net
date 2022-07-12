@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.Sql
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
-            Optional<string> startIPAddress = default;
-            Optional<string> endIPAddress = default;
+            Optional<string> startIpAddress = default;
+            Optional<string> endIpAddress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -71,19 +71,19 @@ namespace Azure.ResourceManager.Sql
                     {
                         if (property0.NameEquals("startIpAddress"))
                         {
-                            startIPAddress = property0.Value.GetString();
+                            startIpAddress = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("endIpAddress"))
                         {
-                            endIPAddress = property0.Value.GetString();
+                            endIpAddress = property0.Value.GetString();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new FirewallRuleData(id.Value, name.Value, type.Value, startIPAddress.Value, endIPAddress.Value);
+            return new FirewallRuleData(id.Value, name.Value, type.Value, startIpAddress.Value, endIpAddress.Value);
         }
     }
 }

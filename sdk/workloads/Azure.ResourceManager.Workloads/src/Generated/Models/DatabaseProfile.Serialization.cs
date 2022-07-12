@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteStringValue(Sku);
             writer.WritePropertyName("tier");
             writer.WriteStringValue(Tier.ToSerialString());
-            if (Optional.IsDefined(HAEnabled))
+            if (Optional.IsDefined(HAHaEnabled))
             {
                 writer.WritePropertyName("haEnabled");
-                writer.WriteStringValue(HAEnabled.Value.ToString());
+                writer.WriteStringValue(HAHaEnabled.Value.ToString());
             }
             if (Optional.IsDefined(StorageSku))
             {

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -21,14 +20,14 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> Initializes a new instance of KeyVaultPrivateEndpointConnectionItemData. </summary>
         /// <param name="id"> Id of private endpoint connection. </param>
-        /// <param name="etag"> Modified whenever there is a change in the state of private endpoint connection. </param>
+        /// <param name="eTagEtag"> Modified whenever there is a change in the state of private endpoint connection. </param>
         /// <param name="privateEndpoint"> Properties of the private endpoint object. </param>
         /// <param name="connectionState"> Approval state of the private link connection. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
-        internal KeyVaultPrivateEndpointConnectionItemData(string id, ETag? etag, SubResource privateEndpoint, KeyVaultPrivateLinkServiceConnectionState connectionState, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState)
+        internal KeyVaultPrivateEndpointConnectionItemData(string id, string eTagEtag, SubResource privateEndpoint, KeyVaultPrivateLinkServiceConnectionState connectionState, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState)
         {
             Id = id;
-            ETag = etag;
+            ETagEtag = eTagEtag;
             PrivateEndpoint = privateEndpoint;
             ConnectionState = connectionState;
             ProvisioningState = provisioningState;
@@ -37,7 +36,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Id of private endpoint connection. </summary>
         public string Id { get; }
         /// <summary> Modified whenever there is a change in the state of private endpoint connection. </summary>
-        public ETag? ETag { get; }
+        public string ETagEtag { get; }
         /// <summary> Properties of the private endpoint object. </summary>
         internal SubResource PrivateEndpoint { get; }
         /// <summary> Gets Id. </summary>

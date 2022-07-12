@@ -7,11 +7,13 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class RecipientsContractProperties : IUtf8JsonSerializable
+    public partial class RecipientsContractProperties : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -77,6 +79,49 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new RecipientsContractProperties(Optional.ToList(emails), Optional.ToList(users));
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "RecipientsContractProperties");
+            if (Optional.IsCollectionDefined(Emails))
+            {
+                foreach (var item in Emails)
+                {
+                    writer.WriteStartElement("RecipientsContractPropertiesEmailsItem");
+                    writer.WriteValue(item);
+                    writer.WriteEndElement();
+                }
+            }
+            if (Optional.IsCollectionDefined(Users))
+            {
+                foreach (var item in Users)
+                {
+                    writer.WriteStartElement("RecipientsContractPropertiesUsersItem");
+                    writer.WriteValue(item);
+                    writer.WriteEndElement();
+                }
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static RecipientsContractProperties DeserializeRecipientsContractProperties(XElement element)
+        {
+            IList<string> emails = default;
+            IList<string> users = default;
+            var array = new List<string>();
+            foreach (var e in element.Elements("RecipientsContractPropertiesEmailsItem"))
+            {
+                array.Add((string)e);
+            }
+            emails = array;
+            var array0 = new List<string>();
+            foreach (var e in element.Elements("RecipientsContractPropertiesUsersItem"))
+            {
+                array0.Add((string)e);
+            }
+            users = array0;
+            return new RecipientsContractProperties(emails, users);
         }
     }
 }

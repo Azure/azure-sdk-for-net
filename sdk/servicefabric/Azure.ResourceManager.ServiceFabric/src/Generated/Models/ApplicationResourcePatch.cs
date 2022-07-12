@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -39,8 +38,8 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="removeApplicationCapacity"> Remove the current application capacity settings. </param>
         /// <param name="metrics"> List of application capacity metric description. </param>
         /// <param name="managedIdentities"> List of user assigned identities for the application, each mapped to a friendly name. </param>
-        /// <param name="etag"> Azure resource etag. </param>
-        internal ApplicationResourcePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string typeVersion, IDictionary<string, string> parameters, ApplicationUpgradePolicy upgradePolicy, long? minimumNodes, long? maximumNodes, bool? removeApplicationCapacity, IList<ApplicationMetricDescription> metrics, IList<ApplicationUserAssignedIdentity> managedIdentities, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="eTagEtag"> Azure resource etag. </param>
+        internal ApplicationResourcePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string typeVersion, IDictionary<string, string> parameters, ApplicationUpgradePolicy upgradePolicy, long? minimumNodes, long? maximumNodes, bool? removeApplicationCapacity, IList<ApplicationMetricDescription> metrics, IList<ApplicationUserAssignedIdentity> managedIdentities, string eTagEtag) : base(id, name, resourceType, systemData, tags, location)
         {
             TypeVersion = typeVersion;
             Parameters = parameters;
@@ -50,7 +49,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             RemoveApplicationCapacity = removeApplicationCapacity;
             Metrics = metrics;
             ManagedIdentities = managedIdentities;
-            ETag = etag;
+            ETagEtag = eTagEtag;
         }
 
         /// <summary> The version of the application type as defined in the application manifest. </summary>
@@ -70,6 +69,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <summary> List of user assigned identities for the application, each mapped to a friendly name. </summary>
         public IList<ApplicationUserAssignedIdentity> ManagedIdentities { get; }
         /// <summary> Azure resource etag. </summary>
-        public ETag? ETag { get; }
+        public string ETagEtag { get; }
     }
 }

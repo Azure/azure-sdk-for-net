@@ -7,13 +7,15 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class OperationContractData : IUtf8JsonSerializable
+    public partial class OperationContractData : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -194,6 +196,144 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             return new OperationContractData(id, name, type, systemData.Value, Optional.ToList(templateParameters), description.Value, request.Value, Optional.ToList(responses), policies.Value, displayName.Value, method.Value, urlTemplate.Value);
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "OperationContract");
+            if (Optional.IsDefined(Description))
+            {
+                writer.WriteStartElement("description");
+                writer.WriteValue(Description);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Request))
+            {
+                writer.WriteObjectValue(Request, "request");
+            }
+            if (Optional.IsDefined(Policies))
+            {
+                writer.WriteStartElement("policies");
+                writer.WriteValue(Policies);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WriteStartElement("displayName");
+                writer.WriteValue(DisplayName);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Method))
+            {
+                writer.WriteStartElement("method");
+                writer.WriteValue(Method);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(UrlTemplate))
+            {
+                writer.WriteStartElement("urlTemplate");
+                writer.WriteValue(UrlTemplate);
+                writer.WriteEndElement();
+            }
+            writer.WriteStartElement("id");
+            writer.WriteValue(Id);
+            writer.WriteEndElement();
+            writer.WriteStartElement("name");
+            writer.WriteValue(Name);
+            writer.WriteEndElement();
+            writer.WriteStartElement("type");
+            writer.WriteValue(ResourceType);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(SystemData))
+            {
+                writer.WriteStartElement("systemData");
+                writer.WriteValue(SystemData);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsCollectionDefined(TemplateParameters))
+            {
+                foreach (var item in TemplateParameters)
+                {
+                    writer.WriteObjectValue(item, "ParameterContract");
+                }
+            }
+            if (Optional.IsCollectionDefined(Responses))
+            {
+                foreach (var item in Responses)
+                {
+                    writer.WriteObjectValue(item, "ResponseContract");
+                }
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static OperationContractData DeserializeOperationContractData(XElement element)
+        {
+            string description = default;
+            RequestContract request = default;
+            string policies = default;
+            string displayName = default;
+            string method = default;
+            string urlTemplate = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
+            IList<ParameterContract> templateParameters = default;
+            IList<ResponseContract> responses = default;
+            if (element.Element("description") is XElement descriptionElement)
+            {
+                description = (string)descriptionElement;
+            }
+            if (element.Element("request") is XElement requestElement)
+            {
+                request = RequestContract.DeserializeRequestContract(requestElement);
+            }
+            if (element.Element("policies") is XElement policiesElement)
+            {
+                policies = (string)policiesElement;
+            }
+            if (element.Element("displayName") is XElement displayNameElement)
+            {
+                displayName = (string)displayNameElement;
+            }
+            if (element.Element("method") is XElement methodElement)
+            {
+                method = (string)methodElement;
+            }
+            if (element.Element("urlTemplate") is XElement urlTemplateElement)
+            {
+                urlTemplate = (string)urlTemplateElement;
+            }
+            if (element.Element("id") is XElement idElement)
+            {
+                id = new ResourceIdentifier((string)idElement);
+            }
+            if (element.Element("name") is XElement nameElement)
+            {
+                name = (string)nameElement;
+            }
+            if (element.Element("type") is XElement typeElement)
+            {
+                resourceType = (string)typeElement;
+            }
+            if (element.Element("systemData") is XElement systemDataElement)
+            {
+                systemData = systemDataElement.(null);
+            }
+            var array = new List<ParameterContract>();
+            foreach (var e in element.Elements("ParameterContract"))
+            {
+                array.Add(ParameterContract.DeserializeParameterContract(e));
+            }
+            templateParameters = array;
+            var array0 = new List<ResponseContract>();
+            foreach (var e in element.Elements("ResponseContract"))
+            {
+                array0.Add(ResponseContract.DeserializeResponseContract(e));
+            }
+            responses = array0;
+            return new OperationContractData(id, name, resourceType, systemData, templateParameters, description, request, responses, policies, displayName, method, urlTemplate);
         }
     }
 }

@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.Batch
             Optional<Models.EncryptionProperties> encryption = default;
             Optional<int?> dedicatedCoreQuota = default;
             Optional<int?> lowPriorityCoreQuota = default;
-            Optional<IReadOnlyList<VirtualMachineFamilyCoreQuota>> dedicatedCoreQuotaPerVmFamily = default;
-            Optional<bool> dedicatedCoreQuotaPerVmFamilyEnforced = default;
+            Optional<IReadOnlyList<VirtualMachineFamilyCoreQuota>> dedicatedCoreQuotaPerVMFamily = default;
+            Optional<bool> dedicatedCoreQuotaPerVMFamilyEnforced = default;
             Optional<int> poolQuota = default;
             Optional<int> activeJobAndJobScheduleQuota = default;
             Optional<IReadOnlyList<AuthenticationMode>> allowedAuthenticationModes = default;
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Batch
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                dedicatedCoreQuotaPerVmFamily = null;
+                                dedicatedCoreQuotaPerVMFamily = null;
                                 continue;
                             }
                             List<VirtualMachineFamilyCoreQuota> array = new List<VirtualMachineFamilyCoreQuota>();
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Batch
                             {
                                 array.Add(VirtualMachineFamilyCoreQuota.DeserializeVirtualMachineFamilyCoreQuota(item));
                             }
-                            dedicatedCoreQuotaPerVmFamily = array;
+                            dedicatedCoreQuotaPerVMFamily = array;
                             continue;
                         }
                         if (property0.NameEquals("dedicatedCoreQuotaPerVMFamilyEnforced"))
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Batch
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            dedicatedCoreQuotaPerVmFamilyEnforced = property0.Value.GetBoolean();
+                            dedicatedCoreQuotaPerVMFamilyEnforced = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("poolQuota"))
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Batch
                     continue;
                 }
             }
-            return new BatchAccountData(id, name, type, systemData.Value, identity.Value, accountEndpoint.Value, nodeManagementEndpoint.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(poolAllocationMode), keyVaultReference.Value, Optional.ToNullable(publicNetworkAccess), networkProfile.Value, Optional.ToList(privateEndpointConnections), autoStorage.Value, encryption.Value, Optional.ToNullable(dedicatedCoreQuota), Optional.ToNullable(lowPriorityCoreQuota), Optional.ToList(dedicatedCoreQuotaPerVmFamily), Optional.ToNullable(dedicatedCoreQuotaPerVmFamilyEnforced), Optional.ToNullable(poolQuota), Optional.ToNullable(activeJobAndJobScheduleQuota), Optional.ToList(allowedAuthenticationModes), Optional.ToNullable(location), Optional.ToDictionary(tags));
+            return new BatchAccountData(id, name, type, systemData.Value, identity.Value, accountEndpoint.Value, nodeManagementEndpoint.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(poolAllocationMode), keyVaultReference.Value, Optional.ToNullable(publicNetworkAccess), networkProfile.Value, Optional.ToList(privateEndpointConnections), autoStorage.Value, encryption.Value, Optional.ToNullable(dedicatedCoreQuota), Optional.ToNullable(lowPriorityCoreQuota), Optional.ToList(dedicatedCoreQuotaPerVMFamily), Optional.ToNullable(dedicatedCoreQuotaPerVMFamilyEnforced), Optional.ToNullable(poolQuota), Optional.ToNullable(activeJobAndJobScheduleQuota), Optional.ToList(allowedAuthenticationModes), Optional.ToNullable(location), Optional.ToDictionary(tags));
         }
     }
 }

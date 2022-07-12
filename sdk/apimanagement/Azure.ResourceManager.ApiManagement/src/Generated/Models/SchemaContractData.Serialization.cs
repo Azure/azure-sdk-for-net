@@ -7,12 +7,14 @@
 
 using System;
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class SchemaContractData : IUtf8JsonSerializable
+    public partial class SchemaContractData : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -147,6 +149,96 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             return new SchemaContractData(id, name, type, systemData.Value, contentType.Value, value.Value, definitions.Value, components.Value);
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "SchemaContract");
+            if (Optional.IsDefined(ContentType))
+            {
+                writer.WriteStartElement("contentType");
+                writer.WriteValue(ContentType);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Value))
+            {
+                writer.WriteStartElement("value");
+                writer.WriteValue(Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Definitions))
+            {
+                writer.WriteStartElement("definitions");
+                writer.WriteValue(Definitions);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Components))
+            {
+                writer.WriteStartElement("components");
+                writer.WriteValue(Components);
+                writer.WriteEndElement();
+            }
+            writer.WriteStartElement("id");
+            writer.WriteValue(Id);
+            writer.WriteEndElement();
+            writer.WriteStartElement("name");
+            writer.WriteValue(Name);
+            writer.WriteEndElement();
+            writer.WriteStartElement("type");
+            writer.WriteValue(ResourceType);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(SystemData))
+            {
+                writer.WriteStartElement("systemData");
+                writer.WriteValue(SystemData);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static SchemaContractData DeserializeSchemaContractData(XElement element)
+        {
+            string contentType = default;
+            string value = default;
+            BinaryData definitions = default;
+            BinaryData components = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
+            if (element.Element("contentType") is XElement contentTypeElement)
+            {
+                contentType = (string)contentTypeElement;
+            }
+            if (element.Element("value") is XElement valueElement)
+            {
+                value = (string)valueElement;
+            }
+            if (element.Element("definitions") is XElement definitionsElement)
+            {
+                definitions = definitionsElement.(null);
+            }
+            if (element.Element("components") is XElement componentsElement)
+            {
+                components = componentsElement.(null);
+            }
+            if (element.Element("id") is XElement idElement)
+            {
+                id = new ResourceIdentifier((string)idElement);
+            }
+            if (element.Element("name") is XElement nameElement)
+            {
+                name = (string)nameElement;
+            }
+            if (element.Element("type") is XElement typeElement)
+            {
+                resourceType = (string)typeElement;
+            }
+            if (element.Element("systemData") is XElement systemDataElement)
+            {
+                systemData = systemDataElement.(null);
+            }
+            return new SchemaContractData(id, name, resourceType, systemData, contentType, value, definitions, components);
         }
     }
 }

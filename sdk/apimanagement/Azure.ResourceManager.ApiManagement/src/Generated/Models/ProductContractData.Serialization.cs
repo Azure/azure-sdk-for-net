@@ -6,13 +6,15 @@
 #nullable disable
 
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ProductContractData : IUtf8JsonSerializable
+    public partial class ProductContractData : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -167,6 +169,129 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             return new ProductContractData(id, name, type, systemData.Value, description.Value, terms.Value, Optional.ToNullable(subscriptionRequired), Optional.ToNullable(approvalRequired), Optional.ToNullable(subscriptionsLimit), Optional.ToNullable(state), displayName.Value);
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "ProductContract");
+            if (Optional.IsDefined(Description))
+            {
+                writer.WriteStartElement("description");
+                writer.WriteValue(Description);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Terms))
+            {
+                writer.WriteStartElement("terms");
+                writer.WriteValue(Terms);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(SubscriptionRequired))
+            {
+                writer.WriteStartElement("subscriptionRequired");
+                writer.WriteValue(SubscriptionRequired.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ApprovalRequired))
+            {
+                writer.WriteStartElement("approvalRequired");
+                writer.WriteValue(ApprovalRequired.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(SubscriptionsLimit))
+            {
+                writer.WriteStartElement("subscriptionsLimit");
+                writer.WriteValue(SubscriptionsLimit.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(State))
+            {
+                writer.WriteStartElement("state");
+                writer.WriteValue(State.Value.ToSerialString());
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WriteStartElement("displayName");
+                writer.WriteValue(DisplayName);
+                writer.WriteEndElement();
+            }
+            writer.WriteStartElement("id");
+            writer.WriteValue(Id);
+            writer.WriteEndElement();
+            writer.WriteStartElement("name");
+            writer.WriteValue(Name);
+            writer.WriteEndElement();
+            writer.WriteStartElement("type");
+            writer.WriteValue(ResourceType);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(SystemData))
+            {
+                writer.WriteStartElement("systemData");
+                writer.WriteValue(SystemData);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static ProductContractData DeserializeProductContractData(XElement element)
+        {
+            string description = default;
+            string terms = default;
+            bool? subscriptionRequired = default;
+            bool? approvalRequired = default;
+            int? subscriptionsLimit = default;
+            ProductState? state = default;
+            string displayName = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
+            if (element.Element("description") is XElement descriptionElement)
+            {
+                description = (string)descriptionElement;
+            }
+            if (element.Element("terms") is XElement termsElement)
+            {
+                terms = (string)termsElement;
+            }
+            if (element.Element("subscriptionRequired") is XElement subscriptionRequiredElement)
+            {
+                subscriptionRequired = (bool?)subscriptionRequiredElement;
+            }
+            if (element.Element("approvalRequired") is XElement approvalRequiredElement)
+            {
+                approvalRequired = (bool?)approvalRequiredElement;
+            }
+            if (element.Element("subscriptionsLimit") is XElement subscriptionsLimitElement)
+            {
+                subscriptionsLimit = (int?)subscriptionsLimitElement;
+            }
+            if (element.Element("state") is XElement stateElement)
+            {
+                state = stateElement.Value.ToProductState();
+            }
+            if (element.Element("displayName") is XElement displayNameElement)
+            {
+                displayName = (string)displayNameElement;
+            }
+            if (element.Element("id") is XElement idElement)
+            {
+                id = new ResourceIdentifier((string)idElement);
+            }
+            if (element.Element("name") is XElement nameElement)
+            {
+                name = (string)nameElement;
+            }
+            if (element.Element("type") is XElement typeElement)
+            {
+                resourceType = (string)typeElement;
+            }
+            if (element.Element("systemData") is XElement systemDataElement)
+            {
+                systemData = systemDataElement.(null);
+            }
+            return new ProductContractData(id, name, resourceType, systemData, description, terms, subscriptionRequired, approvalRequired, subscriptionsLimit, state, displayName);
         }
     }
 }

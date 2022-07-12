@@ -6,11 +6,13 @@
 #nullable disable
 
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class UserIdentityContract : IUtf8JsonSerializable
+    public partial class UserIdentityContract : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -46,6 +48,39 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new UserIdentityContract(provider.Value, id.Value);
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "UserIdentityContract");
+            if (Optional.IsDefined(Provider))
+            {
+                writer.WriteStartElement("provider");
+                writer.WriteValue(Provider);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Id))
+            {
+                writer.WriteStartElement("id");
+                writer.WriteValue(Id);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static UserIdentityContract DeserializeUserIdentityContract(XElement element)
+        {
+            string provider = default;
+            string id = default;
+            if (element.Element("provider") is XElement providerElement)
+            {
+                provider = (string)providerElement;
+            }
+            if (element.Element("id") is XElement idElement)
+            {
+                id = (string)idElement;
+            }
+            return new UserIdentityContract(provider, id);
         }
     }
 }

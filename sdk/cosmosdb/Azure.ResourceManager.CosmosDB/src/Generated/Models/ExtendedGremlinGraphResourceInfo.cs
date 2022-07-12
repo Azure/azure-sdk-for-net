@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -33,12 +32,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="conflictResolutionPolicy"> The conflict resolution policy for the graph. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
-        /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        internal ExtendedGremlinGraphResourceInfo(string id, CosmosDBIndexingPolicy indexingPolicy, ContainerPartitionKey partitionKey, int? defaultTtl, CosmosDBUniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy, string rid, float? timestamp, ETag? etag) : base(id, indexingPolicy, partitionKey, defaultTtl, uniqueKeyPolicy, conflictResolutionPolicy)
+        /// <param name="eTagEtag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
+        internal ExtendedGremlinGraphResourceInfo(string id, CosmosDBIndexingPolicy indexingPolicy, ContainerPartitionKey partitionKey, int? defaultTtl, CosmosDBUniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy, string rid, float? timestamp, string eTagEtag) : base(id, indexingPolicy, partitionKey, defaultTtl, uniqueKeyPolicy, conflictResolutionPolicy)
         {
             Rid = rid;
             Timestamp = timestamp;
-            ETag = etag;
+            ETagEtag = eTagEtag;
         }
 
         /// <summary> A system generated property. A unique identifier. </summary>
@@ -46,6 +45,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> A system generated property that denotes the last updated timestamp of the resource. </summary>
         public float? Timestamp { get; }
         /// <summary> A system generated property representing the resource etag required for optimistic concurrency control. </summary>
-        public ETag? ETag { get; }
+        public string ETagEtag { get; }
     }
 }

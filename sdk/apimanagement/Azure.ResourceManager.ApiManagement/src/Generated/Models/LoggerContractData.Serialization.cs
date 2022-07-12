@@ -7,13 +7,15 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class LoggerContractData : IUtf8JsonSerializable
+    public partial class LoggerContractData : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -152,6 +154,115 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             return new LoggerContractData(id, name, type, systemData.Value, Optional.ToNullable(loggerType), description.Value, Optional.ToDictionary(credentials), Optional.ToNullable(isBuffered), resourceId.Value);
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "LoggerContract");
+            if (Optional.IsDefined(LoggerType))
+            {
+                writer.WriteStartElement("loggerType");
+                writer.WriteValue(LoggerType.Value.ToString());
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WriteStartElement("description");
+                writer.WriteValue(Description);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsCollectionDefined(Credentials))
+            {
+                foreach (var pair in Credentials)
+                {
+                    writer.WriteStartElement("String");
+                    writer.WriteValue(pair.Value);
+                    writer.WriteEndElement();
+                }
+            }
+            if (Optional.IsDefined(IsBuffered))
+            {
+                writer.WriteStartElement("isBuffered");
+                writer.WriteValue(IsBuffered.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ResourceId))
+            {
+                writer.WriteStartElement("resourceId");
+                writer.WriteValue(ResourceId);
+                writer.WriteEndElement();
+            }
+            writer.WriteStartElement("id");
+            writer.WriteValue(Id);
+            writer.WriteEndElement();
+            writer.WriteStartElement("name");
+            writer.WriteValue(Name);
+            writer.WriteEndElement();
+            writer.WriteStartElement("type");
+            writer.WriteValue(ResourceType);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(SystemData))
+            {
+                writer.WriteStartElement("systemData");
+                writer.WriteValue(SystemData);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static LoggerContractData DeserializeLoggerContractData(XElement element)
+        {
+            LoggerType? loggerType = default;
+            string description = default;
+            IDictionary<string, string> credentials = default;
+            bool? isBuffered = default;
+            string resourceId = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
+            if (element.Element("loggerType") is XElement loggerTypeElement)
+            {
+                loggerType = new LoggerType(loggerTypeElement.Value);
+            }
+            if (element.Element("description") is XElement descriptionElement)
+            {
+                description = (string)descriptionElement;
+            }
+            if (element.Element("credentials") is XElement credentialsElement)
+            {
+                var dictionary = new Dictionary<string, string>();
+                foreach (var e in credentialsElement.Elements())
+                {
+                    dictionary.Add(e.Name.LocalName, (string)e);
+                }
+                credentials = dictionary;
+            }
+            if (element.Element("isBuffered") is XElement isBufferedElement)
+            {
+                isBuffered = (bool?)isBufferedElement;
+            }
+            if (element.Element("resourceId") is XElement resourceIdElement)
+            {
+                resourceId = (string)resourceIdElement;
+            }
+            if (element.Element("id") is XElement idElement)
+            {
+                id = new ResourceIdentifier((string)idElement);
+            }
+            if (element.Element("name") is XElement nameElement)
+            {
+                name = (string)nameElement;
+            }
+            if (element.Element("type") is XElement typeElement)
+            {
+                resourceType = (string)typeElement;
+            }
+            if (element.Element("systemData") is XElement systemDataElement)
+            {
+                systemData = systemDataElement.(null);
+            }
+            return new LoggerContractData(id, name, resourceType, systemData, loggerType, description, credentials, isBuffered, resourceId);
         }
     }
 }

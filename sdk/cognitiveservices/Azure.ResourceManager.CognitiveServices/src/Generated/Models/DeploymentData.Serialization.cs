@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.CognitiveServices.Models;
 using Azure.ResourceManager.Models;
@@ -28,7 +27,7 @@ namespace Azure.ResourceManager.CognitiveServices
 
         internal static DeploymentData DeserializeDeploymentData(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<string> etag = default;
             Optional<DeploymentProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -38,12 +37,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
+                    etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -82,7 +76,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     continue;
                 }
             }
-            return new DeploymentData(id, name, type, systemData.Value, Optional.ToNullable(etag), properties.Value);
+            return new DeploymentData(id, name, type, systemData.Value, etag.Value, properties.Value);
         }
     }
 }

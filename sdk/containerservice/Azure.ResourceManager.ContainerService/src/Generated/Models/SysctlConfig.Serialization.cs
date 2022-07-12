@@ -50,60 +50,60 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("netCoreOptmemMax");
                 writer.WriteNumberValue(NetCoreOptmemMax.Value);
             }
-            if (Optional.IsDefined(NetIPv4TcpMaxSynBacklog))
+            if (Optional.IsDefined(NetIPv4Ipv4TcpMaxSynBacklog))
             {
                 writer.WritePropertyName("netIpv4TcpMaxSynBacklog");
-                writer.WriteNumberValue(NetIPv4TcpMaxSynBacklog.Value);
+                writer.WriteNumberValue(NetIPv4Ipv4TcpMaxSynBacklog.Value);
             }
-            if (Optional.IsDefined(NetIPv4TcpMaxTwBuckets))
+            if (Optional.IsDefined(NetIPv4Ipv4TcpMaxTwBuckets))
             {
                 writer.WritePropertyName("netIpv4TcpMaxTwBuckets");
-                writer.WriteNumberValue(NetIPv4TcpMaxTwBuckets.Value);
+                writer.WriteNumberValue(NetIPv4Ipv4TcpMaxTwBuckets.Value);
             }
-            if (Optional.IsDefined(NetIPv4TcpFinTimeout))
+            if (Optional.IsDefined(NetIPv4Ipv4TcpFinTimeout))
             {
                 writer.WritePropertyName("netIpv4TcpFinTimeout");
-                writer.WriteNumberValue(NetIPv4TcpFinTimeout.Value);
+                writer.WriteNumberValue(NetIPv4Ipv4TcpFinTimeout.Value);
             }
-            if (Optional.IsDefined(NetIPv4TcpKeepaliveTime))
+            if (Optional.IsDefined(NetIPv4Ipv4TcpKeepaliveTime))
             {
                 writer.WritePropertyName("netIpv4TcpKeepaliveTime");
-                writer.WriteNumberValue(NetIPv4TcpKeepaliveTime.Value);
+                writer.WriteNumberValue(NetIPv4Ipv4TcpKeepaliveTime.Value);
             }
-            if (Optional.IsDefined(NetIPv4TcpKeepaliveProbes))
+            if (Optional.IsDefined(NetIPv4Ipv4TcpKeepaliveProbes))
             {
                 writer.WritePropertyName("netIpv4TcpKeepaliveProbes");
-                writer.WriteNumberValue(NetIPv4TcpKeepaliveProbes.Value);
+                writer.WriteNumberValue(NetIPv4Ipv4TcpKeepaliveProbes.Value);
             }
-            if (Optional.IsDefined(NetIPv4TcpkeepaliveIntvl))
+            if (Optional.IsDefined(NetIPv4Ipv4TcpkeepaliveIntvl))
             {
                 writer.WritePropertyName("netIpv4TcpkeepaliveIntvl");
-                writer.WriteNumberValue(NetIPv4TcpkeepaliveIntvl.Value);
+                writer.WriteNumberValue(NetIPv4Ipv4TcpkeepaliveIntvl.Value);
             }
-            if (Optional.IsDefined(NetIPv4TcpTwReuse))
+            if (Optional.IsDefined(NetIPv4Ipv4TcpTwReuse))
             {
                 writer.WritePropertyName("netIpv4TcpTwReuse");
-                writer.WriteBooleanValue(NetIPv4TcpTwReuse.Value);
+                writer.WriteBooleanValue(NetIPv4Ipv4TcpTwReuse.Value);
             }
-            if (Optional.IsDefined(NetIPv4IPLocalPortRange))
+            if (Optional.IsDefined(NetIPv4Ipv4IPLocalPortRange))
             {
                 writer.WritePropertyName("netIpv4IpLocalPortRange");
-                writer.WriteStringValue(NetIPv4IPLocalPortRange);
+                writer.WriteStringValue(NetIPv4Ipv4IPLocalPortRange);
             }
-            if (Optional.IsDefined(NetIPv4NeighDefaultGcThresh1))
+            if (Optional.IsDefined(NetIPv4Ipv4NeighDefaultGcThresh1))
             {
                 writer.WritePropertyName("netIpv4NeighDefaultGcThresh1");
-                writer.WriteNumberValue(NetIPv4NeighDefaultGcThresh1.Value);
+                writer.WriteNumberValue(NetIPv4Ipv4NeighDefaultGcThresh1.Value);
             }
-            if (Optional.IsDefined(NetIPv4NeighDefaultGcThresh2))
+            if (Optional.IsDefined(NetIPv4Ipv4NeighDefaultGcThresh2))
             {
                 writer.WritePropertyName("netIpv4NeighDefaultGcThresh2");
-                writer.WriteNumberValue(NetIPv4NeighDefaultGcThresh2.Value);
+                writer.WriteNumberValue(NetIPv4Ipv4NeighDefaultGcThresh2.Value);
             }
-            if (Optional.IsDefined(NetIPv4NeighDefaultGcThresh3))
+            if (Optional.IsDefined(NetIPv4Ipv4NeighDefaultGcThresh3))
             {
                 writer.WritePropertyName("netIpv4NeighDefaultGcThresh3");
-                writer.WriteNumberValue(NetIPv4NeighDefaultGcThresh3.Value);
+                writer.WriteNumberValue(NetIPv4Ipv4NeighDefaultGcThresh3.Value);
             }
             if (Optional.IsDefined(NetNetfilterNfConntrackMax))
             {
@@ -167,17 +167,17 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<int> netCoreWmemDefault = default;
             Optional<int> netCoreWmemMax = default;
             Optional<int> netCoreOptmemMax = default;
-            Optional<int> netIPv4TcpMaxSynBacklog = default;
-            Optional<int> netIPv4TcpMaxTwBuckets = default;
-            Optional<int> netIPv4TcpFinTimeout = default;
-            Optional<int> netIPv4TcpKeepaliveTime = default;
-            Optional<int> netIPv4TcpKeepaliveProbes = default;
-            Optional<int> netIPv4TcpkeepaliveIntvl = default;
-            Optional<bool> netIPv4TcpTwReuse = default;
-            Optional<string> netIPv4IPLocalPortRange = default;
-            Optional<int> netIPv4NeighDefaultGcThresh1 = default;
-            Optional<int> netIPv4NeighDefaultGcThresh2 = default;
-            Optional<int> netIPv4NeighDefaultGcThresh3 = default;
+            Optional<int> netIpv4TcpMaxSynBacklog = default;
+            Optional<int> netIpv4TcpMaxTwBuckets = default;
+            Optional<int> netIpv4TcpFinTimeout = default;
+            Optional<int> netIpv4TcpKeepaliveTime = default;
+            Optional<int> netIpv4TcpKeepaliveProbes = default;
+            Optional<int> netIpv4TcpkeepaliveIntvl = default;
+            Optional<bool> netIpv4TcpTwReuse = default;
+            Optional<string> netIpv4IpLocalPortRange = default;
+            Optional<int> netIpv4NeighDefaultGcThresh1 = default;
+            Optional<int> netIpv4NeighDefaultGcThresh2 = default;
+            Optional<int> netIpv4NeighDefaultGcThresh3 = default;
             Optional<int> netNetfilterNfConntrackMax = default;
             Optional<int> netNetfilterNfConntrackBuckets = default;
             Optional<int> fsInotifyMaxUserWatches = default;
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    netIPv4TcpMaxSynBacklog = property.Value.GetInt32();
+                    netIpv4TcpMaxSynBacklog = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("netIpv4TcpMaxTwBuckets"))
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    netIPv4TcpMaxTwBuckets = property.Value.GetInt32();
+                    netIpv4TcpMaxTwBuckets = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("netIpv4TcpFinTimeout"))
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    netIPv4TcpFinTimeout = property.Value.GetInt32();
+                    netIpv4TcpFinTimeout = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("netIpv4TcpKeepaliveTime"))
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    netIPv4TcpKeepaliveTime = property.Value.GetInt32();
+                    netIpv4TcpKeepaliveTime = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("netIpv4TcpKeepaliveProbes"))
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    netIPv4TcpKeepaliveProbes = property.Value.GetInt32();
+                    netIpv4TcpKeepaliveProbes = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("netIpv4TcpkeepaliveIntvl"))
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    netIPv4TcpkeepaliveIntvl = property.Value.GetInt32();
+                    netIpv4TcpkeepaliveIntvl = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("netIpv4TcpTwReuse"))
@@ -327,12 +327,12 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    netIPv4TcpTwReuse = property.Value.GetBoolean();
+                    netIpv4TcpTwReuse = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("netIpv4IpLocalPortRange"))
                 {
-                    netIPv4IPLocalPortRange = property.Value.GetString();
+                    netIpv4IpLocalPortRange = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("netIpv4NeighDefaultGcThresh1"))
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    netIPv4NeighDefaultGcThresh1 = property.Value.GetInt32();
+                    netIpv4NeighDefaultGcThresh1 = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("netIpv4NeighDefaultGcThresh2"))
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    netIPv4NeighDefaultGcThresh2 = property.Value.GetInt32();
+                    netIpv4NeighDefaultGcThresh2 = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("netIpv4NeighDefaultGcThresh3"))
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    netIPv4NeighDefaultGcThresh3 = property.Value.GetInt32();
+                    netIpv4NeighDefaultGcThresh3 = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("netNetfilterNfConntrackMax"))
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new SysctlConfig(Optional.ToNullable(netCoreSomaxconn), Optional.ToNullable(netCoreNetdevMaxBacklog), Optional.ToNullable(netCoreRmemDefault), Optional.ToNullable(netCoreRmemMax), Optional.ToNullable(netCoreWmemDefault), Optional.ToNullable(netCoreWmemMax), Optional.ToNullable(netCoreOptmemMax), Optional.ToNullable(netIPv4TcpMaxSynBacklog), Optional.ToNullable(netIPv4TcpMaxTwBuckets), Optional.ToNullable(netIPv4TcpFinTimeout), Optional.ToNullable(netIPv4TcpKeepaliveTime), Optional.ToNullable(netIPv4TcpKeepaliveProbes), Optional.ToNullable(netIPv4TcpkeepaliveIntvl), Optional.ToNullable(netIPv4TcpTwReuse), netIPv4IPLocalPortRange.Value, Optional.ToNullable(netIPv4NeighDefaultGcThresh1), Optional.ToNullable(netIPv4NeighDefaultGcThresh2), Optional.ToNullable(netIPv4NeighDefaultGcThresh3), Optional.ToNullable(netNetfilterNfConntrackMax), Optional.ToNullable(netNetfilterNfConntrackBuckets), Optional.ToNullable(fsInotifyMaxUserWatches), Optional.ToNullable(fsFileMax), Optional.ToNullable(fsAioMaxNr), Optional.ToNullable(fsNrOpen), Optional.ToNullable(kernelThreadsMax), Optional.ToNullable(vmMaxMapCount), Optional.ToNullable(vmSwappiness), Optional.ToNullable(vmVfsCachePressure));
+            return new SysctlConfig(Optional.ToNullable(netCoreSomaxconn), Optional.ToNullable(netCoreNetdevMaxBacklog), Optional.ToNullable(netCoreRmemDefault), Optional.ToNullable(netCoreRmemMax), Optional.ToNullable(netCoreWmemDefault), Optional.ToNullable(netCoreWmemMax), Optional.ToNullable(netCoreOptmemMax), Optional.ToNullable(netIpv4TcpMaxSynBacklog), Optional.ToNullable(netIpv4TcpMaxTwBuckets), Optional.ToNullable(netIpv4TcpFinTimeout), Optional.ToNullable(netIpv4TcpKeepaliveTime), Optional.ToNullable(netIpv4TcpKeepaliveProbes), Optional.ToNullable(netIpv4TcpkeepaliveIntvl), Optional.ToNullable(netIpv4TcpTwReuse), netIpv4IpLocalPortRange.Value, Optional.ToNullable(netIpv4NeighDefaultGcThresh1), Optional.ToNullable(netIpv4NeighDefaultGcThresh2), Optional.ToNullable(netIpv4NeighDefaultGcThresh3), Optional.ToNullable(netNetfilterNfConntrackMax), Optional.ToNullable(netNetfilterNfConntrackBuckets), Optional.ToNullable(fsInotifyMaxUserWatches), Optional.ToNullable(fsFileMax), Optional.ToNullable(fsAioMaxNr), Optional.ToNullable(fsNrOpen), Optional.ToNullable(kernelThreadsMax), Optional.ToNullable(vmMaxMapCount), Optional.ToNullable(vmSwappiness), Optional.ToNullable(vmVfsCachePressure));
         }
     }
 }

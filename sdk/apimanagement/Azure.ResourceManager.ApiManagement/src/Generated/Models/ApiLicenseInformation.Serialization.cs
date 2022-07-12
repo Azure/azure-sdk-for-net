@@ -7,11 +7,13 @@
 
 using System;
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ApiLicenseInformation : IUtf8JsonSerializable
+    public partial class ApiLicenseInformation : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -52,6 +54,40 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new ApiLicenseInformation(name.Value, url.Value);
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "ApiLicenseInformation");
+            if (Optional.IsDefined(Name))
+            {
+                writer.WriteStartElement("name");
+                writer.WriteValue(Name);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Uri))
+            {
+                writer.WriteStartElement("url");
+                writer.WriteValue(Uri);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static ApiLicenseInformation DeserializeApiLicenseInformation(XElement element)
+        {
+            string name = default;
+            Uri uri = default;
+            if (element.Element("name") is XElement nameElement)
+            {
+                name = (string)nameElement;
+            }
+            if (element.Element("url") is XElement urlElement)
+            {
+                uri = new Uri((string)urlElement)
+                ;
+            }
+            return new ApiLicenseInformation(name, uri);
         }
     }
 }

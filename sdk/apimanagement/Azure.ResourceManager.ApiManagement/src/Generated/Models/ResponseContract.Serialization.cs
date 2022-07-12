@@ -7,11 +7,13 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ResponseContract : IUtf8JsonSerializable
+    public partial class ResponseContract : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -96,6 +98,64 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new ResponseContract(statusCode, description.Value, Optional.ToList(representations), Optional.ToList(headers));
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "ResponseContract");
+            writer.WriteStartElement("statusCode");
+            writer.WriteValue(StatusCode);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(Description))
+            {
+                writer.WriteStartElement("description");
+                writer.WriteValue(Description);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsCollectionDefined(Representations))
+            {
+                foreach (var item in Representations)
+                {
+                    writer.WriteObjectValue(item, "RepresentationContract");
+                }
+            }
+            if (Optional.IsCollectionDefined(Headers))
+            {
+                foreach (var item in Headers)
+                {
+                    writer.WriteObjectValue(item, "ParameterContract");
+                }
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static ResponseContract DeserializeResponseContract(XElement element)
+        {
+            int statusCode = default;
+            string description = default;
+            IList<RepresentationContract> representations = default;
+            IList<ParameterContract> headers = default;
+            if (element.Element("statusCode") is XElement statusCodeElement)
+            {
+                statusCode = (int)statusCodeElement;
+            }
+            if (element.Element("description") is XElement descriptionElement)
+            {
+                description = (string)descriptionElement;
+            }
+            var array = new List<RepresentationContract>();
+            foreach (var e in element.Elements("RepresentationContract"))
+            {
+                array.Add(RepresentationContract.DeserializeRepresentationContract(e));
+            }
+            representations = array;
+            var array0 = new List<ParameterContract>();
+            foreach (var e in element.Elements("ParameterContract"))
+            {
+                array0.Add(ParameterContract.DeserializeParameterContract(e));
+            }
+            headers = array0;
+            return new ResponseContract(statusCode, description, representations, headers);
         }
     }
 }

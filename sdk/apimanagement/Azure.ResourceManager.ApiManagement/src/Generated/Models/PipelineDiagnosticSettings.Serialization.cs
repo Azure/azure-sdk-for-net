@@ -6,11 +6,13 @@
 #nullable disable
 
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class PipelineDiagnosticSettings : IUtf8JsonSerializable
+    public partial class PipelineDiagnosticSettings : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -56,6 +58,35 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new PipelineDiagnosticSettings(request.Value, response.Value);
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "PipelineDiagnosticSettings");
+            if (Optional.IsDefined(Request))
+            {
+                writer.WriteObjectValue(Request, "request");
+            }
+            if (Optional.IsDefined(Response))
+            {
+                writer.WriteObjectValue(Response, "response");
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static PipelineDiagnosticSettings DeserializePipelineDiagnosticSettings(XElement element)
+        {
+            HttpMessageDiagnostic request = default;
+            HttpMessageDiagnostic response = default;
+            if (element.Element("request") is XElement requestElement)
+            {
+                request = HttpMessageDiagnostic.DeserializeHttpMessageDiagnostic(requestElement);
+            }
+            if (element.Element("response") is XElement responseElement)
+            {
+                response = HttpMessageDiagnostic.DeserializeHttpMessageDiagnostic(responseElement);
+            }
+            return new PipelineDiagnosticSettings(request, response);
         }
     }
 }

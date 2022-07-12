@@ -7,11 +7,13 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class RequestContract : IUtf8JsonSerializable
+    public partial class RequestContract : IUtf8JsonSerializable, IXmlSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -114,6 +116,70 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new RequestContract(description.Value, Optional.ToList(queryParameters), Optional.ToList(headers), Optional.ToList(representations));
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "RequestContract");
+            if (Optional.IsDefined(Description))
+            {
+                writer.WriteStartElement("description");
+                writer.WriteValue(Description);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsCollectionDefined(QueryParameters))
+            {
+                foreach (var item in QueryParameters)
+                {
+                    writer.WriteObjectValue(item, "ParameterContract");
+                }
+            }
+            if (Optional.IsCollectionDefined(Headers))
+            {
+                foreach (var item in Headers)
+                {
+                    writer.WriteObjectValue(item, "ParameterContract");
+                }
+            }
+            if (Optional.IsCollectionDefined(Representations))
+            {
+                foreach (var item in Representations)
+                {
+                    writer.WriteObjectValue(item, "RepresentationContract");
+                }
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static RequestContract DeserializeRequestContract(XElement element)
+        {
+            string description = default;
+            IList<ParameterContract> queryParameters = default;
+            IList<ParameterContract> headers = default;
+            IList<RepresentationContract> representations = default;
+            if (element.Element("description") is XElement descriptionElement)
+            {
+                description = (string)descriptionElement;
+            }
+            var array = new List<ParameterContract>();
+            foreach (var e in element.Elements("ParameterContract"))
+            {
+                array.Add(ParameterContract.DeserializeParameterContract(e));
+            }
+            queryParameters = array;
+            var array0 = new List<ParameterContract>();
+            foreach (var e in element.Elements("ParameterContract"))
+            {
+                array0.Add(ParameterContract.DeserializeParameterContract(e));
+            }
+            headers = array0;
+            var array1 = new List<RepresentationContract>();
+            foreach (var e in element.Elements("RepresentationContract"))
+            {
+                array1.Add(RepresentationContract.DeserializeRepresentationContract(e));
+            }
+            representations = array1;
+            return new RequestContract(description, queryParameters, headers, representations);
         }
     }
 }
