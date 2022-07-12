@@ -12,15 +12,15 @@ using Azure.Core;
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary> The validation operation result for a linker. </summary>
-    public partial class ValidateOperationResult
+    public partial class LinkerValidateOperationResult
     {
-        /// <summary> Initializes a new instance of ValidateOperationResult. </summary>
-        internal ValidateOperationResult()
+        /// <summary> Initializes a new instance of LinkerValidateOperationResult. </summary>
+        internal LinkerValidateOperationResult()
         {
-            ValidationDetail = new ChangeTrackingList<ValidationResultItemData>();
+            ValidationDetail = new ChangeTrackingList<LinkerValidationResultItemInfo>();
         }
 
-        /// <summary> Initializes a new instance of ValidateOperationResult. </summary>
+        /// <summary> Initializes a new instance of LinkerValidateOperationResult. </summary>
         /// <param name="resourceId"> Validated linker id. </param>
         /// <param name="status"> Validation operation status. </param>
         /// <param name="linkerName"> The linker name. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="targetId"> The resource Id of target service. </param>
         /// <param name="authType"> The authentication type. </param>
         /// <param name="validationDetail"> The detail of validation result. </param>
-        internal ValidateOperationResult(ResourceIdentifier resourceId, string status, string linkerName, bool? isConnectionAvailable, DateTimeOffset? reportStartOn, DateTimeOffset? reportEndOn, ResourceIdentifier sourceId, ResourceIdentifier targetId, LinkerAuthType? authType, IReadOnlyList<ValidationResultItemData> validationDetail)
+        internal LinkerValidateOperationResult(ResourceIdentifier resourceId, string status, string linkerName, bool? isConnectionAvailable, DateTimeOffset? reportStartOn, DateTimeOffset? reportEndOn, ResourceIdentifier sourceId, ResourceIdentifier targetId, LinkerAuthType? authType, IReadOnlyList<LinkerValidationResultItemInfo> validationDetail)
         {
             ResourceId = resourceId;
             Status = status;
@@ -64,6 +64,6 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> The authentication type. </summary>
         public LinkerAuthType? AuthType { get; }
         /// <summary> The detail of validation result. </summary>
-        public IReadOnlyList<ValidationResultItemData> ValidationDetail { get; }
+        public IReadOnlyList<LinkerValidationResultItemInfo> ValidationDetail { get; }
     }
 }
