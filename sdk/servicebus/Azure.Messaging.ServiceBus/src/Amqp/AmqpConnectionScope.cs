@@ -173,7 +173,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   Initializes a new instance of the <see cref="AmqpConnectionScope"/> class.
         /// </summary>
         /// <param name="serviceEndpoint">Endpoint for the Service Bus service to which the scope is associated.</param>
-        /// <param name="connectionEndpoint">TODO</param>
+        /// <param name="connectionEndpoint">The endpoint to use for the initial connection to the Service Bus service.</param>
         /// <param name="credential">The credential to use for authorization with the Service Bus service.</param>
         /// <param name="transport">The transport to use for communication.</param>
         /// <param name="proxy">The proxy, if any, to use for communication.</param>
@@ -436,7 +436,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <param name="amqpVersion">The version of AMQP to use for the connection.</param>
         /// <param name="serviceEndpoint">The endpoint for the Service Bus service to which the scope is associated.</param>
-        /// <param name="connectionEndpoint">TODO</param>
+        /// <param name="connectionEndpoint">The endpoint to use for the initial connection to the Service Bus service.</param>
         /// <param name="transportType">The type of transport to use for communication.</param>
         /// <param name="proxy">The proxy, if any, to use for communication.</param>
         /// <param name="scopeIdentifier">The unique identifier for the associated scope.</param>
@@ -459,8 +459,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
             AmqpConnectionSettings connectionSetings = CreateAmqpConnectionSettings(serviceHostName, scopeIdentifier);
 
             TransportSettings transportSettings = transportType.IsWebSocketTransport()
-                ? CreateTransportSettingsForWebSockets(connectionHostName, proxy)
-                : CreateTransportSettingsforTcp(connectionHostName, connectionEndpoint.Port);
+                ? CreateTransportSettingsForWebSockets(serviceHostName, proxy)
+                : CreateTransportSettingsforTcp(serviceHostName, serviceEndpoint.Port);
 
             // Create and open the connection, respecting the timeout constraint
             // that was received.

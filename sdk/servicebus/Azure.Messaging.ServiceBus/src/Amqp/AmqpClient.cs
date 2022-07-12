@@ -114,7 +114,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
             ConnectionScope = new AmqpConnectionScope(
                 ServiceEndpoint,
-                options.CustomEndpointAddress,
+                ConnectionEndpoint,
                 credential,
                 options.TransportType,
                 options.WebProxy,
