@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="operations"> The operations list. </param>
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="properties"> Additional properties from RP, only when operation is successful. </param>
-        internal OperationStatus(string id, string name, string status, float? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<OperationStatusResult> operations, ResponseError error, IReadOnlyDictionary<string, BinaryData> properties) : base(id, name, status, percentComplete, startOn, endOn, operations, error)
+        internal OperationStatus(ResourceIdentifier id, string name, string status, float? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<OperationStatusResult> operations, ResponseError error, IReadOnlyDictionary<string, BinaryData> properties) : base(id, name, status, percentComplete, startOn, endOn, operations, error)
         {
             Properties = properties;
         }

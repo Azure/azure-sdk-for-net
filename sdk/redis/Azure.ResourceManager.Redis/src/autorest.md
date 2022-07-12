@@ -64,5 +64,9 @@ directive:
         }
       ];
       $.RedisResource['x-ms-client-name'] = 'Redis';
+  - from: types.json
+    where: $.definitions.OperationStatusResult
+    transform: >
+      $.properties.id['x-ms-format'] = 'arm-id';
 
 ```

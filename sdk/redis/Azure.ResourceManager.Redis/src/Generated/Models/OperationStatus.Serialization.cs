@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Redis.Models
         internal static OperationStatus DeserializeOperationStatus(JsonElement element)
         {
             Optional<IReadOnlyDictionary<string, BinaryData>> properties = default;
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             string status = default;
             Optional<float> percentComplete = default;
@@ -46,7 +46,12 @@ namespace Azure.ResourceManager.Redis.Models
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
