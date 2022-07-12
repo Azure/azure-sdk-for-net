@@ -33,6 +33,6 @@ namespace Azure.Storage.Blobs.Models
         ///
         /// StageBlock accepts precalcualted checksums if available.
         /// </summary>
-        public UploadTransferValidationOptions TransactionalValidationOptions { get; set; }
+        public UploadTransferValidationOptions TransferValidationOptions { get; set; }
     }
 }

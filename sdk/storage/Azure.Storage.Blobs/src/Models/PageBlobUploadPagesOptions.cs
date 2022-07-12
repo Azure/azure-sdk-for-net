@@ -26,6 +26,6 @@ namespace Azure.Storage.Blobs.Models
         /// Optional <see cref="UploadTransferValidationOptions"/> for using transactional
         /// hashing on uploads.
         /// </summary>
-        public UploadTransferValidationOptions TransactionalValidationOptions { get; set; }
+        public UploadTransferValidationOptions TransferValidationOptions { get; set; }
     }
 }

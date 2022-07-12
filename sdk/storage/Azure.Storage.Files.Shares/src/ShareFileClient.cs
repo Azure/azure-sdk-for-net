@@ -2316,7 +2316,7 @@ namespace Azure.Storage.Files.Shares
             ShareErrors.AssertAlgorithmSupport(validationOptions?.Algorithm);
 
             // calculation gets illegible with null coalesce; just pre-initialize
-            var pageRange = range; // TODO #27253 //options?.Range ?? default;
+            var pageRange = range;
             pageRange = new HttpRange(
                 pageRange.Offset + startOffset,
                 pageRange.Length.HasValue ?

@@ -47,7 +47,7 @@ namespace Azure.Storage.Blobs.Tests
         {
             return await client.OpenWriteAsync(false, 0, new PageBlobOpenWriteOptions
             {
-                ValidationOptions = hashingOptions,
+                TransferValidationOptions = hashingOptions,
                 BufferSize = internalBufferSize
             });
         }
@@ -69,7 +69,7 @@ namespace Azure.Storage.Blobs.Tests
         {
             return (await client.UploadPagesAsync(source, 0, new PageBlobUploadPagesOptions
             {
-                TransactionalValidationOptions = hashingOptions
+                TransferValidationOptions = hashingOptions
             })).GetRawResponse();
         }
 

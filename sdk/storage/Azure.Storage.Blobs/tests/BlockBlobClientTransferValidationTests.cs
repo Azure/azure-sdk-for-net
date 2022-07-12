@@ -68,7 +68,7 @@ namespace Azure.Storage.Blobs.Tests
                 source,
                 new BlockBlobStageBlockOptions
                 {
-                    TransactionalValidationOptions = hashingOptions
+                    TransferValidationOptions = hashingOptions
                 })).GetRawResponse();
         }
 

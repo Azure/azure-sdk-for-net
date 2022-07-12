@@ -1157,7 +1157,7 @@ namespace Azure.Storage.Blobs.Specialized
             StageBlockInternal(
                 base64BlockId,
                 content,
-                options?.TransactionalValidationOptions,
+                options?.TransferValidationOptions,
                 options?.Conditions,
                 options?.ProgressHandler,
                 false, // async
@@ -1208,7 +1208,7 @@ namespace Azure.Storage.Blobs.Specialized
             await StageBlockInternal(
                 base64BlockId,
                 content,
-                options?.TransactionalValidationOptions,
+                options?.TransferValidationOptions,
                 options?.Conditions,
                 options?.ProgressHandler,
                 true, // async

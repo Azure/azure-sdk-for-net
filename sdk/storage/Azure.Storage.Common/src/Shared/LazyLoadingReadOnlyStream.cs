@@ -134,12 +134,6 @@ namespace Azure.Storage
         /// </summary>
         private readonly PredictEncryptedRangeAdjustment _predictEncryptedRangeAdjustment;
 
-        // TODO #27253
-        ///// <summary>
-        ///// Hashing options to use with <see cref="_downloadInternalFunc"/>.
-        ///// </summary>
-        //private readonly DownloadTransactionalHashingOptions _hashingOptions;
-
         public LazyLoadingReadOnlyStream(
             DownloadInternalAsync downloadInternalFunc,
             GetPropertiesAsync getPropertiesFunc,
@@ -252,7 +246,6 @@ namespace Azure.Storage
                 return 0;
             }
 
-            // TODO #27253
             response = await _downloadInternalFunc(range, _validationOptions, async, cancellationToken).ConfigureAwait(false);
 
             using Stream networkStream = response.Value.Content;

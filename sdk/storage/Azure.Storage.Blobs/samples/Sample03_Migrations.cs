@@ -952,7 +952,7 @@ namespace Azure.Storage.Blobs.Samples
                     blockContentStream,
                     new BlockBlobStageBlockOptions
                     {
-                        TransactionalValidationOptions = new UploadTransferValidationOptions
+                        TransferValidationOptions = new UploadTransferValidationOptions
                         {
                             Algorithm = ValidationAlgorithm.MD5,
                             // a precalculated hash can be provided as follows,

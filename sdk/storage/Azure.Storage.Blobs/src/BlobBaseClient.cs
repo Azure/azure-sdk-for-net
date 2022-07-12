@@ -941,21 +941,6 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            BlobDownloadOptions options = default;
-            if (range != default || conditions != default || rangeGetContentHash != default)
-            {
-                options = new BlobDownloadOptions
-                {
-                    Range = range,
-                    Conditions = conditions,
-                    TransferValidationOptions = rangeGetContentHash
-                        ? new DownloadTransferValidationOptions()
-                        {
-                            Algorithm = ValidationAlgorithm.MD5
-                        }
-                        : default,
-                };
-            }
             Response<BlobDownloadStreamingResult> response = await DownloadStreamingDirect(
                 range,
                 conditions,
@@ -1327,7 +1312,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobDownloadOptions options,
             CancellationToken cancellationToken = default)
         {
-            return DownloadStreamingInternal(
+            return DownloadStreamingDirect(
                 options?.Range ?? default,
                 options?.Conditions,
                 options?.TransferValidationOptions,
@@ -1374,7 +1359,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobDownloadOptions options,
             CancellationToken cancellationToken = default)
         {
-            return await DownloadStreamingInternal(
+            return await DownloadStreamingDirect(
                 options?.Range ?? default,
                 options?.Conditions,
                 options?.TransferValidationOptions,
@@ -1528,12 +1513,10 @@ namespace Azure.Storage.Blobs.Specialized
 
                     stream = stream.WithNoDispose().WithProgress(progressHandler);
 
-                    /* NOTE: we do not currently support both features together. This comment remains here
-                     * for the potential future where we do.
-                     * Comparing hash results comes BEFORE decryption.
-                     * Buffer response stream and ensure it matches the transactional hash if any.
-                     * Storage will not return a hash for payload >4MB, so this buffer is capped similarly.
-                     * Hashing is opt-in, so this buffer is part of that opt-in */
+                    /* Decryption handled by caller, so safe to check checksum now.
+                     * Buffer response stream and ensure it matches the transactional checksum if any.
+                     * Storage will not return a checksum for payload >4MB, so this buffer is capped similarly.
+                     * Checksum validation is opt-in, so this buffer is part of that opt-in. */
                     if (validationOptions != default && validationOptions.Algorithm != ValidationAlgorithm.None && validationOptions.Validate)
                     {
                         // safe-buffer; transactional hash download limit well below maxInt
@@ -2694,11 +2677,6 @@ namespace Azure.Storage.Blobs.Specialized
 
             if (UsingClientSideEncryption)
             {
-                if (validationOptions != default && validationOptions.Algorithm != ValidationAlgorithm.None)
-                {
-                    throw Errors.TransactionalHashingNotSupportedWithClientSideEncryption();
-                }
-
                 ClientSideDecryptor.BeginContentEncryptionKeyCaching();
             }
             if (async)
@@ -2990,11 +2968,6 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     scope.Start();
-
-                    if (UsingClientSideEncryption && validationOptions != default)
-                    {
-                        throw Errors.TransactionalHashingNotSupportedWithClientSideEncryption();
-                    }
 
                     // This also makes sure that we fail fast if file doesn't exist.
                     Response<BlobProperties> blobProperties = await GetPropertiesInternal(conditions: conditions, async, cancellationToken).ConfigureAwait(false);

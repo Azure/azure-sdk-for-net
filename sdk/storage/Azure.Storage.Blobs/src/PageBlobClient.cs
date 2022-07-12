@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Shared;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
 
@@ -1110,23 +1111,6 @@ namespace Azure.Storage.Blobs.Specialized
             IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default)
         {
-            // TODO #27253
-            //PageBlobUploadPagesOptions options = default;
-            //if (transactionalContentHash != default || conditions != default || progressHandler != default)
-            //{
-            //    options = new PageBlobUploadPagesOptions()
-            //    {
-            //        TransactionalHashingOptions = transactionalContentHash != default
-            //            ? new UploadTransactionalHashingOptions()
-            //            {
-            //                Algorithm = TransactionalHashAlgorithm.MD5,
-            //                PrecalculatedHash = transactionalContentHash
-            //            }
-            //            : default,
-            //        Conditions = conditions,
-            //        ProgressHandler = progressHandler
-            //    };
-            //}
             return UploadPagesInternal(
                 content,
                 offset,
@@ -1199,33 +1183,10 @@ namespace Azure.Storage.Blobs.Specialized
             IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default)
         {
-            // TODO #27253
-            //PageBlobUploadPagesOptions options = default;
-            //if (transactionalContentHash != default || conditions != default || progressHandler != default)
-            //{
-            //    options = new PageBlobUploadPagesOptions()
-            //    {
-            //        TransactionalHashingOptions = transactionalContentHash != default
-            //            ? new UploadTransactionalHashingOptions()
-            //            {
-            //                Algorithm = TransactionalHashAlgorithm.MD5,
-            //                PrecalculatedHash = transactionalContentHash
-            //            }
-            //            : default,
-            //        Conditions = conditions,
-            //        ProgressHandler = progressHandler
-            //    };
-            //}
             return await UploadPagesInternal(
                 content,
                 offset,
-                transactionalContentHash != default
-                    ? new UploadTransferValidationOptions()
-                    {
-                        Algorithm = ValidationAlgorithm.MD5,
-                        PrecalculatedChecksum = transactionalContentHash
-                    }
-                    : default,
+                transactionalContentHash.ToValidationOptions(),
                 conditions,
                 progressHandler,
                 true, // async
@@ -1274,7 +1235,7 @@ namespace Azure.Storage.Blobs.Specialized
             UploadPagesInternal(
                 content,
                 offset,
-                options?.TransactionalValidationOptions,
+                options?.TransferValidationOptions,
                 options?.Conditions,
                 options?.ProgressHandler,
                 false, // async
@@ -1322,7 +1283,7 @@ namespace Azure.Storage.Blobs.Specialized
             await UploadPagesInternal(
                 content,
                 offset,
-                options?.TransactionalValidationOptions,
+                options?.TransferValidationOptions,
                 options?.Conditions,
                 options?.ProgressHandler,
                 true, // async
@@ -4266,7 +4227,7 @@ namespace Azure.Storage.Blobs.Specialized
                     position: position,
                     conditions: conditions,
                     progressHandler: options?.ProgressHandler,
-                    options?.ValidationOptions
+                    options?.TransferValidationOptions
                     );
             }
             catch (Exception ex)
