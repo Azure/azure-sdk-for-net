@@ -8,16 +8,16 @@
 namespace Azure.ResourceManager.Communication.Models
 {
     /// <summary> Input parameter for verification APIs. </summary>
-    public partial class VerificationContent
+    public partial class DomainsRecordVerificationContent
     {
-        /// <summary> Initializes a new instance of VerificationContent. </summary>
+        /// <summary> Initializes a new instance of DomainsRecordVerificationContent. </summary>
         /// <param name="verificationType"> Type of verification. </param>
-        public VerificationContent(VerificationType verificationType)
+        public DomainsRecordVerificationContent(DomainRecordVerificationType verificationType)
         {
             VerificationType = verificationType;
         }
 
         /// <summary> Type of verification. </summary>
-        public VerificationType VerificationType { get; }
+        public DomainRecordVerificationType VerificationType { get; }
     }
 }

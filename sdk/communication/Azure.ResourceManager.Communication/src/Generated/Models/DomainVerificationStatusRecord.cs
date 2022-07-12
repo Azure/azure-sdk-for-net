@@ -8,24 +8,24 @@
 namespace Azure.ResourceManager.Communication.Models
 {
     /// <summary> A class that represents a VerificationStatus record. </summary>
-    public partial class VerificationStatusRecord
+    public partial class DomainVerificationStatusRecord
     {
-        /// <summary> Initializes a new instance of VerificationStatusRecord. </summary>
-        internal VerificationStatusRecord()
+        /// <summary> Initializes a new instance of DomainVerificationStatusRecord. </summary>
+        internal DomainVerificationStatusRecord()
         {
         }
 
-        /// <summary> Initializes a new instance of VerificationStatusRecord. </summary>
+        /// <summary> Initializes a new instance of DomainVerificationStatusRecord. </summary>
         /// <param name="status"> Status of the verification operation. </param>
         /// <param name="errorCode"> Error code. This property will only be present if the status is UnableToVerify. </param>
-        internal VerificationStatusRecord(VerificationStatus? status, string errorCode)
+        internal DomainVerificationStatusRecord(DomainRecordVerificationStatus? status, string errorCode)
         {
             Status = status;
             ErrorCode = errorCode;
         }
 
         /// <summary> Status of the verification operation. </summary>
-        public VerificationStatus? Status { get; }
+        public DomainRecordVerificationStatus? Status { get; }
         /// <summary> Error code. This property will only be present if the status is UnableToVerify. </summary>
         public string ErrorCode { get; }
     }

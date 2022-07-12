@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Communication.Models
 {
-    public partial class AcceptTags : IUtf8JsonSerializable
+    public partial class CommunicationAcceptTags : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

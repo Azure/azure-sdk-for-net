@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -63,9 +64,9 @@ namespace Azure.ResourceManager.Communication
             Optional<CommunicationServicesProvisioningState> provisioningState = default;
             Optional<string> hostName = default;
             Optional<string> dataLocation = default;
-            Optional<string> notificationHubId = default;
+            Optional<ResourceIdentifier> notificationHubId = default;
             Optional<string> version = default;
-            Optional<string> immutableResourceId = default;
+            Optional<Guid> immutableResourceId = default;
             Optional<IList<string>> linkedDomains = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -145,7 +146,12 @@ namespace Azure.ResourceManager.Communication
                         }
                         if (property0.NameEquals("notificationHubId"))
                         {
-                            notificationHubId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            notificationHubId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("version"))
@@ -155,7 +161,12 @@ namespace Azure.ResourceManager.Communication
                         }
                         if (property0.NameEquals("immutableResourceId"))
                         {
-                            immutableResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            immutableResourceId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("linkedDomains"))
@@ -177,7 +188,7 @@ namespace Azure.ResourceManager.Communication
                     continue;
                 }
             }
-            return new CommunicationServiceResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), hostName.Value, dataLocation.Value, notificationHubId.Value, version.Value, immutableResourceId.Value, Optional.ToList(linkedDomains));
+            return new CommunicationServiceResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), hostName.Value, dataLocation.Value, notificationHubId.Value, version.Value, Optional.ToNullable(immutableResourceId), Optional.ToList(linkedDomains));
         }
     }
 }

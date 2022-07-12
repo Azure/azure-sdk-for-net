@@ -8,28 +8,28 @@
 namespace Azure.ResourceManager.Communication.Models
 {
     /// <summary> The check availability result. </summary>
-    public partial class CommunicationServiceNameAvailabilityResult
+    public partial class CommunicationNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of CommunicationServiceNameAvailabilityResult. </summary>
-        internal CommunicationServiceNameAvailabilityResult()
+        /// <summary> Initializes a new instance of CommunicationNameAvailabilityResult. </summary>
+        internal CommunicationNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of CommunicationServiceNameAvailabilityResult. </summary>
-        /// <param name="nameAvailable"> Indicates if the resource name is available. </param>
+        /// <summary> Initializes a new instance of CommunicationNameAvailabilityResult. </summary>
+        /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is available. </param>
-        internal CommunicationServiceNameAvailabilityResult(bool? nameAvailable, CheckNameAvailabilityReason? reason, string message)
+        internal CommunicationNameAvailabilityResult(bool? isNameAvailable, CommunicationNameAvailabilityReason? reason, string message)
         {
-            NameAvailable = nameAvailable;
+            IsNameAvailable = isNameAvailable;
             Reason = reason;
             Message = message;
         }
 
         /// <summary> Indicates if the resource name is available. </summary>
-        public bool? NameAvailable { get; }
+        public bool? IsNameAvailable { get; }
         /// <summary> The reason why the given name is not available. </summary>
-        public CheckNameAvailabilityReason? Reason { get; }
+        public CommunicationNameAvailabilityReason? Reason { get; }
         /// <summary> Detailed reason why the given name is available. </summary>
         public string Message { get; }
     }

@@ -5,19 +5,21 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Communication.Models
 {
     /// <summary> The check availability request body. </summary>
-    public partial class CheckNameAvailabilityRequestBody
+    public partial class CommunicationNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of CheckNameAvailabilityRequestBody. </summary>
-        public CheckNameAvailabilityRequestBody()
+        /// <summary> Initializes a new instance of CommunicationNameAvailabilityContent. </summary>
+        public CommunicationNameAvailabilityContent()
         {
         }
 
         /// <summary> The name of the resource for which availability needs to be checked. </summary>
         public string Name { get; set; }
         /// <summary> The resource type. </summary>
-        public string ResourceType { get; set; }
+        public ResourceType? ResourceType { get; set; }
     }
 }
