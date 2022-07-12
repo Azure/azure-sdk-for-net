@@ -16,12 +16,8 @@ namespace Azure.ResourceManager.DnsResolver.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Subnet))
-            {
-                writer.WritePropertyName("subnet");
-                JsonSerializer.Serialize(writer, Subnet);
-            }
-            if (Optional.IsDefined(PrivateIPAddress))
+            writer.WritePropertyName("subnet");
+            JsonSerializer.Serialize(writer, Subnet); if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIpAddress");
                 writer.WriteStringValue(PrivateIPAddress);
@@ -36,18 +32,13 @@ namespace Azure.ResourceManager.DnsResolver.Models
 
         internal static IPConfiguration DeserializeIPConfiguration(JsonElement element)
         {
-            Optional<WritableSubResource> subnet = default;
+            WritableSubResource subnet = default;
             Optional<string> privateIPAddress = default;
             Optional<IPAllocationMethod> privateIPAllocationMethod = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subnet"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     subnet = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
                     continue;
                 }

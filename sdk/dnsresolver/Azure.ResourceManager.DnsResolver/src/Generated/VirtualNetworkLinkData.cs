@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -18,8 +19,16 @@ namespace Azure.ResourceManager.DnsResolver
     public partial class VirtualNetworkLinkData : ResourceData
     {
         /// <summary> Initializes a new instance of VirtualNetworkLinkData. </summary>
-        public VirtualNetworkLinkData()
+        /// <param name="virtualNetwork"> The reference to the virtual network. This cannot be changed after creation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetwork"/> is null. </exception>
+        public VirtualNetworkLinkData(WritableSubResource virtualNetwork)
         {
+            if (virtualNetwork == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetwork));
+            }
+
+            VirtualNetwork = virtualNetwork;
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 

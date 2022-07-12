@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -19,8 +20,16 @@ namespace Azure.ResourceManager.DnsResolver
     {
         /// <summary> Initializes a new instance of OutboundEndpointData. </summary>
         /// <param name="location"> The location. </param>
-        public OutboundEndpointData(AzureLocation location) : base(location)
+        /// <param name="subnet"> The reference to the subnet used for the outbound endpoint. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subnet"/> is null. </exception>
+        public OutboundEndpointData(AzureLocation location, WritableSubResource subnet) : base(location)
         {
+            if (subnet == null)
+            {
+                throw new ArgumentNullException(nameof(subnet));
+            }
+
+            Subnet = subnet;
         }
 
         /// <summary> Initializes a new instance of OutboundEndpointData. </summary>
