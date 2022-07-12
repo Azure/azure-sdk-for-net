@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        internal HttpMessage CreateListKeysRequest(string subscriptionId, string resourceGroupName, string accountName, ListKeyExpand? expand)
+        internal HttpMessage CreateListKeysRequest(string subscriptionId, string resourceGroupName, string accountName, StorageListKeyExpand? expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StorageAccountListKeysResult>> ListKeysAsync(string subscriptionId, string resourceGroupName, string accountName, ListKeyExpand? expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<StorageAccountListKeysResult>> ListKeysAsync(string subscriptionId, string resourceGroupName, string accountName, StorageListKeyExpand? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -636,7 +636,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StorageAccountListKeysResult> ListKeys(string subscriptionId, string resourceGroupName, string accountName, ListKeyExpand? expand = null, CancellationToken cancellationToken = default)
+        public Response<StorageAccountListKeysResult> ListKeys(string subscriptionId, string resourceGroupName, string accountName, StorageListKeyExpand? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

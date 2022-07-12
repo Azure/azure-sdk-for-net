@@ -314,108 +314,6 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> A collection id may optionally be specified. </summary>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
-        /// <param name="collectionId"> The collection id. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>LedgerEntry</c>:
-        /// <code>{
-        ///   contents: string, # Required. Contents of the ledger entry.
-        ///   collectionId: {
-        ///     collectionId: string, # Required.
-        ///   }, # Optional. Identifier for collections.
-        ///   transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>LedgerWriteResult</c>:
-        /// <code>{
-        ///   collectionId: {
-        ///     collectionId: string, # Required.
-        ///   }, # Required. Identifier for collections.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> PostLedgerEntryAsync(RequestContent content, string collectionId = null, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.PostLedgerEntry");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreatePostLedgerEntryRequest(content, collectionId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> A collection id may optionally be specified. </summary>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
-        /// <param name="collectionId"> The collection id. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>LedgerEntry</c>:
-        /// <code>{
-        ///   contents: string, # Required. Contents of the ledger entry.
-        ///   collectionId: {
-        ///     collectionId: string, # Required.
-        ///   }, # Optional. Identifier for collections.
-        ///   transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>LedgerWriteResult</c>:
-        /// <code>{
-        ///   collectionId: {
-        ///     collectionId: string, # Required.
-        ///   }, # Required. Identifier for collections.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response PostLedgerEntry(RequestContent content, string collectionId = null, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.PostLedgerEntry");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreatePostLedgerEntryRequest(content, collectionId, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> To return older ledger entries, the relevant sections of the ledger must be read from disk and validated. To prevent blocking within the enclave, the response will indicate whether the entry is ready and part of the response, or if the loading is still ongoing. </summary>
         /// <param name="transactionId"> Identifies a write transaction. </param>
         /// <param name="collectionId"> The collection id. </param>
@@ -434,9 +332,7 @@ namespace Azure.Security.ConfidentialLedger
         ///   state: &quot;Loading&quot; | &quot;Ready&quot;, # Required. State of a ledger query.
         ///   entry: {
         ///     contents: string, # Required. Contents of the ledger entry.
-        ///     collectionId: {
-        ///       collectionId: string, # Required.
-        ///     }, # Optional. Identifier for collections.
+        ///     collectionId: string, # Optional.
         ///     transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
         ///   }, # Optional. The ledger entry found as a result of the query. This is only available if the query is in Ready state.
         /// }
@@ -479,9 +375,7 @@ namespace Azure.Security.ConfidentialLedger
         ///   state: &quot;Loading&quot; | &quot;Ready&quot;, # Required. State of a ledger query.
         ///   entry: {
         ///     contents: string, # Required. Contents of the ledger entry.
-        ///     collectionId: {
-        ///       collectionId: string, # Required.
-        ///     }, # Optional. Identifier for collections.
+        ///     collectionId: string, # Optional.
         ///     transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
         ///   }, # Optional. The ledger entry found as a result of the query. This is only available if the query is in Ready state.
         /// }
@@ -709,9 +603,7 @@ namespace Azure.Security.ConfidentialLedger
         /// Schema for <c>LedgerEntry</c>:
         /// <code>{
         ///   contents: string, # Required. Contents of the ledger entry.
-        ///   collectionId: {
-        ///     collectionId: string, # Required.
-        ///   }, # Optional. Identifier for collections.
+        ///   collectionId: string, # Optional.
         ///   transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
         /// }
         /// </code>
@@ -746,9 +638,7 @@ namespace Azure.Security.ConfidentialLedger
         /// Schema for <c>LedgerEntry</c>:
         /// <code>{
         ///   contents: string, # Required. Contents of the ledger entry.
-        ///   collectionId: {
-        ///     collectionId: string, # Required.
-        ///   }, # Optional. Identifier for collections.
+        ///   collectionId: string, # Optional.
         ///   transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
         /// }
         /// </code>
@@ -1003,9 +893,7 @@ namespace Azure.Security.ConfidentialLedger
         /// Schema for <c>LedgerEntries</c>:
         /// <code>{
         ///   contents: string, # Required. Contents of the ledger entry.
-        ///   collectionId: {
-        ///     collectionId: string, # Required.
-        ///   }, # Optional. Identifier for collections.
+        ///   collectionId: string, # Optional.
         ///   transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
         /// }
         /// </code>
@@ -1048,9 +936,7 @@ namespace Azure.Security.ConfidentialLedger
         /// Schema for <c>LedgerEntries</c>:
         /// <code>{
         ///   contents: string, # Required. Contents of the ledger entry.
-        ///   collectionId: {
-        ///     collectionId: string, # Required.
-        ///   }, # Optional. Identifier for collections.
+        ///   collectionId: string, # Optional.
         ///   transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
         /// }
         /// </code>

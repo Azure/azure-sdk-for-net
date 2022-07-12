@@ -145,8 +145,8 @@ namespace Azure.ResourceManager.Authorization
         public Azure.ResourceManager.Authorization.Models.MemberType? MemberType { get { throw null; } }
         public string PrincipalId { get { throw null; } }
         public Azure.ResourceManager.Authorization.Models.PrincipalType? PrincipalType { get { throw null; } }
-        public string RoleAssignmentScheduleRequestId { get { throw null; } }
-        public string RoleDefinitionId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier RoleAssignmentScheduleRequestId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier RoleDefinitionId { get { throw null; } }
         public string Scope { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleStatus? Status { get { throw null; } }
@@ -177,11 +177,11 @@ namespace Azure.ResourceManager.Authorization
         public string LinkedRoleEligibilityScheduleId { get { throw null; } }
         public string LinkedRoleEligibilityScheduleInstanceId { get { throw null; } }
         public Azure.ResourceManager.Authorization.Models.MemberType? MemberType { get { throw null; } }
-        public string OriginRoleAssignmentId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier OriginRoleAssignmentId { get { throw null; } }
         public string PrincipalId { get { throw null; } }
         public Azure.ResourceManager.Authorization.Models.PrincipalType? PrincipalType { get { throw null; } }
-        public string RoleAssignmentScheduleId { get { throw null; } }
-        public string RoleDefinitionId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier RoleAssignmentScheduleId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier RoleDefinitionId { get { throw null; } }
         public string Scope { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleInstanceStatus? Status { get { throw null; } }
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Authorization
         public Azure.ResourceManager.Authorization.Models.PrincipalType? PrincipalType { get { throw null; } }
         public string RequestorId { get { throw null; } }
         public Azure.ResourceManager.Authorization.Models.RequestType? RequestType { get { throw null; } set { } }
-        public string RoleDefinitionId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier RoleDefinitionId { get { throw null; } set { } }
         public Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleInfo ScheduleInfo { get { throw null; } set { } }
         public string Scope { get { throw null; } }
         public Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleRequestStatus? Status { get { throw null; } }
@@ -321,8 +321,8 @@ namespace Azure.ResourceManager.Authorization
         public Azure.ResourceManager.Authorization.Models.MemberType? MemberType { get { throw null; } }
         public string PrincipalId { get { throw null; } }
         public Azure.ResourceManager.Authorization.Models.PrincipalType? PrincipalType { get { throw null; } }
-        public string RoleDefinitionId { get { throw null; } }
-        public string RoleEligibilityScheduleRequestId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier RoleDefinitionId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier RoleEligibilityScheduleRequestId { get { throw null; } }
         public string Scope { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public Azure.ResourceManager.Authorization.Models.RoleEligibilityScheduleStatus? Status { get { throw null; } }
@@ -352,8 +352,8 @@ namespace Azure.ResourceManager.Authorization
         public Azure.ResourceManager.Authorization.Models.MemberType? MemberType { get { throw null; } }
         public string PrincipalId { get { throw null; } }
         public Azure.ResourceManager.Authorization.Models.PrincipalType? PrincipalType { get { throw null; } }
-        public string RoleDefinitionId { get { throw null; } }
-        public string RoleEligibilityScheduleId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier RoleDefinitionId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier RoleEligibilityScheduleId { get { throw null; } }
         public string Scope { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public Azure.ResourceManager.Authorization.Models.RoleEligibilityScheduleInstanceStatus? Status { get { throw null; } }
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.Authorization
         public Azure.ResourceManager.Authorization.Models.PrincipalType? PrincipalType { get { throw null; } }
         public string RequestorId { get { throw null; } }
         public Azure.ResourceManager.Authorization.Models.RequestType? RequestType { get { throw null; } set { } }
-        public string RoleDefinitionId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier RoleDefinitionId { get { throw null; } set { } }
         public Azure.ResourceManager.Authorization.Models.RoleEligibilityScheduleRequestPropertiesScheduleInfo ScheduleInfo { get { throw null; } set { } }
         public string Scope { get { throw null; } }
         public Azure.ResourceManager.Authorization.Models.RoleEligibilityScheduleRequestStatus? Status { get { throw null; } }
@@ -450,8 +450,8 @@ namespace Azure.ResourceManager.Authorization
         public RoleManagementPolicyAssignmentData() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Authorization.Models.RoleManagementPolicyRule> EffectiveRules { get { throw null; } }
         public Azure.ResourceManager.Authorization.Models.PolicyAssignmentProperties PolicyAssignmentProperties { get { throw null; } }
-        public string PolicyId { get { throw null; } set { } }
-        public string RoleDefinitionId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PolicyId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier RoleDefinitionId { get { throw null; } set { } }
         public string Scope { get { throw null; } set { } }
     }
     public partial class RoleManagementPolicyAssignmentResource : Azure.ResourceManager.ArmResource
@@ -627,14 +627,14 @@ namespace Azure.ResourceManager.Authorization.Models
         internal ExpandedPropertiesRoleDefinition() { }
         public string DisplayName { get { throw null; } }
         public string ExpandedPropertiesRoleDefinitionType { get { throw null; } }
-        public string Id { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
     }
     public partial class ExpandedPropertiesScope
     {
         internal ExpandedPropertiesScope() { }
         public string DisplayName { get { throw null; } }
         public string ExpandedPropertiesScopeType { get { throw null; } }
-        public string Id { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MemberType : System.IEquatable<Azure.ResourceManager.Authorization.Models.MemberType>
@@ -701,7 +701,7 @@ namespace Azure.ResourceManager.Authorization.Models
     public partial class PolicyAssignmentPropertiesPolicy
     {
         internal PolicyAssignmentPropertiesPolicy() { }
-        public string Id { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public Azure.ResourceManager.Authorization.Models.AzurePrincipal LastModifiedBy { get { throw null; } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
     }
@@ -709,21 +709,21 @@ namespace Azure.ResourceManager.Authorization.Models
     {
         internal PolicyAssignmentPropertiesRoleDefinition() { }
         public string DisplayName { get { throw null; } }
-        public string Id { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public string PolicyAssignmentPropertiesRoleDefinitionType { get { throw null; } }
     }
     public partial class PolicyAssignmentPropertiesScope
     {
         internal PolicyAssignmentPropertiesScope() { }
         public string DisplayName { get { throw null; } }
-        public string Id { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public string PolicyAssignmentPropertiesScopeType { get { throw null; } }
     }
     public partial class PolicyPropertiesScope
     {
         internal PolicyPropertiesScope() { }
         public string DisplayName { get { throw null; } }
-        public string Id { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public string PolicyPropertiesScopeType { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -822,7 +822,7 @@ namespace Azure.ResourceManager.Authorization.Models
     {
         internal RoleAssignmentPropertiesWithScope() { }
         public string PrincipalId { get { throw null; } }
-        public string RoleDefinitionId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier RoleDefinitionId { get { throw null; } }
         public string Scope { get { throw null; } }
     }
     public partial class RoleAssignmentScheduleInfo
@@ -834,7 +834,7 @@ namespace Azure.ResourceManager.Authorization.Models
     public partial class RoleAssignmentScheduleInfoExpiration
     {
         public RoleAssignmentScheduleInfoExpiration() { }
-        public System.TimeSpan? Duration { get { throw null; } set { } }
+        public string Duration { get { throw null; } set { } }
         public System.DateTimeOffset? EndOn { get { throw null; } set { } }
         public Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleType? RoleAssignmentExpirationType { get { throw null; } set { } }
     }
@@ -1024,7 +1024,7 @@ namespace Azure.ResourceManager.Authorization.Models
     public partial class RoleEligibilityScheduleRequestPropertiesScheduleInfoExpiration
     {
         public RoleEligibilityScheduleRequestPropertiesScheduleInfoExpiration() { }
-        public System.TimeSpan? Duration { get { throw null; } set { } }
+        public string Duration { get { throw null; } set { } }
         public System.DateTimeOffset? EndOn { get { throw null; } set { } }
         public Azure.ResourceManager.Authorization.Models.RoleEligibilityScheduleType? RoleEligibilityExpirationType { get { throw null; } set { } }
     }
@@ -1149,7 +1149,7 @@ namespace Azure.ResourceManager.Authorization.Models
     {
         public RoleManagementPolicyExpirationRule() { }
         public bool? IsExpirationRequired { get { throw null; } set { } }
-        public System.TimeSpan? MaximumDuration { get { throw null; } set { } }
+        public string MaximumDuration { get { throw null; } set { } }
     }
     public partial class RoleManagementPolicyNotificationRule : Azure.ResourceManager.Authorization.Models.RoleManagementPolicyRule
     {
@@ -1163,7 +1163,7 @@ namespace Azure.ResourceManager.Authorization.Models
     public partial class RoleManagementPolicyRule
     {
         public RoleManagementPolicyRule() { }
-        public string Id { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
         public Azure.ResourceManager.Authorization.Models.RoleManagementPolicyRuleTarget Target { get { throw null; } set { } }
     }
     public partial class RoleManagementPolicyRuleTarget
@@ -1180,7 +1180,7 @@ namespace Azure.ResourceManager.Authorization.Models
     {
         public UserInfo() { }
         public string Description { get { throw null; } set { } }
-        public string Id { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
         public bool? IsBackup { get { throw null; } set { } }
         public Azure.ResourceManager.Authorization.Models.UserType? UserType { get { throw null; } set { } }
     }

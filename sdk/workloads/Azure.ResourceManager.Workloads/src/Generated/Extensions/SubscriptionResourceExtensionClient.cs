@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.Workloads
         private PhpWorkloadsRestOperations _phpWorkloadResourcePhpWorkloadsRestClient;
         private ClientDiagnostics _defaultClientDiagnostics;
         private WorkloadsRestOperations _defaultRestClient;
-        private ClientDiagnostics _sapVirtualInstanceSAPVirtualInstancesClientDiagnostics;
-        private SAPVirtualInstancesRestOperations _sapVirtualInstanceSAPVirtualInstancesRestClient;
+        private ClientDiagnostics _sapVirtualInstanceSapVirtualInstancesClientDiagnostics;
+        private SAPVirtualInstancesRestOperations _sapVirtualInstanceSapVirtualInstancesRestClient;
         private ClientDiagnostics _sapMonitormonitorsClientDiagnostics;
         private MonitorsRestOperations _sapMonitormonitorsRestClient;
         private ClientDiagnostics _skusClientDiagnostics;
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.Workloads
         private PhpWorkloadsRestOperations PhpWorkloadResourcePhpWorkloadsRestClient => _phpWorkloadResourcePhpWorkloadsRestClient ??= new PhpWorkloadsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(PhpWorkloadResource.ResourceType));
         private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Workloads", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private WorkloadsRestOperations DefaultRestClient => _defaultRestClient ??= new WorkloadsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics SapVirtualInstanceSAPVirtualInstancesClientDiagnostics => _sapVirtualInstanceSAPVirtualInstancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Workloads", SapVirtualInstanceResource.ResourceType.Namespace, Diagnostics);
-        private SAPVirtualInstancesRestOperations SapVirtualInstanceSAPVirtualInstancesRestClient => _sapVirtualInstanceSAPVirtualInstancesRestClient ??= new SAPVirtualInstancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SapVirtualInstanceResource.ResourceType));
+        private ClientDiagnostics SapVirtualInstanceSAPVirtualInstancesClientDiagnostics => _sapVirtualInstanceSapVirtualInstancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Workloads", SapVirtualInstanceResource.ResourceType.Namespace, Diagnostics);
+        private SAPVirtualInstancesRestOperations SapVirtualInstanceSAPVirtualInstancesRestClient => _sapVirtualInstanceSapVirtualInstancesRestClient ??= new SAPVirtualInstancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SapVirtualInstanceResource.ResourceType));
         private ClientDiagnostics SapMonitormonitorsClientDiagnostics => _sapMonitormonitorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Workloads", SapMonitorResource.ResourceType.Namespace, Diagnostics);
         private MonitorsRestOperations SapMonitormonitorsRestClient => _sapMonitormonitorsRestClient ??= new MonitorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SapMonitorResource.ResourceType));
         private ClientDiagnostics SkusClientDiagnostics => _skusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Workloads", ProviderConstants.DefaultProviderNamespace, Diagnostics);

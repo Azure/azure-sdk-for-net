@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary> Details of role definition. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="id"> Id of the role definition. </param>
         /// <param name="displayName"> Display name of the role definition. </param>
         /// <param name="policyAssignmentPropertiesRoleDefinitionType"> Type of the role definition. </param>
-        internal PolicyAssignmentPropertiesRoleDefinition(string id, string displayName, string policyAssignmentPropertiesRoleDefinitionType)
+        internal PolicyAssignmentPropertiesRoleDefinition(ResourceIdentifier id, string displayName, string policyAssignmentPropertiesRoleDefinitionType)
         {
             Id = id;
             DisplayName = displayName;
@@ -27,7 +29,7 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Id of the role definition. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
         /// <summary> Display name of the role definition. </summary>
         public string DisplayName { get; }
         /// <summary> Type of the role definition. </summary>

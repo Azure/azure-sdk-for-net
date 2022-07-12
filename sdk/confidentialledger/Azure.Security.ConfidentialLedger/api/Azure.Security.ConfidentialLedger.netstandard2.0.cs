@@ -31,10 +31,8 @@ namespace Azure.Security.ConfidentialLedger
         public virtual System.Threading.Tasks.Task<Azure.Response> GetTransactionStatusAsync(string transactionId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetUser(string userId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetUserAsync(string userId, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response PostLedgerEntry(Azure.Core.RequestContent content, string collectionId = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Security.ConfidentialLedger.PostLedgerEntryOperation PostLedgerEntry(Azure.Core.RequestContent content, string collectionId = null, bool waitForCompletion = true, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> PostLedgerEntryAsync(Azure.Core.RequestContent content, string collectionId = null, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Security.ConfidentialLedger.PostLedgerEntryOperation> PostLedgerEntryAsync(Azure.Core.RequestContent content, string collectionId = null, bool waitForCompletion = true, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation PostLedgerEntry(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, string collectionId = null, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation> PostLedgerEntryAsync(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, string collectionId = null, Azure.RequestContext context = null) { throw null; }
     }
     public partial class ConfidentialLedgerClientOptions : Azure.Core.ClientOptions
     {

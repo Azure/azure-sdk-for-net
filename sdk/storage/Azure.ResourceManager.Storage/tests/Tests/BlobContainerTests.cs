@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Storage.Tests
 
             container = await container.GetAsync();
             Assert.IsEmpty(container.Data.Metadata);
-            Assert.AreEqual(PublicAccess.None, container.Data.PublicAccess);
+            Assert.AreEqual(StoragePublicAccess.None, container.Data.PublicAccess);
             Assert.AreEqual(3, container.Data.ImmutabilityPolicy.UpdateHistory.Count);
             Assert.AreEqual(ImmutabilityPolicyUpdateType.Put, container.Data.ImmutabilityPolicy.UpdateHistory[0].Update);
             Assert.AreEqual(ImmutabilityPolicyUpdateType.Lock, container.Data.ImmutabilityPolicy.UpdateHistory[1].Update);
@@ -174,14 +174,14 @@ namespace Azure.ResourceManager.Storage.Tests
             //update metadata, public access
             BlobContainerData update = container.Data;
             update.Metadata.Add("key1", "value1");
-            update.PublicAccess = PublicAccess.Container;
+            update.PublicAccess = StoragePublicAccess.Container;
             BlobContainerResource container1 = await container.UpdateAsync(update);
 
             //validate
             Assert.NotNull(container1);
             Assert.NotNull(container1.Data.Metadata);
             Assert.AreEqual(container1.Data.Metadata["key1"], "value1");
-            Assert.AreEqual(PublicAccess.Container, container.Data.PublicAccess);
+            Assert.AreEqual(StoragePublicAccess.Container, container.Data.PublicAccess);
             Assert.False(container1.Data.HasLegalHold);
             Assert.False(container1.Data.HasImmutabilityPolicy);
         }
@@ -521,21 +521,21 @@ namespace Azure.ResourceManager.Storage.Tests
                     Days = 300,
                 },
                 DefaultServiceVersion = "2017-04-17",
-                Cors = new CorsRules()
+                Cors = new StorageCorsRules()
                 {
-                    CorsRulesValue =
+                    CorsRules =
                     {
-                        new CorsRule(new[] { "http://www.contoso.com", "http://www.fabrikam.com" },
+                        new StorageCorsRule(new[] { "http://www.contoso.com", "http://www.fabrikam.com" },
                             new[] { CorsRuleAllowedMethodsItem.GET, CorsRuleAllowedMethodsItem.PUT },
                             100,
                             new[] { "x-ms-meta-*" },
                             new[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" }),
-                        new CorsRule(new[] { "*" },
+                        new StorageCorsRule(new[] { "*" },
                             new[] { CorsRuleAllowedMethodsItem.GET },
                             2,
                             new[] { "*" },
                             new[] { "*" }),
-                        new CorsRule(new[] { "http://www.abc23.com", "https://www.fabrikam.com/*" },
+                        new StorageCorsRule(new[] { "http://www.abc23.com", "https://www.fabrikam.com/*" },
                             new[] { CorsRuleAllowedMethodsItem.GET, CorsRuleAllowedMethodsItem.PUT, CorsRuleAllowedMethodsItem.Post },
                             2000,
                             new[] { "x-ms-meta-12345675754564*" },
@@ -550,11 +550,11 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(blobServiceData.DefaultServiceVersion, _blobService.Data.DefaultServiceVersion);
 
             //validate CORS rules
-            Assert.AreEqual(blobServiceData.Cors.CorsRulesValue.Count, _blobService.Data.Cors.CorsRulesValue.Count);
-            for (int i = 0; i < blobServiceData.Cors.CorsRulesValue.Count; i++)
+            Assert.AreEqual(blobServiceData.Cors.CorsRules.Count, _blobService.Data.Cors.CorsRules.Count);
+            for (int i = 0; i < blobServiceData.Cors.CorsRules.Count; i++)
             {
-                CorsRule putRule = blobServiceData.Cors.CorsRulesValue[i];
-                CorsRule getRule = _blobService.Data.Cors.CorsRulesValue[i];
+                var putRule = blobServiceData.Cors.CorsRules[i];
+                var getRule = _blobService.Data.Cors.CorsRules[i];
 
                 Assert.AreEqual(putRule.AllowedHeaders, getRule.AllowedHeaders);
                 Assert.AreEqual(putRule.AllowedMethods, getRule.AllowedMethods);
@@ -570,11 +570,11 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(blobServiceData.DefaultServiceVersion, _blobService.Data.DefaultServiceVersion);
 
             //validate CORS rules
-            Assert.AreEqual(blobServiceData.Cors.CorsRulesValue.Count, _blobService.Data.Cors.CorsRulesValue.Count);
-            for (int i = 0; i < blobServiceData.Cors.CorsRulesValue.Count; i++)
+            Assert.AreEqual(blobServiceData.Cors.CorsRules.Count, _blobService.Data.Cors.CorsRules.Count);
+            for (int i = 0; i < blobServiceData.Cors.CorsRules.Count; i++)
             {
-                CorsRule putRule = blobServiceData.Cors.CorsRulesValue[i];
-                CorsRule getRule = _blobService.Data.Cors.CorsRulesValue[i];
+                var putRule = blobServiceData.Cors.CorsRules[i];
+                var getRule = _blobService.Data.Cors.CorsRules[i];
 
                 Assert.AreEqual(putRule.AllowedHeaders, getRule.AllowedHeaders);
                 Assert.AreEqual(putRule.AllowedMethods, getRule.AllowedMethods);

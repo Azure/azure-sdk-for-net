@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="group"> The name of the group that the category belongs to. </param>
-        internal AzureWebCategoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, string group) : base(id, name, resourceType, systemData)
+        internal AzureWebCategoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string group) : base(id, name, resourceType, systemData)
         {
-            ETag = eTag;
+            ETag = etag;
             Group = group;
         }
 

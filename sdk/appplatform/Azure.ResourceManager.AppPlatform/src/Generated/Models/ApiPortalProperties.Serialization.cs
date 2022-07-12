@@ -59,10 +59,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
         {
             Optional<ApiPortalProvisioningState> provisioningState = default;
             Optional<bool> @public = default;
-            Optional<Uri> url = default;
+            Optional<Uri> uri = default;
             Optional<bool> httpsOnly = default;
             Optional<IList<string>> gatewayIds = default;
-            Optional<IList<Uri>> sourceUrls = default;
+            Optional<IList<Uri>> sourceUris = default;
             Optional<SsoProperties> ssoProperties = default;
             Optional<ApiPortalResourceRequests> resourceRequests = default;
             Optional<IReadOnlyList<ApiPortalInstance>> instances = default;
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        url = null;
+                        uri = null;
                         continue;
                     }
-                    url = new Uri(property.Value.GetString());
+                    uri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("httpsOnly"))
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         array.Add(new Uri(item.GetString()));
                     }
-                    sourceUrls = array;
+                    sourceUris = array;
                     continue;
                 }
                 if (property.NameEquals("ssoProperties"))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new ApiPortalProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(@public), url.Value, Optional.ToNullable(httpsOnly), Optional.ToList(gatewayIds), Optional.ToList(sourceUrls), ssoProperties.Value, resourceRequests.Value, Optional.ToList(instances));
+            return new ApiPortalProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(@public), uri.Value, Optional.ToNullable(httpsOnly), Optional.ToList(gatewayIds), Optional.ToList(sourceUris), ssoProperties.Value, resourceRequests.Value, Optional.ToList(instances));
         }
     }
 }

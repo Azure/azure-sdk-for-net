@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="ruleType"> Rule type. </param>
         /// <param name="priority"> Priority of the request routing rule. </param>
         /// <param name="backendAddressPool"> Backend address pool resource of the application gateway. </param>
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="rewriteRuleSet"> Rewrite Rule Set resource in Basic rule of the application gateway. </param>
         /// <param name="redirectConfiguration"> Redirect configuration resource of the application gateway. </param>
         /// <param name="provisioningState"> The provisioning state of the request routing rule resource. </param>
-        internal ApplicationGatewayRequestRoutingRule(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? eTag, ApplicationGatewayRequestRoutingRuleType? ruleType, int? priority, WritableSubResource backendAddressPool, WritableSubResource backendHttpSettings, WritableSubResource httpListener, WritableSubResource urlPathMap, WritableSubResource rewriteRuleSet, WritableSubResource redirectConfiguration, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal ApplicationGatewayRequestRoutingRule(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, ApplicationGatewayRequestRoutingRuleType? ruleType, int? priority, WritableSubResource backendAddressPool, WritableSubResource backendHttpSettings, WritableSubResource httpListener, WritableSubResource urlPathMap, WritableSubResource rewriteRuleSet, WritableSubResource redirectConfiguration, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            ETag = eTag;
+            ETag = etag;
             RuleType = ruleType;
             Priority = priority;
             BackendAddressPool = backendAddressPool;

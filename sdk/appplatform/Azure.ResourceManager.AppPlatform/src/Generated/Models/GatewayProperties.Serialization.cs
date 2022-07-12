@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         {
             Optional<GatewayProvisioningState> provisioningState = default;
             Optional<bool> @public = default;
-            Optional<Uri> url = default;
+            Optional<Uri> uri = default;
             Optional<bool> httpsOnly = default;
             Optional<SsoProperties> ssoProperties = default;
             Optional<GatewayApiMetadataProperties> apiMetadataProperties = default;
@@ -88,10 +88,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        url = null;
+                        uri = null;
                         continue;
                     }
-                    url = new Uri(property.Value.GetString());
+                    uri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("httpsOnly"))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new GatewayProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(@public), url.Value, Optional.ToNullable(httpsOnly), ssoProperties.Value, apiMetadataProperties.Value, corsProperties.Value, resourceRequests.Value, Optional.ToList(instances), operatorProperties.Value);
+            return new GatewayProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(@public), uri.Value, Optional.ToNullable(httpsOnly), ssoProperties.Value, apiMetadataProperties.Value, corsProperties.Value, resourceRequests.Value, Optional.ToList(instances), operatorProperties.Value);
         }
     }
 }

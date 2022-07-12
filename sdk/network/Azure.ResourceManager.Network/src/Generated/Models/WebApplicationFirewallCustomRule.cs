@@ -36,15 +36,15 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of WebApplicationFirewallCustomRule. </summary>
         /// <param name="name"> The name of the resource that is unique within a policy. This name can be used to access the resource. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="priority"> Priority of the rule. Rules with a lower value will be evaluated before rules with a higher value. </param>
         /// <param name="ruleType"> The rule type. </param>
         /// <param name="matchConditions"> List of match conditions. </param>
         /// <param name="action"> Type of Actions. </param>
-        internal WebApplicationFirewallCustomRule(string name, ETag? eTag, int priority, WebApplicationFirewallRuleType ruleType, IList<MatchCondition> matchConditions, WebApplicationFirewallAction action)
+        internal WebApplicationFirewallCustomRule(string name, ETag? etag, int priority, WebApplicationFirewallRuleType ruleType, IList<MatchCondition> matchConditions, WebApplicationFirewallAction action)
         {
             Name = name;
-            ETag = eTag;
+            ETag = etag;
             Priority = priority;
             RuleType = ruleType;
             MatchConditions = matchConditions;

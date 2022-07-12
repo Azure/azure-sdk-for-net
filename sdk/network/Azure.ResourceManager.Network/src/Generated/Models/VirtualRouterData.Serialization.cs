@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network
             Optional<AzureLocation> location = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<long> virtualRouterAsn = default;
-            Optional<IList<string>> virtualRouterIps = default;
+            Optional<IList<string>> virtualRouterIPs = default;
             Optional<WritableSubResource> hostedSubnet = default;
             Optional<WritableSubResource> hostedGateway = default;
             Optional<IReadOnlyList<WritableSubResource>> peerings = default;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 array.Add(item.GetString());
                             }
-                            virtualRouterIps = array;
+                            virtualRouterIPs = array;
                             continue;
                         }
                         if (property0.NameEquals("hostedSubnet"))
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new VirtualRouterData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), Optional.ToNullable(virtualRouterAsn), Optional.ToList(virtualRouterIps), hostedSubnet, hostedGateway, Optional.ToList(peerings), Optional.ToNullable(provisioningState));
+            return new VirtualRouterData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), Optional.ToNullable(virtualRouterAsn), Optional.ToList(virtualRouterIPs), hostedSubnet, hostedGateway, Optional.ToList(peerings), Optional.ToNullable(provisioningState));
         }
     }
 }

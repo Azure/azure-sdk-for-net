@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ElasticSan
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> volumeId = default;
+            Optional<string> elasticSanVolumeId = default;
             Optional<SourceCreationData> creationData = default;
             Optional<long> sizeGiB = default;
             Optional<IscsiTargetInfo> storageTarget = default;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ElasticSan
                     {
                         if (property0.NameEquals("volumeId"))
                         {
-                            volumeId = property0.Value.GetString();
+                            elasticSanVolumeId = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("creationData"))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ElasticSan
                     continue;
                 }
             }
-            return new ElasticSanVolumeData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, volumeId.Value, creationData.Value, Optional.ToNullable(sizeGiB), storageTarget.Value);
+            return new ElasticSanVolumeData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, elasticSanVolumeId.Value, creationData.Value, Optional.ToNullable(sizeGiB), storageTarget.Value);
         }
     }
 }

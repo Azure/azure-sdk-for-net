@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ServerCommunicationLinkListResult. </summary>
         internal ServerCommunicationLinkListResult()
         {
-            Value = new ChangeTrackingList<ServerCommunicationLinkData>();
+            Value = new ChangeTrackingList<SqlServerCommunicationLinkData>();
         }
 
         /// <summary> Initializes a new instance of ServerCommunicationLinkListResult. </summary>
         /// <param name="value"> The list of server communication links. </param>
-        internal ServerCommunicationLinkListResult(IReadOnlyList<ServerCommunicationLinkData> value)
+        internal ServerCommunicationLinkListResult(IReadOnlyList<SqlServerCommunicationLinkData> value)
         {
             Value = value;
         }
 
         /// <summary> The list of server communication links. </summary>
-        public IReadOnlyList<ServerCommunicationLinkData> Value { get; }
+        public IReadOnlyList<SqlServerCommunicationLinkData> Value { get; }
     }
 }

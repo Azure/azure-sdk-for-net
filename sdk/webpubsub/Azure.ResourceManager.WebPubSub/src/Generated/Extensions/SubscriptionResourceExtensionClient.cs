@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="location"> the region. </param>
         /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NameAvailability>> CheckWebPubSubNameAvailabilityAsync(AzureLocation location, NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebPubSubNameAvailability>> CheckWebPubSubNameAvailabilityAsync(AzureLocation location, WebPubSubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = WebPubSubClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckWebPubSubNameAvailability");
             scope.Start();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="location"> the region. </param>
         /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NameAvailability> CheckWebPubSubNameAvailability(AzureLocation location, NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<WebPubSubNameAvailability> CheckWebPubSubNameAvailability(AzureLocation location, WebPubSubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = WebPubSubClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckWebPubSubNameAvailability");
             scope.Start();

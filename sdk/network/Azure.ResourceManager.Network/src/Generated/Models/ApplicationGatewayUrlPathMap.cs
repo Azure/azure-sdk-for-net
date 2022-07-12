@@ -25,16 +25,16 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="defaultBackendAddressPool"> Default backend address pool resource of URL path map. </param>
         /// <param name="defaultBackendHttpSettings"> Default backend http settings resource of URL path map. </param>
         /// <param name="defaultRewriteRuleSet"> Default Rewrite rule set resource of URL path map. </param>
         /// <param name="defaultRedirectConfiguration"> Default redirect configuration resource of URL path map. </param>
         /// <param name="pathRules"> Path rule of URL path map resource. </param>
         /// <param name="provisioningState"> The provisioning state of the URL path map resource. </param>
-        internal ApplicationGatewayUrlPathMap(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? eTag, WritableSubResource defaultBackendAddressPool, WritableSubResource defaultBackendHttpSettings, WritableSubResource defaultRewriteRuleSet, WritableSubResource defaultRedirectConfiguration, IList<ApplicationGatewayPathRule> pathRules, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal ApplicationGatewayUrlPathMap(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, WritableSubResource defaultBackendAddressPool, WritableSubResource defaultBackendHttpSettings, WritableSubResource defaultRewriteRuleSet, WritableSubResource defaultRedirectConfiguration, IList<ApplicationGatewayPathRule> pathRules, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            ETag = eTag;
+            ETag = etag;
             DefaultBackendAddressPool = defaultBackendAddressPool;
             DefaultBackendHttpSettings = defaultBackendHttpSettings;
             DefaultRewriteRuleSet = defaultRewriteRuleSet;
