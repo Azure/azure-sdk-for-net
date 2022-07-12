@@ -1,0 +1,74 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+using Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.TestFramework;
+
+using Xunit;
+using Xunit.Abstractions;
+
+namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
+{
+    public class RequestTelemetryTests : IClassFixture<OpenTelemetryWebApplicationFactory<AspNetCoreWebApp.Startup>>
+    {
+        private readonly OpenTelemetryWebApplicationFactory<AspNetCoreWebApp.Startup> factory;
+        private readonly ITestOutputHelper output;
+
+        public RequestTelemetryTests(OpenTelemetryWebApplicationFactory<AspNetCoreWebApp.Startup> factory, ITestOutputHelper output)
+        {
+            this.factory = factory;
+            this.output = output;
+        }
+
+        /// <summary>
+        /// This test validates that when an app instrumented with the AzureMonitorExporter receives an HTTP request,
+        /// A TelemetryItem is created matching that request.
+        /// </summary>
+        [Fact]
+        public async Task VerifyRequestTelemetry()
+        {
+            string testValue = Guid.NewGuid().ToString();
+
+            // Arrange
+            var client = this.factory.CreateClient();
+
+            // Act
+            var request = new Uri(client.BaseAddress, $"api/home/{testValue}");
+            var response = await client.GetAsync(request);
+
+            // Shutdown
+            response.EnsureSuccessStatusCode();
+            this.factory.WaitForActivityExport();
+
+            // Assert
+            Assert.True(this.factory.TelemetryItems.Any(), "test project did not capture telemetry");
+            var telemetryItem = this.factory.TelemetryItems.Single();
+
+            output.WriteLine($"Name: {telemetryItem.Name}");
+            Assert.Equal("Request", telemetryItem.Name);
+            Assert.Equal("RequestData", telemetryItem.Data.BaseType);
+
+            output.WriteLine($"Tags: {telemetryItem.Tags.Count}");
+            foreach (var tag in telemetryItem.Tags)
+            {
+                output.WriteLine($"\t{tag.Key}: {tag.Value}");
+            }
+            Assert.Contains("ai.operation.id", telemetryItem.Tags.Keys);
+            Assert.Contains("ai.user.userAgent", telemetryItem.Tags.Keys);
+            Assert.Contains("ai.operation.name", telemetryItem.Tags.Keys);
+            Assert.Contains("ai.location.ip", telemetryItem.Tags.Keys);
+            Assert.Contains("ai.cloud.role", telemetryItem.Tags.Keys);
+            Assert.Contains("ai.cloud.roleInstance", telemetryItem.Tags.Keys);
+            Assert.Contains("ai.internal.sdkVersion", telemetryItem.Tags.Keys);
+
+            var requestData = (Models.RequestData)telemetryItem.Data.BaseData;
+            output.WriteLine($"Url: {requestData.Url}");
+            Assert.Equal("200", requestData.ResponseCode);
+            Assert.Equal(request.AbsoluteUri, requestData.Url);
+        }
+    }
+}
