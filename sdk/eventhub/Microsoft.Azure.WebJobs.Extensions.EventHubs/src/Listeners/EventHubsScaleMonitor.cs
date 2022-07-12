@@ -90,8 +90,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             try
             {
                 checkpoints = (await Task.WhenAll(checkpointTasks).ConfigureAwait(false))
-                    .Where(c => c != null)
-                    .ToArray();
+                    ?? Array.Empty<EventProcessorCheckpoint>();
             }
             catch
             {
@@ -116,7 +115,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             {
                 var partitionProperties = partitionRuntimeInfo[i];
 
-                var checkpoint = (BlobCheckpointStoreInternal.BlobStorageCheckpoint)checkpoints.SingleOrDefault(c => c.PartitionId == partitionProperties.Id);
+                var checkpoint = (BlobCheckpointStoreInternal.BlobStorageCheckpoint)checkpoints.SingleOrDefault(c => c?.PartitionId == partitionProperties.Id);
 
                 // Check for the unprocessed messages when there are messages on the event hub partition
                 // In that case, LastEnqueuedSequenceNumber will be >= 0
