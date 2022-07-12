@@ -24,7 +24,7 @@ using NUnit.Framework;
 namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 {
     [NonParallelizable]
-    [LiveOnly]
+    [LiveOnly(true)]
     public class EventHubEndToEndTests : WebJobsEventHubTestBase
     {
         private static EventWaitHandle _eventWait;
