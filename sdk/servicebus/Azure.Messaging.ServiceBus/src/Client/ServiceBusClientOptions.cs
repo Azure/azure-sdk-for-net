@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
+using System;
 using System.ComponentModel;
 using System.Net;
 using Azure.Core;
@@ -35,6 +35,19 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         ///
         public IWebProxy WebProxy { get; set; }
+
+        /// <summary>
+        ///   A custom endpoint address that can be used when establishing the connection to the Service Bus
+        ///   service.
+        /// </summary>
+        ///
+        /// <remarks>
+        ///   The custom endpoint address will be used in place of the default endpoint provided by the Service
+        ///   Bus namespace when establishing the connection. The connection string or fully qualified namespace
+        ///   will still be needed in order to validate the connection with the service.
+        /// </remarks>
+        ///
+        public Uri CustomEndpointAddress { get; set; }
 
         /// <summary>
         /// The set of options to use for determining whether a failed operation should be retried and,
