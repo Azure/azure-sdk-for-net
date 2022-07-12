@@ -142,7 +142,7 @@ function GenerateDocsMsMetadata($originalMetadata, $language, $languageDisplayNa
   }
   $updatedMetadata = compare-and-merge-metadata -original $originalMetadata -updated $metadataTable
   return "---
-$updatedMetadata---"
+$updatedMetadata---`r`n"
 }
 
 function ServiceLevelReadmeNameStyle($serviceName) {

@@ -84,8 +84,8 @@ function update-metadata-table($readmeFolder, $readmeName, $serviceName, $msServ
     Set-Content -Path $readmePath -Value "$metadataString$readmeContent" -NoNewline
     return
   }
-  $restContent = $Matches["content"]
-  $metadata = $Matches["metadata"]
+  $restContent = $Matches["content"].trim()
+  $metadata = $Matches["metadata"].trim()
   # $Language, $LanguageDisplayName are the variables globally defined in Language-Settings.ps1
   $metadataString = GenerateDocsMsMetadata -originalMetadata $metadata -language $Language -languageDisplayName $LanguageDisplayName -serviceName $serviceName `
     -tenantId $TenantId -clientId $ClientId -clientSecret $ClientSecret `
