@@ -60,10 +60,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// where the Image Version is going to be replicated to. This property
         /// is updatable.</param>
         /// <param name="advancedSettings">Optional. Additional settings to
-        /// pass to the VMApp extension. For advanced use only.</param>
+        /// pass to the vm-application-manager extension. For advanced use
+        /// only.</param>
         /// <param name="enableHealthCheck">Optional. Whether or not this
         /// application reports health.</param>
-        public GalleryApplicationVersionPublishingProfile(UserArtifactSource source, IList<TargetRegion> targetRegions = default(IList<TargetRegion>), int? replicaCount = default(int?), bool? excludeFromLatest = default(bool?), System.DateTime? publishedDate = default(System.DateTime?), System.DateTime? endOfLifeDate = default(System.DateTime?), string storageAccountType = default(string), string replicationMode = default(string), IList<GalleryTargetExtendedLocation> targetExtendedLocations = default(IList<GalleryTargetExtendedLocation>), UserArtifactManage manageActions = default(UserArtifactManage), UserArtifactSettings settings = default(UserArtifactSettings), IDictionary<string, string> advancedSettings = default(IDictionary<string, string>), bool? enableHealthCheck = default(bool?))
+        /// <param name="customActions">A list of custom actions that can be
+        /// performed with this Gallery Application Version.</param>
+        public GalleryApplicationVersionPublishingProfile(UserArtifactSource source, IList<TargetRegion> targetRegions = default(IList<TargetRegion>), int? replicaCount = default(int?), bool? excludeFromLatest = default(bool?), System.DateTime? publishedDate = default(System.DateTime?), System.DateTime? endOfLifeDate = default(System.DateTime?), string storageAccountType = default(string), string replicationMode = default(string), IList<GalleryTargetExtendedLocation> targetExtendedLocations = default(IList<GalleryTargetExtendedLocation>), UserArtifactManage manageActions = default(UserArtifactManage), UserArtifactSettings settings = default(UserArtifactSettings), IDictionary<string, string> advancedSettings = default(IDictionary<string, string>), bool? enableHealthCheck = default(bool?), IList<GalleryApplicationCustomAction> customActions = default(IList<GalleryApplicationCustomAction>))
             : base(targetRegions, replicaCount, excludeFromLatest, publishedDate, endOfLifeDate, storageAccountType, replicationMode, targetExtendedLocations)
         {
             Source = source;
@@ -71,6 +74,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             Settings = settings;
             AdvancedSettings = advancedSettings;
             EnableHealthCheck = enableHealthCheck;
+            CustomActions = customActions;
             CustomInit();
         }
 
@@ -95,8 +99,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         public UserArtifactSettings Settings { get; set; }
 
         /// <summary>
-        /// Gets or sets optional. Additional settings to pass to the VMApp
-        /// extension. For advanced use only.
+        /// Gets or sets optional. Additional settings to pass to the
+        /// vm-application-manager extension. For advanced use only.
         /// </summary>
         [JsonProperty(PropertyName = "advancedSettings")]
         public IDictionary<string, string> AdvancedSettings { get; set; }
@@ -107,6 +111,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "enableHealthCheck")]
         public bool? EnableHealthCheck { get; set; }
+
+        /// <summary>
+        /// Gets or sets a list of custom actions that can be performed with
+        /// this Gallery Application Version.
+        /// </summary>
+        [JsonProperty(PropertyName = "customActions")]
+        public IList<GalleryApplicationCustomAction> CustomActions { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -127,6 +138,16 @@ namespace Microsoft.Azure.Management.Compute.Models
             if (ManageActions != null)
             {
                 ManageActions.Validate();
+            }
+            if (CustomActions != null)
+            {
+                foreach (var element in CustomActions)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }

@@ -14,29 +14,33 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// The gallery artifact version source.
+    /// The source of the gallery artifact version.
     /// </summary>
-    public partial class GalleryArtifactVersionSource
+    public partial class GalleryArtifactVersionFullSource : GalleryArtifactVersionSource
     {
         /// <summary>
-        /// Initializes a new instance of the GalleryArtifactVersionSource
+        /// Initializes a new instance of the GalleryArtifactVersionFullSource
         /// class.
         /// </summary>
-        public GalleryArtifactVersionSource()
+        public GalleryArtifactVersionFullSource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the GalleryArtifactVersionSource
+        /// Initializes a new instance of the GalleryArtifactVersionFullSource
         /// class.
         /// </summary>
         /// <param name="id">The id of the gallery artifact version source. Can
         /// specify a disk uri, snapshot uri, user image or storage account
         /// resource.</param>
-        public GalleryArtifactVersionSource(string id = default(string))
+        /// <param name="communityGalleryImageId">The resource Id of the source
+        /// Community Gallery Image.  Only required when using Community
+        /// Gallery Image as a source.</param>
+        public GalleryArtifactVersionFullSource(string id = default(string), string communityGalleryImageId = default(string))
+            : base(id)
         {
-            Id = id;
+            CommunityGalleryImageId = communityGalleryImageId;
             CustomInit();
         }
 
@@ -46,12 +50,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the id of the gallery artifact version source. Can
-        /// specify a disk uri, snapshot uri, user image or storage account
-        /// resource.
+        /// Gets or sets the resource Id of the source Community Gallery Image.
+        /// Only required when using Community Gallery Image as a source.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
+        [JsonProperty(PropertyName = "communityGalleryImageId")]
+        public string CommunityGalleryImageId { get; set; }
 
     }
 }

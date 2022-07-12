@@ -14,29 +14,30 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// The gallery artifact version source.
+    /// The source for the disk image.
     /// </summary>
-    public partial class GalleryArtifactVersionSource
+    public partial class GalleryDiskImageSource : GalleryArtifactVersionSource
     {
         /// <summary>
-        /// Initializes a new instance of the GalleryArtifactVersionSource
-        /// class.
+        /// Initializes a new instance of the GalleryDiskImageSource class.
         /// </summary>
-        public GalleryArtifactVersionSource()
+        public GalleryDiskImageSource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the GalleryArtifactVersionSource
-        /// class.
+        /// Initializes a new instance of the GalleryDiskImageSource class.
         /// </summary>
         /// <param name="id">The id of the gallery artifact version source. Can
         /// specify a disk uri, snapshot uri, user image or storage account
         /// resource.</param>
-        public GalleryArtifactVersionSource(string id = default(string))
+        /// <param name="uri">The uri of the gallery artifact version source.
+        /// Currently used to specify vhd/blob source.</param>
+        public GalleryDiskImageSource(string id = default(string), string uri = default(string))
+            : base(id)
         {
-            Id = id;
+            Uri = uri;
             CustomInit();
         }
 
@@ -46,12 +47,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the id of the gallery artifact version source. Can
-        /// specify a disk uri, snapshot uri, user image or storage account
-        /// resource.
+        /// Gets or sets the uri of the gallery artifact version source.
+        /// Currently used to specify vhd/blob source.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
+        [JsonProperty(PropertyName = "uri")]
+        public string Uri { get; set; }
 
     }
 }

@@ -10,30 +10,32 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// The cloud service role properties.
+    /// The safety profile of the Gallery Application Version.
     /// </summary>
-    public partial class CloudServiceRoleProperties
+    public partial class GalleryApplicationVersionSafetyProfile : GalleryArtifactSafetyProfileBase
     {
         /// <summary>
-        /// Initializes a new instance of the CloudServiceRoleProperties class.
+        /// Initializes a new instance of the
+        /// GalleryApplicationVersionSafetyProfile class.
         /// </summary>
-        public CloudServiceRoleProperties()
+        public GalleryApplicationVersionSafetyProfile()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the CloudServiceRoleProperties class.
+        /// Initializes a new instance of the
+        /// GalleryApplicationVersionSafetyProfile class.
         /// </summary>
-        /// <param name="uniqueId">Specifies the ID which uniquely identifies a
-        /// cloud service role.</param>
-        public CloudServiceRoleProperties(string uniqueId = default(string))
+        /// <param name="allowDeletionOfReplicatedLocations">Indicates whether
+        /// or not removing this Gallery Image Version from replicated regions
+        /// is allowed.</param>
+        public GalleryApplicationVersionSafetyProfile(bool? allowDeletionOfReplicatedLocations = default(bool?))
+            : base(allowDeletionOfReplicatedLocations)
         {
-            UniqueId = uniqueId;
             CustomInit();
         }
 
@@ -41,13 +43,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets specifies the ID which uniquely identifies a cloud service
-        /// role.
-        /// </summary>
-        [JsonProperty(PropertyName = "uniqueId")]
-        public string UniqueId { get; private set; }
 
     }
 }

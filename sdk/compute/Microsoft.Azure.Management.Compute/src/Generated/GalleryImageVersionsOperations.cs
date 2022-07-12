@@ -184,7 +184,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "galleryImageVersionName");
             }
-            string apiVersion = "2022-01-03";
+            string apiVersion = "2022-03-03";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -424,7 +424,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "galleryImageName");
             }
-            string apiVersion = "2022-01-03";
+            string apiVersion = "2022-03-03";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -650,7 +650,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 galleryImageVersion.Validate();
             }
-            string apiVersion = "2022-01-03";
+            string apiVersion = "2022-03-03";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -916,7 +916,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "galleryImageVersion");
             }
-            string apiVersion = "2022-01-03";
+            string apiVersion = "2022-03-03";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1133,7 +1133,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "galleryImageVersionName");
             }
-            string apiVersion = "2022-01-03";
+            string apiVersion = "2022-03-03";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
