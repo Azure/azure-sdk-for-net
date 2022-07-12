@@ -17,7 +17,7 @@ namespace Azure.Monitor.Ingestion.Tests
 {
     public class IngestionClientLiveTest : RecordedTestBase<IngestionClientTestEnvironment>
     {
-        public IngestionClientLiveTest(bool isAsync) : base(isAsync)
+        public IngestionClientLiveTest(bool isAsync) : base(isAsync, RecordedTestMode.Live)
         {
         }
 
@@ -28,16 +28,21 @@ namespace Azure.Monitor.Ingestion.Tests
             return new LogsIngestionClient(new Uri(TestEnvironment.DCREndpoint), TestEnvironment.ClientSecretCredential);
         }
 
-        [LiveOnly]
         [Test]
         public async Task ValidInputFromObjectAsJson()
         {
+            //var clientSecretCrendential = new ClientSecretCredential("72f988bf-86f1-41af-91ab-2d7cd011db47", "1b0fddd6-a6b5-4f72-a40d-90045a6081dd", "8ew8Q~4PxRXTaQkXDEQWAc0CRfcoVGimYatema2v");
+            //var dcrImmutableId = "dcr-54e5c6ad9aa444ec87cbe7f6621ba956";
+            //var dcrEndpoint = "https://nibhati-dce-ku6s.westus2-1.ingest.monitor.azure.com";
+
+            //LogsIngestionClient client = new LogsIngestionClient(new Uri(dcrEndpoint), clientSecretCrendential);
+
             LogsIngestionClient client = CreateClient();
             var currentTime = Recording.UtcNow;
 
             BinaryData data = BinaryData.FromObjectAsJson(
                 // Use an anonymous type to create the payload
-                new[] {
+                new object[] {
                     new
                     {
                         Time = currentTime,
@@ -54,7 +59,7 @@ namespace Azure.Monitor.Ingestion.Tests
                     new
                     {
                         Time = currentTime,
-                        Computer = "Computer2",
+                        Computer = 4,
                         AdditionalContext = new
                         {
                             InstanceName = "user2",
@@ -67,7 +72,7 @@ namespace Azure.Monitor.Ingestion.Tests
                 });
 
             // Make the request
-            Response response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, RequestContent.Create(data)).ConfigureAwait(false);
+            Response response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, RequestContent.Create(data), "gzip").ConfigureAwait(false);
 
             // Check the response
             Assert.AreEqual(204, response.Status);
