@@ -1,32 +1,12 @@
 # Release History
 
-## 1.0.0-beta.3 (2022-07-12)
-
-### Features Added
-
-- Added Update methods in resource classes.
+## 1.0.0-beta.1 (2022-07-12)
 
 ### Breaking Changes
 
 - Change the namespace from `Azure.ResourceManager.ExtendedLocation` to `Azure.ResourceManager.ExtendedLocations`.
 
-### Other Changes
-
-- Upgraded dependent `Azure.ResourceManager` to 1.2.0
-- Upgraded dependent `Azure.Core` to 1.25.0
-
-## 1.0.0-beta.2 (2022-04-08)
-
-### Breaking Changes
-
-- Simplified `type` property names.
-- Normalized the body parameter type names for PUT / POST / PATCH operations if it is only used as input.
-
-### Other Changes
-
-- Upgraded dependent `Azure.ResourceManager` to 1.0.0
-
-## 1.0.0-beta.1 (2022-03-31)
+### General New Features
 
 - Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET
 - Support [OpenTelemetry](https://opentelemetry.io/) for distributed tracing
