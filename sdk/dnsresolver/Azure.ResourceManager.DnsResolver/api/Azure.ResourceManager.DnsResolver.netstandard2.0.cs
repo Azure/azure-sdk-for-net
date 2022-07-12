@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DnsResolver
     }
     public partial class DnsForwardingRulesetData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DnsForwardingRulesetData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DnsForwardingRulesetData(Azure.Core.AzureLocation location, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> dnsResolverOutboundEndpoints) : base (default(Azure.Core.AzureLocation)) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> DnsResolverOutboundEndpoints { get { throw null; } }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.DnsResolver.Models.ProvisioningState? ProvisioningState { get { throw null; } }
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DnsResolver
     }
     public partial class DnsResolverData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DnsResolverData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DnsResolverData(Azure.Core.AzureLocation location, Azure.ResourceManager.Resources.Models.WritableSubResource virtualNetwork) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.DnsResolver.Models.DnsResolverState? DnsResolverState { get { throw null; } }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.DnsResolver.Models.ProvisioningState? ProvisioningState { get { throw null; } }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DnsResolver
     }
     public partial class ForwardingRuleData : Azure.ResourceManager.Models.ResourceData
     {
-        public ForwardingRuleData() { }
+        public ForwardingRuleData(string domainName, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DnsResolver.Models.TargetDnsServer> targetDnsServers) { }
         public string DomainName { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.DnsResolver.Models.ForwardingRuleState? ForwardingRuleState { get { throw null; } set { } }
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DnsResolver
     }
     public partial class InboundEndpointData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public InboundEndpointData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public InboundEndpointData(Azure.Core.AzureLocation location, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DnsResolver.Models.IPConfiguration> ipConfigurations) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DnsResolver.Models.IPConfiguration> IPConfigurations { get { throw null; } }
         public Azure.ResourceManager.DnsResolver.Models.ProvisioningState? ProvisioningState { get { throw null; } }
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.DnsResolver
     }
     public partial class OutboundEndpointData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public OutboundEndpointData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public OutboundEndpointData(Azure.Core.AzureLocation location, Azure.ResourceManager.Resources.Models.WritableSubResource subnet) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.DnsResolver.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public string ResourceGuid { get { throw null; } }
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.DnsResolver
     }
     public partial class VirtualNetworkLinkData : Azure.ResourceManager.Models.ResourceData
     {
-        public VirtualNetworkLinkData() { }
+        public VirtualNetworkLinkData(Azure.ResourceManager.Resources.Models.WritableSubResource virtualNetwork) { }
         public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
         public Azure.ResourceManager.DnsResolver.Models.ProvisioningState? ProvisioningState { get { throw null; } }
@@ -290,6 +290,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
     public partial class DnsForwardingRulesetPatch
     {
         public DnsForwardingRulesetPatch() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> DnsResolverOutboundEndpoints { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class DnsResolverPatch
@@ -365,7 +366,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
     }
     public partial class IPConfiguration
     {
-        public IPConfiguration() { }
+        public IPConfiguration(Azure.ResourceManager.Resources.Models.WritableSubResource subnet) { }
         public string PrivateIPAddress { get { throw null; } set { } }
         public Azure.ResourceManager.DnsResolver.Models.IPAllocationMethod? PrivateIPAllocationMethod { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
@@ -399,7 +400,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
     }
     public partial class TargetDnsServer
     {
-        public TargetDnsServer() { }
+        public TargetDnsServer(string ipAddress) { }
         public string IPAddress { get { throw null; } set { } }
         public int? Port { get { throw null; } set { } }
     }

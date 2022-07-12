@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DnsResolver.Models;
@@ -17,9 +19,22 @@ namespace Azure.ResourceManager.DnsResolver
     public partial class ForwardingRuleData : ResourceData
     {
         /// <summary> Initializes a new instance of ForwardingRuleData. </summary>
-        public ForwardingRuleData()
+        /// <param name="domainName"> The domain name for the forwarding rule. </param>
+        /// <param name="targetDnsServers"> DNS servers to forward the DNS query to. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> or <paramref name="targetDnsServers"/> is null. </exception>
+        public ForwardingRuleData(string domainName, IEnumerable<TargetDnsServer> targetDnsServers)
         {
-            TargetDnsServers = new ChangeTrackingList<TargetDnsServer>();
+            if (domainName == null)
+            {
+                throw new ArgumentNullException(nameof(domainName));
+            }
+            if (targetDnsServers == null)
+            {
+                throw new ArgumentNullException(nameof(targetDnsServers));
+            }
+
+            DomainName = domainName;
+            TargetDnsServers = targetDnsServers.ToList();
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
