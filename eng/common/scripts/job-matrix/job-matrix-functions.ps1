@@ -190,6 +190,12 @@ function ParseFilter([string]$filter) {
     }
 }
 
+function GetMatrixConfigFromYaml([String] $yamlConfig)
+{
+    $config = $yamlConfig | ConvertFrom-Yaml
+    return GetMatrixConfigFromJson($config | ConvertTo-Json)
+}
+
 # Importing the JSON as PSCustomObject preserves key ordering,
 # whereas ConvertFrom-Json -AsHashtable does not
 function GetMatrixConfigFromJson([String]$jsonConfig)
