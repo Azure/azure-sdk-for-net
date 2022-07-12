@@ -86,6 +86,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         }
 
         [Test]
+        [RecordedTest]
         public async Task CheckIfExist()
         {
             string webPubSubName = Recording.GenerateAssetName("webpubsub-");
