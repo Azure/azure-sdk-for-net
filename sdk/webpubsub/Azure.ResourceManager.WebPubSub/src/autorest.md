@@ -130,4 +130,9 @@ directive:
   - from: webpubsub.json
     where: $.definitions.WebPubSubProperties.properties.disableLocalAuth
     transform: $["x-ms-client-name"] = 'isDisableLocalAuth'
+
+  # Change ManagedIdentity to common identity type(ManagedServiceIdentity)
+  - from: swagger-document
+    where: $.definitions.ManagedIdentityType
+    transform: $.enum.push("SystemAssigned, UserAssigned")
 ```
