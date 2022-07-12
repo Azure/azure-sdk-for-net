@@ -164,11 +164,11 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public Azure.Core.ResourceIdentifier SourceId { get { throw null; } }
         public string Status { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetId { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ServiceLinker.Models.LinkerValidationResultItemData> ValidationDetail { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ServiceLinker.Models.LinkerValidationResultItemInfo> ValidationDetail { get { throw null; } }
     }
-    public partial class LinkerValidationResultItemData
+    public partial class LinkerValidationResultItemInfo
     {
-        internal LinkerValidationResultItemData() { }
+        internal LinkerValidationResultItemInfo() { }
         public string Description { get { throw null; } }
         public string ErrorCode { get { throw null; } }
         public string ErrorMessage { get { throw null; } }
