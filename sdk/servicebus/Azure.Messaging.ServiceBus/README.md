@@ -416,6 +416,22 @@ ServiceBusClient client = new ServiceBusClient(fullyQualifiedNamespace, new Defa
 
 ### Initiating the connection with a custom endpoint
 
+If an alternative host name is needed to establish the connection to the service, a custom endpoint address can be provided through the `ServiceBusClientOptions`. The client will use this endpoint to open the initial connection, and then will use the default endpoint provided by the Service Bus service for all following operations and validation.
+
+```C#:Snippet:ServiceBusCustomEndpoint
+// Connect to the service using a custom endpoint
+string connectionString = "<connection_string>";
+string customEndpoint = "<custom_endpoint>";
+
+var options = new ServiceBusClientOptions
+{
+    CustomEndpointAddress = new Uri(customEndpoint)
+};
+
+// since ServiceBusClient implements IAsyncDisposable we create it with "await using"
+ServiceBusClient client = new ServiceBusClient(connectionString, options);
+```
+
 ### Working with Sessions
 
 [Sessions](https://docs.microsoft.com/azure/service-bus-messaging/message-sessions) provide a mechanism for grouping related messages. In order to use sessions, you need to be working with a session-enabled entity.
