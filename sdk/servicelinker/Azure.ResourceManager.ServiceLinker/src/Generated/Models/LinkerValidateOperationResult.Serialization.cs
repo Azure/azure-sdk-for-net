@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    public partial class ValidateOperationResult
+    public partial class LinkerValidateOperationResult
     {
-        internal static ValidateOperationResult DeserializeValidateOperationResult(JsonElement element)
+        internal static LinkerValidateOperationResult DeserializeLinkerValidateOperationResult(JsonElement element)
         {
             Optional<ResourceIdentifier> resourceId = default;
             Optional<string> status = default;
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             Optional<ResourceIdentifier> sourceId = default;
             Optional<ResourceIdentifier> targetId = default;
             Optional<LinkerAuthType?> authType = default;
-            Optional<IReadOnlyList<ValidationResultItemData>> validationDetail = default;
+            Optional<IReadOnlyList<LinkerValidationResultItemData>> validationDetail = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"))
@@ -134,10 +134,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                                 validationDetail = null;
                                 continue;
                             }
-                            List<ValidationResultItemData> array = new List<ValidationResultItemData>();
+                            List<LinkerValidationResultItemData> array = new List<LinkerValidationResultItemData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ValidationResultItemData.DeserializeValidationResultItemData(item));
+                                array.Add(LinkerValidationResultItemData.DeserializeLinkerValidationResultItemData(item));
                             }
                             validationDetail = array;
                             continue;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     continue;
                 }
             }
-            return new ValidateOperationResult(resourceId.Value, status.Value, linkerName.Value, Optional.ToNullable(isConnectionAvailable), Optional.ToNullable(reportStartTimeUtc), Optional.ToNullable(reportEndTimeUtc), sourceId.Value, targetId.Value, Optional.ToNullable(authType), Optional.ToList(validationDetail));
+            return new LinkerValidateOperationResult(resourceId.Value, status.Value, linkerName.Value, Optional.ToNullable(isConnectionAvailable), Optional.ToNullable(reportStartTimeUtc), Optional.ToNullable(reportEndTimeUtc), sourceId.Value, targetId.Value, Optional.ToNullable(authType), Optional.ToList(validationDetail));
         }
     }
 }

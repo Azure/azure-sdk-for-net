@@ -10,13 +10,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    public partial class ValidationResultItemData
+    public partial class LinkerValidationResultItemData
     {
-        internal static ValidationResultItemData DeserializeValidationResultItemData(JsonElement element)
+        internal static LinkerValidationResultItemData DeserializeLinkerValidationResultItemData(JsonElement element)
         {
             Optional<string> name = default;
             Optional<string> description = default;
-            Optional<ValidationResultStatus?> result = default;
+            Optional<LinkerValidationResultStatus?> result = default;
             Optional<string> errorMessage = default;
             Optional<string> errorCode = default;
             foreach (var property in element.EnumerateObject())
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                         result = null;
                         continue;
                     }
-                    result = new ValidationResultStatus(property.Value.GetString());
+                    result = new LinkerValidationResultStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("errorMessage"))
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     continue;
                 }
             }
-            return new ValidationResultItemData(name.Value, description.Value, Optional.ToNullable(result), errorMessage.Value, errorCode.Value);
+            return new LinkerValidationResultItemData(name.Value, description.Value, Optional.ToNullable(result), errorMessage.Value, errorCode.Value);
         }
     }
 }

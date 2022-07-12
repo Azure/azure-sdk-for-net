@@ -29,13 +29,16 @@ rename-mapping:
   SecretType: LinkerSecretType
   SecretStore: LinkerSecretStore
   ClientType: LinkerClientType
-  ValidationResultItem: ValidationResultItemData
+  ValidateOperationResult: LinkerValidateOperationResult
   ValidateOperationResult.properties.reportStartTimeUtc: reportStartOn
   ValidateOperationResult.properties.reportEndTimeUtc: reportEndOn
+  ValidationResultItem: LinkerValidationResultItemData
+  ValidationResultStatus: LinkerValidationResultStatus
 
 
 format-by-name-rules:
   'tenantId': 'uuid'
+  'principalId': 'uuid'
   'ETag': 'etag'
   'location': 'azure-location'
   'keyVaultId': 'arm-id'
@@ -67,6 +70,7 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  VNet: Vnet
 
 directive:
   - from: servicelinker.json
