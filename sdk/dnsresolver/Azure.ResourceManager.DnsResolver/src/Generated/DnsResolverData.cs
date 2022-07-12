@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -19,8 +20,16 @@ namespace Azure.ResourceManager.DnsResolver
     {
         /// <summary> Initializes a new instance of DnsResolverData. </summary>
         /// <param name="location"> The location. </param>
-        public DnsResolverData(AzureLocation location) : base(location)
+        /// <param name="virtualNetwork"> The reference to the virtual network. This cannot be changed after creation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetwork"/> is null. </exception>
+        public DnsResolverData(AzureLocation location, WritableSubResource virtualNetwork) : base(location)
         {
+            if (virtualNetwork == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetwork));
+            }
+
+            VirtualNetwork = virtualNetwork;
         }
 
         /// <summary> Initializes a new instance of DnsResolverData. </summary>
