@@ -62,27 +62,12 @@ function create-metadata-table($readmeFolder, $readmeName, $moniker, $msService,
   $metadataString = GenerateDocsMsMetadata -language $Language -languageDisplayName $LanguageDisplayName -serviceName $serviceName `
     -tenantId $TenantId -clientId $ClientId -clientSecret $ClientSecret `
     -msService $msService
-  Add-Content -Path $readmePath -Value $metadataString
+  Add-Content -Path $readmePath -Value $metadataString -NoNewline
 
   # Add tables, seperate client and mgmt.
   $readmeHeader = "# Azure $serviceName SDK for $languageDisplayName - $moniker`r`n"
   Add-Content -Path $readmePath -Value $readmeHeader
-  Add-Content -Path $readmePath -Value $content
-}
-
-function compare-and-merge-metadata ($original, $updated) {
-  if (!$original -or !$updated) {
-    return $original + $updated 
-  }
-  $originalTable = ConvertFrom-StringData -StringData $original -Delimiter ":"
-  $updatedTable = ConvertFrom-StringData -StringData $updated -Delimiter ":"
-  foreach ($key in $originalTable.Keys) {
-    if (!($updatedTable.ContainsKey($key))) {
-      Write-Warning "New metadata missed the entry: $key. Adding back."
-      $updated += "$key`: $($originalTable[$key])`r`n"
-    }
-  }
-  return $updated
+  Add-Content -Path $readmePath -Value $content -NoNewline
 }
 
 # Update the metadata table.
@@ -90,22 +75,22 @@ function update-metadata-table($readmeFolder, $readmeName, $serviceName, $msServ
 {
   $readmePath = Join-Path $readmeFolder -ChildPath $readmeName
   $readmeContent = Get-Content -Path $readmePath -Raw
-  # $Language, $LanguageDisplayName are the variables globally defined in Language-Settings.ps1
-  $metadataString = GenerateDocsMsMetadata -language $Language -languageDisplayName $LanguageDisplayName -serviceName $serviceName `
-    -tenantId $TenantId -clientId $ClientId -clientSecret $ClientSecret `
-    -msService $msService
   $match = $readmeContent -match "^---\n*(?<metadata>(.*\n?)*?)---\n*(?<content>(.*\n?)*)"
   if (!$match) {
-    Set-Content -Path $readmePath -Value "$metadataString`r`n$readmeContent" -NoNewline
+    # $Language, $LanguageDisplayName are the variables globally defined in Language-Settings.ps1
+    $metadataString = GenerateDocsMsMetadata -language $Language -languageDisplayName $LanguageDisplayName -serviceName $serviceName `
+      -tenantId $TenantId -clientId $ClientId -clientSecret $ClientSecret `
+      -msService $msService
+    Set-Content -Path $readmePath -Value "$metadataString$readmeContent" -NoNewline
     return
   }
   $restContent = $Matches["content"]
   $metadata = $Matches["metadata"]
-  $metadataMatch = $metadataString -match "---\n(?<metadata>(.*\n)*)---"
-  if ($metadataMatch) {
-    $metadata = compare-and-merge-metadata -original $metadata -updated $Matches["metadata"]
-  }
-  Set-Content -Path $readmePath -Value "---`r`n$metadata---`r`n$restContent" -NoNewline
+  # $Language, $LanguageDisplayName are the variables globally defined in Language-Settings.ps1
+  $metadataString = GenerateDocsMsMetadata -originalMetadata $metadata -language $Language -languageDisplayName $LanguageDisplayName -serviceName $serviceName `
+    -tenantId $TenantId -clientId $ClientId -clientSecret $ClientSecret `
+    -msService $msService
+  Set-Content -Path $readmePath -Value "$metadataString$restContent" -NoNewline
 }
 
 function generate-markdown-table($readmeFolder, $readmeName, $packageInfo, $moniker) {
