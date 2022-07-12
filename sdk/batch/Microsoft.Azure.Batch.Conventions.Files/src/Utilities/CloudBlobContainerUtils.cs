@@ -12,6 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using Azure;
 ﻿using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System;
@@ -21,29 +24,35 @@ namespace Microsoft.Azure.Batch.Conventions.Files.Utilities
 {
     internal static class CloudBlobContainerUtils
     {
-        internal static CloudBlobContainer GetContainerReference(Uri jobOutputContainerUri)
+        internal static BlobContainerClient GetContainerReference(Uri jobOutputContainerUri)
         {
             if (jobOutputContainerUri == null)
             {
                 throw new ArgumentNullException(nameof(jobOutputContainerUri));
             }
 
-            return new CloudBlobContainer(jobOutputContainerUri);
+            return new BlobContainerClient(jobOutputContainerUri);
         }
+        /*
+         * No corresponding class for CloudStorageAccount in Azure.Storage.Blob SDK, remove method?
+         */
+        //internal static BlobContainerClient GetContainerReference(CloudStorageAccount storageAccount, string jobId)
+        //{
+        //    if (storageAccount == null)
+        //    {
+        //        throw new ArgumentNullException(nameof(storageAccount));
+        //    }
 
-        internal static CloudBlobContainer GetContainerReference(CloudStorageAccount storageAccount, string jobId)
-        {
-            if (storageAccount == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccount));
-            }
+        //    Validate.IsNotNullOrEmpty(jobId, nameof(jobId));
 
-            Validate.IsNotNullOrEmpty(jobId, nameof(jobId));
+        //    var jobOutputContainerName = ContainerNameUtils.GetSafeContainerName(jobId);
+        //    return storageAccount.CreateCloudBlobClient().GetContainerReference(jobOutputContainerName);
+        //}
 
-            var jobOutputContainerName = ContainerNameUtils.GetSafeContainerName(jobId);
-            return storageAccount.CreateCloudBlobClient().GetContainerReference(jobOutputContainerName);
-        }
 
+        /*
+         * Need to invoke different methods for flat blob listing and hierachical listing
+         */
         internal static IEnumerable<IListBlobItem> ListBlobs(this CloudBlobContainer container, string prefix, bool useFlatBlobListing)
         {
             BlobContinuationToken continuationToken = null;
@@ -60,6 +69,42 @@ namespace Microsoft.Azure.Batch.Conventions.Files.Utilities
                 continuationToken = segment.ContinuationToken;
             } while (continuationToken != null);
 
+        }
+
+        internal static IEnumerable<BlobItem> BlobsFlatListing(BlobContainerClient container, string prefix = null)
+        {
+            //string initialContinuationToken = null;
+            IEnumerable<Page<BlobItem>> resultSegment = container.GetBlobs(prefix: prefix).AsPages();
+
+            foreach (Page<BlobItem> page in resultSegment)
+            {
+                foreach (BlobItem blob in page.Values)
+                {
+                    Console.WriteLine("Processing blob: {0}", blob.Name);
+                    //Console.WriteLine("ContinuationToken equal to null or empty? {0}", String.IsNullOrEmpty(page.ContinuationToken));
+                    yield return blob;
+                }
+
+                //initialContinuationToken = page.ContinuationToken;
+                //Console.WriteLine("initialContinuationToken equal to null? {0}", String.IsNullOrEmpty(initialContinuationToken));
+
+            }
+        }
+
+        internal static IEnumerable<BlobHierarchyItem> ListBlobsByHierachy(BlobContainerClient container, string prefix = null, string delimiter = null)
+        {
+            //string initialContinuationToken = null;
+            IEnumerable<Page<BlobHierarchyItem>> resultSegment = container.GetBlobsByHierarchy(delimiter: delimiter, prefix: prefix).AsPages();
+
+            foreach (Page<BlobHierarchyItem> page in resultSegment)
+            {
+                foreach (BlobHierarchyItem blobHeiracyItem in page.Values)
+                {
+                    yield return blobHeiracyItem;
+                }
+                //initialContinuationToken = page.ContinuationToken;
+                //Console.WriteLine("initialContinuationToken equal to null? {0}", String.IsNullOrEmpty(initialContinuationToken));
+            }
         }
     }
 }
