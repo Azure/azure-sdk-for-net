@@ -16,6 +16,7 @@ using Microsoft.Azure.Batch.Conventions.Files.Utilities;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage.RetryPolicies;
+using Azure.Storage.Blobs;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -100,7 +101,11 @@ namespace Microsoft.Azure.Batch.Conventions.Files
         {
         }
 
-        private TaskOutputStorage(CloudBlobContainer jobOutputContainer, string taskId, IRetryPolicy storageRetryPolicy)
+        /*
+         * No retry policy interfaces exist in new SDK - Consider passing ClientOptions.RetryOptions? or ClientOptions.AddPolicy to add custom policy to act on request for retries?
+         * Seems that once you instantiate BlobContainerClient, you cannot modify the client options..?
+         */
+        private TaskOutputStorage(BlobContainerClient jobOutputContainer, string taskId, IRetryPolicy storageRetryPolicy)
         {
             if (jobOutputContainer == null)
             {
