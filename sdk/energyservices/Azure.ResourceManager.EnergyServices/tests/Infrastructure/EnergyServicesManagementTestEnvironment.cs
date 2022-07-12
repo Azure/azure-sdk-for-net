@@ -3,7 +3,7 @@
 
 using Azure.Core.TestFramework;
 
-namespace Azure.ResourceManager.EnergyServices.Tests
+namespace Azure.ResourceManager.EnergyServices.Tests.Infrastructure
 {
     public class EnergyServicesManagementTestEnvironment : TestEnvironment
     {

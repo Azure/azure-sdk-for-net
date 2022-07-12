@@ -24,6 +24,5 @@ namespace Azure.ResourceManager.EnergyServices.Models
 
         /// <summary> The list of Energy services resource&apos;s Data Partition Names. </summary>
         internal DataPartitionNames Name { get; set; }
-        
     }
 }

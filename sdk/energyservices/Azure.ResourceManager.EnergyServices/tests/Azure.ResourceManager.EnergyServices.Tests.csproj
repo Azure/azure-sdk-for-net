@@ -1,5 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net6.0;net461;netcoreapp3.1</TargetFrameworks>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>  
+  
+  <ItemGroup>
+    <PackageReference Include="NUnit" />
+    <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="Moq" />
+  </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.EnergyServices.csproj" />
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="SessionRecords\" />
+  </ItemGroup>
+  
 </Project>

@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.EnergyServices.Tests.Infrastructure;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
@@ -12,7 +13,10 @@ namespace Azure.ResourceManager.EnergyServices.Tests
 {
     public class EnergyServicesManagementTestBase : ManagementRecordedTestBase<EnergyServicesManagementTestEnvironment>
     {
-        protected ArmClient Client { get; private set; }
+        public string SubscriptionId { get; set; }
+        public ArmClient ArmClient { get; private set; }
+        public ResourceGroupCollection ResourceGroupsOperations { get; set; }
+        public SubscriptionResource Subscription { get; set; }
 
         protected EnergyServicesManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
@@ -27,7 +31,7 @@ namespace Azure.ResourceManager.EnergyServices.Tests
         [SetUp]
         public void CreateCommonClient()
         {
-            Client = GetArmClient();
+            ArmClient = GetArmClient();
         }
 
         protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
@@ -36,6 +40,17 @@ namespace Azure.ResourceManager.EnergyServices.Tests
             ResourceGroupData input = new ResourceGroupData(location);
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
             return lro.Value;
+        }
+
+        public async Task<ResourceGroupResource> GetResourceGroupAsync(string name)
+        {
+            return await Subscription.GetResourceGroups().GetAsync(name);
+        }
+
+        protected async Task<EnergyServiceCollection> GetEnergyServicesCollectionAsync(string resourceGroupName)
+        {
+            ResourceGroupResource rg = await GetResourceGroupAsync(resourceGroupName);
+            return rg.GetEnergyServices();
         }
     }
 }

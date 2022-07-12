@@ -6,6 +6,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 csharp: true
 library-name: EnergyServices
+title: EnergyServices
 namespace: Azure.ResourceManager.EnergyServices
 require: https://github.com/Azure/azure-rest-api-specs/blob/cd3bae20cb3d8b2125e98dffc46f24c5eaba729a/specification/oep/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
