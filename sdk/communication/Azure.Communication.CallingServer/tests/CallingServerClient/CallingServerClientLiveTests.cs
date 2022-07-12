@@ -18,18 +18,19 @@ namespace Azure.Communication.CallingServer.Tests.CallingServerClient
         [Test]
         public async Task CreateCallToACSGetCallAndHangUpCallTest()
         {
-            /* Test case: Acs to Acs call
-             * 1. create a CallingServerClient using xPMA endpoint.
+            /* Test case: ACS to ACS call
+             * 1. create a CallingServerClient.
              * 2. create a call from source to one ACS target.
              * 3. use GetCall method to check for the connected state.
              * 4. hang up the call.
+             * 5. use GetCall method to check for 404 Not Found once call is hung up.
             */
 
             if (SkipCallingServerInteractionLiveTests)
                 Assert.Ignore("Skip callingserver interaction live tests flag is on.");
 
             CallingServer.CallingServerClient client = CreateInstrumentedCallingServerClientWithConnectionString();
-
+            bool wasConnected = false;
             try
             {
                 var user = await CreateIdentityUserAsync().ConfigureAwait(false);
@@ -42,8 +43,21 @@ namespace Azure.Communication.CallingServer.Tests.CallingServerClient
 
                 CallConnection updatedCallConnection = await client.GetCallAsync(callConnectionId).ConfigureAwait(false);
                 Assert.AreEqual("connected", updatedCallConnection.CallConnectionState.ToString());
+                wasConnected = true;
 
                 await callConnection.HangupAsync().ConfigureAwait(false);
+                await WaitForOperationCompletion().ConfigureAwait(false);
+                await client.GetCallAsync(callConnectionId).ConfigureAwait(false);
+                Assert.Fail("Call connection should not be found after hanging up.");
+            }
+            catch (RequestFailedException ex)
+            {
+                if (ex.Status == 404 && wasConnected)
+                {
+                    // call hung up successfully
+                    Assert.Pass();
+                }
+                Assert.Fail($"Unexpected error: {ex}");
             }
             catch (Exception ex)
             {
@@ -54,18 +68,19 @@ namespace Azure.Communication.CallingServer.Tests.CallingServerClient
         [Test]
         public async Task CreateCallToPSTNGetCallAndHangUpCallTest()
         {
-            /* Test case: Acs to PSTN call
-             * 1. create a CallingServerClient using xPMA endpoint.
+            /* Test case: ACS to PSTN call
+             * 1. create a CallingServerClient.
              * 2. create a call from source to one PSTN target.
              * 3. use GetCall method to check for the connected state.
              * 4. hang up the call.
+             * 5. use GetCall method to check for 404 Not Found once call is hung up.
             */
 
             if (SkipCallingServerInteractionLiveTests)
                 Assert.Ignore("Skip callingserver interaction live tests flag is on.");
 
             CallingServer.CallingServerClient client = CreateInstrumentedCallingServerClientWithConnectionString();
-
+            bool wasConnected = false;
             try
             {
                 var user = await CreateIdentityUserAsync().ConfigureAwait(false);
@@ -78,8 +93,21 @@ namespace Azure.Communication.CallingServer.Tests.CallingServerClient
 
                 CallConnection updatedCallConnection = await client.GetCallAsync(callConnectionId).ConfigureAwait(false);
                 Assert.AreEqual("connected", updatedCallConnection.CallConnectionState.ToString());
+                wasConnected = true;
 
                 await callConnection.HangupAsync().ConfigureAwait(false);
+                await WaitForOperationCompletion().ConfigureAwait(false);
+                await client.GetCallAsync(callConnectionId).ConfigureAwait(false);
+                Assert.Fail("Call connection should not be found after hanging up.");
+            }
+            catch (RequestFailedException ex)
+            {
+                if (ex.Status == 404 && wasConnected)
+                {
+                    // call hung up successfully
+                    Assert.Pass();
+                }
+                Assert.Fail($"Request failed error: {ex}");
             }
             catch (Exception ex)
             {
