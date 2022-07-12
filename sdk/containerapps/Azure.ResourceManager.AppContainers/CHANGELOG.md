@@ -1,16 +1,10 @@
 # Release History
 
-## 1.0.0-beta.2 (2022-07-12)
+## 1.0.0-beta.1 (2022-07-12)
 
 ### Breaking Changes
 
 - Change the namesapce from `Azure.ResourceManager.Applications.Containers` to `Azure.ResourceManager.AppContainers`.
-
-### Bugs Fixed
-
-### Other Changes
-
-## 1.0.0-beta.1 (2022-05-24)
 
 ### General New Features
 
