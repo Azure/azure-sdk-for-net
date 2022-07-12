@@ -35,7 +35,7 @@
     <Exec ContinueOnError="true" ConsoleToMSBuild="true" StandardOutputImportance="High" Command="$(PowerShellExe) -NoProfile -NonInteractive -executionpolicy Unrestricted -File $(ValidateReleaseNotesScriptPath) -ChangeLogLocation $(ChangeLogPath) -VersionString $(_VersionInProject)">
       <Output TaskParameter="ExitCode" PropertyName="SetReleaseNotesErrorCode" />
     </Exec>
-    <Error Condition="'$(SetReleaseNotesErrorCode)' != '0'" Text="ChangeLog Verification failed at [$(ChangeLogPath)]." />
+    <Error Condition="'$(SetReleaseNotesErrorCode)' != '0'" Text="ChangeLog verification failed for [$(ChangeLogPath)]." />
   </Target>
 
   <!--Run Aggregate Updates to Source -->
