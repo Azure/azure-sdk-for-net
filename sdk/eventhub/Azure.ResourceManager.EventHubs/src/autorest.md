@@ -58,7 +58,7 @@ rename-rules:
 rename-mapping:
   SchemaType: EventHubsSchemaType
   SchemaCompatibility: EventHubsSchemaCompatibility
-  KeySource: EventHubsEncryptionKeySource
+  KeySource: EventHubsKeySource
   UnavailableReason: EventHubsNameUnavailableReason
 
 directive:
