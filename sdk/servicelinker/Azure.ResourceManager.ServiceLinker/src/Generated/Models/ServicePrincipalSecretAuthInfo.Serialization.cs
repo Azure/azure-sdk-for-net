@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         internal static ServicePrincipalSecretAuthInfo DeserializeServicePrincipalSecretAuthInfo(JsonElement element)
         {
             string clientId = default;
-            string principalId = default;
+            Guid principalId = default;
             string secret = default;
             LinkerAuthType authType = default;
             foreach (var property in element.EnumerateObject())
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 if (property.NameEquals("principalId"))
                 {
-                    principalId = property.Value.GetString();
+                    principalId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("secret"))

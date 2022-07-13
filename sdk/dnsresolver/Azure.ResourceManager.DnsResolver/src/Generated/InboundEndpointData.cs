@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DnsResolver.Models;
@@ -18,9 +20,16 @@ namespace Azure.ResourceManager.DnsResolver
     {
         /// <summary> Initializes a new instance of InboundEndpointData. </summary>
         /// <param name="location"> The location. </param>
-        public InboundEndpointData(AzureLocation location) : base(location)
+        /// <param name="ipConfigurations"> IP configurations for the inbound endpoint. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurations"/> is null. </exception>
+        public InboundEndpointData(AzureLocation location, IEnumerable<IPConfiguration> ipConfigurations) : base(location)
         {
-            IPConfigurations = new ChangeTrackingList<IPConfiguration>();
+            if (ipConfigurations == null)
+            {
+                throw new ArgumentNullException(nameof(ipConfigurations));
+            }
+
+            IPConfigurations = ipConfigurations.ToList();
         }
 
         /// <summary> Initializes a new instance of InboundEndpointData. </summary>
