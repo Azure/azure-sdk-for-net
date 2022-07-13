@@ -15,44 +15,39 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver
 {
-    public partial class DnsResolverData : IUtf8JsonSerializable
+    public partial class DnsForwardingRulesetVirtualNetworkLinkData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            writer.WritePropertyName("properties");
+            writer.WriteStartObject();
+            writer.WritePropertyName("virtualNetwork");
+            JsonSerializer.Serialize(writer, VirtualNetwork); if (Optional.IsCollectionDefined(Metadata))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("metadata");
                 writer.WriteStartObject();
-                foreach (var item in Tags)
+                foreach (var item in Metadata)
                 {
                     writer.WritePropertyName(item.Key);
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
-            writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
-            writer.WriteStartObject();
-            writer.WritePropertyName("virtualNetwork");
-            JsonSerializer.Serialize(writer, VirtualNetwork); writer.WriteEndObject();
+            writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static DnsResolverData DeserializeDnsResolverData(JsonElement element)
+        internal static DnsForwardingRulesetVirtualNetworkLinkData DeserializeDnsForwardingRulesetVirtualNetworkLinkData(JsonElement element)
         {
             Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
-            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             WritableSubResource virtualNetwork = default;
-            Optional<DnsResolverState> dnsResolverState = default;
+            Optional<IDictionary<string, string>> metadata = default;
             Optional<DnsResolverProvisioningState> provisioningState = default;
-            Optional<string> resourceGuid = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -63,26 +58,6 @@ namespace Azure.ResourceManager.DnsResolver
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("tags"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    tags = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("location"))
-                {
-                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -124,14 +99,19 @@ namespace Azure.ResourceManager.DnsResolver
                             virtualNetwork = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
-                        if (property0.NameEquals("dnsResolverState"))
+                        if (property0.NameEquals("metadata"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            dnsResolverState = new DnsResolverState(property0.Value.GetString());
+                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, property1.Value.GetString());
+                            }
+                            metadata = dictionary;
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -144,16 +124,11 @@ namespace Azure.ResourceManager.DnsResolver
                             provisioningState = new DnsResolverProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("resourceGuid"))
-                        {
-                            resourceGuid = property0.Value.GetString();
-                            continue;
-                        }
                     }
                     continue;
                 }
             }
-            return new DnsResolverData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), virtualNetwork, Optional.ToNullable(dnsResolverState), Optional.ToNullable(provisioningState), resourceGuid.Value);
+            return new DnsForwardingRulesetVirtualNetworkLinkData(id, name, type, systemData.Value, Optional.ToNullable(etag), virtualNetwork, Optional.ToDictionary(metadata), Optional.ToNullable(provisioningState));
         }
     }
 }
