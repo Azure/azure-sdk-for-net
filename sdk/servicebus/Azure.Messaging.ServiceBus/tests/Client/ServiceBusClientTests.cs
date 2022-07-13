@@ -226,6 +226,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
             Assert.That(options, Is.Not.SameAs(defaultOptions), $"The { constructorDescription } constructor should not have the same options instance.");
             Assert.That(options.TransportType, Is.EqualTo(defaultOptions.TransportType), $"The { constructorDescription } constructor should have the correct connection type.");
             Assert.That(options.WebProxy, Is.EqualTo(defaultOptions.WebProxy), $"The { constructorDescription } constructor should have the correct proxy.");
+            Assert.That(options.CustomEndpointAddress, Is.EqualTo(defaultOptions.CustomEndpointAddress), $"The {constructorDescription} constructor should have the correct custom endpoint.");
         }
 
         /// <summary>
@@ -245,6 +246,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
             Assert.That(options, Is.Not.SameAs(constructorOptions), $"The { constructorDescription } constructor should have cloned the options.");
             Assert.That(options.TransportType, Is.EqualTo(constructorOptions.TransportType), $"The { constructorDescription } constructor should have the correct connection type.");
             Assert.That(options.WebProxy, Is.EqualTo(constructorOptions.WebProxy), $"The { constructorDescription } constructor should have the correct proxy.");
+            Assert.That(options.CustomEndpointAddress, Is.EqualTo(constructorOptions.CustomEndpointAddress), $"The {constructorDescription} constructor should have the correct custom endpoint.");
         }
 
         /// <summary>

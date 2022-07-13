@@ -122,7 +122,8 @@ namespace Azure.Messaging.ServiceBus
                 WebProxy = WebProxy,
                 RetryOptions = RetryOptions.Clone(),
                 EnableCrossEntityTransactions = EnableCrossEntityTransactions,
-                EnableTransportMetrics = EnableTransportMetrics
+                EnableTransportMetrics = EnableTransportMetrics,
+                CustomEndpointAddress = CustomEndpointAddress
             };
     }
 }
