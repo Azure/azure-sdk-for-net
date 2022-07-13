@@ -412,6 +412,7 @@ The [Azure Identity library](https://github.com/Azure/azure-sdk-for-net/tree/mai
 // Create a ServiceBusClient that will authenticate through Active Directory
 string fullyQualifiedNamespace = "yournamespace.servicebus.windows.net";
 ServiceBusClient client = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential());
+```
 
 ### Initiating the connection with a custom endpoint
 
@@ -420,12 +421,14 @@ If an alternative host name is needed to establish the connection to the service
 ```C#:Snippet:ServiceBusCustomEndpoint
 // Connect to the service using a custom endpoint
 string connectionString = "<connection_string>";
-string customEndpoint = "<custom_endpoint>";
+string customEndpoint = "<custom_endpoint";
 
 var options = new ServiceBusClientOptions
 {
     CustomEndpointAddress = new Uri(customEndpoint)
 };
+
+ServiceBusClient client = new ServiceBusClient(connectionString, options);
 ```
 
 ### Working with Sessions
