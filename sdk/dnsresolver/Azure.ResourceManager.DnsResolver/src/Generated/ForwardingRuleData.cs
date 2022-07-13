@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DnsResolver.Models;
@@ -17,9 +19,22 @@ namespace Azure.ResourceManager.DnsResolver
     public partial class ForwardingRuleData : ResourceData
     {
         /// <summary> Initializes a new instance of ForwardingRuleData. </summary>
-        public ForwardingRuleData()
+        /// <param name="domainName"> The domain name for the forwarding rule. </param>
+        /// <param name="targetDnsServers"> DNS servers to forward the DNS query to. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> or <paramref name="targetDnsServers"/> is null. </exception>
+        public ForwardingRuleData(string domainName, IEnumerable<TargetDnsServer> targetDnsServers)
         {
-            TargetDnsServers = new ChangeTrackingList<TargetDnsServer>();
+            if (domainName == null)
+            {
+                throw new ArgumentNullException(nameof(domainName));
+            }
+            if (targetDnsServers == null)
+            {
+                throw new ArgumentNullException(nameof(targetDnsServers));
+            }
+
+            DomainName = domainName;
+            TargetDnsServers = targetDnsServers.ToList();
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
@@ -28,15 +43,15 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="eTag"> ETag of the forwarding rule. </param>
+        /// <param name="etag"> ETag of the forwarding rule. </param>
         /// <param name="domainName"> The domain name for the forwarding rule. </param>
         /// <param name="targetDnsServers"> DNS servers to forward the DNS query to. </param>
         /// <param name="metadata"> Metadata attached to the forwarding rule. </param>
         /// <param name="forwardingRuleState"> The state of forwarding rule. </param>
         /// <param name="provisioningState"> The current provisioning state of the forwarding rule. This is a read-only property and any attempt to set this value will be ignored. </param>
-        internal ForwardingRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, string domainName, IList<TargetDnsServer> targetDnsServers, IDictionary<string, string> metadata, ForwardingRuleState? forwardingRuleState, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal ForwardingRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string domainName, IList<TargetDnsServer> targetDnsServers, IDictionary<string, string> metadata, ForwardingRuleState? forwardingRuleState, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
-            ETag = eTag;
+            ETag = etag;
             DomainName = domainName;
             TargetDnsServers = targetDnsServers;
             Metadata = metadata;

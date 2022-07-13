@@ -35,13 +35,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="self"> A system generated property that specifies the addressable path of the container resource. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
-        /// <param name="eTag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        internal RestorableSqlContainerPropertiesResourceContainer(string id, CosmosDBIndexingPolicy indexingPolicy, ContainerPartitionKey partitionKey, int? defaultTtl, CosmosDBUniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy, long? analyticalStorageTtl, string self, string rid, float? timestamp, ETag? eTag) : base(id, indexingPolicy, partitionKey, defaultTtl, uniqueKeyPolicy, conflictResolutionPolicy, analyticalStorageTtl)
+        /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
+        internal RestorableSqlContainerPropertiesResourceContainer(string id, CosmosDBIndexingPolicy indexingPolicy, ContainerPartitionKey partitionKey, int? defaultTtl, CosmosDBUniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy, long? analyticalStorageTtl, string self, string rid, float? timestamp, ETag? etag) : base(id, indexingPolicy, partitionKey, defaultTtl, uniqueKeyPolicy, conflictResolutionPolicy, analyticalStorageTtl)
         {
             Self = self;
             Rid = rid;
             Timestamp = timestamp;
-            ETag = eTag;
+            ETag = etag;
         }
 
         /// <summary> A system generated property that specifies the addressable path of the container resource. </summary>

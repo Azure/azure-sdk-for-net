@@ -22,28 +22,28 @@ namespace Azure.ResourceManager.Compute.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string StandardLRSValue = "Standard_LRS";
-        private const string PremiumLRSValue = "Premium_LRS";
-        private const string StandardSsdLRSValue = "StandardSSD_LRS";
-        private const string UltraSsdLRSValue = "UltraSSD_LRS";
-        private const string PremiumZRSValue = "Premium_ZRS";
-        private const string StandardSsdZRSValue = "StandardSSD_ZRS";
-        private const string PremiumV2LRSValue = "PremiumV2_LRS";
+        private const string StandardLrsValue = "Standard_LRS";
+        private const string PremiumLrsValue = "Premium_LRS";
+        private const string StandardSsdLrsValue = "StandardSSD_LRS";
+        private const string UltraSsdLrsValue = "UltraSSD_LRS";
+        private const string PremiumZrsValue = "Premium_ZRS";
+        private const string StandardSsdZrsValue = "StandardSSD_ZRS";
+        private const string PremiumV2LrsValue = "PremiumV2_LRS";
 
         /// <summary> Standard HDD locally redundant storage. Best for backup, non-critical, and infrequent access. </summary>
-        public static DiskStorageAccountType StandardLRS { get; } = new DiskStorageAccountType(StandardLRSValue);
+        public static DiskStorageAccountType StandardLrs { get; } = new DiskStorageAccountType(StandardLrsValue);
         /// <summary> Premium SSD locally redundant storage. Best for production and performance sensitive workloads. </summary>
-        public static DiskStorageAccountType PremiumLRS { get; } = new DiskStorageAccountType(PremiumLRSValue);
+        public static DiskStorageAccountType PremiumLrs { get; } = new DiskStorageAccountType(PremiumLrsValue);
         /// <summary> Standard SSD locally redundant storage. Best for web servers, lightly used enterprise applications and dev/test. </summary>
-        public static DiskStorageAccountType StandardSsdLRS { get; } = new DiskStorageAccountType(StandardSsdLRSValue);
+        public static DiskStorageAccountType StandardSsdLrs { get; } = new DiskStorageAccountType(StandardSsdLrsValue);
         /// <summary> Ultra SSD locally redundant storage. Best for IO-intensive workloads such as SAP HANA, top tier databases (for example, SQL, Oracle), and other transaction-heavy workloads. </summary>
-        public static DiskStorageAccountType UltraSsdLRS { get; } = new DiskStorageAccountType(UltraSsdLRSValue);
+        public static DiskStorageAccountType UltraSsdLrs { get; } = new DiskStorageAccountType(UltraSsdLrsValue);
         /// <summary> Premium SSD zone redundant storage. Best for the production workloads that need storage resiliency against zone failures. </summary>
-        public static DiskStorageAccountType PremiumZRS { get; } = new DiskStorageAccountType(PremiumZRSValue);
+        public static DiskStorageAccountType PremiumZrs { get; } = new DiskStorageAccountType(PremiumZrsValue);
         /// <summary> Standard SSD zone redundant storage. Best for web servers, lightly used enterprise applications and dev/test that need storage resiliency against zone failures. </summary>
-        public static DiskStorageAccountType StandardSsdZRS { get; } = new DiskStorageAccountType(StandardSsdZRSValue);
+        public static DiskStorageAccountType StandardSsdZrs { get; } = new DiskStorageAccountType(StandardSsdZrsValue);
         /// <summary> Premium SSD v2 locally redundant storage. Best for production and performance-sensitive workloads that consistently require low latency and high IOPS and throughput. </summary>
-        public static DiskStorageAccountType PremiumV2LRS { get; } = new DiskStorageAccountType(PremiumV2LRSValue);
+        public static DiskStorageAccountType PremiumV2Lrs { get; } = new DiskStorageAccountType(PremiumV2LrsValue);
         /// <summary> Determines if two <see cref="DiskStorageAccountType"/> values are the same. </summary>
         public static bool operator ==(DiskStorageAccountType left, DiskStorageAccountType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DiskStorageAccountType"/> values are not the same. </summary>

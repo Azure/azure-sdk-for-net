@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         internal static ManagedHsmNetworkRuleSet DeserializeManagedHsmNetworkRuleSet(JsonElement element)
         {
             Optional<ManagedHsmNetworkRuleBypassOption> bypass = default;
-            Optional<NetworkRuleAction> defaultAction = default;
+            Optional<ManagedHsmNetworkRuleAction> defaultAction = default;
             Optional<IList<ManagedHsmIPRule>> ipRules = default;
             Optional<IList<ManagedHsmVirtualNetworkRule>> virtualNetworkRules = default;
             foreach (var property in element.EnumerateObject())
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    defaultAction = new NetworkRuleAction(property.Value.GetString());
+                    defaultAction = new ManagedHsmNetworkRuleAction(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ipRules"))

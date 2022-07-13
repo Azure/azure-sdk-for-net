@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DnsResolver.Models;
@@ -18,9 +20,16 @@ namespace Azure.ResourceManager.DnsResolver
     {
         /// <summary> Initializes a new instance of InboundEndpointData. </summary>
         /// <param name="location"> The location. </param>
-        public InboundEndpointData(AzureLocation location) : base(location)
+        /// <param name="ipConfigurations"> IP configurations for the inbound endpoint. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurations"/> is null. </exception>
+        public InboundEndpointData(AzureLocation location, IEnumerable<IPConfiguration> ipConfigurations) : base(location)
         {
-            IPConfigurations = new ChangeTrackingList<IPConfiguration>();
+            if (ipConfigurations == null)
+            {
+                throw new ArgumentNullException(nameof(ipConfigurations));
+            }
+
+            IPConfigurations = ipConfigurations.ToList();
         }
 
         /// <summary> Initializes a new instance of InboundEndpointData. </summary>
@@ -30,13 +39,13 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="eTag"> ETag of the inbound endpoint. </param>
+        /// <param name="etag"> ETag of the inbound endpoint. </param>
         /// <param name="ipConfigurations"> IP configurations for the inbound endpoint. </param>
         /// <param name="provisioningState"> The current provisioning state of the inbound endpoint. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="resourceGuid"> The resourceGuid property of the inbound endpoint resource. </param>
-        internal InboundEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? eTag, IList<IPConfiguration> ipConfigurations, ProvisioningState? provisioningState, string resourceGuid) : base(id, name, resourceType, systemData, tags, location)
+        internal InboundEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IList<IPConfiguration> ipConfigurations, ProvisioningState? provisioningState, string resourceGuid) : base(id, name, resourceType, systemData, tags, location)
         {
-            ETag = eTag;
+            ETag = etag;
             IPConfigurations = ipConfigurations;
             ProvisioningState = provisioningState;
             ResourceGuid = resourceGuid;

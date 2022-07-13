@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="modelDefinitionApplied"> Specifies whether the model applied to the virtual machine is the model of the virtual machine scale set or the customized model for the virtual machine. </param>
         /// <param name="protectionPolicy"> Specifies the protection policy of the virtual machine. </param>
         /// <param name="userData"> UserData for the VM, which must be base-64 encoded. Customer should not pass any secrets in here. &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-03-01. </param>
-        internal VirtualMachineScaleSetVmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string instanceId, ComputeSku sku, ComputePlan plan, IReadOnlyList<VirtualMachineExtensionData> resources, IReadOnlyList<string> zones, ManagedServiceIdentity identity, bool? latestModelApplied, string vmId, VirtualMachineScaleSetVmInstanceView instanceView, HardwareProfile hardwareProfile, StorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, OSProfile osProfile, SecurityProfile securityProfile, NetworkProfile networkProfile, VirtualMachineScaleSetVmNetworkProfileConfiguration networkProfileConfiguration, DiagnosticsProfile diagnosticsProfile, WritableSubResource availabilitySet, string provisioningState, string licenseType, string modelDefinitionApplied, VirtualMachineScaleSetVmProtectionPolicy protectionPolicy, string userData) : base(id, name, resourceType, systemData, tags, location)
+        internal VirtualMachineScaleSetVmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string instanceId, ComputeSku sku, ComputePlan plan, IReadOnlyList<VirtualMachineExtensionData> resources, IReadOnlyList<string> zones, ManagedServiceIdentity identity, bool? latestModelApplied, string vmId, VirtualMachineScaleSetVmInstanceView instanceView, VirtualMachineHardwareProfile hardwareProfile, VirtualMachineStorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, VirtualMachineOSProfile osProfile, SecurityProfile securityProfile, VirtualMachineNetworkProfile networkProfile, VirtualMachineScaleSetVmNetworkProfileConfiguration networkProfileConfiguration, DiagnosticsProfile diagnosticsProfile, WritableSubResource availabilitySet, string provisioningState, string licenseType, string modelDefinitionApplied, VirtualMachineScaleSetVmProtectionPolicy protectionPolicy, string userData) : base(id, name, resourceType, systemData, tags, location)
         {
             InstanceId = instanceId;
             Sku = sku;
@@ -100,17 +100,17 @@ namespace Azure.ResourceManager.Compute
         /// <summary> The virtual machine instance view. </summary>
         public VirtualMachineScaleSetVmInstanceView InstanceView { get; }
         /// <summary> Specifies the hardware settings for the virtual machine. </summary>
-        public HardwareProfile HardwareProfile { get; set; }
+        public VirtualMachineHardwareProfile HardwareProfile { get; set; }
         /// <summary> Specifies the storage settings for the virtual machine disks. </summary>
-        public StorageProfile StorageProfile { get; set; }
+        public VirtualMachineStorageProfile StorageProfile { get; set; }
         /// <summary> Specifies additional capabilities enabled or disabled on the virtual machine in the scale set. For instance: whether the virtual machine has the capability to support attaching managed data disks with UltraSSD_LRS storage account type. </summary>
         public AdditionalCapabilities AdditionalCapabilities { get; set; }
         /// <summary> Specifies the operating system settings for the virtual machine. </summary>
-        public OSProfile OSProfile { get; set; }
+        public VirtualMachineOSProfile OSProfile { get; set; }
         /// <summary> Specifies the Security related profile settings for the virtual machine. </summary>
         public SecurityProfile SecurityProfile { get; set; }
         /// <summary> Specifies the network interfaces of the virtual machine. </summary>
-        public NetworkProfile NetworkProfile { get; set; }
+        public VirtualMachineNetworkProfile NetworkProfile { get; set; }
         /// <summary> Specifies the network profile configuration of the virtual machine. </summary>
         internal VirtualMachineScaleSetVmNetworkProfileConfiguration NetworkProfileConfiguration { get; set; }
         /// <summary> The list of network configurations. </summary>

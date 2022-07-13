@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="message"> The detailed info regarding the reason associated with the namespace. </param>
         /// <param name="nameAvailable"> Value indicating namespace is availability, true if the namespace is available; otherwise, false. </param>
         /// <param name="reason"> The reason for unavailability of a namespace. </param>
-        internal ServiceBusNameAvailabilityResult(string message, bool? nameAvailable, UnavailableReason? reason)
+        internal ServiceBusNameAvailabilityResult(string message, bool? nameAvailable, ServiceBusNameUnavailableReason? reason)
         {
             Message = message;
             NameAvailable = nameAvailable;
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <summary> Value indicating namespace is availability, true if the namespace is available; otherwise, false. </summary>
         public bool? NameAvailable { get; }
         /// <summary> The reason for unavailability of a namespace. </summary>
-        public UnavailableReason? Reason { get; }
+        public ServiceBusNameUnavailableReason? Reason { get; }
     }
 }

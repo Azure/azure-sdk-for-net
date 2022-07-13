@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="thumbprint"> The revoked VPN client certificate thumbprint. </param>
         /// <param name="provisioningState"> The provisioning state of the VPN client revoked certificate resource. </param>
-        internal VpnClientRevokedCertificate(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? eTag, string thumbprint, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal VpnClientRevokedCertificate(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string thumbprint, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            ETag = eTag;
+            ETag = etag;
             Thumbprint = thumbprint;
             ProvisioningState = provisioningState;
         }

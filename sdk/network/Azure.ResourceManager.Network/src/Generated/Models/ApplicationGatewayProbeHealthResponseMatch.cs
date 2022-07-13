@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -22,14 +23,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationGatewayProbeHealthResponseMatch. </summary>
         /// <param name="body"> Body that must be contained in the health response. Default value is empty. </param>
         /// <param name="statusCodes"> Allowed ranges of healthy status codes. Default range of healthy status codes is 200-399. </param>
-        internal ApplicationGatewayProbeHealthResponseMatch(string body, IList<string> statusCodes)
+        internal ApplicationGatewayProbeHealthResponseMatch(BinaryData body, IList<string> statusCodes)
         {
             Body = body;
             StatusCodes = statusCodes;
         }
 
         /// <summary> Body that must be contained in the health response. Default value is empty. </summary>
-        public string Body { get; set; }
+        public BinaryData Body { get; set; }
         /// <summary> Allowed ranges of healthy status codes. Default range of healthy status codes is 200-399. </summary>
         public IList<string> StatusCodes { get; }
     }

@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal ComputeResourceSkuLocationInfo()
         {
             Zones = new ChangeTrackingList<string>();
-            ZoneDetails = new ChangeTrackingList<ResourceSkuZoneDetails>();
+            ZoneDetails = new ChangeTrackingList<ComputeResourceSkuZoneDetails>();
             ExtendedLocations = new ChangeTrackingList<string>();
         }
 
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="zoneDetails"> Details of capabilities available to a SKU in specific zones. </param>
         /// <param name="extendedLocations"> The names of extended locations. </param>
         /// <param name="extendedLocationType"> The type of the extended location. </param>
-        internal ComputeResourceSkuLocationInfo(AzureLocation? location, IReadOnlyList<string> zones, IReadOnlyList<ResourceSkuZoneDetails> zoneDetails, IReadOnlyList<string> extendedLocations, ExtendedLocationType? extendedLocationType)
+        internal ComputeResourceSkuLocationInfo(AzureLocation? location, IReadOnlyList<string> zones, IReadOnlyList<ComputeResourceSkuZoneDetails> zoneDetails, IReadOnlyList<string> extendedLocations, ExtendedLocationType? extendedLocationType)
         {
             Location = location;
             Zones = zones;
@@ -41,10 +42,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> List of availability zones where the SKU is supported. </summary>
         public IReadOnlyList<string> Zones { get; }
         /// <summary> Details of capabilities available to a SKU in specific zones. </summary>
-        public IReadOnlyList<ResourceSkuZoneDetails> ZoneDetails { get; }
+        public IReadOnlyList<ComputeResourceSkuZoneDetails> ZoneDetails { get; }
         /// <summary> The names of extended locations. </summary>
         public IReadOnlyList<string> ExtendedLocations { get; }
-        /// <summary> The type of the extended location. </summary>
-        public ExtendedLocationType? ExtendedLocationType { get; }
     }
 }

@@ -106,21 +106,24 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task UpdateTableService()
         {
             //update cors
-            CorsRules cors = new CorsRules();
-            cors.CorsRulesValue.Add(new CorsRule(
-                allowedHeaders: new string[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" },
-                allowedMethods: new CorsRuleAllowedMethodsItem[] { "GET", "HEAD", "POST", "OPTIONS", "MERGE", "PUT" },
-                 allowedOrigins: new string[] { "http://www.contoso.com", "http://www.fabrikam.com" },
-                exposedHeaders: new string[] { "x-ms-meta-*" },
-                maxAgeInSeconds: 100));
             TableServiceData parameter = new TableServiceData()
             {
-                Cors = cors,
+                Cors = new StorageCorsRules() {
+                    CorsRules =
+                    {
+                        new StorageCorsRule(
+                            allowedHeaders: new string[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" },
+                            allowedMethods: new CorsRuleAllowedMethodsItem[] { "GET", "HEAD", "POST", "OPTIONS", "MERGE", "PUT" },
+                             allowedOrigins: new string[] { "http://www.contoso.com", "http://www.fabrikam.com" },
+                            exposedHeaders: new string[] { "x-ms-meta-*" },
+                            maxAgeInSeconds: 100)
+                    }
+                }
             };
             _tableService = (await _tableService.CreateOrUpdateAsync(WaitUntil.Completed, parameter)).Value;
 
             //validate
-            Assert.AreEqual(_tableService.Data.Cors.CorsRulesValue.Count, 1);
+            Assert.AreEqual(_tableService.Data.Cors.CorsRules.Count, 1);
         }
     }
 }

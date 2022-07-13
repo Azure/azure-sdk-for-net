@@ -15,21 +15,21 @@ namespace Azure.ResourceManager.AppPlatform.Models
     {
         internal static BuildResultLog DeserializeBuildResultLog(JsonElement element)
         {
-            Optional<Uri> blobUrl = default;
+            Optional<Uri> blobUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("blobUrl"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        blobUrl = null;
+                        blobUri = null;
                         continue;
                     }
-                    blobUrl = new Uri(property.Value.GetString());
+                    blobUri = new Uri(property.Value.GetString());
                     continue;
                 }
             }
-            return new BuildResultLog(blobUrl.Value);
+            return new BuildResultLog(blobUri.Value);
         }
     }
 }

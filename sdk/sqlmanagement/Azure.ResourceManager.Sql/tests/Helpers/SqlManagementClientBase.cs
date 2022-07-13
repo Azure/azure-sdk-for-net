@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Sql.Tests
                 Location = location,
                 PrivateLinkServiceConnections =
                 {
-                    new PrivateLinkServiceConnection()
+                    new NetworkPrivateLinkServiceConnection()
                     {
                         Name = privateEndpointName,
                         PrivateLinkServiceId = managedInstance.Data.Id,
