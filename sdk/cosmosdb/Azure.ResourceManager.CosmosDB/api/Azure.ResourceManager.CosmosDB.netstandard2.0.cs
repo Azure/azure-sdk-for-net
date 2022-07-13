@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CosmosDB
     public partial class CassandraClusterData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public CassandraClusterData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.Models.SystemAssignedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CassandraClusterProperties Properties { get { throw null; } set { } }
     }
     public partial class CassandraClusterResource : Azure.ResourceManager.ArmResource
