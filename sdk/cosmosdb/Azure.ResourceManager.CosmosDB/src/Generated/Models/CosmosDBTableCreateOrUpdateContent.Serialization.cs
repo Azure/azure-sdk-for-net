@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -34,7 +33,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             writer.WritePropertyName("resource");
-            JsonSerializer.Serialize(writer, Resource); if (Optional.IsDefined(Options))
+            writer.WriteObjectValue(Resource);
+            if (Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options");
                 writer.WriteObjectValue(Options);
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            WritableSubResource resource = default;
+            CosmosDBTableResourceInfo resource = default;
             Optional<CosmosDBCreateUpdateConfig> options = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         if (property0.NameEquals("resource"))
                         {
-                            resource = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            resource = CosmosDBTableResourceInfo.DeserializeCosmosDBTableResourceInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("options"))

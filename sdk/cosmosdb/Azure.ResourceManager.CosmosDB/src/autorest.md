@@ -59,7 +59,7 @@ operation-id-mappings:
   CosmosDBSqlDatabaseThroughputSetting:
       accountName: Microsoft.DocumentDB/databaseAccounts
       databaseName: Microsoft.DocumentDB/databaseAccounts/sqlDatabases
-no-property-type-replacement: CosmosDBSqlDatabaseResourceInfo;MongoDBDatabaseResourceInfo;CosmosTableResourceInfo;CassandraKeyspaceResourceInfo;CassandraColumn;GremlinDatabaseResourceInfo;PrivateEndpointProperty
+no-property-type-replacement: CosmosDBSqlDatabaseResourceInfo;MongoDBDatabaseResourceInfo;CosmosDBTableResourceInfo;CassandraKeyspaceResourceInfo;CassandraColumn;GremlinDatabaseResourceInfo;PrivateEndpointProperty
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -222,10 +222,6 @@ rename-mapping:
   RestorableSqlContainerPropertiesResource.ownerResourceId: ContainerId
   RestorableSqlDatabasePropertiesResource.ownerId: DatabaseName
   RestorableSqlDatabasePropertiesResource.ownerResourceId: DatabaseId
-  TableCreateUpdateParameters: CosmosDBTableCreateOrUpdateContent
-  TableGetProperties: CosmosDBTableProperties
-  TableGetResults: CosmosDBTable
-  LocationGetResult: CosmosDBLocation
 
 prepend-rp-prefix:
 - UniqueKey
@@ -264,7 +260,9 @@ directive:
 - remove-operation:
   - DatabaseAccounts_GetReadOnlyKeys
 # rename bad model names
-
+- rename-model:
+    from: LocationGetResult
+    to: CosmosDBLocation
 - rename-model:
     from: DatabaseAccountGetResults
     to: CosmosDBAccount
@@ -316,6 +314,12 @@ directive:
 - rename-model:
     from: MongoDBCollectionGetProperties
     to: MongoDBCollectionProperties
+- rename-model:
+    from: TableGetResults
+    to: CosmosDBTable
+- rename-model:
+    from: TableGetProperties
+    to: CosmosDBTableProperties
 - rename-model:
     from: CassandraKeyspaceGetResults
     to: CassandraKeyspace
@@ -431,6 +435,9 @@ directive:
 - rename-model:
     from: MongoDBCollectionCreateUpdateParameters
     to: MongoDBCollectionCreateUpdateData
+- rename-model:
+    from: TableCreateUpdateParameters
+    to: CosmosDBTableCreateUpdateData
 - rename-model:
     from: CassandraKeyspaceCreateUpdateParameters
     to: CassandraKeyspaceCreateUpdateData

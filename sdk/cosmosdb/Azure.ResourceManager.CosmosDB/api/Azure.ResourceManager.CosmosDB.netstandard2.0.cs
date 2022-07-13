@@ -872,8 +872,8 @@ namespace Azure.ResourceManager.CosmosDB
     public partial class CosmosDBTableData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public CosmosDBTableData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.CosmosDB.Models.TableGetPropertiesOptions Options { get { throw null; } set { } }
-        public Azure.ResourceManager.CosmosDB.Models.TableGetPropertiesResource Resource { get { throw null; } set { } }
+        public Azure.ResourceManager.CosmosDB.Models.CosmosDBTablePropertiesOptions Options { get { throw null; } set { } }
+        public Azure.ResourceManager.CosmosDB.Models.CosmosDBTablePropertiesResource Resource { get { throw null; } set { } }
     }
     public partial class CosmosDBTableResource : Azure.ResourceManager.ArmResource
     {
@@ -2263,9 +2263,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
     }
     public partial class CosmosDBTableCreateOrUpdateContent : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public CosmosDBTableCreateOrUpdateContent(Azure.Core.AzureLocation location, Azure.ResourceManager.Resources.Models.WritableSubResource resource) : base (default(Azure.Core.AzureLocation)) { }
+        public CosmosDBTableCreateOrUpdateContent(Azure.Core.AzureLocation location, Azure.ResourceManager.CosmosDB.Models.CosmosDBTableResourceInfo resource) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBCreateUpdateConfig Options { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
+        public string ResourceTableName { get { throw null; } set { } }
+    }
+    public partial class CosmosDBTablePropertiesOptions : Azure.ResourceManager.CosmosDB.Models.CosmosDBBaseConfig
+    {
+        public CosmosDBTablePropertiesOptions() { }
+    }
+    public partial class CosmosDBTablePropertiesResource : Azure.ResourceManager.CosmosDB.Models.CosmosDBTableResourceInfo
+    {
+        public CosmosDBTablePropertiesResource(string tableName) : base (default(string)) { }
+        public Azure.ETag? ETag { get { throw null; } }
+        public string Rid { get { throw null; } }
+        public float? Timestamp { get { throw null; } }
     }
     public partial class CosmosDBTableResourceInfo
     {
@@ -2715,17 +2726,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static implicit operator Azure.ResourceManager.CosmosDB.Models.SpatialType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CosmosDB.Models.SpatialType left, Azure.ResourceManager.CosmosDB.Models.SpatialType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class TableGetPropertiesOptions : Azure.ResourceManager.CosmosDB.Models.CosmosDBBaseConfig
-    {
-        public TableGetPropertiesOptions() { }
-    }
-    public partial class TableGetPropertiesResource : Azure.ResourceManager.CosmosDB.Models.CosmosDBTableResourceInfo
-    {
-        public TableGetPropertiesResource(string tableName) : base (default(string)) { }
-        public Azure.ETag? ETag { get { throw null; } }
-        public string Rid { get { throw null; } }
-        public float? Timestamp { get { throw null; } }
     }
     public partial class ThroughputPolicyResourceInfo
     {

@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.CosmosDB
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<TableGetPropertiesResource> resource = default;
-            Optional<TableGetPropertiesOptions> options = default;
+            Optional<CosmosDBTablePropertiesResource> resource = default;
+            Optional<CosmosDBTablePropertiesOptions> options = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.CosmosDB
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            resource = TableGetPropertiesResource.DeserializeTableGetPropertiesResource(property0.Value);
+                            resource = CosmosDBTablePropertiesResource.DeserializeCosmosDBTablePropertiesResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("options"))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.CosmosDB
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            options = TableGetPropertiesOptions.DeserializeTableGetPropertiesOptions(property0.Value);
+                            options = CosmosDBTablePropertiesOptions.DeserializeCosmosDBTablePropertiesOptions(property0.Value);
                             continue;
                         }
                     }

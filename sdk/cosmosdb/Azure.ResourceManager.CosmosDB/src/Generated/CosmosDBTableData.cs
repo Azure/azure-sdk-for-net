@@ -30,15 +30,15 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="location"> The location. </param>
         /// <param name="resource"></param>
         /// <param name="options"></param>
-        internal CosmosDBTableData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, TableGetPropertiesResource resource, TableGetPropertiesOptions options) : base(id, name, resourceType, systemData, tags, location)
+        internal CosmosDBTableData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CosmosDBTablePropertiesResource resource, CosmosDBTablePropertiesOptions options) : base(id, name, resourceType, systemData, tags, location)
         {
             Resource = resource;
             Options = options;
         }
 
         /// <summary> Gets or sets the resource. </summary>
-        public TableGetPropertiesResource Resource { get; set; }
+        public CosmosDBTablePropertiesResource Resource { get; set; }
         /// <summary> Gets or sets the options. </summary>
-        public TableGetPropertiesOptions Options { get; set; }
+        public CosmosDBTablePropertiesOptions Options { get; set; }
     }
 }

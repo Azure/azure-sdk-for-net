@@ -65,15 +65,15 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             updateOptions.Tags.Add("key4", "value4");
             await account2.UpdateAsync(WaitUntil.Completed, updateOptions);
 
-            var failoverPolicyList = new List<FailoverPolicy>
+            var failoverPolicyList = new List<CosmosDBFailoverPolicy>
             {
-                new FailoverPolicy()
+                new CosmosDBFailoverPolicy()
                 {
                     LocationName = AzureLocation.WestUS,
                     FailoverPriority = 0
                 }
             };
-            FailoverPolicies failoverPolicies = new FailoverPolicies(failoverPolicyList);
+            CosmosDBFailoverPolicies failoverPolicies = new CosmosDBFailoverPolicies(failoverPolicyList);
             await account2.FailoverPriorityChangeAsync(WaitUntil.Completed, failoverPolicies);
 
             CosmosDBAccountResource account3 = await DatabaseAccountCollection.GetAsync(_databaseAccountName);
@@ -256,14 +256,14 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             }
         }
 
-        private void VerifyFailoverPolicies(IReadOnlyList<FailoverPolicy> expectedData, IReadOnlyList<FailoverPolicy> actualData)
+        private void VerifyFailoverPolicies(IReadOnlyList<CosmosDBFailoverPolicy> expectedData, IReadOnlyList<CosmosDBFailoverPolicy> actualData)
         {
             Assert.AreEqual(expectedData.Count, actualData.Count);
             if (expectedData.Count != 0)
             {
-                foreach (FailoverPolicy expexctedFailoverPolicy in expectedData)
+                foreach (CosmosDBFailoverPolicy expexctedFailoverPolicy in expectedData)
                 {
-                    foreach (FailoverPolicy actualFailoverPolicy in actualData)
+                    foreach (CosmosDBFailoverPolicy actualFailoverPolicy in actualData)
                     {
                         if (expexctedFailoverPolicy.Id == actualFailoverPolicy.Id)
                         {
