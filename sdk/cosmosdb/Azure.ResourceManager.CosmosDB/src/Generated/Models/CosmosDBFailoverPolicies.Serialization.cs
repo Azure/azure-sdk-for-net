@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class FailoverPolicies : IUtf8JsonSerializable
+    public partial class CosmosDBFailoverPolicies : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("failoverPolicies");
             writer.WriteStartArray();
-            foreach (var item in FailoverPoliciesValue)
+            foreach (var item in FailoverPolicies)
             {
                 writer.WriteObjectValue(item);
             }

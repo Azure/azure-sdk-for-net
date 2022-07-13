@@ -9,10 +9,11 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CosmosTableCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class CosmosDBTableCreateOrUpdateContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,8 +34,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             writer.WritePropertyName("resource");
-            writer.WriteObjectValue(Resource);
-            if (Optional.IsDefined(Options))
+            JsonSerializer.Serialize(writer, Resource); if (Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options");
                 writer.WriteObjectValue(Options);
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteEndObject();
         }
 
-        internal static CosmosTableCreateOrUpdateContent DeserializeCosmosTableCreateOrUpdateContent(JsonElement element)
+        internal static CosmosDBTableCreateOrUpdateContent DeserializeCosmosDBTableCreateOrUpdateContent(JsonElement element)
         {
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            CosmosTableResourceInfo resource = default;
+            WritableSubResource resource = default;
             Optional<CosmosDBCreateUpdateConfig> options = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         if (property0.NameEquals("resource"))
                         {
-                            resource = CosmosTableResourceInfo.DeserializeCosmosTableResourceInfo(property0.Value);
+                            resource = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("options"))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new CosmosTableCreateOrUpdateContent(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, resource, options.Value);
+            return new CosmosDBTableCreateOrUpdateContent(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, resource, options.Value);
         }
     }
 }

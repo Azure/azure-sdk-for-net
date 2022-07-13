@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CosmosTableResourceInfo : IUtf8JsonSerializable
+    public partial class CosmosDBTableResourceInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
+            writer.WriteStringValue(TableName);
             writer.WriteEndObject();
         }
 
-        internal static CosmosTableResourceInfo DeserializeCosmosTableResourceInfo(JsonElement element)
+        internal static CosmosDBTableResourceInfo DeserializeCosmosDBTableResourceInfo(JsonElement element)
         {
             string id = default;
             foreach (var property in element.EnumerateObject())
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new CosmosTableResourceInfo(id);
+            return new CosmosDBTableResourceInfo(id);
         }
     }
 }

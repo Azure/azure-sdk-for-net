@@ -47,9 +47,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> The standard JSON format of a SQL database. </summary>
         internal CosmosDBSqlDatabaseResourceInfo Resource { get; set; }
         /// <summary> Name of the Cosmos DB SQL database. </summary>
-        public string ResourceId
+        public string ResourceDatabaseName
         {
-            get => Resource is null ? default : Resource.Id;
+            get => Resource is null ? default : Resource.DatabaseName;
             set => Resource = new CosmosDBSqlDatabaseResourceInfo(value);
         }
 

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.CosmosDB
             WriteLocations = new ChangeTrackingList<CosmosDBAccountLocation>();
             ReadLocations = new ChangeTrackingList<CosmosDBAccountLocation>();
             Locations = new ChangeTrackingList<CosmosDBAccountLocation>();
-            FailoverPolicies = new ChangeTrackingList<FailoverPolicy>();
+            FailoverPolicies = new ChangeTrackingList<CosmosDBFailoverPolicy>();
             VirtualNetworkRules = new ChangeTrackingList<CosmosDBVirtualNetworkRule>();
             PrivateEndpointConnections = new ChangeTrackingList<CosmosDBPrivateEndpointConnectionData>();
             Cors = new ChangeTrackingList<CosmosDBAccountCorsPolicy>();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="networkAclBypassResourceIds"> An array that contains the Resource Ids for Network Acl Bypass for the Cosmos DB account. </param>
         /// <param name="disableLocalAuth"> Opt-out of local authentication and ensure only MSI and AAD can be used exclusively for authentication. </param>
         /// <param name="capacity"> The object that represents all properties related to capacity enforcement on an account. </param>
-        internal CosmosDBAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CosmosDBAccountKind? kind, ManagedServiceIdentity identity, string provisioningState, string documentEndpoint, CosmosDBAccountOfferType? databaseAccountOfferType, IList<CosmosDBIPAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, ConsistencyPolicy consistencyPolicy, IList<CosmosDBAccountCapability> capabilities, IReadOnlyList<CosmosDBAccountLocation> writeLocations, IReadOnlyList<CosmosDBAccountLocation> readLocations, IReadOnlyList<CosmosDBAccountLocation> locations, IReadOnlyList<FailoverPolicy> failoverPolicies, IList<CosmosDBVirtualNetworkRule> virtualNetworkRules, IReadOnlyList<CosmosDBPrivateEndpointConnectionData> privateEndpointConnections, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, Uri keyVaultKeyUri, string defaultIdentity, PublicNetworkAccess? publicNetworkAccess, bool? enableFreeTier, ApiProperties apiProperties, bool? enableAnalyticalStorage, AnalyticalStorageConfiguration analyticalStorageConfiguration, string instanceId, CosmosDBAccountCreateMode? createMode, CosmosDBAccountRestoreParameters restoreParameters, CosmosDBAccountBackupPolicy backupPolicy, IList<CosmosDBAccountCorsPolicy> cors, NetworkAclBypass? networkAclBypass, IList<ResourceIdentifier> networkAclBypassResourceIds, bool? disableLocalAuth, CosmosDBAccountCapacity capacity) : base(id, name, resourceType, systemData, tags, location)
+        internal CosmosDBAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CosmosDBAccountKind? kind, ManagedServiceIdentity identity, string provisioningState, string documentEndpoint, CosmosDBAccountOfferType? databaseAccountOfferType, IList<CosmosDBIPAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, ConsistencyPolicy consistencyPolicy, IList<CosmosDBAccountCapability> capabilities, IReadOnlyList<CosmosDBAccountLocation> writeLocations, IReadOnlyList<CosmosDBAccountLocation> readLocations, IReadOnlyList<CosmosDBAccountLocation> locations, IReadOnlyList<CosmosDBFailoverPolicy> failoverPolicies, IList<CosmosDBVirtualNetworkRule> virtualNetworkRules, IReadOnlyList<CosmosDBPrivateEndpointConnectionData> privateEndpointConnections, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, Uri keyVaultKeyUri, string defaultIdentity, PublicNetworkAccess? publicNetworkAccess, bool? enableFreeTier, ApiProperties apiProperties, bool? enableAnalyticalStorage, AnalyticalStorageConfiguration analyticalStorageConfiguration, Guid? instanceId, CosmosDBAccountCreateMode? createMode, CosmosDBAccountRestoreParameters restoreParameters, CosmosDBAccountBackupPolicy backupPolicy, IList<CosmosDBAccountCorsPolicy> cors, NetworkAclBypass? networkAclBypass, IList<ResourceIdentifier> networkAclBypassResourceIds, bool? disableLocalAuth, CosmosDBAccountCapacity capacity) : base(id, name, resourceType, systemData, tags, location)
         {
             Kind = kind;
             Identity = identity;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> An array that contains all of the locations enabled for the Cosmos DB account. </summary>
         public IReadOnlyList<CosmosDBAccountLocation> Locations { get; }
         /// <summary> An array that contains the regions ordered by their failover priorities. </summary>
-        public IReadOnlyList<FailoverPolicy> FailoverPolicies { get; }
+        public IReadOnlyList<CosmosDBFailoverPolicy> FailoverPolicies { get; }
         /// <summary> List of Virtual Network ACL rules configured for the Cosmos DB account. </summary>
         public IList<CosmosDBVirtualNetworkRule> VirtualNetworkRules { get; }
         /// <summary> List of Private Endpoint Connections configured for the Cosmos DB account. </summary>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> A unique identifier assigned to the database account. </summary>
-        public string InstanceId { get; }
+        public Guid? InstanceId { get; }
         /// <summary> Enum to indicate the mode of account creation. </summary>
         public CosmosDBAccountCreateMode? CreateMode { get; set; }
         /// <summary> Parameters to indicate the information about the restore. </summary>

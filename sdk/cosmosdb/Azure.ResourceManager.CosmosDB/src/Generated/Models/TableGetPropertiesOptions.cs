@@ -7,18 +7,18 @@
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> The CosmosTablePropertiesConfig. </summary>
-    public partial class CosmosTablePropertiesConfig : CosmosDBBaseConfig
+    /// <summary> The TableGetPropertiesOptions. </summary>
+    public partial class TableGetPropertiesOptions : CosmosDBBaseConfig
     {
-        /// <summary> Initializes a new instance of CosmosTablePropertiesConfig. </summary>
-        public CosmosTablePropertiesConfig()
+        /// <summary> Initializes a new instance of TableGetPropertiesOptions. </summary>
+        public TableGetPropertiesOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosTablePropertiesConfig. </summary>
+        /// <summary> Initializes a new instance of TableGetPropertiesOptions. </summary>
         /// <param name="throughput"> Value of the Cosmos DB resource throughput or autoscaleSettings. Use the ThroughputSetting resource when retrieving offer details. </param>
         /// <param name="autoscaleSettings"> Specifies the Autoscale settings. </param>
-        internal CosmosTablePropertiesConfig(int? throughput, AutoscaleSettings autoscaleSettings) : base(throughput, autoscaleSettings)
+        internal TableGetPropertiesOptions(int? throughput, AutoscaleSettings autoscaleSettings) : base(throughput, autoscaleSettings)
         {
         }
     }

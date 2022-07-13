@@ -16,7 +16,6 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
-model-namespae: true
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/throughputSettings/default: CassandraKeyspaceThroughputSetting
@@ -67,11 +66,15 @@ format-by-name-rules:
   'ETag': 'etag'
   'location': 'azure-location'
   'locationName': 'azure-location'
+  'dataCenterLocation': 'azure-location'
+  'hostId': 'uuid'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
   'principalId': 'uuid'
   '*SubnetId': 'arm-id'
   'networkAclBypassResourceIds': 'arm-id'
+  'partitionId': 'uuid'
+  'instanceId': 'uuid'
 
 rename-rules:
   CPU: Cpu
@@ -96,15 +99,18 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
   Mongodb: MongoDB
+  VNet: Vnet
+
 override-operation-name:
   RestorableMongodbDatabases_List: GetRestorableMongoDBDatabases
   RestorableMongodbCollections_List: GetRestorableMongoDBCollections
   RestorableMongodbResources_List: GetRestorableMongoDBResources
+
 rename-mapping:
   SqlRoleDefinitionResource: CosmosDBSqlRoleDefinitionResourceInfo
   CassandraKeyspacePropertiesOptions: CassandraKeyspacePropertiesConfig
   CassandraTablePropertiesOptions: CassandraTablePropertiesConfig
-  CosmosTablePropertiesOptions: CosmosTablePropertiesConfig
+  CosmosTablePropertiesOptions: CosmosDBTablePropertiesConfig
   CreateUpdateOptions: CosmosDBCreateUpdateConfig
   GremlinDatabasePropertiesOptions: GremlinDatabasePropertiesConfig
   GremlinGraphPropertiesOptions: GremlinGraphPropertiesConfig
@@ -144,7 +150,7 @@ rename-mapping:
   CosmosDBSqlTriggerPropertiesResource: ExtendedCosmosDBSqlTriggerResourceInfo
   SqlUserDefinedFunctionPropertiesResource: ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo
   SqlUserDefinedFunctionResource: CosmosDBSqlUserDefinedFunctionResourceInfo
-  TableResource: CosmosTableResourceInfo
+  TableResource: CosmosDBTableResourceInfo
   ThroughputPolicyResource: ThroughputPolicyResourceInfo
   ThroughputSettingsPropertiesResource: ExtendedThroughputSettingsResourceInfo
   ThroughputSettingsResource: ThroughputSettingsResourceInfo
@@ -185,10 +191,42 @@ rename-mapping:
   RestoreMode: CosmosDBAccountRestoreMode
   RestoreParameters: CosmosDBAccountRestoreParameters
   RoleDefinitionType: CosmosDBSqlRoleDefinitionType
-  TableListResult: CosmosTableListResult
+  TableListResult: CosmosDBTableListResult
   TriggerOperation: CosmosDBSqlTriggerOperation
   TriggerType: CosmosDBSqlTriggerType
   UnitType: CosmosDBMetricUnitType
+  ClusterResourceProperties.cassandraAuditLoggingEnabled: IsCassandraAuditLoggingEnabled
+  ClusterResourceProperties.deallocated : IsDeallocated
+  ClusterResourceProperties.repairEnabled: IsRepairEnabled
+  CommandPostBody.readwrite: IsReadwrite
+  IndexingPolicy.automatic: IsAutomatic
+  ManagedCassandraReaperStatus.healthy: IsHealthy
+  MongoIndexOptions.unique: IsUnique
+  CassandraKeyspaceResource.id: KeyspaceName
+  CassandraTableResource.id: TableName
+  SqlDatabaseResource.id: DatabaseName
+  TableResource.id: TableName
+  GremlinDatabaseResource.id: DatabaseName
+  MongoDBDatabaseResource.id: DatabaseName
+  SqlContainerResource.id: containerName
+  SqlStoredProcedureResource.id: StoredProcedureName
+  SqlTriggerResource.id: TriggerName
+  SqlUserDefinedFunctionResource.id: FunctionName
+  GremlinGraphResource.id: GraphName
+  MongoDBCollectionResource.id: CollectionName
+  RestorableMongodbCollectionPropertiesResource.ownerId: CollectionName
+  RestorableMongodbCollectionPropertiesResource.ownerResourceId: CollectionId
+  RestorableMongodbDatabasePropertiesResource.ownerId: DatabaseName
+  RestorableMongodbDatabasePropertiesResource.ownerResourceId: DatabaseId
+  RestorableSqlContainerPropertiesResource.ownerId: ContainerName
+  RestorableSqlContainerPropertiesResource.ownerResourceId: ContainerId
+  RestorableSqlDatabasePropertiesResource.ownerId: DatabaseName
+  RestorableSqlDatabasePropertiesResource.ownerResourceId: DatabaseId
+  TableCreateUpdateParameters: CosmosDBTableCreateOrUpdateContent
+  TableGetProperties: CosmosDBTableProperties
+  TableGetResults: CosmosDBTable
+  LocationGetResult: CosmosDBLocation
+
 prepend-rp-prefix:
 - UniqueKey
 - UniqueKeyPolicy
@@ -212,22 +250,21 @@ prepend-rp-prefix:
 - ApiType
 - UsagesResult
 - VirtualNetworkRule
+- FailoverPolicies
+- FailoverPolicy
+
 directive:
 - from: cosmos-db.json
-  where: $.definitions.MetricDefinition.properties.resourceUri
+  where: $.definitions
   transform: >
-    $["x-ms-client-name"] = "ResourceId";
-    $["x-ms-format"] = "arm-id";
+    $.MetricDefinition.properties.resourceUri['x-ms-client-name'] = 'ResourceId';
+    $.MetricDefinition.properties.resourceUri['x-ms-format'] = 'arm-id';
+    $.VirtualNetworkRule.properties.id['x-ms-format'] = 'arm-id';
 # Below is a workaround for ADO 6196
 - remove-operation:
   - DatabaseAccounts_GetReadOnlyKeys
 # rename bad model names
-- rename-model:
-    from: NotebookWorkspaceConnectionInfoResult
-    to: NotebookWorkspaceConnectionInfo
-- rename-model:
-    from: LocationGetResult
-    to: CosmosDBLocation
+
 - rename-model:
     from: DatabaseAccountGetResults
     to: CosmosDBAccount
@@ -280,12 +317,6 @@ directive:
     from: MongoDBCollectionGetProperties
     to: MongoDBCollectionProperties
 - rename-model:
-    from: TableGetResults
-    to: CosmosTable
-- rename-model:
-    from: TableGetProperties
-    to: CosmosTableProperties
-- rename-model:
     from: CassandraKeyspaceGetResults
     to: CassandraKeyspace
 - rename-model:
@@ -326,11 +357,11 @@ directive:
     to: CosmosDBSqlRoleDefinitionList
 # This API is returning a collection wrapping by the model 'DatabaseAccountListConnectionStringsResult', adding this directive so that the content could be automatically flattened
 - from: swagger-document
-  where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/listConnectionStrings"].post
+  where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/listConnectionStrings'].post
   transform: >
-    $["x-ms-pageable"] = {
-          "nextLinkName": null,
-          "itemName": "connectionStrings"
+    $['x-ms-pageable'] = {
+          'nextLinkName': null,
+          'itemName': 'connectionStrings'
         }
 - rename-model:
     from: SqlRoleDefinitionGetResults
@@ -401,14 +432,8 @@ directive:
     from: MongoDBCollectionCreateUpdateParameters
     to: MongoDBCollectionCreateUpdateData
 - rename-model:
-    from: TableCreateUpdateParameters
-    to: TableCreateUpdateData
-- rename-model:
     from: CassandraKeyspaceCreateUpdateParameters
     to: CassandraKeyspaceCreateUpdateData
-- rename-model:
-    from: CassandraTableCreateUpdateParameters
-    to: CassandraTableCreateUpdateData
 - rename-model:
     from: GremlinDatabaseCreateUpdateParameters
     to: GremlinDatabaseCreateUpdateData
@@ -425,10 +450,10 @@ directive:
 
 # add a missing response code for long running operation. an issue was filed on swagger: https://github.com/Azure/azure-rest-api-specs/issues/16508
 - from: swagger-document
-  where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/notebookWorkspaces/{notebookWorkspaceName}"].put
+  where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/notebookWorkspaces/{notebookWorkspaceName}'].put
   transform: >
-    $.responses["202"] = {
-        "description": "Creation of notebook workspace will complete asynchronously."
+    $.responses['202'] = {
+        'description': 'Creation of notebook workspace will complete asynchronously.'
     };
 - from: swagger-document
   where: $.definitions..creationTime
@@ -439,13 +464,14 @@ directive:
   transform: >
     $['x-ms-client-name'] = 'DeletedOn';
 - from: rbac.json
-  where: $.definitions.SqlRoleDefinitionResource
+  where: $.definitions
   transform: >
-    $.properties.type['x-ms-client-name'] = 'RoleDefinitionType';
+    $.SqlRoleDefinitionResource.properties.type['x-ms-client-name'] = 'RoleDefinitionType';
+    $.SqlRoleAssignmentResource.properties.roleDefinitionId['x-ms-format'] = 'arm-id';
 - from: managedCassandra.json
-  where: $.definitions.CassandraClusterPublicStatus
+  where: $.definitions
   transform: >
-    $.properties.dataCenters.items.properties.nodes.items['x-ms-client-name'] = 'CassandraClusterDataCenterNodeItem';
+    $.CassandraClusterPublicStatus.properties.dataCenters.items.properties.nodes.items['x-ms-client-name'] = 'CassandraClusterDataCenterNodeItem';
 - from: swagger-document
   where: $.definitions.._ts
   transform: >
@@ -454,14 +480,15 @@ directive:
   where: $.definitions.PrivateEndpointProperty
   transform: >
     $.properties.id['x-ms-format'] = 'arm-id';
-- from: rbac.json
-  where: $.definitions.SqlRoleAssignmentResource
-  transform: >
-    $.properties.roleDefinitionId['x-ms-format'] = 'arm-id';
 - from: restorable.json
   where: $.definitions.ContinuousBackupInformation
   transform: >
     $.properties.latestRestorableTimestamp['format'] = 'date-time';
+- from: restorable.json
+  where: $.parameters
+  transform: >
+    $.restoreLocationParameter['x-ms-format'] = 'azure-location';
+    $.instanceIdParameter['format'] = 'uuid';
 ```
 
 ### Tag: package-2021-10-csharp

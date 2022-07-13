@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class ExtendedCosmosTableResourceInfo : IUtf8JsonSerializable
+    public partial class TableGetPropertiesResource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
+            writer.WriteStringValue(TableName);
             writer.WriteEndObject();
         }
 
-        internal static ExtendedCosmosTableResourceInfo DeserializeExtendedCosmosTableResourceInfo(JsonElement element)
+        internal static TableGetPropertiesResource DeserializeTableGetPropertiesResource(JsonElement element)
         {
             Optional<string> rid = default;
             Optional<float> ts = default;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new ExtendedCosmosTableResourceInfo(id, rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
+            return new TableGetPropertiesResource(id, rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
         }
     }
 }
