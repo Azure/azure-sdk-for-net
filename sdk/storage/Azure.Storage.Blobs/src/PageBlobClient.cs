@@ -1224,7 +1224,7 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual Response<PageInfo> UploadPages(
             Stream content,
             long offset,
-            PageBlobUploadPagesOptions options,
+            PageBlobUploadPagesOptions options = default,
             CancellationToken cancellationToken = default) =>
             UploadPagesInternal(
                 content,
@@ -1272,7 +1272,7 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual async Task<Response<PageInfo>> UploadPagesAsync(
             Stream content,
             long offset,
-            PageBlobUploadPagesOptions options,
+            PageBlobUploadPagesOptions options = default,
             CancellationToken cancellationToken = default) =>
             await UploadPagesInternal(
                 content,

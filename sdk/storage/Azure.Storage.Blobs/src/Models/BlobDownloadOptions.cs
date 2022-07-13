@@ -44,13 +44,6 @@ namespace Azure.Storage.Blobs.Models
         public DownloadTransferValidationOptions TransferValidationOptions { get; set; }
 
         /// <summary>
-        /// Default constructor.
-        /// </summary>
-        public BlobDownloadOptions()
-        {
-        }
-
-        /// <summary>
         /// Deep copy constructor.
         /// </summary>
         /// <param name="deepCopySource"></param>
