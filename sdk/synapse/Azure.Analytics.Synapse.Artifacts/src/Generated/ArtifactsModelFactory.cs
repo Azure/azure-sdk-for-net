@@ -631,12 +631,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
         /// <param name="privateEndpoint"> The private endpoint which the connection belongs to. </param>
-        /// <param name="privateLinkServiceConnectionState"> Connection state of the private endpoint connection. </param>
+        /// <param name="connectionState"> Connection state of the private endpoint connection. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
         /// <returns> A new <see cref="Models.PrivateEndpointConnection"/> instance for mocking. </returns>
-        public static PrivateEndpointConnection PrivateEndpointConnection(string id = null, string name = null, string type = null, PrivateEndpoint privateEndpoint = null, PrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, string provisioningState = null)
+        public static PrivateEndpointConnection PrivateEndpointConnection(string id = null, string name = null, string type = null, PrivateEndpoint privateEndpoint = null, PrivateLinkServiceConnectionState connectionState = null, string provisioningState = null)
         {
-            return new PrivateEndpointConnection(id, name, type, privateEndpoint, privateLinkServiceConnectionState, provisioningState);
+            return new PrivateEndpointConnection(id, name, type, privateEndpoint, connectionState, provisioningState);
         }
 
         /// <summary> Initializes a new instance of PrivateEndpoint. </summary>

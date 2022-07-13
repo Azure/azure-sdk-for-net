@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "ExpressRouteCrossConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ExpressRouteCrossConnectionResource(ArmClient client, ExpressRouteCrossConnectionData data) : this(client, new ResourceIdentifier(data.Id))
+        internal ExpressRouteCrossConnectionResource(ArmClient client, ExpressRouteCrossConnectionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="crossConnectionParameters"> Parameters supplied to update express route cross connection tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="crossConnectionParameters"/> is null. </exception>
-        public virtual async Task<Response<ExpressRouteCrossConnectionResource>> UpdateAsync(TagsObject crossConnectionParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExpressRouteCrossConnectionResource>> UpdateAsync(NetworkTagsObject crossConnectionParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(crossConnectionParameters, nameof(crossConnectionParameters));
 
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="crossConnectionParameters"> Parameters supplied to update express route cross connection tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="crossConnectionParameters"/> is null. </exception>
-        public virtual Response<ExpressRouteCrossConnectionResource> Update(TagsObject crossConnectionParameters, CancellationToken cancellationToken = default)
+        public virtual Response<ExpressRouteCrossConnectionResource> Update(NetworkTagsObject crossConnectionParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(crossConnectionParameters, nameof(crossConnectionParameters));
 

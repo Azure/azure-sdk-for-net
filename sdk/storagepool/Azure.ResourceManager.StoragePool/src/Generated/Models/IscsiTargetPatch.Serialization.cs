@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<IList<Acl>> staticAcls = default;
             Optional<IList<IscsiLun>> luns = default;
             foreach (var property in element.EnumerateObject())
@@ -102,11 +102,16 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -153,7 +158,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     continue;
                 }
             }
-            return new IscsiTargetPatch(id, name, type, systemData, managedBy.Value, Optional.ToList(managedByExtended), Optional.ToList(staticAcls), Optional.ToList(luns));
+            return new IscsiTargetPatch(id, name, type, systemData.Value, managedBy.Value, Optional.ToList(managedByExtended), Optional.ToList(staticAcls), Optional.ToList(luns));
         }
     }
 }

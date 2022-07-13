@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using Azure;
+using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the NetworkPrivateEndpointConnection data model. </summary>
-    public partial class NetworkPrivateEndpointConnectionData : SubResource
+    public partial class NetworkPrivateEndpointConnectionData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of NetworkPrivateEndpointConnectionData. </summary>
         public NetworkPrivateEndpointConnectionData()
@@ -19,36 +21,30 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of NetworkPrivateEndpointConnectionData. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
-        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="privateEndpoint"> The resource of private end point. </param>
-        /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <param name="linkIdentifier"> The consumer link id. </param>
-        internal NetworkPrivateEndpointConnectionData(string id, string name, string resourceType, string etag, PrivateEndpointData privateEndpoint, NetworkPrivateLinkServiceConnectionState privateLinkServiceConnectionState, ProvisioningState? provisioningState, string linkIdentifier) : base(id)
+        internal NetworkPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, PrivateEndpointData privateEndpoint, NetworkPrivateLinkServiceConnectionState connectionState, NetworkProvisioningState? provisioningState, string linkIdentifier) : base(id, name, resourceType)
         {
-            Name = name;
-            ResourceType = resourceType;
-            Etag = etag;
+            ETag = etag;
             PrivateEndpoint = privateEndpoint;
-            PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
+            ConnectionState = connectionState;
             ProvisioningState = provisioningState;
             LinkIdentifier = linkIdentifier;
         }
 
-        /// <summary> The name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>
-        public string Name { get; set; }
-        /// <summary> The resource type. </summary>
-        public string ResourceType { get; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> The resource of private end point. </summary>
         public PrivateEndpointData PrivateEndpoint { get; }
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-        public NetworkPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
+        public NetworkPrivateLinkServiceConnectionState ConnectionState { get; set; }
         /// <summary> The provisioning state of the private endpoint connection resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The consumer link id. </summary>
         public string LinkIdentifier { get; }
     }

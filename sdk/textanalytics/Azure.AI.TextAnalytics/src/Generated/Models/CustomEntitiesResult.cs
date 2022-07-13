@@ -13,20 +13,16 @@ using Azure.AI.TextAnalytics;
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The CustomEntitiesResult. </summary>
-    internal partial class CustomEntitiesResult
+    internal partial class CustomEntitiesResult : CustomResult
     {
         /// <summary> Initializes a new instance of CustomEntitiesResult. </summary>
-        /// <param name="documents"> Response by document. </param>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="documents"/>, <paramref name="errors"/>, <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
-        internal CustomEntitiesResult(IEnumerable<DocumentEntities> documents, IEnumerable<DocumentError> errors, string projectName, string deploymentName)
+        /// <param name="documents"> Response by document. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="errors"/>, <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="documents"/> is null. </exception>
+        public CustomEntitiesResult(IEnumerable<DocumentError> errors, string projectName, string deploymentName, IEnumerable<CustomEntitiesResultDocumentsItem> documents) : base(errors, projectName, deploymentName)
         {
-            if (documents == null)
-            {
-                throw new ArgumentNullException(nameof(documents));
-            }
             if (errors == null)
             {
                 throw new ArgumentNullException(nameof(errors));
@@ -39,37 +35,26 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 throw new ArgumentNullException(nameof(deploymentName));
             }
+            if (documents == null)
+            {
+                throw new ArgumentNullException(nameof(documents));
+            }
 
             Documents = documents.ToList();
-            Errors = errors.ToList();
-            ProjectName = projectName;
-            DeploymentName = deploymentName;
         }
 
         /// <summary> Initializes a new instance of CustomEntitiesResult. </summary>
-        /// <param name="documents"> Response by document. </param>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
-        internal CustomEntitiesResult(IReadOnlyList<DocumentEntities> documents, IReadOnlyList<DocumentError> errors, TextDocumentBatchStatistics statistics, string projectName, string deploymentName)
+        /// <param name="documents"> Response by document. </param>
+        internal CustomEntitiesResult(IList<DocumentError> errors, TextDocumentBatchStatistics statistics, string projectName, string deploymentName, IList<CustomEntitiesResultDocumentsItem> documents) : base(errors, statistics, projectName, deploymentName)
         {
             Documents = documents;
-            Errors = errors;
-            Statistics = statistics;
-            ProjectName = projectName;
-            DeploymentName = deploymentName;
         }
 
         /// <summary> Response by document. </summary>
-        public IReadOnlyList<DocumentEntities> Documents { get; }
-        /// <summary> Errors by document id. </summary>
-        public IReadOnlyList<DocumentError> Errors { get; }
-        /// <summary> if showStats=true was specified in the request this field will contain information about the request payload. </summary>
-        public TextDocumentBatchStatistics Statistics { get; }
-        /// <summary> This field indicates the project name for the model. </summary>
-        public string ProjectName { get; }
-        /// <summary> This field indicates the deployment name for the model. </summary>
-        public string DeploymentName { get; }
+        public IList<CustomEntitiesResultDocumentsItem> Documents { get; }
     }
 }

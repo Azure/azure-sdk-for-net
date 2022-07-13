@@ -19,7 +19,7 @@ namespace Azure.Communication.Tests
             LiveTestDynamicConnectionStringEnvironmentVariableName,
             options => options.HasSecretConnectionStringParameter("accessKey", SanitizedValue.Base64));
 
-        public Uri LiveTestDynamicEndpoint => new Uri(Core.ConnectionString.Parse(LiveTestDynamicConnectionString).GetRequired("endpoint"));
+        public Uri LiveTestDynamicEndpoint => new(Core.ConnectionString.Parse(LiveTestDynamicConnectionString).GetRequired("endpoint"));
 
         public string LiveTestDynamicAccessKey => Core.ConnectionString.Parse(LiveTestDynamicConnectionString).GetRequired("accesskey");
 
@@ -27,7 +27,7 @@ namespace Azure.Communication.Tests
                 LiveTestStaticConnectionStringEnvironmentVariableName,
                 options => options.HasSecretConnectionStringParameter("accessKey", SanitizedValue.Base64));
 
-        public Uri LiveTestStaticEndpoint => new Uri(Core.ConnectionString.Parse(LiveTestStaticConnectionString).GetRequired("endpoint"));
+        public Uri LiveTestStaticEndpoint => new(Core.ConnectionString.Parse(LiveTestStaticConnectionString).GetRequired("endpoint"));
 
         public string LiveTestStaticAccessKey => Core.ConnectionString.Parse(LiveTestStaticConnectionString).GetRequired("accesskey");
 

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute
     {
         private readonly ClientDiagnostics _virtualMachineExtensionImageClientDiagnostics;
         private readonly VirtualMachineExtensionImagesRestOperations _virtualMachineExtensionImageRestClient;
-        private readonly string _location;
+        private readonly AzureLocation _location;
         private readonly string _publisherName;
 
         /// <summary> Initializes a new instance of the <see cref="VirtualMachineExtensionImageCollection"/> class for mocking. </summary>
@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="publisherName"> The String to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="publisherName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
-        internal VirtualMachineExtensionImageCollection(ArmClient client, ResourceIdentifier id, string location, string publisherName) : base(client, id)
+        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
+        internal VirtualMachineExtensionImageCollection(ArmClient client, ResourceIdentifier id, AzureLocation location, string publisherName) : base(client, id)
         {
             _location = location;
             _publisherName = publisherName;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _virtualMachineExtensionImageRestClient.GetAsync(Id.SubscriptionId, _location, _publisherName, type, version, cancellationToken).ConfigureAwait(false);
+                var response = await _virtualMachineExtensionImageRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), _publisherName, type, version, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VirtualMachineExtensionImageResource(Client, response.Value), response.GetRawResponse());
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _virtualMachineExtensionImageRestClient.Get(Id.SubscriptionId, _location, _publisherName, type, version, cancellationToken);
+                var response = _virtualMachineExtensionImageRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), _publisherName, type, version, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VirtualMachineExtensionImageResource(Client, response.Value), response.GetRawResponse());
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Compute
                 scope.Start();
                 try
                 {
-                    var response = await _virtualMachineExtensionImageRestClient.ListTypesAsync(Id.SubscriptionId, _location, _publisherName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _virtualMachineExtensionImageRestClient.ListTypesAsync(Id.SubscriptionId, new AzureLocation(_location), _publisherName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Select(value => new VirtualMachineExtensionImageResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Compute
                 scope.Start();
                 try
                 {
-                    var response = _virtualMachineExtensionImageRestClient.ListTypes(Id.SubscriptionId, _location, _publisherName, cancellationToken: cancellationToken);
+                    var response = _virtualMachineExtensionImageRestClient.ListTypes(Id.SubscriptionId, new AzureLocation(_location), _publisherName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Select(value => new VirtualMachineExtensionImageResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Compute
                 scope.Start();
                 try
                 {
-                    var response = await _virtualMachineExtensionImageRestClient.ListVersionsAsync(Id.SubscriptionId, _location, _publisherName, type, filter, top, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _virtualMachineExtensionImageRestClient.ListVersionsAsync(Id.SubscriptionId, new AzureLocation(_location), _publisherName, type, filter, top, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Select(value => new VirtualMachineExtensionImageResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Compute
                 scope.Start();
                 try
                 {
-                    var response = _virtualMachineExtensionImageRestClient.ListVersions(Id.SubscriptionId, _location, _publisherName, type, filter, top, orderby, cancellationToken: cancellationToken);
+                    var response = _virtualMachineExtensionImageRestClient.ListVersions(Id.SubscriptionId, new AzureLocation(_location), _publisherName, type, filter, top, orderby, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Select(value => new VirtualMachineExtensionImageResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _virtualMachineExtensionImageRestClient.GetAsync(Id.SubscriptionId, _location, _publisherName, type, version, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _virtualMachineExtensionImageRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), _publisherName, type, version, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _virtualMachineExtensionImageRestClient.Get(Id.SubscriptionId, _location, _publisherName, type, version, cancellationToken: cancellationToken);
+                var response = _virtualMachineExtensionImageRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), _publisherName, type, version, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

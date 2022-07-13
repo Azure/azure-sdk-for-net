@@ -32,7 +32,7 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="endpoint"> Supported Cognitive Services endpoints (protocol and hostname, for example: https://westus2.api.cognitive.microsoft.com). </param>
         /// <param name="apiVersion"> Anomaly Detector API version (for example, v1.0). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="endpoint"/> is null. </exception>
-        public AnomalyDetectorRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, ApiVersion? apiVersion = default)
+        public AnomalyDetectorRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, ApiVersion? apiVersion = null)
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));

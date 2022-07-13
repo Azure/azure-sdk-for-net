@@ -7,7 +7,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
+
 using OpenTelemetry;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.TestFramework

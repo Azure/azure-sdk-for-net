@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
-            Optional<RestorableSqlContainerPropertiesResource> resource = default;
+            Optional<SystemData> systemData = default;
+            Optional<ExtendedRestorableSqlContainerResourceInfo> resource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -34,11 +34,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -58,14 +63,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            resource = RestorableSqlContainerPropertiesResource.DeserializeRestorableSqlContainerPropertiesResource(property0.Value);
+                            resource = ExtendedRestorableSqlContainerResourceInfo.DeserializeExtendedRestorableSqlContainerResourceInfo(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new RestorableSqlContainer(id, name, type, systemData, resource.Value);
+            return new RestorableSqlContainer(id, name, type, systemData.Value, resource.Value);
         }
     }
 }

@@ -12,8 +12,39 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
-    public partial struct LinkedEntity
+    public partial struct LinkedEntity : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("name");
+            writer.WriteStringValue(Name);
+            writer.WritePropertyName("matches");
+            writer.WriteStartArray();
+            foreach (var item in Matches)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("language");
+            writer.WriteStringValue(Language);
+            if (Optional.IsDefined(DataSourceEntityId))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(DataSourceEntityId);
+            }
+            writer.WritePropertyName("url");
+            writer.WriteStringValue(Url.AbsoluteUri);
+            writer.WritePropertyName("dataSource");
+            writer.WriteStringValue(DataSource);
+            if (Optional.IsDefined(BingEntitySearchApiId))
+            {
+                writer.WritePropertyName("bingId");
+                writer.WriteStringValue(BingEntitySearchApiId);
+            }
+            writer.WriteEndObject();
+        }
+
         internal static LinkedEntity DeserializeLinkedEntity(JsonElement element)
         {
             string name = default;

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Backup information of a resource. </summary>
@@ -25,9 +27,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Information about the status of continuous backups. </summary>
         internal ContinuousBackupInformation ContinuousBackupInformation { get; }
         /// <summary> The latest restorable timestamp for a resource. </summary>
-        public string ContinuousBackupInformationLatestRestorableTimestamp
+        public DateTimeOffset? ContinuousBackupInformationLatestRestorableTimestamp
         {
-            get => ContinuousBackupInformation.LatestRestorableTimestamp;
+            get => ContinuousBackupInformation?.LatestRestorableTimestamp;
         }
     }
 }

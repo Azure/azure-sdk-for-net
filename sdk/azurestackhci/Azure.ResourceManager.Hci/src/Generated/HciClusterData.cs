@@ -35,6 +35,8 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cloudManagementEndpoint"> Endpoint configured for management from the Azure portal. </param>
         /// <param name="aadClientId"> App id of cluster AAD identity. </param>
         /// <param name="aadTenantId"> Tenant id of cluster AAD identity. </param>
+        /// <param name="aadApplicationObjectId"> Object id of cluster AAD identity. </param>
+        /// <param name="aadServicePrincipalObjectId"> Id of cluster identity service principal. </param>
         /// <param name="desiredProperties"> Desired properties of the cluster. </param>
         /// <param name="reportedProperties"> Properties reported by cluster agent. </param>
         /// <param name="trialDaysRemaining"> Number of days remaining in the trial period. </param>
@@ -42,13 +44,8 @@ namespace Azure.ResourceManager.Hci
         /// <param name="registrationTimestamp"> First cluster sync timestamp. </param>
         /// <param name="lastSyncTimestamp"> Most recent cluster sync timestamp. </param>
         /// <param name="lastBillingTimestamp"> Most recent billing meter timestamp. </param>
-        /// <param name="createdBy"> The identity that created the resource. </param>
-        /// <param name="createdByType"> The type of identity that created the resource. </param>
-        /// <param name="createdOn"> The timestamp of resource creation (UTC). </param>
-        /// <param name="lastModifiedBy"> The identity that last modified the resource. </param>
-        /// <param name="lastModifiedByType"> The type of identity that last modified the resource. </param>
-        /// <param name="lastModifiedOn"> The timestamp of resource last modification (UTC). </param>
-        internal HciClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProvisioningState? provisioningState, HciClusterStatus? status, Guid? cloudId, string cloudManagementEndpoint, Guid? aadClientId, Guid? aadTenantId, ClusterDesiredProperties desiredProperties, ClusterReportedProperties reportedProperties, float? trialDaysRemaining, string billingModel, DateTimeOffset? registrationTimestamp, DateTimeOffset? lastSyncTimestamp, DateTimeOffset? lastBillingTimestamp, string createdBy, Models.CreatedByType? createdByType, DateTimeOffset? createdOn, string lastModifiedBy, Models.CreatedByType? lastModifiedByType, DateTimeOffset? lastModifiedOn) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serviceEndpoint"> Region specific DataPath Endpoint of the cluster. </param>
+        internal HciClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProvisioningState? provisioningState, HciClusterStatus? status, Guid? cloudId, string cloudManagementEndpoint, Guid? aadClientId, Guid? aadTenantId, Guid? aadApplicationObjectId, Guid? aadServicePrincipalObjectId, ClusterDesiredProperties desiredProperties, ClusterReportedProperties reportedProperties, float? trialDaysRemaining, string billingModel, DateTimeOffset? registrationTimestamp, DateTimeOffset? lastSyncTimestamp, DateTimeOffset? lastBillingTimestamp, string serviceEndpoint) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             Status = status;
@@ -56,6 +53,8 @@ namespace Azure.ResourceManager.Hci
             CloudManagementEndpoint = cloudManagementEndpoint;
             AadClientId = aadClientId;
             AadTenantId = aadTenantId;
+            AadApplicationObjectId = aadApplicationObjectId;
+            AadServicePrincipalObjectId = aadServicePrincipalObjectId;
             DesiredProperties = desiredProperties;
             ReportedProperties = reportedProperties;
             TrialDaysRemaining = trialDaysRemaining;
@@ -63,12 +62,7 @@ namespace Azure.ResourceManager.Hci
             RegistrationTimestamp = registrationTimestamp;
             LastSyncTimestamp = lastSyncTimestamp;
             LastBillingTimestamp = lastBillingTimestamp;
-            CreatedBy = createdBy;
-            CreatedByType = createdByType;
-            CreatedOn = createdOn;
-            LastModifiedBy = lastModifiedBy;
-            LastModifiedByType = lastModifiedByType;
-            LastModifiedOn = lastModifiedOn;
+            ServiceEndpoint = serviceEndpoint;
         }
 
         /// <summary> Provisioning state. </summary>
@@ -83,6 +77,10 @@ namespace Azure.ResourceManager.Hci
         public Guid? AadClientId { get; set; }
         /// <summary> Tenant id of cluster AAD identity. </summary>
         public Guid? AadTenantId { get; set; }
+        /// <summary> Object id of cluster AAD identity. </summary>
+        public Guid? AadApplicationObjectId { get; set; }
+        /// <summary> Id of cluster identity service principal. </summary>
+        public Guid? AadServicePrincipalObjectId { get; set; }
         /// <summary> Desired properties of the cluster. </summary>
         public ClusterDesiredProperties DesiredProperties { get; set; }
         /// <summary> Properties reported by cluster agent. </summary>
@@ -97,17 +95,7 @@ namespace Azure.ResourceManager.Hci
         public DateTimeOffset? LastSyncTimestamp { get; }
         /// <summary> Most recent billing meter timestamp. </summary>
         public DateTimeOffset? LastBillingTimestamp { get; }
-        /// <summary> The identity that created the resource. </summary>
-        public string CreatedBy { get; set; }
-        /// <summary> The type of identity that created the resource. </summary>
-        public Models.CreatedByType? CreatedByType { get; set; }
-        /// <summary> The timestamp of resource creation (UTC). </summary>
-        public DateTimeOffset? CreatedOn { get; set; }
-        /// <summary> The identity that last modified the resource. </summary>
-        public string LastModifiedBy { get; set; }
-        /// <summary> The type of identity that last modified the resource. </summary>
-        public Models.CreatedByType? LastModifiedByType { get; set; }
-        /// <summary> The timestamp of resource last modification (UTC). </summary>
-        public DateTimeOffset? LastModifiedOn { get; set; }
+        /// <summary> Region specific DataPath Endpoint of the cluster. </summary>
+        public string ServiceEndpoint { get; }
     }
 }

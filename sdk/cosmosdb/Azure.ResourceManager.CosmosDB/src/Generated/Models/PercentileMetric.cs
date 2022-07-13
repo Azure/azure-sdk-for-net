@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="name"> The name information for the metric. </param>
         /// <param name="metricValues"> The percentile metric values for the specified time window and timestep. </param>
-        internal PercentileMetric(DateTimeOffset? startOn, DateTimeOffset? endOn, string timeGrain, UnitType? unit, MetricName name, IReadOnlyList<PercentileMetricValue> metricValues)
+        internal PercentileMetric(DateTimeOffset? startOn, DateTimeOffset? endOn, string timeGrain, CosmosDBMetricUnitType? unit, CosmosDBMetricName name, IReadOnlyList<PercentileMetricValue> metricValues)
         {
             StartOn = startOn;
             EndOn = endOn;
@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> The time grain to be used to summarize the metric values. </summary>
         public string TimeGrain { get; }
         /// <summary> The unit of the metric. </summary>
-        public UnitType? Unit { get; }
+        public CosmosDBMetricUnitType? Unit { get; }
         /// <summary> The name information for the metric. </summary>
-        public MetricName Name { get; }
+        public CosmosDBMetricName Name { get; }
         /// <summary> The percentile metric values for the specified time window and timestep. </summary>
         public IReadOnlyList<PercentileMetricValue> MetricValues { get; }
     }

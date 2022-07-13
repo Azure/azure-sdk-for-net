@@ -11,18 +11,27 @@ using Azure.Core;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Definition of which streams are sent to which destinations. </summary>
-    internal partial class DataFlow
+    public partial class DataFlow
     {
         /// <summary> Initializes a new instance of DataFlow. </summary>
-        internal DataFlow()
+        public DataFlow()
         {
-            Streams = new ChangeTrackingList<KnownDataFlowStreams>();
+            Streams = new ChangeTrackingList<KnownDataFlowStream>();
             Destinations = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of DataFlow. </summary>
+        /// <param name="streams"> List of streams for this data flow. </param>
+        /// <param name="destinations"> List of destinations for this data flow. </param>
+        internal DataFlow(IList<KnownDataFlowStream> streams, IList<string> destinations)
+        {
+            Streams = streams;
+            Destinations = destinations;
+        }
+
         /// <summary> List of streams for this data flow. </summary>
-        public IReadOnlyList<KnownDataFlowStreams> Streams { get; }
+        public IList<KnownDataFlowStream> Streams { get; }
         /// <summary> List of destinations for this data flow. </summary>
-        public IReadOnlyList<string> Destinations { get; }
+        public IList<string> Destinations { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DnsResolver.Models;
 using Azure.ResourceManager.Models;
@@ -19,53 +20,63 @@ namespace Azure.ResourceManager.DnsResolver
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("tags");
-            writer.WriteStartObject();
-            foreach (var item in Tags)
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
+                writer.WritePropertyName("tags");
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DnsResolverOutboundEndpoints))
+            writer.WritePropertyName("dnsResolverOutboundEndpoints");
+            writer.WriteStartArray();
+            foreach (var item in DnsResolverOutboundEndpoints)
             {
-                writer.WritePropertyName("dnsResolverOutboundEndpoints");
-                writer.WriteStartArray();
-                foreach (var item in DnsResolverOutboundEndpoints)
-                {
-                    JsonSerializer.Serialize(writer, item);
-                }
-                writer.WriteEndArray();
+                JsonSerializer.Serialize(writer, item);
             }
+            writer.WriteEndArray();
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static DnsForwardingRulesetData DeserializeDnsForwardingRulesetData(JsonElement element)
         {
-            Optional<string> etag = default;
-            IDictionary<string, string> tags = default;
+            Optional<ETag> etag = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
-            Optional<IList<WritableSubResource>> dnsResolverOutboundEndpoints = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            IList<WritableSubResource> dnsResolverOutboundEndpoints = default;
+            Optional<DnsResolverProvisioningState> provisioningState = default;
             Optional<string> resourceGuid = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -76,7 +87,7 @@ namespace Azure.ResourceManager.DnsResolver
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -91,11 +102,16 @@ namespace Azure.ResourceManager.DnsResolver
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -110,11 +126,6 @@ namespace Azure.ResourceManager.DnsResolver
                     {
                         if (property0.NameEquals("dnsResolverOutboundEndpoints"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -130,7 +141,7 @@ namespace Azure.ResourceManager.DnsResolver
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new DnsResolverProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("resourceGuid"))
@@ -142,7 +153,7 @@ namespace Azure.ResourceManager.DnsResolver
                     continue;
                 }
             }
-            return new DnsForwardingRulesetData(id, name, type, systemData, tags, location, etag.Value, Optional.ToList(dnsResolverOutboundEndpoints), Optional.ToNullable(provisioningState), resourceGuid.Value);
+            return new DnsForwardingRulesetData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), dnsResolverOutboundEndpoints, Optional.ToNullable(provisioningState), resourceGuid.Value);
         }
     }
 }

@@ -2,7 +2,9 @@
   <PropertyGroup>
     <Description>Microsoft Azure Schema Registry Apache Avro SDK</Description>
     <AssemblyTitle>Microsoft Azure Schema Registry Apache Avro SDK</AssemblyTitle>
-    <Version>1.0.0-beta.9</Version>
+    <Version>1.1.0-beta.1</Version>
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <PackageTags>Azure;Schema Registry;SchemaRegistry;.NET;Data;Apache;Avro;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
@@ -20,9 +22,7 @@
     <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)OperationPoller.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)DelayStrategy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ConstantDelayStrategy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)RetryAfterDelayStrategy.cs" LinkBase="Shared" />

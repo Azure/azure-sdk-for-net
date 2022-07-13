@@ -5,10 +5,13 @@
 
 #nullable disable
 
+using Azure;
+using Azure.Core;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> ResourceNavigationLink resource. </summary>
-    public partial class ResourceNavigationLink : SubResource
+    public partial class ResourceNavigationLink : NetworkResourceData
     {
         /// <summary> Initializes a new instance of ResourceNavigationLink. </summary>
         public ResourceNavigationLink()
@@ -17,33 +20,27 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of ResourceNavigationLink. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="linkedResourceType"> Resource type of the linked resource. </param>
         /// <param name="link"> Link to the external resource. </param>
         /// <param name="provisioningState"> The provisioning state of the resource navigation link resource. </param>
-        internal ResourceNavigationLink(string id, string name, string etag, string resourceType, string linkedResourceType, string link, ProvisioningState? provisioningState) : base(id)
+        internal ResourceNavigationLink(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, ResourceType? linkedResourceType, ResourceIdentifier link, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            Name = name;
-            Etag = etag;
-            ResourceType = resourceType;
+            ETag = etag;
             LinkedResourceType = linkedResourceType;
             Link = link;
             ProvisioningState = provisioningState;
         }
 
-        /// <summary> Name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>
-        public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
-        /// <summary> Resource type. </summary>
-        public string ResourceType { get; }
+        public ETag? ETag { get; }
         /// <summary> Resource type of the linked resource. </summary>
-        public string LinkedResourceType { get; set; }
+        public ResourceType? LinkedResourceType { get; set; }
         /// <summary> Link to the external resource. </summary>
-        public string Link { get; set; }
+        public ResourceIdentifier Link { get; set; }
         /// <summary> The provisioning state of the resource navigation link resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

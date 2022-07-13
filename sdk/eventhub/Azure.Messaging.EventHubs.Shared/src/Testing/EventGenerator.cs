@@ -65,6 +65,47 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Creates a random set of events with random data and random body size within the specified constraints.
+        /// </summary>
+        ///
+        /// <param name="maximumBatchSize">The maximum size of the batch.</param>
+        /// <param name="numberOfEvents">The number of events to create.</param>
+        /// <param name="largeMessageRandomFactor">The percentage of events that should be large.</param>
+        /// <param name="minimumBodySize">The minimum size of the event body.</param>
+        /// <param name="maximumBodySize">The maximum size of the event body.</param>
+        ///
+        /// <returns>The requested set of events.</returns>
+        ///
+        public static IEnumerable<EventData> CreateEvents(long maximumBatchSize,
+                                                          int numberOfEvents,
+                                                          int largeMessageRandomFactor = 30,
+                                                          int minimumBodySize = 15,
+                                                          int maximumBodySize = 83886)
+        {
+            var activeMinimumBodySize = minimumBodySize;
+            var activeMaximumBodySize = maximumBodySize;
+            var totalBytesGenerated = 0;
+
+            if (RandomNumberGenerator.Value.Next(1, 100) < largeMessageRandomFactor)
+            {
+                activeMinimumBodySize = (int)Math.Ceiling(maximumBodySize * 0.65);
+            }
+            else
+            {
+                activeMaximumBodySize = (int)Math.Floor((maximumBatchSize * 1.0f) / numberOfEvents);
+            }
+
+            for (var index = 0; ((index < numberOfEvents) && (totalBytesGenerated <= maximumBatchSize)); ++index)
+            {
+                var buffer = new byte[RandomNumberGenerator.Value.Next(activeMinimumBodySize, activeMaximumBodySize)];
+                RandomNumberGenerator.Value.NextBytes(buffer);
+                totalBytesGenerated += buffer.Length;
+
+                yield return CreateEventFromBody(buffer);
+            }
+        }
+
+        /// <summary>
         ///   Creates a set of events with random data and a small body size.
         /// </summary>
         ///

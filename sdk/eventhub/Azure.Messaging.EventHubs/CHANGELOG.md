@@ -1,6 +1,6 @@
 # Release History
 
-## 5.7.0-beta.6 (Unreleased)
+## 5.8.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,77 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 5.7.1 (2022-07-07)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Chad Vidovcich _([GitHub](https://github.com/chadvidovcich))_
+
+### Features Added
+
+- The event processor error handler will now raise warning when an unhandled exception propagated from the event processing handler causing partition processing to fault and restart.
+
+### Bugs Fixed
+
+- Fixed an issue with the `EventHubBufferedProducerClient` where it was not properly identifying when buffers were empty and should enter an idle state; this caused the background task that manages publishing to spin and consume an unreasonable amount of resources. 
+
+- Fixed an issue with event processor startup validation where an invalid consumer group was not properly detected.
+
+### Other Changes
+
+- Samples now each have a table of contents to help discover and navigate to the topics discussed for a scenario. _(A community contribution, courtesy of [chadvidovcich](https://github.com/chadvidovcich))_
+
+- Enhanced API documentation for the `EventData` properties collection, detailing the types supported by AMQP serialization.
+
+## 5.7.0 (2022-05-10)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
+
+### Features Added
+
+- The `EventHubBufferedProducerClient` is being introduced, intended to allow for efficient publishing of events without having to explicitly manage batches in the application.  More information can be found in its [design document](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/design/proposal-event-hub-buffered-producer.md).  
+  _(Thanks to [danielmarbach](https://github.com/danielmarbach) for his contributions to the implementation)_
+
+- An additional base class for event processors, `PluggableCheckpointStoreEventProcessor<T>`, has been added to simplify creating customized event processors and integrate with concrete `CheckpointStore` implementations.
+
+- An abstract `CheckpointStore` is now available for use with the `PluggableCheckpointStoreEventProcessor<T>` to simplify creating customized event processors and allow reusing existing checkpoint store implementations. 
+
+- Support for cancellation tokens has been improved for AMQP operations, enabling earlier detection of cancellation requests without needing to wait for the configured timeout to elapse.
+
+- Added `FullyQualifiedNamespace`, `EventHubName`, and `ConsumerGroup` to the partition context associated with events read by the `EventHubConsumerClient`.
+
+### Other Changes
+
+- Based on a new series of profiling and testing in real-world application scenarios, the default values for `EventProcessor<T>` load balancing have been updated to provide better performance and stability.  The default load balancing interval was changed from 10 seconds to 30 seconds.  The default ownership expiration interval was changed from 30 seconds to 2 minutes.  The default load balancing strategy has been changed from balanced to greedy.
+
+- Added additional heuristics for the `EventProcessor<T>` load balancing cycle to help discover issues that can impact processor performance and stability; these validations will produce warnings should potential concerns be found.
+
+- `EventProcessor<T>` will now log a verbose message indicating what event position was chosen to read from when initializing a partition.
+
+- Removed allocations from Event Source logging by introducing `WriteEvent` overloads to handle cases that would otherwise result in boxing to `object[]` via params array.  _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+
+- Removed LINQ from the `AmqpMessageConverter` in favor of direct looping.  _(Based on a community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+
+- Changed the internal batch `AsEnumerable<T>` to `AsList<T>` in order to avoid casting costs and have `Count` available to right-size transform collections. _(Based on a community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+
+- Moved to using the two item overload when creating a linked token source to avoid allocating an unnecessary array.  _(Based on a community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+
+- Attempts to retrieve AMQP objects will first try synchronously before calling `GetOrCreateAsync`, to avoid an asynchronous call unless necessary.
+
+- Improved documentation for `EventPosition` to be more explicit about defaults for inclusivity.
+
+- `EventPosition` now exposes its `ToString` method for code completion, making it more discoverable.
+
+- Minor updates to the class hierarchy of `EventData` to improve integration with Azure Schema Registry.
+
+- `EventData` now allows the `EventBody` to be set after construction and supports an empty constructor.
 
 ## 5.7.0-beta.5 (2022-04-05)
 

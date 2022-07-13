@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -36,15 +37,23 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Initializes a new instance of PurviewCatalogClient. </summary>
         /// <param name="endpoint"> The catalog endpoint of your Purview account. Example: https://{accountName}.purview.azure.com. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public PurviewCatalogClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new PurviewCatalogClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of PurviewCatalogClient. </summary>
+        /// <param name="endpoint"> The catalog endpoint of your Purview account. Example: https://{accountName}.purview.azure.com. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public PurviewCatalogClient(Uri endpoint, TokenCredential credential, PurviewCatalogClientOptions options = null)
+        public PurviewCatalogClient(Uri endpoint, TokenCredential credential, PurviewCatalogClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new PurviewCatalogClientOptions();
 
-            ClientDiagnostics = new ClientDiagnostics(options);
+            ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
@@ -52,54 +61,56 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Gets data using search. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>SearchRequest</c>:
         /// <code>{
-        ///   keywords: string,
-        ///   offset: number,
-        ///   limit: number,
-        ///   filter: AnyObject,
+        ///   keywords: string, # Optional. The keywords applied to all searchable fields.
+        ///   offset: number, # Optional. The offset. The default value is 0. The maximum value is 100000.
+        ///   limit: number, # Optional. The limit of the number of the search result. default value is 50; maximum value is 1000.
+        ///   filter: AnyObject, # Optional. The filter for the search. See examples for the usage of supported filters.
         ///   facets: [
         ///     {
-        ///       count: number,
-        ///       facet: string,
-        ///       sort: AnyObject
+        ///       count: number, # Optional. The count of the facet item.
+        ///       facet: string, # Optional. The name of the facet item.
+        ///       sort: AnyObject, # Optional. Any object
         ///     }
-        ///   ],
+        ///   ], # Optional.
         ///   taxonomySetting: {
-        ///     assetTypes: [string],
-        ///     facet: SearchFacetItem
-        ///   }
+        ///     assetTypes: [string], # Optional.
+        ///     facet: SearchFacetItem, # Optional. The content of a search facet result item.
+        ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>SearchResult</c>:
         /// <code>{
-        ///   @search.count: number,
+        ///   @search.count: number, # Optional. The total number of search results (not the number of documents in a single page).
         ///   @search.facets: {
         ///     assetType: [
         ///       {
-        ///         count: number,
-        ///         value: string
+        ///         count: number, # Optional. The count of the facet item.
+        ///         value: string, # Optional. The name of the facet item.
         ///       }
-        ///     ],
-        ///     classification: [SearchFacetItemValue],
-        ///     classificationCategory: [SearchFacetItemValue],
-        ///     contactId: [SearchFacetItemValue],
-        ///     fileExtension: [SearchFacetItemValue],
-        ///     label: [SearchFacetItemValue],
-        ///     term: [SearchFacetItemValue]
-        ///   },
-        ///   value: [SearchResultValue]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///     ], # Optional.
+        ///     classification: [SearchFacetItemValue], # Optional.
+        ///     classificationCategory: [SearchFacetItemValue], # Optional.
+        ///     contactId: [SearchFacetItemValue], # Optional.
+        ///     fileExtension: [SearchFacetItemValue], # Optional.
+        ///     label: [SearchFacetItemValue], # Optional.
+        ///     term: [SearchFacetItemValue], # Optional.
+        ///   }, # Optional. A facet list that consists of index fields assetType ,classification, contactId, and label. When the facet is specified in the request, the value of the facet is returned as an element of @search.facets.
+        ///   value: [SearchResultValue], # Optional.
         /// }
         /// </code>
         /// 
@@ -123,54 +134,56 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Gets data using search. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>SearchRequest</c>:
         /// <code>{
-        ///   keywords: string,
-        ///   offset: number,
-        ///   limit: number,
-        ///   filter: AnyObject,
+        ///   keywords: string, # Optional. The keywords applied to all searchable fields.
+        ///   offset: number, # Optional. The offset. The default value is 0. The maximum value is 100000.
+        ///   limit: number, # Optional. The limit of the number of the search result. default value is 50; maximum value is 1000.
+        ///   filter: AnyObject, # Optional. The filter for the search. See examples for the usage of supported filters.
         ///   facets: [
         ///     {
-        ///       count: number,
-        ///       facet: string,
-        ///       sort: AnyObject
+        ///       count: number, # Optional. The count of the facet item.
+        ///       facet: string, # Optional. The name of the facet item.
+        ///       sort: AnyObject, # Optional. Any object
         ///     }
-        ///   ],
+        ///   ], # Optional.
         ///   taxonomySetting: {
-        ///     assetTypes: [string],
-        ///     facet: SearchFacetItem
-        ///   }
+        ///     assetTypes: [string], # Optional.
+        ///     facet: SearchFacetItem, # Optional. The content of a search facet result item.
+        ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>SearchResult</c>:
         /// <code>{
-        ///   @search.count: number,
+        ///   @search.count: number, # Optional. The total number of search results (not the number of documents in a single page).
         ///   @search.facets: {
         ///     assetType: [
         ///       {
-        ///         count: number,
-        ///         value: string
+        ///         count: number, # Optional. The count of the facet item.
+        ///         value: string, # Optional. The name of the facet item.
         ///       }
-        ///     ],
-        ///     classification: [SearchFacetItemValue],
-        ///     classificationCategory: [SearchFacetItemValue],
-        ///     contactId: [SearchFacetItemValue],
-        ///     fileExtension: [SearchFacetItemValue],
-        ///     label: [SearchFacetItemValue],
-        ///     term: [SearchFacetItemValue]
-        ///   },
-        ///   value: [SearchResultValue]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///     ], # Optional.
+        ///     classification: [SearchFacetItemValue], # Optional.
+        ///     classificationCategory: [SearchFacetItemValue], # Optional.
+        ///     contactId: [SearchFacetItemValue], # Optional.
+        ///     fileExtension: [SearchFacetItemValue], # Optional.
+        ///     label: [SearchFacetItemValue], # Optional.
+        ///     term: [SearchFacetItemValue], # Optional.
+        ///   }, # Optional. A facet list that consists of index fields assetType ,classification, contactId, and label. When the facet is specified in the request, the value of the facet is returned as an element of @search.facets.
+        ///   value: [SearchResultValue], # Optional.
         /// }
         /// </code>
         /// 
@@ -194,27 +207,29 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get search suggestions by query criteria. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>SuggestRequest</c>:
         /// <code>{
-        ///   keywords: string,
-        ///   limit: number,
-        ///   filter: AnyObject
+        ///   keywords: string, # Optional. The keywords applied to all fields that support suggest operation. It must be at least 1 character, and no more than 100 characters. In the index schema we defined a default suggester which lists all the supported fields and specifies a search mode.
+        ///   limit: number, # Optional. The number of suggestions we hope to return. The default value is 5. The value must be a number between 1 and 100.
+        ///   filter: AnyObject, # Optional. The filter for the search.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>SuggestResult</c>:
         /// <code>{
-        ///   value: [SuggestResultValue]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   value: [SuggestResultValue], # Optional.
         /// }
         /// </code>
         /// 
@@ -238,27 +253,29 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get search suggestions by query criteria. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>SuggestRequest</c>:
         /// <code>{
-        ///   keywords: string,
-        ///   limit: number,
-        ///   filter: AnyObject
+        ///   keywords: string, # Optional. The keywords applied to all fields that support suggest operation. It must be at least 1 character, and no more than 100 characters. In the index schema we defined a default suggester which lists all the supported fields and specifies a search mode.
+        ///   limit: number, # Optional. The number of suggestions we hope to return. The default value is 5. The value must be a number between 1 and 100.
+        ///   filter: AnyObject, # Optional. The filter for the search.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>SuggestResult</c>:
         /// <code>{
-        ///   value: [SuggestResultValue]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   value: [SuggestResultValue], # Optional.
         /// }
         /// </code>
         /// 
@@ -282,29 +299,31 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Browse entities by path or entity type. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>BrowseRequest</c>:
         /// <code>{
-        ///   entityType: string,
-        ///   path: string,
-        ///   limit: number,
-        ///   offset: number
+        ///   entityType: string, # Optional. The entity type to browse as the root level entry point.
+        ///   path: string, # Optional. The path to browse the next level child entities.
+        ///   limit: number, # Optional. The number of browse items we hope to return. The maximum value is 10000.
+        ///   offset: number, # Optional. The offset. The default value is 0. The maximum value is 100000.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>BrowseResult</c>:
         /// <code>{
-        ///   @search.count: number,
-        ///   value: [BrowseResultValue]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   @search.count: number, # Optional. The total number of browse results.
+        ///   value: [BrowseResultValue], # Optional.
         /// }
         /// </code>
         /// 
@@ -328,29 +347,31 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Browse entities by path or entity type. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>BrowseRequest</c>:
         /// <code>{
-        ///   entityType: string,
-        ///   path: string,
-        ///   limit: number,
-        ///   offset: number
+        ///   entityType: string, # Optional. The entity type to browse as the root level entry point.
+        ///   path: string, # Optional. The path to browse the next level child entities.
+        ///   limit: number, # Optional. The number of browse items we hope to return. The maximum value is 10000.
+        ///   offset: number, # Optional. The offset. The default value is 0. The maximum value is 100000.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>BrowseResult</c>:
         /// <code>{
-        ///   @search.count: number,
-        ///   value: [BrowseResultValue]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   @search.count: number, # Optional. The total number of browse results.
+        ///   value: [BrowseResultValue], # Optional.
         /// }
         /// </code>
         /// 
@@ -374,27 +395,29 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get auto complete options. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>AutoCompleteRequest</c>:
         /// <code>{
-        ///   keywords: string,
-        ///   limit: number,
-        ///   filter: AnyObject
+        ///   keywords: string, # Optional. The keywords applied to all fields that support autocomplete operation. It must be at least 1 character, and no more than 100 characters.
+        ///   limit: number, # Optional. The number of autocomplete results we hope to return. The default value is 50. The value must be a number between 1 and 100.
+        ///   filter: AnyObject, # Optional. The filter for the autocomplete request.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AutoCompleteResult</c>:
         /// <code>{
-        ///   value: [AutoCompleteResultValue]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   value: [AutoCompleteResultValue], # Optional.
         /// }
         /// </code>
         /// 
@@ -418,27 +441,29 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get auto complete options. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>AutoCompleteRequest</c>:
         /// <code>{
-        ///   keywords: string,
-        ///   limit: number,
-        ///   filter: AnyObject
+        ///   keywords: string, # Optional. The keywords applied to all fields that support autocomplete operation. It must be at least 1 character, and no more than 100 characters.
+        ///   limit: number, # Optional. The number of autocomplete results we hope to return. The default value is 50. The value must be a number between 1 and 100.
+        ///   filter: AnyObject, # Optional. The filter for the autocomplete request.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AutoCompleteResult</c>:
         /// <code>{
-        ///   value: [AutoCompleteResultValue]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   value: [AutoCompleteResultValue], # Optional.
         /// }
         /// </code>
         /// 
@@ -459,6 +484,49 @@ namespace Azure.Analytics.Purview.Catalog
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        private PurviewEntities _cachedPurviewEntities;
+        private PurviewGlossaries _cachedPurviewGlossaries;
+        private PurviewLineages _cachedPurviewLineages;
+        private PurviewRelationships _cachedPurviewRelationships;
+        private PurviewTypes _cachedPurviewTypes;
+        private PurviewCollections _cachedPurviewCollections;
+
+        /// <summary> Initializes a new instance of PurviewEntities. </summary>
+        public virtual PurviewEntities GetPurviewEntitiesClient()
+        {
+            return Volatile.Read(ref _cachedPurviewEntities) ?? Interlocked.CompareExchange(ref _cachedPurviewEntities, new PurviewEntities(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint), null) ?? _cachedPurviewEntities;
+        }
+
+        /// <summary> Initializes a new instance of PurviewGlossaries. </summary>
+        public virtual PurviewGlossaries GetPurviewGlossariesClient()
+        {
+            return Volatile.Read(ref _cachedPurviewGlossaries) ?? Interlocked.CompareExchange(ref _cachedPurviewGlossaries, new PurviewGlossaries(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedPurviewGlossaries;
+        }
+
+        /// <summary> Initializes a new instance of PurviewLineages. </summary>
+        public virtual PurviewLineages GetPurviewLineagesClient()
+        {
+            return Volatile.Read(ref _cachedPurviewLineages) ?? Interlocked.CompareExchange(ref _cachedPurviewLineages, new PurviewLineages(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedPurviewLineages;
+        }
+
+        /// <summary> Initializes a new instance of PurviewRelationships. </summary>
+        public virtual PurviewRelationships GetPurviewRelationshipsClient()
+        {
+            return Volatile.Read(ref _cachedPurviewRelationships) ?? Interlocked.CompareExchange(ref _cachedPurviewRelationships, new PurviewRelationships(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint), null) ?? _cachedPurviewRelationships;
+        }
+
+        /// <summary> Initializes a new instance of PurviewTypes. </summary>
+        public virtual PurviewTypes GetPurviewTypesClient()
+        {
+            return Volatile.Read(ref _cachedPurviewTypes) ?? Interlocked.CompareExchange(ref _cachedPurviewTypes, new PurviewTypes(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedPurviewTypes;
+        }
+
+        /// <summary> Initializes a new instance of PurviewCollections. </summary>
+        public virtual PurviewCollections GetPurviewCollectionsClient()
+        {
+            return Volatile.Read(ref _cachedPurviewCollections) ?? Interlocked.CompareExchange(ref _cachedPurviewCollections, new PurviewCollections(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedPurviewCollections;
         }
 
         internal HttpMessage CreateSearchRequest(RequestContent content, RequestContext context)

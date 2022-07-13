@@ -5,13 +5,12 @@ using System;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.DocumentAnalysis.Tests;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 {
     public partial class DocumentAnalysisSamples : SamplesBase<DocumentAnalysisTestEnvironment>
     {
-        [Test]
+        [RecordedTest]
         public async Task ManageModelsAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
@@ -27,16 +26,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
             Console.WriteLine($"It can have at most {accountProperties.DocumentModelLimit} models.");
 
             // List the first ten or fewer models currently stored in the account.
-            AsyncPageable<DocumentModelInfo> models = client.GetModelsAsync();
+            AsyncPageable<DocumentModelSummary> models = client.GetModelsAsync();
 
             int count = 0;
-            await foreach (DocumentModelInfo modelInfo in models)
+            await foreach (DocumentModelSummary modelSummary in models)
             {
-                Console.WriteLine($"Custom Model Info:");
-                Console.WriteLine($"  Model Id: {modelInfo.ModelId}");
-                if (string.IsNullOrEmpty(modelInfo.Description))
-                    Console.WriteLine($"  Model description: {modelInfo.Description}");
-                Console.WriteLine($"  Created on: {modelInfo.CreatedOn}");
+                Console.WriteLine($"Custom Model Summary:");
+                Console.WriteLine($"  Model Id: {modelSummary.ModelId}");
+                if (string.IsNullOrEmpty(modelSummary.Description))
+                    Console.WriteLine($"  Model description: {modelSummary.Description}");
+                Console.WriteLine($"  Created on: {modelSummary.CreatedOn}");
                 if (++count == 10)
                     break;
             }

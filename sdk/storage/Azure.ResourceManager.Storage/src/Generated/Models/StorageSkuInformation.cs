@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Storage.Models
         {
             Name = name;
             Locations = new ChangeTrackingList<string>();
-            Capabilities = new ChangeTrackingList<SKUCapability>();
-            Restrictions = new ChangeTrackingList<Restriction>();
+            Capabilities = new ChangeTrackingList<StorageSkuCapability>();
+            Restrictions = new ChangeTrackingList<StorageSkuRestriction>();
         }
 
         /// <summary> Initializes a new instance of StorageSkuInformation. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="locations"> The set of locations that the SKU is available. This will be supported and registered Azure Geo Regions (e.g. West US, East US, Southeast Asia, etc.). </param>
         /// <param name="capabilities"> The capability information in the specified SKU, including file encryption, network ACLs, change notification, etc. </param>
         /// <param name="restrictions"> The restrictions because of which SKU cannot be used. This is empty if there are no restrictions. </param>
-        internal StorageSkuInformation(StorageSkuName name, StorageSkuTier? tier, string resourceType, StorageKind? kind, IReadOnlyList<string> locations, IReadOnlyList<SKUCapability> capabilities, IReadOnlyList<Restriction> restrictions)
+        internal StorageSkuInformation(StorageSkuName name, StorageSkuTier? tier, string resourceType, StorageKind? kind, IReadOnlyList<string> locations, IReadOnlyList<StorageSkuCapability> capabilities, IReadOnlyList<StorageSkuRestriction> restrictions)
         {
             Name = name;
             Tier = tier;
@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> The set of locations that the SKU is available. This will be supported and registered Azure Geo Regions (e.g. West US, East US, Southeast Asia, etc.). </summary>
         public IReadOnlyList<string> Locations { get; }
         /// <summary> The capability information in the specified SKU, including file encryption, network ACLs, change notification, etc. </summary>
-        public IReadOnlyList<SKUCapability> Capabilities { get; }
+        public IReadOnlyList<StorageSkuCapability> Capabilities { get; }
         /// <summary> The restrictions because of which SKU cannot be used. This is empty if there are no restrictions. </summary>
-        public IReadOnlyList<Restriction> Restrictions { get; }
+        public IReadOnlyList<StorageSkuRestriction> Restrictions { get; }
     }
 }

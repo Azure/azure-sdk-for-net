@@ -8,6 +8,8 @@ namespace ServiceBus.Tests.ScenarioTests
     using Microsoft.Azure.Management.Resources;
     using Microsoft.Azure.Management.ServiceBus;
     using Microsoft.Azure.Management.KeyVault;
+    using Microsoft.Azure.Management.ManagedServiceIdentity;
+    using Microsoft.Azure.Management.Network;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using TestHelper;
 
@@ -16,6 +18,8 @@ namespace ServiceBus.Tests.ScenarioTests
         private ResourceManagementClient _resourceManagementClient;
         private ServiceBusManagementClient _serviceBusManagementClient;
         private KeyVaultManagementClient _KeyVaultManagementClient;
+        private NetworkManagementClient _NetworkManagementClient;
+        private ManagedServiceIdentityClient _IdentityManagementClient;
         private RecordedDelegatingHandler handler = new RecordedDelegatingHandler();
 
         protected bool m_initialized = false;
@@ -36,6 +40,8 @@ namespace ServiceBus.Tests.ScenarioTests
                         _resourceManagementClient = ServiceBusManagementHelper.GetResourceManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                         _serviceBusManagementClient = ServiceBusManagementHelper.GetServiceBusManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                         _KeyVaultManagementClient = ServiceBusManagementHelper.GetKeyVaultManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                        _NetworkManagementClient = ServiceBusManagementHelper.GetNetworkManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                        _IdentityManagementClient = ServiceBusManagementHelper.GetIdentityManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                     }
                 }
             }
@@ -62,6 +68,22 @@ namespace ServiceBus.Tests.ScenarioTests
             get
             {
                 return _KeyVaultManagementClient;
+            }
+        }
+
+        public NetworkManagementClient NetworkManagementClient
+        {
+            get
+            {
+                return _NetworkManagementClient;
+            }
+        }
+
+        public ManagedServiceIdentityClient IdentityManagementClient
+        {
+            get
+            {
+                return _IdentityManagementClient;
             }
         }
     }

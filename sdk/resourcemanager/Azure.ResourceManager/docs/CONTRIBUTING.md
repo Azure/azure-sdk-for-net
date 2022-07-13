@@ -28,33 +28,7 @@ To update [`Azure.Data.AppConfiguration.netstandard2.0.cs`][azconfig_api] after 
 
 ## Testing
 
-### Frameworks
-
-We use [NUnit 3][nunit] as our testing framework.
-
-[Azure.Core.TestFramework's testing framework][core_tests] provides a set of reusable primitives that simplify writing tests for new Azure SDK libraries.
-
-### Sync/Async testing
-
-We expose all of our APIs with both sync and async variants. To avoid writing each of our tests twice, we automatically rewrite our async API calls into their sync equivalents. Simply write your tests using only async APIs and call `InstrumentClient` on any of our client objects. The test framework will wrap the client with a proxy that forwards everything to the sync overloads. Please note that a number of our helpers will automatically instrument clients they provide you. Visual Studio's test runner will show `*TestClass(True)` for the async variants and `*TestClass(False)` for the sync variants.
-
-### Recorded tests
-
-Our testing framework supports recording service requests made during a unit test so they can be replayed later. You can set the `AZURE_TEST_MODE` environment variable to `Playback` to run previously recorded tests, `Record` to record or re-record tests, and `Live` to run tests against the live service.
-
-Properly supporting recorded tests does require a few extra considerations. All random values should be obtained via `this.Recording.Random` since we use the same seed on test playback to ensure our client code generates the same "random" values each time. You can't share any state between tests or rely on ordering because you don't know the order they'll be recorded or replayed. Any sensitive values are redacted via the [`ConfigurationRecordedTestSanitizer`][tests_sanitized].
-
-### Running tests
-
-The easiest way to run the tests is via Visual Studio's unit test runner.
-
-You can also run tests via the command line using `dotnet test`, but that will run tests for all supported platforms simultaneously and intermingle their output. You can run the tests for just one platform with `dotnet test -f netcoreapp2.1` or `dotnet test -f net461`.
-
-The recorded tests are run automatically on every pull request. Live tests are run nightly. Contributors with write access can ask Azure DevOps to run the live tests against a pull request by commenting `/azp run net - appconfiguration - tests` in the PR.
-
-### Samples
-
-Our samples are structured as unit tests so we can easily verify they're up to date and working correctly. These tests aren't recorded and make minimal use of test infrastructure to keep them easy to read.
+See [here][test_guide] for the details about how to test .NET management plane SDK.
 
 ## Development history
 
@@ -67,8 +41,6 @@ For additional insight and context, the development, release, and issue history 
 [cla]: https://cla.microsoft.com
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
-[core_tests]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core.TestFramework
-[nunit]: https://github.com/nunit/docs/wiki
 [open_issues]: https://github.com/Azure/azure-sdk-for-net/issues?utf8=%E2%9C%93&q=is%3Aopen+is%3Aissue+label%3AClient+label%3AAzConfig
 [sdk_readme]: https://github.com/Azure/azure-sdk
 [sdk_contributing]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/appconfiguration/CONTRIBUTING.md
@@ -76,3 +48,4 @@ For additional insight and context, the development, release, and issue history 
 [sdk_design_guidelines_dotnet]: https://azure.github.io/azure-sdk/dotnet_introduction.html
 [sdk_dotnet_code_readme]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md
 [email_opencode]: mailto:opencode@microsoft.com
+[test_guide]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/TestGuide.md

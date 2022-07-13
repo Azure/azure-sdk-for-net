@@ -362,6 +362,86 @@ namespace Microsoft.Azure.Management.Reservations
             }
 
             /// <summary>
+            /// List the reservations and the roll up counts of reservations group by
+            /// provisioning states that the user has access to in the current tenant.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='filter'>
+            /// May be used to filter by reservation properties. The filter supports 'eq',
+            /// 'or', and 'and'. It does not currently support 'ne', 'gt', 'le', 'ge', or
+            /// 'not'. Reservation properties include sku/name,
+            /// properties/{appliedScopeType, archived, displayName,
+            /// displayProvisioningState, effectiveDateTime, expiryDate, provisioningState,
+            /// quantity, renew, reservedResourceType, term, userFriendlyAppliedScopeType,
+            /// userFriendlyRenewState}
+            /// </param>
+            /// <param name='orderby'>
+            /// May be used to sort order by reservation properties.
+            /// </param>
+            /// <param name='refreshSummary'>
+            /// To indicate whether to refresh the roll up counts of the reservations group
+            /// by provisioning states
+            /// </param>
+            /// <param name='skiptoken'>
+            /// The number of reservations to skip from the list before returning results
+            /// </param>
+            /// <param name='selectedState'>
+            /// The selected provisioning state
+            /// </param>
+            /// <param name='take'>
+            /// To number of reservations to return
+            /// </param>
+            public static IPage<ReservationResponse> ListAll(this IReservationOperations operations, string filter = default(string), string orderby = default(string), string refreshSummary = default(string), double? skiptoken = default(double?), string selectedState = default(string), double? take = default(double?))
+            {
+                return operations.ListAllAsync(filter, orderby, refreshSummary, skiptoken, selectedState, take).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List the reservations and the roll up counts of reservations group by
+            /// provisioning states that the user has access to in the current tenant.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='filter'>
+            /// May be used to filter by reservation properties. The filter supports 'eq',
+            /// 'or', and 'and'. It does not currently support 'ne', 'gt', 'le', 'ge', or
+            /// 'not'. Reservation properties include sku/name,
+            /// properties/{appliedScopeType, archived, displayName,
+            /// displayProvisioningState, effectiveDateTime, expiryDate, provisioningState,
+            /// quantity, renew, reservedResourceType, term, userFriendlyAppliedScopeType,
+            /// userFriendlyRenewState}
+            /// </param>
+            /// <param name='orderby'>
+            /// May be used to sort order by reservation properties.
+            /// </param>
+            /// <param name='refreshSummary'>
+            /// To indicate whether to refresh the roll up counts of the reservations group
+            /// by provisioning states
+            /// </param>
+            /// <param name='skiptoken'>
+            /// The number of reservations to skip from the list before returning results
+            /// </param>
+            /// <param name='selectedState'>
+            /// The selected provisioning state
+            /// </param>
+            /// <param name='take'>
+            /// To number of reservations to return
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ReservationResponse>> ListAllAsync(this IReservationOperations operations, string filter = default(string), string orderby = default(string), string refreshSummary = default(string), double? skiptoken = default(double?), string selectedState = default(string), double? take = default(double?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListAllWithHttpMessagesAsync(filter, orderby, refreshSummary, skiptoken, selectedState, take, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Get Available Scopes for `Reservation`.
             /// </summary>
             /// <remarks>
@@ -636,6 +716,42 @@ namespace Microsoft.Azure.Management.Reservations
             public static async Task<IPage<ReservationResponse>> ListRevisionsNextAsync(this IReservationOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListRevisionsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List the reservations and the roll up counts of reservations group by
+            /// provisioning states that the user has access to in the current tenant.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<ReservationResponse> ListAllNext(this IReservationOperations operations, string nextPageLink)
+            {
+                return operations.ListAllNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List the reservations and the roll up counts of reservations group by
+            /// provisioning states that the user has access to in the current tenant.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ReservationResponse>> ListAllNextAsync(this IReservationOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListAllNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

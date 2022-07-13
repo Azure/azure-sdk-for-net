@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<CdnSku> sku = default;
             ResourceIdentifier id = default;
             string name = default;
-            Core.ResourceType type = default;
-            SystemData systemData = default;
+            ResourceType type = default;
+            Optional<SystemData> systemData = default;
             Optional<string> provisioningState = default;
             Optional<string> ruleSetType = default;
             Optional<string> ruleSetVersion = default;
@@ -63,11 +63,16 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -114,7 +119,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new ManagedRuleSetDefinition(id, name, type, systemData, sku.Value, provisioningState.Value, ruleSetType.Value, ruleSetVersion.Value, Optional.ToList(ruleGroups));
+            return new ManagedRuleSetDefinition(id, name, type, systemData.Value, sku.Value, provisioningState.Value, ruleSetType.Value, ruleSetVersion.Value, Optional.ToList(ruleGroups));
         }
     }
 }

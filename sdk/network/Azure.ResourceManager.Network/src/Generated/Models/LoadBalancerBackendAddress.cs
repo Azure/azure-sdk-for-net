@@ -72,8 +72,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier NetworkInterfaceIPConfigurationId
         {
-            get => NetworkInterfaceIPConfiguration.Id;
-            set => NetworkInterfaceIPConfiguration.Id = value;
+            get => NetworkInterfaceIPConfiguration?.Id;
         }
 
         /// <summary> Reference to the frontend ip address configuration defined in regional loadbalancer. </summary>

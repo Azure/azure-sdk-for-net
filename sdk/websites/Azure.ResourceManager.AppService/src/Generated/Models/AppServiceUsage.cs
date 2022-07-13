@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Usage of the quota resource. </summary>
-    public partial class AppServiceUsage : ProxyOnlyResource
+    public partial class AppServiceUsage : ResourceData
     {
         /// <summary> Initializes a new instance of AppServiceUsage. </summary>
         public AppServiceUsage()
@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="displayName"> Friendly name shown in the UI. </param>
         /// <param name="resourceName"> Name of the quota resource. </param>
         /// <param name="unit"> Units of measurement for the quota resource. </param>
@@ -33,7 +32,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="nextResetOn"> Next reset time for the resource counter. </param>
         /// <param name="computeMode"> Compute mode used for this usage. </param>
         /// <param name="siteMode"> Site mode used for this usage. </param>
-        internal AppServiceUsage(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string displayName, string resourceName, string unit, long? currentValue, long? limit, DateTimeOffset? nextResetOn, ComputeModeOptions? computeMode, string siteMode) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal AppServiceUsage(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string resourceName, string unit, long? currentValue, long? limit, DateTimeOffset? nextResetOn, ComputeModeOption? computeMode, string siteMode, string kind) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             ResourceName = resourceName;
@@ -43,6 +43,7 @@ namespace Azure.ResourceManager.AppService.Models
             NextResetOn = nextResetOn;
             ComputeMode = computeMode;
             SiteMode = siteMode;
+            Kind = kind;
         }
 
         /// <summary> Friendly name shown in the UI. </summary>
@@ -58,8 +59,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Next reset time for the resource counter. </summary>
         public DateTimeOffset? NextResetOn { get; }
         /// <summary> Compute mode used for this usage. </summary>
-        public ComputeModeOptions? ComputeMode { get; }
+        public ComputeModeOption? ComputeMode { get; }
         /// <summary> Site mode used for this usage. </summary>
         public string SiteMode { get; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

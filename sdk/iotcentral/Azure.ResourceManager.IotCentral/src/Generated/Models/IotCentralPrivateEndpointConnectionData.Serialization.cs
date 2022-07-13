@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.IotCentral
                 writer.WritePropertyName("privateEndpoint");
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
-            if (Optional.IsDefined(PrivateLinkServiceConnectionState))
+            if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState");
-                writer.WriteObjectValue(PrivateLinkServiceConnectionState);
+                writer.WriteObjectValue(ConnectionState);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.IotCentral
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<IReadOnlyList<string>> groupIds = default;
             Optional<SubResource> privateEndpoint = default;
             Optional<IotCentralPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
@@ -59,11 +59,16 @@ namespace Azure.ResourceManager.IotCentral
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -125,7 +130,7 @@ namespace Azure.ResourceManager.IotCentral
                     continue;
                 }
             }
-            return new IotCentralPrivateEndpointConnectionData(id, name, type, systemData, Optional.ToList(groupIds), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
+            return new IotCentralPrivateEndpointConnectionData(id, name, type, systemData.Value, Optional.ToList(groupIds), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

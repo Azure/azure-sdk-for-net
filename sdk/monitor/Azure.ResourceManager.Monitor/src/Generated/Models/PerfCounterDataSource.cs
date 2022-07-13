@@ -14,32 +14,55 @@ namespace Azure.ResourceManager.Monitor.Models
     /// Definition of which performance counters will be collected and how they will be collected by this data collection rule.
     /// Collected from both Windows and Linux machines where the counter is present.
     /// </summary>
-    internal partial class PerfCounterDataSource
+    public partial class PerfCounterDataSource
     {
         /// <summary> Initializes a new instance of PerfCounterDataSource. </summary>
-        internal PerfCounterDataSource()
+        public PerfCounterDataSource()
         {
-            Streams = new ChangeTrackingList<KnownPerfCounterDataSourceStreams>();
+            Streams = new ChangeTrackingList<KnownPerfCounterDataSourceStream>();
             CounterSpecifiers = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of PerfCounterDataSource. </summary>
+        /// <param name="streams">
+        /// List of streams that this data source will be sent to.
+        /// A stream indicates what schema will be used for this data and usually what table in Log Analytics the data will be sent to.
+        /// </param>
+        /// <param name="samplingFrequencyInSeconds"> The number of seconds between consecutive counter measurements (samples). </param>
+        /// <param name="counterSpecifiers">
+        /// A list of specifier names of the performance counters you want to collect.
+        /// Use a wildcard (*) to collect a counter for all instances.
+        /// To get a list of performance counters on Windows, run the command &apos;typeperf&apos;.
+        /// </param>
+        /// <param name="name">
+        /// A friendly name for the data source. 
+        /// This name should be unique across all data sources (regardless of type) within the data collection rule.
+        /// </param>
+        internal PerfCounterDataSource(IList<KnownPerfCounterDataSourceStream> streams, int? samplingFrequencyInSeconds, IList<string> counterSpecifiers, string name)
+        {
+            Streams = streams;
+            SamplingFrequencyInSeconds = samplingFrequencyInSeconds;
+            CounterSpecifiers = counterSpecifiers;
+            Name = name;
         }
 
         /// <summary>
         /// List of streams that this data source will be sent to.
         /// A stream indicates what schema will be used for this data and usually what table in Log Analytics the data will be sent to.
         /// </summary>
-        public IReadOnlyList<KnownPerfCounterDataSourceStreams> Streams { get; }
+        public IList<KnownPerfCounterDataSourceStream> Streams { get; }
         /// <summary> The number of seconds between consecutive counter measurements (samples). </summary>
-        public int? SamplingFrequencyInSeconds { get; }
+        public int? SamplingFrequencyInSeconds { get; set; }
         /// <summary>
         /// A list of specifier names of the performance counters you want to collect.
         /// Use a wildcard (*) to collect a counter for all instances.
         /// To get a list of performance counters on Windows, run the command &apos;typeperf&apos;.
         /// </summary>
-        public IReadOnlyList<string> CounterSpecifiers { get; }
+        public IList<string> CounterSpecifiers { get; }
         /// <summary>
         /// A friendly name for the data source. 
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
         /// </summary>
-        public string Name { get; }
+        public string Name { get; set; }
     }
 }

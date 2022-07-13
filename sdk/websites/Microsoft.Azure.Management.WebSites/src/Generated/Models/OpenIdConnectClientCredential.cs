@@ -10,8 +10,6 @@
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -19,8 +17,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
     /// The authentication client credentials of the custom Open ID Connect
     /// provider.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
-    public partial class OpenIdConnectClientCredential : ProxyOnlyResource
+    public partial class OpenIdConnectClientCredential
     {
         /// <summary>
         /// Initializes a new instance of the OpenIdConnectClientCredential
@@ -35,16 +32,11 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// Initializes a new instance of the OpenIdConnectClientCredential
         /// class.
         /// </summary>
-        /// <param name="id">Resource Id.</param>
-        /// <param name="name">Resource Name.</param>
-        /// <param name="kind">Kind of resource.</param>
-        /// <param name="type">Resource type.</param>
         /// <param name="method">The method that should be used to authenticate
         /// the user. Possible values include: 'ClientSecretPost'</param>
         /// <param name="clientSecretSettingName">The app setting that contains
         /// the client secret for the custom Open ID Connect provider.</param>
-        public OpenIdConnectClientCredential(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), ClientCredentialMethod? method = default(ClientCredentialMethod?), string clientSecretSettingName = default(string))
-            : base(id, name, kind, type)
+        public OpenIdConnectClientCredential(ClientCredentialMethod? method = default(ClientCredentialMethod?), string clientSecretSettingName = default(string))
         {
             Method = method;
             ClientSecretSettingName = clientSecretSettingName;
@@ -60,14 +52,14 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// Gets or sets the method that should be used to authenticate the
         /// user. Possible values include: 'ClientSecretPost'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.method")]
+        [JsonProperty(PropertyName = "method")]
         public ClientCredentialMethod? Method { get; set; }
 
         /// <summary>
         /// Gets or sets the app setting that contains the client secret for
         /// the custom Open ID Connect provider.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.clientSecretSettingName")]
+        [JsonProperty(PropertyName = "clientSecretSettingName")]
         public string ClientSecretSettingName { get; set; }
 
     }

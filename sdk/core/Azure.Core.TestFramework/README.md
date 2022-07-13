@@ -208,9 +208,9 @@ public class ConfigurationLiveTests: RecordedTestBase<AppConfigurationTestEnviro
 }
 ```
 
-By default tests are run in playback mode. To change the mode use the `AZURE_TEST_MODE` environment variable and set it to one of the followind values: `Live`, `Playback`, `Record`.
+By default tests are run in playback mode. To change the mode use the `AZURE_TEST_MODE` environment variable and set it to one of the following values: `Live`, `Playback`, `Record`.
 
-In development scenarios where it's required to change mode quickly without restarting the Visual Studio use the two-parameter constructor of `RecordedTestBase` to change the mode:
+In development scenarios where it's required to change mode quickly without restarting Visual Studio, use the two-parameter constructor of `RecordedTestBase` to change the mode, or use the `.runsettings` file as described [here](#test-settings).
 
 Recorded tests can be attributed with the `RecordedTestAttribute` in lieu of the standard `TestAttribute` to enable functionality to automatically re-record tests that fail due to recording session file mismatches.
 Tests that are auto-rerecorded will fail with the following error and succeed if re-run.
@@ -233,6 +233,7 @@ public class ConfigurationLiveTests: RecordedTestBase<AppConfigurationTestEnviro
     }
 }
 ```
+In addition to the auto-rerecording functionality, using the RecordedTestAttribute also will automatically retry tests that fail due due to exceeding the global test time limit.
 
 ### Recording
 
@@ -288,6 +289,13 @@ When tests are run in `Playback` mode, the HTTP method, Uri, and headers are use
     }
 ```
 
+### Ignoring intermittent service errors
+
+If your live tests are impacted by temporary or intermittent services errors, be sure the service team is aware and has a plan to address the issues.
+If these issues cannot be resolved, you can attribute test classes or test methods with `[IgnoreServiceError]` which takes a required HTTP status code, Azure service error, and optional error message substring.
+This attribute, when used with `RecordedTestBase`-derived test fixtures and methods attributed with `[RecordedTest]`, which mark tests that failed with that specific error as "inconclusive", along with an optional
+reason you specify and the original error information.
+
 ### Misc
 
 You can use `Recording.GenerateId()` to generate repeatable random IDs.
@@ -326,11 +334,26 @@ public abstract class BlobTestBase : StorageTestBase
 }
 ```
 
+The `ServiceVersion` must be either an Enum that is convertible to an Int32 or a string in the format of a date with an optional preview qualifier `yyyy-MM-dd[-preview]`.
+The list passed into `ClientTestFixture` must be homogenous.
+
+By default these versions will only apply to live tests.  There is an overloaded constructor which adds a flag `recordAllVersions` to apply these versions to record and playback as well.
+If this flag is set to true you will now get a version qualifier string added to the file name.
+
 Add a `ServiceVersion` parameter to the test class constructor and use the provided service version to create the `ClientOptions` instance.
 
 ```C#
 public BlobClientOptions GetOptions() =>
     new BlobClientOptions(_serviceVersion) { /* ... */ };
+```
+
+For Management plane setting this in the client options is handled by default in the `ManagementRecordedTestBase` class by calling the new constructor which takes in the ResourceType and apiVersion to use.
+
+```C#
+        public ResourceGroupOperationsTests(bool isAsync, string apiVersion)
+            : base(isAsync, ResourceGroupResource.ResourceType, apiVersion)
+        {
+        }
 ```
 
 To control what service versions a test will run against, use the `ServiceVersion` attribute by setting it's `Min` or `Max` properties (inclusive).

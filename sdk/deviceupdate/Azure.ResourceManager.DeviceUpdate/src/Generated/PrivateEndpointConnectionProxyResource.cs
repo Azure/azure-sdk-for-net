@@ -13,6 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DeviceUpdate.Models;
 
 namespace Azure.ResourceManager.DeviceUpdate
 {
@@ -289,6 +290,58 @@ namespace Azure.ResourceManager.DeviceUpdate
             try
             {
                 var response = _privateEndpointConnectionProxyRestClient.Validate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// (INTERNAL - DO NOT USE) Updates a private endpoint inside the private endpoint connection proxy object.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/privateEndpointConnectionProxies/{privateEndpointConnectionProxyId}/updatePrivateEndpointProperties
+        /// Operation Id: PrivateEndpointConnectionProxies_UpdatePrivateEndpointProperties
+        /// </summary>
+        /// <param name="privateEndpointUpdate"> The parameters for updating a private endpoint connection proxy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointUpdate"/> is null. </exception>
+        public virtual async Task<Response> UpdatePrivateEndpointPropertiesAsync(PrivateEndpointUpdate privateEndpointUpdate, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(privateEndpointUpdate, nameof(privateEndpointUpdate));
+
+            using var scope = _privateEndpointConnectionProxyClientDiagnostics.CreateScope("PrivateEndpointConnectionProxyResource.UpdatePrivateEndpointProperties");
+            scope.Start();
+            try
+            {
+                var response = await _privateEndpointConnectionProxyRestClient.UpdatePrivateEndpointPropertiesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, privateEndpointUpdate, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// (INTERNAL - DO NOT USE) Updates a private endpoint inside the private endpoint connection proxy object.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/privateEndpointConnectionProxies/{privateEndpointConnectionProxyId}/updatePrivateEndpointProperties
+        /// Operation Id: PrivateEndpointConnectionProxies_UpdatePrivateEndpointProperties
+        /// </summary>
+        /// <param name="privateEndpointUpdate"> The parameters for updating a private endpoint connection proxy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointUpdate"/> is null. </exception>
+        public virtual Response UpdatePrivateEndpointProperties(PrivateEndpointUpdate privateEndpointUpdate, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(privateEndpointUpdate, nameof(privateEndpointUpdate));
+
+            using var scope = _privateEndpointConnectionProxyClientDiagnostics.CreateScope("PrivateEndpointConnectionProxyResource.UpdatePrivateEndpointProperties");
+            scope.Start();
+            try
+            {
+                var response = _privateEndpointConnectionProxyRestClient.UpdatePrivateEndpointProperties(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, privateEndpointUpdate, cancellationToken);
                 return response;
             }
             catch (Exception e)

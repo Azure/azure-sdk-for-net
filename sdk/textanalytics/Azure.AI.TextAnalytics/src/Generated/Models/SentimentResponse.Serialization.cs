@@ -12,22 +12,49 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class SentimentResponse
+    internal partial class SentimentResponse : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("documents");
+            writer.WriteStartArray();
+            foreach (var item in Documents)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("errors");
+            writer.WriteStartArray();
+            foreach (var item in Errors)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsDefined(Statistics))
+            {
+                writer.WritePropertyName("statistics");
+                writer.WriteObjectValue(Statistics);
+            }
+            writer.WritePropertyName("modelVersion");
+            writer.WriteStringValue(ModelVersion);
+            writer.WriteEndObject();
+        }
+
         internal static SentimentResponse DeserializeSentimentResponse(JsonElement element)
         {
-            IReadOnlyList<DocumentSentimentInternal> documents = default;
-            IReadOnlyList<DocumentError> errors = default;
+            IList<SentimentResponseDocumentsItem> documents = default;
+            IList<DocumentError> errors = default;
             Optional<TextDocumentBatchStatistics> statistics = default;
             string modelVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("documents"))
                 {
-                    List<DocumentSentimentInternal> array = new List<DocumentSentimentInternal>();
+                    List<SentimentResponseDocumentsItem> array = new List<SentimentResponseDocumentsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentSentimentInternal.DeserializeDocumentSentimentInternal(item));
+                        array.Add(SentimentResponseDocumentsItem.DeserializeSentimentResponseDocumentsItem(item));
                     }
                     documents = array;
                     continue;
@@ -58,7 +85,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new SentimentResponse(documents, errors, statistics.Value, modelVersion);
+            return new SentimentResponse(errors, statistics.Value, modelVersion, documents);
         }
     }
 }

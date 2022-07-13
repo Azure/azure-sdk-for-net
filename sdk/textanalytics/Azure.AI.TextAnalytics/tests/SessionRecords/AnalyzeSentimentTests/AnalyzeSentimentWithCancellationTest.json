@@ -1,78 +1,81 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/text/analytics/v3.2-preview.2/sentiment?showStats=false\u0026stringIndexType=Utf16CodeUnit",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/:analyze-text?api-version=2022-04-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "text/json"
-        ],
-        "Content-Length": "76",
+        "Accept": "application/json",
+        "Content-Length": "170",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-368890d794e6354e8f780a04fb8e2519-4b12fa586958904e-00",
-        "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20211025.1",
-          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "1cd519dfbccdba31b1f719f550932df6",
+        "traceparent": "00-85bd91c0b007cb46922afa7e29ff7709-ff912eaebfd3c049-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220504.1 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "3c79ea74c00bbd85f4016b93c427aa2e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "documents": [
-          {
-            "id": "0",
-            "text": "El mejor test del mundo!",
-            "language": "en"
-          }
-        ]
+        "analysisInput": {
+          "documents": [
+            {
+              "id": "0",
+              "text": "El mejor test del mundo!",
+              "language": "en"
+            }
+          ]
+        },
+        "parameters": {
+          "stringIndexType": "Utf16CodeUnit"
+        },
+        "kind": "SentimentAnalysis"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "337d2d40-85e7-43f5-81bb-7e865b769be1",
+        "apim-request-id": "a920c7ea-802b-459e-a6f6-de4898c333d6",
+        "Content-Length": "379",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1,CognitiveServices.TextAnalytics.TextRecords=1",
-        "Date": "Mon, 25 Oct 2021 21:13:24 GMT",
+        "Date": "Wed, 04 May 2022 23:16:48 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "94"
+        "x-envoy-upstream-service-time": "13"
       },
       "ResponseBody": {
-        "documents": [
-          {
-            "id": "0",
-            "sentiment": "positive",
-            "confidenceScores": {
-              "positive": 0.96,
-              "neutral": 0.03,
-              "negative": 0.01
-            },
-            "sentences": [
-              {
-                "sentiment": "positive",
-                "confidenceScores": {
-                  "positive": 0.96,
-                  "neutral": 0.03,
-                  "negative": 0.01
-                },
-                "offset": 0,
-                "length": 24,
-                "text": "El mejor test del mundo!"
-              }
-            ],
-            "warnings": []
-          }
-        ],
-        "errors": [],
-        "modelVersion": "2020-04-01"
+        "kind": "SentimentAnalysisResults",
+        "results": {
+          "documents": [
+            {
+              "id": "0",
+              "sentiment": "positive",
+              "confidenceScores": {
+                "positive": 0.99,
+                "neutral": 0.01,
+                "negative": 0.0
+              },
+              "sentences": [
+                {
+                  "sentiment": "positive",
+                  "confidenceScores": {
+                    "positive": 0.99,
+                    "neutral": 0.01,
+                    "negative": 0.0
+                  },
+                  "offset": 0,
+                  "length": 24,
+                  "text": "El mejor test del mundo!"
+                }
+              ],
+              "warnings": []
+            }
+          ],
+          "errors": [],
+          "modelVersion": "2021-10-01"
+        }
       }
     }
   ],
   "Variables": {
-    "RandomSeed": "673624529",
+    "RandomSeed": "1586276495",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com/"
+    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
   }
 }

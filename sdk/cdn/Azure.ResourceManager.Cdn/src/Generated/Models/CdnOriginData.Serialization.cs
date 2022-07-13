@@ -117,8 +117,8 @@ namespace Azure.ResourceManager.Cdn
         {
             ResourceIdentifier id = default;
             string name = default;
-            Core.ResourceType type = default;
-            SystemData systemData = default;
+            ResourceType type = default;
+            Optional<SystemData> systemData = default;
             Optional<string> hostName = default;
             Optional<int?> httpPort = default;
             Optional<int?> httpsPort = default;
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Cdn
             Optional<string> privateLinkLocation = default;
             Optional<string> privateLinkApprovalMessage = default;
             Optional<OriginResourceState> resourceState = default;
-            Optional<string> provisioningState = default;
+            Optional<OriginProvisioningState> provisioningState = default;
             Optional<PrivateEndpointStatus?> privateEndpointStatus = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -147,11 +147,16 @@ namespace Azure.ResourceManager.Cdn
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -261,7 +266,12 @@ namespace Azure.ResourceManager.Cdn
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
-                            provisioningState = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            provisioningState = new OriginProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointStatus"))
@@ -278,7 +288,7 @@ namespace Azure.ResourceManager.Cdn
                     continue;
                 }
             }
-            return new CdnOriginData(id, name, type, systemData, hostName.Value, Optional.ToNullable(httpPort), Optional.ToNullable(httpsPort), originHostHeader.Value, Optional.ToNullable(priority), Optional.ToNullable(weight), Optional.ToNullable(enabled), privateLinkAlias.Value, privateLinkResourceId.Value, privateLinkLocation.Value, privateLinkApprovalMessage.Value, Optional.ToNullable(resourceState), provisioningState.Value, Optional.ToNullable(privateEndpointStatus));
+            return new CdnOriginData(id, name, type, systemData.Value, hostName.Value, Optional.ToNullable(httpPort), Optional.ToNullable(httpsPort), originHostHeader.Value, Optional.ToNullable(priority), Optional.ToNullable(weight), Optional.ToNullable(enabled), privateLinkAlias.Value, privateLinkResourceId.Value, privateLinkLocation.Value, privateLinkApprovalMessage.Value, Optional.ToNullable(resourceState), Optional.ToNullable(provisioningState), Optional.ToNullable(privateEndpointStatus));
         }
     }
 }

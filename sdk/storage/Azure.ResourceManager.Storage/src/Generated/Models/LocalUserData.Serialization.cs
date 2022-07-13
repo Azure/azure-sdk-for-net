@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Storage
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
-            Optional<IList<PermissionScope>> permissionScopes = default;
+            Optional<SystemData> systemData = default;
+            Optional<IList<StoragePermissionScope>> permissionScopes = default;
             Optional<string> homeDirectory = default;
-            Optional<IList<SshPublicKey>> sshAuthorizedKeys = default;
+            Optional<IList<StorageSshPublicKey>> sshAuthorizedKeys = default;
             Optional<string> sid = default;
             Optional<bool> hasSharedKey = default;
             Optional<bool> hasSshKey = default;
@@ -91,11 +91,16 @@ namespace Azure.ResourceManager.Storage
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -115,10 +120,10 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<PermissionScope> array = new List<PermissionScope>();
+                            List<StoragePermissionScope> array = new List<StoragePermissionScope>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PermissionScope.DeserializePermissionScope(item));
+                                array.Add(StoragePermissionScope.DeserializeStoragePermissionScope(item));
                             }
                             permissionScopes = array;
                             continue;
@@ -135,10 +140,10 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SshPublicKey> array = new List<SshPublicKey>();
+                            List<StorageSshPublicKey> array = new List<StorageSshPublicKey>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SshPublicKey.DeserializeSshPublicKey(item));
+                                array.Add(StorageSshPublicKey.DeserializeStorageSshPublicKey(item));
                             }
                             sshAuthorizedKeys = array;
                             continue;
@@ -182,7 +187,7 @@ namespace Azure.ResourceManager.Storage
                     continue;
                 }
             }
-            return new LocalUserData(id, name, type, systemData, Optional.ToList(permissionScopes), homeDirectory.Value, Optional.ToList(sshAuthorizedKeys), sid.Value, Optional.ToNullable(hasSharedKey), Optional.ToNullable(hasSshKey), Optional.ToNullable(hasSshPassword));
+            return new LocalUserData(id, name, type, systemData.Value, Optional.ToList(permissionScopes), homeDirectory.Value, Optional.ToList(sshAuthorizedKeys), sid.Value, Optional.ToNullable(hasSharedKey), Optional.ToNullable(hasSshKey), Optional.ToNullable(hasSshPassword));
         }
     }
 }

@@ -5,9 +5,15 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The resource from which the rule collects its data. </summary>
+    /// <summary>
+    /// The resource from which the rule collects its data.
+    /// Please note <see cref="RuleDataSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="RuleManagementEventDataSource"/> and <see cref="RuleMetricDataSource"/>.
+    /// </summary>
     public partial class RuleDataSource
     {
         /// <summary> Initializes a new instance of RuleDataSource. </summary>
@@ -21,7 +27,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="legacyResourceId"> the legacy resource identifier of the resource the rule monitors. **NOTE**: this property cannot be updated for an existing rule. </param>
         /// <param name="resourceLocation"> the location of the resource. </param>
         /// <param name="metricNamespace"> the namespace of the metric. </param>
-        internal RuleDataSource(string odataType, string resourceId, string legacyResourceId, string resourceLocation, string metricNamespace)
+        internal RuleDataSource(string odataType, ResourceIdentifier resourceId, string legacyResourceId, string resourceLocation, string metricNamespace)
         {
             OdataType = odataType;
             ResourceId = resourceId;
@@ -33,7 +39,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> specifies the type of data source. There are two types of rule data sources: RuleMetricDataSource and RuleManagementEventDataSource. </summary>
         internal string OdataType { get; set; }
         /// <summary> the resource identifier of the resource the rule monitors. **NOTE**: this property cannot be updated for an existing rule. </summary>
-        public string ResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
         /// <summary> the legacy resource identifier of the resource the rule monitors. **NOTE**: this property cannot be updated for an existing rule. </summary>
         public string LegacyResourceId { get; set; }
         /// <summary> the location of the resource. </summary>

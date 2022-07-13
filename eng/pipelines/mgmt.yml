@@ -27,6 +27,7 @@ pr:
     - mgmt.proj
     - eng/mgmt.proj
     - eng/pipelines/mgmt.yml
+    - eng/pipelines/templates/jobs/ci.mgmt.yml
     - eng/mgmt
     - sdk/mgmtcommon
     - sdk/advisor/Microsoft.Azure.Management.Advisor
@@ -202,9 +203,8 @@ stages:
           Scope: ${{ parameters.Scope }}
           ShouldPublish: ${{ parameters.ShouldPublish }}
 
-  # The Release job is conditioned on whether we are building a pull request and the branch.
-  - ${{ if and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['System.TeamProject'], 'internal')) }}:
-    - template: /eng/pipelines/templates/jobs/mgmt-release.yml
-      parameters:
-        ShouldPublish: ${{ parameters.ShouldPublish }}
-        DependsOn: Build
+      - ${{ if and(eq(parameters.ShouldPublish, 'true'), eq(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-net')) }}:
+        - ${{ if and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['System.TeamProject'], 'internal')) }}:
+          - template: /eng/pipelines/templates/jobs/mgmt-release.yml
+            parameters:
+              DependsOn: Build

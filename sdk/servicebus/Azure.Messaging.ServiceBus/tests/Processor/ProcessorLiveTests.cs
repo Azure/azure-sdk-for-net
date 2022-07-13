@@ -61,6 +61,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 async Task ProcessMessage(ProcessMessageEventArgs args)
                 {
+                    Assert.AreEqual(processor.EntityPath, args.EntityPath);
+                    Assert.AreEqual(processor.FullyQualifiedNamespace, args.FullyQualifiedNamespace);
                     try
                     {
                         var message = args.Message;
@@ -1082,7 +1084,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                     if (count == 1)
                     {
-                        var received = await args.ReceiveMessagesAsync(messageCount);
+                        var received = await args.GetReceiveActions().ReceiveMessagesAsync(messageCount);
                         Assert.IsNotEmpty(received);
                         count = Interlocked.Add(ref receivedCount, received.Count);
                     }
@@ -1160,7 +1162,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                     if (count == 2)
                     {
-                        receivedDeferredMessages = await args.ReceiveDeferredMessagesAsync(sequenceNumbers.Keys);
+                        receivedDeferredMessages = await args.GetReceiveActions().ReceiveDeferredMessagesAsync(sequenceNumbers.Keys);
                     }
 
                     if (manualRenew && !sequenceNumbers.ContainsKey(args.Message.SequenceNumber))
@@ -1202,7 +1204,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await tcs.Task;
 
                 // verify args cannot be used to receive messages outside of callback scope
-                await AsyncAssert.ThrowsAsync<InvalidOperationException>(async () => await capturedArgs.ReceiveMessagesAsync(10));
+                await AsyncAssert.ThrowsAsync<InvalidOperationException>(async () => await capturedArgs.GetReceiveActions().ReceiveMessagesAsync(10));
 
                 await processor.CloseAsync();
 
@@ -1215,6 +1217,97 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     async () => await receiver.ReceiveDeferredMessagesAsync(sequenceNumbers.Keys),
                     Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason))
                         .EqualTo(ServiceBusFailureReason.MessageNotFound));
+            }
+        }
+
+        [Test]
+        public async Task MessagesReceivedFromCallbackAbandonedWhenException()
+        {
+            var lockDuration = ShortLockDuration;
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false, lockDuration: lockDuration))
+            {
+                await using var client = CreateClient();
+                var sender = client.CreateSender(scope.QueueName);
+                int messageCount = 10;
+                ConcurrentDictionary<long, byte> sequenceNumbers = new();
+
+                await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(messageCount));
+
+                await using var processor = client.CreateProcessor(scope.QueueName, new ServiceBusProcessorOptions
+                {
+                    MaxConcurrentCalls = 1
+                });
+
+                int receivedCount = 0;
+                var tcs = new TaskCompletionSource<bool>();
+
+                async Task ProcessMessage(ProcessMessageEventArgs args)
+                {
+                    var count = Interlocked.Increment(ref receivedCount);
+
+                    // defer first two messages
+                    if (count <= 2)
+                    {
+                        await args.DeferMessageAsync(args.Message);
+                        sequenceNumbers[args.Message.SequenceNumber] = default;
+                    }
+
+                    if (count == 2)
+                    {
+                        var additionalMessages = await args.GetReceiveActions().ReceiveMessagesAsync(2);
+                        Interlocked.Add(ref receivedCount, additionalMessages.Count);
+                    }
+
+                    if (count == messageCount)
+                    {
+                        tcs.TrySetResult(true);
+                    }
+
+                    throw new Exception("User exception message");
+                }
+
+                Task ProcessError(ProcessErrorEventArgs eventArgs)
+                {
+                    if (!eventArgs.Exception.Message.Contains("User exception message"))
+                    {
+                        Assert.Fail(eventArgs.Exception.ToString());
+                    }
+                    return Task.CompletedTask;
+                }
+
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += ProcessError;
+
+                await processor.StartProcessingAsync();
+                await tcs.Task;
+                await processor.CloseAsync();
+
+                var receiver = client.CreateReceiver(scope.QueueName, new ServiceBusReceiverOptions {ReceiveMode = ServiceBusReceiveMode.ReceiveAndDelete});
+                int remaining = messageCount;
+
+                // all messages should have been abandoned, so we should be able to receive them right away
+                CancellationTokenSource tokenSource = new CancellationTokenSource();
+                tokenSource.CancelAfter(TimeSpan.FromSeconds(5));
+
+                while (!tokenSource.IsCancellationRequested && remaining > 0)
+                {
+                    try
+                    {
+                        var receivedMessages = await receiver.ReceiveMessagesAsync(remaining, TimeSpan.FromSeconds(5), tokenSource.Token);
+                        remaining -= receivedMessages.Count;
+
+                        if (sequenceNumbers.Keys.Count > 0)
+                        {
+                            receivedMessages = await receiver.ReceiveDeferredMessagesAsync(sequenceNumbers.Keys, tokenSource.Token);
+                            sequenceNumbers.Clear();
+                            remaining -= receivedMessages.Count;
+                        }
+                    }
+                    catch (OperationCanceledException)
+                    {
+                    }
+                }
+                Assert.AreEqual(0, remaining);
             }
         }
     }

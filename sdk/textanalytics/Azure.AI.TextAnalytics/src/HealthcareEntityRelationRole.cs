@@ -10,6 +10,12 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public partial class HealthcareEntityRelationRole
     {
+        internal HealthcareEntityRelationRole(HealthcareEntity entity, string entityName)
+        {
+            Name = entityName;
+            Entity = entity;
+        }
+
         internal HealthcareEntityRelationRole(HealthcareEntityInternal entity, string entityName)
         {
             Name = entityName;

@@ -7,7 +7,6 @@ using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Certificates.Samples
 {
-    [NonParallelizable]
     public class SampleFixture: SamplesBase<KeyVaultTestEnvironment>
     {
         private KeyVaultTestEventListener _listener;

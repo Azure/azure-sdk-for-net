@@ -13,29 +13,29 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class DeliveryRuleRouteConfigurationOverrideAction : DeliveryRuleAction
     {
         /// <summary> Initializes a new instance of DeliveryRuleRouteConfigurationOverrideAction. </summary>
-        /// <param name="parameters"> Defines the parameters for the action. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public DeliveryRuleRouteConfigurationOverrideAction(RouteConfigurationOverrideActionParameters parameters)
+        /// <param name="properties"> Defines the parameters for the action. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public DeliveryRuleRouteConfigurationOverrideAction(RouteConfigurationOverrideActionProperties properties)
         {
-            if (parameters == null)
+            if (properties == null)
             {
-                throw new ArgumentNullException(nameof(parameters));
+                throw new ArgumentNullException(nameof(properties));
             }
 
-            Parameters = parameters;
+            Properties = properties;
             Name = DeliveryRuleActionType.RouteConfigurationOverride;
         }
 
         /// <summary> Initializes a new instance of DeliveryRuleRouteConfigurationOverrideAction. </summary>
         /// <param name="name"> The name of the action for the delivery rule. </param>
-        /// <param name="parameters"> Defines the parameters for the action. </param>
-        internal DeliveryRuleRouteConfigurationOverrideAction(DeliveryRuleActionType name, RouteConfigurationOverrideActionParameters parameters) : base(name)
+        /// <param name="properties"> Defines the parameters for the action. </param>
+        internal DeliveryRuleRouteConfigurationOverrideAction(DeliveryRuleActionType name, RouteConfigurationOverrideActionProperties properties) : base(name)
         {
-            Parameters = parameters;
+            Properties = properties;
             Name = name;
         }
 
         /// <summary> Defines the parameters for the action. </summary>
-        public RouteConfigurationOverrideActionParameters Parameters { get; set; }
+        public RouteConfigurationOverrideActionProperties Properties { get; set; }
     }
 }

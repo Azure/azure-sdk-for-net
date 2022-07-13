@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ManagementGroups
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<Guid> tenantId = default;
             Optional<string> displayName = default;
             Optional<ManagementGroupInfo> details = default;
@@ -40,11 +40,16 @@ namespace Azure.ResourceManager.ManagementGroups
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -101,7 +106,7 @@ namespace Azure.ResourceManager.ManagementGroups
                     continue;
                 }
             }
-            return new ManagementGroupData(id, name, type, systemData, Optional.ToNullable(tenantId), displayName.Value, details.Value, Optional.ToList(children));
+            return new ManagementGroupData(id, name, type, systemData.Value, Optional.ToNullable(tenantId), displayName.Value, details.Value, Optional.ToList(children));
         }
     }
 }

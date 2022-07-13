@@ -14,45 +14,49 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static CdnUsage DeserializeCdnUsage(JsonElement element)
         {
-            Optional<ResourceIdentifier> id = default;
-            UsageUnit unit = default;
-            long currentValue = default;
-            long limit = default;
-            UsageName name = default;
+            Optional<string> resourceType = default;
+            Optional<CdnUsageUnit> unit = default;
+            Optional<int> currentValue = default;
+            Optional<int> limit = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("resourceType"))
+                {
+                    resourceType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("unit"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("unit"))
-                {
-                    unit = new UsageUnit(property.Value.GetString());
+                    unit = new CdnUsageUnit(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("currentValue"))
                 {
-                    currentValue = property.Value.GetInt64();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    currentValue = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("limit"))
                 {
-                    limit = property.Value.GetInt64();
-                    continue;
-                }
-                if (property.NameEquals("name"))
-                {
-                    name = UsageName.DeserializeUsageName(property.Value);
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    limit = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new CdnUsage(id.Value, unit, currentValue, limit, name);
+            return new CdnUsage(resourceType.Value, Optional.ToNullable(unit), Optional.ToNullable(currentValue), Optional.ToNullable(limit));
         }
     }
 }

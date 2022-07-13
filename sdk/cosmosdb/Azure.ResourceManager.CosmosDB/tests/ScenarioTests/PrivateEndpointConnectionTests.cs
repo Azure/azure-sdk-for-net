@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
     public class PrivateEndpointConnectionTests : CosmosDBManagementClientBase
     {
         private ResourceIdentifier _databaseAccountIdentifier;
-        private DatabaseAccountResource _databaseAccount;
+        private CosmosDBAccountResource _databaseAccount;
 
         public PrivateEndpointConnectionTests(bool isAsync) : base(isAsync)
         {
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             _resourceGroup = await GlobalClient.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
 
-            _databaseAccountIdentifier = (await CreateDatabaseAccount(SessionRecording.GenerateAssetName("dbaccount-"), DatabaseAccountKind.MongoDB)).Id;
+            _databaseAccountIdentifier = (await CreateDatabaseAccount(SessionRecording.GenerateAssetName("dbaccount-"), CosmosDBAccountKind.MongoDB)).Id;
             await StopSessionRecordingAsync();
         }
 
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             if (_databaseAccountIdentifier != null)
             {
-                ArmClient.GetDatabaseAccountResource(_databaseAccountIdentifier).Delete(WaitUntil.Completed);
+                ArmClient.GetCosmosDBAccountResource(_databaseAccountIdentifier).Delete(WaitUntil.Completed);
             }
         }
 
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             // need to overwrite with the resource group fetched by ArmClient, otherwise it won't be recorded
             _resourceGroup = await ArmClient.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
 
-            _databaseAccount = await ArmClient.GetDatabaseAccountResource(_databaseAccountIdentifier).GetAsync();
+            _databaseAccount = await ArmClient.GetCosmosDBAccountResource(_databaseAccountIdentifier).GetAsync();
         }
 
         [TearDown]
@@ -68,11 +68,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var privateEndpointConnections = await PrivateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
             var privateEndpointConnection = privateEndpointConnections[0];
             VerifyPrivateEndpointConnections(privateEndpoint.Data.ManualPrivateLinkServiceConnections[0], privateEndpointConnection);
-            Assert.AreEqual("Pending", privateEndpointConnection.Data.PrivateLinkServiceConnectionState.Status);
+            Assert.AreEqual("Pending", privateEndpointConnection.Data.ConnectionState.Status);
 
             _ = await PrivateEndpointConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnection.Data.Name, new CosmosDBPrivateEndpointConnectionData()
             {
-                PrivateLinkServiceConnectionState = new CosmosDBPrivateLinkServiceConnectionStateProperty()
+                ConnectionState = new CosmosDBPrivateLinkServiceConnectionStateProperty()
                 {
                     Status = "Approved",
                     Description = "Approved by test",
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             privateEndpoint= await privateEndpoint.GetAsync();
             privateEndpointConnection = await PrivateEndpointConnectionCollection.GetAsync(privateEndpointConnection.Data.Name);
             VerifyPrivateEndpointConnections(privateEndpoint.Data.ManualPrivateLinkServiceConnections[0], privateEndpointConnection);
-            Assert.AreEqual("Approved", privateEndpointConnection.Data.PrivateLinkServiceConnectionState.Status);
+            Assert.AreEqual("Approved", privateEndpointConnection.Data.ConnectionState.Status);
         }
 
         [Test]
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 Subnets = { new SubnetData() {
                     Name = "default",
                     AddressPrefix = "10.0.1.0/24",
-                    PrivateEndpointNetworkPolicies = VirtualNetworkPrivateEndpointNetworkPolicies.Disabled
+                    PrivateEndpointNetworkPolicy = VirtualNetworkPrivateEndpointNetworkPolicy.Disabled
                 }}
             };
             vnet.AddressPrefixes.Add("10.0.0.0/16");
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 Location = AzureLocation.WestUS,
                 Subnet = virtualNetwork.Data.Subnets[0],
                 ManualPrivateLinkServiceConnections = {
-                    new PrivateLinkServiceConnection
+                    new NetworkPrivateLinkServiceConnection
                     {
                         Name = Recording.GenerateAssetName("pec"),
                         // TODO: externalize or create the service on-demand, like virtual network
@@ -153,14 +153,14 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             return (await _resourceGroup.GetPrivateEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, name, privateEndpointData)).Value;
         }
 
-        private void VerifyPrivateEndpointConnections(PrivateLinkServiceConnection expectedValue, CosmosDBPrivateEndpointConnectionResource actualValue)
+        private void VerifyPrivateEndpointConnections(NetworkPrivateLinkServiceConnection expectedValue, CosmosDBPrivateEndpointConnectionResource actualValue)
         {
             // Services will give diffferent ids and names for the incoming private endpoint connections, so comparing them is meaningless
             //Assert.AreEqual(expectedValue.Id, actualValue.Id);
             //Assert.AreEqual(expectedValue.Name, actualValue.Data.Name);
-            Assert.AreEqual(expectedValue.PrivateLinkServiceConnectionState.Status, actualValue.Data.PrivateLinkServiceConnectionState.Status);
-            Assert.AreEqual(expectedValue.PrivateLinkServiceConnectionState.Description, actualValue.Data.PrivateLinkServiceConnectionState.Description);
-            Assert.AreEqual(expectedValue.PrivateLinkServiceConnectionState.ActionsRequired, actualValue.Data.PrivateLinkServiceConnectionState.ActionsRequired);
+            Assert.AreEqual(expectedValue.ConnectionState.Status, actualValue.Data.ConnectionState.Status);
+            Assert.AreEqual(expectedValue.ConnectionState.Description, actualValue.Data.ConnectionState.Description);
+            Assert.AreEqual(expectedValue.ConnectionState.ActionsRequired, actualValue.Data.ConnectionState.ActionsRequired);
         }
     }
 }

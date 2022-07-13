@@ -3,7 +3,8 @@ namespace Azure.Analytics.Purview.Administration
     public partial class PurviewAccountClient
     {
         protected PurviewAccountClient() { }
-        public PurviewAccountClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Administration.PurviewAccountClientOptions options = null) { }
+        public PurviewAccountClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public PurviewAccountClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Administration.PurviewAccountClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response GetAccessKeys(Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetAccessKeysAsync(Azure.RequestContext context = null) { throw null; }
@@ -12,6 +13,8 @@ namespace Azure.Analytics.Purview.Administration
         public virtual Azure.Analytics.Purview.Administration.PurviewCollection GetCollectionClient(string collectionName) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetCollections(string skipToken = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetCollectionsAsync(string skipToken = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Analytics.Purview.Administration.PurviewCollection GetPurviewCollectionClient(string collectionName) { throw null; }
+        public virtual Azure.Analytics.Purview.Administration.PurviewResourceSetRule GetPurviewResourceSetRuleClient() { throw null; }
         public virtual Azure.Analytics.Purview.Administration.PurviewResourceSetRule GetResourceSetRuleClient() { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetResourceSetRules(string skipToken = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetResourceSetRulesAsync(string skipToken = null, Azure.RequestContext context = null) { throw null; }
@@ -54,7 +57,8 @@ namespace Azure.Analytics.Purview.Administration
     public partial class PurviewMetadataPolicyClient
     {
         protected PurviewMetadataPolicyClient() { }
-        public PurviewMetadataPolicyClient(System.Uri endpoint, string collectionName, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Administration.PurviewMetadataClientOptions options = null) { }
+        public PurviewMetadataPolicyClient(System.Uri endpoint, string collectionName, Azure.Core.TokenCredential credential) { }
+        public PurviewMetadataPolicyClient(System.Uri endpoint, string collectionName, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Administration.PurviewMetadataClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Pageable<System.BinaryData> GetMetadataPolicies(Azure.RequestContext context = null) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetMetadataPoliciesAsync(Azure.RequestContext context = null) { throw null; }
@@ -66,7 +70,8 @@ namespace Azure.Analytics.Purview.Administration
     public partial class PurviewMetadataRolesClient
     {
         protected PurviewMetadataRolesClient() { }
-        public PurviewMetadataRolesClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Administration.PurviewMetadataClientOptions options = null) { }
+        public PurviewMetadataRolesClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public PurviewMetadataRolesClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Administration.PurviewMetadataClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Pageable<System.BinaryData> GetMetadataRoles(Azure.RequestContext context = null) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetMetadataRolesAsync(Azure.RequestContext context = null) { throw null; }

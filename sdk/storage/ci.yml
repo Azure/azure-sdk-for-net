@@ -21,9 +21,11 @@ pr:
     include:
     - sdk/storage/
     - sdk/resourcemanager/
+    - sdk/compute/
+    - sdk/network/
 
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: storage
     ArtifactName: packages

@@ -39,7 +39,7 @@ namespace Azure.Storage.Files.DataLake
             _version = version ?? throw new ArgumentNullException(nameof(version));
         }
 
-        internal HttpMessage CreateCreateRequest(int? timeout, PathResourceType? resource, string continuation, BlobType? blobType, PathRenameMode? mode, string cacheControl, string contentEncoding, string contentLanguage, string contentDisposition, string contentType, string renameSource, string leaseId, string sourceLeaseId, string properties, string permissions, string umask, string ifMatch, string ifNoneMatch, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm)
+        internal HttpMessage CreateCreateRequest(int? timeout, PathResourceType? resource, string continuation, BlobType? blobType, PathRenameMode? mode, string cacheControl, string contentEncoding, string contentLanguage, string contentDisposition, string contentType, string renameSource, string leaseId, string sourceLeaseId, string properties, string permissions, string umask, string ifMatch, string ifNoneMatch, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, string owner, string group, string acl, string proposedLeaseId, long? leaseDuration, PathExpiryOptions? expiryOptions, string expiresOn)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -156,6 +156,34 @@ namespace Azure.Storage.Files.DataLake
             {
                 request.Headers.Add("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToSerialString());
             }
+            if (owner != null)
+            {
+                request.Headers.Add("x-ms-owner", owner);
+            }
+            if (group != null)
+            {
+                request.Headers.Add("x-ms-group", group);
+            }
+            if (acl != null)
+            {
+                request.Headers.Add("x-ms-acl", acl);
+            }
+            if (proposedLeaseId != null)
+            {
+                request.Headers.Add("x-ms-proposed-lease-id", proposedLeaseId);
+            }
+            if (leaseDuration != null)
+            {
+                request.Headers.Add("x-ms-lease-duration", leaseDuration.Value);
+            }
+            if (expiryOptions != null)
+            {
+                request.Headers.Add("x-ms-expiry-option", expiryOptions.Value.ToString());
+            }
+            if (expiresOn != null)
+            {
+                request.Headers.Add("x-ms-expiry-time", expiresOn);
+            }
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -188,10 +216,17 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is &quot;AES256&quot;. Must be provided if the x-ms-encryption-key header is provided. </param>
+        /// <param name="owner"> Optional. The owner of the blob or directory. </param>
+        /// <param name="group"> Optional. The owning group of the blob or directory. </param>
+        /// <param name="acl"> Sets POSIX access control rights on files and directories. The value is a comma-separated list of access control entries. Each access control entry (ACE) consists of a scope, a type, a user or group identifier, and permissions in the format &quot;[scope:][type]:[id]:[permissions]&quot;. </param>
+        /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
+        /// <param name="leaseDuration"> The lease duration is required to acquire a lease, and specifies the duration of the lease in seconds.  The lease duration must be between 15 and 60 seconds or -1 for infinite lease. </param>
+        /// <param name="expiryOptions"> Required. Indicates mode of the expiry time. </param>
+        /// <param name="expiresOn"> The time to set the blob to expiry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<PathCreateHeaders>> CreateAsync(int? timeout = null, PathResourceType? resource = null, string continuation = null, BlobType? blobType = null, PathRenameMode? mode = null, string cacheControl = null, string contentEncoding = null, string contentLanguage = null, string contentDisposition = null, string contentType = null, string renameSource = null, string leaseId = null, string sourceLeaseId = null, string properties = null, string permissions = null, string umask = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PathCreateHeaders>> CreateAsync(int? timeout = null, PathResourceType? resource = null, string continuation = null, BlobType? blobType = null, PathRenameMode? mode = null, string cacheControl = null, string contentEncoding = null, string contentLanguage = null, string contentDisposition = null, string contentType = null, string renameSource = null, string leaseId = null, string sourceLeaseId = null, string properties = null, string permissions = null, string umask = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string owner = null, string group = null, string acl = null, string proposedLeaseId = null, long? leaseDuration = null, PathExpiryOptions? expiryOptions = null, string expiresOn = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(timeout, resource, continuation, blobType, mode, cacheControl, contentEncoding, contentLanguage, contentDisposition, contentType, renameSource, leaseId, sourceLeaseId, properties, permissions, umask, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, sourceIfModifiedSince, sourceIfUnmodifiedSince, encryptionKey, encryptionKeySha256, encryptionAlgorithm);
+            using var message = CreateCreateRequest(timeout, resource, continuation, blobType, mode, cacheControl, contentEncoding, contentLanguage, contentDisposition, contentType, renameSource, leaseId, sourceLeaseId, properties, permissions, umask, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, sourceIfModifiedSince, sourceIfUnmodifiedSince, encryptionKey, encryptionKeySha256, encryptionAlgorithm, owner, group, acl, proposedLeaseId, leaseDuration, expiryOptions, expiresOn);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PathCreateHeaders(message.Response);
             switch (message.Response.Status)
@@ -231,10 +266,17 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is &quot;AES256&quot;. Must be provided if the x-ms-encryption-key header is provided. </param>
+        /// <param name="owner"> Optional. The owner of the blob or directory. </param>
+        /// <param name="group"> Optional. The owning group of the blob or directory. </param>
+        /// <param name="acl"> Sets POSIX access control rights on files and directories. The value is a comma-separated list of access control entries. Each access control entry (ACE) consists of a scope, a type, a user or group identifier, and permissions in the format &quot;[scope:][type]:[id]:[permissions]&quot;. </param>
+        /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
+        /// <param name="leaseDuration"> The lease duration is required to acquire a lease, and specifies the duration of the lease in seconds.  The lease duration must be between 15 and 60 seconds or -1 for infinite lease. </param>
+        /// <param name="expiryOptions"> Required. Indicates mode of the expiry time. </param>
+        /// <param name="expiresOn"> The time to set the blob to expiry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<PathCreateHeaders> Create(int? timeout = null, PathResourceType? resource = null, string continuation = null, BlobType? blobType = null, PathRenameMode? mode = null, string cacheControl = null, string contentEncoding = null, string contentLanguage = null, string contentDisposition = null, string contentType = null, string renameSource = null, string leaseId = null, string sourceLeaseId = null, string properties = null, string permissions = null, string umask = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PathCreateHeaders> Create(int? timeout = null, PathResourceType? resource = null, string continuation = null, BlobType? blobType = null, PathRenameMode? mode = null, string cacheControl = null, string contentEncoding = null, string contentLanguage = null, string contentDisposition = null, string contentType = null, string renameSource = null, string leaseId = null, string sourceLeaseId = null, string properties = null, string permissions = null, string umask = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string owner = null, string group = null, string acl = null, string proposedLeaseId = null, long? leaseDuration = null, PathExpiryOptions? expiryOptions = null, string expiresOn = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(timeout, resource, continuation, blobType, mode, cacheControl, contentEncoding, contentLanguage, contentDisposition, contentType, renameSource, leaseId, sourceLeaseId, properties, permissions, umask, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, sourceIfModifiedSince, sourceIfUnmodifiedSince, encryptionKey, encryptionKeySha256, encryptionAlgorithm);
+            using var message = CreateCreateRequest(timeout, resource, continuation, blobType, mode, cacheControl, contentEncoding, contentLanguage, contentDisposition, contentType, renameSource, leaseId, sourceLeaseId, properties, permissions, umask, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, sourceIfModifiedSince, sourceIfUnmodifiedSince, encryptionKey, encryptionKeySha256, encryptionAlgorithm, owner, group, acl, proposedLeaseId, leaseDuration, expiryOptions, expiresOn);
             _pipeline.Send(message, cancellationToken);
             var headers = new PathCreateHeaders(message.Response);
             switch (message.Response.Status)

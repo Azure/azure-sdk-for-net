@@ -305,31 +305,8 @@ namespace Azure.Storage.Files.DataLake
         ///
         /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
         /// </summary>
-        /// <param name="httpHeaders">
-        /// Optional standard HTTP header properties that can be set for the
-        /// new file or directory..
-        /// </param>
-        /// <param name="metadata">
-        /// Optional custom metadata to set for this file or directory.
-        /// </param>
-        /// <param name="permissions">
-        /// Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access
-        /// permissions for the file owner, the file owning group, and others. Each class may be granted read,
-        /// write, or execute permission. The sticky bit is also supported. Both symbolic (rwxrw-rw-) and 4-digit
-        /// octal notation (e.g. 0766) are supported.
-        /// </param>
-        /// <param name="umask">
-        /// Optional and only valid if Hierarchical Namespace is enabled for the account.
-        /// When creating a file or directory and the parent folder does not have a default ACL,
-        /// the umask restricts the permissions of the file or directory to be created. The resulting
-        /// permission is given by p bitwise-and ^u, where p is the permission and u is the umask. For example,
-        /// if p is 0777 and u is 0057, then the resulting permission is 0720. The default permission is
-        /// 0777 for a directory and 0666 for a file. The default umask is 0027. The umask must be specified
-        /// in 4-digit octal notation (e.g. 0766).
-        /// </param>
-        /// <param name="conditions">
-        /// Optional <see cref="DataLakeRequestConditions"/> to add
-        /// conditions on the creation of this file or directory.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -344,11 +321,7 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         public new virtual Response<PathInfo> Create(
-            PathHttpHeaders httpHeaders = default,
-            Metadata metadata = default,
-            string permissions = default,
-            string umask = default,
-            DataLakeRequestConditions conditions = default,
+            DataLakePathCreateOptions options = default,
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeAppendFileClient)}.{nameof(Create)}");
@@ -360,11 +333,18 @@ namespace Azure.Storage.Files.DataLake
                 return base.CreateInternal(
                     resourceType: PathResourceType.File,
                     blobType: BlobType.Appendblob,
-                    httpHeaders: httpHeaders,
-                    metadata: metadata,
-                    permissions: permissions,
-                    umask: umask,
-                    conditions: conditions,
+                    httpHeaders: options?.HttpHeaders,
+                    metadata: options?.Metadata,
+                    permissions: options?.AccessOptions?.Permissions,
+                    umask: options?.AccessOptions?.Umask,
+                    owner: options?.AccessOptions?.Owner,
+                    group: options?.AccessOptions?.Group,
+                    accessControlList: options?.AccessOptions?.AccessControlList,
+                    leaseId: options?.LeaseId,
+                    leaseDuration: options?.LeaseDuration,
+                    timeToExpire: options?.ScheduleDeletionOptions?.TimeToExpire,
+                    expiresOn: options?.ScheduleDeletionOptions?.ExpiresOn,
+                    conditions: options?.Conditions,
                     async: false,
                     cancellationToken: cancellationToken)
                     .EnsureCompleted();
@@ -387,31 +367,8 @@ namespace Azure.Storage.Files.DataLake
         ///
         /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
         /// </summary>
-        /// <param name="httpHeaders">
-        /// Optional standard HTTP header properties that can be set for the
-        /// new file or directory..
-        /// </param>
-        /// <param name="metadata">
-        /// Optional custom metadata to set for this file or directory.
-        /// </param>
-        /// <param name="permissions">
-        /// Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access
-        /// permissions for the file owner, the file owning group, and others. Each class may be granted read,
-        /// write, or execute permission. The sticky bit is also supported. Both symbolic (rwxrw-rw-) and 4-digit
-        /// octal notation (e.g. 0766) are supported.
-        /// </param>
-        /// <param name="umask">
-        /// Optional and only valid if Hierarchical Namespace is enabled for the account.
-        /// When creating a file or directory and the parent folder does not have a default ACL,
-        /// the umask restricts the permissions of the file or directory to be created. The resulting
-        /// permission is given by p bitwise-and ^u, where p is the permission and u is the umask. For example,
-        /// if p is 0777 and u is 0057, then the resulting permission is 0720. The default permission is
-        /// 0777 for a directory and 0666 for a file. The default umask is 0027. The umask must be specified
-        /// in 4-digit octal notation (e.g. 0766).
-        /// </param>
-        /// <param name="conditions">
-        /// Optional <see cref="DataLakeRequestConditions"/> to add
-        /// conditions on the creation of this file or directory.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -426,11 +383,7 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         public new virtual async Task<Response<PathInfo>> CreateAsync(
-            PathHttpHeaders httpHeaders = default,
-            Metadata metadata = default,
-            string permissions = default,
-            string umask = default,
-            DataLakeRequestConditions conditions = default,
+            DataLakePathCreateOptions options = default,
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeAppendFileClient)}.{nameof(Create)}");
@@ -442,11 +395,18 @@ namespace Azure.Storage.Files.DataLake
                 return await base.CreateInternal(
                     resourceType: PathResourceType.File,
                     blobType: BlobType.Appendblob,
-                    httpHeaders: httpHeaders,
-                    metadata: metadata,
-                    permissions: permissions,
-                    umask: umask,
-                    conditions: conditions,
+                    httpHeaders: options?.HttpHeaders,
+                    metadata: options?.Metadata,
+                    permissions: options?.AccessOptions?.Permissions,
+                    umask: options?.AccessOptions?.Umask,
+                    owner: options?.AccessOptions?.Owner,
+                    group: options?.AccessOptions?.Group,
+                    accessControlList: options?.AccessOptions?.AccessControlList,
+                    leaseId: options?.LeaseId,
+                    leaseDuration: options?.LeaseDuration,
+                    timeToExpire: options?.ScheduleDeletionOptions?.TimeToExpire,
+                    expiresOn: options?.ScheduleDeletionOptions?.ExpiresOn,
+                    conditions: options?.Conditions,
                     async: true,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
@@ -470,27 +430,8 @@ namespace Azure.Storage.Files.DataLake
         ///
         /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
         /// </summary>
-        /// <param name="httpHeaders">
-        /// Optional standard HTTP header properties that can be set for the
-        /// new file or directory..
-        /// </param>
-        /// <param name="metadata">
-        /// Optional custom metadata to set for this file or directory..
-        /// </param>
-        /// <param name="permissions">
-        /// Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access
-        /// permissions for the file owner, the file owning group, and others. Each class may be granted read,
-        /// write, or execute permission. The sticky bit is also supported. Both symbolic (rwxrw-rw-) and 4-digit
-        /// octal notation (e.g. 0766) are supported.
-        /// </param>
-        /// <param name="umask">
-        /// Optional and only valid if Hierarchical Namespace is enabled for the account.
-        /// When creating a file or directory and the parent folder does not have a default ACL,
-        /// the umask restricts the permissions of the file or directory to be created. The resulting
-        /// permission is given by p bitwise-and ^u, where p is the permission and u is the umask. For example,
-        /// if p is 0777 and u is 0057, then the resulting permission is 0720. The default permission is
-        /// 0777 for a directory and 0666 for a file. The default umask is 0027. The umask must be specified
-        /// in 4-digit octal notation (e.g. 0766).
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -505,10 +446,7 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         public new virtual Response<PathInfo> CreateIfNotExists(
-            PathHttpHeaders httpHeaders = default,
-            Metadata metadata = default,
-            string permissions = default,
-            string umask = default,
+            DataLakePathCreateOptions options = default,
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeAppendFileClient)}.{nameof(CreateIfNotExists)}");
@@ -517,13 +455,20 @@ namespace Azure.Storage.Files.DataLake
             {
                 scope.Start();
 
-                return base.CreateIfNotExistsInternal(
-                    PathResourceType.File,
-                    BlobType.Appendblob,
-                    httpHeaders,
-                    metadata,
-                    permissions,
-                    umask,
+                return CreateIfNotExistsInternal(
+                    resourceType: PathResourceType.File,
+                    blobType: BlobType.Appendblob,
+                    httpHeaders: options?.HttpHeaders,
+                    metadata: options?.Metadata,
+                    permissions: options?.AccessOptions?.Permissions,
+                    umask: options?.AccessOptions?.Umask,
+                    owner: options?.AccessOptions?.Owner,
+                    group: options?.AccessOptions?.Group,
+                    accessControlList: options?.AccessOptions?.AccessControlList,
+                    leaseId: options?.LeaseId,
+                    leaseDuration: options?.LeaseDuration,
+                    timeToExpire: options?.ScheduleDeletionOptions?.TimeToExpire,
+                    expiresOn: options?.ScheduleDeletionOptions?.ExpiresOn,
                     async: false,
                     cancellationToken)
                     .EnsureCompleted();
@@ -545,27 +490,8 @@ namespace Azure.Storage.Files.DataLake
         ///
         /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
         /// </summary>
-        /// <param name="httpHeaders">
-        /// Optional standard HTTP header properties that can be set for the
-        /// new file or directory..
-        /// </param>
-        /// <param name="metadata">
-        /// Optional custom metadata to set for this file or directory..
-        /// </param>
-        /// <param name="permissions">
-        /// Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access
-        /// permissions for the file owner, the file owning group, and others. Each class may be granted read,
-        /// write, or execute permission. The sticky bit is also supported. Both symbolic (rwxrw-rw-) and 4-digit
-        /// octal notation (e.g. 0766) are supported.
-        /// </param>
-        /// <param name="umask">
-        /// Optional and only valid if Hierarchical Namespace is enabled for the account.
-        /// When creating a file or directory and the parent folder does not have a default ACL,
-        /// the umask restricts the permissions of the file or directory to be created. The resulting
-        /// permission is given by p bitwise-and ^u, where p is the permission and u is the umask. For example,
-        /// if p is 0777 and u is 0057, then the resulting permission is 0720. The default permission is
-        /// 0777 for a directory and 0666 for a file. The default umask is 0027. The umask must be specified
-        /// in 4-digit octal notation (e.g. 0766).
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -580,10 +506,7 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         public new virtual async Task<Response<PathInfo>> CreateIfNotExistsAsync(
-            PathHttpHeaders httpHeaders = default,
-            Metadata metadata = default,
-            string permissions = default,
-            string umask = default,
+            DataLakePathCreateOptions options = default,
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeAppendFileClient)}.{nameof(CreateIfNotExists)}");
@@ -592,13 +515,20 @@ namespace Azure.Storage.Files.DataLake
             {
                 scope.Start();
 
-                return await base.CreateIfNotExistsInternal(
-                    PathResourceType.File,
-                    BlobType.Appendblob,
-                    httpHeaders,
-                    metadata,
-                    permissions,
-                    umask,
+                return await CreateIfNotExistsInternal(
+                    resourceType: PathResourceType.File,
+                    blobType: BlobType.Appendblob,
+                    httpHeaders: options?.HttpHeaders,
+                    metadata: options?.Metadata,
+                    permissions: options?.AccessOptions?.Permissions,
+                    umask: options?.AccessOptions?.Umask,
+                    owner: options?.AccessOptions?.Owner,
+                    group: options?.AccessOptions?.Group,
+                    accessControlList: options?.AccessOptions?.AccessControlList,
+                    leaseId: options?.LeaseId,
+                    leaseDuration: options?.LeaseDuration,
+                    timeToExpire: options?.ScheduleDeletionOptions?.TimeToExpire,
+                    expiresOn: options?.ScheduleDeletionOptions?.ExpiresOn,
                     async: true,
                     cancellationToken)
                     .ConfigureAwait(false);
