@@ -48,6 +48,7 @@ function Get-SwaggerInfo()
 function CreateOrUpdateAutorestConfigFile() {
     param (
         [string]$autorestFilePath,
+        [string]$namespace,
         [string]$inputfile = "",
         [string]$readme = "",
         [string]$autorestConfigYaml = ""
@@ -122,7 +123,7 @@ function CreateOrUpdateAutorestConfigFile() {
         Write-Host "autorest.md does not exist. start to create one."
         if ( $autorestConfigYaml ) {
             Write-Host "Create autorest.md with configuration."
-            $autorestConfigYaml = "# Azure.IoT.DeviceUpdate" + [Environment]::NewLine + '``` yaml' +  [Environment]::NewLine + $autorestConfigYaml + '```' + [Environment]::NewLine;
+            $autorestConfigYaml = "# " + $namespace + [Environment]::NewLine + '``` yaml' +  [Environment]::NewLine + $autorestConfigYaml + '```' + [Environment]::NewLine;
             $autorestConfigYaml | Out-File $autorestFilePath
         } else {
             Write-Error "autorest.md does not exist, and no autorest configuration to create one."
@@ -190,7 +191,7 @@ function New-DataPlanePackageFolder() {
     Write-Host "Path exists!"
     # update the input-file url if needed.
     $file = (Join-Path $projectFolder "src" $AUTOREST_CONFIG_FILE)
-    CreateOrUpdateAutorestConfigFile -autorestFilePath $file -inputfile "$inputfile" -readme "$readme" -autorestConfigYaml "$autorestConfigYaml"
+    CreateOrUpdateAutorestConfigFile -autorestFilePath $file -namespace $namespace -inputfile "$inputfile" -readme "$readme" -autorestConfigYaml "$autorestConfigYaml"
     Update-CIYmlFile -ciFilePath $ciymlFilePath -artifact $namespace
   } else {
     Write-Host "Path doesn't exist. create template."
@@ -238,7 +239,7 @@ function New-DataPlanePackageFolder() {
 
     $file = (Join-Path $projectFolder "src" $AUTOREST_CONFIG_FILE)
     Write-Host "Updating configuration file: $file"
-    CreateOrUpdateAutorestConfigFile -autorestFilePath $file -readme "$readme" -autorestConfigYaml "$autorestConfigYaml"
+    CreateOrUpdateAutorestConfigFile -autorestFilePath $file -namespace $namespace -readme "$readme" -autorestConfigYaml "$autorestConfigYaml"
     Pop-Location
 
     $projFile = (Join-Path $projectFolder "src" "$namespace.csproj")
