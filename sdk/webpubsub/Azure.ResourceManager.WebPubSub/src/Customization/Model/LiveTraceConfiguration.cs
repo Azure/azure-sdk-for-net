@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             }
             set
             {
-                Enabled = value.ToString();
+                Enabled = value.ToString().ToLower(new System.Globalization.CultureInfo("en-us"));
             }
         }
         /// <summary> Gets or sets the list of category configurations. </summary>
