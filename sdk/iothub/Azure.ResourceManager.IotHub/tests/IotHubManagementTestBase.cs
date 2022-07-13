@@ -3,9 +3,11 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.IotHub.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
+using System.Security;
 using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.IotHub.Tests
@@ -36,6 +38,18 @@ namespace Azure.ResourceManager.IotHub.Tests
             ResourceGroupData input = new ResourceGroupData(location);
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
             return lro.Value;
+        }
+
+        protected async Task<IotHubDescriptionResource> CreateIotHub(ResourceGroupResource resourceGroup,string iotHubName, AzureLocation location)
+        {
+            var sku = new IotHubSkuInfo("S1")
+            {
+                Name = "S1",
+                Capacity = 1
+            };
+            IotHubDescriptionData data = new IotHubDescriptionData(location, sku) { };
+            var iotHub = await resourceGroup.GetIotHubDescriptions().CreateOrUpdateAsync(WaitUntil.Completed, iotHubName, data);
+            return iotHub.Value;
         }
     }
 }
