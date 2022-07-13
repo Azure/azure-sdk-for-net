@@ -279,7 +279,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 CustomEndpointAddress = new Uri(customEndpoint)
             };
 
-            // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
             ServiceBusClient client = new ServiceBusClient(connectionString, options);
             #endregion
         }
