@@ -6,9 +6,9 @@ Run `dotnet msbuild /t:GenerateCode` to generate code.
 > see https://aka.ms/autorest
 
 ``` yaml
-tag: package-2022-06
+tag: package-2022-10
 require:
-    -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/5b0818f55339dbff370a967e3f068e180c6ad5a1/specification/communication/data-plane/Identity/readme.md
+    -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/49e2859d9eef95013f083af9506127cfffd1e866/specification/communication/data-plane/Identity/readme.md
 payload-flattening-threshold: 3
 generation1-convenience-client: true
 ```
