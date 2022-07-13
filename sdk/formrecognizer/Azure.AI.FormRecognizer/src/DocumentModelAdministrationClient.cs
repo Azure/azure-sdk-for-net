@@ -116,8 +116,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// </summary>
         /// <param name="waitUntil">
         /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
-        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations,
-        /// please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md">Azure.Core long-running operation samples</see>.
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
         /// </param>
         /// <param name="trainingFilesUri">
         /// An externally accessible Azure Blob Storage container URI pointing to the container that has your training files.
@@ -205,8 +204,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// </summary>
         /// <param name="waitUntil">
         /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
-        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations,
-        /// please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md">Azure.Core long-running operation samples</see>.
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
         /// </param>
         /// <param name="trainingFilesUri">
         /// An externally accessible Azure Blob Storage container URI pointing to the container that has your training files.
@@ -674,8 +672,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// </summary>
         /// <param name="waitUntil">
         /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
-        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations,
-        /// please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md">Azure.Core long-running operation samples</see>.
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
         /// </param>
         /// <param name="modelId">Model identifier of the model to copy to the target Form Recognizer resource.</param>
         /// <param name="target">A <see cref="CopyAuthorization"/> with the copy authorization to the target Form Recognizer resource.</param>
@@ -715,8 +712,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// </summary>
         /// <param name="waitUntil">
         /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
-        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations,
-        /// please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md">Azure.Core long-running operation samples</see>.
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
         /// </param>
         /// <param name="modelId">Model identifier of the model to copy to the target Form Recognizer resource.</param>
         /// <param name="target">A <see cref="CopyAuthorization"/> with the copy authorization to the target Form Recognizer resource.</param>
@@ -844,8 +840,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// </summary>
         /// <param name="waitUntil">
         /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
-        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations,
-        /// please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md">Azure.Core long-running operation samples</see>.
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
         /// </param>
         /// <param name="componentModelIds">List of model ids to use in the composition.</param>
         /// <param name="modelId">A unique ID for your model. If not specified, a model ID will be created for you.</param>
@@ -904,8 +899,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// </summary>
         /// <param name="waitUntil">
         /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
-        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations,
-        /// please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md">Azure.Core long-running operation samples</see>.
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
         /// </param>
         /// <param name="componentModelIds">List of model ids to use in the composition.</param>
         /// <param name="modelId">A unique ID for your model. If not specified, a model ID will be created for you.</param>
