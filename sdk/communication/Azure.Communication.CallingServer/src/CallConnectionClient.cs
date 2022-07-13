@@ -190,15 +190,15 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        /// <summary> Add a participant to the call. </summary>
+        /// <summary> Add participants to the call. </summary>
         /// <param name="participantsToAdd"> The list of identity of participants to be added to the call. </param>
         /// <param name="options">The options. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"> <paramref name="participantsToAdd"/> is null. </exception>
-        public virtual async Task<Response<AddParticipantsResponse>> AddParticipantAsync(IEnumerable<CommunicationIdentifier> participantsToAdd, AddParticipantsOptions options = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AddParticipantsResponse>> AddParticipantsAsync(IEnumerable<CommunicationIdentifier> participantsToAdd, AddParticipantsOptions options = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnectionClient)}.{nameof(AddParticipant)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnectionClient)}.{nameof(AddParticipants)}");
             scope.Start();
             try
             {
@@ -224,15 +224,15 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        /// <summary> Add a participant to the call. </summary>
+        /// <summary> Add participants to the call. </summary>
         /// <param name="participantsToAdd"> The list of identity of participants to be added to the call. </param>
         /// <param name="options">The options. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"> <paramref name="participantsToAdd"/> is null. </exception>
-        public virtual Response<AddParticipantsResponse> AddParticipant(IEnumerable<CommunicationIdentifier> participantsToAdd, AddParticipantsOptions options = default, CancellationToken cancellationToken = default)
+        public virtual Response<AddParticipantsResponse> AddParticipants(IEnumerable<CommunicationIdentifier> participantsToAdd, AddParticipantsOptions options = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnectionClient)}.{nameof(AddParticipant)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnectionClient)}.{nameof(AddParticipants)}");
             scope.Start();
             try
             {
