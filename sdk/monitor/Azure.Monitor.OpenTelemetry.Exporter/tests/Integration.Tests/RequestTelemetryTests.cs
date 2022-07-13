@@ -31,7 +31,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
         /// A TelemetryItem is created matching that request.
         /// </summary>
         [Fact]
-        public async Task VerifyRequestTelemetry()
+        public async Task VerifyRequestTelemetry_WithSpinWait()
         {
             string testValue = Guid.NewGuid().ToString();
 
