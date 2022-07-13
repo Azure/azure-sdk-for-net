@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         public Azure.ResourceManager.SqlVirtualMachine.Models.AssessmentSettings AssessmentSettings { get { throw null; } set { } }
         public Azure.ResourceManager.SqlVirtualMachine.Models.AutoBackupSettings AutoBackupSettings { get { throw null; } set { } }
         public Azure.ResourceManager.SqlVirtualMachine.Models.AutoPatchingSettings AutoPatchingSettings { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.SystemAssignedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.SqlVirtualMachine.Models.KeyVaultCredentialSettings KeyVaultCredentialSettings { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.SqlVirtualMachine.Models.ServerConfigurationsManagementSettings ServerConfigurationsManagementSettings { get { throw null; } set { } }
