@@ -17,18 +17,18 @@ namespace Microsoft.Azure.Management.Network.Models
     /// <summary>
     /// Explicit Proxy Settings in Firewall Policy.
     /// </summary>
-    public partial class ExplicitProxy
+    public partial class ExplicitProxySettings
     {
         /// <summary>
-        /// Initializes a new instance of the ExplicitProxy class.
+        /// Initializes a new instance of the ExplicitProxySettings class.
         /// </summary>
-        public ExplicitProxy()
+        public ExplicitProxySettings()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ExplicitProxy class.
+        /// Initializes a new instance of the ExplicitProxySettings class.
         /// </summary>
         /// <param name="enableExplicitProxy">When set to true, explicit proxy
         /// mode is enabled.</param>
@@ -36,17 +36,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// protocol, cannot be greater than 64000.</param>
         /// <param name="httpsPort">Port number for explicit proxy https
         /// protocol, cannot be greater than 64000.</param>
-        /// <param name="enablePacFile">When set to true, pac file port and url
-        /// needs to be provided.</param>
         /// <param name="pacFilePort">Port number for firewall to serve PAC
         /// file.</param>
         /// <param name="pacFile">SAS URL for PAC file.</param>
-        public ExplicitProxy(bool? enableExplicitProxy = default(bool?), int? httpPort = default(int?), int? httpsPort = default(int?), bool? enablePacFile = default(bool?), int? pacFilePort = default(int?), string pacFile = default(string))
+        public ExplicitProxySettings(bool? enableExplicitProxy = default(bool?), int? httpPort = default(int?), int? httpsPort = default(int?), int? pacFilePort = default(int?), string pacFile = default(string))
         {
             EnableExplicitProxy = enableExplicitProxy;
             HttpPort = httpPort;
             HttpsPort = httpsPort;
-            EnablePacFile = enablePacFile;
             PacFilePort = pacFilePort;
             PacFile = pacFile;
             CustomInit();
@@ -76,13 +73,6 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "httpsPort")]
         public int? HttpsPort { get; set; }
-
-        /// <summary>
-        /// Gets or sets when set to true, pac file port and url needs to be
-        /// provided.
-        /// </summary>
-        [JsonProperty(PropertyName = "enablePacFile")]
-        public bool? EnablePacFile { get; set; }
 
         /// <summary>
         /// Gets or sets port number for firewall to serve PAC file.

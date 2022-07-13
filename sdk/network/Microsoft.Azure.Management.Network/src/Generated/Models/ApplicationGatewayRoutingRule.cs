@@ -34,7 +34,6 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the ApplicationGatewayRoutingRule
         /// class.
         /// </summary>
-        /// <param name="priority">Priority of the routing rule.</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="ruleType">Rule type. Possible values include: 'Basic',
         /// 'PathBasedRouting'</param>
@@ -52,11 +51,10 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
         /// <param name="type">Type of the resource.</param>
-        public ApplicationGatewayRoutingRule(int priority, string id = default(string), string ruleType = default(string), SubResource backendAddressPool = default(SubResource), SubResource backendSettings = default(SubResource), SubResource listener = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
+        public ApplicationGatewayRoutingRule(string id = default(string), string ruleType = default(string), SubResource backendAddressPool = default(SubResource), SubResource backendSettings = default(SubResource), SubResource listener = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
             : base(id)
         {
             RuleType = ruleType;
-            Priority = priority;
             BackendAddressPool = backendAddressPool;
             BackendSettings = backendSettings;
             Listener = listener;
@@ -78,12 +76,6 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.ruleType")]
         public string RuleType { get; set; }
-
-        /// <summary>
-        /// Gets or sets priority of the routing rule.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.priority")]
-        public int Priority { get; set; }
 
         /// <summary>
         /// Gets or sets backend address pool resource of the application
@@ -132,22 +124,5 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Priority > 20000)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "Priority", 20000);
-            }
-            if (Priority < 1)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "Priority", 1);
-            }
-        }
     }
 }

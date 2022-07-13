@@ -60,8 +60,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="vnetEncryptionSupported">Whether the virtual machine
         /// this nic is attached to supports encryption.</param>
         /// <param name="enableAcceleratedNetworking">If the network interface
-        /// is configured for accelerated networking. Not applicable to VM
-        /// sizes which require accelerated networking.</param>
+        /// is accelerated networking enabled.</param>
         /// <param name="enableIPForwarding">Indicates whether IP forwarding is
         /// enabled on this network interface.</param>
         /// <param name="hostedWorkloads">A list of references to linked
@@ -184,9 +183,8 @@ namespace Microsoft.Azure.Management.Network.Models
         public bool? VnetEncryptionSupported { get; private set; }
 
         /// <summary>
-        /// Gets or sets if the network interface is configured for accelerated
-        /// networking. Not applicable to VM sizes which require accelerated
-        /// networking.
+        /// Gets or sets if the network interface is accelerated networking
+        /// enabled.
         /// </summary>
         [JsonProperty(PropertyName = "properties.enableAcceleratedNetworking")]
         public bool? EnableAcceleratedNetworking { get; set; }

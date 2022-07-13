@@ -46,8 +46,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="defaultPolicy">Name of the Ssl predefined policy
         /// applied by default to application gateway. Possible values include:
         /// 'AppGwSslPolicy20150501', 'AppGwSslPolicy20170401',
-        /// 'AppGwSslPolicy20170401S', 'AppGwSslPolicy20220101',
-        /// 'AppGwSslPolicy20220101S'</param>
+        /// 'AppGwSslPolicy20170401S'</param>
         /// <param name="availableCipherSuites">List of available Ssl cipher
         /// suites.</param>
         /// <param name="availableProtocols">List of available Ssl
@@ -77,8 +76,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets name of the Ssl predefined policy applied by default
         /// to application gateway. Possible values include:
         /// 'AppGwSslPolicy20150501', 'AppGwSslPolicy20170401',
-        /// 'AppGwSslPolicy20170401S', 'AppGwSslPolicy20220101',
-        /// 'AppGwSslPolicy20220101S'
+        /// 'AppGwSslPolicy20170401S'
         /// </summary>
         [JsonProperty(PropertyName = "properties.defaultPolicy")]
         public string DefaultPolicy { get; set; }

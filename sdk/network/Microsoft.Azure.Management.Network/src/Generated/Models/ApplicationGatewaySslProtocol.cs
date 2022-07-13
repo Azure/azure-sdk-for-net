@@ -19,6 +19,5 @@ namespace Microsoft.Azure.Management.Network.Models
         public const string TLSv10 = "TLSv1_0";
         public const string TLSv11 = "TLSv1_1";
         public const string TLSv12 = "TLSv1_2";
-        public const string TLSv13 = "TLSv1_3";
     }
 }
