@@ -259,7 +259,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>CollectionArray</c>:
+        /// Schema for <c>Collection</c>:
         /// <code>{
         ///   collectionId: string, # Required.
         /// }
@@ -291,7 +291,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>CollectionArray</c>:
+        /// Schema for <c>Collection</c>:
         /// <code>{
         ///   collectionId: string, # Required.
         /// }

@@ -1007,7 +1007,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Request Body:
         /// 
-        /// Schema for <c>ImportUpdateInput</c>:
+        /// Schema for <c>ImportUpdateInputItem</c>:
         /// <code>{
         ///   importManifest: {
         ///     url: string, # Required. Azure Blob location from which the import manifest can be downloaded by Device Update for IoT Hub. This is typically a read-only SAS-protected blob URL with an expiration set to at least 4 hours.
@@ -1055,7 +1055,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Request Body:
         /// 
-        /// Schema for <c>ImportUpdateInput</c>:
+        /// Schema for <c>ImportUpdateInputItem</c>:
         /// <code>{
         ///   importManifest: {
         ///     url: string, # Required. Azure Blob location from which the import manifest can be downloaded by Device Update for IoT Hub. This is typically a read-only SAS-protected blob URL with an expiration set to at least 4 hours.

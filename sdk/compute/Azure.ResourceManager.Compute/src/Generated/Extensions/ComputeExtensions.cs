@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="skus"> A valid image SKU. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="top"> The Int32 to use. </param>
         /// <param name="orderby"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is an empty string, and was expected to be non-empty. </exception>
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="skus"> A valid image SKU. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="top"> The Int32 to use. </param>
         /// <param name="orderby"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is an empty string, and was expected to be non-empty. </exception>

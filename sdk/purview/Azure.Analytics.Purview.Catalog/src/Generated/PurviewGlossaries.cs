@@ -62,8 +62,31 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasGlossary</c>:
+        /// <details><summary>AtlasGlossaryExtInfo</summary>Schema for <c>AtlasGlossaryExtInfo</c>:
         /// <code>{
+        ///   categories: [
+        ///     {
+        ///       categoryGuid: string, # Optional. The GUID of the category.
+        ///       description: string, # Optional. The description of the category header.
+        ///       displayText: string, # Optional. The display text.
+        ///       parentCategoryGuid: string, # Optional. The GUID of the parent category.
+        ///       relationGuid: string, # Optional. The GUID of the relationship.
+        ///     }
+        ///   ], # Optional. An array of categories.
+        ///   language: string, # Optional. The language of the glossary.
+        ///   terms: [
+        ///     {
+        ///       description: string, # Optional. The description of the related term.
+        ///       displayText: string, # Optional. The display text.
+        ///       expression: string, # Optional. The expression of the term.
+        ///       relationGuid: string, # Optional. The GUID of the relationship.
+        ///       source: string, # Optional. The source of the term.
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of term relationship.
+        ///       steward: string, # Optional. The steward of the term.
+        ///       termGuid: string, # Optional. The GUID of the term.
+        ///     }
+        ///   ], # Optional. An array of related term headers.
+        ///   usage: string, # Optional. The usage of the glossary.
         ///   classifications: [
         ///     {
         ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
@@ -89,31 +112,11 @@ namespace Azure.Analytics.Purview.Catalog
         ///   shortDescription: string, # Optional. The short version of description.
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   guid: string, # Optional. The GUID of the object.
-        ///   categories: [
-        ///     {
-        ///       categoryGuid: string, # Optional. The GUID of the category.
-        ///       description: string, # Optional. The description of the category header.
-        ///       displayText: string, # Optional. The display text.
-        ///       parentCategoryGuid: string, # Optional. The GUID of the parent category.
-        ///       relationGuid: string, # Optional. The GUID of the relationship.
-        ///     }
-        ///   ], # Optional. An array of categories.
-        ///   language: string, # Optional. The language of the glossary.
-        ///   terms: [
-        ///     {
-        ///       description: string, # Optional. The description of the related term.
-        ///       displayText: string, # Optional. The display text.
-        ///       expression: string, # Optional. The expression of the term.
-        ///       relationGuid: string, # Optional. The GUID of the relationship.
-        ///       source: string, # Optional. The source of the term.
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of term relationship.
-        ///       steward: string, # Optional. The steward of the term.
-        ///       termGuid: string, # Optional. The GUID of the term.
-        ///     }
-        ///   ], # Optional. An array of related term headers.
-        ///   usage: string, # Optional. The usage of the glossary.
+        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;, # Optional. The glossary category information.
+        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. The glossary term information.
         /// }
         /// </code>
+        /// </details>
         /// 
         /// </remarks>
         public virtual async Task<Response> GetGlossariesAsync(int? limit = null, int? offset = null, string sort = null, bool? ignoreTermsAndCategories = null, RequestContext context = null)
@@ -145,8 +148,31 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasGlossary</c>:
+        /// <details><summary>AtlasGlossaryExtInfo</summary>Schema for <c>AtlasGlossaryExtInfo</c>:
         /// <code>{
+        ///   categories: [
+        ///     {
+        ///       categoryGuid: string, # Optional. The GUID of the category.
+        ///       description: string, # Optional. The description of the category header.
+        ///       displayText: string, # Optional. The display text.
+        ///       parentCategoryGuid: string, # Optional. The GUID of the parent category.
+        ///       relationGuid: string, # Optional. The GUID of the relationship.
+        ///     }
+        ///   ], # Optional. An array of categories.
+        ///   language: string, # Optional. The language of the glossary.
+        ///   terms: [
+        ///     {
+        ///       description: string, # Optional. The description of the related term.
+        ///       displayText: string, # Optional. The display text.
+        ///       expression: string, # Optional. The expression of the term.
+        ///       relationGuid: string, # Optional. The GUID of the relationship.
+        ///       source: string, # Optional. The source of the term.
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of term relationship.
+        ///       steward: string, # Optional. The steward of the term.
+        ///       termGuid: string, # Optional. The GUID of the term.
+        ///     }
+        ///   ], # Optional. An array of related term headers.
+        ///   usage: string, # Optional. The usage of the glossary.
         ///   classifications: [
         ///     {
         ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
@@ -172,31 +198,11 @@ namespace Azure.Analytics.Purview.Catalog
         ///   shortDescription: string, # Optional. The short version of description.
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   guid: string, # Optional. The GUID of the object.
-        ///   categories: [
-        ///     {
-        ///       categoryGuid: string, # Optional. The GUID of the category.
-        ///       description: string, # Optional. The description of the category header.
-        ///       displayText: string, # Optional. The display text.
-        ///       parentCategoryGuid: string, # Optional. The GUID of the parent category.
-        ///       relationGuid: string, # Optional. The GUID of the relationship.
-        ///     }
-        ///   ], # Optional. An array of categories.
-        ///   language: string, # Optional. The language of the glossary.
-        ///   terms: [
-        ///     {
-        ///       description: string, # Optional. The description of the related term.
-        ///       displayText: string, # Optional. The display text.
-        ///       expression: string, # Optional. The expression of the term.
-        ///       relationGuid: string, # Optional. The GUID of the relationship.
-        ///       source: string, # Optional. The source of the term.
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of term relationship.
-        ///       steward: string, # Optional. The steward of the term.
-        ///       termGuid: string, # Optional. The GUID of the term.
-        ///     }
-        ///   ], # Optional. An array of related term headers.
-        ///   usage: string, # Optional. The usage of the glossary.
+        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;, # Optional. The glossary category information.
+        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. The glossary term information.
         /// }
         /// </code>
+        /// </details>
         /// 
         /// </remarks>
         public virtual Response GetGlossaries(int? limit = null, int? offset = null, string sort = null, bool? ignoreTermsAndCategories = null, RequestContext context = null)
@@ -514,7 +520,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Request Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasGlossaryCategory</c>:
+        /// Schema for <c>AtlasGlossaryCategory</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -573,7 +579,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasGlossaryCategory</c>:
+        /// Schema for <c>AtlasGlossaryCategory</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -660,7 +666,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Request Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasGlossaryCategory</c>:
+        /// Schema for <c>AtlasGlossaryCategory</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -719,7 +725,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasGlossaryCategory</c>:
+        /// Schema for <c>AtlasGlossaryCategory</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -1806,7 +1812,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>DictionaryOfpathsCic80AAtlasV2GlossaryCategoryCategoryguidRelatedGetResponses200ContentApplicationJsonSchemaAdditionalproperties</c>:
+        /// Schema for <c>AtlasRelatedCategoryHeader</c>:
         /// <code>{
         ///   categoryGuid: string, # Optional. The GUID of the category.
         ///   description: string, # Optional. The description of the category header.
@@ -1850,7 +1856,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>DictionaryOfpathsCic80AAtlasV2GlossaryCategoryCategoryguidRelatedGetResponses200ContentApplicationJsonSchemaAdditionalproperties</c>:
+        /// Schema for <c>AtlasRelatedCategoryHeader</c>:
         /// <code>{
         ///   categoryGuid: string, # Optional. The GUID of the category.
         ///   description: string, # Optional. The description of the category header.
@@ -1894,7 +1900,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasRelatedTermHeader</c>:
+        /// Schema for <c>AtlasRelatedTermHeader</c>:
         /// <code>{
         ///   description: string, # Optional. The description of the related term.
         ///   displayText: string, # Optional. The display text.
@@ -1941,7 +1947,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasRelatedTermHeader</c>:
+        /// Schema for <c>AtlasRelatedTermHeader</c>:
         /// <code>{
         ///   description: string, # Optional. The description of the related term.
         ///   displayText: string, # Optional. The display text.
@@ -3543,7 +3549,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Request Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasGlossaryTerm</c>:
+        /// Schema for <c>AtlasGlossaryTerm</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -3648,7 +3654,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasGlossaryTerm</c>:
+        /// Schema for <c>AtlasGlossaryTerm</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -3782,7 +3788,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Request Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasGlossaryTerm</c>:
+        /// Schema for <c>AtlasGlossaryTerm</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -3887,7 +3893,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasGlossaryTerm</c>:
+        /// Schema for <c>AtlasGlossaryTerm</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -4024,7 +4030,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasRelatedObjectId</c>:
+        /// Schema for <c>AtlasRelatedObjectId</c>:
         /// <code>{
         ///   guid: string, # Optional. The GUID of the object.
         ///   typeName: string, # Optional. The name of the type.
@@ -4076,7 +4082,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasRelatedObjectId</c>:
+        /// Schema for <c>AtlasRelatedObjectId</c>:
         /// <code>{
         ///   guid: string, # Optional. The GUID of the object.
         ///   typeName: string, # Optional. The name of the type.
@@ -4126,7 +4132,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Request Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasRelatedObjectId</c>:
+        /// Schema for <c>AtlasRelatedObjectId</c>:
         /// <code>{
         ///   guid: string, # Optional. The GUID of the object.
         ///   typeName: string, # Optional. The name of the type.
@@ -4177,7 +4183,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Request Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasRelatedObjectId</c>:
+        /// Schema for <c>AtlasRelatedObjectId</c>:
         /// <code>{
         ///   guid: string, # Optional. The GUID of the object.
         ///   typeName: string, # Optional. The name of the type.
@@ -4228,7 +4234,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Request Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasRelatedObjectId</c>:
+        /// Schema for <c>AtlasRelatedObjectId</c>:
         /// <code>{
         ///   guid: string, # Optional. The GUID of the object.
         ///   typeName: string, # Optional. The name of the type.
@@ -4279,7 +4285,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Request Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasRelatedObjectId</c>:
+        /// Schema for <c>AtlasRelatedObjectId</c>:
         /// <code>{
         ///   guid: string, # Optional. The GUID of the object.
         ///   typeName: string, # Optional. The name of the type.
@@ -4330,7 +4336,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Request Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasRelatedObjectId</c>:
+        /// Schema for <c>AtlasRelatedObjectId</c>:
         /// <code>{
         ///   guid: string, # Optional. The GUID of the object.
         ///   typeName: string, # Optional. The name of the type.
@@ -4381,7 +4387,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Request Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasRelatedObjectId</c>:
+        /// Schema for <c>AtlasRelatedObjectId</c>:
         /// <code>{
         ///   guid: string, # Optional. The GUID of the object.
         ///   typeName: string, # Optional. The name of the type.
@@ -4434,7 +4440,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>DictionaryOfpathsV84KwqAtlasV2GlossaryTermsTermguidRelatedGetResponses200ContentApplicationJsonSchemaAdditionalproperties</c>:
+        /// Schema for <c>AtlasRelatedTermHeader</c>:
         /// <code>{
         ///   description: string, # Optional. The description of the related term.
         ///   displayText: string, # Optional. The display text.
@@ -4481,7 +4487,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>DictionaryOfpathsV84KwqAtlasV2GlossaryTermsTermguidRelatedGetResponses200ContentApplicationJsonSchemaAdditionalproperties</c>:
+        /// Schema for <c>AtlasRelatedTermHeader</c>:
         /// <code>{
         ///   description: string, # Optional. The description of the related term.
         ///   displayText: string, # Optional. The display text.
@@ -5046,7 +5052,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasGlossaryCategory</c>:
+        /// Schema for <c>AtlasGlossaryCategory</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -5137,7 +5143,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasGlossaryCategory</c>:
+        /// Schema for <c>AtlasGlossaryCategory</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -5228,7 +5234,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasRelatedCategoryHeader</c>:
+        /// Schema for <c>AtlasRelatedCategoryHeader</c>:
         /// <code>{
         ///   categoryGuid: string, # Optional. The GUID of the category.
         ///   description: string, # Optional. The description of the category header.
@@ -5272,7 +5278,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasRelatedCategoryHeader</c>:
+        /// Schema for <c>AtlasRelatedCategoryHeader</c>:
         /// <code>{
         ///   categoryGuid: string, # Optional. The GUID of the category.
         ///   description: string, # Optional. The description of the category header.
@@ -5671,7 +5677,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasGlossaryTerm</c>:
+        /// Schema for <c>AtlasGlossaryTerm</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -5809,7 +5815,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasGlossaryTerm</c>:
+        /// Schema for <c>AtlasGlossaryTerm</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -5946,7 +5952,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasRelatedTermHeader</c>:
+        /// Schema for <c>AtlasRelatedTermHeader</c>:
         /// <code>{
         ///   description: string, # Optional. The description of the related term.
         ///   displayText: string, # Optional. The display text.
@@ -5993,7 +5999,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasRelatedTermHeader</c>:
+        /// Schema for <c>AtlasRelatedTermHeader</c>:
         /// <code>{
         ///   description: string, # Optional. The description of the related term.
         ///   displayText: string, # Optional. The display text.
@@ -6192,7 +6198,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasGlossaryTerm</c>:
+        /// Schema for <c>AtlasGlossaryTerm</c>:
         /// <code>{
         ///   classifications: [
         ///     {
@@ -6329,7 +6335,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasGlossaryTerm</c>:
+        /// Schema for <c>AtlasGlossaryTerm</c>:
         /// <code>{
         ///   classifications: [
         ///     {
