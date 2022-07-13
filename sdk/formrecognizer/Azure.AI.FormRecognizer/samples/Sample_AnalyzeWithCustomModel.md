@@ -25,10 +25,7 @@ To analyze a given file at a URI, use the `StartAnalyzeDocumentFromUri` method. 
 string modelId = "<modelId>";
 Uri fileUri = new Uri("<fileUri>");
 
-AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync(modelId, fileUri);
-
-await operation.WaitForCompletionAsync();
-
+AnalyzeDocumentOperation operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, modelId, fileUri);
 AnalyzeResult result = operation.Value;
 
 Console.WriteLine($"Document was analyzed with model with ID: {result.ModelId}");
@@ -60,10 +57,7 @@ string filePath = "<filePath>";
 
 using var stream = new FileStream(filePath, FileMode.Open);
 
-AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentAsync(modelId, stream);
-
-await operation.WaitForCompletionAsync();
-
+AnalyzeDocumentOperation operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, modelId, stream);
 AnalyzeResult result = operation.Value;
 
 Console.WriteLine($"Document was analyzed with model with ID: {result.ModelId}");

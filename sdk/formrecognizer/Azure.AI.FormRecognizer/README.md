@@ -197,10 +197,7 @@ Extract text, selection marks, table structures, styles, and paragraphs, along w
 ```C# Snippet:FormRecognizerExtractLayoutFromUriAsync
 Uri fileUri = new Uri("<fileUri>");
 
-AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-layout", fileUri);
-
-await operation.WaitForCompletionAsync();
-
+AnalyzeDocumentOperation operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-layout", fileUri);
 AnalyzeResult result = operation.Value;
 
 foreach (DocumentPage page in result.Pages)
@@ -287,10 +284,7 @@ Analyze text, selection marks, table structures, styles, paragraphs, and key-val
 ```C# Snippet:FormRecognizerAnalyzePrebuiltDocumentFromUriAsync
 Uri fileUri = new Uri("<fileUri>");
 
-AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-document", fileUri);
-
-await operation.WaitForCompletionAsync();
-
+AnalyzeDocumentOperation operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-document", fileUri);
 AnalyzeResult result = operation.Value;
 
 Console.WriteLine("Detected key-value pairs:");
@@ -379,10 +373,7 @@ Analyze textual elements, such as page words and lines, styles, paragraphs, and 
 ```C# Snippet:FormRecognizerAnalyzePrebuiltReadFromUriAsync
 Uri fileUri = new Uri("<fileUri>");
 
-AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-read", fileUri);
-
-await operation.WaitForCompletionAsync();
-
+AnalyzeDocumentOperation operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-read", fileUri);
 AnalyzeResult result = operation.Value;
 
 Console.WriteLine("Detected languages:");
@@ -442,10 +433,7 @@ string filePath = "<filePath>";
 
 using var stream = new FileStream(filePath, FileMode.Open);
 
-AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentAsync("prebuilt-invoice", stream);
-
-await operation.WaitForCompletionAsync();
-
+AnalyzeDocumentOperation operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-invoice", stream);
 AnalyzeResult result = operation.Value;
 
 // To see the list of all the supported fields returned by service and its corresponding types for the
@@ -564,9 +552,8 @@ var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureK
 // build modes and their differences, please see:
 // https://aka.ms/azsdk/formrecognizer/buildmode
 
-BuildModelOperation operation = await client.StartBuildModelAsync(trainingFileUri, DocumentBuildMode.Template);
-Response<DocumentModel> operationResponse = await operation.WaitForCompletionAsync();
-DocumentModel model = operationResponse.Value;
+BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, trainingFileUri, DocumentBuildMode.Template);
+DocumentModel model = operation.Value;
 
 Console.WriteLine($"  Model Id: {model.ModelId}");
 if (string.IsNullOrEmpty(model.Description))
@@ -592,10 +579,7 @@ Analyze text, field values, selection marks, and table structures, styles, and p
 string modelId = "<modelId>";
 Uri fileUri = new Uri("<fileUri>");
 
-AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync(modelId, fileUri);
-
-await operation.WaitForCompletionAsync();
-
+AnalyzeDocumentOperation operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, modelId, fileUri);
 AnalyzeResult result = operation.Value;
 
 Console.WriteLine($"Document was analyzed with model with ID: {result.ModelId}");
@@ -647,9 +631,8 @@ await foreach (DocumentModelSummary modelSummary in models)
 
 // Create a new model to store in the account
 Uri trainingFileUri = new Uri("<trainingFileUri>");
-BuildModelOperation operation = await client.StartBuildModelAsync(trainingFileUri, DocumentBuildMode.Template);
-Response<DocumentModel> operationResponse = await operation.WaitForCompletionAsync();
-DocumentModel model = operationResponse.Value;
+BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, trainingFileUri, DocumentBuildMode.Template);
+DocumentModel model = operation.Value;
 
 // Get the model that was just created
 DocumentModel newCreatedModel = await client.GetModelAsync(model.ModelId);
@@ -693,9 +676,8 @@ foreach (DocumentModelSummary modelSummary in models.Take(10))
 // Create a new model to store in the account
 
 Uri trainingFileUri = new Uri("<trainingFileUri>");
-BuildModelOperation operation = client.StartBuildModel(trainingFileUri, DocumentBuildMode.Template);
-Response<DocumentModel> operationResponse = await operation.WaitForCompletionAsync();
-DocumentModel model = operationResponse.Value;
+BuildModelOperation operation = client.BuildModel(WaitUntil.Completed, trainingFileUri, DocumentBuildMode.Template);
+DocumentModel model = operation.Value;
 
 // Get the model that was just created
 DocumentModel newCreatedModel = client.GetModel(model.ModelId);
@@ -721,8 +703,7 @@ For example, if you submit a receipt image with an invalid `Uri`, a `400` error 
 ```C# Snippet:DocumentAnalysisBadRequest
 try
 {
-    AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-receipt", new Uri("http://invalid.uri"));
-    await operation.WaitForCompletionAsync();
+    AnalyzeDocumentOperation operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-receipt", new Uri("http://invalid.uri"));
 }
 catch (RequestFailedException e)
 {

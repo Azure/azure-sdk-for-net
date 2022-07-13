@@ -24,10 +24,7 @@ To extract the layout from a given file at a URI, use the `StartAnalyzeDocumentF
 ```C# Snippet:FormRecognizerExtractLayoutFromUriAsync
 Uri fileUri = new Uri("<fileUri>");
 
-AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-layout", fileUri);
-
-await operation.WaitForCompletionAsync();
-
+AnalyzeDocumentOperation operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-layout", fileUri);
 AnalyzeResult result = operation.Value;
 
 foreach (DocumentPage page in result.Pages)
@@ -114,10 +111,7 @@ To extract the layout from a given file at a file stream, use the `StartAnalyzeD
 string filePath = "<filePath>";
 using var stream = new FileStream(filePath, FileMode.Open);
 
-AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentAsync("prebuilt-layout", stream);
-
-await operation.WaitForCompletionAsync();
-
+AnalyzeDocumentOperation operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", stream);
 AnalyzeResult result = operation.Value;
 
 foreach (DocumentPage page in result.Pages)

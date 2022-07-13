@@ -24,10 +24,7 @@ To analyze a given file at a URI, use the `StartAnalyzeDocumentFromUri` method a
 ```C# Snippet:FormRecognizerAnalyzePrebuiltDocumentFromUriAsync
 Uri fileUri = new Uri("<fileUri>");
 
-AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-document", fileUri);
-
-await operation.WaitForCompletionAsync();
-
+AnalyzeDocumentOperation operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-document", fileUri);
 AnalyzeResult result = operation.Value;
 
 Console.WriteLine("Detected key-value pairs:");
@@ -116,10 +113,7 @@ To analyze a given file at a file stream, use the `StartAnalyzeDocument` method 
 string filePath = "<filePath>";
 using var stream = new FileStream(filePath, FileMode.Open);
 
-AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentAsync("prebuilt-document", stream);
-
-await operation.WaitForCompletionAsync();
-
+AnalyzeDocumentOperation operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-document", stream);
 AnalyzeResult result = operation.Value;
 
 Console.WriteLine("Detected key-value pairs:");

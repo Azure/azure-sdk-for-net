@@ -224,10 +224,7 @@ Analyzing prebuilt models like business cards, identity documents, invoices, and
 ```C# Snippet:FormRecognizerAnalyzeWithPrebuiltModelFromUriAsync
 Uri fileUri = new Uri("<fileUri>");
 
-AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-invoice", fileUri);
-
-await operation.WaitForCompletionAsync();
-
+AnalyzeDocumentOperation operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-invoice", fileUri);
 AnalyzeResult result = operation.Value;
 
 // To see the list of all the supported fields returned by service and its corresponding types for the
@@ -386,10 +383,7 @@ Analyzing document layout with `4.0.x`:
 ```C# Snippet:FormRecognizerExtractLayoutFromUriAsync
 Uri fileUri = new Uri("<fileUri>");
 
-AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-layout", fileUri);
-
-await operation.WaitForCompletionAsync();
-
+AnalyzeDocumentOperation operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-layout", fileUri);
 AnalyzeResult result = operation.Value;
 
 foreach (DocumentPage page in result.Pages)
@@ -475,10 +469,7 @@ Analyzing general prebuilt document types with `4.0.x`:
 ```C# Snippet:FormRecognizerAnalyzePrebuiltDocumentFromUriAsync
 Uri fileUri = new Uri("<fileUri>");
 
-AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-document", fileUri);
-
-await operation.WaitForCompletionAsync();
-
+AnalyzeDocumentOperation operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-document", fileUri);
 AnalyzeResult result = operation.Value;
 
 Console.WriteLine("Detected key-value pairs:");
@@ -629,9 +620,8 @@ var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureK
 // build modes and their differences, please see:
 // https://aka.ms/azsdk/formrecognizer/buildmode
 
-BuildModelOperation operation = await client.StartBuildModelAsync(trainingFileUri, DocumentBuildMode.Template);
-Response<DocumentModel> operationResponse = await operation.WaitForCompletionAsync();
-DocumentModel model = operationResponse.Value;
+BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, trainingFileUri, DocumentBuildMode.Template);
+DocumentModel model = operation.Value;
 
 Console.WriteLine($"  Model Id: {model.ModelId}");
 if (string.IsNullOrEmpty(model.Description))
@@ -718,10 +708,7 @@ Analyze a document using a custom model with `4.0.x`:
 string modelId = "<modelId>";
 Uri fileUri = new Uri("<fileUri>");
 
-AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync(modelId, fileUri);
-
-await operation.WaitForCompletionAsync();
-
+AnalyzeDocumentOperation operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, modelId, fileUri);
 AnalyzeResult result = operation.Value;
 
 Console.WriteLine($"Document was analyzed with model with ID: {result.ModelId}");
