@@ -418,7 +418,7 @@ ServiceBusClient client = new ServiceBusClient(fullyQualifiedNamespace, new Defa
 
 If an alternative host name is needed to establish the connection to the service, a custom endpoint address can be provided through the `ServiceBusClientOptions`. The client will use this endpoint to open the initial connection, and then will use the default endpoint provided by the Service Bus service for all following operations and validation.
 
-```C#:Snippet:ServiceBusCustomEndpoint
+```C# Snippet:ServiceBusCustomEndpoint
 // Connect to the service using a custom endpoint
 string connectionString = "<connection_string>";
 string customEndpoint = "<custom_endpoint";
