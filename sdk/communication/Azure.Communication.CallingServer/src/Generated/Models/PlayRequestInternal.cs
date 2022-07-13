@@ -45,6 +45,6 @@ namespace Azure.Communication.CallingServer
         /// </summary>
         public IList<CommunicationIdentifierModel> PlayTo { get; }
         /// <summary> Defines options for playing the audio. </summary>
-        public PlayOptions PlayOptions { get; set; }
+        public PlayOptionsInternal PlayOptions { get; set; }
     }
 }

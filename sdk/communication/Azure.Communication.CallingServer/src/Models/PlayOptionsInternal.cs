@@ -5,8 +5,8 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    [CodeGenModel("PlayOption")]
-    internal partial class PlayOptionInternal
+    [CodeGenModel("PlayOptions")]
+    internal partial class PlayOptionsInternal
     {
     }
 }

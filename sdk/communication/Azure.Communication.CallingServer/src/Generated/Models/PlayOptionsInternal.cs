@@ -8,11 +8,11 @@
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The PlayOptions. </summary>
-    public partial class PlayOptions
+    internal partial class PlayOptionsInternal
     {
-        /// <summary> Initializes a new instance of PlayOptions. </summary>
+        /// <summary> Initializes a new instance of PlayOptionsInternal. </summary>
         /// <param name="loop"> The option to play the provided audio source in loop when set to true. </param>
-        public PlayOptions(bool loop)
+        public PlayOptionsInternal(bool loop)
         {
             Loop = loop;
         }
