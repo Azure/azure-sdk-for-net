@@ -1,14 +1,15 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0-beta.2 (2022-07-12)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Added Update methods in resource classes.
 
 ### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.2.0
+- Upgraded dependent `Azure.Core` to 1.25.0
 
 ## 1.0.0-beta.1 (2022-06-02)
 
