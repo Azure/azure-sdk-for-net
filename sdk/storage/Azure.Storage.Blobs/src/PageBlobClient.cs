@@ -1103,13 +1103,15 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response<PageInfo> UploadPages(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             Stream content,
             long offset,
-            byte[] transactionalContentHash = default,
-            PageBlobRequestConditions conditions = default,
-            IProgress<long> progressHandler = default,
-            CancellationToken cancellationToken = default)
+            byte[] transactionalContentHash,
+            PageBlobRequestConditions conditions,
+            IProgress<long> progressHandler,
+            CancellationToken cancellationToken)
         {
             return UploadPagesInternal(
                 content,
@@ -1169,13 +1171,15 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response<PageInfo>> UploadPagesAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             Stream content,
             long offset,
-            byte[] transactionalContentHash = default,
-            PageBlobRequestConditions conditions = default,
-            IProgress<long> progressHandler = default,
-            CancellationToken cancellationToken = default)
+            byte[] transactionalContentHash,
+            PageBlobRequestConditions conditions,
+            IProgress<long> progressHandler,
+            CancellationToken cancellationToken)
         {
             return await UploadPagesInternal(
                 content,
