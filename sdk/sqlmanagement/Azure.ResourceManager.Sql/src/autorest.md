@@ -327,13 +327,10 @@ directive:
       transform: >
           $['x-ms-client-name'] = 'IsPublicDataEndpointEnabled'
     - from: LocationCapabilities.json
-      where: $.definitions..instancePoolSupported
+      where: $.definitions.ManagedInstanceVcoresCapability.properties
       transform: >
-          $['x-ms-client-name'] = 'IsInstancePoolSupported'
-    - from: LocationCapabilities.json
-      where: $.definitions..standaloneSupported
-      transform: >
-          $['x-ms-client-name'] = 'IsStandaloneSupported'
+          $.instancePoolSupported['x-ms-client-name'] = 'IsInstancePoolSupported'；
+          $.standaloneSupported['x-ms-client-name'] = 'IsStandaloneSupported'；
     - from: swagger-document
       where: $.definitions..enabled
       transform: >
