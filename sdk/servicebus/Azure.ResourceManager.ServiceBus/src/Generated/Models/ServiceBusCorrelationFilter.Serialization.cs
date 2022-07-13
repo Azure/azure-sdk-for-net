@@ -11,16 +11,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    public partial class CorrelationFilter : IUtf8JsonSerializable
+    public partial class ServiceBusCorrelationFilter : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Properties))
+            if (Optional.IsCollectionDefined(ApplicationProperties))
             {
                 writer.WritePropertyName("properties");
                 writer.WriteStartObject();
-                foreach (var item in Properties)
+                foreach (var item in ApplicationProperties)
                 {
                     writer.WritePropertyName(item.Key);
                     writer.WriteStringValue(item.Value);
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 writer.WritePropertyName("replyTo");
                 writer.WriteStringValue(ReplyTo);
             }
-            if (Optional.IsDefined(Label))
+            if (Optional.IsDefined(Subject))
             {
                 writer.WritePropertyName("label");
-                writer.WriteStringValue(Label);
+                writer.WriteStringValue(Subject);
             }
             if (Optional.IsDefined(SessionId))
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             writer.WriteEndObject();
         }
 
-        internal static CorrelationFilter DeserializeCorrelationFilter(JsonElement element)
+        internal static ServiceBusCorrelationFilter DeserializeServiceBusCorrelationFilter(JsonElement element)
         {
             Optional<IDictionary<string, string>> properties = default;
             Optional<string> correlationId = default;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     continue;
                 }
             }
-            return new CorrelationFilter(Optional.ToDictionary(properties), correlationId.Value, messageId.Value, to.Value, replyTo.Value, label.Value, sessionId.Value, replyToSessionId.Value, contentType.Value, Optional.ToNullable(requiresPreprocessing));
+            return new ServiceBusCorrelationFilter(Optional.ToDictionary(properties), correlationId.Value, messageId.Value, to.Value, replyTo.Value, label.Value, sessionId.Value, replyToSessionId.Value, contentType.Value, Optional.ToNullable(requiresPreprocessing));
         }
     }
 }

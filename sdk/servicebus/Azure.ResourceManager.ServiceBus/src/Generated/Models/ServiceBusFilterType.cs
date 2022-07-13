@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     /// <summary> Rule filter types. </summary>
-    public enum FilterType
+    public enum ServiceBusFilterType
     {
         /// <summary> SqlFilter. </summary>
         SqlFilter,
