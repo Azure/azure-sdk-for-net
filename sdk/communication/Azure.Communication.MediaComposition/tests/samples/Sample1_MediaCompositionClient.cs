@@ -69,15 +69,15 @@ namespace Azure.Communication.MediaComposition.Tests.samples
         {
             var mediaCompositionClient = CreateClient();
             await CreateMediaCompositionHelper(mediaCompositionClient);
-            #region Snippet:UpdateMediaComposition
-            var layout = new PresenterLayout("jill", "jack")
+            #region Snippet:UpdateLayout
+            var layout = new MediaCompositionLayout()
             {
                 Resolution = new(720, 480),
                 SupportPosition = SupportPosition.BottomRight,
                 SupportAspectRatio = 3 / 2
             };
-            var response = await mediaCompositionClient.UpdateAsync(mediaCompositionId, layout);
-            #endregion Snippet:UpdateMediaComposition
+            var response = await mediaCompositionClient.UpdateLayoutAsync(mediaCompositionId, layout);
+            #endregion Snippet:UpdateLayout
             Assert.AreEqual(response.Value.Id, mediaCompositionId);
             Assert.AreEqual(response.Value.Layout.Resolution.Width, 720);
             Assert.AreEqual(response.Value.Layout.Resolution.Height, 480);
@@ -85,6 +85,107 @@ namespace Azure.Communication.MediaComposition.Tests.samples
             await mediaCompositionClient.DeleteAsync(mediaCompositionId);
         }
 
+        [Test]
+        public async Task AddInputsMediaCompositionAsync()
+        {
+            var mediaCompositionClient = CreateClient();
+            await CreateMediaCompositionHelper(mediaCompositionClient);
+            #region Snippet:AddInputs
+            var inputsToAdd = new Dictionary<string, MediaInput>()
+            {
+                ["james"] = new()
+                {
+                    Participant = new(
+                        id: new() { MicrosoftTeamsUser = new("f3ba9014-6dca-4456-8ec0-fa03cfa2b70p") },
+                        call: "teamsMeeting")
+                    {
+                        PlaceholderImageUri = "https://imageendpoint"
+                    }
+                }
+            };
+            var response = await mediaCompositionClient.AddInputsAsync(mediaCompositionId, inputsToAdd);
+            #endregion Snippet:AddInputs
+            Assert.AreEqual(response.Value.Id, mediaCompositionId);
+            response.Value.Inputs.TryGetValue("james", out var james);
+            Assert.IsNotNull(james);
+            response.Value.Inputs.TryGetValue("jack", out var jack);
+            Assert.IsNotNull(jack);
+            await mediaCompositionClient.DeleteAsync(mediaCompositionId);
+        }
+
+        [Test]
+        public async Task RemoveInputsMediaCompositionAsync()
+        {
+            var mediaCompositionClient = CreateClient();
+            await CreateMediaCompositionHelper(mediaCompositionClient);
+            var layout = new MediaCompositionLayout()
+            {
+                Resolution = new(720, 480),
+                Presenter = new("jill", "jack")
+                {
+                    SupportPosition = SupportPosition.BottomRight,
+                    SupportAspectRatio = 3 / 2
+                }
+            };
+            await mediaCompositionClient.UpdateLayoutAsync(mediaCompositionId, layout);
+            #region Snippet:RemoveInputs
+            var inputIdsToRemove = new List<string>()
+            {
+                "jane", "jerry"
+            };
+            var response = await mediaCompositionClient.RemoveInputsAsync(mediaCompositionId, inputIdsToRemove);
+            #endregion Snippet:RemoveInputs
+            Assert.AreEqual(response.Value.Id, mediaCompositionId);
+            response.Value.Inputs.TryGetValue("jane", out var jane);
+            Assert.IsNull(jane);
+            response.Value.Inputs.TryGetValue("jerry", out var jerry);
+            Assert.IsNull(jerry);
+            await mediaCompositionClient.DeleteAsync(mediaCompositionId);
+        }
+
+        [Test]
+        public async Task AddOutputsMediaCompositionAsync()
+        {
+            var mediaCompositionClient = CreateClient();
+            await CreateMediaCompositionHelper(mediaCompositionClient);
+            #region Snippet:AddOutputs
+            var outputsToAdd = new Dictionary<string, MediaOutput>()
+            {
+                {
+                    "youtube",
+                    new()
+                    {
+                        Rtmp = new("key", new(1920, 1080), "rtmp://a.rtmp.youtube.com/live2")
+                    }
+                }
+            };
+            var response = await mediaCompositionClient.AddOutputsAsync(mediaCompositionId, outputsToAdd);
+            #endregion Snippet:AddOutputs
+            Assert.AreEqual(response.Value.Id, mediaCompositionId);
+            response.Value.Outputs.TryGetValue("youtube", out var youtube);
+            Assert.IsNotNull(youtube);
+            response.Value.Outputs.TryGetValue("acsGroupCall", out var acsGroupCall);
+            Assert.IsNotNull(acsGroupCall);
+            await mediaCompositionClient.DeleteAsync(mediaCompositionId);
+        }
+
+        [Test]
+        public async Task RemoveOutputsMediaCompositionAsync()
+        {
+            var mediaCompositionClient = CreateClient();
+            await CreateMediaCompositionHelper(mediaCompositionClient);
+            #region Snippet:RemoveOutputs
+            var outputIdsToRemove = new List<string>()
+            {
+                "acsGroupCall"
+            };
+            var response = await mediaCompositionClient.RemoveOutputsAsync(mediaCompositionId, outputIdsToRemove);
+            #endregion Snippet:RemoveOutputs
+            Assert.AreEqual(response.Value.Id, mediaCompositionId);
+            response.Value.Outputs.TryGetValue("acsGroupCall", out var acsGroupCall);
+            Assert.IsNull(acsGroupCall);
+            await mediaCompositionClient.DeleteAsync(mediaCompositionId);
+        }
         [Test]
         public async Task StartMediaCompositionAsync()
         {

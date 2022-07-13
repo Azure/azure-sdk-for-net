@@ -122,8 +122,8 @@ var gridMediaCompositionResponse = await mediaCompositionClient.GetAsync(mediaCo
 
 ### Updating an existing media composition
 
-Note: Updating the `groupCallInput` and the `teamsMeetingInput` is currently not supported. A new media composition will need to be created if `groupCallInput` and the `teamsMeetingInput` needs to change.
-```C# Snippet:UpdateMediaComposition
+You can update the layout:
+```C# Snippet:UpdateLayout
 var layout = new MediaCompositionLayout()
 {
     Resolution = new(720, 480),
@@ -133,7 +133,57 @@ var layout = new MediaCompositionLayout()
         SupportAspectRatio = 3 / 2
     }
 };
-var response = await mediaCompositionClient.UpdateAsync(mediaCompositionId, layout);
+var response = await mediaCompositionClient.UpdateLayoutAsync(mediaCompositionId, layout);
+```
+
+Note: Updating `GroupCall`, `Room`, and `TeamsMeeting` input kind is currently not supported. A new media composition will need to be created if `GroupCall`, `Room`, or `TeamsMeeting` inputs needs to change.
+You can add or remove an input:
+
+```C# Snippet:AddInputs
+var inputsToAdd = new Dictionary<string, MediaInput>()
+{
+    ["james"] = new()
+    {
+        Participant = new(
+            id: new() { MicrosoftTeamsUser = new("f3ba9014-6dca-4456-8ec0-fa03cfa2b70p") },
+            call: "teamsMeeting")
+        {
+            PlaceholderImageUri = "https://imageendpoint"
+        }
+    }
+};
+var response = await mediaCompositionClient.AddInputsAsync(mediaCompositionId, inputsToAdd);
+```
+
+```C# Snippet:RemoveInputs
+var inputIdsToRemove = new List<string>()
+{
+    "jane", "jerry"
+};
+var response = await mediaCompositionClient.RemoveInputsAsync(mediaCompositionId, inputIdsToRemove);
+```
+
+You also can add or remove an output:
+```C# Snippet:AddOutputs
+var outputsToAdd = new Dictionary<string, MediaOutput>()
+{
+    {
+        "youtube",
+        new()
+        {
+            Rtmp = new("key", new(1920, 1080), "rtmp://a.rtmp.youtube.com/live2")
+        }
+    }
+};
+var response = await mediaCompositionClient.AddOutputsAsync(mediaCompositionId, outputsToAdd);
+```
+
+```C# Snippet:RemoveOutputs
+var outputIdsToRemove = new List<string>()
+{
+    "acsGroupCall"
+};
+var response = await mediaCompositionClient.RemoveOutputsAsync(mediaCompositionId, outputIdsToRemove);
 ```
 
 ### Starting the media composition to start streaming

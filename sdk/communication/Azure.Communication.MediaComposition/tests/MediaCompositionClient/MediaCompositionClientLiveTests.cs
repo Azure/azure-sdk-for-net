@@ -248,8 +248,11 @@ namespace Azure.Communication.MediaComposition.Tests
             {
                 Resolution = new(1920, 1080)
             };
-            var response = await mediaCompositionClient.UpdateAsync(mediaCompositionId, updatedLayout);
-            Assert.AreEqual(response.Value.Layout.GetType(), typeof(GridLayout));
+            var response = await mediaCompositionClient.UpdateLayoutAsync(mediaCompositionId, updatedLayout);
+            Assert.AreEqual(response.Value.Layout.Grid.Columns, updatedLayout.Grid.Columns);
+            Assert.AreEqual(response.Value.Layout.Grid.Rows, updatedLayout.Grid.Rows);
+            Assert.AreEqual(response.Value.Layout.Grid.InputIds.Count, 1);
+            Assert.IsNull(response.Value.Layout.Presenter);
 
             // Inputs and Outputs set to null by default and should not change
             Assert.AreEqual(response.Value.Inputs.Count, 3);
@@ -264,7 +267,7 @@ namespace Azure.Communication.MediaComposition.Tests
             try
             {
                 var mediaCompositionClient = CreateClient();
-                var response = await mediaCompositionClient.UpdateAsync("nonexistentMediaCompositionId");
+                var response = await mediaCompositionClient.UpdateLayoutAsync("nonexistentMediaCompositionId", null);
             }
             catch (RequestFailedException ex)
             {
