@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver
 {
-    public partial class DnsResolverData : IUtf8JsonSerializable
+    public partial class DnsResolverOutboundEndpointData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.DnsResolver
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            writer.WritePropertyName("virtualNetwork");
-            JsonSerializer.Serialize(writer, VirtualNetwork); writer.WriteEndObject();
+            writer.WritePropertyName("subnet");
+            JsonSerializer.Serialize(writer, Subnet); writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static DnsResolverData DeserializeDnsResolverData(JsonElement element)
+        internal static DnsResolverOutboundEndpointData DeserializeDnsResolverOutboundEndpointData(JsonElement element)
         {
             Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -49,8 +49,7 @@ namespace Azure.ResourceManager.DnsResolver
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            WritableSubResource virtualNetwork = default;
-            Optional<DnsResolverState> dnsResolverState = default;
+            WritableSubResource subnet = default;
             Optional<DnsResolverProvisioningState> provisioningState = default;
             Optional<string> resourceGuid = default;
             foreach (var property in element.EnumerateObject())
@@ -119,19 +118,9 @@ namespace Azure.ResourceManager.DnsResolver
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("virtualNetwork"))
+                        if (property0.NameEquals("subnet"))
                         {
-                            virtualNetwork = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
-                            continue;
-                        }
-                        if (property0.NameEquals("dnsResolverState"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            dnsResolverState = new DnsResolverState(property0.Value.GetString());
+                            subnet = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -153,7 +142,7 @@ namespace Azure.ResourceManager.DnsResolver
                     continue;
                 }
             }
-            return new DnsResolverData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), virtualNetwork, Optional.ToNullable(dnsResolverState), Optional.ToNullable(provisioningState), resourceGuid.Value);
+            return new DnsResolverOutboundEndpointData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), subnet, Optional.ToNullable(provisioningState), resourceGuid.Value);
         }
     }
 }
