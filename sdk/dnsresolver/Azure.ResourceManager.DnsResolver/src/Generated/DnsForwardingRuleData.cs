@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DnsResolver
 
             DomainName = domainName;
             TargetDnsServers = targetDnsServers.ToList();
-            Metadata = new ChangeTrackingDictionary<string, BinaryData>();
+            Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of DnsForwardingRuleData. </summary>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="metadata"> Metadata attached to the forwarding rule. </param>
         /// <param name="dnsForwardingRuleState"> The state of forwarding rule. </param>
         /// <param name="provisioningState"> The current provisioning state of the forwarding rule. This is a read-only property and any attempt to set this value will be ignored. </param>
-        internal DnsForwardingRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string domainName, IList<TargetDnsServer> targetDnsServers, IDictionary<string, BinaryData> metadata, DnsForwardingRuleState? dnsForwardingRuleState, DnsResolverProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal DnsForwardingRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string domainName, IList<TargetDnsServer> targetDnsServers, IDictionary<string, string> metadata, DnsForwardingRuleState? dnsForwardingRuleState, DnsResolverProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
             DomainName = domainName;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <summary> DNS servers to forward the DNS query to. </summary>
         public IList<TargetDnsServer> TargetDnsServers { get; }
         /// <summary> Metadata attached to the forwarding rule. </summary>
-        public IDictionary<string, BinaryData> Metadata { get; }
+        public IDictionary<string, string> Metadata { get; }
         /// <summary> The state of forwarding rule. </summary>
         public DnsForwardingRuleState? DnsForwardingRuleState { get; set; }
         /// <summary> The current provisioning state of the forwarding rule. This is a read-only property and any attempt to set this value will be ignored. </summary>

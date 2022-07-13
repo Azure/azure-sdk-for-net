@@ -60,8 +60,5 @@ directive:
   - from: dnsresolver.json
     where: $.definitions
     transform: >
-      $.ForwardingRuleProperties.properties.metadata.additionalProperties.type = 'object';
-      $.ForwardingRulePatchProperties.properties.metadata.additionalProperties.type = 'object';
-      $.VirtualNetworkLinkProperties.properties.metadata.additionalProperties.type = 'object';
       $.VirtualNetworkDnsForwardingRuleset.properties.id['x-ms-format'] = 'arm-id';
 ```

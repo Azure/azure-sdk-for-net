@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -18,13 +17,13 @@ namespace Azure.ResourceManager.DnsResolver.Models
         public DnsForwardingRulePatch()
         {
             TargetDnsServers = new ChangeTrackingList<TargetDnsServer>();
-            Metadata = new ChangeTrackingDictionary<string, BinaryData>();
+            Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> DNS servers to forward the DNS query to. </summary>
         public IList<TargetDnsServer> TargetDnsServers { get; }
         /// <summary> Metadata attached to the forwarding rule. </summary>
-        public IDictionary<string, BinaryData> Metadata { get; }
+        public IDictionary<string, string> Metadata { get; }
         /// <summary> The state of forwarding rule. </summary>
         public DnsForwardingRuleState? DnsForwardingRuleState { get; set; }
     }

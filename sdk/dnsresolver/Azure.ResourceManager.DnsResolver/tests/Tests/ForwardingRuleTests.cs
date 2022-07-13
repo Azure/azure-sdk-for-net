@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -135,7 +134,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var newTagValue = Recording.GenerateAlphaNumericId("tagValue");
 
             var patchableForwardingRuleData = new DnsForwardingRulePatch();
-            patchableForwardingRuleData.Metadata.Add(newTagKey, BinaryData.FromString(newTagValue));
+            patchableForwardingRuleData.Metadata.Add(newTagKey, newTagValue);
 
             // ACT
             var patchedForwardingRule = await createdForwardingRule.Value.UpdateAsync(patchableForwardingRuleData);

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DnsResolver
             }
 
             VirtualNetwork = virtualNetwork;
-            Metadata = new ChangeTrackingDictionary<string, BinaryData>();
+            Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of DnsForwardingRulesetVirtualNetworkLinkData. </summary>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="virtualNetwork"> The reference to the virtual network. This cannot be changed after creation. </param>
         /// <param name="metadata"> Metadata attached to the virtual network link. </param>
         /// <param name="provisioningState"> The current provisioning state of the virtual network link. This is a read-only property and any attempt to set this value will be ignored. </param>
-        internal DnsForwardingRulesetVirtualNetworkLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, WritableSubResource virtualNetwork, IDictionary<string, BinaryData> metadata, DnsResolverProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal DnsForwardingRulesetVirtualNetworkLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, WritableSubResource virtualNetwork, IDictionary<string, string> metadata, DnsResolverProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
             VirtualNetwork = virtualNetwork;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Metadata attached to the virtual network link. </summary>
-        public IDictionary<string, BinaryData> Metadata { get; }
+        public IDictionary<string, string> Metadata { get; }
         /// <summary> The current provisioning state of the virtual network link. This is a read-only property and any attempt to set this value will be ignored. </summary>
         public DnsResolverProvisioningState? ProvisioningState { get; }
     }

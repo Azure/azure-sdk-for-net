@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -38,11 +37,7 @@ namespace Azure.ResourceManager.DnsResolver
                 foreach (var item in Metadata)
                 {
                     writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
-#endif
+                    writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -64,7 +59,7 @@ namespace Azure.ResourceManager.DnsResolver
             Optional<SystemData> systemData = default;
             string domainName = default;
             IList<TargetDnsServer> targetDnsServers = default;
-            Optional<IDictionary<string, BinaryData>> metadata = default;
+            Optional<IDictionary<string, string>> metadata = default;
             Optional<DnsForwardingRuleState> forwardingRuleState = default;
             Optional<DnsResolverProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
@@ -135,10 +130,10 @@ namespace Azure.ResourceManager.DnsResolver
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
+                                dictionary.Add(property1.Name, property1.Value.GetString());
                             }
                             metadata = dictionary;
                             continue;
