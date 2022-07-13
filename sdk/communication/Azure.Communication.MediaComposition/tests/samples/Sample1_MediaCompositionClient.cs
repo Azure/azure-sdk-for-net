@@ -189,6 +189,7 @@ namespace Azure.Communication.MediaComposition.Tests.samples
             Assert.IsNull(acsGroupCall);
             await mediaCompositionClient.DeleteAsync(mediaCompositionId);
         }
+
         [Test]
         public async Task StartMediaCompositionAsync()
         {
