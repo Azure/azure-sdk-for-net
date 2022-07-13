@@ -84,16 +84,10 @@
     <RemoveDuplicates Inputs="@(ProjectsToInclude)">
       <Output TaskParameter="Filtered" ItemName="ProjectsToIncludeFitered"/>
     </RemoveDuplicates>
-    <Message Text="%(ProjectsToIncludeFitered.Identity)" Importance="High" />
+    <!-- <Message Text="%(ProjectsToIncludeFitered.Identity)" Importance="High" /> -->
 
-    <PropertyGroup>
-      <_PropFileLines>$(_PropFileLines)&#13;&lt;Project&gt;</_PropFileLines>
-      <_PropFileLines>$(_PropFileLines)&#13;  &lt;ItemGroup&gt;</_PropFileLines>
-      <_PropFileLines>$(_PropFileLines)&#13;    &lt;ProjectReference Include='%(ProjectsToIncludeFitered.Identity)' /&gt;</_PropFileLines>
-      <_PropFileLines>$(_PropFileLines)&#13;  &lt;/ItemGroup&gt;</_PropFileLines>
-      <_PropFileLines>$(_PropFileLines)&#13;&lt;/Project&gt;</_PropFileLines>
-    </PropertyGroup>
-    <Message Text="$(_PropFileLines)" Importance="High" />
-    <WriteLinesToFile File="projects.props" Lines="$(_PropFileLines)" Overwrite="true" />
+    <WriteLinesToFile File="projects.props" Lines="%3CProject%3E%0A%20%20%3CItemGroup%3E" Overwrite="true" />
+    <WriteLinesToFile File="projects.props" Lines="%20%20%20%20%3CProjectReference%20Include%3D'%(ProjectsToIncludeFitered.Identity)'%20%2F%3E" />
+    <WriteLinesToFile File="projects.props" Lines="%20%20%3C%2FItemGroup%3E%0A%3C%2FProject%3E" />
   </Target>
 </Project>
