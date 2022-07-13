@@ -20,6 +20,15 @@ namespace Azure.ResourceManager.EnergyServices.Models
         }
 
         /// <summary> Initializes a new instance of EnergyServiceProperties. </summary>
+        /// <param name="authAppId"></param>
+        /// <param name="dataPartitionNames"></param>
+        public EnergyServiceProperties(string authAppId, IList<DataPartitionNames> dataPartitionNames)
+        {
+            DataPartitionNames = dataPartitionNames;
+            AuthAppId = authAppId;
+        }
+
+        /// <summary> Initializes a new instance of EnergyServiceProperties. </summary>
         /// <param name="dnsName"></param>
         /// <param name="provisioningState"></param>
         /// <param name="authAppId"></param>

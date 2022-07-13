@@ -29,9 +29,11 @@ namespace Azure.ResourceManager.EnergyServices.Tests
         }
 
         [SetUp]
-        public void CreateCommonClient()
+        public async Task CreateCommonClient()
         {
             ArmClient = GetArmClient();
+            Subscription = await ArmClient.GetDefaultSubscriptionAsync();
+            ResourceGroupsOperations = Subscription.GetResourceGroups();
         }
 
         protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)

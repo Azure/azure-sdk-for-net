@@ -9,8 +9,8 @@ namespace Azure.ResourceManager.EnergyServices.Tests.Helpers
 {
     public class EnergyServicesTestUtilities
     {
-        public const string DefaultResourceGroupName = "rg-edgeorder-sdk-tests";
-        public const string DefaultResourceLocation = "eastus";
+        public const string DefaultResourceGroupName = "rg-komakkar-sdk-tests";
+        public const string DefaultResourceLocation = "centraluseuap";
         // komakkar
         public const string DefaultAddressName = "edgeorder-sdk-tests-Address1";
         public const string DefaultOrderItemName = "edgeorder-sdk-tests-OrderItem1";
