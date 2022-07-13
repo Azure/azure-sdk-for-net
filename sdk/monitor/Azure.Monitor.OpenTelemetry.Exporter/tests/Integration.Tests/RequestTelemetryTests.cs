@@ -5,25 +5,25 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
+using Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.AspNetCoreWebApp;
 using Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.TestFramework;
-using Azure.Monitor.OpenTelemetry.Exporter.Models;
+
+using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.DependencyInjection;
+
+using OpenTelemetry;
+using OpenTelemetry.Trace;
 
 using Xunit;
 using Xunit.Abstractions;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
 {
-    public class RequestTelemetryTests : IClassFixture<OpenTelemetryWebApplicationFactory<AspNetCoreWebApp.Startup>>
+    public class RequestTelemetryTests : WebApplicationTestsBase
     {
-        private readonly OpenTelemetryWebApplicationFactory<AspNetCoreWebApp.Startup> factory;
-        private readonly ITestOutputHelper output;
-        private readonly TelemetryItemOutputHelper telemetryOutput;
-
-        public RequestTelemetryTests(OpenTelemetryWebApplicationFactory<AspNetCoreWebApp.Startup> factory, ITestOutputHelper output)
+        public RequestTelemetryTests(WebApplicationFactory<Startup> factory, ITestOutputHelper output) : base(factory, output)
         {
-            this.factory = factory;
-            this.output = output;
-            this.telemetryOutput = new TelemetryItemOutputHelper(output);
         }
 
         /// <summary>
@@ -36,7 +36,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
             string testValue = Guid.NewGuid().ToString();
 
             // Arrange
-            var client = this.factory.CreateClient();
+            var transmitter = new MockTransmitter();
+            var activityProcessor = new SimpleActivityExportProcessor(new AzureMonitorTraceExporter(transmitter));
+            var client = this.factory
+                .WithWebHostBuilder(builder =>
+                    builder.ConfigureTestServices(services =>
+                    {
+                        services.AddOpenTelemetryTracing((builder) => builder
+                            .AddAspNetCoreInstrumentation()
+                            .AddProcessor(activityProcessor));
+                    }))
+                .CreateClient();
 
             // Act
             var request = new Uri(client.BaseAddress, $"api/home/{testValue}");
@@ -44,27 +54,56 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
 
             // Shutdown
             response.EnsureSuccessStatusCode();
-            this.factory.WaitForActivityExport();
+            this.WaitForActivityExport(transmitter.TelemetryItems);
 
             // Assert
-            Assert.True(this.factory.TelemetryItems.Any(), "test project did not capture telemetry");
-            var telemetryItem = this.factory.TelemetryItems.Single();
+            Assert.True(transmitter.TelemetryItems.Any(), "test project did not capture telemetry");
+            var telemetryItem = transmitter.TelemetryItems.Single();
+            this.telemetryOutput.Write(telemetryItem);
+
+            AssertRequestTelemetry(
+                telemetryItem: telemetryItem,
+                expectedResponseCode: "200",
+                expectedUrl: request.AbsoluteUri);
+        }
+
+        [Fact]
+        public async Task VerifyRequestTelemetry_WithTracerProvider()
+        {
+            string testValue = Guid.NewGuid().ToString();
+
+            // Arrange
+            TracerProvider tracerProvider = null;
+            var transmitter = new MockTransmitter();
+            var activityProcessor = new SimpleActivityExportProcessor(new AzureMonitorTraceExporter(transmitter));
+            var client = this.factory
+                .WithWebHostBuilder(builder =>
+                    builder.ConfigureTestServices(services =>
+                    {
+                        tracerProvider = Sdk.CreateTracerProviderBuilder()
+                            .AddAspNetCoreInstrumentation()
+                            .AddProcessor(activityProcessor)
+                            .Build();
+                    }))
+                .CreateClient();
+
+            // Act
+            var request = new Uri(client.BaseAddress, $"api/home/{testValue}");
+            var response = await client.GetAsync(request);
+
+            // Shutdown
+            response.EnsureSuccessStatusCode();
+            tracerProvider.ForceFlush();
+
+            // Assert
+            Assert.True(transmitter.TelemetryItems.Any(), "test project did not capture telemetry");
+            var telemetryItem = transmitter.TelemetryItems.Single();
             telemetryOutput.Write(telemetryItem);
 
-            Assert.Equal("Request", telemetryItem.Name);
-
-            Assert.Contains("ai.operation.id", telemetryItem.Tags.Keys);
-            Assert.Contains("ai.user.userAgent", telemetryItem.Tags.Keys);
-            Assert.Contains("ai.operation.name", telemetryItem.Tags.Keys);
-            Assert.Contains("ai.location.ip", telemetryItem.Tags.Keys);
-            Assert.Contains("ai.cloud.role", telemetryItem.Tags.Keys);
-            Assert.Contains("ai.cloud.roleInstance", telemetryItem.Tags.Keys);
-            Assert.Contains("ai.internal.sdkVersion", telemetryItem.Tags.Keys);
-
-            Assert.Equal(nameof(RequestData), telemetryItem.Data.BaseType);
-            var requestData = (RequestData)telemetryItem.Data.BaseData;
-            Assert.Equal("200", requestData.ResponseCode);
-            Assert.Equal(request.AbsoluteUri, requestData.Url);
+            AssertRequestTelemetry(
+                telemetryItem: telemetryItem,
+                expectedResponseCode: "200",
+                expectedUrl: request.AbsoluteUri);
         }
     }
 }
