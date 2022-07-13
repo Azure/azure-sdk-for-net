@@ -731,7 +731,7 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="rankings"> The ArrayOfLogRanking to use. </param>
         /// <param name="metrics"> The ArrayOfLogRankingMetric to use. </param>
-        /// <param name="maxRanking"> The Integer to use. </param>
+        /// <param name="maxRanking"> The Int32 to use. </param>
         /// <param name="dateTimeBegin"> The DateTime to use. </param>
         /// <param name="dateTimeEnd"> The DateTime to use. </param>
         /// <param name="customDomains"> The ArrayOfString to use. </param>
@@ -763,7 +763,7 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="rankings"> The ArrayOfLogRanking to use. </param>
         /// <param name="metrics"> The ArrayOfLogRankingMetric to use. </param>
-        /// <param name="maxRanking"> The Integer to use. </param>
+        /// <param name="maxRanking"> The Int32 to use. </param>
         /// <param name="dateTimeBegin"> The DateTime to use. </param>
         /// <param name="dateTimeEnd"> The DateTime to use. </param>
         /// <param name="customDomains"> The ArrayOfString to use. </param>
@@ -948,7 +948,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="metrics"> The ArrayOfWafMetric to use. </param>
         /// <param name="dateTimeBegin"> The DateTime to use. </param>
         /// <param name="dateTimeEnd"> The DateTime to use. </param>
-        /// <param name="maxRanking"> The Integer to use. </param>
+        /// <param name="maxRanking"> The Int32 to use. </param>
         /// <param name="rankings"> The ArrayOfWafRankingType to use. </param>
         /// <param name="actions"> The ArrayOfWafAction to use. </param>
         /// <param name="ruleTypes"> The ArrayOfWafRuleType to use. </param>
@@ -981,7 +981,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="metrics"> The ArrayOfWafMetric to use. </param>
         /// <param name="dateTimeBegin"> The DateTime to use. </param>
         /// <param name="dateTimeEnd"> The DateTime to use. </param>
-        /// <param name="maxRanking"> The Integer to use. </param>
+        /// <param name="maxRanking"> The Int32 to use. </param>
         /// <param name="rankings"> The ArrayOfWafRankingType to use. </param>
         /// <param name="actions"> The ArrayOfWafAction to use. </param>
         /// <param name="ruleTypes"> The ArrayOfWafRuleType to use. </param>

@@ -779,7 +779,7 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/deletedSites
         /// Operation Id: DeletedWebApps_ListByLocation
         /// </summary>
-        /// <param name="location"> The String to use. </param>
+        /// <param name="location"> The AzureLocation to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DeletedSiteResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeletedSiteResource> GetDeletedSitesByLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
@@ -822,7 +822,7 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/deletedSites
         /// Operation Id: DeletedWebApps_ListByLocation
         /// </summary>
-        /// <param name="location"> The String to use. </param>
+        /// <param name="location"> The AzureLocation to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeletedSiteResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeletedSiteResource> GetDeletedSitesByLocation(AzureLocation location, CancellationToken cancellationToken = default)
@@ -865,7 +865,7 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/deletedSites/{deletedSiteId}
         /// Operation Id: DeletedWebApps_GetDeletedWebAppByLocation
         /// </summary>
-        /// <param name="location"> The String to use. </param>
+        /// <param name="location"> The AzureLocation to use. </param>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DeletedSiteResource>> GetDeletedWebAppByLocationDeletedWebAppAsync(AzureLocation location, string deletedSiteId, CancellationToken cancellationToken = default)
@@ -889,7 +889,7 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/deletedSites/{deletedSiteId}
         /// Operation Id: DeletedWebApps_GetDeletedWebAppByLocation
         /// </summary>
-        /// <param name="location"> The String to use. </param>
+        /// <param name="location"> The AzureLocation to use. </param>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DeletedSiteResource> GetDeletedWebAppByLocationDeletedWebApp(AzureLocation location, string deletedSiteId, CancellationToken cancellationToken = default)

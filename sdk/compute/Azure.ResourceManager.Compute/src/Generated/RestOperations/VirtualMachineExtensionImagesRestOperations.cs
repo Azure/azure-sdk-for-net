@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publisherName"> The String to use. </param>
         /// <param name="type"> The String to use. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="top"> The Int32 to use. </param>
         /// <param name="orderby"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="publisherName"/> or <paramref name="type"/> is null. </exception>
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publisherName"> The String to use. </param>
         /// <param name="type"> The String to use. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="top"> The Int32 to use. </param>
         /// <param name="orderby"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="publisherName"/> or <paramref name="type"/> is null. </exception>

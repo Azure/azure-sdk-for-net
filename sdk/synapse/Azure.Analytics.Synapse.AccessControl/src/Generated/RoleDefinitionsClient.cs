@@ -70,7 +70,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>RoleDefinitionsListResponse</c>:
+        /// Schema for <c>SynapseRoleDefinition</c>:
         /// <code>{
         ///   id: SynapseRoleDefinitionId, # Optional. Role Definition ID
         ///   name: string, # Optional. Name of the Synapse role
@@ -117,7 +117,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>RoleDefinitionsListResponse</c>:
+        /// Schema for <c>SynapseRoleDefinition</c>:
         /// <code>{
         ///   id: SynapseRoleDefinitionId, # Optional. Role Definition ID
         ///   name: string, # Optional. Name of the Synapse role

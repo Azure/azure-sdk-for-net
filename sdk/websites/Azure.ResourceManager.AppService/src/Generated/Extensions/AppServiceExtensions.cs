@@ -655,7 +655,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: DeletedWebApps_ListByLocation
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The String to use. </param>
+        /// <param name="location"> The AzureLocation to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DeletedSiteResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DeletedSiteResource> GetDeletedSitesByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
@@ -669,7 +669,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: DeletedWebApps_ListByLocation
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The String to use. </param>
+        /// <param name="location"> The AzureLocation to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeletedSiteResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DeletedSiteResource> GetDeletedSitesByLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
@@ -683,7 +683,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: DeletedWebApps_GetDeletedWebAppByLocation
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The String to use. </param>
+        /// <param name="location"> The AzureLocation to use. </param>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -701,7 +701,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: DeletedWebApps_GetDeletedWebAppByLocation
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The String to use. </param>
+        /// <param name="location"> The AzureLocation to use. </param>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is an empty string, and was expected to be non-empty. </exception>

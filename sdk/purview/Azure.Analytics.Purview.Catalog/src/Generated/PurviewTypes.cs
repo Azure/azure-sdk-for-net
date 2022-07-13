@@ -8100,7 +8100,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasTypeDefHeader</c>:
+        /// Schema for <c>AtlasTypeDefHeader</c>:
         /// <code>{
         ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///   guid: string, # Optional. The GUID of the type definition.
@@ -8139,7 +8139,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasTypeDefHeader</c>:
+        /// Schema for <c>AtlasTypeDefHeader</c>:
         /// <code>{
         ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. The enum of type category.
         ///   guid: string, # Optional. The GUID of the type definition.

@@ -1931,7 +1931,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Request Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasClassification</c>:
+        /// Schema for <c>AtlasClassification</c>:
         /// <code>{
         ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
         ///   typeName: string, # Optional. The name of the type.
@@ -1984,7 +1984,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Request Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasClassification</c>:
+        /// Schema for <c>AtlasClassification</c>:
         /// <code>{
         ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
         ///   typeName: string, # Optional. The name of the type.
@@ -2037,7 +2037,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Request Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasClassification</c>:
+        /// Schema for <c>AtlasClassification</c>:
         /// <code>{
         ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
         ///   typeName: string, # Optional. The name of the type.
@@ -2090,7 +2090,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Request Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasClassification</c>:
+        /// Schema for <c>AtlasClassification</c>:
         /// <code>{
         ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
         ///   typeName: string, # Optional. The name of the type.
@@ -2914,7 +2914,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Request Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasClassification</c>:
+        /// Schema for <c>AtlasClassification</c>:
         /// <code>{
         ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
         ///   typeName: string, # Optional. The name of the type.
@@ -2968,7 +2968,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Request Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasClassification</c>:
+        /// Schema for <c>AtlasClassification</c>:
         /// <code>{
         ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
         ///   typeName: string, # Optional. The name of the type.
@@ -3022,7 +3022,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Request Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasClassification</c>:
+        /// Schema for <c>AtlasClassification</c>:
         /// <code>{
         ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
         ///   typeName: string, # Optional. The name of the type.
@@ -3076,7 +3076,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Request Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasClassification</c>:
+        /// Schema for <c>AtlasClassification</c>:
         /// <code>{
         ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
         ///   typeName: string, # Optional. The name of the type.

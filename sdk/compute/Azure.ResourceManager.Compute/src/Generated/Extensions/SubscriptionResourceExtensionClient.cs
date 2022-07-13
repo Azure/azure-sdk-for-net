@@ -718,7 +718,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="skus"> A valid image SKU. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="top"> The Int32 to use. </param>
         /// <param name="orderby"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
@@ -752,7 +752,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="skus"> A valid image SKU. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="top"> The Int32 to use. </param>
         /// <param name="orderby"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
