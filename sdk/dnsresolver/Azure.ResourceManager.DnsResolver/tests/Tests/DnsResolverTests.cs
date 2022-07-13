@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var dnsResolver = await this.dnsResolverCollection.CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverName, dnsResolverData);
 
             // ASSERT
-            Assert.AreEqual(dnsResolver.Value.Data.ProvisioningState, ProvisioningState.Succeeded);
+            Assert.AreEqual(dnsResolver.Value.Data.ProvisioningState, DnsResolverProvisioningState.Succeeded);
         }
 
         [Test]
