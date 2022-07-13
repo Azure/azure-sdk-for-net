@@ -22,22 +22,22 @@ namespace Azure.Core.Pipeline
         private static readonly ConcurrentDictionary<string, object?> ActivitySources = new();
 
         private readonly ActivityAdapter? _activityAdapter;
-        private readonly bool _suppressNestedClientScopes;
+        private readonly bool _suppressNestedClientActivities;
 
-        internal DiagnosticScope(string ns, string scopeName, DiagnosticListener source, ActivityKind kind, bool suppressNestedClientScopes = true) :
-            this(scopeName, source, null, GetActivitySource(ns, scopeName), kind, suppressNestedClientScopes)
+        internal DiagnosticScope(string ns, string scopeName, DiagnosticListener source, ActivityKind kind, bool suppressNestedClientActivities) :
+            this(scopeName, source, null, GetActivitySource(ns, scopeName), kind, suppressNestedClientActivities)
         {
         }
 
-        internal DiagnosticScope(string scopeName, DiagnosticListener source, object? diagnosticSourceArgs, object? activitySource, ActivityKind kind, bool suppressNestedClientScopes = true)
+        internal DiagnosticScope(string scopeName, DiagnosticListener source, object? diagnosticSourceArgs, object? activitySource, ActivityKind kind, bool suppressNestedClientActivities)
         {
             // ActivityKind.Internal and Client both can represent public API calls depending on the SDK
-            _suppressNestedClientScopes = (kind == ActivityKind.Client || kind == ActivityKind.Internal) ? suppressNestedClientScopes : false;
+            _suppressNestedClientActivities = (kind == ActivityKind.Client || kind == ActivityKind.Internal) ? suppressNestedClientActivities : false;
 
             // outer scope presence is enough to suppress any inner scope, regardless of inner scope configuation.
             IsEnabled = source.IsEnabled() || ActivityExtensions.ActivitySourceHasListeners(activitySource);
 
-            if (_suppressNestedClientScopes)
+            if (_suppressNestedClientActivities)
             {
                 IsEnabled &= !AzureSdkScopeValue.Equals(Activity.Current?.GetCustomProperty(AzureSdkScopeLabel));
             }
@@ -293,7 +293,7 @@ namespace Azure.Core.Pipeline
 
                     if (_startTime != default)
                     {
-                        _currentActivity.SetStartTime(_startTime.DateTime);
+                        _currentActivity.SetStartTime(_startTime.UtcDateTime);
                     }
 
                     if (_tagCollection != null)

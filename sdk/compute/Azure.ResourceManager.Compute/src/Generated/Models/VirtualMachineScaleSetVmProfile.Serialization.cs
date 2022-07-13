@@ -85,6 +85,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("applicationProfile");
                 writer.WriteObjectValue(ApplicationProfile);
             }
+            if (Optional.IsDefined(HardwareProfile))
+            {
+                writer.WritePropertyName("hardwareProfile");
+                writer.WriteObjectValue(HardwareProfile);
+            }
             writer.WriteEndObject();
         }
 
@@ -97,13 +102,14 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<DiagnosticsProfile> diagnosticsProfile = default;
             Optional<VirtualMachineScaleSetExtensionProfile> extensionProfile = default;
             Optional<string> licenseType = default;
-            Optional<VirtualMachinePriorityTypes> priority = default;
-            Optional<VirtualMachineEvictionPolicyTypes> evictionPolicy = default;
+            Optional<VirtualMachinePriorityType> priority = default;
+            Optional<VirtualMachineEvictionPolicyType> evictionPolicy = default;
             Optional<BillingProfile> billingProfile = default;
             Optional<ScheduledEventsProfile> scheduledEventsProfile = default;
             Optional<string> userData = default;
             Optional<CapacityReservationProfile> capacityReservation = default;
             Optional<ApplicationProfile> applicationProfile = default;
+            Optional<VirtualMachineScaleSetHardwareProfile> hardwareProfile = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osProfile"))
@@ -178,7 +184,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    priority = new VirtualMachinePriorityTypes(property.Value.GetString());
+                    priority = new VirtualMachinePriorityType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("evictionPolicy"))
@@ -188,7 +194,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    evictionPolicy = new VirtualMachineEvictionPolicyTypes(property.Value.GetString());
+                    evictionPolicy = new VirtualMachineEvictionPolicyType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("billingProfile"))
@@ -236,8 +242,18 @@ namespace Azure.ResourceManager.Compute.Models
                     applicationProfile = ApplicationProfile.DeserializeApplicationProfile(property.Value);
                     continue;
                 }
+                if (property.NameEquals("hardwareProfile"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    hardwareProfile = VirtualMachineScaleSetHardwareProfile.DeserializeVirtualMachineScaleSetHardwareProfile(property.Value);
+                    continue;
+                }
             }
-            return new VirtualMachineScaleSetVmProfile(osProfile.Value, storageProfile.Value, networkProfile.Value, securityProfile.Value, diagnosticsProfile.Value, extensionProfile.Value, licenseType.Value, Optional.ToNullable(priority), Optional.ToNullable(evictionPolicy), billingProfile.Value, scheduledEventsProfile.Value, userData.Value, capacityReservation.Value, applicationProfile.Value);
+            return new VirtualMachineScaleSetVmProfile(osProfile.Value, storageProfile.Value, networkProfile.Value, securityProfile.Value, diagnosticsProfile.Value, extensionProfile.Value, licenseType.Value, Optional.ToNullable(priority), Optional.ToNullable(evictionPolicy), billingProfile.Value, scheduledEventsProfile.Value, userData.Value, capacityReservation.Value, applicationProfile.Value, hardwareProfile.Value);
         }
     }
 }

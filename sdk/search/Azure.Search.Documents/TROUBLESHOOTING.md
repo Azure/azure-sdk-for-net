@@ -11,6 +11,7 @@ See [Azure SDK diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main
   * [HTTP 404 Errors](#404-not-found)
   * [HTTP 429 Errors](#429-too-many-requests)
 * [Unexpected search query results](#unexpected-search-query-results)
+* [Limits imposed by the Search service](#limits-imposed-by-the-service)
 
 # Troubleshooting Issues By Response Code
 See [this page](https://docs.microsoft.com/rest/api/searchservice/http-status-codes) for the common response status codes sent by the Azure Cognitive Search service.
@@ -33,3 +34,6 @@ If this error occurs during document upload, it indicates that you've exceeded y
 A common class of issues when using the Search SDK is that the result set of a search query is different than expected. For such cases, you should start by running the search query in the portal to rule out any service-side issues with the search query or any parameter(s). Review the [OData syntax](https://docs.microsoft.com/azure/search/query-odata-filter-orderby-syntax), if any, used in the query.
 
 Once the result looks good in the portal, use that as the template to populate the objects and parameters in the search request APIs. You should also verify that the correct set of documents have been indexed and are being searched on the service side. One tip would be to start with a 'broad' query (one that returns a superset of desired results, possibly by giving a large value for or entirely removing, some [query parameters](https://docs.microsoft.com/rest/api/searchservice/search-documents#query-parameters)) and then progressively refining the query till it expresses the desired intent.
+
+# Limits imposed by the service
+The service imposes limits on storage, workloads, and quantities of indexes and other objects depending on whether you provision Azure Cognitive Search at Free, Basic, Standard, or Storage Optimized pricing tiers. See [this page](https://docs.microsoft.com/azure/search/search-limits-quotas-capacity) for details.

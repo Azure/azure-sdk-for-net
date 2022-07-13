@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             {
                 Location = location,
                 Tags = { { "key", "value" } },
-                PublicIPAllocationMethod = IPAllocationMethod.Dynamic,
+                PublicIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                 DnsSettings = new PublicIPAddressDnsSettings() { DomainNameLabel = domainNameLabel }
             };
 
@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             {
                 Location = location,
                 Tags = { { "key", "value" } },
-                PublicIPAllocationMethod = IPAllocationMethod.Dynamic,
+                PublicIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                 DnsSettings = new PublicIPAddressDnsSettings() { DomainNameLabel = domainNameLabel }
             };
 
@@ -578,8 +578,8 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                     new NetworkInterfaceIPConfigurationData()
                     {
                          Name = ipConfigName,
-                         PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
-                         Subnet = new SubnetData() { Id = subnetId }
+                         PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                         Subnet = new SubnetData() { Id = new ResourceIdentifier(subnetId) }
                     }
                 }
             };
@@ -614,8 +614,8 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                     new NetworkInterfaceIPConfigurationData()
                     {
                          Name = ipConfigName,
-                         PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
-                         Subnet = new SubnetData() { Id = subnetId }
+                         PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                         Subnet = new SubnetData() { Id = new ResourceIdentifier(subnetId) }
                     }
                 }
             };

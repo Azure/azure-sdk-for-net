@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "VirtualNetworkTapResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal VirtualNetworkTapResource(ArmClient client, VirtualNetworkTapData data) : this(client, new ResourceIdentifier(data.Id))
+        internal VirtualNetworkTapResource(ArmClient client, VirtualNetworkTapData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="tapParameters"> Parameters supplied to update VirtualNetworkTap tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tapParameters"/> is null. </exception>
-        public virtual async Task<Response<VirtualNetworkTapResource>> UpdateAsync(TagsObject tapParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualNetworkTapResource>> UpdateAsync(NetworkTagsObject tapParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tapParameters, nameof(tapParameters));
 
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="tapParameters"> Parameters supplied to update VirtualNetworkTap tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tapParameters"/> is null. </exception>
-        public virtual Response<VirtualNetworkTapResource> Update(TagsObject tapParameters, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualNetworkTapResource> Update(NetworkTagsObject tapParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tapParameters, nameof(tapParameters));
 

@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Dns.Models
         /// <param name="ipv6Address"> The IPv6 address of this AAAA record. </param>
         internal AaaaRecord(string ipv6Address)
         {
-            Ipv6Address = ipv6Address;
+            IPv6Address = ipv6Address;
         }
 
         /// <summary> The IPv6 address of this AAAA record. </summary>
-        public string Ipv6Address { get; set; }
+        public string IPv6Address { get; set; }
     }
 }

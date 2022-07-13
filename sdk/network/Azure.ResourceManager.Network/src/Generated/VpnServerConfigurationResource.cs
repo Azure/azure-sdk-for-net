@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "VpnServerConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal VpnServerConfigurationResource(ArmClient client, VpnServerConfigurationData data) : this(client, new ResourceIdentifier(data.Id))
+        internal VpnServerConfigurationResource(ArmClient client, VpnServerConfigurationData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="vpnServerConfigurationParameters"> Parameters supplied to update VpnServerConfiguration tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnServerConfigurationParameters"/> is null. </exception>
-        public virtual async Task<Response<VpnServerConfigurationResource>> UpdateAsync(TagsObject vpnServerConfigurationParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VpnServerConfigurationResource>> UpdateAsync(NetworkTagsObject vpnServerConfigurationParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(vpnServerConfigurationParameters, nameof(vpnServerConfigurationParameters));
 
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="vpnServerConfigurationParameters"> Parameters supplied to update VpnServerConfiguration tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnServerConfigurationParameters"/> is null. </exception>
-        public virtual Response<VpnServerConfigurationResource> Update(TagsObject vpnServerConfigurationParameters, CancellationToken cancellationToken = default)
+        public virtual Response<VpnServerConfigurationResource> Update(NetworkTagsObject vpnServerConfigurationParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(vpnServerConfigurationParameters, nameof(vpnServerConfigurationParameters));
 

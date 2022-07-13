@@ -142,7 +142,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         {
             var client = CreateInstrumentedClient();
 
-            Assert.ThrowsAsync<ArgumentNullException>(() => client.StartCreateComposedModelAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => client.StartComposeModelAsync(null));
         }
 
         [Test]

@@ -107,13 +107,13 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteNull("defaultOriginGroup");
                 }
             }
-            if (Optional.IsCollectionDefined(UrlSigningKeys))
+            if (Optional.IsCollectionDefined(UriSigningKeys))
             {
-                if (UrlSigningKeys != null)
+                if (UriSigningKeys != null)
                 {
                     writer.WritePropertyName("urlSigningKeys");
                     writer.WriteStartArray();
-                    foreach (var item in UrlSigningKeys)
+                    foreach (var item in UriSigningKeys)
                     {
                         writer.WriteObjectValue(item);
                     }

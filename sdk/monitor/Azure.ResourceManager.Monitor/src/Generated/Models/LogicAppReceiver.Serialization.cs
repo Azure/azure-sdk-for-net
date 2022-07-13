@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Monitor.Models
         internal static LogicAppReceiver DeserializeLogicAppReceiver(JsonElement element)
         {
             string name = default;
-            string resourceId = default;
+            ResourceIdentifier resourceId = default;
             Uri callbackUrl = default;
             Optional<bool> useCommonAlertSchema = default;
             foreach (var property in element.EnumerateObject())
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("resourceId"))
                 {
-                    resourceId = property.Value.GetString();
+                    resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("callbackUrl"))

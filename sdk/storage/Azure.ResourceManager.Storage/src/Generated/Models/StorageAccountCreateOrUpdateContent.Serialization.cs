@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation");
-                writer.WriteObjectValue(ExtendedLocation);
+                JsonSerializer.Serialize(writer, ExtendedLocation);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -155,6 +155,11 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 writer.WritePropertyName("immutableStorageWithVersioning");
                 writer.WriteObjectValue(ImmutableStorageWithVersioning);
+            }
+            if (Optional.IsDefined(DnsEndpointType))
+            {
+                writer.WritePropertyName("dnsEndpointType");
+                writer.WriteStringValue(DnsEndpointType.Value.ToString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

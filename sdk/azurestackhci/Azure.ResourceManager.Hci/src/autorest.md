@@ -8,17 +8,27 @@ azure-arm: true
 csharp: true
 library-name: Hci
 namespace: Azure.ResourceManager.Hci
-require: https://github.com/Azure/azure-rest-api-specs/blob/75b53c0708590483bb2166b9e2751f1bdf5adefa/specification/azurestackhci/resource-manager/readme.md
-tag: package-2021-09
-output-folder: Generated/
+require: https://github.com/Azure/azure-rest-api-specs/blob/324a148497f28ef7588eee7bdb61dcd28b74f505/specification/azurestackhci/resource-manager/readme.md
+tag: package-2022-05
+output-folder: $(this-folder)/Generated
 clear-output-folder: true
+skip-csproj: true
+modelerfour:
+  flatten-payloads: false
+
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'etag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
 
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
   Ip: IP
-  Ips: IPs
+  Ips: IPs|ips
   ID: Id
   IDs: Ids
   VM: Vm
@@ -29,16 +39,20 @@ rename-rules:
   VPN: Vpn
   NAT: Nat
   WAN: Wan
-  Ipv4: IPv4
-  Ipv6: IPv6
-  Ipsec: IPsec
+  Ipv4: IPv4|ipv4
+  Ipv6: IPv6|ipv6
+  Ipsec: IPsec|ipsec
   SSO: Sso
   URI: Uri
+  Etag: ETag|etag
 
 directive:
   - from: extensions.json
     where: $.definitions.Extension
     transform: $["x-ms-client-name"] = "ArcExtension"
+  - from: extensions.json
+    where: $.definitions.Extension.properties.systemData
+    transform: $["x-ms-client-flatten"] = false
   - from: clusters.json
     where: $.definitions.Cluster
     transform: $["x-ms-client-name"] = "HciCluster"
@@ -51,6 +65,8 @@ directive:
       $.aadClientId.format = "uuid";
       $.aadTenantId.format = "uuid";
       $.cloudId.format = "uuid";
+      $.aadApplicationObjectId.format = "uuid";
+      $.aadServicePrincipalObjectId.format = "uuid";
   - from: clusters.json
     where: $.definitions.ClusterPatchProperties.properties
     transform: >
@@ -60,4 +76,17 @@ directive:
     where: $.definitions.ClusterReportedProperties.properties.clusterId
     transform: >
       $.format = "uuid"
+  - from: clusters.json
+    where: $.definitions.Cluster.properties.systemData
+    transform: $["x-ms-client-flatten"] = false
+  - from: arcSettings.json
+    where: $.definitions.ArcSetting.properties.systemData
+    transform: $["x-ms-client-flatten"] = false
+  - from: arcSettings.json
+    where: $.definitions.ArcSettingProperties.properties
+    transform: >
+      $.arcApplicationClientId.format = "uuid";
+      $.arcApplicationTenantId.format = "uuid";
+      $.arcServicePrincipalObjectId.format = "uuid";
+      $.arcApplicationObjectId.format = "uuid";
 ```

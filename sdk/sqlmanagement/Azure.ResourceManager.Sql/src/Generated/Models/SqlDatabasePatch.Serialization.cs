@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("sku");
                 writer.WriteObjectValue(Sku);
             }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity");
+                writer.WriteObjectValue(Identity);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
@@ -63,15 +68,15 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("sourceDatabaseId");
                 writer.WriteStringValue(SourceDatabaseId);
             }
-            if (Optional.IsDefined(RestorePointInOn))
+            if (Optional.IsDefined(RestorePointInTime))
             {
                 writer.WritePropertyName("restorePointInTime");
-                writer.WriteStringValue(RestorePointInOn.Value, "O");
+                writer.WriteStringValue(RestorePointInTime.Value, "O");
             }
-            if (Optional.IsDefined(SourceDatabaseDeletionOn))
+            if (Optional.IsDefined(SourceDatabaseDeletedOn))
             {
                 writer.WritePropertyName("sourceDatabaseDeletionDate");
-                writer.WriteStringValue(SourceDatabaseDeletionOn.Value, "O");
+                writer.WriteStringValue(SourceDatabaseDeletedOn.Value, "O");
             }
             if (Optional.IsDefined(RecoveryServicesRecoveryPointId))
             {
@@ -147,6 +152,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 writer.WritePropertyName("isLedgerOn");
                 writer.WriteBooleanValue(IsLedgerOn.Value);
+            }
+            if (Optional.IsDefined(FederatedClientId))
+            {
+                writer.WritePropertyName("federatedClientId");
+                writer.WriteStringValue(FederatedClientId.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

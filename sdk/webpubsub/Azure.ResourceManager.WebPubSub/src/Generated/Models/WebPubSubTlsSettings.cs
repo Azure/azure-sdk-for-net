@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.WebPubSub.Models
         }
 
         /// <summary> Initializes a new instance of WebPubSubTlsSettings. </summary>
-        /// <param name="clientCertEnabled"> Request client certificate during TLS handshake if enabled. </param>
-        internal WebPubSubTlsSettings(bool? clientCertEnabled)
+        /// <param name="isClientCertEnabled"> Request client certificate during TLS handshake if enabled. </param>
+        internal WebPubSubTlsSettings(bool? isClientCertEnabled)
         {
-            ClientCertEnabled = clientCertEnabled;
+            IsClientCertEnabled = isClientCertEnabled;
         }
 
         /// <summary> Request client certificate during TLS handshake if enabled. </summary>
-        public bool? ClientCertEnabled { get; set; }
+        public bool? IsClientCertEnabled { get; set; }
     }
 }

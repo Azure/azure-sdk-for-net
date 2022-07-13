@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Output of virtual machine capture operation. </summary>
-    public partial class VirtualMachineCaptureResult : SubResource
+    public partial class VirtualMachineCaptureResult : ComputeWriteableSubResourceData
     {
         /// <summary> Initializes a new instance of VirtualMachineCaptureResult. </summary>
         public VirtualMachineCaptureResult()
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="contentVersion"> the version of the content. </param>
         /// <param name="parameters"> parameters of the captured virtual machine. </param>
         /// <param name="resources"> a list of resource items of the captured virtual machine. </param>
-        internal VirtualMachineCaptureResult(string id, string schema, string contentVersion, BinaryData parameters, IReadOnlyList<BinaryData> resources) : base(id)
+        internal VirtualMachineCaptureResult(ResourceIdentifier id, string schema, string contentVersion, BinaryData parameters, IReadOnlyList<BinaryData> resources) : base(id)
         {
             Schema = schema;
             ContentVersion = contentVersion;

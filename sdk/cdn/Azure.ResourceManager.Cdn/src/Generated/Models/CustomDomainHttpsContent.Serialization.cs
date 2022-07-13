@@ -33,13 +33,13 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureKeyVault": return UserManagedHttpsOptions.DeserializeUserManagedHttpsOptions(element);
-                    case "Cdn": return CdnManagedHttpsOptions.DeserializeCdnManagedHttpsOptions(element);
+                    case "AzureKeyVault": return UserManagedHttpsContent.DeserializeUserManagedHttpsContent(element);
+                    case "Cdn": return CdnManagedHttpsContent.DeserializeCdnManagedHttpsContent(element);
                 }
             }
             CertificateSource certificateSource = default;
-            ProtocolType protocolType = default;
-            Optional<MinimumTlsVersion> minimumTlsVersion = default;
+            SecureDeliveryProtocolType protocolType = default;
+            Optional<CdnMinimumTlsVersion> minimumTlsVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("certificateSource"))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (property.NameEquals("protocolType"))
                 {
-                    protocolType = new ProtocolType(property.Value.GetString());
+                    protocolType = new SecureDeliveryProtocolType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("minimumTlsVersion"))
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    minimumTlsVersion = property.Value.GetString().ToMinimumTlsVersion();
+                    minimumTlsVersion = property.Value.GetString().ToCdnMinimumTlsVersion();
                     continue;
                 }
             }

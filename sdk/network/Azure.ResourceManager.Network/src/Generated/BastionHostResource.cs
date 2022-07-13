@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "BastionHostResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal BastionHostResource(ArmClient client, BastionHostData data) : this(client, new ResourceIdentifier(data.Id))
+        internal BastionHostResource(ArmClient client, BastionHostData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;

@@ -45,10 +45,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             }
 
             var endpoints = _configuration.GetSection(Constants.AzureSignalREndpoints).GetEndpoints(_azureComponentFactory);
-            // Fall back to use a section to configure Azure identity
-            if (options.ConnectionString == null && _configuration.GetSection(_connectionStringKey).TryGetNamedEndpointFromIdentity(_azureComponentFactory, out var endpoint))
+
+            // when the configuration is in the style: AzureSignalRConnectionString:serviceUri = https://xxx.service.signalr.net , we see the endpoint as unnamed.
+            if (options.ConnectionString == null && _configuration.GetSection(_connectionStringKey).TryGetEndpointFromIdentity(_azureComponentFactory, out var endpoint, isNamed: false))
             {
-                endpoint.Name = string.Empty;
                 endpoints = endpoints.Append(endpoint);
             }
             if (endpoints.Any())

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "DdosCustomPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DdosCustomPolicyResource(ArmClient client, DdosCustomPolicyData data) : this(client, new ResourceIdentifier(data.Id))
+        internal DdosCustomPolicyResource(ArmClient client, DdosCustomPolicyData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -194,18 +194,18 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosCustomPolicies/{ddosCustomPolicyName}
         /// Operation Id: DdosCustomPolicies_UpdateTags
         /// </summary>
-        /// <param name="tagsObject"> Parameters supplied to update DDoS custom policy resource tags. </param>
+        /// <param name="networkTagsObject"> Parameters supplied to update DDoS custom policy resource tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
-        public virtual async Task<Response<DdosCustomPolicyResource>> UpdateAsync(TagsObject tagsObject, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="networkTagsObject"/> is null. </exception>
+        public virtual async Task<Response<DdosCustomPolicyResource>> UpdateAsync(NetworkTagsObject networkTagsObject, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+            Argument.AssertNotNull(networkTagsObject, nameof(networkTagsObject));
 
             using var scope = _ddosCustomPolicyClientDiagnostics.CreateScope("DdosCustomPolicyResource.Update");
             scope.Start();
             try
             {
-                var response = await _ddosCustomPolicyRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject, cancellationToken).ConfigureAwait(false);
+                var response = await _ddosCustomPolicyRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkTagsObject, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new DdosCustomPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -220,18 +220,18 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosCustomPolicies/{ddosCustomPolicyName}
         /// Operation Id: DdosCustomPolicies_UpdateTags
         /// </summary>
-        /// <param name="tagsObject"> Parameters supplied to update DDoS custom policy resource tags. </param>
+        /// <param name="networkTagsObject"> Parameters supplied to update DDoS custom policy resource tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
-        public virtual Response<DdosCustomPolicyResource> Update(TagsObject tagsObject, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="networkTagsObject"/> is null. </exception>
+        public virtual Response<DdosCustomPolicyResource> Update(NetworkTagsObject networkTagsObject, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+            Argument.AssertNotNull(networkTagsObject, nameof(networkTagsObject));
 
             using var scope = _ddosCustomPolicyClientDiagnostics.CreateScope("DdosCustomPolicyResource.Update");
             scope.Start();
             try
             {
-                var response = _ddosCustomPolicyRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject, cancellationToken);
+                var response = _ddosCustomPolicyRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkTagsObject, cancellationToken);
                 return Response.FromValue(new DdosCustomPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

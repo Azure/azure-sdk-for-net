@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "VirtualHubResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal VirtualHubResource(ArmClient client, VirtualHubData data) : this(client, new ResourceIdentifier(data.Id))
+        internal VirtualHubResource(ArmClient client, VirtualHubData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualHubParameters"> Parameters supplied to update VirtualHub tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualHubParameters"/> is null. </exception>
-        public virtual async Task<Response<VirtualHubResource>> UpdateAsync(TagsObject virtualHubParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualHubResource>> UpdateAsync(NetworkTagsObject virtualHubParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(virtualHubParameters, nameof(virtualHubParameters));
 
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualHubParameters"> Parameters supplied to update VirtualHub tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualHubParameters"/> is null. </exception>
-        public virtual Response<VirtualHubResource> Update(TagsObject virtualHubParameters, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualHubResource> Update(NetworkTagsObject virtualHubParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(virtualHubParameters, nameof(virtualHubParameters));
 

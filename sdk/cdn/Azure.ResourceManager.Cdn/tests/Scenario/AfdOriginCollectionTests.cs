@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Cdn.Tests
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
             ProfileResource afdProfileResource = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             string afdOriginGroupName = Recording.GenerateAssetName("AFDOriginGroup-");
-            AfdOriginGroupResource afdOriginGroupInstance = await CreateAfdOriginGroup(afdProfileResource, afdOriginGroupName);
+            FrontDoorOriginGroupResource afdOriginGroupInstance = await CreateAfdOriginGroup(afdProfileResource, afdOriginGroupName);
             string afdOriginName = Recording.GenerateAssetName("AFDOrigin-");
-            AfdOriginResource afdOriginInstance = await CreateAfdOrigin(afdOriginGroupInstance, afdOriginName);
+            FrontDoorOriginResource afdOriginInstance = await CreateAfdOrigin(afdOriginGroupInstance, afdOriginName);
             Assert.AreEqual(afdOriginName, afdOriginInstance.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdOriginGroupInstance.GetAfdOrigins().CreateOrUpdateAsync(WaitUntil.Completed, null, afdOriginInstance.Data));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdOriginGroupInstance.GetAfdOrigins().CreateOrUpdateAsync(WaitUntil.Completed, afdOriginName, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdOriginGroupInstance.GetFrontDoorOrigins().CreateOrUpdateAsync(WaitUntil.Completed, null, afdOriginInstance.Data));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdOriginGroupInstance.GetFrontDoorOrigins().CreateOrUpdateAsync(WaitUntil.Completed, afdOriginName, null));
         }
 
         [TestCase]
@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.Cdn.Tests
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
             ProfileResource afdProfileResource = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             string afdOriginGroupName = Recording.GenerateAssetName("AFDOriginGroup-");
-            AfdOriginGroupResource afdOriginGroupInstance = await CreateAfdOriginGroup(afdProfileResource, afdOriginGroupName);
+            FrontDoorOriginGroupResource afdOriginGroupInstance = await CreateAfdOriginGroup(afdProfileResource, afdOriginGroupName);
             string afdOriginName = Recording.GenerateAssetName("AFDOrigin-");
             _ = await CreateAfdOrigin(afdOriginGroupInstance, afdOriginName);
             int count = 0;
-            await foreach (var tempAfdOrigin in afdOriginGroupInstance.GetAfdOrigins().GetAllAsync())
+            await foreach (var tempAfdOrigin in afdOriginGroupInstance.GetFrontDoorOrigins().GetAllAsync())
             {
                 count++;
             }
@@ -64,12 +64,12 @@ namespace Azure.ResourceManager.Cdn.Tests
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
             ProfileResource afdProfileResource = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             string afdOriginGroupName = Recording.GenerateAssetName("AFDOriginGroup-");
-            AfdOriginGroupResource afdOriginGroupInstance = await CreateAfdOriginGroup(afdProfileResource, afdOriginGroupName);
+            FrontDoorOriginGroupResource afdOriginGroupInstance = await CreateAfdOriginGroup(afdProfileResource, afdOriginGroupName);
             string afdOriginName = Recording.GenerateAssetName("AFDOrigin-");
-            AfdOriginResource afdOriginInstance = await CreateAfdOrigin(afdOriginGroupInstance, afdOriginName);
-            AfdOriginResource getAfdOriginInstance = await afdOriginGroupInstance.GetAfdOrigins().GetAsync(afdOriginName);
+            FrontDoorOriginResource afdOriginInstance = await CreateAfdOrigin(afdOriginGroupInstance, afdOriginName);
+            FrontDoorOriginResource getAfdOriginInstance = await afdOriginGroupInstance.GetFrontDoorOrigins().GetAsync(afdOriginName);
             ResourceDataHelper.AssertValidAfdOrigin(afdOriginInstance, getAfdOriginInstance);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdOriginGroupInstance.GetAfdOrigins().GetAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdOriginGroupInstance.GetFrontDoorOrigins().GetAsync(null));
         }
     }
 }

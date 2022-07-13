@@ -73,6 +73,9 @@ For the event processor client to make use of Azure Storage blobs for checkpoint
 - [Requesting Azure Storage Service Versions](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample06_RequestingStorageServiceVersions.md)  
   An illustration of configuring the Blob Storage client to use a specific version of the service, rather than the default (latest).  This is useful when the Azure host environment that you are targeting supports a different version of Blob Storage service than is available in the Azure public cloud, such as Azure Stack Hub 2002.
 
+- [Processing Events in Batches](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample07_BatchProcessing.md)  
+  A demonstration of how events can be processed in batches rather than individually.
+
 ## Contributing  
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit https://cla.microsoft.com.

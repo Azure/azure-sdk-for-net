@@ -131,7 +131,7 @@ void LogInformation(string message, ConsoleColor? color = default)
 {
     if (IsDevOpsHost)
     {
-        Console.WriteLine($"[debug]{ message })");
+        Console.WriteLine($"[debug]{ message }");
     }
     else
     {

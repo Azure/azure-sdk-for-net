@@ -78,7 +78,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <summary>
         /// The scaled dimensions of the asset.
         /// </summary>
-        public System.Numerics.Vector3? ScaledAssetDimensions { get => ScaledAssetDimensionsWrapper == null ? null : ScaledAssetDimensionsWrapper; }
+        public System.Numerics.Vector3? ScaledAssetDimensions { get => ScaledAssetDimensionsWrapper == null ? null : (System.Numerics.Vector3)ScaledAssetDimensionsWrapper; }
 
         [CodeGenMember("OutputModelUri")]
         internal string OutputModelUriString { get; }

@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -19,16 +21,6 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 writer.WritePropertyName("domain");
                 writer.WriteStringValue(Domain.Value.ToString());
-            }
-            if (Optional.IsDefined(ModelVersion))
-            {
-                writer.WritePropertyName("model-version");
-                writer.WriteStringValue(ModelVersion);
-            }
-            if (Optional.IsDefined(LoggingOptOut))
-            {
-                writer.WritePropertyName("loggingOptOut");
-                writer.WriteBooleanValue(LoggingOptOut.Value);
             }
             if (Optional.IsCollectionDefined(PiiCategories))
             {
@@ -45,7 +37,80 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WritePropertyName("stringIndexType");
                 writer.WriteStringValue(StringIndexType.Value.ToString());
             }
+            if (Optional.IsDefined(ModelVersion))
+            {
+                writer.WritePropertyName("modelVersion");
+                writer.WriteStringValue(ModelVersion);
+            }
+            if (Optional.IsDefined(LoggingOptOut))
+            {
+                writer.WritePropertyName("loggingOptOut");
+                writer.WriteBooleanValue(LoggingOptOut.Value);
+            }
             writer.WriteEndObject();
+        }
+
+        internal static PiiTaskParameters DeserializePiiTaskParameters(JsonElement element)
+        {
+            Optional<PiiDomain> domain = default;
+            Optional<IList<PiiEntityCategory>> piiCategories = default;
+            Optional<StringIndexType> stringIndexType = default;
+            Optional<string> modelVersion = default;
+            Optional<bool> loggingOptOut = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("domain"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    domain = new PiiDomain(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("piiCategories"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<PiiEntityCategory> array = new List<PiiEntityCategory>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(new PiiEntityCategory(item.GetString()));
+                    }
+                    piiCategories = array;
+                    continue;
+                }
+                if (property.NameEquals("stringIndexType"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    stringIndexType = new StringIndexType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("modelVersion"))
+                {
+                    modelVersion = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("loggingOptOut"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    loggingOptOut = property.Value.GetBoolean();
+                    continue;
+                }
+            }
+            return new PiiTaskParameters(Optional.ToNullable(loggingOptOut), modelVersion.Value, Optional.ToNullable(domain), Optional.ToList(piiCategories), Optional.ToNullable(stringIndexType));
         }
     }
 }

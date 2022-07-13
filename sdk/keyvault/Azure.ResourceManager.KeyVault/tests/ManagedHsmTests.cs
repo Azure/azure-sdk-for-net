@@ -31,6 +31,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
 
         // The MHSM is very expensive and only allow to have 5 MHSM instance per retion.
         // So before running live / record please make sure the test region have the capacity for create a new one.
+        [PlaybackOnly("Live test for MHSM is not necessary")]
         [RecordedTest]
         public async Task ManagedHsmFull()
         {
@@ -56,8 +57,8 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 false,
                 true,
                 new List<string> { ObjectId },
-                ManagedHsmProperties.NetworkAcls,
-                PublicNetworkAccess.Disabled,
+                ManagedHsmProperties.NetworkRuleSet,
+                ManagedHsmPublicNetworkAccess.Disabled,
                 DefSoftDeleteRetentionInDays,
                 Tags);
 
@@ -75,8 +76,8 @@ namespace Azure.ResourceManager.KeyVault.Tests
             Assert.True(count == 1);
 
             // Update
-            ManagedHsmProperties.PublicNetworkAccess = PublicNetworkAccess.Enabled;
-            ManagedHsmProperties.NetworkAcls.DefaultAction = "Allow";
+            ManagedHsmProperties.PublicNetworkAccess = ManagedHsmPublicNetworkAccess.Enabled;
+            ManagedHsmProperties.NetworkRuleSet.DefaultAction = "Allow";
             parameters = new ManagedHsmData(Location)
             {
                 Sku = new ManagedHsmSku(ManagedHsmSkuFamily.B, ManagedHsmSkuName.StandardB1),
@@ -128,8 +129,8 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 false,
                 true,
                 new List<string> { ObjectId },
-                ManagedHsmProperties.NetworkAcls,
-                PublicNetworkAccess.Enabled,
+                ManagedHsmProperties.NetworkRuleSet,
+                ManagedHsmPublicNetworkAccess.Enabled,
                 DefSoftDeleteRetentionInDays,
                 Tags);
 
@@ -175,7 +176,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 await ManagedHsmCollection.GetAsync(MHSMName);
             });
 
-            parameters.Properties.CreateMode = CreateMode.Recover;
+            parameters.Properties.CreateMode = ManagedHsmCreateMode.Recover;
 
             // Recover in recover mode
             ArmOperation<ManagedHsmResource> recoveredVault2 = await ManagedHsmCollection.CreateOrUpdateAsync(WaitUntil.Completed, MHSMName, parameters).ConfigureAwait(false);
@@ -201,8 +202,8 @@ namespace Azure.ResourceManager.KeyVault.Tests
             bool expectedEnablePurgeProtection,
             bool expectedEnableSoftDelete,
             List<string> expectedInitialAdminObjectIds,
-            MhsmNetworkRuleSet expectedNetworkAcls,
-            PublicNetworkAccess expectedPublicNetworkAccess,
+            ManagedHsmNetworkRuleSet expectedNetworkAcls,
+            ManagedHsmPublicNetworkAccess expectedPublicNetworkAccess,
             int expectedSoftDeleteRetentionInDays,
             Dictionary<string, string> expectedTags)
         {
@@ -223,8 +224,8 @@ namespace Azure.ResourceManager.KeyVault.Tests
             Assert.AreEqual(expectedEnableSoftDelete, managedHsmData.Properties.EnableSoftDelete);
             Assert.AreEqual(expectedHsmUri, managedHsmData.Properties.HsmUri.ToString());
             Assert.AreEqual(expectedInitialAdminObjectIds, managedHsmData.Properties.InitialAdminObjectIds);
-            Assert.AreEqual(expectedNetworkAcls.Bypass, managedHsmData.Properties.NetworkAcls.Bypass);
-            Assert.AreEqual(expectedNetworkAcls.DefaultAction, managedHsmData.Properties.NetworkAcls.DefaultAction);
+            Assert.AreEqual(expectedNetworkAcls.Bypass, managedHsmData.Properties.NetworkRuleSet.Bypass);
+            Assert.AreEqual(expectedNetworkAcls.DefaultAction, managedHsmData.Properties.NetworkRuleSet.DefaultAction);
             Assert.AreEqual(expectedPublicNetworkAccess, managedHsmData.Properties.PublicNetworkAccess);
             Assert.AreEqual(expectedSoftDeleteRetentionInDays, managedHsmData.Properties.SoftDeleteRetentionInDays);
             Assert.True(expectedTags.DictionaryEqual(managedHsmData.Tags));

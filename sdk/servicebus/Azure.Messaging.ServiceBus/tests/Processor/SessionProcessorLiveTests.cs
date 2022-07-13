@@ -141,6 +141,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 async Task SessionInitHandler(ProcessSessionEventArgs args)
                 {
+                    Assert.AreEqual(processor.EntityPath, args.EntityPath);
+                    Assert.AreEqual(processor.FullyQualifiedNamespace, args.FullyQualifiedNamespace);
                     Interlocked.Increment(ref sessionOpenEventCt);
                     byte[] state = ServiceBusTestUtilities.GetRandomBuffer(100);
                     await args.SetSessionStateAsync(new BinaryData(state));
@@ -149,6 +151,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 async Task SessionCloseHandler(ProcessSessionEventArgs args)
                 {
+                    Assert.AreEqual(processor.EntityPath, args.EntityPath);
+                    Assert.AreEqual(processor.FullyQualifiedNamespace, args.FullyQualifiedNamespace);
                     Interlocked.Increment(ref sessionCloseEventCt);
                     var setIndex = Interlocked.Increment(ref completionSourceIndex);
                     completionSources[setIndex].SetResult(true);
@@ -159,6 +163,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 async Task ProcessMessage(ProcessSessionMessageEventArgs args)
                 {
+                    Assert.AreEqual(processor.EntityPath, args.EntityPath);
+                    Assert.AreEqual(processor.FullyQualifiedNamespace, args.FullyQualifiedNamespace);
                     var message = args.Message;
                     if (!autoComplete)
                     {
@@ -2015,7 +2021,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                     if (count == 1)
                     {
-                        var received = await args.ReceiveMessagesAsync(messageCount);
+                        var received = await args.GetReceiveActions().ReceiveMessagesAsync(messageCount);
                         Assert.IsNotEmpty(received);
                         count = Interlocked.Add(ref receivedCount, received.Count);
                     }
@@ -2086,7 +2092,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                     if (count == 2)
                     {
-                        receivedDeferredMessages = await args.ReceiveDeferredMessagesAsync(sequenceNumbers.Keys);
+                        receivedDeferredMessages = await args.GetReceiveActions().ReceiveDeferredMessagesAsync(sequenceNumbers.Keys);
                     }
 
                     // lock renewal should happen for messages received in callback
@@ -2121,7 +2127,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await tcs.Task;
 
                 // verify args cannot be used to receive messages outside of callback scope
-                await AsyncAssert.ThrowsAsync<InvalidOperationException>(async () => await capturedArgs.ReceiveMessagesAsync(10));
+                await AsyncAssert.ThrowsAsync<InvalidOperationException>(async () => await capturedArgs.GetReceiveActions().ReceiveMessagesAsync(10));
 
                 await processor.CloseAsync();
 

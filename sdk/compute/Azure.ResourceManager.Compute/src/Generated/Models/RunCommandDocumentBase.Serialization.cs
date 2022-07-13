@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             string schema = default;
             string id = default;
-            OperatingSystemTypes osType = default;
+            SupportedOperatingSystemType osType = default;
             string label = default;
             string description = default;
             foreach (var property in element.EnumerateObject())
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("osType"))
                 {
-                    osType = property.Value.GetString().ToOperatingSystemTypes();
+                    osType = property.Value.GetString().ToSupportedOperatingSystemType();
                     continue;
                 }
                 if (property.NameEquals("label"))

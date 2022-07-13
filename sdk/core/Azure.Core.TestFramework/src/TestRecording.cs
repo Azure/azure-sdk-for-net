@@ -72,10 +72,6 @@ namespace Azure.Core.TestFramework
                     await AddProxySanitizersAsync();
 
                     // temporary until Azure.Core fix is shipped that makes HttpWebRequestTransport consistent with HttpClientTransport
-                    // if (!_matcher.CompareBodies)
-                    // {
-                    //     _proxy.Client.AddBodilessMatcher(RecordingId);
-                    // }
                     var excludedHeaders = new List<string>(_recordedTestBase.LegacyExcludedHeaders)
                     {
                         "Content-Type",

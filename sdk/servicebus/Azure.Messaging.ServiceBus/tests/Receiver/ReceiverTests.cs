@@ -311,5 +311,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             await receiver.CloseAsync(cts.Token);
             mockTransportReceiver.Verify(transportReceiver => transportReceiver.CloseAsync(It.Is<CancellationToken>(ct => ct == cts.Token)));
         }
+
+        [Test]
+        public async Task CallingCloseAsyncUpdatesIsClosed()
+        {
+            var mockConnection = ServiceBusTestUtilities.GetMockedReceiverConnection();
+            var receiver = new ServiceBusReceiver(mockConnection, "fake", default, new ServiceBusReceiverOptions());
+            await receiver.CloseAsync();
+            Assert.IsTrue(receiver.IsClosed);
+        }
     }
 }

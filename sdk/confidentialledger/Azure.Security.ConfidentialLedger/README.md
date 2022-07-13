@@ -99,9 +99,9 @@ Every write to Confidential Ledger generates an immutable ledger entry in the se
 
 ```C# Snippet:AppendToLedger
 PostLedgerEntryOperation postOperation = ledgerClient.PostLedgerEntry(
+    waitUntil: WaitUntil.Completed,
     RequestContent.Create(
-        new { contents = "Hello world!" }),
-    waitForCompletion: true);
+        new { contents = "Hello world!" })) as PostLedgerEntryOperation;
 
 string transactionId = postOperation.Id;
 Console.WriteLine($"Appended transaction with Id: {transactionId}");
@@ -149,23 +149,23 @@ While most use cases will involve one ledger, we provide the sub-ledger feature 
 
 ```C# Snippet:SubLedger
 ledgerClient.PostLedgerEntry(
+    waitUntil: WaitUntil.Completed,
     RequestContent.Create(
-        new { contents = "Hello from Chris!", subLedgerId = "Chris' messages" }),
-    waitForCompletion: true);
+        new { contents = "Hello from Chris!", subLedgerId = "Chris' messages" }));
 
 ledgerClient.PostLedgerEntry(
+    waitUntil: WaitUntil.Completed,
     RequestContent.Create(
-        new { contents = "Hello from Allison!", subLedgerId = "Allison's messages" }),
-    waitForCompletion: true);
+        new { contents = "Hello from Allison!", subLedgerId = "Allison's messages" }));
 ```
 
 When no sub-ledger id is specified on method calls, the Confidential Ledger service will assume a constant, service-determined sub-ledger id.
 
 ```C# Snippet:NoSubLedgerId
 Response postResponse = ledgerClient.PostLedgerEntry(
+waitUntil: WaitUntil.Completed,
     RequestContent.Create(
-        new { contents = "Hello world!" }),
-    waitForCompletion: true);
+        new { contents = "Hello world!" })) as PostLedgerEntryOperation;
 string transactionId = postOperation.Id;
 string subLedgerId = "subledger:0";
 
@@ -209,20 +209,19 @@ Ledger entries are retrieved from sub-ledgers. When a transaction id is specifie
 
 ```C# Snippet:GetEnteryWithNoTransactionId
 PostLedgerEntryOperation firstPostOperation = ledgerClient.PostLedgerEntry(
-    RequestContent.Create(new { contents = "Hello world 0" }),
-    waitForCompletion: true);
+    waitUntil: WaitUntil.Completed,
+    RequestContent.Create(new { contents = "Hello world 0" })) as PostLedgerEntryOperation;
 ledgerClient.PostLedgerEntry(
-    RequestContent.Create(new { contents = "Hello world 1" }),
-    waitForCompletion: true);
+    waitUntil: WaitUntil.Completed,
+    RequestContent.Create(new { contents = "Hello world 1" }));
 PostLedgerEntryOperation subLedgerPostOperation = ledgerClient.PostLedgerEntry(
+    waitUntil: WaitUntil.Completed,
     RequestContent.Create(new { contents = "Hello world sub-ledger 0" }),
-    "my sub-ledger",
-    waitForCompletion: true);
+    "my sub-ledger") as PostLedgerEntryOperation;
 ledgerClient.PostLedgerEntry(
+    waitUntil: WaitUntil.Completed,
     RequestContent.Create(new { contents = "Hello world sub-ledger 1" }),
-    "my sub-ledger",
-    waitForCompletion: true);
-
+    "my sub-ledger");
 string transactionId = firstPostOperation.Id;
 
 // Wait for the entry to be committed

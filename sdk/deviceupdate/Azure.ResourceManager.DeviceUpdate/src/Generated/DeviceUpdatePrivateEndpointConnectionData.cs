@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DeviceUpdate.Models;
 using Azure.ResourceManager.Models;
@@ -16,8 +18,17 @@ namespace Azure.ResourceManager.DeviceUpdate
     public partial class DeviceUpdatePrivateEndpointConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of DeviceUpdatePrivateEndpointConnectionData. </summary>
-        public DeviceUpdatePrivateEndpointConnectionData()
+        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionState"/> is null. </exception>
+        public DeviceUpdatePrivateEndpointConnectionData(DeviceUpdatePrivateLinkServiceConnectionState connectionState)
         {
+            if (connectionState == null)
+            {
+                throw new ArgumentNullException(nameof(connectionState));
+            }
+
+            ConnectionState = connectionState;
+            GroupIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DeviceUpdatePrivateEndpointConnectionData. </summary>
@@ -26,12 +37,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="privateEndpoint"> The resource of private end point. </param>
-        /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="groupIds"> Array of group IDs. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
-        internal DeviceUpdatePrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SubResource privateEndpoint, DeviceUpdatePrivateLinkServiceConnectionState privateLinkServiceConnectionState, DeviceUpdatePrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal DeviceUpdatePrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SubResource privateEndpoint, DeviceUpdatePrivateLinkServiceConnectionState connectionState, IList<string> groupIds, DeviceUpdatePrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             PrivateEndpoint = privateEndpoint;
-            PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
+            ConnectionState = connectionState;
+            GroupIds = groupIds;
             ProvisioningState = provisioningState;
         }
 
@@ -44,7 +57,9 @@ namespace Azure.ResourceManager.DeviceUpdate
         }
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-        public DeviceUpdatePrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
+        public DeviceUpdatePrivateLinkServiceConnectionState ConnectionState { get; set; }
+        /// <summary> Array of group IDs. </summary>
+        public IList<string> GroupIds { get; }
         /// <summary> The provisioning state of the private endpoint connection resource. </summary>
         public DeviceUpdatePrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
     }

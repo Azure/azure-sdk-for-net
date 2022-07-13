@@ -1,9 +1,9 @@
-# Recognizing Entities from Documents
-This sample demonstrates how to recognize entities in one or more documents. To get started you'll need a Text Analytics endpoint and credentials.  See [README][README] for links and instructions.
+# Recognizing Named Entities from Documents
+This sample demonstrates how to recognize entities in one or more documents.
 
 ## Creating a `TextAnalyticsClient`
 
-To create a new `TextAnalyticsClient` to recognize entities in a document, you need a Text Analytics endpoint and credentials.  You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.  In the sample below, however, you'll use a Text Analytics API key credential by creating an `AzureKeyCredential` object, that if needed, will allow you to update the API key without creating a new client.
+To create a new `TextAnalyticsClient` to recognize entities in a document, you need a Cognitive Services or Language service endpoint and credentials.  You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.  In the sample below, however, you'll use a Text Analytics API key credential by creating an `AzureKeyCredential` object, that if needed, will allow you to update the API key without creating a new client. See [README][README] for links and instructions.
 
 You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
 
@@ -86,7 +86,7 @@ Response<RecognizeEntitiesResultCollection> response = client.RecognizeEntitiesB
 RecognizeEntitiesResultCollection entititesPerDocuments = response.Value;
 
 int i = 0;
-Console.WriteLine($"Results of Azure Text Analytics \"Named Entity Recognition\" Model, version: \"{entititesPerDocuments.ModelVersion}\"");
+Console.WriteLine($"Results of \"Named Entity Recognition\" Model, version: \"{entititesPerDocuments.ModelVersion}\"");
 Console.WriteLine("");
 
 foreach (RecognizeEntitiesResult entitiesInDocument in entititesPerDocuments)
@@ -163,7 +163,7 @@ Response<RecognizeEntitiesResultCollection> response = client.RecognizeEntitiesB
 RecognizeEntitiesResultCollection entitiesInDocuments = response.Value;
 
 int i = 0;
-Console.WriteLine($"Results of Azure Text Analytics \"Named Entity Recognition\" Model, version: \"{entitiesInDocuments.ModelVersion}\"");
+Console.WriteLine($"Results of \"Named Entity Recognition\" Model, version: \"{entitiesInDocuments.ModelVersion}\"");
 Console.WriteLine("");
 
 foreach (RecognizeEntitiesResult entitiesInDocument in entitiesInDocuments)

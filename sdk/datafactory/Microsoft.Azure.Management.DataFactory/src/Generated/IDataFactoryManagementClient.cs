@@ -170,5 +170,10 @@ namespace Microsoft.Azure.Management.DataFactory
         /// </summary>
         IPrivateLinkResourcesOperations PrivateLinkResources { get; }
 
+        /// <summary>
+        /// Gets the IGlobalParametersOperations.
+        /// </summary>
+        IGlobalParametersOperations GlobalParameters { get; }
+
     }
 }

@@ -44,8 +44,10 @@ steps:
               Write-Host "git sparse-checkout init"
               git sparse-checkout init
 
-              Write-Host "git sparse-checkout set '/*' '!/*/' '/eng'"
-              git sparse-checkout set '/*' '!/*/' '/eng'
+              # Set non-cone mode otherwise path filters will not work in git >= 2.37.0
+              # See https://github.blog/2022-06-27-highlights-from-git-2-37/#tidbits
+              Write-Host "git sparse-checkout set --no-cone '/*' '!/*/' '/eng'"
+              git sparse-checkout set --no-cone '/*' '!/*/' '/eng'
             }
 
             # Prevent wildcard expansion in Invoke-Expression (e.g. for checkout path '/*')
@@ -59,8 +61,9 @@ steps:
 
             # sparse-checkout commands after initial checkout will auto-checkout again
             if (!$hasInitialized) {
-              Write-Host "git checkout $($repository.Commitish)"
-              git checkout $($repository.Commitish)  # this will use the default branch if repo.Commitish is empty
+              Write-Host "git -c advice.detachedHead=false checkout $($repository.Commitish)"
+              # This will use the default branch if repo.Commitish is empty
+              git -c advice.detachedHead=false checkout $($repository.Commitish)
             } else {
               Write-Host "Skipping checkout as repo has already been initialized"
             }

@@ -4,12 +4,16 @@
 using System.Collections.Generic;
 using System.Diagnostics.Metrics;
 using System.Linq;
+
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
+
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
+
 using Xunit;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter
+namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
     public class MetricHelperTests
     {
@@ -40,8 +44,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             Assert.Equal("TestDoubleCounter", metricsData.Metrics.First().Name);
             Assert.Equal(123.45, metricsData.Metrics.First().Value);
             Assert.Equal(DataPointType.Aggregation, metricsData.Metrics.First().DataPointType);
-            Assert.Equal(1, metricsData.Properties.Count);
-            Assert.Equal("60000", metricsData.Properties["_MS.AggregationIntervalMs"]);
         }
     }
 }

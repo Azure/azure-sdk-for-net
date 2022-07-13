@@ -861,7 +861,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            return new ExtractKeyPhrasesActionResult(actionName, completedOn, new TextAnalyticsErrorInternal(code, message));
+            return new ExtractKeyPhrasesActionResult(actionName, completedOn, new Error(code, message));
         }
 
         /// <summary>
@@ -877,7 +877,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            return new ExtractKeyPhrasesActionResult(default, completedOn, new TextAnalyticsErrorInternal(code, message));
+            return new ExtractKeyPhrasesActionResult(default, completedOn, new Error(code, message));
         }
 
         /// <summary>
@@ -923,7 +923,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            return new ExtractSummaryActionResult(actionName, completedOn, new TextAnalyticsErrorInternal(code, message));
+            return new ExtractSummaryActionResult(actionName, completedOn, new Error(code, message));
         }
 
         /// <summary>
@@ -939,7 +939,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            return new ExtractSummaryActionResult(default, completedOn, new TextAnalyticsErrorInternal(code, message));
+            return new ExtractSummaryActionResult(default, completedOn, new Error(code, message));
         }
 
         /// <summary>
@@ -985,7 +985,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            return new RecognizeCustomEntitiesActionResult(actionName, completedOn, new TextAnalyticsErrorInternal(code, message));
+            return new RecognizeCustomEntitiesActionResult(actionName, completedOn, new Error(code, message));
         }
 
         /// <summary>
@@ -1001,7 +1001,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            return new RecognizeCustomEntitiesActionResult(default, completedOn, new TextAnalyticsErrorInternal(code, message));
+            return new RecognizeCustomEntitiesActionResult(default, completedOn, new Error(code, message));
         }
 
         /// <summary>
@@ -1047,7 +1047,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            return new MultiCategoryClassifyActionResult(actionName, completedOn, new TextAnalyticsErrorInternal(code, message));
+            return new MultiCategoryClassifyActionResult(actionName, completedOn, new Error(code, message));
         }
 
         /// <summary>
@@ -1063,7 +1063,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            return new MultiCategoryClassifyActionResult(default, completedOn, new TextAnalyticsErrorInternal(code, message));
+            return new MultiCategoryClassifyActionResult(default, completedOn, new Error(code, message));
         }
 
         /// <summary>
@@ -1109,7 +1109,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            return new SingleCategoryClassifyActionResult(actionName, completedOn, new TextAnalyticsErrorInternal(code, message));
+            return new SingleCategoryClassifyActionResult(actionName, completedOn, new Error(code, message));
         }
 
         /// <summary>
@@ -1125,7 +1125,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            return new SingleCategoryClassifyActionResult(default, completedOn, new TextAnalyticsErrorInternal(code, message));
+            return new SingleCategoryClassifyActionResult(default, completedOn, new Error(code, message));
         }
 
         /// <summary>
@@ -1172,7 +1172,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            return new AnalyzeSentimentActionResult(actionName, completedOn, new TextAnalyticsErrorInternal(code, message));
+            return new AnalyzeSentimentActionResult(actionName, completedOn, new Error(code, message));
         }
 
         /// <summary>
@@ -1188,7 +1188,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            return new AnalyzeSentimentActionResult(default, completedOn, new TextAnalyticsErrorInternal(code, message));
+            return new AnalyzeSentimentActionResult(default, completedOn, new Error(code, message));
         }
 
         /// <summary>
@@ -1234,7 +1234,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            return new RecognizeLinkedEntitiesActionResult(actionName, completedOn, new TextAnalyticsErrorInternal(code, message));
+            return new RecognizeLinkedEntitiesActionResult(actionName, completedOn, new Error(code, message));
         }
 
         /// <summary>
@@ -1250,7 +1250,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            return new RecognizeLinkedEntitiesActionResult(default, completedOn, new TextAnalyticsErrorInternal(code, message));
+            return new RecognizeLinkedEntitiesActionResult(default, completedOn, new Error(code, message));
         }
 
         /// <summary>
@@ -1296,7 +1296,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            return new RecognizeEntitiesActionResult(actionName, completedOn, new TextAnalyticsErrorInternal(code, message));
+            return new RecognizeEntitiesActionResult(actionName, completedOn, new Error(code, message));
         }
 
         /// <summary>
@@ -1312,7 +1312,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            return new RecognizeEntitiesActionResult(default, completedOn, new TextAnalyticsErrorInternal(code, message));
+            return new RecognizeEntitiesActionResult(default, completedOn, new Error(code, message));
         }
 
         /// <summary>`
@@ -1358,7 +1358,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            return new RecognizePiiEntitiesActionResult(actionName, completedOn, new TextAnalyticsErrorInternal(code, message));
+            return new RecognizePiiEntitiesActionResult(actionName, completedOn, new Error(code, message));
         }
 
         /// <summary>
@@ -1374,7 +1374,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            return new RecognizePiiEntitiesActionResult(default, completedOn, new TextAnalyticsErrorInternal(code, message));
+            return new RecognizePiiEntitiesActionResult(default, completedOn, new Error(code, message));
         }
 
         #endregion Action Result Models
@@ -1390,6 +1390,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="entityRelations">Sets the collection of <see cref="TextAnalytics.HealthcareEntityRelation"/>.</param>
         /// <param name="warnings">Sets the collection of <see cref="TextAnalytics.TextAnalyticsWarning"/>.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.AnalyzeHealthcareEntitiesResult"/> for mocking purposes.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static AnalyzeHealthcareEntitiesResult AnalyzeHealthcareEntitiesResult(
             string id,
             TextDocumentStatistics statistics,
@@ -1398,6 +1399,27 @@ namespace Azure.AI.TextAnalytics
             IEnumerable<TextAnalyticsWarning> warnings)
         {
             return new AnalyzeHealthcareEntitiesResult(id, statistics, healthcareEntities.ToList(), entityRelations.ToList(), warnings.ToList());
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.AnalyzeHealthcareEntitiesResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="id">Sets the <see cref="TextAnalyticsResult.Id"/> property.</param>
+        /// <param name="statistics">Sets the <see cref="TextAnalyticsResult.Statistics"/> property.</param>
+        /// <param name="healthcareEntities">Sets the collection of <see cref="TextAnalytics.HealthcareEntity"/>.</param>
+        /// <param name="entityRelations">Sets the collection of <see cref="TextAnalytics.HealthcareEntityRelation"/>.</param>
+        /// <param name="warnings">Sets the collection of <see cref="TextAnalytics.TextAnalyticsWarning"/>.</param>
+        /// <param name="fhirBundle">Sets the object <see cref="AnalyzeHealthcareEntitiesResult.FhirBundle"/>.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.AnalyzeHealthcareEntitiesResult"/> for mocking purposes.</returns>
+        public static AnalyzeHealthcareEntitiesResult AnalyzeHealthcareEntitiesResult(
+            string id,
+            TextDocumentStatistics statistics,
+            IEnumerable<HealthcareEntity> healthcareEntities,
+            IEnumerable<HealthcareEntityRelation> entityRelations,
+            IEnumerable<TextAnalyticsWarning> warnings,
+            IDictionary<string, object> fhirBundle)
+        {
+            return new AnalyzeHealthcareEntitiesResult(id, statistics, healthcareEntities.ToList(), entityRelations.ToList(), warnings.ToList(), fhirBundle);
         }
 
         /// <summary>
@@ -1483,5 +1505,24 @@ namespace Azure.AI.TextAnalytics
             return new HealthcareEntityRelation(relationType, roles.ToList());
         }
         #endregion Healthcare
+
+        /// <summary> Initializes a new instance of HealthcareEntityAssertion. </summary>
+        /// <param name="conditionality"> Describes any conditionality on the entity. </param>
+        /// <param name="certainty"> Describes the entities certainty and polarity. </param>
+        /// <param name="association"> Describes if the entity is the subject of the text or if it describes someone else. </param>
+        /// <returns> A new <see cref="TextAnalytics.HealthcareEntityAssertion"/> instance for mocking. </returns>
+        public static HealthcareEntityAssertion HealthcareEntityAssertion(EntityConditionality? conditionality = null, EntityCertainty? certainty = null, EntityAssociation? association = null)
+        {
+            return new HealthcareEntityAssertion(conditionality, certainty, association);
+        }
+
+        /// <summary> Initializes a new instance of EntityDataSource. </summary>
+        /// <param name="name"> Entity Catalog. Examples include: UMLS, CHV, MSH, etc. </param>
+        /// <param name="entityId"> Entity id in the given source catalog. </param>
+        /// <returns> A new <see cref="TextAnalytics.EntityDataSource"/> instance for mocking. </returns>
+        public static EntityDataSource EntityDataSource(string name = null, string entityId = null)
+        {
+            return new EntityDataSource(name, entityId);
+        }
     }
 }

@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Dns.Models
         /// <param name="ipv4Address"> The IPv4 address of this A record. </param>
         internal ARecord(string ipv4Address)
         {
-            Ipv4Address = ipv4Address;
+            IPv4Address = ipv4Address;
         }
 
         /// <summary> The IPv4 address of this A record. </summary>
-        public string Ipv4Address { get; set; }
+        public string IPv4Address { get; set; }
     }
 }

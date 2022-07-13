@@ -306,6 +306,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             var mockProcessor = new MockSessionProcessor();
             var mockReceiver = new Mock<ServiceBusSessionReceiver>();
             mockReceiver.Setup(r => r.SessionId).Returns("sessionId");
+            mockReceiver.Setup(r => r.FullyQualifiedNamespace).Returns("namespace");
+            mockReceiver.Setup(r => r.EntityPath).Returns("entityPath");
             bool processMessageCalled = false;
             bool processErrorCalled = false;
             bool sessionOpenCalled = false;
@@ -332,6 +334,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 processMessageCalled = true;
                 Assert.AreEqual("1", args.Message.MessageId);
                 Assert.AreEqual("sessionId", args.SessionId);
+                Assert.AreEqual("namespace", args.FullyQualifiedNamespace);
+                Assert.AreEqual("entityPath", args.EntityPath);
                 return Task.CompletedTask;
             };
 
@@ -351,6 +355,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             {
                 sessionOpenCalled = true;
                 Assert.AreEqual("sessionId", args.SessionId);
+                Assert.AreEqual("namespace", args.FullyQualifiedNamespace);
+                Assert.AreEqual("entityPath", args.EntityPath);
                 return Task.CompletedTask;
             };
 
@@ -358,6 +364,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             {
                 sessionCloseCalled = true;
                 Assert.AreEqual("sessionId", args.SessionId);
+                Assert.AreEqual("namespace", args.FullyQualifiedNamespace);
+                Assert.AreEqual("entityPath", args.EntityPath);
                 return Task.CompletedTask;
             };
 

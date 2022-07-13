@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB
     public partial class CosmosDBLocationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CosmosDBLocationResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string location)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}";
             return new ResourceIdentifier(resourceId);
@@ -87,11 +87,11 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of RestorableDatabaseAccountResources in the CosmosDBLocation. </summary>
-        /// <returns> An object representing collection of RestorableDatabaseAccountResources and their operations over a RestorableDatabaseAccountResource. </returns>
-        public virtual RestorableDatabaseAccountCollection GetRestorableDatabaseAccounts()
+        /// <summary> Gets a collection of RestorableCosmosDBAccountResources in the CosmosDBLocation. </summary>
+        /// <returns> An object representing collection of RestorableCosmosDBAccountResources and their operations over a RestorableCosmosDBAccountResource. </returns>
+        public virtual RestorableCosmosDBAccountCollection GetRestorableCosmosDBAccounts()
         {
-            return GetCachedClient(Client => new RestorableDatabaseAccountCollection(Client, Id));
+            return GetCachedClient(Client => new RestorableCosmosDBAccountCollection(Client, Id));
         }
 
         /// <summary>
@@ -104,9 +104,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<RestorableDatabaseAccountResource>> GetRestorableDatabaseAccountAsync(string instanceId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RestorableCosmosDBAccountResource>> GetRestorableCosmosDBAccountAsync(string instanceId, CancellationToken cancellationToken = default)
         {
-            return await GetRestorableDatabaseAccounts().GetAsync(instanceId, cancellationToken).ConfigureAwait(false);
+            return await GetRestorableCosmosDBAccounts().GetAsync(instanceId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -119,9 +119,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<RestorableDatabaseAccountResource> GetRestorableDatabaseAccount(string instanceId, CancellationToken cancellationToken = default)
+        public virtual Response<RestorableCosmosDBAccountResource> GetRestorableCosmosDBAccount(string instanceId, CancellationToken cancellationToken = default)
         {
-            return GetRestorableDatabaseAccounts().Get(instanceId, cancellationToken);
+            return GetRestorableCosmosDBAccounts().Get(instanceId, cancellationToken);
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _cosmosDBLocationLocationsRestClient.GetAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _cosmosDBLocationLocationsRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CosmosDBLocationResource(Client, response.Value), response.GetRawResponse());
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _cosmosDBLocationLocationsRestClient.Get(Id.SubscriptionId, Id.Name, cancellationToken);
+                var response = _cosmosDBLocationLocationsRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CosmosDBLocationResource(Client, response.Value), response.GetRawResponse());

@@ -33,12 +33,13 @@ To authenticate in Visual Studio select the `Tools > Options` menu to launch the
 
 Developers using Visual Studio Code can use the [Azure Account extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.azure-account) to authenticate via the editor. Applications using the `DefaultAzureCredential` or the `VisualStudioCodeCredential` can then use this account to authenticate calls in their application when running locally.
 
-To authenticate in Visual Studio Code, ensure **version 0.9.11 or earlier** of the Azure Account extension is installed. To track progress toward supporting newer extension versions, see [this GitHub issue](https://github.com/Azure/azure-sdk-for-net/issues/27263). Once installed, open the **Command Palette** and run the **Azure: Sign In** command.
+It's a [known issue](https://github.com/Azure/azure-sdk-for-net/issues/27263) that `VisualStudioCodeCredential` doesn't work with [Azure Account extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.azure-account) versions newer than **0.9.11**. A long-term fix to this problem is in progress. In the meantime, consider [authenticating via the Azure CLI](#authenticating-via-the-azure-cli).
 
 #### Authenticating via the Azure CLI
+
 Developers coding outside of an IDE can also use the [Azure CLI][azure_cli] to authenticate. Applications using the `DefaultAzureCredential` or the `AzureCliCredential` can then use this account to authenticate calls in their application when running locally.
 
-To authenticate with the [Azure CLI][azure_cli], users can run the command `az login`. For users running on a system with a default web browser the azure cli will launch the browser to authenticate the user.
+To authenticate with the [Azure CLI][azure_cli], users can run the command `az login`. For users running on a system with a default web browser, the Azure CLI will launch the browser to authenticate the user.
 
 ![Azure CLI Account Sign In][azure_cli_login_image]
 
@@ -47,6 +48,7 @@ For systems without a default web browser, the `az login` command will use the d
 ![Azure CLI Account Device Code Sign In][azure_cli_login_device_code_image]
 
 #### Authenticating via Azure PowerShell
+
 Developers coding outside of an IDE can also use [Azure PowerShell][azure_powerShell] to authenticate. Applications using the `DefaultAzureCredential` or the `AzurePowerShellCredential` can then use this account to authenticate calls in their application when running locally.
 
 To authenticate with [Azure PowerShell][azure_powerShell], users can run the command `Connect-AzAccount`. For users running on a system with a default web browser and version 5.0.0 or later of azure PowerShell, it will launch the browser to authenticate the user.
@@ -138,8 +140,10 @@ The [Managed identity authentication](https://docs.microsoft.com/azure/active-di
 
 
 ## Credential Classes
+
 ### Authenticating Azure Hosted Applications
-|credential  | usage
+
+|Credential  | Usage
 |-|-
 |[`DefaultAzureCredential`][ref_DefaultAzureCredential]|provides a simplified authentication experience to quickly start developing applications run in the Azure cloud
 |[`ChainedTokenCredential`][ref_ChainedTokenCredential]|allows users to define custom authentication flows composing multiple credentials
@@ -147,27 +151,31 @@ The [Managed identity authentication](https://docs.microsoft.com/azure/active-di
 |[`EnvironmentCredential`][ref_EnvironmentCredential]|authenticates a service principal or user via credential information specified in environment variables
 
 ### Authenticating Service Principals
-|credential  | usage
-|-|-
-|[`ClientSecretCredential`][ref_ClientSecretCredential]|authenticates a service principal using a secret
-|[`ClientCertificateCredential`][ref_ClientCertificateCredential]|authenticates a service principal using a certificate
 
+|Credential  | Usage
+|-|-
+|[`ClientAssertionCredential`][ref_ClientAssertionCredential]|authenticates a service principal using a signed client assertion
+|[`ClientCertificateCredential`][ref_ClientCertificateCredential]|authenticates a service principal using a certificate
+|[`ClientSecretCredential`][ref_ClientSecretCredential]|authenticates a service principal using a secret
 
 ### Authenticating Users
-|credential  | usage
+
+|Credential  | Usage
 |-|-
-|[`InteractiveBrowserCredential`][ref_InteractiveBrowserCredential]|interactively authenticates a user with the default system browser
+|[`AuthorizationCodeCredential`][ref_AuthorizationCodeCredential]|authenticates a user with a previously obtained authorization code
 |[`DeviceCodeCredential`][ref_DeviceCodeCredential]|interactively authenticates a user on devices with limited UI
+|[`InteractiveBrowserCredential`][ref_InteractiveBrowserCredential]|interactively authenticates a user with the default system browser
+|[`OnBehalfOfCredential`][ref_OnBehalfOfCredential]|propagates the delegated user identity and permissions through the request chain
 |[`UsernamePasswordCredential`][ref_UsernamePasswordCredential]|authenticates a user with a username and password
-|[`AuthorizationCodeCredential`][ref_AuthorizationCodeCredential]|authenticate a user with a previously obtained authorization code
 
 ### Authenticating via Development Tools
-|credential  | usage
+
+|Credential  | Usage
 |-|-
-|[`AzureCliCredential`][ref_AzureCliCredential]|authenticate in a development environment with the Azure CLI
-|[`AzurePowerShellCredential`][ref_AzurePowerShellCredential]|authenticate in a development environment with the Azure PowerShell
-|[`VisualStudioCredential`][ref_VisualStudioCredential]|authenticate in a development environment with Visual Studio
-|[`VisualStudioCodeCredential`][ref_VisualStudioCodeCredential]|authenticate in a development environment with Visual Studio Code
+|[`AzureCliCredential`][ref_AzureCliCredential]|authenticates in a development environment with the Azure CLI
+|[`AzurePowerShellCredential`][ref_AzurePowerShellCredential]|authenticates in a development environment with the Azure PowerShell
+|[`VisualStudioCredential`][ref_VisualStudioCredential]|authenticates in a development environment with Visual Studio
+|[`VisualStudioCodeCredential`][ref_VisualStudioCodeCredential]|authenticates in a development environment with Visual Studio Code
 
 > __Note:__ All credential implementations in the Azure Identity library are threadsafe, and a single credential instance can be used by multiple service clients.
 
@@ -327,10 +335,12 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [ref_ManagedIdentityCredential]: https://docs.microsoft.com/dotnet/api/azure.identity.managedidentitycredential?view=azure-dotnet
 [ref_ClientSecretCredential]: https://docs.microsoft.com/dotnet/api/azure.identity.clientsecretcredential?view=azure-dotnet
 [ref_ClientCertificateCredential]: https://docs.microsoft.com/dotnet/api/azure.identity.clientcertificatecredential?view=azure-dotnet
+[ref_ClientAssertionCredential]: https://docs.microsoft.com/dotnet/api/azure.identity.clientassertioncredential?view=azure-dotnet
 [ref_InteractiveBrowserCredential]: https://docs.microsoft.com/dotnet/api/azure.identity.interactivebrowsercredential?view=azure-dotnet
 [ref_DeviceCodeCredential]: https://docs.microsoft.com/dotnet/api/azure.identity.devicecodecredential?view=azure-dotnet
 [ref_UsernamePasswordCredential]: https://docs.microsoft.com/dotnet/api/azure.identity.usernamepasswordcredential?view=azure-dotnet
 [ref_AuthorizationCodeCredential]: https://docs.microsoft.com/dotnet/api/azure.identity.authorizationcodecredential?view=azure-dotnet
+[ref_OnBehalfOfCredential]: https://docs.microsoft.com/dotnet/api/azure.identity.onbehalfofcredential?view=azure-dotnet
 [ref_AzureCliCredential]: https://docs.microsoft.com/dotnet/api/azure.identity.azureclicredential?view=azure-dotnet
 [ref_AzurePowerShellCredential]: https://docs.microsoft.com/dotnet/api/azure.identity.azurepowershellcredential?view=azure-dotnet
 [ref_VisualStudioCredential]: https://docs.microsoft.com/dotnet/api/azure.identity.visualstudiocredential?view=azure-dotnet

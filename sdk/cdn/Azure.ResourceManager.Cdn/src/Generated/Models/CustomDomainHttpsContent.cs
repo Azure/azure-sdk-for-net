@@ -7,12 +7,16 @@
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The JSON object that contains the properties to secure a custom domain. </summary>
+    /// <summary>
+    /// The JSON object that contains the properties to secure a custom domain.
+    /// Please note <see cref="CustomDomainHttpsContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="UserManagedHttpsContent"/> and <see cref="CdnManagedHttpsContent"/>.
+    /// </summary>
     public partial class CustomDomainHttpsContent
     {
         /// <summary> Initializes a new instance of CustomDomainHttpsContent. </summary>
         /// <param name="protocolType"> Defines the TLS extension protocol that is used for secure delivery. </param>
-        public CustomDomainHttpsContent(ProtocolType protocolType)
+        public CustomDomainHttpsContent(SecureDeliveryProtocolType protocolType)
         {
             ProtocolType = protocolType;
         }
@@ -21,7 +25,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="certificateSource"> Defines the source of the SSL certificate. </param>
         /// <param name="protocolType"> Defines the TLS extension protocol that is used for secure delivery. </param>
         /// <param name="minimumTlsVersion"> TLS protocol version that will be used for Https. </param>
-        internal CustomDomainHttpsContent(CertificateSource certificateSource, ProtocolType protocolType, MinimumTlsVersion? minimumTlsVersion)
+        internal CustomDomainHttpsContent(CertificateSource certificateSource, SecureDeliveryProtocolType protocolType, CdnMinimumTlsVersion? minimumTlsVersion)
         {
             CertificateSource = certificateSource;
             ProtocolType = protocolType;
@@ -31,8 +35,8 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Defines the source of the SSL certificate. </summary>
         internal CertificateSource CertificateSource { get; set; }
         /// <summary> Defines the TLS extension protocol that is used for secure delivery. </summary>
-        public ProtocolType ProtocolType { get; set; }
+        public SecureDeliveryProtocolType ProtocolType { get; set; }
         /// <summary> TLS protocol version that will be used for Https. </summary>
-        public MinimumTlsVersion? MinimumTlsVersion { get; set; }
+        public CdnMinimumTlsVersion? MinimumTlsVersion { get; set; }
     }
 }

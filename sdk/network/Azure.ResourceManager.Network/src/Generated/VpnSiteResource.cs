@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "VpnSiteResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal VpnSiteResource(ArmClient client, VpnSiteData data) : this(client, new ResourceIdentifier(data.Id))
+        internal VpnSiteResource(ArmClient client, VpnSiteData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="vpnSiteParameters"> Parameters supplied to update VpnSite tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteParameters"/> is null. </exception>
-        public virtual async Task<Response<VpnSiteResource>> UpdateAsync(TagsObject vpnSiteParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VpnSiteResource>> UpdateAsync(NetworkTagsObject vpnSiteParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(vpnSiteParameters, nameof(vpnSiteParameters));
 
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="vpnSiteParameters"> Parameters supplied to update VpnSite tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteParameters"/> is null. </exception>
-        public virtual Response<VpnSiteResource> Update(TagsObject vpnSiteParameters, CancellationToken cancellationToken = default)
+        public virtual Response<VpnSiteResource> Update(NetworkTagsObject vpnSiteParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(vpnSiteParameters, nameof(vpnSiteParameters));
 

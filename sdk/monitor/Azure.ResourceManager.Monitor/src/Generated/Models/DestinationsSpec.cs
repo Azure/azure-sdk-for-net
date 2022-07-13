@@ -11,25 +11,40 @@ using Azure.Core;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Specification of destinations that can be used in data flows. </summary>
-    internal partial class DestinationsSpec
+    public partial class DestinationsSpec
     {
         /// <summary> Initializes a new instance of DestinationsSpec. </summary>
-        internal DestinationsSpec()
+        public DestinationsSpec()
         {
             LogAnalytics = new ChangeTrackingList<LogAnalyticsDestination>();
         }
 
+        /// <summary> Initializes a new instance of DestinationsSpec. </summary>
+        /// <param name="logAnalytics"> List of Log Analytics destinations. </param>
+        /// <param name="azureMonitorMetrics"> Azure Monitor Metrics destination. </param>
+        internal DestinationsSpec(IList<LogAnalyticsDestination> logAnalytics, DestinationsSpecAzureMonitorMetrics azureMonitorMetrics)
+        {
+            LogAnalytics = logAnalytics;
+            AzureMonitorMetrics = azureMonitorMetrics;
+        }
+
         /// <summary> List of Log Analytics destinations. </summary>
-        public IReadOnlyList<LogAnalyticsDestination> LogAnalytics { get; }
+        public IList<LogAnalyticsDestination> LogAnalytics { get; }
         /// <summary> Azure Monitor Metrics destination. </summary>
-        internal DestinationsSpecAzureMonitorMetrics AzureMonitorMetrics { get; }
+        internal DestinationsSpecAzureMonitorMetrics AzureMonitorMetrics { get; set; }
         /// <summary>
         /// A friendly name for the destination. 
         /// This name should be unique across all destinations (regardless of type) within the data collection rule.
         /// </summary>
         public string AzureMonitorMetricsName
         {
-            get => AzureMonitorMetrics.Name;
+            get => AzureMonitorMetrics is null ? default : AzureMonitorMetrics.Name;
+            set
+            {
+                if (AzureMonitorMetrics is null)
+                    AzureMonitorMetrics = new DestinationsSpecAzureMonitorMetrics();
+                AzureMonitorMetrics.Name = value;
+            }
         }
     }
 }

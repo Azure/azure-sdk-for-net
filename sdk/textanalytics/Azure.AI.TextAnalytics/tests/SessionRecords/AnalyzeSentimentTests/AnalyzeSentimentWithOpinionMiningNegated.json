@@ -1,109 +1,113 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/text/analytics/v3.2-preview.2/sentiment?showStats=false\u0026opinionMining=true\u0026stringIndexType=Utf16CodeUnit",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/:analyze-text?api-version=2022-04-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "text/json"
-        ],
-        "Content-Length": "80",
+        "Accept": "application/json",
+        "Content-Length": "195",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-86675bd77ae22f4ab8d4bd3342505e82-b522e4ea33228f45-00",
-        "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20211025.1",
-          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "8d0590d28394353aadd5df7e697ac312",
+        "traceparent": "00-f95117113293f5438addd1eb58f19efc-61ddb516158c584e-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220504.1 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "c1742ad2df58f122f56949c75f99758d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "documents": [
-          {
-            "id": "0",
-            "text": "The bathrooms are not clean.",
-            "language": "en"
-          }
-        ]
+        "analysisInput": {
+          "documents": [
+            {
+              "id": "0",
+              "text": "The bathrooms are not clean.",
+              "language": "en"
+            }
+          ]
+        },
+        "parameters": {
+          "opinionMining": true,
+          "stringIndexType": "Utf16CodeUnit"
+        },
+        "kind": "SentimentAnalysis"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "e57b83da-b803-4796-9a07-c55f5c205670",
+        "apim-request-id": "3f042aa5-f97b-47b0-b96b-f01110cdc998",
+        "Content-Length": "751",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1,CognitiveServices.TextAnalytics.TextRecords=1",
-        "Date": "Mon, 25 Oct 2021 21:13:48 GMT",
+        "Date": "Wed, 04 May 2022 23:16:50 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "80"
+        "x-envoy-upstream-service-time": "20"
       },
       "ResponseBody": {
-        "documents": [
-          {
-            "id": "0",
-            "sentiment": "negative",
-            "confidenceScores": {
-              "positive": 0.0,
-              "neutral": 0.0,
-              "negative": 1.0
-            },
-            "sentences": [
-              {
-                "sentiment": "negative",
-                "confidenceScores": {
-                  "positive": 0.0,
-                  "neutral": 0.0,
-                  "negative": 1.0
-                },
-                "offset": 0,
-                "length": 28,
-                "text": "The bathrooms are not clean.",
-                "targets": [
-                  {
-                    "sentiment": "negative",
-                    "confidenceScores": {
-                      "positive": 0.01,
-                      "negative": 0.99
-                    },
-                    "offset": 4,
-                    "length": 9,
-                    "text": "bathrooms",
-                    "relations": [
-                      {
-                        "relationType": "assessment",
-                        "ref": "#/documents/0/sentences/0/assessments/0"
-                      }
-                    ]
-                  }
-                ],
-                "assessments": [
-                  {
-                    "sentiment": "negative",
-                    "confidenceScores": {
-                      "positive": 0.01,
-                      "negative": 0.99
-                    },
-                    "offset": 22,
-                    "length": 5,
-                    "text": "clean",
-                    "isNegated": true
-                  }
-                ]
-              }
-            ],
-            "warnings": []
-          }
-        ],
-        "errors": [],
-        "modelVersion": "2020-04-01"
+        "kind": "SentimentAnalysisResults",
+        "results": {
+          "documents": [
+            {
+              "id": "0",
+              "sentiment": "negative",
+              "confidenceScores": {
+                "positive": 0.0,
+                "neutral": 0.01,
+                "negative": 0.99
+              },
+              "sentences": [
+                {
+                  "sentiment": "negative",
+                  "confidenceScores": {
+                    "positive": 0.0,
+                    "neutral": 0.01,
+                    "negative": 0.99
+                  },
+                  "offset": 0,
+                  "length": 28,
+                  "text": "The bathrooms are not clean.",
+                  "targets": [
+                    {
+                      "sentiment": "negative",
+                      "confidenceScores": {
+                        "positive": 0.0,
+                        "negative": 1.0
+                      },
+                      "offset": 4,
+                      "length": 9,
+                      "text": "bathrooms",
+                      "relations": [
+                        {
+                          "relationType": "assessment",
+                          "ref": "#/documents/0/sentences/0/assessments/0"
+                        }
+                      ]
+                    }
+                  ],
+                  "assessments": [
+                    {
+                      "sentiment": "negative",
+                      "confidenceScores": {
+                        "positive": 0.0,
+                        "negative": 1.0
+                      },
+                      "offset": 22,
+                      "length": 5,
+                      "text": "clean",
+                      "isNegated": true
+                    }
+                  ]
+                }
+              ],
+              "warnings": []
+            }
+          ],
+          "errors": [],
+          "modelVersion": "2021-10-01"
+        }
       }
     }
   ],
   "Variables": {
-    "RandomSeed": "825040414",
+    "RandomSeed": "839256410",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com/"
+    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
   }
 }

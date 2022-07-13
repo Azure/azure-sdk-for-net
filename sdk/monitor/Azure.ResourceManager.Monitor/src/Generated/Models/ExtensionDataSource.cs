@@ -15,38 +15,59 @@ namespace Azure.ResourceManager.Monitor.Models
     /// Definition of which data will be collected from a separate VM extension that integrates with the Azure Monitor Agent.
     /// Collected from either Windows and Linux machines, depending on which extension is defined.
     /// </summary>
-    internal partial class ExtensionDataSource
+    public partial class ExtensionDataSource
     {
         /// <summary> Initializes a new instance of ExtensionDataSource. </summary>
         /// <param name="extensionName"> The name of the VM extension. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
-        internal ExtensionDataSource(string extensionName)
+        public ExtensionDataSource(string extensionName)
         {
             if (extensionName == null)
             {
                 throw new ArgumentNullException(nameof(extensionName));
             }
 
-            Streams = new ChangeTrackingList<KnownExtensionDataSourceStreams>();
+            Streams = new ChangeTrackingList<KnownExtensionDataSourceStream>();
             ExtensionName = extensionName;
             InputDataSources = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of ExtensionDataSource. </summary>
+        /// <param name="streams">
+        /// List of streams that this data source will be sent to.
+        /// A stream indicates what schema will be used for this data and usually what table in Log Analytics the data will be sent to.
+        /// </param>
+        /// <param name="extensionName"> The name of the VM extension. </param>
+        /// <param name="extensionSettings"> The extension settings. The format is specific for particular extension. </param>
+        /// <param name="inputDataSources"> The list of data sources this extension needs data from. </param>
+        /// <param name="name">
+        /// A friendly name for the data source. 
+        /// This name should be unique across all data sources (regardless of type) within the data collection rule.
+        /// </param>
+        internal ExtensionDataSource(IList<KnownExtensionDataSourceStream> streams, string extensionName, BinaryData extensionSettings, IList<string> inputDataSources, string name)
+        {
+            Streams = streams;
+            ExtensionName = extensionName;
+            ExtensionSettings = extensionSettings;
+            InputDataSources = inputDataSources;
+            Name = name;
         }
 
         /// <summary>
         /// List of streams that this data source will be sent to.
         /// A stream indicates what schema will be used for this data and usually what table in Log Analytics the data will be sent to.
         /// </summary>
-        public IReadOnlyList<KnownExtensionDataSourceStreams> Streams { get; }
+        public IList<KnownExtensionDataSourceStream> Streams { get; }
         /// <summary> The name of the VM extension. </summary>
-        public string ExtensionName { get; }
+        public string ExtensionName { get; set; }
         /// <summary> The extension settings. The format is specific for particular extension. </summary>
-        public BinaryData ExtensionSettings { get; }
+        public BinaryData ExtensionSettings { get; set; }
         /// <summary> The list of data sources this extension needs data from. </summary>
-        public IReadOnlyList<string> InputDataSources { get; }
+        public IList<string> InputDataSources { get; }
         /// <summary>
         /// A friendly name for the data source. 
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
         /// </summary>
-        public string Name { get; }
+        public string Name { get; set; }
     }
 }

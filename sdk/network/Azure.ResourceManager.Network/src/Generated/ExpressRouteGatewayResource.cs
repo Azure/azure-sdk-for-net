@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "ExpressRouteGatewayResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ExpressRouteGatewayResource(ArmClient client, ExpressRouteGatewayData data) : this(client, new ResourceIdentifier(data.Id))
+        internal ExpressRouteGatewayResource(ArmClient client, ExpressRouteGatewayData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="expressRouteGatewayParameters"> Parameters supplied to update a virtual wan express route gateway tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="expressRouteGatewayParameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<ExpressRouteGatewayResource>> UpdateAsync(WaitUntil waitUntil, TagsObject expressRouteGatewayParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ExpressRouteGatewayResource>> UpdateAsync(WaitUntil waitUntil, NetworkTagsObject expressRouteGatewayParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(expressRouteGatewayParameters, nameof(expressRouteGatewayParameters));
 
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="expressRouteGatewayParameters"> Parameters supplied to update a virtual wan express route gateway tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="expressRouteGatewayParameters"/> is null. </exception>
-        public virtual ArmOperation<ExpressRouteGatewayResource> Update(WaitUntil waitUntil, TagsObject expressRouteGatewayParameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ExpressRouteGatewayResource> Update(WaitUntil waitUntil, NetworkTagsObject expressRouteGatewayParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(expressRouteGatewayParameters, nameof(expressRouteGatewayParameters));
 

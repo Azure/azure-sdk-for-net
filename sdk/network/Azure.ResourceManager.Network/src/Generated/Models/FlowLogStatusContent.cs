@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of FlowLogStatusContent. </summary>
         /// <param name="targetResourceId"> The target resource where getting the flow log and traffic analytics (optional) status. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/> is null. </exception>
-        public FlowLogStatusContent(string targetResourceId)
+        public FlowLogStatusContent(ResourceIdentifier targetResourceId)
         {
             if (targetResourceId == null)
             {
@@ -26,6 +27,6 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The target resource where getting the flow log and traffic analytics (optional) status. </summary>
-        public string TargetResourceId { get; }
+        public ResourceIdentifier TargetResourceId { get; }
     }
 }

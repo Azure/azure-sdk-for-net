@@ -32,7 +32,19 @@ namespace Azure.DigitalTwins.Core
         /// The last update time of a digital twin property, used in the $metadata object
         /// on a digital twin or component about their properties.
         /// </summary>
+        public const string MetadataLastUpdateTime = "$lastUpdateTime";
+
+        /// <summary>
+        /// The last update time of a digital twin property, used in the $metadata object
+        /// on a digital twin or component about their properties.
+        /// </summary>
         public const string MetadataPropertyLastUpdateTime = "lastUpdateTime";
+
+        /// <summary>
+        /// The time the value of a digital twin property was sourced, used in the $metadata
+        /// object on a digital twin or component about their properties.
+        /// </summary>
+        public const string MetadataPropertySourceTime = "sourceTime";
 
         /// <summary>
         /// The JSON property name for the Id field on a relationship.

@@ -29,15 +29,15 @@ namespace Azure.ResourceManager.Sql
         /// <param name="serverKeyType"> The key type like &apos;ServiceManaged&apos;, &apos;AzureKeyVault&apos;. </param>
         /// <param name="uri"> The URI of the key. If the ServerKeyType is AzureKeyVault, then the URI is required. </param>
         /// <param name="thumbprint"> Thumbprint of the key. </param>
-        /// <param name="creationOn"> The key creation date. </param>
+        /// <param name="createdOn"> The key creation date. </param>
         /// <param name="autoRotationEnabled"> Key auto rotation opt-in flag. Either true or false. </param>
-        internal ManagedInstanceKeyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, ServerKeyType? serverKeyType, Uri uri, string thumbprint, DateTimeOffset? creationOn, bool? autoRotationEnabled) : base(id, name, resourceType, systemData)
+        internal ManagedInstanceKeyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, ServerKeyType? serverKeyType, Uri uri, string thumbprint, DateTimeOffset? createdOn, bool? autoRotationEnabled) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             ServerKeyType = serverKeyType;
             Uri = uri;
             Thumbprint = thumbprint;
-            CreationOn = creationOn;
+            CreatedOn = createdOn;
             AutoRotationEnabled = autoRotationEnabled;
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Thumbprint of the key. </summary>
         public string Thumbprint { get; }
         /// <summary> The key creation date. </summary>
-        public DateTimeOffset? CreationOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> Key auto rotation opt-in flag. Either true or false. </summary>
         public bool? AutoRotationEnabled { get; }
     }
