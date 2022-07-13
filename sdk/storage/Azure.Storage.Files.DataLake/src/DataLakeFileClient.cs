@@ -2796,11 +2796,13 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response<FileDownloadInfo> Read(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             HttpRange range,
             DataLakeRequestConditions conditions,
             bool rangeGetContentHash,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(Read)}");
 
@@ -2868,11 +2870,13 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response<FileDownloadInfo>> ReadAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             HttpRange range,
             DataLakeRequestConditions conditions,
             bool rangeGetContentHash,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(Read)}");
 
@@ -3246,7 +3250,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions,
             //IProgress<long> progressHandler,
             StorageTransferOptions transferOptions,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ReadTo)}");
 
@@ -3309,7 +3313,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions,
             //IProgress<long> progressHandler,
             StorageTransferOptions transferOptions,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ReadTo)}");
 
@@ -3372,7 +3376,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions,
             //IProgress<long> progressHandler,
             StorageTransferOptions transferOptions,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ReadTo)}");
 
@@ -3436,7 +3440,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions,
             //IProgress<long> progressHandler,
             StorageTransferOptions transferOptions,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($".{nameof(DataLakeFileClient)}.{nameof(ReadTo)}");
 
