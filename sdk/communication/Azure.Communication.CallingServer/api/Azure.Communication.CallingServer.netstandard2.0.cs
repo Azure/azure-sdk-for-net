@@ -161,11 +161,6 @@ namespace Azure.Communication.CallingServer
         internal GetCallRecordingStateResponse() { }
         public Azure.Communication.CallingServer.RecordingState? RecordingState { get { throw null; } }
     }
-    public partial class PlayOptions
-    {
-        public PlayOptions(bool loop) { }
-        public bool Loop { get { throw null; } }
-    }
     public partial class PlayResponse
     {
         internal PlayResponse() { }
