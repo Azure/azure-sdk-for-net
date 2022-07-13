@@ -18,7 +18,7 @@ namespace Azure.Communication.CallingServer.Models
             ServerCallId = callConnectionPropertiesDtoInternal.ServerCallId;
             Source = CommunicationIdentifierSerializer.Deserialize(callConnectionPropertiesDtoInternal.Source);
             AlternateCallerId = callConnectionPropertiesDtoInternal.AlternateCallerId == null ? null : new PhoneNumberIdentifier(callConnectionPropertiesDtoInternal.AlternateCallerId.Value);
-            Targets = callConnectionPropertiesDtoInternal.Targets.Select(t => CommunicationIdentifierSerializer.Deserialize(t));
+            Targets = callConnectionPropertiesDtoInternal.Targets.Select(t => CommunicationIdentifierSerializer.Deserialize(t)).ToList();
             CallConnectionState = callConnectionPropertiesDtoInternal.CallConnectionState;
             Subject = callConnectionPropertiesDtoInternal.Subject;
             CallbackUri = new Uri(callConnectionPropertiesDtoInternal.CallbackUri);
@@ -33,7 +33,7 @@ namespace Azure.Communication.CallingServer.Models
         /// <summary> The alternate identity of the source of the call if dialing out to a pstn number. </summary>
         public PhoneNumberIdentifier AlternateCallerId { get; }
         /// <summary> The targets of the call. </summary>
-        public IEnumerable<CommunicationIdentifier> Targets { get; }
+        public IReadOnlyList<CommunicationIdentifier> Targets { get; }
         /// <summary> The state of the call connection. </summary>
         public CallConnectionState? CallConnectionState { get; }
         /// <summary> The subject. </summary>

@@ -5,8 +5,8 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    [CodeGenModel("CallingOperationStatusDto")]
-    public readonly partial struct CallingOperationStatus
+    [CodeGenModel("PlayOption")]
+    internal partial class PlayOptionInternal
     {
     }
 }

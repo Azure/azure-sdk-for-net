@@ -22,7 +22,7 @@ namespace Azure.Communication.CallingServer
         /// Plays to everyone in the call when not provided.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="playSourceInfo"/> or <paramref name="playTo"/> is null. </exception>
-        public PlayRequestInternal(PlaySource playSourceInfo, IEnumerable<CommunicationIdentifierModel> playTo)
+        public PlayRequestInternal(PlaySourceInternal playSourceInfo, IEnumerable<CommunicationIdentifierModel> playTo)
         {
             if (playSourceInfo == null)
             {
@@ -38,7 +38,7 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> The source of the audio to be played. </summary>
-        public PlaySource PlaySourceInfo { get; }
+        public PlaySourceInternal PlaySourceInfo { get; }
         /// <summary>
         /// The list of call participants play provided audio to. 
         /// Plays to everyone in the call when not provided.

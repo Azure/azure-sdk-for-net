@@ -18,7 +18,7 @@ namespace Azure.Communication.CallingServer.Models
         public string OperationContext { get; set; }
 
         /// <summary> Timeout before invitation timesout. </summary>
-        public int InvitationTimeoutInSeconds { get; set; }
+        public int? InvitationTimeoutInSeconds { get; set; }
 
         /// <summary> The replacement CallConnectionId. </summary>
         public string ReplacementCallConnectionId { get; set; }
@@ -26,7 +26,7 @@ namespace Azure.Communication.CallingServer.Models
         /// <summary>
         /// Add Participants Options.
         /// </summary>
-        public AddParticipantsOptions(PhoneNumberIdentifier alternateCallerId = default, string operationContext = default, int invitationTimeoutInSeconds = default, string replacementCallConnectionId = default)
+        public AddParticipantsOptions(PhoneNumberIdentifier alternateCallerId = default, string operationContext = default, int? invitationTimeoutInSeconds = default, string replacementCallConnectionId = default)
         {
             AlternateCallerId = alternateCallerId;
             OperationContext = operationContext;

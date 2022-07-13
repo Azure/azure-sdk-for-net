@@ -20,6 +20,6 @@ namespace Azure.Communication.CallingServer
         /// <summary> The server call id. </summary>
         public string ServerCallId { get; set; }
         /// <summary> The call locator kind. </summary>
-        public CallLocatorKind? Kind { get; set; }
+        public CallLocatorKindInternal? Kind { get; set; }
     }
 }

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Communication.CallingServer.Models
+namespace Azure.Communication.CallingServer
 {
     /// <summary> The state of the call connection. </summary>
     public readonly partial struct CallConnectionState : IEquatable<CallConnectionState>

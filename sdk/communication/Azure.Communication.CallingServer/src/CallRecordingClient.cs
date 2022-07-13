@@ -26,9 +26,6 @@ namespace Azure.Communication.CallingServer
         internal ServerCallsRestClient serverCallsRestClient { get; }
         internal ContentRestClient contentRestClient { get; }
 
-        /// <summary> Content Capabilities for the call. </summary>
-        internal ContentCapabilities ContentCapabilities { get; }
-
         internal CallRecordingClient(string ResourceEndpoint, ServerCallsRestClient ServerCallsRestClient, ContentRestClient ContentRestClient, ClientDiagnostics ClientDiagnostics, HttpPipeline HttpPipeline)
         {
             _resourceEndpoint = ResourceEndpoint;

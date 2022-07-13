@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.Communication.CallingServer.Models;
-
 namespace Azure.Communication.CallingServer
 {
     /// <summary> Model factory for read-only models. </summary>
@@ -27,7 +25,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="code"> The result code associated with the operation. </param>
         /// <param name="subcode"> The subcode that further classifies the result. </param>
         /// <param name="message"> The message is a detail explanation of subcode. </param>
-        /// <returns> A new <see cref="Models.CallingOperationResultDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="CallingServer.CallingOperationResultDetails"/> instance for mocking. </returns>
         public static CallingOperationResultDetails CallingOperationResultDetails(int code = default, int subcode = default, string message = null)
         {
             return new CallingOperationResultDetails(code, subcode, message);

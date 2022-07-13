@@ -9,7 +9,7 @@ using Azure.Core;
 namespace Azure.Communication.CallingServer.Models
 {
     /// <summary> The options for transfering a call. </summary>
-    public class TransferCallOptions
+    public class TransferCallToParticipantOptions
     {
         /// <summary> The alternate caller id of the source. </summary>
         public PhoneNumberIdentifier AlternateCallerId { get; set; }
@@ -26,7 +26,7 @@ namespace Azure.Communication.CallingServer.Models
         /// <param name="alternateCallerId">The alternate caller id of the source</param>
         /// <param name="userToUserInformation">The userToUserInformation.</param>
         /// <param name="operationContext">The operationContext for this transfer call.</param>
-        public TransferCallOptions(PhoneNumberIdentifier alternateCallerId = default, string userToUserInformation = default, string operationContext = default)
+        public TransferCallToParticipantOptions(PhoneNumberIdentifier alternateCallerId = default, string userToUserInformation = default, string operationContext = default)
         {
             AlternateCallerId = alternateCallerId;
             UserToUserInformation = userToUserInformation;

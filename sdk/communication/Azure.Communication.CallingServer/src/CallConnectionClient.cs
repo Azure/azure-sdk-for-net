@@ -129,7 +129,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="options">The transfer options. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<TransferCallResponse>> TransferCallToParticipantAsync(CommunicationIdentifier targetParticipant, TransferCallOptions options = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TransferCallResponse>> TransferCallToParticipantAsync(CommunicationIdentifier targetParticipant, TransferCallToParticipantOptions options = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnectionClient)}.{nameof(TransferCallToParticipant)}");
             scope.Start();
@@ -162,7 +162,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="options">The transfer options. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<TransferCallResponse> TransferCallToParticipant(CommunicationIdentifier targetParticipant, TransferCallOptions options = default, CancellationToken cancellationToken = default)
+        public virtual Response<TransferCallResponse> TransferCallToParticipant(CommunicationIdentifier targetParticipant, TransferCallToParticipantOptions options = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnectionClient)}.{nameof(TransferCallToParticipant)}");
             scope.Start();

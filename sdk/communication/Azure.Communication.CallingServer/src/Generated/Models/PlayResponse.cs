@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.Communication.CallingServer.Models;
-
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The PlayResponse. </summary>

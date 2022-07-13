@@ -5,8 +5,8 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    [CodeGenModel("TransferToCallRequest")]
-    internal partial class TransferToCallRequestInternal
+    [CodeGenModel("PlaySource")]
+    internal partial class PlaySourceInternal
     {
     }
 }

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Communication.CallingServer.Models
+namespace Azure.Communication.CallingServer
 {
     /// <summary> The CallingOperationResultDetailsDto. </summary>
     public partial class CallingOperationResultDetails

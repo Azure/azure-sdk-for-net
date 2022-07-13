@@ -364,8 +364,8 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        /// <summary> Get CallConnection. <see cref="CallConnectionClient"/>.</summary>
-        /// <param name="callConnectionId"> The thread id for the ChatThreadClient instance. </param>
+        /// <summary> Get various properties of the call. <see cref="CallConnectionProperties"/>.</summary>
+        /// <param name="callConnectionId"> The call connection id for the call. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         public virtual async Task<Response<CallConnectionProperties>> GetCallConnectionPropertiesAsync(string callConnectionId, CancellationToken cancellationToken = default)
         {
@@ -386,8 +386,8 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        /// <summary> Get CallConnection. <see cref="CallConnectionClient"/>.</summary>
-        /// <param name="callConnectionId"> The thread id for the ChatThreadClient instance. </param>
+        /// <summary> Get various properties of the call. <see cref="CallConnectionProperties"/>.</summary>
+        /// <param name="callConnectionId"> The call connection id for the call. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         public virtual Response<CallConnectionProperties> GetCallConnectionProperties(string callConnectionId, CancellationToken cancellationToken = default)
         {
@@ -409,7 +409,7 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Initializes a new instance of CallConnectionClient. <see cref="GetCallConnectionClient"/>.</summary>
-        /// <param name="callConnectionId"> The thread id for the ChatThreadClient instance. </param>
+        /// <param name="callConnectionId"> The call connection id for the GetCallConnectionClient instance. </param>
         public virtual CallConnectionClient GetCallConnectionClient(string callConnectionId)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(GetCallConnectionClient)}");
@@ -425,7 +425,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        /// <summary> Initializes a new instance of CallConnectionClient. <see cref="CallRecordingClient"/>.</summary>
+        /// <summary> Initializes a new instance of GetCallRecordingClient. <see cref="CallRecordingClient"/>.</summary>
         public virtual CallRecordingClient GetCallRecordingClient()
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(GetCallRecordingClient)}");
@@ -441,11 +441,11 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        /// <summary> Initializes a new instance of CallContentClient. <see cref="CallContentClient"/>.</summary>
-        /// <param name="callConnectionId"> The thread id for the ChatThreadClient instance. </param>
-        public virtual CallContentClient GetContentClient(string callConnectionId)
+        /// <summary> Initializes a new instance of GetCallContentClient. <see cref="CallContentClient"/>.</summary>
+        /// <param name="callConnectionId"> The call connection id for the GetCallContentClient instance. </param>
+        public virtual CallContentClient GetCallContentClient(string callConnectionId)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(GetCallConnectionClient)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(GetCallContentClient)}");
             scope.Start();
             try
             {

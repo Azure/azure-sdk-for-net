@@ -14,12 +14,12 @@ namespace Azure.Communication.CallingServer.Models
                 ServerCallLocator serverCallLocator => new CallLocatorInternal
                 {
                     ServerCallId = serverCallLocator.Id,
-                    Kind = CallLocatorKind.ServerCallLocator,
+                    Kind = CallLocatorKindInternal.ServerCallLocator,
                 },
                 GroupCallLocator groupCallLocator => new CallLocatorInternal
                 {
                     GroupCallId = groupCallLocator.Id,
-                    Kind = CallLocatorKind.GroupCallLocator,
+                    Kind = CallLocatorKindInternal.GroupCallLocator,
                 },
                 _ => throw new NotSupportedException(),
             };
@@ -31,10 +31,10 @@ namespace Azure.Communication.CallingServer.Models
                 throw new JsonException("No type present in CallLocatorModel");
             }
 
-            if (identifier.Kind.Value == CallLocatorKind.ServerCallLocator)
+            if (identifier.Kind.Value == CallLocatorKindInternal.ServerCallLocator)
                 return new ServerCallLocator(AssertNotNull(identifier.ServerCallId, nameof(identifier.ServerCallId), nameof(identifier.ServerCallId)));
 
-            if (identifier.Kind.Value == CallLocatorKind.GroupCallLocator)
+            if (identifier.Kind.Value == CallLocatorKindInternal.GroupCallLocator)
                 return new GroupCallLocator(AssertNotNull(identifier.GroupCallId, nameof(identifier.GroupCallId), nameof(identifier.GroupCallId)));
 
             throw new JsonException("Unknown type present in CallLocatorModel");
