@@ -11,17 +11,20 @@
     <IncludeStress Condition="'$(IncludeStress)' == ''">true</IncludeStress>
     <IncludeSamplesApplications Condition="'$(IncludeSamplesApplications)' == ''">true</IncludeSamplesApplications>
     <IncludeSamplesApplications Condition="'$(ServiceDirectory)' != '*' or '$(IncludeSamples)' == 'false'">false</IncludeSamplesApplications>
+    <IsClientLibrary Condition="'$(IsClientLibrary)' == ''">true</IsClientLibrary>
   </PropertyGroup>
 
   <ItemGroup>
     <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\*\Microsoft.*.Management.*\**\*.csproj;$(MSBuildThisFileDirectory)..\sdk\*mgmt*\**\*.csproj" />
     <TestProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\tests\**\*.csproj" />
+    <ClientTestProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\tests\**\Azure.*csproj" />
     <SamplesProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\samples\**\*.csproj;..\sdk\$(ServiceDirectory)\samples\**\*.csproj" />
     <PerfProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\perf\**\*.csproj" />
     <StressProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\stress\**\*.csproj" />
     <SampleApplications Include="..\samples\**\*.csproj" />
     <SrcProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\src\**\*.csproj" Exclude="@(TestProjects);@(SamplesProjects);@(PerfProjects);@(StressProjects)" />
-    <ProjectReference Include="@(TestProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeTests)' == 'true' and '$(IsClientLibrary)' == 'true'" />
+    <ProjectReference Include="@(TestProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeTests)' == 'true' and '$(IsClientLibrary)' != 'true'" />
+    <ProjectReference Include="@(ClientTestProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeTests)' == 'true' and '$(IsClientLibrary)' == 'true'" />
     <ProjectReference Include="@(SamplesProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeSamples)' == 'true'" />
     <ProjectReference Include="@(PerfProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludePerf)' == 'true'" />
     <ProjectReference Include="@(StressProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeStress)' == 'true'" />
@@ -77,7 +80,7 @@
             BuildInParallel="$(BuildInParallel)"
             SkipNonexistentProjects="false"
             SkipNonexistentTargets="true">
-      <Output ItemName="ProjectsToInclude" TaskParameter="TargetOutputs"/>
+      <Output ItemName="ProjectsToInclude" TaskParameter="TargetOutputs" />
     </MSBuild>
 
     <RemoveDuplicates Inputs="@(ProjectsToInclude)">
