@@ -1,13 +1,37 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <Version>1.1.0-beta.1</Version>
-    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.0.0</ApiCompatVersion>
-    <PackageId>Azure.ResourceManager.Network</PackageId>
-    <Description>
-      Azure management client SDK for Azure resource provider Microsoft.Network.
-      This is a beta preview vesion.  This version uses a next-generation code generator that introduces important breaking changes, but also new features (such as intuitive authentication, custom HTTP pipeline, distributed tracing and much more).
-    </Description>
-    <PackageTags>azure;management;network</PackageTags>
-  </PropertyGroup>
+  <!-- Please do not move/edit code below this line -->
+	<Import Project="$(RepoEngPath)/mgmt/AzSdk.reference.props" />
+	<!-- Please do not move/edit code above this line -->
+
+	<PropertyGroup>
+		<PackageId>Microsoft.Azure.Management.Network</PackageId>
+		<Description>
+			Provides management capabilities for Network services.
+			Development of this library has shifted focus to the Azure Unified SDK. The future development will be focused on "Azure.ResourceManager.Network" (https://www.nuget.org/packages/Azure.ResourceManager.Network/). Please see the package changelog for more information.
+		</Description>
+		<AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
+		<Version>23.0.0</Version>
+		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>
+		<PackageReleaseNotes>
+		<![CDATA[
+        - Added new api version 2022-01-01
+        - Updated Explicit proxy settings by adding one boolean field to it
+        - Implemented for express route provider port
+        - Added WAF match variable operators
+        - Added VirtualHub Router autoscale configuration
+        - Added rule priority to Tls Proxy routing rule object model    
+        - Updated spec for VMSS Packet Capture
+        - Added flushConnection to NSG
+        - Implemented Network Manager (NSM) to the GA
+        - Added new parameter noInternetAdvertise to CustomIPPrefix
+        - Route Server Integration feature swagger changes			
+		]]></PackageReleaseNotes>
+	</PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
+	</PropertyGroup>
+
+	<!-- Please do not move/edit code below this line -->
+	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+	<!-- Please do not move/edit code above this line -->
 </Project>

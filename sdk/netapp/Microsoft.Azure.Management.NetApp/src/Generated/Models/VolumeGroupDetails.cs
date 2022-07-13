@@ -38,15 +38,17 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="tags">Resource tags</param>
         /// <param name="provisioningState">Azure lifecycle management</param>
         /// <param name="groupMetaData">groupMetaData</param>
         /// <param name="volumes">List of volumes from group</param>
-        public VolumeGroupDetails(string location = default(string), string id = default(string), string name = default(string), string type = default(string), string provisioningState = default(string), VolumeGroupMetaData groupMetaData = default(VolumeGroupMetaData), IList<VolumeGroupVolumeProperties> volumes = default(IList<VolumeGroupVolumeProperties>))
+        public VolumeGroupDetails(string location = default(string), string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), VolumeGroupMetaData groupMetaData = default(VolumeGroupMetaData), IList<VolumeGroupVolumeProperties> volumes = default(IList<VolumeGroupVolumeProperties>))
         {
             Location = location;
             Id = id;
             Name = name;
             Type = type;
+            Tags = tags;
             ProvisioningState = provisioningState;
             GroupMetaData = groupMetaData;
             Volumes = volumes;
@@ -81,6 +83,12 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
+
+        /// <summary>
+        /// Gets or sets resource tags
+        /// </summary>
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
         /// Gets azure lifecycle management

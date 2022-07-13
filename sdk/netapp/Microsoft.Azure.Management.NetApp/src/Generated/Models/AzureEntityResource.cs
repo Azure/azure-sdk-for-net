@@ -39,11 +39,9 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="type">The type of the resource. E.g.
         /// "Microsoft.Compute/virtualMachines" or
         /// "Microsoft.Storage/storageAccounts"</param>
-        /// <param name="systemData">Azure Resource Manager metadata containing
-        /// createdBy and modifiedBy information.</param>
         /// <param name="etag">Resource Etag.</param>
-        public AzureEntityResource(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string etag = default(string))
-            : base(id, name, type, systemData)
+        public AzureEntityResource(string id = default(string), string name = default(string), string type = default(string), string etag = default(string))
+            : base(id, name, type)
         {
             Etag = etag;
             CustomInit();

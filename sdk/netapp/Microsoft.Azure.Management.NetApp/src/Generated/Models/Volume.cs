@@ -11,6 +11,7 @@
 namespace Microsoft.Azure.Management.NetApp.Models
 {
     using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
@@ -21,7 +22,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
     /// Volume resource
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class Volume : TrackedResource
+    public partial class Volume : IResource
     {
         /// <summary>
         /// Initializes a new instance of the Volume class.
@@ -34,24 +35,17 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <summary>
         /// Initializes a new instance of the Volume class.
         /// </summary>
-        /// <param name="location">The geo-location where the resource
-        /// lives</param>
+        /// <param name="location">Resource location</param>
         /// <param name="creationToken">Creation Token or File Path</param>
         /// <param name="usageThreshold">usageThreshold</param>
         /// <param name="subnetId">The Azure Resource URI for a delegated
         /// subnet. Must have the delegation Microsoft.NetApp/volumes</param>
-        /// <param name="id">Fully qualified resource ID for the resource. Ex -
-        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
-        /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. E.g.
-        /// "Microsoft.Compute/virtualMachines" or
-        /// "Microsoft.Storage/storageAccounts"</param>
-        /// <param name="systemData">Azure Resource Manager metadata containing
-        /// createdBy and modifiedBy information.</param>
-        /// <param name="tags">Resource tags.</param>
+        /// <param name="id">Resource Id</param>
+        /// <param name="name">Resource name</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        /// <param name="zones">Availability Zone</param>
+        /// <param name="type">Resource type</param>
+        /// <param name="tags">Resource tags</param>
         /// <param name="fileSystemId">FileSystem ID</param>
         /// <param name="serviceLevel">serviceLevel</param>
         /// <param name="exportPolicy">exportPolicy</param>
@@ -88,10 +82,8 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="throughputMibps">Maximum throughput in Mibps that can
         /// be achieved by this volume and this will be accepted as input only
         /// for manual qosType volume</param>
-        /// <param name="encryptionKeySource">Source of key used to encrypt
-        /// data in volume. Possible values (case-insensitive) are:
-        /// 'Microsoft.NetApp'. Possible values include:
-        /// 'Microsoft.NetApp'</param>
+        /// <param name="encryptionKeySource">Encryption Key Source. Possible
+        /// values are: 'Microsoft.NetApp'</param>
         /// <param name="ldapEnabled">Specifies whether LDAP is enabled or not
         /// for a given NFS volume.</param>
         /// <param name="coolAccess">Specifies whether Cool Access(tiering) is
@@ -132,18 +124,20 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="volumeSpecName">Volume spec name is the application
         /// specific designation or identifier for the particular volume in a
         /// volume group for e.g. data, log</param>
-        /// <param name="encrypted">Specifies if the volume is encrypted or
-        /// not. Only available on volumes created or updated after
-        /// 2022-01-01.</param>
         /// <param name="placementRules">Volume placement rules</param>
         /// <param name="enableSubvolumes">Flag indicating whether subvolume
         /// operations are enabled on the volume. Possible values include:
         /// 'Enabled', 'Disabled'</param>
-        public Volume(string location, string creationToken, long usageThreshold, string subnetId, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), IList<string> zones = default(IList<string>), string fileSystemId = default(string), string serviceLevel = default(string), VolumePropertiesExportPolicy exportPolicy = default(VolumePropertiesExportPolicy), IList<string> protocolTypes = default(IList<string>), string provisioningState = default(string), string snapshotId = default(string), string backupId = default(string), string baremetalTenantId = default(string), string networkFeatures = default(string), string networkSiblingSetId = default(string), string storageToNetworkProximity = default(string), IList<MountTargetProperties> mountTargets = default(IList<MountTargetProperties>), string volumeType = default(string), VolumePropertiesDataProtection dataProtection = default(VolumePropertiesDataProtection), bool? isRestoring = default(bool?), bool? snapshotDirectoryVisible = default(bool?), bool? kerberosEnabled = default(bool?), string securityStyle = default(string), bool? smbEncryption = default(bool?), bool? smbContinuouslyAvailable = default(bool?), double? throughputMibps = default(double?), string encryptionKeySource = default(string), bool? ldapEnabled = default(bool?), bool? coolAccess = default(bool?), int? coolnessPeriod = default(int?), string unixPermissions = default(string), int? cloneProgress = default(int?), string avsDataStore = default(string), bool? isDefaultQuotaEnabled = default(bool?), long? defaultUserQuotaInKiBs = default(long?), long? defaultGroupQuotaInKiBs = default(long?), long? maximumNumberOfFiles = default(long?), string volumeGroupName = default(string), string capacityPoolResourceId = default(string), string proximityPlacementGroup = default(string), string t2Network = default(string), string volumeSpecName = default(string), bool? encrypted = default(bool?), IList<PlacementKeyValuePairs> placementRules = default(IList<PlacementKeyValuePairs>), string enableSubvolumes = default(string))
-            : base(location, id, name, type, systemData, tags)
+        /// <param name="systemData">The system meta data relating to this
+        /// resource.</param>
+        public Volume(string location, string creationToken, long usageThreshold, string subnetId, string id = default(string), string name = default(string), string etag = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string fileSystemId = default(string), string serviceLevel = default(string), VolumePropertiesExportPolicy exportPolicy = default(VolumePropertiesExportPolicy), IList<string> protocolTypes = default(IList<string>), string provisioningState = default(string), string snapshotId = default(string), string backupId = default(string), string baremetalTenantId = default(string), string networkFeatures = default(string), string networkSiblingSetId = default(string), string storageToNetworkProximity = default(string), IList<MountTargetProperties> mountTargets = default(IList<MountTargetProperties>), string volumeType = default(string), VolumePropertiesDataProtection dataProtection = default(VolumePropertiesDataProtection), bool? isRestoring = default(bool?), bool? snapshotDirectoryVisible = default(bool?), bool? kerberosEnabled = default(bool?), string securityStyle = default(string), bool? smbEncryption = default(bool?), bool? smbContinuouslyAvailable = default(bool?), double? throughputMibps = default(double?), string encryptionKeySource = default(string), bool? ldapEnabled = default(bool?), bool? coolAccess = default(bool?), int? coolnessPeriod = default(int?), string unixPermissions = default(string), int? cloneProgress = default(int?), string avsDataStore = default(string), bool? isDefaultQuotaEnabled = default(bool?), long? defaultUserQuotaInKiBs = default(long?), long? defaultGroupQuotaInKiBs = default(long?), long? maximumNumberOfFiles = default(long?), string volumeGroupName = default(string), string capacityPoolResourceId = default(string), string proximityPlacementGroup = default(string), string t2Network = default(string), string volumeSpecName = default(string), IList<PlacementKeyValuePairs> placementRules = default(IList<PlacementKeyValuePairs>), string enableSubvolumes = default(string), SystemData systemData = default(SystemData))
         {
+            Location = location;
+            Id = id;
+            Name = name;
             Etag = etag;
-            Zones = zones;
+            Type = type;
+            Tags = tags;
             FileSystemId = fileSystemId;
             CreationToken = creationToken;
             ServiceLevel = serviceLevel;
@@ -184,9 +178,9 @@ namespace Microsoft.Azure.Management.NetApp.Models
             ProximityPlacementGroup = proximityPlacementGroup;
             T2Network = t2Network;
             VolumeSpecName = volumeSpecName;
-            Encrypted = encrypted;
             PlacementRules = placementRules;
             EnableSubvolumes = enableSubvolumes;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -196,6 +190,24 @@ namespace Microsoft.Azure.Management.NetApp.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets resource location
+        /// </summary>
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; set; }
+
+        /// <summary>
+        /// Gets resource Id
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
+
+        /// <summary>
+        /// Gets resource name
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; private set; }
+
+        /// <summary>
         /// Gets a unique read-only string that changes whenever the resource
         /// is updated.
         /// </summary>
@@ -203,10 +215,16 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public string Etag { get; private set; }
 
         /// <summary>
-        /// Gets or sets availability Zone
+        /// Gets resource type
         /// </summary>
-        [JsonProperty(PropertyName = "zones")]
-        public IList<string> Zones { get; set; }
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; private set; }
+
+        /// <summary>
+        /// Gets or sets resource tags
+        /// </summary>
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
         /// Gets fileSystem ID
@@ -414,9 +432,8 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public double? ThroughputMibps { get; set; }
 
         /// <summary>
-        /// Gets or sets source of key used to encrypt data in volume. Possible
-        /// values (case-insensitive) are: 'Microsoft.NetApp'. Possible values
-        /// include: 'Microsoft.NetApp'
+        /// Gets or sets encryption Key Source. Possible values are:
+        /// 'Microsoft.NetApp'
         /// </summary>
         [JsonProperty(PropertyName = "properties.encryptionKeySource")]
         public string EncryptionKeySource { get; set; }
@@ -537,13 +554,6 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public string VolumeSpecName { get; set; }
 
         /// <summary>
-        /// Gets specifies if the volume is encrypted or not. Only available on
-        /// volumes created or updated after 2022-01-01.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.encrypted")]
-        public bool? Encrypted { get; private set; }
-
-        /// <summary>
         /// Gets or sets volume placement rules
         /// </summary>
         /// <remarks>
@@ -561,14 +571,23 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public string EnableSubvolumes { get; set; }
 
         /// <summary>
+        /// Gets the system meta data relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
+            if (Location == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Location");
+            }
             if (CreationToken == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "CreationToken");

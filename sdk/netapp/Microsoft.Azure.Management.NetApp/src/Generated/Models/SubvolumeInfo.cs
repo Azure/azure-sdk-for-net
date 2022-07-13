@@ -38,19 +38,20 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="type">The type of the resource. E.g.
         /// "Microsoft.Compute/virtualMachines" or
         /// "Microsoft.Storage/storageAccounts"</param>
-        /// <param name="systemData">Azure Resource Manager metadata containing
-        /// createdBy and modifiedBy information.</param>
         /// <param name="path">path</param>
         /// <param name="size">size</param>
         /// <param name="parentPath">name</param>
         /// <param name="provisioningState">Azure lifecycle management</param>
-        public SubvolumeInfo(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string path = default(string), long? size = default(long?), string parentPath = default(string), string provisioningState = default(string))
-            : base(id, name, type, systemData)
+        /// <param name="systemData">The system meta data relating to this
+        /// resource.</param>
+        public SubvolumeInfo(string id = default(string), string name = default(string), string type = default(string), string path = default(string), long? size = default(long?), string parentPath = default(string), string provisioningState = default(string), SystemData systemData = default(SystemData))
+            : base(id, name, type)
         {
             Path = path;
             Size = size;
             ParentPath = parentPath;
             ProvisioningState = provisioningState;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -91,6 +92,12 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets the system meta data relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
     }
 }

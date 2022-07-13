@@ -132,11 +132,6 @@ namespace Microsoft.Azure.Management.NetApp
         public virtual IBackupPoliciesOperations BackupPolicies { get; private set; }
 
         /// <summary>
-        /// Gets the IVolumeQuotaRulesOperations.
-        /// </summary>
-        public virtual IVolumeQuotaRulesOperations VolumeQuotaRules { get; private set; }
-
-        /// <summary>
         /// Gets the IVaultsOperations.
         /// </summary>
         public virtual IVaultsOperations Vaults { get; private set; }
@@ -403,12 +398,11 @@ namespace Microsoft.Azure.Management.NetApp
             Backups = new BackupsOperations(this);
             AccountBackups = new AccountBackupsOperations(this);
             BackupPolicies = new BackupPoliciesOperations(this);
-            VolumeQuotaRules = new VolumeQuotaRulesOperations(this);
             Vaults = new VaultsOperations(this);
             VolumeGroups = new VolumeGroupsOperations(this);
             Subvolumes = new SubvolumesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2022-01-01";
+            ApiVersion = "2021-10-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

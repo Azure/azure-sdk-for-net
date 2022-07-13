@@ -19,31 +19,30 @@ namespace Microsoft.Azure.Management.NetApp
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("NetApp", "AccountBackups", "2022-01-01"),
-                new Tuple<string, string, string>("NetApp", "Accounts", "2022-01-01"),
-                new Tuple<string, string, string>("NetApp", "BackupPolicies", "2022-01-01"),
-                new Tuple<string, string, string>("NetApp", "Backups", "2022-01-01"),
-                new Tuple<string, string, string>("NetApp", "NetAppResource", "2022-01-01"),
-                new Tuple<string, string, string>("NetApp", "NetAppResourceQuotaLimits", "2022-01-01"),
-                new Tuple<string, string, string>("NetApp", "Operations", "2022-01-01"),
-                new Tuple<string, string, string>("NetApp", "Pools", "2022-01-01"),
-                new Tuple<string, string, string>("NetApp", "SnapshotPolicies", "2022-01-01"),
-                new Tuple<string, string, string>("NetApp", "Snapshots", "2022-01-01"),
-                new Tuple<string, string, string>("NetApp", "Subvolumes", "2022-01-01"),
-                new Tuple<string, string, string>("NetApp", "Vaults", "2022-01-01"),
-                new Tuple<string, string, string>("NetApp", "VolumeGroups", "2022-01-01"),
-                new Tuple<string, string, string>("NetApp", "VolumeQuotaRules", "2022-01-01"),
-                new Tuple<string, string, string>("NetApp", "Volumes", "2022-01-01"),
+                new Tuple<string, string, string>("NetApp", "AccountBackups", "2021-10-01"),
+                new Tuple<string, string, string>("NetApp", "Accounts", "2021-10-01"),
+                new Tuple<string, string, string>("NetApp", "BackupPolicies", "2021-10-01"),
+                new Tuple<string, string, string>("NetApp", "Backups", "2021-10-01"),
+                new Tuple<string, string, string>("NetApp", "NetAppResource", "2021-10-01"),
+                new Tuple<string, string, string>("NetApp", "NetAppResourceQuotaLimits", "2021-10-01"),
+                new Tuple<string, string, string>("NetApp", "Operations", "2021-10-01"),
+                new Tuple<string, string, string>("NetApp", "Pools", "2021-10-01"),
+                new Tuple<string, string, string>("NetApp", "SnapshotPolicies", "2021-10-01"),
+                new Tuple<string, string, string>("NetApp", "Snapshots", "2021-10-01"),
+                new Tuple<string, string, string>("NetApp", "Subvolumes", "2021-10-01"),
+                new Tuple<string, string, string>("NetApp", "Vaults", "2021-10-01"),
+                new Tuple<string, string, string>("NetApp", "VolumeGroups", "2021-10-01"),
+                new Tuple<string, string, string>("NetApp", "Volumes", "2021-10-01"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "2.0.4421";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/netapp/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --use:@microsoft.azure/autorest.csharp@2.3.90 --csharp-sdks-folder=D:\\GitRepos\\AzureSdkForNet1\\sdk";
+      public static readonly String AutoRestVersion = "v2";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@3.5.1";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/netapp/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --use:@microsoft.azure/autorest.csharp@2.3.90 --csharp-sdks-folder=C:\\Users\\audunn\\Source\\repos\\azure\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "main";
-      public static readonly String GithubCommidId = "7f80a452b284a2cbc57c65ecc6e8224360d72657";
+      public static readonly String GithubCommidId = "4c50e693e709f9a88ed342abfdb54a67ed901ba5";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
