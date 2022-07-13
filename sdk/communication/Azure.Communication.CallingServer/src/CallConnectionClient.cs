@@ -364,18 +364,22 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Remove participants from the call. </summary>
         /// <param name="participantsToRemove"> The list of identity of participants to be removed from the call. </param>
-        /// <param name="operationContext">The operation context. </param>
+        /// <param name="options"> Options for removing participants. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"> <paramref name="participantsToRemove"/> is null. </exception>
-        public virtual async Task<Response<RemoveParticipantsResponse>> RemoveParticipantsAsync(IEnumerable<CommunicationIdentifier> participantsToRemove, string operationContext = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RemoveParticipantsResponse>> RemoveParticipantsAsync(IEnumerable<CommunicationIdentifier> participantsToRemove, RemoveParticipantsOptions options = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnectionClient)}.{nameof(RemoveParticipants)}");
             scope.Start();
             try
             {
                 RemoveParticipantsRequestInternal request = new RemoveParticipantsRequestInternal(participantsToRemove.Select(t => CommunicationIdentifierSerializer.Serialize(t)));
-                request.OperationContext = operationContext;
+
+                if (options != null)
+                {
+                    request.OperationContext = options.OperationContext;
+                }
 
                 return await RestClient.RemoveParticipantsAsync(
                     callConnectionId: CallConnectionId,
@@ -392,18 +396,22 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Remove participants from the call. </summary>
         /// <param name="participantsToRemove"> The list of identity of participants to be removed from the call. </param>
-        /// <param name="operationContext">The operation context. </param>
+        /// <param name="options"> Options for removing participants. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"> <paramref name="participantsToRemove"/> is null. </exception>
-        public virtual Response<RemoveParticipantsResponse> RemoveParticipants(IEnumerable<CommunicationIdentifier> participantsToRemove, string operationContext = default, CancellationToken cancellationToken = default)
+        public virtual Response<RemoveParticipantsResponse> RemoveParticipants(IEnumerable<CommunicationIdentifier> participantsToRemove, RemoveParticipantsOptions options = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnectionClient)}.{nameof(RemoveParticipants)}");
             scope.Start();
             try
             {
                 RemoveParticipantsRequestInternal request = new RemoveParticipantsRequestInternal(participantsToRemove.Select(t => CommunicationIdentifierSerializer.Serialize(t)));
-                request.OperationContext = operationContext;
+
+                if (options != null)
+                {
+                    request.OperationContext = options.OperationContext;
+                }
 
                 return RestClient.RemoveParticipants(
                     callConnectionId: CallConnectionId,
