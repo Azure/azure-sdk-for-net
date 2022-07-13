@@ -115,6 +115,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// Analyzes pages from one or more documents, using a model built with custom forms or one of the prebuilt
         /// models provided by the Form Recognizer service.
         /// </summary>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations,
+        /// please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md">Azure.Core long-running operation samples</see>.
+        /// </param>
         /// <param name="modelId">
         /// The ID of the model to use for analyzing the input documents. When using a custom built model
         /// for analysis, this parameter must be the ID attributed to the model during its creation. When
@@ -131,14 +136,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// An <see cref="AnalyzeDocumentOperation"/> to wait on this long-running operation. Its <see cref="AnalyzeDocumentOperation.Value"/> upon successful
         /// completion will contain analyzed pages from the input document.
         /// </returns>
-        public virtual async Task<AnalyzeDocumentOperation> StartAnalyzeDocumentAsync(string modelId, Stream document, AnalyzeDocumentOptions options = default, CancellationToken cancellationToken = default)
+        public virtual async Task<AnalyzeDocumentOperation> AnalyzeDocumentAsync(WaitUntil waitUntil, string modelId, Stream document, AnalyzeDocumentOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
             Argument.AssertNotNull(document, nameof(document));
 
             options ??= new AnalyzeDocumentOptions();
 
-            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentAnalysisClient)}.{nameof(StartAnalyzeDocument)}");
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentAnalysisClient)}.{nameof(AnalyzeDocument)}");
             scope.Start();
 
             try
@@ -152,7 +157,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     document,
                     cancellationToken).ConfigureAwait(false);
 
-                return new AnalyzeDocumentOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation, response.GetRawResponse());
+                var operation = new AnalyzeDocumentOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation, response.GetRawResponse());
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+
+                return operation;
             }
             catch (Exception e)
             {
@@ -165,6 +177,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// Analyzes pages from one or more documents, using a model built with custom forms or one of the prebuilt
         /// models provided by the Form Recognizer service.
         /// </summary>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations,
+        /// please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md">Azure.Core long-running operation samples</see>.
+        /// </param>
         /// <param name="modelId">
         /// The ID of the model to use for analyzing the input documents. When using a custom built model
         /// for analysis, this parameter must be the ID attributed to the model during its creation. When
@@ -181,14 +198,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// An <see cref="AnalyzeDocumentOperation"/> to wait on this long-running operation. Its <see cref="AnalyzeDocumentOperation.Value"/> upon successful
         /// completion will contain analyzed pages from the input document.
         /// </returns>
-        public virtual AnalyzeDocumentOperation StartAnalyzeDocument(string modelId, Stream document, AnalyzeDocumentOptions options = default, CancellationToken cancellationToken = default)
+        public virtual AnalyzeDocumentOperation AnalyzeDocument(WaitUntil waitUntil, string modelId, Stream document, AnalyzeDocumentOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
             Argument.AssertNotNull(document, nameof(document));
 
             options ??= new AnalyzeDocumentOptions();
 
-            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentAnalysisClient)}.{nameof(StartAnalyzeDocument)}");
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentAnalysisClient)}.{nameof(AnalyzeDocument)}");
             scope.Start();
 
             try
@@ -202,7 +219,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     document,
                     cancellationToken);
 
-                return new AnalyzeDocumentOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation, response.GetRawResponse());
+                var operation = new AnalyzeDocumentOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation, response.GetRawResponse());
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+
+                return operation;
             }
             catch (Exception e)
             {
@@ -215,6 +239,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// Analyzes pages from one or more documents, using a model built with custom forms or one of the prebuilt
         /// models provided by the Form Recognizer service.
         /// </summary>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations,
+        /// please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md">Azure.Core long-running operation samples</see>.
+        /// </param>
         /// <param name="modelId">
         /// The ID of the model to use for analyzing the input documents. When using a custom built model
         /// for analysis, this parameter must be the ID attributed to the model during its creation. When
@@ -231,14 +260,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// An <see cref="AnalyzeDocumentOperation"/> to wait on this long-running operation. Its <see cref="AnalyzeDocumentOperation.Value"/> upon successful
         /// completion will contain analyzed pages from the input document.
         /// </returns>
-        public virtual async Task<AnalyzeDocumentOperation> StartAnalyzeDocumentFromUriAsync(string modelId, Uri documentUri, AnalyzeDocumentOptions options = default, CancellationToken cancellationToken = default)
+        public virtual async Task<AnalyzeDocumentOperation> AnalyzeDocumentFromUriAsync(WaitUntil waitUntil, string modelId, Uri documentUri, AnalyzeDocumentOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
             Argument.AssertNotNull(documentUri, nameof(documentUri));
 
             options ??= new AnalyzeDocumentOptions();
 
-            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentAnalysisClient)}.{nameof(StartAnalyzeDocumentFromUri)}");
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentAnalysisClient)}.{nameof(AnalyzeDocumentFromUri)}");
             scope.Start();
 
             try
@@ -252,7 +281,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     request,
                     cancellationToken).ConfigureAwait(false);
 
-                return new AnalyzeDocumentOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation, response.GetRawResponse());
+                var operation = new AnalyzeDocumentOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation, response.GetRawResponse());
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+
+                return operation;
             }
             catch (Exception e)
             {
@@ -265,6 +301,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// Analyzes pages from one or more documents, using a model built with custom forms or one of the prebuilt
         /// models provided by the Form Recognizer service.
         /// </summary>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations,
+        /// please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md">Azure.Core long-running operation samples</see>.
+        /// </param>
         /// <param name="modelId">
         /// The ID of the model to use for analyzing the input documents. When using a custom built model
         /// for analysis, this parameter must be the ID attributed to the model during its creation. When
@@ -281,14 +322,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// An <see cref="AnalyzeDocumentOperation"/> to wait on this long-running operation. Its <see cref="AnalyzeDocumentOperation.Value"/> upon successful
         /// completion will contain analyzed pages from the input document.
         /// </returns>
-        public virtual AnalyzeDocumentOperation StartAnalyzeDocumentFromUri(string modelId, Uri documentUri, AnalyzeDocumentOptions options = default, CancellationToken cancellationToken = default)
+        public virtual AnalyzeDocumentOperation AnalyzeDocumentFromUri(WaitUntil waitUntil, string modelId, Uri documentUri, AnalyzeDocumentOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
             Argument.AssertNotNull(documentUri, nameof(documentUri));
 
             options ??= new AnalyzeDocumentOptions();
 
-            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentAnalysisClient)}.{nameof(StartAnalyzeDocumentFromUri)}");
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentAnalysisClient)}.{nameof(AnalyzeDocumentFromUri)}");
             scope.Start();
 
             try
@@ -302,7 +343,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     request,
                     cancellationToken);
 
-                return new AnalyzeDocumentOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation, response.GetRawResponse());
+                var operation = new AnalyzeDocumentOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation, response.GetRawResponse());
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+
+                return operation;
             }
             catch (Exception e)
             {
