@@ -1,4 +1,4 @@
-﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <Import Project="Versioning.targets" />
 
@@ -174,7 +174,7 @@
     <!-- Add ProjectReferences -->
     <ProjectReference Include="@(ProjectsToConvert -> '%(ProjectPath)')" />
   </ItemGroup>
-
+  
   <!--TODO: update build targets - ADO 5668-->
   <PropertyGroup>
     <MgmtCoreShared>$(MSBuildThisFileDirectory)/../sdk/resourcemanager/Azure.ResourceManager/src/Shared</MgmtCoreShared>
@@ -185,7 +185,7 @@
     <Compile Include="$(MgmtCoreShared)/**/*.cs"
                  LinkBase="Shared/Management" />
   </ItemGroup>
-
+  
   <!--TODO: end-->
 
   <!-- *********** Files needed for LRO ************* -->
@@ -210,13 +210,13 @@
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared/Core" />
   </ItemGroup>
-
+    
     <!-- *********** Management Client Library Override section ************* -->
   <ItemGroup Condition="'$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' != 'true'">
 
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.Text.Json" />
-
+    
     <!-- TODO: Review these file references-->
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
@@ -327,34 +327,6 @@
     </PropertyGroup>
 
     <Message Condition="'$(IsShippingLibrary)' == 'true'" Text="'$(PackageRootDirectory)' '$(ServiceDirectory)' '$(PackageId)' '$(VersionForProperties)' '$(PackageSdkType)' '$(PackageIsNewSdk)'" Importance="High" />
-  </Target>
-
-  <Target Name="_SetProjectDependsOnInnerTarget">
-    <PropertyGroup>
-      <InnerTargets>ProjectDependsOnInner</InnerTargets>
-    </PropertyGroup>
-  </Target>
-
-  <Target
-    Name="ProjectDependsOn"
-    DependsOnTargets="_SetProjectDependsOnInnerTarget;DispatchToInnerBuilds"
-    Condition="'$(IsCrossTargetingBuild)' == 'true'"
-    Returns="@(ProjectsToInclude)">
-
-    <RemoveDuplicates Inputs="@(InnerOutput)">
-      <Output TaskParameter="Filtered" ItemName="ProjectsToInclude"/>
-    </RemoveDuplicates>
-  </Target>
-
-  <Target Name="ProjectDependsOnInner" DependsOnTargets="ResolveReferences" Returns="@(ProjectsToInclude)">
-    <ItemGroup>
-      <_LibrariesReferenced Include="@(ReferencePath -> '%(Filename)')"/>
-      <_DependsOnGiven Include="@(_LibrariesReferenced)" Condition="'%(Identity)' == '$(TestTargetDependency)'" />
-    </ItemGroup>
-
-    <ItemGroup Condition="'@(_DependsOnGiven)' != ''" >
-      <ProjectsToInclude Include="$(MSBuildProjectFullPath)" />
-    </ItemGroup>
   </Target>
 
   <Import Project="$(CentralPackageVersionPackagePath)\Sdk.targets" />
