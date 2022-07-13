@@ -141,8 +141,7 @@ function GenerateDocsMsMetadata($originalMetadata, $language, $languageDisplayNa
     "ms.service"= $msService
   }
   $updatedMetadata = compare-and-merge-metadata -original $originalMetadata -updated $metadataTable
-  return "---
-$updatedMetadata---`r`n"
+  return "---`r`n$updatedMetadata---`r`n"
 }
 
 function ServiceLevelReadmeNameStyle($serviceName) {
