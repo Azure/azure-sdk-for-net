@@ -21,6 +21,7 @@
   <ItemGroup>
     <Compile Include="$(AzureStorageSharedTestSources)..\Sas\*.cs" LinkBase="Shared\Sas" />
     <Compile Include="$(AzureStorageSharedTestSources)\**\*.cs" LinkBase="Shared" />
+    <Compile Remove="$(AzureStorageSharedTestSources)\**\Unsafe\**\*.cs" LinkBase="Shared" />
     <None Include="$(AzureStorageSharedTestSources)\*.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

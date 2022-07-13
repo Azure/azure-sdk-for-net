@@ -15,6 +15,7 @@
     <Folder Include="SessionRecords\" />
     <Compile Include="$(AzureStorageSharedTestSources)..\Sas\*.cs" LinkBase="Shared\Sas" />
     <Compile Include="$(AzureStorageSharedTestSources)\**\*.cs" LinkBase="Shared" />
+    <Compile Remove="$(AzureStorageSharedTestSources)\**\Unsafe\**\*.cs" LinkBase="Shared" />
     <Compile Remove="$(AzureStorageSharedTestSources)\AzuriteFixture.cs" />
     <Compile Remove="$(AzureStorageSharedTestSources)\AzuriteNUnitFixture.cs" />
     <Compile Remove="$(AzureStorageSharedTestSources)\ClientSideEncryptionTestExtensions.cs" />

@@ -10,6 +10,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureStorageSharedTestSources)\**\*.cs" LinkBase="Shared" />
+    <Compile Remove="$(AzureStorageSharedTestSources)\**\Unsafe\**\*.cs" LinkBase="Shared" />
     <Compile Remove="$(AzureStorageSharedTestSources)\AzuriteFixture.cs" />
     <Compile Remove="$(AzureStorageSharedTestSources)\AzuriteNUnitFixture.cs" />
     <Compile Remove="$(AzureStorageSharedTestSources)\StorageTestBase.SasVersion.cs" />

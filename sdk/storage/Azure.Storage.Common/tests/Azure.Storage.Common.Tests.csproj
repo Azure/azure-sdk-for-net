@@ -20,6 +20,7 @@
     <Compile Remove="Shared\ClientSideEncryptionTestExtensions.cs" />
     <Compile Remove="Shared\StorageTestBase.SasVersion.cs" />
     <Compile Remove="AesGcmTests\*.cs" />
+    <Compile Remove="Shared\**\Unsafe\**\*.cs" LinkBase="Shared" />
   </ItemGroup>
   <ItemGroup>
     <!-- To test shared resources that aren't included in Azure.Storage.Common itself. -->

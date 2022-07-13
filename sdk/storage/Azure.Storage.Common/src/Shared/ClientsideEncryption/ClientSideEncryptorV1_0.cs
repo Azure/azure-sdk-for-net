@@ -64,7 +64,7 @@ namespace Azure.Storage.Cryptography
         {
             ValidateMembers();
 
-            var generatedKey = CreateKey(Constants.ClientSideEncryption.EncryptionKeySizeBits);
+            var generatedKey = ContentEncryptionKeyGenerator.CreateKey(Constants.ClientSideEncryption.EncryptionKeySizeBits);
             EncryptionData encryptionData = default;
             Stream ciphertext = default;
 
@@ -96,7 +96,7 @@ namespace Azure.Storage.Cryptography
         {
             ValidateMembers();
 
-            var generatedKey = CreateKey(Constants.ClientSideEncryption.EncryptionKeySizeBits);
+            var generatedKey = ContentEncryptionKeyGenerator.CreateKey(Constants.ClientSideEncryption.EncryptionKeySizeBits);
             EncryptionData encryptionData = default;
             var ciphertext = new MemoryStream();
             byte[] bufferedCiphertext = default;
@@ -151,7 +151,7 @@ namespace Azure.Storage.Cryptography
         {
             ValidateMembers();
 
-            var generatedKey = CreateKey(Constants.ClientSideEncryption.EncryptionKeySizeBits);
+            var generatedKey = ContentEncryptionKeyGenerator.CreateKey(Constants.ClientSideEncryption.EncryptionKeySizeBits);
             EncryptionData encryptionData = default;
             Stream writeStream = default;
 
@@ -185,20 +185,5 @@ namespace Azure.Storage.Cryptography
                 keyEncryptionKey: _keyEncryptionKey,
                 async: async,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// Securely generate a key.
-        /// </summary>
-        /// <param name="numBits">Key size.</param>
-        /// <returns>The generated key bytes.</returns>
-        private static byte[] CreateKey(int numBits)
-        {
-            using (var secureRng = new RNGCryptoServiceProvider())
-            {
-                var buff = new byte[numBits / 8];
-                secureRng.GetBytes(buff);
-                return buff;
-            }
-        }
     }
 }

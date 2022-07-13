@@ -16,7 +16,7 @@ namespace Azure.Storage.Test.Shared
     /// Provides extensions on various classes for getting <see cref="Core.Cryptography"/>
     /// type implementations for use in testing.
     /// </summary>
-    public static class ClientSideEncryptionTestExtensions
+    public static partial class ClientSideEncryptionTestExtensions
     {
         public const string s_algorithmName = "some algorithm name";
 
