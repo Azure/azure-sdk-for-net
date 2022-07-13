@@ -1,21 +1,5 @@
 <Project>
   <ItemGroup>
-    <ProjectReference Include='/home/sima/workspace/sdk/azure-sdk-for-net/sdk/extensions/Microsoft.Azure.WebJobs.Extensions.Clients/samples/Microsoft.Azure.WebJobs.Extensions.Clients.Samples.csproj' />
-    <ProjectReference Include='/home/sima/workspace/sdk/azure-sdk-for-net/sdk/extensions/Microsoft.Extensions.Azure/samples/Microsoft.Extensions.Azure.Samples.csproj' />
-    <ProjectReference Include='/home/sima/workspace/sdk/azure-sdk-for-net/sdk/keyvault/samples/keyvaultproxy/tests/AzureSamples.Security.KeyVault.Proxy.Tests.csproj' />
-    <ProjectReference Include='/home/sima/workspace/sdk/azure-sdk-for-net/sdk/quantum/Azure.Quantum.Jobs/samples/Azure.Quantum.Jobs.Samples.csproj' />
-    <ProjectReference Include='/home/sima/workspace/sdk/azure-sdk-for-net/sdk/storage/Azure.Storage.Blobs.Batch/samples/Azure.Storage.Blobs.Batch.Samples.Tests.csproj' />
-    <ProjectReference Include='/home/sima/workspace/sdk/azure-sdk-for-net/sdk/storage/Azure.Storage.Blobs.ChangeFeed/samples/Azure.Storage.Blobs.ChangeFeed.Samples.Tests.csproj' />
-    <ProjectReference Include='/home/sima/workspace/sdk/azure-sdk-for-net/sdk/storage/Azure.Storage.Blobs/samples/Azure.Storage.Blobs.Samples.Tests.csproj' />
-    <ProjectReference Include='/home/sima/workspace/sdk/azure-sdk-for-net/sdk/storage/Azure.Storage.Common/samples/Azure.Storage.Common.Samples.Tests.csproj' />
-    <ProjectReference Include='/home/sima/workspace/sdk/azure-sdk-for-net/sdk/storage/Azure.Storage.Files.DataLake/samples/Azure.Storage.Files.DataLake.Samples.Tests.csproj' />
-    <ProjectReference Include='/home/sima/workspace/sdk/azure-sdk-for-net/sdk/storage/Azure.Storage.Files.Shares/samples/Azure.Storage.Files.Shares.Samples.Tests.csproj' />
-    <ProjectReference Include='/home/sima/workspace/sdk/azure-sdk-for-net/sdk/storage/Azure.Storage.Queues/samples/Azure.Storage.Queues.Samples.Tests.csproj' />
-    <ProjectReference Include='/home/sima/workspace/sdk/azure-sdk-for-net/sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Blobs/samples/functionapp/Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Samples.Function.App.csproj' />
-    <ProjectReference Include='/home/sima/workspace/sdk/azure-sdk-for-net/sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Blobs/samples/readmes/Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Samples.Tests.csproj' />
-    <ProjectReference Include='/home/sima/workspace/sdk/azure-sdk-for-net/sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Queues/samples/functionapp/Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Samples.Function.App.csproj' />
-    <ProjectReference Include='/home/sima/workspace/sdk/azure-sdk-for-net/sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Queues/samples/readmes/Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Samples.Tests.csproj' />
-    <ProjectReference Include='/home/sima/workspace/sdk/azure-sdk-for-net/sdk/videoanalyzer/Azure.Media.VideoAnalyzer.Edge/samples/Azure.Media.VideoAnalyzer.Edge.Samples.csproj' />
-    <ProjectReference Include='/home/sima/workspace/sdk/azure-sdk-for-net/sdk/core/Azure.Core/tests/Azure.Core.Tests.csproj' />
+    <ProjectReference Include='' />
   </ItemGroup>
 </Project>
