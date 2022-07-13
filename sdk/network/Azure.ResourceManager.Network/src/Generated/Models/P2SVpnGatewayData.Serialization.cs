@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -87,14 +88,14 @@ namespace Azure.ResourceManager.Network
 
         internal static P2SVpnGatewayData DeserializeP2SVpnGatewayData(JsonElement element)
         {
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<AzureLocation> location = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<WritableSubResource> virtualHub = default;
-            Optional<IList<P2SConnectionConfiguration>> p2SConnectionConfigurations = default;
+            Optional<IList<P2SConnectionConfiguration>> p2sConnectionConfigurations = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<int> vpnGatewayScaleUnit = default;
             Optional<WritableSubResource> vpnServerConfiguration = default;
@@ -105,7 +106,12 @@ namespace Azure.ResourceManager.Network
             {
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -189,7 +195,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 array.Add(P2SConnectionConfiguration.DeserializeP2SConnectionConfiguration(item));
                             }
-                            p2SConnectionConfigurations = array;
+                            p2sConnectionConfigurations = array;
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -261,7 +267,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new P2SVpnGatewayData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), etag.Value, virtualHub, Optional.ToList(p2SConnectionConfigurations), Optional.ToNullable(provisioningState), Optional.ToNullable(vpnGatewayScaleUnit), vpnServerConfiguration, vpnClientConnectionHealth.Value, Optional.ToList(customDnsServers), Optional.ToNullable(isRoutingPreferenceInternet));
+            return new P2SVpnGatewayData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), virtualHub, Optional.ToList(p2sConnectionConfigurations), Optional.ToNullable(provisioningState), Optional.ToNullable(vpnGatewayScaleUnit), vpnServerConfiguration, vpnClientConnectionHealth.Value, Optional.ToList(customDnsServers), Optional.ToNullable(isRoutingPreferenceInternet));
         }
     }
 }

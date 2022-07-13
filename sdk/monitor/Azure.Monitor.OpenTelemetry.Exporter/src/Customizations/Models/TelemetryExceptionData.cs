@@ -4,7 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+
 using Azure.Core;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+
 using OpenTelemetry.Logs;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
@@ -21,7 +24,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             var message = LogsHelper.GetMessageAndSetProperties(logRecord, Properties);
 
             SeverityLevel = LogsHelper.GetSeverityLevel(logRecord.LogLevel);
-            ProblemId = LogsHelper.GetProblemId(logRecord.Exception);
+            ProblemId = LogsHelper.GetProblemId(logRecord.Exception).Truncate(SchemaConstants.ExceptionData_ProblemId_MaxLength);
 
             // collect the set of exceptions detail info from the passed in exception
             List<TelemetryExceptionDetails> exceptions = new List<TelemetryExceptionDetails>();

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -27,9 +28,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="peerIP"> Peer IP. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="connectionState"> The current state of the VirtualHub to Peer. </param>
-        internal BgpConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, string etag, long? peerAsn, string peerIP, NetworkProvisioningState? provisioningState, HubBgpConnectionStatus? connectionState) : base(id, name, resourceType)
+        internal BgpConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, long? peerAsn, string peerIP, NetworkProvisioningState? provisioningState, HubBgpConnectionStatus? connectionState) : base(id, name, resourceType)
         {
-            Etag = etag;
+            ETag = etag;
             PeerAsn = peerAsn;
             PeerIP = peerIP;
             ProvisioningState = provisioningState;
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> Peer ASN. </summary>
         public long? PeerAsn { get; set; }
         /// <summary> Peer IP. </summary>

@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -30,7 +32,11 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Data))
             {
                 writer.WritePropertyName("data");
-                writer.WriteStringValue(Data);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Data);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Data.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Password))
             {
@@ -48,20 +54,25 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewaySslCertificate DeserializeApplicationGatewaySslCertificate(JsonElement element)
         {
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
-            Optional<string> data = default;
+            Optional<BinaryData> data = default;
             Optional<string> password = default;
-            Optional<string> publicCertData = default;
+            Optional<BinaryData> publicCertData = default;
             Optional<string> keyVaultSecretId = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -100,7 +111,12 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         if (property0.NameEquals("data"))
                         {
-                            data = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            data = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("password"))
@@ -110,7 +126,12 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("publicCertData"))
                         {
-                            publicCertData = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            publicCertData = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("keyVaultSecretId"))
@@ -132,7 +153,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewaySslCertificate(id.Value, name.Value, Optional.ToNullable(type), etag.Value, data.Value, password.Value, publicCertData.Value, keyVaultSecretId.Value, Optional.ToNullable(provisioningState));
+            return new ApplicationGatewaySslCertificate(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), data.Value, password.Value, publicCertData.Value, keyVaultSecretId.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

@@ -30,11 +30,11 @@ namespace Microsoft.Azure.Management.GuestConfiguration
         /// <param name='resourceGroupName'>
         /// The resource group name.
         /// </param>
-        /// <param name='name'>
-        /// The guest configuration assignment name.
-        /// </param>
         /// <param name='vmssName'>
         /// The name of the virtual machine scale set.
+        /// </param>
+        /// <param name='name'>
+        /// The guest configuration assignment name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.GuestConfiguration
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<GuestConfigurationAssignmentReportList>> ListWithHttpMessagesAsync(string resourceGroupName, string name, string vmssName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IEnumerable<GuestConfigurationAssignmentReport>>> ListWithHttpMessagesAsync(string resourceGroupName, string vmssName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get a report for the VMSS guest configuration assignment, by
         /// reportId.
@@ -59,14 +59,14 @@ namespace Microsoft.Azure.Management.GuestConfiguration
         /// <param name='resourceGroupName'>
         /// The resource group name.
         /// </param>
+        /// <param name='vmssName'>
+        /// The name of the virtual machine scale set.
+        /// </param>
         /// <param name='name'>
         /// The guest configuration assignment name.
         /// </param>
         /// <param name='id'>
         /// The GUID for the guest configuration assignment report.
-        /// </param>
-        /// <param name='vmssName'>
-        /// The name of the virtual machine scale set.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -83,6 +83,6 @@ namespace Microsoft.Azure.Management.GuestConfiguration
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<GuestConfigurationAssignmentReport>> GetWithHttpMessagesAsync(string resourceGroupName, string name, string id, string vmssName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<GuestConfigurationAssignmentReport>> GetWithHttpMessagesAsync(string resourceGroupName, string vmssName, string name, string id, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

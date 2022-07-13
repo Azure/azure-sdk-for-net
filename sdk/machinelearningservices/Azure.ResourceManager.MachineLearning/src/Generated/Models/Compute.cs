@@ -11,7 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Machine Learning compute object. </summary>
+    /// <summary>
+    /// Machine Learning compute object.
+    /// Please note <see cref="Compute"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="AksCompute"/>, <see cref="AmlCompute"/>, <see cref="ComputeInstance"/>, <see cref="DataFactoryCompute"/>, <see cref="DataLakeAnalyticsCompute"/>, <see cref="DatabricksCompute"/>, <see cref="HDInsightCompute"/>, <see cref="KubernetesCompute"/>, <see cref="SynapseSparkCompute"/> and <see cref="VirtualMachineCompute"/>.
+    /// </summary>
     public partial class Compute
     {
         /// <summary> Initializes a new instance of Compute. </summary>

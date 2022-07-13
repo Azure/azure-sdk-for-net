@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -31,16 +32,16 @@ namespace Azure.ResourceManager.Network
         /// <param name="vendor"> Network Virtual Appliance Sku vendor. </param>
         /// <param name="availableVersions"> Available Network Virtual Appliance versions. </param>
         /// <param name="availableScaleUnits"> The list of scale units available. </param>
-        internal NetworkVirtualApplianceSkuData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, string etag, string vendor, IReadOnlyList<string> availableVersions, IList<NetworkVirtualApplianceSkuInstances> availableScaleUnits) : base(id, name, resourceType, location, tags)
+        internal NetworkVirtualApplianceSkuData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, string vendor, IReadOnlyList<string> availableVersions, IList<NetworkVirtualApplianceSkuInstances> availableScaleUnits) : base(id, name, resourceType, location, tags)
         {
-            Etag = etag;
+            ETag = etag;
             Vendor = vendor;
             AvailableVersions = availableVersions;
             AvailableScaleUnits = availableScaleUnits;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> Network Virtual Appliance Sku vendor. </summary>
         public string Vendor { get; }
         /// <summary> Available Network Virtual Appliance versions. </summary>

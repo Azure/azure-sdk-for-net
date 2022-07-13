@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -28,9 +29,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="fqdn"> FQDN of vpn-site-link. </param>
         /// <param name="bgpProperties"> The set of bgp properties. </param>
         /// <param name="provisioningState"> The provisioning state of the VPN site link resource. </param>
-        internal VpnSiteLinkData(ResourceIdentifier id, string name, ResourceType? resourceType, string etag, VpnLinkProviderProperties linkProperties, string ipAddress, string fqdn, VpnLinkBgpSettings bgpProperties, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal VpnSiteLinkData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, VpnLinkProviderProperties linkProperties, string ipAddress, string fqdn, VpnLinkBgpSettings bgpProperties, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            Etag = etag;
+            ETag = etag;
             LinkProperties = linkProperties;
             IPAddress = ipAddress;
             Fqdn = fqdn;
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> The link provider properties. </summary>
         public VpnLinkProviderProperties LinkProperties { get; set; }
         /// <summary> The ip-address for the vpn-site-link. </summary>

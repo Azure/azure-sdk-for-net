@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.Cdn.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string MicrosoftCdnProfilesEndpointsValue = "Microsoft.Cdn/Profiles/Endpoints";
-        private const string MicrosoftCdnProfilesAfdEndpointsValue = "Microsoft.Cdn/Profiles/AfdEndpoints";
+        private const string EndpointsValue = "Microsoft.Cdn/Profiles/Endpoints";
+        private const string FrontDoorEndpointsValue = "Microsoft.Cdn/Profiles/AfdEndpoints";
 
         /// <summary> Microsoft.Cdn/Profiles/Endpoints. </summary>
-        public static CdnResourceType MicrosoftCdnProfilesEndpoints { get; } = new CdnResourceType(MicrosoftCdnProfilesEndpointsValue);
+        public static CdnResourceType Endpoints { get; } = new CdnResourceType(EndpointsValue);
         /// <summary> Microsoft.Cdn/Profiles/AfdEndpoints. </summary>
-        public static CdnResourceType MicrosoftCdnProfilesAfdEndpoints { get; } = new CdnResourceType(MicrosoftCdnProfilesAfdEndpointsValue);
+        public static CdnResourceType FrontDoorEndpoints { get; } = new CdnResourceType(FrontDoorEndpointsValue);
         /// <summary> Determines if two <see cref="CdnResourceType"/> values are the same. </summary>
         public static bool operator ==(CdnResourceType left, CdnResourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CdnResourceType"/> values are not the same. </summary>

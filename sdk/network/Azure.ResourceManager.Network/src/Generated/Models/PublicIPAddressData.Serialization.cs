@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation");
-                writer.WriteObjectValue(ExtendedLocation);
+                JsonSerializer.Serialize(writer, ExtendedLocation);
             }
             if (Optional.IsDefined(Sku))
             {
@@ -138,18 +139,18 @@ namespace Azure.ResourceManager.Network
 
         internal static PublicIPAddressData DeserializePublicIPAddressData(JsonElement element)
         {
-            Optional<Models.ExtendedLocation> extendedLocation = default;
+            Optional<ExtendedLocation> extendedLocation = default;
             Optional<PublicIPAddressSku> sku = default;
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             Optional<IList<string>> zones = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<AzureLocation> location = default;
             Optional<IDictionary<string, string>> tags = default;
-            Optional<IPAllocationMethod> publicIPAllocationMethod = default;
-            Optional<IPVersion> publicIPAddressVersion = default;
-            Optional<IPConfiguration> ipConfiguration = default;
+            Optional<NetworkIPAllocationMethod> publicIPAllocationMethod = default;
+            Optional<NetworkIPVersion> publicIPAddressVersion = default;
+            Optional<NetworkIPConfiguration> ipConfiguration = default;
             Optional<PublicIPAddressDnsSettings> dnsSettings = default;
             Optional<DdosSettings> ddosSettings = default;
             Optional<IList<IPTag>> ipTags = default;
@@ -162,7 +163,7 @@ namespace Azure.ResourceManager.Network
             Optional<NatGatewayData> natGateway = default;
             Optional<PublicIPAddressMigrationPhase> migrationPhase = default;
             Optional<PublicIPAddressData> linkedPublicIPAddress = default;
-            Optional<DeleteOptions> deleteOption = default;
+            Optional<IPAddressDeleteOption> deleteOption = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"))
@@ -172,7 +173,7 @@ namespace Azure.ResourceManager.Network
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    extendedLocation = Models.ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("sku"))
@@ -187,7 +188,12 @@ namespace Azure.ResourceManager.Network
                 }
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("zones"))
@@ -271,7 +277,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicIPAllocationMethod = new IPAllocationMethod(property0.Value.GetString());
+                            publicIPAllocationMethod = new NetworkIPAllocationMethod(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("publicIPAddressVersion"))
@@ -281,7 +287,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicIPAddressVersion = new IPVersion(property0.Value.GetString());
+                            publicIPAddressVersion = new NetworkIPVersion(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("ipConfiguration"))
@@ -291,7 +297,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            ipConfiguration = IPConfiguration.DeserializeIPConfiguration(property0.Value);
+                            ipConfiguration = NetworkIPConfiguration.DeserializeNetworkIPConfiguration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("dnsSettings"))
@@ -421,14 +427,14 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            deleteOption = new DeleteOptions(property0.Value.GetString());
+                            deleteOption = new IPAddressDeleteOption(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new PublicIPAddressData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), extendedLocation.Value, sku.Value, etag.Value, Optional.ToList(zones), Optional.ToNullable(publicIPAllocationMethod), Optional.ToNullable(publicIPAddressVersion), ipConfiguration.Value, dnsSettings.Value, ddosSettings.Value, Optional.ToList(ipTags), ipAddress.Value, publicIPPrefix, Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), servicePublicIPAddress.Value, natGateway.Value, Optional.ToNullable(migrationPhase), linkedPublicIPAddress.Value, Optional.ToNullable(deleteOption));
+            return new PublicIPAddressData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), extendedLocation, sku.Value, Optional.ToNullable(etag), Optional.ToList(zones), Optional.ToNullable(publicIPAllocationMethod), Optional.ToNullable(publicIPAddressVersion), ipConfiguration.Value, dnsSettings.Value, ddosSettings.Value, Optional.ToList(ipTags), ipAddress.Value, publicIPPrefix, Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), servicePublicIPAddress.Value, natGateway.Value, Optional.ToNullable(migrationPhase), linkedPublicIPAddress.Value, Optional.ToNullable(deleteOption));
         }
     }
 }

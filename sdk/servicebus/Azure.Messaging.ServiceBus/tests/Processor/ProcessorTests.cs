@@ -320,10 +320,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             var mockProcessor = new MockProcessor();
             bool processMessageCalled = false;
             bool processErrorCalled = false;
+            var mockReceiver = new Mock<ServiceBusReceiver>();
+            mockReceiver.Setup(r => r.FullyQualifiedNamespace).Returns("namespace");
+            mockReceiver.Setup(r => r.EntityPath).Returns("entityPath");
 
             var processArgs = new ProcessMessageEventArgs(
                 ServiceBusModelFactory.ServiceBusReceivedMessage(messageId: "1"),
-                new Mock<ServiceBusReceiver>().Object,
+                mockReceiver.Object,
                 CancellationToken.None);
 
             var errorArgs = new ProcessErrorEventArgs(
@@ -337,6 +340,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             {
                 processMessageCalled = true;
                 Assert.AreEqual("1", args.Message.MessageId);
+                Assert.AreEqual("namespace", args.FullyQualifiedNamespace);
+                Assert.AreEqual("entityPath", args.EntityPath);
                 return Task.CompletedTask;
             };
 

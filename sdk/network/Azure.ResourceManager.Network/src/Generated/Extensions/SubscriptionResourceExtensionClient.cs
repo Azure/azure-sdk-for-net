@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.Network
         private ExpressRoutePortsRestOperations _expressRoutePortRestClient;
         private ClientDiagnostics _firewallPolicyClientDiagnostics;
         private FirewallPoliciesRestOperations _firewallPolicyRestClient;
-        private ClientDiagnostics _ipAllocationIpAllocationsClientDiagnostics;
-        private IpAllocationsRestOperations _ipAllocationIpAllocationsRestClient;
-        private ClientDiagnostics _ipGroupIpGroupsClientDiagnostics;
-        private IpGroupsRestOperations _ipGroupIpGroupsRestClient;
+        private ClientDiagnostics _ipAllocationIPAllocationsClientDiagnostics;
+        private IpAllocationsRestOperations _ipAllocationIPAllocationsRestClient;
+        private ClientDiagnostics _ipGroupIPGroupsClientDiagnostics;
+        private IpGroupsRestOperations _ipGroupIPGroupsRestClient;
         private ClientDiagnostics _loadBalancerClientDiagnostics;
         private LoadBalancersRestOperations _loadBalancerRestClient;
         private ClientDiagnostics _natGatewayClientDiagnostics;
@@ -114,8 +114,8 @@ namespace Azure.ResourceManager.Network
         private VirtualHubsRestOperations _virtualHubRestClient;
         private ClientDiagnostics _vpnGatewayClientDiagnostics;
         private VpnGatewaysRestOperations _vpnGatewayRestClient;
-        private ClientDiagnostics _p2SVpnGatewayP2sVpnGatewaysClientDiagnostics;
-        private P2SVpnGatewaysRestOperations _p2SVpnGatewayP2sVpnGatewaysRestClient;
+        private ClientDiagnostics _p2sVpnGatewayP2sVpnGatewaysClientDiagnostics;
+        private P2SVpnGatewaysRestOperations _p2sVpnGatewayP2sVpnGatewaysRestClient;
         private ClientDiagnostics _expressRouteGatewayClientDiagnostics;
         private ExpressRouteGatewaysRestOperations _expressRouteGatewayRestClient;
         private ClientDiagnostics _webApplicationFirewallPolicyClientDiagnostics;
@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.Network
         private ExpressRoutePortsRestOperations ExpressRoutePortRestClient => _expressRoutePortRestClient ??= new ExpressRoutePortsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ExpressRoutePortResource.ResourceType));
         private ClientDiagnostics FirewallPolicyClientDiagnostics => _firewallPolicyClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", FirewallPolicyResource.ResourceType.Namespace, Diagnostics);
         private FirewallPoliciesRestOperations FirewallPolicyRestClient => _firewallPolicyRestClient ??= new FirewallPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(FirewallPolicyResource.ResourceType));
-        private ClientDiagnostics IPAllocationIpAllocationsClientDiagnostics => _ipAllocationIpAllocationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", IPAllocationResource.ResourceType.Namespace, Diagnostics);
-        private IpAllocationsRestOperations IPAllocationIpAllocationsRestClient => _ipAllocationIpAllocationsRestClient ??= new IpAllocationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(IPAllocationResource.ResourceType));
-        private ClientDiagnostics IPGroupIpGroupsClientDiagnostics => _ipGroupIpGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", IPGroupResource.ResourceType.Namespace, Diagnostics);
-        private IpGroupsRestOperations IPGroupIpGroupsRestClient => _ipGroupIpGroupsRestClient ??= new IpGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(IPGroupResource.ResourceType));
+        private ClientDiagnostics IPAllocationIpAllocationsClientDiagnostics => _ipAllocationIPAllocationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", IPAllocationResource.ResourceType.Namespace, Diagnostics);
+        private IpAllocationsRestOperations IPAllocationIpAllocationsRestClient => _ipAllocationIPAllocationsRestClient ??= new IpAllocationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(IPAllocationResource.ResourceType));
+        private ClientDiagnostics IPGroupIpGroupsClientDiagnostics => _ipGroupIPGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", IPGroupResource.ResourceType.Namespace, Diagnostics);
+        private IpGroupsRestOperations IPGroupIpGroupsRestClient => _ipGroupIPGroupsRestClient ??= new IpGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(IPGroupResource.ResourceType));
         private ClientDiagnostics LoadBalancerClientDiagnostics => _loadBalancerClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", LoadBalancerResource.ResourceType.Namespace, Diagnostics);
         private LoadBalancersRestOperations LoadBalancerRestClient => _loadBalancerRestClient ??= new LoadBalancersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(LoadBalancerResource.ResourceType));
         private ClientDiagnostics NatGatewayClientDiagnostics => _natGatewayClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", NatGatewayResource.ResourceType.Namespace, Diagnostics);
@@ -227,8 +227,8 @@ namespace Azure.ResourceManager.Network
         private VirtualHubsRestOperations VirtualHubRestClient => _virtualHubRestClient ??= new VirtualHubsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VirtualHubResource.ResourceType));
         private ClientDiagnostics VpnGatewayClientDiagnostics => _vpnGatewayClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", VpnGatewayResource.ResourceType.Namespace, Diagnostics);
         private VpnGatewaysRestOperations VpnGatewayRestClient => _vpnGatewayRestClient ??= new VpnGatewaysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VpnGatewayResource.ResourceType));
-        private ClientDiagnostics P2SVpnGatewayP2sVpnGatewaysClientDiagnostics => _p2SVpnGatewayP2sVpnGatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", P2SVpnGatewayResource.ResourceType.Namespace, Diagnostics);
-        private P2SVpnGatewaysRestOperations P2SVpnGatewayP2sVpnGatewaysRestClient => _p2SVpnGatewayP2sVpnGatewaysRestClient ??= new P2SVpnGatewaysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(P2SVpnGatewayResource.ResourceType));
+        private ClientDiagnostics P2SVpnGatewayP2sVpnGatewaysClientDiagnostics => _p2sVpnGatewayP2sVpnGatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", P2SVpnGatewayResource.ResourceType.Namespace, Diagnostics);
+        private P2SVpnGatewaysRestOperations P2SVpnGatewayP2sVpnGatewaysRestClient => _p2sVpnGatewayP2sVpnGatewaysRestClient ??= new P2SVpnGatewaysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(P2SVpnGatewayResource.ResourceType));
         private ClientDiagnostics ExpressRouteGatewayClientDiagnostics => _expressRouteGatewayClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRouteGatewayResource.ResourceType.Namespace, Diagnostics);
         private ExpressRouteGatewaysRestOperations ExpressRouteGatewayRestClient => _expressRouteGatewayRestClient ??= new ExpressRouteGatewaysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ExpressRouteGatewayResource.ResourceType));
         private ClientDiagnostics WebApplicationFirewallPolicyClientDiagnostics => _webApplicationFirewallPolicyClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", WebApplicationFirewallPolicyResource.ResourceType.Namespace, Diagnostics);
@@ -2130,7 +2130,7 @@ namespace Azure.ResourceManager.Network
         /// <summary>
         /// Swaps VIPs between two load balancers.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/setLoadBalancerFrontendPublicIpAddresses
-        /// Operation Id: LoadBalancers_SwapPublicIPAddresses
+        /// Operation Id: LoadBalancers_SwapPublicIpAddresses
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="location"> The region where load balancers are located at. </param>
@@ -2158,7 +2158,7 @@ namespace Azure.ResourceManager.Network
         /// <summary>
         /// Swaps VIPs between two load balancers.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/setLoadBalancerFrontendPublicIpAddresses
-        /// Operation Id: LoadBalancers_SwapPublicIPAddresses
+        /// Operation Id: LoadBalancers_SwapPublicIpAddresses
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="location"> The region where load balancers are located at. </param>

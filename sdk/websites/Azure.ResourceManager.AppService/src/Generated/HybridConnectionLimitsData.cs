@@ -6,13 +6,12 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing the HybridConnectionLimits data model. </summary>
-    public partial class HybridConnectionLimitsData : ProxyOnlyResource
+    public partial class HybridConnectionLimitsData : ResourceData
     {
         /// <summary> Initializes a new instance of HybridConnectionLimitsData. </summary>
         public HybridConnectionLimitsData()
@@ -24,18 +23,21 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="current"> The current number of Hybrid Connections. </param>
         /// <param name="maximum"> The maximum number of Hybrid Connections allowed. </param>
-        internal HybridConnectionLimitsData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, int? current, int? maximum) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal HybridConnectionLimitsData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? current, int? maximum, string kind) : base(id, name, resourceType, systemData)
         {
             Current = current;
             Maximum = maximum;
+            Kind = kind;
         }
 
         /// <summary> The current number of Hybrid Connections. </summary>
         public int? Current { get; }
         /// <summary> The maximum number of Hybrid Connections allowed. </summary>
         public int? Maximum { get; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

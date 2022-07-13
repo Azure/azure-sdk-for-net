@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -90,7 +91,7 @@ namespace Azure.ResourceManager.Network
 
         internal static IPAllocationData DeserializeIPAllocationData(JsonElement element)
         {
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
@@ -98,17 +99,22 @@ namespace Azure.ResourceManager.Network
             Optional<IDictionary<string, string>> tags = default;
             Optional<WritableSubResource> subnet = default;
             Optional<WritableSubResource> virtualNetwork = default;
-            Optional<IPAllocationType> type0 = default;
+            Optional<NetworkIPAllocationType> type0 = default;
             Optional<string> prefix = default;
             Optional<int?> prefixLength = default;
-            Optional<IPVersion> prefixType = default;
+            Optional<NetworkIPVersion> prefixType = default;
             Optional<string> ipamAllocationId = default;
             Optional<IDictionary<string, string>> allocationTags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -197,7 +203,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            type0 = new IPAllocationType(property0.Value.GetString());
+                            type0 = new NetworkIPAllocationType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("prefix"))
@@ -222,7 +228,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            prefixType = new IPVersion(property0.Value.GetString());
+                            prefixType = new NetworkIPVersion(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("ipamAllocationId"))
@@ -249,7 +255,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new IPAllocationData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), etag.Value, subnet, virtualNetwork, Optional.ToNullable(type0), prefix.Value, Optional.ToNullable(prefixLength), Optional.ToNullable(prefixType), ipamAllocationId.Value, Optional.ToDictionary(allocationTags));
+            return new IPAllocationData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), subnet, virtualNetwork, Optional.ToNullable(type0), prefix.Value, Optional.ToNullable(prefixLength), Optional.ToNullable(prefixType), ipamAllocationId.Value, Optional.ToDictionary(allocationTags));
         }
     }
 }

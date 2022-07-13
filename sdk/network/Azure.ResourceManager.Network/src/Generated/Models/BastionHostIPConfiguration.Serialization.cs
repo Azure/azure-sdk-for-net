@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -49,19 +50,24 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static BastionHostIPConfiguration DeserializeBastionHostIPConfiguration(JsonElement element)
         {
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<WritableSubResource> subnet = default;
             Optional<WritableSubResource> publicIPAddress = default;
             Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<IPAllocationMethod> privateIPAllocationMethod = default;
+            Optional<NetworkIPAllocationMethod> privateIPAllocationMethod = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -135,14 +141,14 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            privateIPAllocationMethod = new IPAllocationMethod(property0.Value.GetString());
+                            privateIPAllocationMethod = new NetworkIPAllocationMethod(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new BastionHostIPConfiguration(id.Value, name.Value, Optional.ToNullable(type), etag.Value, subnet, publicIPAddress, Optional.ToNullable(provisioningState), Optional.ToNullable(privateIPAllocationMethod));
+            return new BastionHostIPConfiguration(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), subnet, publicIPAddress, Optional.ToNullable(provisioningState), Optional.ToNullable(privateIPAllocationMethod));
         }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -59,12 +60,12 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayFrontendIPConfiguration DeserializeApplicationGatewayFrontendIPConfiguration(JsonElement element)
         {
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<string> privateIPAddress = default;
-            Optional<IPAllocationMethod> privateIPAllocationMethod = default;
+            Optional<NetworkIPAllocationMethod> privateIPAllocationMethod = default;
             Optional<WritableSubResource> subnet = default;
             Optional<WritableSubResource> publicIPAddress = default;
             Optional<WritableSubResource> privateLinkConfiguration = default;
@@ -73,7 +74,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -122,7 +128,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            privateIPAllocationMethod = new IPAllocationMethod(property0.Value.GetString());
+                            privateIPAllocationMethod = new NetworkIPAllocationMethod(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("subnet"))
@@ -169,7 +175,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayFrontendIPConfiguration(id.Value, name.Value, Optional.ToNullable(type), etag.Value, privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), subnet, publicIPAddress, privateLinkConfiguration, Optional.ToNullable(provisioningState));
+            return new ApplicationGatewayFrontendIPConfiguration(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), subnet, publicIPAddress, privateLinkConfiguration, Optional.ToNullable(provisioningState));
         }
     }
 }

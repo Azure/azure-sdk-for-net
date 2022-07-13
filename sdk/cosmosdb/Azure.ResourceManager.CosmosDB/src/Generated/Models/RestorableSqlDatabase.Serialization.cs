@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
-            Optional<RestorableSqlDatabasePropertiesResource> resource = default;
+            Optional<SystemData> systemData = default;
+            Optional<ExtendedRestorableSqlDatabaseResourceInfo> resource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -39,6 +39,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -58,14 +63,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            resource = RestorableSqlDatabasePropertiesResource.DeserializeRestorableSqlDatabasePropertiesResource(property0.Value);
+                            resource = ExtendedRestorableSqlDatabaseResourceInfo.DeserializeExtendedRestorableSqlDatabaseResourceInfo(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new RestorableSqlDatabase(id, name, type, systemData, resource.Value);
+            return new RestorableSqlDatabase(id, name, type, systemData.Value, resource.Value);
         }
     }
 }

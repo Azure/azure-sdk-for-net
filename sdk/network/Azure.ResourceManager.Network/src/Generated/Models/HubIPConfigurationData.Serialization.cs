@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -54,12 +55,12 @@ namespace Azure.ResourceManager.Network
 
         internal static HubIPConfigurationData DeserializeHubIPConfigurationData(JsonElement element)
         {
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<string> privateIPAddress = default;
-            Optional<IPAllocationMethod> privateIPAllocationMethod = default;
+            Optional<NetworkIPAllocationMethod> privateIPAllocationMethod = default;
             Optional<SubnetData> subnet = default;
             Optional<PublicIPAddressData> publicIPAddress = default;
             Optional<NetworkProvisioningState> provisioningState = default;
@@ -67,7 +68,12 @@ namespace Azure.ResourceManager.Network
             {
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -116,7 +122,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            privateIPAllocationMethod = new IPAllocationMethod(property0.Value.GetString());
+                            privateIPAllocationMethod = new NetworkIPAllocationMethod(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("subnet"))
@@ -153,7 +159,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new HubIPConfigurationData(id.Value, name.Value, Optional.ToNullable(type), etag.Value, privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), subnet.Value, publicIPAddress.Value, Optional.ToNullable(provisioningState));
+            return new HubIPConfigurationData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), subnet.Value, publicIPAddress.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

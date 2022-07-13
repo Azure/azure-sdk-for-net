@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The snapshots sku name. Can be Standard_LRS, Premium_LRS, or Standard_ZRS. This is an optional parameter for incremental snapshot and the default behavior is the SKU will be set to the same sku as the previous snapshot. </summary>
         public SnapshotSku Sku { get; set; }
         /// <summary> the Operating System type. </summary>
-        public OperatingSystemTypes? OSType { get; set; }
+        public SupportedOperatingSystemType? OSType { get; set; }
         /// <summary> If creationData.createOption is Empty, this field is mandatory and it indicates the size of the disk to create. If this field is present for updates or creation with other options, it indicates a resize. Resizes are only allowed if the disk is not attached to a running VM, and can only increase the disk&apos;s size. </summary>
         public int? DiskSizeGB { get; set; }
         /// <summary> Encryption settings collection used be Azure Disk Encryption, can contain multiple encryption settings per disk or snapshot. </summary>
-        public EncryptionSettingGroup EncryptionSettingGroup { get; set; }
+        public EncryptionSettingsGroup EncryptionSettingsGroup { get; set; }
         /// <summary> Encryption property can be used to encrypt data at rest with customer managed keys or platform managed keys. </summary>
         public DiskEncryption Encryption { get; set; }
         /// <summary> Policy for accessing the disk via network. </summary>
@@ -38,19 +38,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Indicates the OS on a snapshot supports hibernation. </summary>
         public bool? SupportsHibernation { get; set; }
         /// <summary> Policy for controlling export on the disk. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
-        /// <summary> List of supported capabilities (like accelerated networking) for the image from which the OS disk was created. </summary>
-        internal SupportedCapabilities SupportedCapabilities { get; set; }
-        /// <summary> True if the image from which the OS disk is created supports accelerated networking. </summary>
-        public bool? AcceleratedNetwork
-        {
-            get => SupportedCapabilities is null ? default : SupportedCapabilities.AcceleratedNetwork;
-            set
-            {
-                if (SupportedCapabilities is null)
-                    SupportedCapabilities = new SupportedCapabilities();
-                SupportedCapabilities.AcceleratedNetwork = value;
-            }
-        }
+        public DiskPublicNetworkAccess? PublicNetworkAccess { get; set; }
+        /// <summary> Additional authentication requirements when exporting or uploading to a disk or snapshot. </summary>
+        public DataAccessAuthMode? DataAccessAuthMode { get; set; }
+        /// <summary> List of supported capabilities for the image from which the OS disk was created. </summary>
+        public SupportedCapabilities SupportedCapabilities { get; set; }
     }
 }

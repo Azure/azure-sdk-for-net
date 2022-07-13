@@ -47,5 +47,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             Assert.That(async () => await receiver.SetSessionStateAsync(new BinaryData("new!")),
                 Throws.InstanceOf<ObjectDisposedException>().And.Property(nameof(ObjectDisposedException.ObjectName)).EqualTo(nameof(ServiceBusConnection)));
         }
+
+        [Test]
+        public async Task CallingCloseAsyncUpdatesIsClosed()
+        {
+            var mockConnection = ServiceBusTestUtilities.GetMockedReceiverConnection();
+            var receiver = new ServiceBusSessionReceiver(mockConnection, "fake", default, CancellationToken.None);
+            await receiver.CloseAsync();
+            Assert.IsTrue(receiver.IsClosed);
+        }
     }
 }

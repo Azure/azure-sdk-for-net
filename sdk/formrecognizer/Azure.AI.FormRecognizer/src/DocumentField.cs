@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
@@ -31,21 +32,32 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         [CodeGenMember("Type")]
         public DocumentFieldType ValueType { get; }
 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string ValueString { get; }
 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private DateTimeOffset? ValueDate { get; }
 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private TimeSpan? ValueTime { get; }
 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string ValuePhoneNumber { get; }
 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private double? ValueNumber { get; }
 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private int? ValueInteger { get; }
 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private SelectionMarkState? ValueSelectionMark { get; set; }
 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private AddressValue ValueAddress { get; }
+
         [CodeGenMember("ValueSelectionMark")]
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private V3SelectionMarkState? ValueSelectionMarkPrivate
         {
             get => throw new InvalidOperationException();
@@ -70,14 +82,19 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
         }
 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private DocumentSignatureType? ValueSignature { get; }
 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string ValueCountryRegion { get; }
 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private CurrencyValue? ValueCurrency { get; }
 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private IReadOnlyList<DocumentField> ValueArray { get; }
 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private IReadOnlyDictionary<string, DocumentField> ValueObject { get; }
 
         /// <summary>
@@ -294,5 +311,67 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             return ValueCurrency.Value;
         }
+
+        /// <summary>
+        /// Gets the value of the field as an <see cref="AddressValue"/>.
+        /// </summary>
+        /// <returns>The value of the field converted to an <see cref="AddressValue"/>.</returns>
+        /// <exception cref="InvalidOperationException">Thrown when <see cref="ValueType"/> is not <see cref="DocumentFieldType.Address"/>.</exception>
+        public AddressValue AsAddress()
+        {
+            if (ValueType != DocumentFieldType.Address)
+            {
+                throw new InvalidOperationException($"Cannot get field as address.  Field value's type is {ValueType}.");
+            }
+
+            return ValueAddress;
+        }
+
+        /// <summary>
+        /// Returns a string that represents the <see cref="DocumentField"/> object.
+        /// </summary>
+        /// <returns>A string that represents the <see cref="DocumentField"/> object.</returns>
+        public override string ToString()
+        {
+            string conversionMethod = ValueType switch
+            {
+                DocumentFieldType.Address => nameof(AsAddress),
+                DocumentFieldType.CountryRegion => nameof(AsCountryRegion),
+                DocumentFieldType.Currency => nameof(AsCurrency),
+                DocumentFieldType.Date => nameof(AsDate),
+                DocumentFieldType.Dictionary => nameof(AsDictionary),
+                DocumentFieldType.Double => nameof(AsDouble),
+                DocumentFieldType.Int64 => nameof(AsInt64),
+                DocumentFieldType.List => nameof(AsList),
+                DocumentFieldType.PhoneNumber => nameof(AsPhoneNumber),
+                DocumentFieldType.SelectionMark => nameof(AsSelectionMarkState),
+                DocumentFieldType.Signature => nameof(AsSignatureType),
+                DocumentFieldType.String => nameof(AsString),
+                DocumentFieldType.Time => nameof(AsTime),
+                _ => null
+            };
+
+            return conversionMethod == null
+                ? $"{nameof(DocumentField)}: {nameof(ValueType)}={ValueType}"
+                : $"{nameof(DocumentField)}: {nameof(ValueType)}={ValueType}, {conversionMethod}()=>Value";
+        }
+
+        private object InternalValue => ValueType switch
+        {
+            DocumentFieldType.Address => AsAddress(),
+            DocumentFieldType.CountryRegion => AsCountryRegion(),
+            DocumentFieldType.Currency => AsCurrency(),
+            DocumentFieldType.Date => AsDate(),
+            DocumentFieldType.Dictionary => AsDictionary(),
+            DocumentFieldType.Double => AsDouble(),
+            DocumentFieldType.Int64 => AsInt64(),
+            DocumentFieldType.List => AsList(),
+            DocumentFieldType.PhoneNumber => AsPhoneNumber(),
+            DocumentFieldType.SelectionMark => AsSelectionMarkState(),
+            DocumentFieldType.Signature => AsSignatureType(),
+            DocumentFieldType.String => AsString(),
+            DocumentFieldType.Time => AsTime(),
+            _ => null
+        };
     }
 }

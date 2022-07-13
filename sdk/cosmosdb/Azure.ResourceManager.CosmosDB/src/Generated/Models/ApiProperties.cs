@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Initializes a new instance of ApiProperties. </summary>
         /// <param name="serverVersion"> Describes the ServerVersion of an a MongoDB account. </param>
-        internal ApiProperties(ServerVersion? serverVersion)
+        internal ApiProperties(CosmosDBServerVersion? serverVersion)
         {
             ServerVersion = serverVersion;
         }
 
         /// <summary> Describes the ServerVersion of an a MongoDB account. </summary>
-        public ServerVersion? ServerVersion { get; set; }
+        public CosmosDBServerVersion? ServerVersion { get; set; }
     }
 }

@@ -115,9 +115,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static Classification DeserializeClassification(JsonElement element)
         {
-            Optional<IList<ClassificationModels>> allowedModels = default;
-            Optional<IList<ClassificationModels>> blockedModels = default;
-            Optional<ClassificationPrimaryMetrics> primaryMetric = default;
+            Optional<IList<ClassificationModel>> allowedModels = default;
+            Optional<IList<ClassificationModel>> blockedModels = default;
+            Optional<ClassificationPrimaryMetric> primaryMetric = default;
             Optional<TableVerticalDataSettings> dataSettings = default;
             Optional<TableVerticalFeaturizationSettings> featurizationSettings = default;
             Optional<TableVerticalLimitSettings> limitSettings = default;
@@ -133,10 +133,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         allowedModels = null;
                         continue;
                     }
-                    List<ClassificationModels> array = new List<ClassificationModels>();
+                    List<ClassificationModel> array = new List<ClassificationModel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new ClassificationModels(item.GetString()));
+                        array.Add(new ClassificationModel(item.GetString()));
                     }
                     allowedModels = array;
                     continue;
@@ -148,10 +148,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         blockedModels = null;
                         continue;
                     }
-                    List<ClassificationModels> array = new List<ClassificationModels>();
+                    List<ClassificationModel> array = new List<ClassificationModel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new ClassificationModels(item.GetString()));
+                        array.Add(new ClassificationModel(item.GetString()));
                     }
                     blockedModels = array;
                     continue;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    primaryMetric = new ClassificationPrimaryMetrics(property.Value.GetString());
+                    primaryMetric = new ClassificationPrimaryMetric(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dataSettings"))

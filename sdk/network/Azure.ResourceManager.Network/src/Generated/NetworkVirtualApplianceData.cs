@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
@@ -45,10 +46,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualApplianceSites"> List of references to VirtualApplianceSite. </param>
         /// <param name="inboundSecurityRules"> List of references to InboundSecurityRules. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal NetworkVirtualApplianceData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ManagedServiceIdentity identity, string etag, VirtualApplianceSkuProperties nvaSku, string addressPrefix, IList<string> bootStrapConfigurationBlobs, WritableSubResource virtualHub, IList<string> cloudInitConfigurationBlobs, string cloudInitConfiguration, long? virtualApplianceAsn, IReadOnlyList<VirtualApplianceNicProperties> virtualApplianceNics, IReadOnlyList<WritableSubResource> virtualApplianceSites, IReadOnlyList<WritableSubResource> inboundSecurityRules, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
+        internal NetworkVirtualApplianceData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ManagedServiceIdentity identity, ETag? etag, VirtualApplianceSkuProperties nvaSku, string addressPrefix, IList<string> bootStrapConfigurationBlobs, WritableSubResource virtualHub, IList<string> cloudInitConfigurationBlobs, string cloudInitConfiguration, long? virtualApplianceAsn, IReadOnlyList<VirtualApplianceNicProperties> virtualApplianceNics, IReadOnlyList<WritableSubResource> virtualApplianceSites, IReadOnlyList<WritableSubResource> inboundSecurityRules, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
         {
             Identity = identity;
-            Etag = etag;
+            ETag = etag;
             NvaSku = nvaSku;
             AddressPrefix = addressPrefix;
             BootStrapConfigurationBlobs = bootStrapConfigurationBlobs;
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The service principal that has read access to cloud-init and config blob. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> Network Virtual Appliance SKU. </summary>
         public VirtualApplianceSkuProperties NvaSku { get; set; }
         /// <summary> Address Prefix. </summary>

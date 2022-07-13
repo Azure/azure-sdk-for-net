@@ -24,6 +24,7 @@ namespace Microsoft.Azure.Management.Sql
                 new Tuple<string, string, string>("Sql", "DataMaskingPolicies", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "DataMaskingRules", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "DataWarehouseUserActivities", "2020-11-01-preview"),
+                new Tuple<string, string, string>("Sql", "DatabaseAdvancedThreatProtectionSettings", "2021-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "DatabaseAdvisors", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "DatabaseAutomaticTuning", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "DatabaseBlobAuditingPolicies", "2021-11-01-preview"),
@@ -99,6 +100,7 @@ namespace Microsoft.Azure.Management.Sql
                 new Tuple<string, string, string>("Sql", "ManagedInstanceVulnerabilityAssessments", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedInstances", "2021-05-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedRestorableDroppedDatabaseBackupShortTermRetentionPolicies", "2020-11-01-preview"),
+                new Tuple<string, string, string>("Sql", "ManagedServerDnsAliases", "2021-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedServerSecurityAlertPolicies", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "Operations", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "OutboundFirewallRules", "2021-02-01-preview"),
@@ -107,12 +109,12 @@ namespace Microsoft.Azure.Management.Sql
                 new Tuple<string, string, string>("Sql", "RecommendedSensitivityLabels", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "RecoverableDatabases", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "RecoverableManagedDatabases", "2020-11-01-preview"),
-                new Tuple<string, string, string>("Sql", "ReplicationLinks", "2014-04-01"),
-                new Tuple<string, string, string>("Sql", "ReplicationLinks", "2021-02-01-preview"),
+                new Tuple<string, string, string>("Sql", "ReplicationLinks", "2021-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "RestorableDroppedDatabases", "2021-05-01-preview"),
                 new Tuple<string, string, string>("Sql", "RestorableDroppedManagedDatabases", "2021-05-01-preview"),
                 new Tuple<string, string, string>("Sql", "RestorePoints", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "SensitivityLabels", "2020-11-01-preview"),
+                new Tuple<string, string, string>("Sql", "ServerAdvancedThreatProtectionSettings", "2021-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "ServerAdvisors", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "ServerAutomaticTuning", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "ServerAzureADAdministrators", "2020-11-01-preview"),
@@ -148,12 +150,12 @@ namespace Microsoft.Azure.Management.Sql
           }
       }
       // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "v2";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@3.5.1";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/sql/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=D:\\vs\\gh_repos\\azure-sdk-for-net\\sdk";
+      public static readonly String AutoRestVersion = "2.0.4421";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@3.6.1";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/sql/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp-sdks-folder=D:\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "main";
-      public static readonly String GithubCommidId = "ea9af04161c73743cdb40c1439a3046f16f35f71";
+      public static readonly String GithubCommidId = "e8c0c73d5f11f9f2b7cde8e1ac33638bb3c5695d";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

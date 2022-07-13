@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -24,15 +25,15 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="port"> Frontend port. </param>
         /// <param name="provisioningState"> The provisioning state of the frontend port resource. </param>
-        internal ApplicationGatewayFrontendPort(ResourceIdentifier id, string name, ResourceType? resourceType, string etag, int? port, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal ApplicationGatewayFrontendPort(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, int? port, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            Etag = etag;
+            ETag = etag;
             Port = port;
             ProvisioningState = provisioningState;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> Frontend port. </summary>
         public int? Port { get; set; }
         /// <summary> The provisioning state of the frontend port resource. </summary>

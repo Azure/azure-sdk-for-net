@@ -1,14 +1,25 @@
 # Release History
 
-## 1.0.0-beta.10 (Unreleased)
+## 1.0.0-beta.11 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
+- Refined quite a few names of types and properties according to internal review comments.
+
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.10 (2022-06-24)
+
+### Breaking Changes
+
+- Base type of `BlobContainerData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Base type of `FileShareData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Base type of `ImmutabilityPolicyData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Type `AzureEntityResource` was removed.
 
 ## 1.0.0-beta.9 (2022-05-13)
 
@@ -152,9 +163,14 @@ ArmClient client = new ArmClient(new DefaultAzureCredential());
 ResourceGroupResource resourceGroup = client.GetDefaultSubscription().GetResourceGroups().Get(resourceGroupName);
 StorageAccountCollection storageAccountCollection = resourceGroup.GetStorageAccounts();
 StorageSku sku = new StorageSku(StorageSkuName.PremiumLRS);
-StorageAccountCreateOrUpdateContent parameters = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.StandardGRS), StorageKind.Storage, AzureLocation.WestUS);
-parameters.Tags.Add("key1", "value1");
-parameters.Tags.Add("key2", "value2");
+StorageAccountCreateOrUpdateContent parameters = new StorageAccountCreateOrUpdateContent(sku, StorageKind.Storage, AzureLocation.WestUS)
+{
+    Tags =
+    {
+        ["key1"] = "value1",
+        ["key2"] = "value2"
+    }
+};
 StorageAccountResource account = storageAccountCollection.CreateOrUpdate(WaitUntil.Completed, accountName, parameters).Value;
 ```
 

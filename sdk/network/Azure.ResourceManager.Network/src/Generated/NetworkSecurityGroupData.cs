@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -39,9 +40,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="flowLogs"> A collection of references to flow log resources. </param>
         /// <param name="resourceGuid"> The resource GUID property of the network security group resource. </param>
         /// <param name="provisioningState"> The provisioning state of the network security group resource. </param>
-        internal NetworkSecurityGroupData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, string etag, IList<SecurityRuleData> securityRules, IReadOnlyList<SecurityRuleData> defaultSecurityRules, IReadOnlyList<NetworkInterfaceData> networkInterfaces, IReadOnlyList<SubnetData> subnets, IReadOnlyList<FlowLogData> flowLogs, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
+        internal NetworkSecurityGroupData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, IList<SecurityRuleData> securityRules, IReadOnlyList<SecurityRuleData> defaultSecurityRules, IReadOnlyList<NetworkInterfaceData> networkInterfaces, IReadOnlyList<SubnetData> subnets, IReadOnlyList<FlowLogData> flowLogs, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
         {
-            Etag = etag;
+            ETag = etag;
             SecurityRules = securityRules;
             DefaultSecurityRules = defaultSecurityRules;
             NetworkInterfaces = networkInterfaces;
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> A collection of security rules of the network security group. </summary>
         public IList<SecurityRuleData> SecurityRules { get; }
         /// <summary> The default security rules of network security group. </summary>

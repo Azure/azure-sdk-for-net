@@ -28,7 +28,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="resourceState"> Resource status of the custom domain. </param>
         /// <param name="customHttpsProvisioningState"> Provisioning status of the custom domain. </param>
         /// <param name="customHttpsAvailabilityState"> Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. </param>
-        /// <param name="customDomainHttpsContent"> Certificate parameters for securing custom HTTPS. </param>
+        /// <param name="customDomainHttpsContent">
+        /// Certificate parameters for securing custom HTTPS
+        /// Please note <see cref="CustomDomainHttpsContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="UserManagedHttpsContent"/> and <see cref="CdnManagedHttpsContent"/>.
+        /// </param>
         /// <param name="validationData"> Special validation or data may be required when delivering CDN to some regions due to local compliance reasons. E.g. ICP license number of a custom domain is required to deliver content in China. </param>
         /// <param name="provisioningState"> Provisioning status of Custom Https of the custom domain. </param>
         internal CdnCustomDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string hostName, CustomDomainResourceState? resourceState, CustomHttpsProvisioningState? customHttpsProvisioningState, CustomHttpsAvailabilityState? customHttpsAvailabilityState, CustomDomainHttpsContent customDomainHttpsContent, string validationData, CustomHttpsProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
@@ -50,7 +54,11 @@ namespace Azure.ResourceManager.Cdn
         public CustomHttpsProvisioningState? CustomHttpsProvisioningState { get; }
         /// <summary> Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. </summary>
         public CustomHttpsAvailabilityState? CustomHttpsAvailabilityState { get; }
-        /// <summary> Certificate parameters for securing custom HTTPS. </summary>
+        /// <summary>
+        /// Certificate parameters for securing custom HTTPS
+        /// Please note <see cref="CustomDomainHttpsContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="UserManagedHttpsContent"/> and <see cref="CdnManagedHttpsContent"/>.
+        /// </summary>
         public CustomDomainHttpsContent CustomDomainHttpsContent { get; set; }
         /// <summary> Special validation or data may be required when delivering CDN to some regions due to local compliance reasons. E.g. ICP license number of a custom domain is required to deliver content in China. </summary>
         public string ValidationData { get; set; }

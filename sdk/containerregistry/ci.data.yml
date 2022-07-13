@@ -26,7 +26,7 @@ pr:
     - sdk/containerregistry/Microsoft.Azure.ContainerRegistry
 
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     SDKType: data
     ServiceDirectory: containerregistry

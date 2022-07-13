@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -43,10 +44,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("subnet");
                 JsonSerializer.Serialize(writer, Subnet);
             }
-            if (Optional.IsDefined(Primary))
+            if (Optional.IsDefined(IsPrimary))
             {
                 writer.WritePropertyName("primary");
-                writer.WriteBooleanValue(Primary.Value);
+                writer.WriteBooleanValue(IsPrimary.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -54,12 +55,12 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayPrivateLinkIPConfiguration DeserializeApplicationGatewayPrivateLinkIPConfiguration(JsonElement element)
         {
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<string> privateIPAddress = default;
-            Optional<IPAllocationMethod> privateIPAllocationMethod = default;
+            Optional<NetworkIPAllocationMethod> privateIPAllocationMethod = default;
             Optional<WritableSubResource> subnet = default;
             Optional<bool> primary = default;
             Optional<NetworkProvisioningState> provisioningState = default;
@@ -67,7 +68,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -116,7 +122,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            privateIPAllocationMethod = new IPAllocationMethod(property0.Value.GetString());
+                            privateIPAllocationMethod = new NetworkIPAllocationMethod(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("subnet"))
@@ -153,7 +159,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayPrivateLinkIPConfiguration(id.Value, name.Value, Optional.ToNullable(type), etag.Value, privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), subnet, Optional.ToNullable(primary), Optional.ToNullable(provisioningState));
+            return new ApplicationGatewayPrivateLinkIPConfiguration(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), subnet, Optional.ToNullable(primary), Optional.ToNullable(provisioningState));
         }
     }
 }

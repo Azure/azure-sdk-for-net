@@ -12,7 +12,6 @@ using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
 using NUnit.Framework;
-using SubResource = Azure.ResourceManager.Network.Models.NetworkSubResource;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Tests
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.Network.Tests
                 new ApplicationGatewaySslCertificate()
                 {
                     Name = sslCertName,
-                    Data = Convert.ToBase64String(cert.Export(X509ContentType.Pfx, password)),
+                    Data = BinaryData.FromString(Convert.ToBase64String(cert.Export(X509ContentType.Pfx, password))),
                     Password = password
                 }
             };
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.Network.Tests
                 new ApplicationGatewayAuthenticationCertificate()
                 {
                     Name = authCertName,
-                    Data = Convert.ToBase64String(cert.Export(X509ContentType.Cert))
+                    Data = BinaryData.FromString(Convert.ToBase64String(cert.Export(X509ContentType.Cert)))
                 };
         }
 
@@ -130,7 +129,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new ApplicationGatewayFrontendIPConfiguration()
                     {
                         Name = frontendIPConfigName,
-                        PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         Subnet = new WritableSubResource()
                         {
                             Id = subnet.Id
@@ -165,13 +164,13 @@ namespace Azure.ResourceManager.Network.Tests
                         Name = probeName,
                         Protocol = ApplicationGatewayProtocol.Http,
                         Path = "/path/path.htm",
-                        Interval = 17,
-                        Timeout = 17,
+                        IntervalInSeconds = 17,
+                        TimeoutInSeconds = 17,
                         UnhealthyThreshold = 5,
                         PickHostNameFromBackendHttpSettings = true,
                         Match = new ApplicationGatewayProbeHealthResponseMatch
                         {
-                            Body = "helloworld",
+                            Body = BinaryData.FromString("helloworld"),
                             StatusCodes = {"200-300","403"}
                         }
                     }
@@ -203,7 +202,7 @@ namespace Azure.ResourceManager.Network.Tests
                         Port = 80,
                         Protocol = ApplicationGatewayProtocol.Http,
                         CookieBasedAffinity = ApplicationGatewayCookieBasedAffinity.Disabled,
-                        RequestTimeout = 69,
+                        RequestTimeoutInSeconds = 69,
                         Probe = new WritableSubResource()
                         {
                             Id = GetChildAppGwResourceId(subscriptionId,
@@ -480,7 +479,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new ApplicationGatewayFrontendIPConfiguration()
                     {
                         Name = frontendIPConfigName,
-                        PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         Subnet = new WritableSubResource()
                         {
                             Id = subnet.Id
@@ -523,7 +522,7 @@ namespace Azure.ResourceManager.Network.Tests
                         Port = 80,
                         Protocol = ApplicationGatewayProtocol.Http,
                         CookieBasedAffinity = ApplicationGatewayCookieBasedAffinity.Disabled,
-                        RequestTimeout = 20,
+                        RequestTimeoutInSeconds = 20,
                     }
                 },
                 HttpListeners = {
@@ -631,7 +630,7 @@ namespace Azure.ResourceManager.Network.Tests
                 {
                     Assert.NotNull(gw2.BackendHttpSettingsCollection[i].ConnectionDraining);
                     Assert.AreEqual(gw1.BackendHttpSettingsCollection[i].ConnectionDraining.Enabled, gw2.BackendHttpSettingsCollection[i].ConnectionDraining.Enabled);
-                    Assert.AreEqual(gw1.BackendHttpSettingsCollection[i].ConnectionDraining.DrainTimeoutInSec, gw2.BackendHttpSettingsCollection[i].ConnectionDraining.DrainTimeoutInSec);
+                    Assert.AreEqual(gw1.BackendHttpSettingsCollection[i].ConnectionDraining.DrainTimeoutInSeconds, gw2.BackendHttpSettingsCollection[i].ConnectionDraining.DrainTimeoutInSeconds);
                 }
                 else
                 {

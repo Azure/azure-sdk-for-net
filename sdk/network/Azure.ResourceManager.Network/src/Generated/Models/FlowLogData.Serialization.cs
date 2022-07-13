@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.Network
 
         internal static FlowLogData DeserializeFlowLogData(JsonElement element)
         {
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
@@ -85,17 +86,22 @@ namespace Azure.ResourceManager.Network
             Optional<IDictionary<string, string>> tags = default;
             Optional<ResourceIdentifier> targetResourceId = default;
             Optional<Guid> targetResourceGuid = default;
-            Optional<string> storageId = default;
+            Optional<ResourceIdentifier> storageId = default;
             Optional<bool> enabled = default;
             Optional<RetentionPolicyParameters> retentionPolicy = default;
-            Optional<FlowLogFormatParameters> format = default;
+            Optional<FlowLogProperties> format = default;
             Optional<TrafficAnalyticsProperties> flowAnalyticsConfiguration = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -179,7 +185,12 @@ namespace Azure.ResourceManager.Network
                         }
                         if (property0.NameEquals("storageId"))
                         {
-                            storageId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            storageId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("enabled"))
@@ -209,7 +220,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            format = FlowLogFormatParameters.DeserializeFlowLogFormatParameters(property0.Value);
+                            format = FlowLogProperties.DeserializeFlowLogProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("flowAnalyticsConfiguration"))
@@ -236,7 +247,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new FlowLogData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), etag.Value, targetResourceId.Value, Optional.ToNullable(targetResourceGuid), storageId.Value, Optional.ToNullable(enabled), retentionPolicy.Value, format.Value, flowAnalyticsConfiguration.Value, Optional.ToNullable(provisioningState));
+            return new FlowLogData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), targetResourceId.Value, Optional.ToNullable(targetResourceGuid), storageId.Value, Optional.ToNullable(enabled), retentionPolicy.Value, format.Value, flowAnalyticsConfiguration.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

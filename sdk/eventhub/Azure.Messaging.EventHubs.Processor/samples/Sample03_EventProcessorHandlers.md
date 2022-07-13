@@ -4,6 +4,21 @@ Once started, the majority of work performed by the `EventProcessorClient` takes
 
 This sample details the means to receive information and interact with the `EventProcessorClient` as it is running and demonstrates how to configure the event handlers for some common scenarios.  To begin, please ensure that you're familiar with the items discussed in the [Getting started](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples#getting-started) section of the README, and have the prerequisites and connection string information available.
 
+## Table of contents
+
+- [Process Event](#process-event)
+    - [Respecting cancellation](#respecting-cancellation)
+- [Process Error](#process-error)
+    - [Inspecting error details](#inspecting-error-details)
+    - [Reacting to processor errors](#reacting-to-processor-errors)
+- [Partition Initializing](#partition-initializing)
+    - [Requesting a default starting point for the partition](#requesting-a-default-starting-point-for-the-partition)
+- [Partition Closing](#partition-closing)
+    - [Inspecting closing details](#inspecting-closing-details)
+- [Common guidance for handlers](#common-guidance-for-handlers)
+    - [Exceptions in handlers](#exceptions-in-handlers)
+    - [Stop the processor for fatal exceptions](#stop-the-processor-for-fatal-exceptions)
+
 ## Process Event
 
 The processor will invoke the `ProcessEventAsync` handler when an event read from the Event Hubs service is available for processing or, if the [MaximumWaitTime](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventprocessorclientoptions.maximumwaittime?view=azure-dotnet#Azure_Messaging_EventHubs_EventProcessorClientOptions_MaximumWaitTime) was specified, when that duration has elapsed without an event being available.  This handler will be invoked concurrently, limited to one active call per partition.  While the handler may be processing events from different partitions concurrently, the processor will ensure that the events from the same partition are processed one-at-a-time in the order that they were read from the partition. 
@@ -401,7 +416,7 @@ finally
 }
 ```
 
-# Common guidance for handlers
+## Common guidance for handlers
 
 The following examples discuss common guidance for handlers used with the `EventProcessorClient`.  For illustration, the `ProcessEventAsync` handler is demonstrated, but the concept and form are common across each of the handlers, unless otherwise discussed as a special case.
 

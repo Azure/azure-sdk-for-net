@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.KeyVault
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _vaultClientDiagnostics;
-        private VaultsRestOperations _vaultRestClient;
+        private ClientDiagnostics _keyVaultVaultsClientDiagnostics;
+        private VaultsRestOperations _keyVaultVaultsRestClient;
         private ClientDiagnostics _vaultsClientDiagnostics;
         private VaultsRestOperations _vaultsRestClient;
         private ClientDiagnostics _managedHsmClientDiagnostics;
@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.KeyVault
         {
         }
 
-        private ClientDiagnostics VaultClientDiagnostics => _vaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.KeyVault", VaultResource.ResourceType.Namespace, Diagnostics);
-        private VaultsRestOperations VaultRestClient => _vaultRestClient ??= new VaultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VaultResource.ResourceType));
+        private ClientDiagnostics KeyVaultVaultsClientDiagnostics => _keyVaultVaultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.KeyVault", KeyVaultResource.ResourceType.Namespace, Diagnostics);
+        private VaultsRestOperations KeyVaultVaultsRestClient => _keyVaultVaultsRestClient ??= new VaultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(KeyVaultResource.ResourceType));
         private ClientDiagnostics VaultsClientDiagnostics => _vaultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.KeyVault", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private VaultsRestOperations VaultsRestClient => _vaultsRestClient ??= new VaultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics ManagedHsmClientDiagnostics => _managedHsmClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.KeyVault", ManagedHsmResource.ResourceType.Namespace, Diagnostics);
@@ -56,11 +56,11 @@ namespace Azure.ResourceManager.KeyVault
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of DeletedVaultResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of DeletedVaultResources and their operations over a DeletedVaultResource. </returns>
-        public virtual DeletedVaultCollection GetDeletedVaults()
+        /// <summary> Gets a collection of DeletedKeyVaultResources in the SubscriptionResource. </summary>
+        /// <returns> An object representing collection of DeletedKeyVaultResources and their operations over a DeletedKeyVaultResource. </returns>
+        public virtual DeletedKeyVaultCollection GetDeletedKeyVaults()
         {
-            return GetCachedClient(Client => new DeletedVaultCollection(Client, Id));
+            return GetCachedClient(Client => new DeletedKeyVaultCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of DeletedManagedHsmResources in the SubscriptionResource. </summary>
@@ -77,17 +77,17 @@ namespace Azure.ResourceManager.KeyVault
         /// </summary>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VaultResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VaultResource> GetVaultsAsync(int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="KeyVaultResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<KeyVaultResource> GetKeyVaultsAsync(int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<VaultResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<KeyVaultResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = VaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVaults");
+                using var scope = KeyVaultVaultsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetKeyVaults");
                 scope.Start();
                 try
                 {
-                    var response = await VaultRestClient.ListBySubscriptionAsync(Id.SubscriptionId, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VaultResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await KeyVaultVaultsRestClient.ListBySubscriptionAsync(Id.SubscriptionId, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new KeyVaultResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -95,14 +95,14 @@ namespace Azure.ResourceManager.KeyVault
                     throw;
                 }
             }
-            async Task<Page<VaultResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<KeyVaultResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = VaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVaults");
+                using var scope = KeyVaultVaultsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetKeyVaults");
                 scope.Start();
                 try
                 {
-                    var response = await VaultRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VaultResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await KeyVaultVaultsRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new KeyVaultResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -120,17 +120,17 @@ namespace Azure.ResourceManager.KeyVault
         /// </summary>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VaultResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VaultResource> GetVaults(int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="KeyVaultResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<KeyVaultResource> GetKeyVaults(int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<VaultResource> FirstPageFunc(int? pageSizeHint)
+            Page<KeyVaultResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = VaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVaults");
+                using var scope = KeyVaultVaultsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetKeyVaults");
                 scope.Start();
                 try
                 {
-                    var response = VaultRestClient.ListBySubscription(Id.SubscriptionId, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VaultResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = KeyVaultVaultsRestClient.ListBySubscription(Id.SubscriptionId, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new KeyVaultResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -138,14 +138,14 @@ namespace Azure.ResourceManager.KeyVault
                     throw;
                 }
             }
-            Page<VaultResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<KeyVaultResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = VaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVaults");
+                using var scope = KeyVaultVaultsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetKeyVaults");
                 scope.Start();
                 try
                 {
-                    var response = VaultRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VaultResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = KeyVaultVaultsRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new KeyVaultResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -162,17 +162,17 @@ namespace Azure.ResourceManager.KeyVault
         /// Operation Id: Vaults_ListDeleted
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeletedVaultResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DeletedVaultResource> GetDeletedVaultsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DeletedKeyVaultResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DeletedKeyVaultResource> GetDeletedKeyVaultsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DeletedVaultResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<DeletedKeyVaultResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = VaultsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDeletedVaults");
+                using var scope = VaultsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDeletedKeyVaults");
                 scope.Start();
                 try
                 {
                     var response = await VaultsRestClient.ListDeletedAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedVaultResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DeletedKeyVaultResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -180,14 +180,14 @@ namespace Azure.ResourceManager.KeyVault
                     throw;
                 }
             }
-            async Task<Page<DeletedVaultResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<DeletedKeyVaultResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = VaultsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDeletedVaults");
+                using var scope = VaultsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDeletedKeyVaults");
                 scope.Start();
                 try
                 {
                     var response = await VaultsRestClient.ListDeletedNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedVaultResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DeletedKeyVaultResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -204,17 +204,17 @@ namespace Azure.ResourceManager.KeyVault
         /// Operation Id: Vaults_ListDeleted
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeletedVaultResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DeletedVaultResource> GetDeletedVaults(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DeletedKeyVaultResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DeletedKeyVaultResource> GetDeletedKeyVaults(CancellationToken cancellationToken = default)
         {
-            Page<DeletedVaultResource> FirstPageFunc(int? pageSizeHint)
+            Page<DeletedKeyVaultResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = VaultsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDeletedVaults");
+                using var scope = VaultsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDeletedKeyVaults");
                 scope.Start();
                 try
                 {
                     var response = VaultsRestClient.ListDeleted(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedVaultResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DeletedKeyVaultResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -222,14 +222,14 @@ namespace Azure.ResourceManager.KeyVault
                     throw;
                 }
             }
-            Page<DeletedVaultResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<DeletedKeyVaultResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = VaultsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDeletedVaults");
+                using var scope = VaultsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDeletedKeyVaults");
                 scope.Start();
                 try
                 {
                     var response = VaultsRestClient.ListDeletedNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedVaultResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DeletedKeyVaultResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </summary>
         /// <param name="content"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckKeyVaultNameAvailabilityAsync(VaultCheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KeyVaultNameAvailabilityResult>> CheckKeyVaultNameAvailabilityAsync(KeyVaultNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = VaultsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckKeyVaultNameAvailability");
             scope.Start();
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </summary>
         /// <param name="content"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckNameAvailabilityResult> CheckKeyVaultNameAvailability(VaultCheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<KeyVaultNameAvailabilityResult> CheckKeyVaultNameAvailability(KeyVaultNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = VaultsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckKeyVaultNameAvailability");
             scope.Start();

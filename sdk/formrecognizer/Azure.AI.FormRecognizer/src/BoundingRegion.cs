@@ -13,26 +13,24 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary>
         /// Initializes a new instance of BoundingRegion. Used by the <see cref="DocumentAnalysisModelFactory"/>.
         /// </summary>
-        internal BoundingRegion(int pageNumber, BoundingBox boundingBox)
+        internal BoundingRegion(int pageNumber, BoundingPolygon boundingPolygon)
         {
             PageNumber = pageNumber;
-            BoundingBox = boundingBox;
+            BoundingPolygon = boundingPolygon;
         }
 
         /// <summary>
-        /// The quadrilateral bounding box that outlines this region. Units are in pixels for
-        /// images and inches for PDF. The <see cref="LengthUnit"/> type of a recognized page can be found
-        /// at <see cref="DocumentPage.Unit"/>.
+        /// The bounding polygon that outlines this region. Units are in pixels for images and inches for
+        /// PDF. The <see cref="LengthUnit"/> type of a recognized page can be found at <see cref="DocumentPage.Unit"/>.
         /// </summary>
-        public BoundingBox BoundingBox { get; private set; }
+        public BoundingPolygon BoundingPolygon { get; private set; }
 
-        [CodeGenMember("BoundingBox")]
-        private IReadOnlyList<float> BoundingBoxPrivate
+        private IReadOnlyList<float> Polygon
         {
             get => throw new InvalidOperationException();
             set
             {
-                BoundingBox = new BoundingBox(value);
+                BoundingPolygon = new BoundingPolygon(value);
             }
         }
     }

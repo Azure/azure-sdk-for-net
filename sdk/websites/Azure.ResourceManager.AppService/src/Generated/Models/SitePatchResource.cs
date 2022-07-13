@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> ARM resource for a site. </summary>
-    public partial class SitePatchResource : ProxyOnlyResource
+    public partial class SitePatchResource : ResourceData
     {
         /// <summary> Initializes a new instance of SitePatchResource. </summary>
         public SitePatchResource()
@@ -29,7 +29,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="identity"> Managed service identity. </param>
         /// <param name="state"> Current state of the app. </param>
         /// <param name="hostNames"> Hostnames associated with the app. </param>
@@ -92,7 +91,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// Azure Resource Manager ID of the Virtual network and subnet to be joined by Regional VNET Integration.
         /// This must be of the form /subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}
         /// </param>
-        internal SitePatchResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, ManagedServiceIdentity identity, string state, IReadOnlyList<string> hostNames, string repositorySiteName, UsageState? usageState, bool? enabled, IReadOnlyList<string> enabledHostNames, SiteAvailabilityState? availabilityState, IList<HostNameSslState> hostNameSslStates, string serverFarmId, bool? reserved, bool? isXenon, bool? hyperV, DateTimeOffset? lastModifiedTimeUtc, SiteConfigProperties siteConfig, IReadOnlyList<string> trafficManagerHostNames, bool? scmSiteAlsoStopped, string targetSwapSlot, HostingEnvironmentProfile hostingEnvironmentProfile, bool? clientAffinityEnabled, bool? clientCertEnabled, ClientCertMode? clientCertMode, string clientCertExclusionPaths, bool? hostNamesDisabled, string customDomainVerificationId, string outboundIPAddresses, string possibleOutboundIPAddresses, int? containerSize, int? dailyMemoryTimeQuota, DateTimeOffset? suspendedTill, int? maxNumberOfWorkers, CloningInfo cloningInfo, string resourceGroup, bool? isDefaultContainer, string defaultHostName, SlotSwapStatus slotSwapStatus, bool? httpsOnly, RedundancyMode? redundancyMode, Guid? inProgressOperationId, bool? storageAccountRequired, string keyVaultReferenceIdentity, string virtualNetworkSubnetId) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal SitePatchResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string state, IReadOnlyList<string> hostNames, string repositorySiteName, UsageState? usageState, bool? enabled, IReadOnlyList<string> enabledHostNames, SiteAvailabilityState? availabilityState, IList<HostNameSslState> hostNameSslStates, string serverFarmId, bool? reserved, bool? isXenon, bool? hyperV, DateTimeOffset? lastModifiedTimeUtc, SiteConfigProperties siteConfig, IReadOnlyList<string> trafficManagerHostNames, bool? scmSiteAlsoStopped, string targetSwapSlot, HostingEnvironmentProfile hostingEnvironmentProfile, bool? clientAffinityEnabled, bool? clientCertEnabled, ClientCertMode? clientCertMode, string clientCertExclusionPaths, bool? hostNamesDisabled, string customDomainVerificationId, string outboundIPAddresses, string possibleOutboundIPAddresses, int? containerSize, int? dailyMemoryTimeQuota, DateTimeOffset? suspendedTill, int? maxNumberOfWorkers, CloningInfo cloningInfo, string resourceGroup, bool? isDefaultContainer, string defaultHostName, SlotSwapStatus slotSwapStatus, bool? httpsOnly, RedundancyMode? redundancyMode, Guid? inProgressOperationId, bool? storageAccountRequired, string keyVaultReferenceIdentity, string virtualNetworkSubnetId, string kind) : base(id, name, resourceType, systemData)
         {
             Identity = identity;
             State = state;
@@ -136,6 +136,7 @@ namespace Azure.ResourceManager.AppService.Models
             StorageAccountRequired = storageAccountRequired;
             KeyVaultReferenceIdentity = keyVaultReferenceIdentity;
             VirtualNetworkSubnetId = virtualNetworkSubnetId;
+            Kind = kind;
         }
 
         /// <summary> Managed service identity. </summary>
@@ -242,5 +243,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// This must be of the form /subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}
         /// </summary>
         public string VirtualNetworkSubnetId { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }
