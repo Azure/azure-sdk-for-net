@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ExtendedLocation
         public string DisplayName { get { throw null; } set { } }
         public string HostResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.ExtendedLocation.Models.HostType? HostType { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.SystemAssignedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public string Namespace { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } set { } }
     }
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ExtendedLocation.Models
         public string DisplayName { get { throw null; } set { } }
         public string HostResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.ExtendedLocation.Models.HostType? HostType { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.SystemAssignedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public string Namespace { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
