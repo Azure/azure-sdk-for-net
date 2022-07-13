@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// 
     /// Copy, Secondary, and RestoreLongTermRetentionBackup are not supported for DataWarehouse edition.
     /// </summary>
-    public readonly partial struct CreateMode : IEquatable<CreateMode>
+    public readonly partial struct SqlDatabaseCreateMode : IEquatable<SqlDatabaseCreateMode>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="CreateMode"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlDatabaseCreateMode"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CreateMode(string value)
+        public SqlDatabaseCreateMode(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -52,37 +52,37 @@ namespace Azure.ResourceManager.Sql.Models
         private const string OnlineSecondaryValue = "OnlineSecondary";
 
         /// <summary> Default. </summary>
-        public static CreateMode Default { get; } = new CreateMode(DefaultValue);
+        public static SqlDatabaseCreateMode Default { get; } = new SqlDatabaseCreateMode(DefaultValue);
         /// <summary> Copy. </summary>
-        public static CreateMode Copy { get; } = new CreateMode(CopyValue);
+        public static SqlDatabaseCreateMode Copy { get; } = new SqlDatabaseCreateMode(CopyValue);
         /// <summary> Secondary. </summary>
-        public static CreateMode Secondary { get; } = new CreateMode(SecondaryValue);
+        public static SqlDatabaseCreateMode Secondary { get; } = new SqlDatabaseCreateMode(SecondaryValue);
         /// <summary> PointInTimeRestore. </summary>
-        public static CreateMode PointInTimeRestore { get; } = new CreateMode(PointInTimeRestoreValue);
+        public static SqlDatabaseCreateMode PointInTimeRestore { get; } = new SqlDatabaseCreateMode(PointInTimeRestoreValue);
         /// <summary> Restore. </summary>
-        public static CreateMode Restore { get; } = new CreateMode(RestoreValue);
+        public static SqlDatabaseCreateMode Restore { get; } = new SqlDatabaseCreateMode(RestoreValue);
         /// <summary> Recovery. </summary>
-        public static CreateMode Recovery { get; } = new CreateMode(RecoveryValue);
+        public static SqlDatabaseCreateMode Recovery { get; } = new SqlDatabaseCreateMode(RecoveryValue);
         /// <summary> RestoreExternalBackup. </summary>
-        public static CreateMode RestoreExternalBackup { get; } = new CreateMode(RestoreExternalBackupValue);
+        public static SqlDatabaseCreateMode RestoreExternalBackup { get; } = new SqlDatabaseCreateMode(RestoreExternalBackupValue);
         /// <summary> RestoreExternalBackupSecondary. </summary>
-        public static CreateMode RestoreExternalBackupSecondary { get; } = new CreateMode(RestoreExternalBackupSecondaryValue);
+        public static SqlDatabaseCreateMode RestoreExternalBackupSecondary { get; } = new SqlDatabaseCreateMode(RestoreExternalBackupSecondaryValue);
         /// <summary> RestoreLongTermRetentionBackup. </summary>
-        public static CreateMode RestoreLongTermRetentionBackup { get; } = new CreateMode(RestoreLongTermRetentionBackupValue);
+        public static SqlDatabaseCreateMode RestoreLongTermRetentionBackup { get; } = new SqlDatabaseCreateMode(RestoreLongTermRetentionBackupValue);
         /// <summary> OnlineSecondary. </summary>
-        public static CreateMode OnlineSecondary { get; } = new CreateMode(OnlineSecondaryValue);
-        /// <summary> Determines if two <see cref="CreateMode"/> values are the same. </summary>
-        public static bool operator ==(CreateMode left, CreateMode right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="CreateMode"/> values are not the same. </summary>
-        public static bool operator !=(CreateMode left, CreateMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CreateMode"/>. </summary>
-        public static implicit operator CreateMode(string value) => new CreateMode(value);
+        public static SqlDatabaseCreateMode OnlineSecondary { get; } = new SqlDatabaseCreateMode(OnlineSecondaryValue);
+        /// <summary> Determines if two <see cref="SqlDatabaseCreateMode"/> values are the same. </summary>
+        public static bool operator ==(SqlDatabaseCreateMode left, SqlDatabaseCreateMode right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="SqlDatabaseCreateMode"/> values are not the same. </summary>
+        public static bool operator !=(SqlDatabaseCreateMode left, SqlDatabaseCreateMode right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="SqlDatabaseCreateMode"/>. </summary>
+        public static implicit operator SqlDatabaseCreateMode(string value) => new SqlDatabaseCreateMode(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is CreateMode other && Equals(other);
+        public override bool Equals(object obj) => obj is SqlDatabaseCreateMode other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(CreateMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SqlDatabaseCreateMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -8,22 +8,22 @@
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The result of a name availability check. </summary>
-    public partial class CheckNameAvailabilityResponse
+    public partial class SqlNameAvailabilityResponse
     {
-        /// <summary> Initializes a new instance of CheckNameAvailabilityResponse. </summary>
-        internal CheckNameAvailabilityResponse()
+        /// <summary> Initializes a new instance of SqlNameAvailabilityResponse. </summary>
+        internal SqlNameAvailabilityResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of CheckNameAvailabilityResponse. </summary>
+        /// <summary> Initializes a new instance of SqlNameAvailabilityResponse. </summary>
         /// <param name="name"> The name whose availability was checked. </param>
-        /// <param name="available"> True if the name is available, otherwise false. </param>
+        /// <param name="isAvailable"> True if the name is available, otherwise false. </param>
         /// <param name="reason"> The reason code explaining why the name is unavailable. Will be undefined if the name is available. </param>
         /// <param name="message"> A message explaining why the name is unavailable. Will be undefined if the name is available. </param>
-        internal CheckNameAvailabilityResponse(string name, bool? available, CheckNameAvailabilityReason? reason, string message)
+        internal SqlNameAvailabilityResponse(string name, bool? isAvailable, SqlNameAvailabilityReason? reason, string message)
         {
             Name = name;
-            Available = available;
+            IsAvailable = isAvailable;
             Reason = reason;
             Message = message;
         }
@@ -31,9 +31,9 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The name whose availability was checked. </summary>
         public string Name { get; }
         /// <summary> True if the name is available, otherwise false. </summary>
-        public bool? Available { get; }
+        public bool? IsAvailable { get; }
         /// <summary> The reason code explaining why the name is unavailable. Will be undefined if the name is available. </summary>
-        public CheckNameAvailabilityReason? Reason { get; }
+        public SqlNameAvailabilityReason? Reason { get; }
         /// <summary> A message explaining why the name is unavailable. Will be undefined if the name is available. </summary>
         public string Message { get; }
     }

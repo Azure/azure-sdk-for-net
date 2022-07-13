@@ -8,17 +8,17 @@
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A database metric name. </summary>
-    public partial class MetricName
+    public partial class SqlMetricName
     {
-        /// <summary> Initializes a new instance of MetricName. </summary>
-        internal MetricName()
+        /// <summary> Initializes a new instance of SqlMetricName. </summary>
+        internal SqlMetricName()
         {
         }
 
-        /// <summary> Initializes a new instance of MetricName. </summary>
+        /// <summary> Initializes a new instance of SqlMetricName. </summary>
         /// <param name="value"> The name of the database metric. </param>
         /// <param name="localizedValue"> The friendly name of the database metric. </param>
-        internal MetricName(string value, string localizedValue)
+        internal SqlMetricName(string value, string localizedValue)
         {
             Value = value;
             LocalizedValue = localizedValue;

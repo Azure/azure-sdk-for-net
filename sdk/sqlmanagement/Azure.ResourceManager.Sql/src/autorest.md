@@ -19,8 +19,10 @@ format-by-name-rules:
   'tenantId': 'uuid'
   'etag': 'etag'
   'location': 'azure-location'
+  'locationName': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  'keyId': 'Uri'
   '*ResourceId': 'arm-id'
   '*SubnetId': 'arm-id'
   'subnetId': 'arm-id'
@@ -36,8 +38,11 @@ format-by-name-rules:
   'recoveryServicesRecoveryPointId': 'arm-id'
   'syncAgentId': 'arm-id'
   'oldServerDnsAliasId': 'arm-id'
+  'failoverGroupId': 'arm-id'
   'partnerLocation': 'azure-location'
   'defaultSecondaryLocation': 'azure-location'
+  'privateLinkServiceId': 'arm-id'
+  'resourceType': 'resource-type'
 
 keep-plural-enums:
   - DiffBackupIntervalInHours
@@ -64,12 +69,25 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  SQL: Sql
+  DTU: Dtu
+  GEO: Geo
+  GRS: Grs
+  LRS: Lrs
+  ZRS: Zrs
+  Hierarchyid: HierarchyId
 prepend-rp-prefix:
   - DatabaseAutomaticTuning
   - DatabaseBlobAuditingPolicy
   - DatabaseSecurityAlertPolicy
   - TimeZone
   - Metric
+  - MetricListResult
+  - MetricAvalability
+  - MetricName
+  - MetricType
+  - MetricValue
+  - MetricDefinition
   - Server
   - Database
   - DayOfWeek
@@ -156,7 +174,14 @@ rename-mapping:
   LedgerDigestUploads: LedgerDigestUpload
   ServerDevOpsAuditingSettings: SqlServerDevOpsAuditingSetting
   ManagedDatabaseRestoreDetailsResult: ManagedDatabaseRestoreDetail
-
+  CheckNameAvailabilityReason: SqlNameAvailabilityReason
+  CheckNameAvailabilityResourceType: SqlNameAvailabilityResourceType
+  CheckNameAvailabilityRequest: SqlNameAvailabilityContent
+  CreateMode: SqlDatabaseCreateMode
+  OperationMode: DatabaseExtensionOperationMode
+  ProvisioningState: JobExecutionProvisioningState
+  UnitType: SqlMetricUnitType
+  UnitDefinitionType: SqlMetricDefinitionUnitType
 directive:
     - remove-operation: DatabaseExtensions_Get # This operation is not supported
     - remove-operation: FirewallRules_Replace # This operation sends a list of rules but got a single rule in response, which is abnormal. Besides, using FirewallRules_CreateOrUpdate/FirewallRules_Delete multiple times could achieve the same goal.
@@ -285,3 +310,57 @@ directive:
       where: $.definitions..lastChecked
       transform: >
           $['x-ms-client-name'] = 'LastCheckedOn'
+    - from: swagger-document
+      where: $.definitions..memoryOptimized
+      transform: >
+          $['x-ms-client-name'] = 'IsMemoryOptimized'
+    - from: swagger-document
+      where: $.definitions..zoneRedundant
+      transform: >
+          $['x-ms-client-name'] = 'IsZoneRedundant'
+    - from: swagger-document
+      where: $.definitions..autoRotationEnabled
+      transform: >
+          $['x-ms-client-name'] = 'IsAutoRotationEnabled'
+    - from: swagger-document
+      where: $.definitions..publicDataEndpointEnabled
+      transform: >
+          $['x-ms-client-name'] = 'IsPublicDataEndpointEnabled'
+    - from: LocationCapabilities.json
+      where: $.definitions..instancePoolSupported
+      transform: >
+          $['x-ms-client-name'] = 'IsInstancePoolSupported'
+    - from: LocationCapabilities.json
+      where: $.definitions..standaloneSupported
+      transform: >
+          $['x-ms-client-name'] = 'IsStandaloneSupported'
+    - from: swagger-document
+      where: $.definitions..enabled
+      transform: >
+          if ($['type'] === 'boolean')
+              $['x-ms-client-name'] = 'IsEnabled'
+    - from: swagger-document
+      where: $.definitions.ResourceWithWritableName
+      transform: >
+              $.properties.id['x-ms-format'] = 'arm-id';
+    - from: Servers.json
+      where: $.definitions.CheckNameAvailabilityResponse
+      transform: >
+          $['x-ms-client-name'] = 'SqlNameAvailabilityResponse';
+          $.properties.available['x-ms-client-name'] = 'IsAvailable';
+    - from: ManagedInstances.json
+      where: $.definitions.ManagedInstancePecProperty
+      transform: >
+          $.properties.id['x-ms-format'] = 'arm-id';
+    - from: Databases.json
+      where: $.definitions.ResourceMoveDefinition
+      transform: >
+          $.properties.id['x-ms-format'] = 'arm-id';
+    - from: FailoverGroups.json
+      where: $.definitions.PartnerInfo
+      transform: >
+          $.properties.id['x-ms-format'] = 'arm-id';
+    - from: Servers.json
+      where: $.definitions.ServerPrivateEndpointConnection
+      transform: >
+          $.properties.id['x-ms-format'] = 'arm-id';

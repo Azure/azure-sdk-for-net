@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="storageKeyType"> Storage key type. </param>
         /// <param name="storageKey"> Storage key. </param>
         /// <param name="storageUri"> Storage Uri. </param>
-        internal DatabaseExtensions(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, OperationMode? operationMode, StorageKeyType? storageKeyType, string storageKey, Uri storageUri) : base(id, name, resourceType, systemData)
+        internal DatabaseExtensions(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DatabaseExtensionOperationMode? operationMode, StorageKeyType? storageKeyType, string storageKey, Uri storageUri) : base(id, name, resourceType, systemData)
         {
             OperationMode = operationMode;
             StorageKeyType = storageKeyType;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Operation Mode. </summary>
-        public OperationMode? OperationMode { get; set; }
+        public DatabaseExtensionOperationMode? OperationMode { get; set; }
         /// <summary> Storage key type. </summary>
         public StorageKeyType? StorageKeyType { get; set; }
         /// <summary> Storage key. </summary>

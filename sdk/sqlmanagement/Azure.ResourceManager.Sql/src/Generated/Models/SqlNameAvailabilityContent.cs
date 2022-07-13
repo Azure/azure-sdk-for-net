@@ -10,12 +10,12 @@ using System;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A request to check whether the specified name for a resource is available. </summary>
-    public partial class CheckNameAvailabilityContent
+    public partial class SqlNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of CheckNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of SqlNameAvailabilityContent. </summary>
         /// <param name="name"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public CheckNameAvailabilityContent(string name)
+        public SqlNameAvailabilityContent(string name)
         {
             if (name == null)
             {
@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             Name = name;
-            ResourceType = CheckNameAvailabilityResourceType.MicrosoftSqlServers;
+            ResourceType = SqlNameAvailabilityResourceType.MicrosoftSqlServers;
         }
 
         /// <summary> Gets the name. </summary>
         public string Name { get; }
         /// <summary> Gets the resource type. </summary>
-        public CheckNameAvailabilityResourceType ResourceType { get; }
+        public SqlNameAvailabilityResourceType ResourceType { get; }
     }
 }

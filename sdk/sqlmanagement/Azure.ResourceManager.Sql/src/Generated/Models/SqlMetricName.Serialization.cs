@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class MetricName
+    public partial class SqlMetricName
     {
-        internal static MetricName DeserializeMetricName(JsonElement element)
+        internal static SqlMetricName DeserializeSqlMetricName(JsonElement element)
         {
             Optional<string> value = default;
             Optional<string> localizedValue = default;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new MetricName(value.Value, localizedValue.Value);
+            return new SqlMetricName(value.Value, localizedValue.Value);
         }
     }
 }

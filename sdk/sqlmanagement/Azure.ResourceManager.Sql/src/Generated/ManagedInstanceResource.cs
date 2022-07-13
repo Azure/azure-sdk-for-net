@@ -1046,7 +1046,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="observationMetric"> Metric to be used for ranking top queries. Default is &apos;cpu&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="TopQueries" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TopQueries> GetTopQueriesAsync(int? numberOfQueries = null, string databases = null, string startTime = null, string endTime = null, QueryTimeGrainType? interval = null, AggregationFunctionType? aggregationFunction = null, MetricType? observationMetric = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<TopQueries> GetTopQueriesAsync(int? numberOfQueries = null, string databases = null, string startTime = null, string endTime = null, QueryTimeGrainType? interval = null, AggregationFunctionType? aggregationFunction = null, SqlMetricType? observationMetric = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<TopQueries>> FirstPageFunc(int? pageSizeHint)
             {
@@ -1095,7 +1095,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="observationMetric"> Metric to be used for ranking top queries. Default is &apos;cpu&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="TopQueries" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TopQueries> GetTopQueries(int? numberOfQueries = null, string databases = null, string startTime = null, string endTime = null, QueryTimeGrainType? interval = null, AggregationFunctionType? aggregationFunction = null, MetricType? observationMetric = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<TopQueries> GetTopQueries(int? numberOfQueries = null, string databases = null, string startTime = null, string endTime = null, QueryTimeGrainType? interval = null, AggregationFunctionType? aggregationFunction = null, SqlMetricType? observationMetric = null, CancellationToken cancellationToken = default)
         {
             Page<TopQueries> FirstPageFunc(int? pageSizeHint)
             {

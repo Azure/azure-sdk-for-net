@@ -10,13 +10,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class CheckNameAvailabilityResponse
+    public partial class SqlNameAvailabilityResponse
     {
-        internal static CheckNameAvailabilityResponse DeserializeCheckNameAvailabilityResponse(JsonElement element)
+        internal static SqlNameAvailabilityResponse DeserializeSqlNameAvailabilityResponse(JsonElement element)
         {
             Optional<string> name = default;
             Optional<bool> available = default;
-            Optional<CheckNameAvailabilityReason> reason = default;
+            Optional<SqlNameAvailabilityReason> reason = default;
             Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    reason = property.Value.GetString().ToCheckNameAvailabilityReason();
+                    reason = property.Value.GetString().ToSqlNameAvailabilityReason();
                     continue;
                 }
                 if (property.NameEquals("message"))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new CheckNameAvailabilityResponse(name.Value, Optional.ToNullable(available), Optional.ToNullable(reason), message.Value);
+            return new SqlNameAvailabilityResponse(name.Value, Optional.ToNullable(available), Optional.ToNullable(reason), message.Value);
         }
     }
 }

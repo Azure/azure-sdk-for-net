@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Conditional. If createMode is RestoreExternalBackup, this value is required. Specifies the storage container sas token. </summary>
         public string StorageContainerSasToken { get; set; }
         /// <summary> Instance Failover Group resource identifier that this managed database belongs to. </summary>
-        public string FailoverGroupId { get; }
+        public ResourceIdentifier FailoverGroupId { get; }
         /// <summary> The resource identifier of the recoverable database associated with create operation of this database. </summary>
         public ResourceIdentifier RecoverableDatabaseId { get; set; }
         /// <summary> The name of the Long Term Retention backup to be used for restore of this managed database. </summary>

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a collection of DeletedServerResources in the SubscriptionResource. </summary>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <returns> An object representing collection of DeletedServerResources and their operations over a DeletedServerResource. </returns>
-        public virtual DeletedServerCollection GetDeletedServers(string locationName)
+        public virtual DeletedServerCollection GetDeletedServers(AzureLocation locationName)
         {
             return new DeletedServerCollection(Client, Id, locationName);
         }
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a collection of SubscriptionUsageResources in the SubscriptionResource. </summary>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <returns> An object representing collection of SubscriptionUsageResources and their operations over a SubscriptionUsageResource. </returns>
-        public virtual SubscriptionUsageCollection GetSubscriptionUsages(string locationName)
+        public virtual SubscriptionUsageCollection GetSubscriptionUsages(AzureLocation locationName)
         {
             return new SubscriptionUsageCollection(Client, Id, locationName);
         }
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a collection of SqlTimeZoneResources in the SubscriptionResource. </summary>
         /// <param name="locationName"> The String to use. </param>
         /// <returns> An object representing collection of SqlTimeZoneResources and their operations over a SqlTimeZoneResource. </returns>
-        public virtual SqlTimeZoneCollection GetSqlTimeZones(string locationName)
+        public virtual SqlTimeZoneCollection GetSqlTimeZones(AzureLocation locationName)
         {
             return new SqlTimeZoneCollection(Client, Id, locationName);
         }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="longTermRetentionServerName"> The name of the server. </param>
         /// <param name="longTermRetentionDatabaseName"> The name of the database. </param>
         /// <returns> An object representing collection of SubscriptionLongTermRetentionBackupResources and their operations over a SubscriptionLongTermRetentionBackupResource. </returns>
-        public virtual SubscriptionLongTermRetentionBackupCollection GetSubscriptionLongTermRetentionBackups(string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName)
+        public virtual SubscriptionLongTermRetentionBackupCollection GetSubscriptionLongTermRetentionBackups(AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName)
         {
             return new SubscriptionLongTermRetentionBackupCollection(Client, Id, locationName, longTermRetentionServerName, longTermRetentionDatabaseName);
         }
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="databaseName"> The name of the managed database. </param>
         /// <returns> An object representing collection of SubscriptionLongTermRetentionManagedInstanceBackupResources and their operations over a SubscriptionLongTermRetentionManagedInstanceBackupResource. </returns>
-        public virtual SubscriptionLongTermRetentionManagedInstanceBackupCollection GetSubscriptionLongTermRetentionManagedInstanceBackups(string locationName, string managedInstanceName, string databaseName)
+        public virtual SubscriptionLongTermRetentionManagedInstanceBackupCollection GetSubscriptionLongTermRetentionManagedInstanceBackups(AzureLocation locationName, string managedInstanceName, string databaseName)
         {
             return new SubscriptionLongTermRetentionManagedInstanceBackupCollection(Client, Id, locationName, managedInstanceName, databaseName);
         }
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="locationName"> The location name whose capabilities are retrieved. </param>
         /// <param name="include"> If specified, restricts the response to only include the selected item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LocationCapabilities>> GetCapabilitiesByLocationAsync(string locationName, CapabilityGroup? include = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LocationCapabilities>> GetCapabilitiesByLocationAsync(AzureLocation locationName, CapabilityGroup? include = null, CancellationToken cancellationToken = default)
         {
             using var scope = CapabilitiesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCapabilitiesByLocation");
             scope.Start();
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="locationName"> The location name whose capabilities are retrieved. </param>
         /// <param name="include"> If specified, restricts the response to only include the selected item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LocationCapabilities> GetCapabilitiesByLocation(string locationName, CapabilityGroup? include = null, CancellationToken cancellationToken = default)
+        public virtual Response<LocationCapabilities> GetCapabilitiesByLocation(AzureLocation locationName, CapabilityGroup? include = null, CancellationToken cancellationToken = default)
         {
             using var scope = CapabilitiesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCapabilitiesByLocation");
             scope.Start();
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SubResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SubResource> GetSyncDatabaseIdsSyncGroupsAsync(string locationName, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SubResource> GetSyncDatabaseIdsSyncGroupsAsync(AzureLocation locationName, CancellationToken cancellationToken = default)
         {
             async Task<Page<SubResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SubResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SubResource> GetSyncDatabaseIdsSyncGroups(string locationName, CancellationToken cancellationToken = default)
+        public virtual Pageable<SubResource> GetSyncDatabaseIdsSyncGroups(AzureLocation locationName, CancellationToken cancellationToken = default)
         {
             Page<SubResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -600,7 +600,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="content"> The name availability request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CheckNameAvailabilityResponse>> CheckNameAvailabilityServerAsync(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlNameAvailabilityResponse>> CheckNameAvailabilityServerAsync(SqlNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = SqlServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityServer");
             scope.Start();
@@ -623,7 +623,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="content"> The name availability request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckNameAvailabilityResponse> CheckNameAvailabilityServer(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<SqlNameAvailabilityResponse> CheckNameAvailabilityServer(SqlNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = SqlServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityServer");
             scope.Start();
@@ -649,7 +649,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionBackupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByLocationAsync(string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByLocationAsync(AzureLocation locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<SubscriptionLongTermRetentionBackupResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -694,7 +694,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SubscriptionLongTermRetentionBackupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByLocation(string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByLocation(AzureLocation locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Page<SubscriptionLongTermRetentionBackupResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -740,7 +740,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionBackupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByServerAsync(string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByServerAsync(AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<SubscriptionLongTermRetentionBackupResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -786,7 +786,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SubscriptionLongTermRetentionBackupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByServer(string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByServer(AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Page<SubscriptionLongTermRetentionBackupResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -832,7 +832,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByInstanceAsync(string locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByInstanceAsync(AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<SubscriptionLongTermRetentionManagedInstanceBackupResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -878,7 +878,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByInstance(string locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByInstance(AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Page<SubscriptionLongTermRetentionManagedInstanceBackupResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -923,7 +923,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByLocationAsync(string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByLocationAsync(AzureLocation locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<SubscriptionLongTermRetentionManagedInstanceBackupResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -968,7 +968,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByLocation(string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByLocation(AzureLocation locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Page<SubscriptionLongTermRetentionManagedInstanceBackupResource> FirstPageFunc(int? pageSizeHint)
             {
