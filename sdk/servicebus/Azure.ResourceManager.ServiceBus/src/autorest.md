@@ -56,6 +56,12 @@ rename-rules:
 rename-mapping:
   UnavailableReason: ServiceBusNameUnavailableReason
   EntityStatus: ServiceBusMessagingEntityStatus
+  FilterType: ServiceBusFilterType
+  SqlFilter: ServiceBusSqlFilter
+  CorrelationFilter: ServiceBusCorrelationFilter
+  CorrelationFilter.label: Subject
+  CorrelationFilter.properties: ApplicationProperties
+  FilterAction: ServiceBusFilterAction
 
 directive:
     - from: swagger-document

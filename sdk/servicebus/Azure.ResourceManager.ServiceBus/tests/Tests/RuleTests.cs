@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
             //create rule with correlation filter
             string ruleName2 = Recording.GenerateAssetName("rule");
-            ServiceBusRuleResource rule2 = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName2, new ServiceBusRuleData(){FilterType = FilterType.CorrelationFilter})).Value;
+            ServiceBusRuleResource rule2 = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName2, new ServiceBusRuleData(){FilterType = ServiceBusFilterType.CorrelationFilter})).Value;
             Assert.NotNull(rule2);
             Assert.AreEqual(rule2.Id.Name, ruleName2);
 
@@ -70,14 +70,14 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             //update rule with sql filter and action
             ServiceBusRuleData updateParameters = new ServiceBusRuleData()
             {
-                Action = new FilterAction()
+                Action = new ServiceBusFilterAction()
                 {
                     RequiresPreprocessing = true,
                     SqlExpression = "SET " + strSqlExp,
                 },
-                SqlFilter = new SqlFilter() { SqlExpression = strSqlExp },
-                FilterType = FilterType.SqlFilter,
-                CorrelationFilter = new CorrelationFilter()
+                SqlFilter = new ServiceBusSqlFilter() { SqlExpression = strSqlExp },
+                FilterType = ServiceBusFilterType.SqlFilter,
+                CorrelationFilter = new ServiceBusCorrelationFilter()
             };
             rule1 = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName1, updateParameters)).Value;
 

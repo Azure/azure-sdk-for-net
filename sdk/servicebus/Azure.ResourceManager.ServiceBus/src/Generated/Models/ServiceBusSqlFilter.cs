@@ -8,18 +8,18 @@
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     /// <summary> Represents a filter which is a composition of an expression and an action that is executed in the pub/sub pipeline. </summary>
-    public partial class SqlFilter
+    public partial class ServiceBusSqlFilter
     {
-        /// <summary> Initializes a new instance of SqlFilter. </summary>
-        public SqlFilter()
+        /// <summary> Initializes a new instance of ServiceBusSqlFilter. </summary>
+        public ServiceBusSqlFilter()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlFilter. </summary>
+        /// <summary> Initializes a new instance of ServiceBusSqlFilter. </summary>
         /// <param name="sqlExpression"> The SQL expression. e.g. MyProperty=&apos;ABC&apos;. </param>
         /// <param name="compatibilityLevel"> This property is reserved for future use. An integer value showing the compatibility level, currently hard-coded to 20. </param>
         /// <param name="requiresPreprocessing"> Value that indicates whether the rule action requires preprocessing. </param>
-        internal SqlFilter(string sqlExpression, int? compatibilityLevel, bool? requiresPreprocessing)
+        internal ServiceBusSqlFilter(string sqlExpression, int? compatibilityLevel, bool? requiresPreprocessing)
         {
             SqlExpression = sqlExpression;
             CompatibilityLevel = compatibilityLevel;

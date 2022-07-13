@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    public partial class FilterAction : IUtf8JsonSerializable
+    public partial class ServiceBusFilterAction : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             writer.WriteEndObject();
         }
 
-        internal static FilterAction DeserializeFilterAction(JsonElement element)
+        internal static ServiceBusFilterAction DeserializeServiceBusFilterAction(JsonElement element)
         {
             Optional<string> sqlExpression = default;
             Optional<int> compatibilityLevel = default;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     continue;
                 }
             }
-            return new FilterAction(sqlExpression.Value, Optional.ToNullable(compatibilityLevel), Optional.ToNullable(requiresPreprocessing));
+            return new ServiceBusFilterAction(sqlExpression.Value, Optional.ToNullable(compatibilityLevel), Optional.ToNullable(requiresPreprocessing));
         }
     }
 }
