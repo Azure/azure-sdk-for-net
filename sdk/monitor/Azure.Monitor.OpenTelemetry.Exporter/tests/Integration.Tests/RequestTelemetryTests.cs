@@ -66,44 +66,5 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
                 expectedResponseCode: "200",
                 expectedUrl: request.AbsoluteUri);
         }
-
-        [Fact]
-        public async Task VerifyRequestTelemetry_WithTracerProvider()
-        {
-            string testValue = Guid.NewGuid().ToString();
-
-            // Arrange
-            TracerProvider tracerProvider = null;
-            var transmitter = new MockTransmitter();
-            var activityProcessor = new SimpleActivityExportProcessor(new AzureMonitorTraceExporter(transmitter));
-            var client = this.factory
-                .WithWebHostBuilder(builder =>
-                    builder.ConfigureTestServices(services =>
-                    {
-                        tracerProvider = Sdk.CreateTracerProviderBuilder()
-                            .AddAspNetCoreInstrumentation()
-                            .AddProcessor(activityProcessor)
-                            .Build();
-                    }))
-                .CreateClient();
-
-            // Act
-            var request = new Uri(client.BaseAddress, $"api/home/{testValue}");
-            var response = await client.GetAsync(request);
-
-            // Shutdown
-            response.EnsureSuccessStatusCode();
-            tracerProvider.ForceFlush();
-
-            // Assert
-            Assert.True(transmitter.TelemetryItems.Any(), "test project did not capture telemetry");
-            var telemetryItem = transmitter.TelemetryItems.Single();
-            telemetryOutput.Write(telemetryItem);
-
-            AssertRequestTelemetry(
-                telemetryItem: telemetryItem,
-                expectedResponseCode: "200",
-                expectedUrl: request.AbsoluteUri);
-        }
     }
 }
