@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Communication.CallingServer.Models;
+
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The TransferCallResponse. </summary>
@@ -12,7 +14,7 @@ namespace Azure.Communication.CallingServer
     {
         /// <summary> Initializes a new instance of TransferCallResponse. </summary>
         /// <param name="status"> The status of the operation. </param>
-        internal TransferCallResponse(CallingOperationStatusDto status)
+        internal TransferCallResponse(CallingOperationStatus status)
         {
             Status = status;
         }
@@ -22,7 +24,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="status"> The status of the operation. </param>
         /// <param name="operationContext"> The operation context provided by client. </param>
         /// <param name="resultDetails"> The result info for the operation. </param>
-        internal TransferCallResponse(string operationId, CallingOperationStatusDto status, string operationContext, CallingOperationResultDetailsDto resultDetails)
+        internal TransferCallResponse(string operationId, CallingOperationStatus status, string operationContext, CallingOperationResultDetails resultDetails)
         {
             OperationId = operationId;
             Status = status;
@@ -33,10 +35,10 @@ namespace Azure.Communication.CallingServer
         /// <summary> The operation id. </summary>
         public string OperationId { get; }
         /// <summary> The status of the operation. </summary>
-        public CallingOperationStatusDto Status { get; }
+        public CallingOperationStatus Status { get; }
         /// <summary> The operation context provided by client. </summary>
         public string OperationContext { get; }
         /// <summary> The result info for the operation. </summary>
-        public CallingOperationResultDetailsDto ResultDetails { get; }
+        public CallingOperationResultDetails ResultDetails { get; }
     }
 }

@@ -9,13 +9,13 @@ using System;
 
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> The request payload for answering the call. </summary>
-    public partial class AnswerCallRequest
+    /// <summary> The request payload for rejecting the call. </summary>
+    internal partial class RejectCallRequestInternal
     {
-        /// <summary> Initializes a new instance of AnswerCallRequest. </summary>
+        /// <summary> Initializes a new instance of RejectCallRequestInternal. </summary>
         /// <param name="incomingCallContext"> The context associated with the call. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="incomingCallContext"/> is null. </exception>
-        public AnswerCallRequest(string incomingCallContext)
+        public RejectCallRequestInternal(string incomingCallContext)
         {
             if (incomingCallContext == null)
             {
@@ -27,7 +27,7 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> The context associated with the call. </summary>
         public string IncomingCallContext { get; }
-        /// <summary> The callback uri. </summary>
-        public string CallbackUri { get; set; }
+        /// <summary> The rejection reason. </summary>
+        public CallRejectReason? CallRejectReason { get; set; }
     }
 }

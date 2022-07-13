@@ -5,8 +5,8 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer.Models
 {
-    [CodeGenModel("PlayRequest")]
-    internal partial class PlayRequest
+    [CodeGenModel("CallConnectionPropertiesDto")]
+    internal partial class CallConnectionPropertiesDtoInternal
     {
     }
 }

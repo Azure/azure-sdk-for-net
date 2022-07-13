@@ -5,25 +5,25 @@
 
 #nullable disable
 
-namespace Azure.Communication.CallingServer
+namespace Azure.Communication.CallingServer.Models
 {
     /// <summary> The CallingOperationResultDetailsDto. </summary>
-    public partial class CallingOperationResultDetailsDto
+    public partial class CallingOperationResultDetails
     {
-        /// <summary> Initializes a new instance of CallingOperationResultDetailsDto. </summary>
+        /// <summary> Initializes a new instance of CallingOperationResultDetails. </summary>
         /// <param name="code"> The result code associated with the operation. </param>
         /// <param name="subcode"> The subcode that further classifies the result. </param>
-        internal CallingOperationResultDetailsDto(int code, int subcode)
+        internal CallingOperationResultDetails(int code, int subcode)
         {
             Code = code;
             Subcode = subcode;
         }
 
-        /// <summary> Initializes a new instance of CallingOperationResultDetailsDto. </summary>
+        /// <summary> Initializes a new instance of CallingOperationResultDetails. </summary>
         /// <param name="code"> The result code associated with the operation. </param>
         /// <param name="subcode"> The subcode that further classifies the result. </param>
         /// <param name="message"> The message is a detail explanation of subcode. </param>
-        internal CallingOperationResultDetailsDto(int code, int subcode, string message)
+        internal CallingOperationResultDetails(int code, int subcode, string message)
         {
             Code = code;
             Subcode = subcode;

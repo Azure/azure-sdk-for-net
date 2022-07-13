@@ -9,21 +9,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Communication;
-using Azure.Communication.CallingServer;
 
-namespace Azure.Communication.CallingServer.Models
+namespace Azure.Communication.CallingServer
 {
     /// <summary> The PlayRequest. </summary>
-    internal partial class PlayRequest
+    internal partial class PlayRequestInternal
     {
-        /// <summary> Initializes a new instance of PlayRequest. </summary>
+        /// <summary> Initializes a new instance of PlayRequestInternal. </summary>
         /// <param name="playSourceInfo"> The source of the audio to be played. </param>
         /// <param name="playTo">
         /// The list of call participants play provided audio to. 
         /// Plays to everyone in the call when not provided.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="playSourceInfo"/> or <paramref name="playTo"/> is null. </exception>
-        public PlayRequest(PlaySource playSourceInfo, IEnumerable<CommunicationIdentifierModel> playTo)
+        public PlayRequestInternal(PlaySource playSourceInfo, IEnumerable<CommunicationIdentifierModel> playTo)
         {
             if (playSourceInfo == null)
             {

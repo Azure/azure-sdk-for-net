@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 
-namespace Azure.Communication.CallingServer
+namespace Azure.Communication.CallingServer.Models
 {
     /// <summary> The options for transfering a call. </summary>
     public class TransferCallOptions
@@ -26,7 +26,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="alternateCallerId">The alternate caller id of the source</param>
         /// <param name="userToUserInformation">The userToUserInformation.</param>
         /// <param name="operationContext">The operationContext for this transfer call.</param>
-        public TransferCallOptions(PhoneNumberIdentifier alternateCallerId, string userToUserInformation, string operationContext)
+        public TransferCallOptions(PhoneNumberIdentifier alternateCallerId = default, string userToUserInformation = default, string operationContext = default)
         {
             AlternateCallerId = alternateCallerId;
             UserToUserInformation = userToUserInformation;

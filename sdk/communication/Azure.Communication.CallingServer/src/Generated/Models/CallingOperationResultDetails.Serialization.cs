@@ -8,11 +8,11 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.CallingServer
+namespace Azure.Communication.CallingServer.Models
 {
-    public partial class CallingOperationResultDetailsDto
+    public partial class CallingOperationResultDetails
     {
-        internal static CallingOperationResultDetailsDto DeserializeCallingOperationResultDetailsDto(JsonElement element)
+        internal static CallingOperationResultDetails DeserializeCallingOperationResultDetails(JsonElement element)
         {
             int code = default;
             int subcode = default;
@@ -35,7 +35,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new CallingOperationResultDetailsDto(code, subcode, message.Value);
+            return new CallingOperationResultDetails(code, subcode, message.Value);
         }
     }
 }

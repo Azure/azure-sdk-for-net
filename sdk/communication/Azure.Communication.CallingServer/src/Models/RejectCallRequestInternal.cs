@@ -5,8 +5,8 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    [CodeGenModel("CallConnectionProperties")]
-    internal partial class CallConnectionPropertiesInternal
+    [CodeGenModel("RejectCallRequest")]
+    internal partial class RejectCallRequestInternal
     {
     }
 }

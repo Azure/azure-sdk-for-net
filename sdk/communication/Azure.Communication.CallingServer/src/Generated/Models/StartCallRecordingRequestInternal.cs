@@ -10,12 +10,12 @@ using System;
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The request payload start for call recording operation with call locator. </summary>
-    public partial class StartCallRecordingRequest
+    internal partial class StartCallRecordingRequestInternal
     {
-        /// <summary> Initializes a new instance of StartCallRecordingRequest. </summary>
+        /// <summary> Initializes a new instance of StartCallRecordingRequestInternal. </summary>
         /// <param name="callLocator"> The call locator. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/> is null. </exception>
-        public StartCallRecordingRequest(CallLocator callLocator)
+        public StartCallRecordingRequestInternal(CallLocatorInternal callLocator)
         {
             if (callLocator == null)
             {
@@ -26,7 +26,7 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> The call locator. </summary>
-        public CallLocator CallLocator { get; }
+        public CallLocatorInternal CallLocator { get; }
         /// <summary> The uri to send notifications to. </summary>
         public string RecordingStateCallbackUri { get; set; }
         /// <summary> The content type of call recording. </summary>

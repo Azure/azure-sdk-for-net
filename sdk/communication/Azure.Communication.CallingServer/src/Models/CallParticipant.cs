@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Communication.CallingServer
+namespace Azure.Communication.CallingServer.Models
 {
     /// <summary> The participant in a call. </summary>
     public class CallParticipant
@@ -20,13 +20,13 @@ namespace Azure.Communication.CallingServer
         internal CallParticipant(AcsCallParticipantDtoInternal callParticipantInternal)
         {
             Identifier = CommunicationIdentifierSerializer.Deserialize(callParticipantInternal.Identifier);
-            IsMuted = callParticipantInternal.IsMuted;
+            IsMuted = (bool)callParticipantInternal.IsMuted;
         }
 
         /// <summary> The communication identifier. </summary>
         public CommunicationIdentifier Identifier { get; }
 
         /// <summary> Is participant muted. </summary>
-        public bool? IsMuted { get; }
+        public bool IsMuted { get; }
     }
 }

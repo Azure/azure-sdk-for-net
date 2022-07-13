@@ -32,7 +32,7 @@ namespace Azure.Communication.CallingServer
         /// <returns></returns>
         public async Task<Response<PlayResponse>> PlayAsync(PlaySource playSource, IEnumerable<CommunicationIdentifier> playTo, CancellationToken cancellationToken = default)
         {
-            PlayRequest request = new PlayRequest(playSource, playTo.Select(t => CommunicationIdentifierSerializer.Serialize(t)));
+            PlayRequestInternal request = new PlayRequestInternal(playSource, playTo.Select(t => CommunicationIdentifierSerializer.Serialize(t)));
             return await _client.PlayAsync(_callConnectionId, request, cancellationToken).ConfigureAwait(false);
         }
 
@@ -56,7 +56,7 @@ namespace Azure.Communication.CallingServer
         /// <returns></returns>
         public Response<PlayResponse> Play(PlaySource playSource, IEnumerable<CommunicationIdentifier> playTo, CancellationToken cancellationToken = default)
         {
-            PlayRequest request = new PlayRequest(playSource, playTo.Select(t => CommunicationIdentifierSerializer.Serialize(t)));
+            PlayRequestInternal request = new PlayRequestInternal(playSource, playTo.Select(t => CommunicationIdentifierSerializer.Serialize(t)));
             return _client.Play(_callConnectionId, request, cancellationToken);
         }
 

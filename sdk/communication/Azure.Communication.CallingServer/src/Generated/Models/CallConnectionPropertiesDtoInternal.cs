@@ -7,21 +7,20 @@
 
 using System.Collections.Generic;
 using Azure.Communication;
-using Azure.Communication.CallingServer;
 using Azure.Core;
 
 namespace Azure.Communication.CallingServer.Models
 {
     /// <summary> The CallConnectionPropertiesDto. </summary>
-    internal partial class CallConnectionPropertiesDto
+    internal partial class CallConnectionPropertiesDtoInternal
     {
-        /// <summary> Initializes a new instance of CallConnectionPropertiesDto. </summary>
-        internal CallConnectionPropertiesDto()
+        /// <summary> Initializes a new instance of CallConnectionPropertiesDtoInternal. </summary>
+        internal CallConnectionPropertiesDtoInternal()
         {
             Targets = new ChangeTrackingList<CommunicationIdentifierModel>();
         }
 
-        /// <summary> Initializes a new instance of CallConnectionPropertiesDto. </summary>
+        /// <summary> Initializes a new instance of CallConnectionPropertiesDtoInternal. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="serverCallId"> The server call id. </param>
         /// <param name="source"> The source of the call. </param>
@@ -30,7 +29,7 @@ namespace Azure.Communication.CallingServer.Models
         /// <param name="callConnectionState"> The state of the call connection. </param>
         /// <param name="subject"> The subject. </param>
         /// <param name="callbackUri"> The callback URI. </param>
-        internal CallConnectionPropertiesDto(string callConnectionId, string serverCallId, CommunicationIdentifierModel source, PhoneNumberIdentifierModel alternateCallerId, IReadOnlyList<CommunicationIdentifierModel> targets, CallConnectionStateModel? callConnectionState, string subject, string callbackUri)
+        internal CallConnectionPropertiesDtoInternal(string callConnectionId, string serverCallId, CommunicationIdentifierModel source, PhoneNumberIdentifierModel alternateCallerId, IReadOnlyList<CommunicationIdentifierModel> targets, CallConnectionState? callConnectionState, string subject, string callbackUri)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
@@ -53,7 +52,7 @@ namespace Azure.Communication.CallingServer.Models
         /// <summary> The targets of the call. </summary>
         public IReadOnlyList<CommunicationIdentifierModel> Targets { get; }
         /// <summary> The state of the call connection. </summary>
-        public CallConnectionStateModel? CallConnectionState { get; }
+        public CallConnectionState? CallConnectionState { get; }
         /// <summary> The subject. </summary>
         public string Subject { get; }
         /// <summary> The callback URI. </summary>
