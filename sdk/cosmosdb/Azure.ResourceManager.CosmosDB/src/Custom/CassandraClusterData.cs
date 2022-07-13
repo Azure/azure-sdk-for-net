@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> Properties of a managed Cassandra cluster. </param>
-        /// <param name="identity"> Identity for the resource. Currently supported identity types: SystemAssigned, None.</param>
+        /// <param name="identity"> Identity for the resource. Current supported identity types: SystemAssigned, None.</param>
         internal CassandraClusterData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CassandraClusterProperties properties, ResourceManager.Models.ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Properties of a managed Cassandra cluster. </summary>
         public CassandraClusterProperties Properties { get; set; }
-        /// <summary> Identity for the resource. Currently supported identity types: SystemAssigned, None.</summary>
+        /// <summary> Identity for the resource. Current supported identity types: SystemAssigned, None.</summary>
         public ResourceManager.Models.ManagedServiceIdentity Identity { get; set; }
     }
 }
