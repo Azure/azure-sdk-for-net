@@ -1,7 +1,4 @@
 parameters:
-  - name: operatingSystems
-    type: string
-    default: 'Linux'
   - name: packageVersions
     displayName: PackageVersions (regex of package versions to run)
     type: string
@@ -13,7 +10,7 @@ parameters:
   - name: arguments
     displayName: Arguments (regex of arguments to run)
     type: string
-    default: '(10240)|(10485760)|(1073741824)|(5 )|(500 )|(50000 )'
+    default: '(10240)|(10485760)|(1073741824)|(5 )|(500 )|(50000 )' 
   - name: iterations
     displayName: Iterations (times to run each test)
     type: number
@@ -26,7 +23,6 @@ parameters:
 extends:
   template: /eng/pipelines/templates/jobs/perf.yml
   parameters:
-    operatingSystems: ${{ parameters.operatingSystems }}
     serviceDirectory: storage/Azure.Storage.Blobs
     services: "^storage-blob$"
     packageVersions: ${{ parameters.packageVersions }}

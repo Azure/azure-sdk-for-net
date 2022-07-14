@@ -1,7 +1,4 @@
 parameters:
-  - name: operatingSystems
-    type: string
-    default: 'Linux'
   - name: serviceDirectory
     type: string
     default: ''
@@ -32,7 +29,6 @@ extends:
   parameters:
     variables:
       - template: /eng/pipelines/templates/variables/globals.yml
-    operatingSystems: ${{ parameters.operatingSystems }}
     language: net
     installLanguageSteps:
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
