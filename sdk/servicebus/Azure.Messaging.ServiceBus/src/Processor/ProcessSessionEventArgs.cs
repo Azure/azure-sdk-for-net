@@ -24,6 +24,8 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         private readonly ServiceBusSessionReceiver _sessionReceiver;
 
+        private readonly SessionReceiverManager _manager;
+
         /// <summary>
         /// The Session Id associated with the session being processed.
         /// </summary>
@@ -54,9 +56,19 @@ namespace Azure.Messaging.ServiceBus
         /// </param>
         public ProcessSessionEventArgs(
             ServiceBusSessionReceiver receiver,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken) : this(manager: null, cancellationToken)
         {
             _sessionReceiver = receiver;
+        }
+
+        internal ProcessSessionEventArgs(
+            SessionReceiverManager manager,
+            CancellationToken cancellationToken)
+        {
+            _manager = manager;
+
+            // manager would be null in scenarios where customers are using the public constructor for testing purposes.
+            _sessionReceiver = (ServiceBusSessionReceiver) _manager?.Receiver;
             CancellationToken = cancellationToken;
         }
 
@@ -85,5 +97,21 @@ namespace Azure.Messaging.ServiceBus
             BinaryData sessionState,
             CancellationToken cancellationToken = default) =>
             await _sessionReceiver.SetSessionStateAsync(sessionState, cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Releases the session that is being processed. No receives will be initiated for the session and the
+        /// session will be closed.
+        /// The session may end up being reopened for processing immediately after closing if there are messages remaining in the session (
+        /// This depends on what other session messages may be in the queue or subscription).
+        /// </summary>
+        public virtual void ReleaseSession() =>
+            // manager will be null if instance created using the public constructor which is exposed for testing purposes
+            _manager?.CancelSession();
+
+        ///<inheritdoc cref="ServiceBusSessionReceiver.RenewSessionLockAsync(CancellationToken)"/>
+        public virtual async Task RenewSessionLockAsync(CancellationToken cancellationToken = default)
+        {
+            await _sessionReceiver.RenewSessionLockAsync(cancellationToken).ConfigureAwait(false);
+        }
     }
 }
