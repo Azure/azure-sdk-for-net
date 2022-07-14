@@ -8,12 +8,11 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.CosmosDB
+namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CosmosTableData : IUtf8JsonSerializable
+    public partial class CosmosDBTableCreateOrUpdateContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,11 +32,8 @@ namespace Azure.ResourceManager.CosmosDB
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(Resource))
-            {
-                writer.WritePropertyName("resource");
-                writer.WriteObjectValue(Resource);
-            }
+            writer.WritePropertyName("resource");
+            writer.WriteObjectValue(Resource);
             if (Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options");
@@ -47,7 +43,7 @@ namespace Azure.ResourceManager.CosmosDB
             writer.WriteEndObject();
         }
 
-        internal static CosmosTableData DeserializeCosmosTableData(JsonElement element)
+        internal static CosmosDBTableCreateOrUpdateContent DeserializeCosmosDBTableCreateOrUpdateContent(JsonElement element)
         {
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -55,8 +51,8 @@ namespace Azure.ResourceManager.CosmosDB
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ExtendedCosmosTableResourceInfo> resource = default;
-            Optional<CosmosTablePropertiesConfig> options = default;
+            CosmosDBTableResourceInfo resource = default;
+            Optional<CosmosDBCreateUpdateConfig> options = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -115,12 +111,7 @@ namespace Azure.ResourceManager.CosmosDB
                     {
                         if (property0.NameEquals("resource"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            resource = ExtendedCosmosTableResourceInfo.DeserializeExtendedCosmosTableResourceInfo(property0.Value);
+                            resource = CosmosDBTableResourceInfo.DeserializeCosmosDBTableResourceInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("options"))
@@ -130,14 +121,14 @@ namespace Azure.ResourceManager.CosmosDB
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            options = CosmosTablePropertiesConfig.DeserializeCosmosTablePropertiesConfig(property0.Value);
+                            options = CosmosDBCreateUpdateConfig.DeserializeCosmosDBCreateUpdateConfig(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new CosmosTableData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, resource.Value, options.Value);
+            return new CosmosDBTableCreateOrUpdateContent(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, resource, options.Value);
         }
     }
 }

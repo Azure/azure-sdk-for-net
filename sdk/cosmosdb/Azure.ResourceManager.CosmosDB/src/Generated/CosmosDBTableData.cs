@@ -12,16 +12,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary> A class representing the CosmosTable data model. </summary>
-    public partial class CosmosTableData : TrackedResourceData
+    /// <summary> A class representing the CosmosDBTable data model. </summary>
+    public partial class CosmosDBTableData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of CosmosTableData. </summary>
+        /// <summary> Initializes a new instance of CosmosDBTableData. </summary>
         /// <param name="location"> The location. </param>
-        public CosmosTableData(AzureLocation location) : base(location)
+        public CosmosDBTableData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosTableData. </summary>
+        /// <summary> Initializes a new instance of CosmosDBTableData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,15 +30,15 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="location"> The location. </param>
         /// <param name="resource"></param>
         /// <param name="options"></param>
-        internal CosmosTableData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedCosmosTableResourceInfo resource, CosmosTablePropertiesConfig options) : base(id, name, resourceType, systemData, tags, location)
+        internal CosmosDBTableData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CosmosDBTablePropertiesResource resource, CosmosDBTablePropertiesOptions options) : base(id, name, resourceType, systemData, tags, location)
         {
             Resource = resource;
             Options = options;
         }
 
         /// <summary> Gets or sets the resource. </summary>
-        public ExtendedCosmosTableResourceInfo Resource { get; set; }
+        public CosmosDBTablePropertiesResource Resource { get; set; }
         /// <summary> Gets or sets the options. </summary>
-        public CosmosTablePropertiesConfig Options { get; set; }
+        public CosmosDBTablePropertiesOptions Options { get; set; }
     }
 }

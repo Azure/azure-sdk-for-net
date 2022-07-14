@@ -13,13 +13,13 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Parameters to create and update Cosmos DB Table. </summary>
-    public partial class CosmosTableCreateOrUpdateContent : TrackedResourceData
+    public partial class CosmosDBTableCreateOrUpdateContent : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of CosmosTableCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of CosmosDBTableCreateOrUpdateContent. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="resource"> The standard JSON format of a Table. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resource"/> is null. </exception>
-        public CosmosTableCreateOrUpdateContent(AzureLocation location, CosmosTableResourceInfo resource) : base(location)
+        public CosmosDBTableCreateOrUpdateContent(AzureLocation location, CosmosDBTableResourceInfo resource) : base(location)
         {
             if (resource == null)
             {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Resource = resource;
         }
 
-        /// <summary> Initializes a new instance of CosmosTableCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of CosmosDBTableCreateOrUpdateContent. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,19 +38,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="location"> The location. </param>
         /// <param name="resource"> The standard JSON format of a Table. </param>
         /// <param name="options"> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </param>
-        internal CosmosTableCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CosmosTableResourceInfo resource, CosmosDBCreateUpdateConfig options) : base(id, name, resourceType, systemData, tags, location)
+        internal CosmosDBTableCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CosmosDBTableResourceInfo resource, CosmosDBCreateUpdateConfig options) : base(id, name, resourceType, systemData, tags, location)
         {
             Resource = resource;
             Options = options;
         }
 
         /// <summary> The standard JSON format of a Table. </summary>
-        internal CosmosTableResourceInfo Resource { get; set; }
+        internal CosmosDBTableResourceInfo Resource { get; set; }
         /// <summary> Name of the Cosmos DB table. </summary>
-        public string ResourceId
+        public string ResourceTableName
         {
-            get => Resource is null ? default : Resource.Id;
-            set => Resource = new CosmosTableResourceInfo(value);
+            get => Resource is null ? default : Resource.TableName;
+            set => Resource = new CosmosDBTableResourceInfo(value);
         }
 
         /// <summary> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </summary>

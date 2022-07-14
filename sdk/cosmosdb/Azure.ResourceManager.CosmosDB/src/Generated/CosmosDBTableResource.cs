@@ -19,46 +19,46 @@ using Azure.ResourceManager.CosmosDB.Models;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
-    /// A Class representing a CosmosTable along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CosmosTableResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCosmosTableResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CosmosDBAccountResource" /> using the GetCosmosTable method.
+    /// A Class representing a CosmosDBTable along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CosmosDBTableResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetCosmosDBTableResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CosmosDBAccountResource" /> using the GetCosmosDBTable method.
     /// </summary>
-    public partial class CosmosTableResource : ArmResource
+    public partial class CosmosDBTableResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="CosmosTableResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="CosmosDBTableResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string tableName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/tables/{tableName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _cosmosTableTableResourcesClientDiagnostics;
-        private readonly TableResourcesRestOperations _cosmosTableTableResourcesRestClient;
-        private readonly CosmosTableData _data;
+        private readonly ClientDiagnostics _cosmosDBTableTableResourcesClientDiagnostics;
+        private readonly TableResourcesRestOperations _cosmosDBTableTableResourcesRestClient;
+        private readonly CosmosDBTableData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="CosmosTableResource"/> class for mocking. </summary>
-        protected CosmosTableResource()
+        /// <summary> Initializes a new instance of the <see cref="CosmosDBTableResource"/> class for mocking. </summary>
+        protected CosmosDBTableResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CosmosTableResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "CosmosDBTableResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal CosmosTableResource(ArmClient client, CosmosTableData data) : this(client, data.Id)
+        internal CosmosDBTableResource(ArmClient client, CosmosDBTableData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="CosmosTableResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CosmosDBTableResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal CosmosTableResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal CosmosDBTableResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _cosmosTableTableResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string cosmosTableTableResourcesApiVersion);
-            _cosmosTableTableResourcesRestClient = new TableResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosTableTableResourcesApiVersion);
+            _cosmosDBTableTableResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string cosmosDBTableTableResourcesApiVersion);
+            _cosmosDBTableTableResourcesRestClient = new TableResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBTableTableResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual CosmosTableData Data
+        public virtual CosmosDBTableData Data
         {
             get
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets an object representing a CosmosTableThroughputSettingResource along with the instance operations that can be performed on it in the CosmosTable. </summary>
+        /// <summary> Gets an object representing a CosmosTableThroughputSettingResource along with the instance operations that can be performed on it in the CosmosDBTable. </summary>
         /// <returns> Returns a <see cref="CosmosTableThroughputSettingResource" /> object. </returns>
         public virtual CosmosTableThroughputSettingResource GetCosmosTableThroughputSetting()
         {
@@ -101,16 +101,16 @@ namespace Azure.ResourceManager.CosmosDB
         /// Operation Id: TableResources_GetTable
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CosmosTableResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CosmosDBTableResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _cosmosTableTableResourcesClientDiagnostics.CreateScope("CosmosTableResource.Get");
+            using var scope = _cosmosDBTableTableResourcesClientDiagnostics.CreateScope("CosmosDBTableResource.Get");
             scope.Start();
             try
             {
-                var response = await _cosmosTableTableResourcesRestClient.GetTableAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _cosmosDBTableTableResourcesRestClient.GetTableAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CosmosTableResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CosmosDBTableResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -125,16 +125,16 @@ namespace Azure.ResourceManager.CosmosDB
         /// Operation Id: TableResources_GetTable
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CosmosTableResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<CosmosDBTableResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _cosmosTableTableResourcesClientDiagnostics.CreateScope("CosmosTableResource.Get");
+            using var scope = _cosmosDBTableTableResourcesClientDiagnostics.CreateScope("CosmosDBTableResource.Get");
             scope.Start();
             try
             {
-                var response = _cosmosTableTableResourcesRestClient.GetTable(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _cosmosDBTableTableResourcesRestClient.GetTable(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CosmosTableResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CosmosDBTableResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -152,12 +152,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _cosmosTableTableResourcesClientDiagnostics.CreateScope("CosmosTableResource.Delete");
+            using var scope = _cosmosDBTableTableResourcesClientDiagnostics.CreateScope("CosmosDBTableResource.Delete");
             scope.Start();
             try
             {
-                var response = await _cosmosTableTableResourcesRestClient.DeleteTableAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation(_cosmosTableTableResourcesClientDiagnostics, Pipeline, _cosmosTableTableResourcesRestClient.CreateDeleteTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _cosmosDBTableTableResourcesRestClient.DeleteTableAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new CosmosDBArmOperation(_cosmosDBTableTableResourcesClientDiagnostics, Pipeline, _cosmosDBTableTableResourcesRestClient.CreateDeleteTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -178,12 +178,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _cosmosTableTableResourcesClientDiagnostics.CreateScope("CosmosTableResource.Delete");
+            using var scope = _cosmosDBTableTableResourcesClientDiagnostics.CreateScope("CosmosDBTableResource.Delete");
             scope.Start();
             try
             {
-                var response = _cosmosTableTableResourcesRestClient.DeleteTable(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CosmosDBArmOperation(_cosmosTableTableResourcesClientDiagnostics, Pipeline, _cosmosTableTableResourcesRestClient.CreateDeleteTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _cosmosDBTableTableResourcesRestClient.DeleteTable(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new CosmosDBArmOperation(_cosmosDBTableTableResourcesClientDiagnostics, Pipeline, _cosmosDBTableTableResourcesRestClient.CreateDeleteTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -204,16 +204,16 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="content"> The parameters to provide for the current Table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<CosmosTableResource>> UpdateAsync(WaitUntil waitUntil, CosmosTableCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CosmosDBTableResource>> UpdateAsync(WaitUntil waitUntil, CosmosDBTableCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _cosmosTableTableResourcesClientDiagnostics.CreateScope("CosmosTableResource.Update");
+            using var scope = _cosmosDBTableTableResourcesClientDiagnostics.CreateScope("CosmosDBTableResource.Update");
             scope.Start();
             try
             {
-                var response = await _cosmosTableTableResourcesRestClient.CreateUpdateTableAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<CosmosTableResource>(new CosmosTableOperationSource(Client), _cosmosTableTableResourcesClientDiagnostics, Pipeline, _cosmosTableTableResourcesRestClient.CreateCreateUpdateTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = await _cosmosDBTableTableResourcesRestClient.CreateUpdateTableAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new CosmosDBArmOperation<CosmosDBTableResource>(new CosmosDBTableOperationSource(Client), _cosmosDBTableTableResourcesClientDiagnostics, Pipeline, _cosmosDBTableTableResourcesRestClient.CreateCreateUpdateTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -234,16 +234,16 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="content"> The parameters to provide for the current Table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<CosmosTableResource> Update(WaitUntil waitUntil, CosmosTableCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CosmosDBTableResource> Update(WaitUntil waitUntil, CosmosDBTableCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _cosmosTableTableResourcesClientDiagnostics.CreateScope("CosmosTableResource.Update");
+            using var scope = _cosmosDBTableTableResourcesClientDiagnostics.CreateScope("CosmosDBTableResource.Update");
             scope.Start();
             try
             {
-                var response = _cosmosTableTableResourcesRestClient.CreateUpdateTable(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new CosmosDBArmOperation<CosmosTableResource>(new CosmosTableOperationSource(Client), _cosmosTableTableResourcesClientDiagnostics, Pipeline, _cosmosTableTableResourcesRestClient.CreateCreateUpdateTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = _cosmosDBTableTableResourcesRestClient.CreateUpdateTable(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new CosmosDBArmOperation<CosmosDBTableResource>(new CosmosDBTableOperationSource(Client), _cosmosDBTableTableResourcesClientDiagnostics, Pipeline, _cosmosDBTableTableResourcesRestClient.CreateCreateUpdateTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -264,20 +264,20 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<CosmosTableResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CosmosDBTableResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _cosmosTableTableResourcesClientDiagnostics.CreateScope("CosmosTableResource.AddTag");
+            using var scope = _cosmosDBTableTableResourcesClientDiagnostics.CreateScope("CosmosDBTableResource.AddTag");
             scope.Start();
             try
             {
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues[key] = value;
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _cosmosTableTableResourcesRestClient.GetTableAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new CosmosTableResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _cosmosDBTableTableResourcesRestClient.GetTableAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new CosmosDBTableResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -295,20 +295,20 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<CosmosTableResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<CosmosDBTableResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _cosmosTableTableResourcesClientDiagnostics.CreateScope("CosmosTableResource.AddTag");
+            using var scope = _cosmosDBTableTableResourcesClientDiagnostics.CreateScope("CosmosDBTableResource.AddTag");
             scope.Start();
             try
             {
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues[key] = value;
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _cosmosTableTableResourcesRestClient.GetTable(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new CosmosTableResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _cosmosDBTableTableResourcesRestClient.GetTable(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return Response.FromValue(new CosmosDBTableResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -325,11 +325,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<CosmosTableResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CosmosDBTableResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _cosmosTableTableResourcesClientDiagnostics.CreateScope("CosmosTableResource.SetTags");
+            using var scope = _cosmosDBTableTableResourcesClientDiagnostics.CreateScope("CosmosDBTableResource.SetTags");
             scope.Start();
             try
             {
@@ -337,8 +337,8 @@ namespace Azure.ResourceManager.CosmosDB
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _cosmosTableTableResourcesRestClient.GetTableAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new CosmosTableResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _cosmosDBTableTableResourcesRestClient.GetTableAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new CosmosDBTableResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -355,11 +355,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<CosmosTableResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<CosmosDBTableResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _cosmosTableTableResourcesClientDiagnostics.CreateScope("CosmosTableResource.SetTags");
+            using var scope = _cosmosDBTableTableResourcesClientDiagnostics.CreateScope("CosmosDBTableResource.SetTags");
             scope.Start();
             try
             {
@@ -367,8 +367,8 @@ namespace Azure.ResourceManager.CosmosDB
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _cosmosTableTableResourcesRestClient.GetTable(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new CosmosTableResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _cosmosDBTableTableResourcesRestClient.GetTable(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return Response.FromValue(new CosmosDBTableResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -385,19 +385,19 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<CosmosTableResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CosmosDBTableResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _cosmosTableTableResourcesClientDiagnostics.CreateScope("CosmosTableResource.RemoveTag");
+            using var scope = _cosmosDBTableTableResourcesClientDiagnostics.CreateScope("CosmosDBTableResource.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.Remove(key);
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _cosmosTableTableResourcesRestClient.GetTableAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new CosmosTableResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _cosmosDBTableTableResourcesRestClient.GetTableAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new CosmosDBTableResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -414,19 +414,19 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<CosmosTableResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<CosmosDBTableResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _cosmosTableTableResourcesClientDiagnostics.CreateScope("CosmosTableResource.RemoveTag");
+            using var scope = _cosmosDBTableTableResourcesClientDiagnostics.CreateScope("CosmosDBTableResource.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues.Remove(key);
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _cosmosTableTableResourcesRestClient.GetTable(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new CosmosTableResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _cosmosDBTableTableResourcesRestClient.GetTable(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return Response.FromValue(new CosmosDBTableResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {

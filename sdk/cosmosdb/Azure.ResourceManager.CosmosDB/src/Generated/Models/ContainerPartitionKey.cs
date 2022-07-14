@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="paths"> List of paths using which data within the container can be partitioned. </param>
         /// <param name="kind"> Indicates the kind of algorithm used for partitioning. For MultiHash, multiple partition keys (upto three maximum) are supported for container create. </param>
         /// <param name="version"> Indicates the version of the partition key definition. </param>
-        /// <param name="systemKey"> Indicates if the container is using a system generated partition key. </param>
-        internal ContainerPartitionKey(IList<string> paths, PartitionKind? kind, int? version, bool? systemKey)
+        /// <param name="isSystemKey"> Indicates if the container is using a system generated partition key. </param>
+        internal ContainerPartitionKey(IList<string> paths, PartitionKind? kind, int? version, bool? isSystemKey)
         {
             Paths = paths;
             Kind = kind;
             Version = version;
-            SystemKey = systemKey;
+            IsSystemKey = isSystemKey;
         }
 
         /// <summary> List of paths using which data within the container can be partitioned. </summary>
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Indicates the version of the partition key definition. </summary>
         public int? Version { get; set; }
         /// <summary> Indicates if the container is using a system generated partition key. </summary>
-        public bool? SystemKey { get; }
+        public bool? IsSystemKey { get; }
     }
 }

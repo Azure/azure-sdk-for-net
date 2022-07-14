@@ -12,11 +12,11 @@ using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    internal partial class CosmosTableListResult
+    internal partial class CosmosDBTableListResult
     {
-        internal static CosmosTableListResult DeserializeCosmosTableListResult(JsonElement element)
+        internal static CosmosDBTableListResult DeserializeCosmosDBTableListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<CosmosTableData>> value = default;
+            Optional<IReadOnlyList<CosmosDBTableData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -26,16 +26,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<CosmosTableData> array = new List<CosmosTableData>();
+                    List<CosmosDBTableData> array = new List<CosmosDBTableData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosTableData.DeserializeCosmosTableData(item));
+                        array.Add(CosmosDBTableData.DeserializeCosmosDBTableData(item));
                     }
                     value = array;
                     continue;
                 }
             }
-            return new CosmosTableListResult(Optional.ToList(value));
+            return new CosmosDBTableListResult(Optional.ToList(value));
         }
     }
 }

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class FailoverPolicy : IUtf8JsonSerializable
+    public partial class CosmosDBFailoverPolicy : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteEndObject();
         }
 
-        internal static FailoverPolicy DeserializeFailoverPolicy(JsonElement element)
+        internal static CosmosDBFailoverPolicy DeserializeCosmosDBFailoverPolicy(JsonElement element)
         {
             Optional<string> id = default;
             Optional<AzureLocation> locationName = default;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new FailoverPolicy(id.Value, Optional.ToNullable(locationName), Optional.ToNullable(failoverPriority));
+            return new CosmosDBFailoverPolicy(id.Value, Optional.ToNullable(locationName), Optional.ToNullable(failoverPriority));
         }
     }
 }

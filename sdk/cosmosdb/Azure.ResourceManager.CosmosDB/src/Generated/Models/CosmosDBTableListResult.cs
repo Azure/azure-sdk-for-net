@@ -12,22 +12,22 @@ using Azure.ResourceManager.CosmosDB;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The List operation response, that contains the Table and their properties. </summary>
-    internal partial class CosmosTableListResult
+    internal partial class CosmosDBTableListResult
     {
-        /// <summary> Initializes a new instance of CosmosTableListResult. </summary>
-        internal CosmosTableListResult()
+        /// <summary> Initializes a new instance of CosmosDBTableListResult. </summary>
+        internal CosmosDBTableListResult()
         {
-            Value = new ChangeTrackingList<CosmosTableData>();
+            Value = new ChangeTrackingList<CosmosDBTableData>();
         }
 
-        /// <summary> Initializes a new instance of CosmosTableListResult. </summary>
+        /// <summary> Initializes a new instance of CosmosDBTableListResult. </summary>
         /// <param name="value"> List of Table and their properties. </param>
-        internal CosmosTableListResult(IReadOnlyList<CosmosTableData> value)
+        internal CosmosDBTableListResult(IReadOnlyList<CosmosDBTableData> value)
         {
             Value = value;
         }
 
         /// <summary> List of Table and their properties. </summary>
-        public IReadOnlyList<CosmosTableData> Value { get; }
+        public IReadOnlyList<CosmosDBTableData> Value { get; }
     }
 }
