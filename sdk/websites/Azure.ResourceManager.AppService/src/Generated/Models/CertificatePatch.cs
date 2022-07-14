@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// Status of the Key Vault secret.
         /// Serialized Name: CertificatePatchResource.properties.keyVaultSecretStatus
         /// </param>
-        /// <param name="serverFarmId">
+        /// <param name="appServicePlanId">
         /// Resource ID of the associated App Service plan, formatted as: &quot;/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}&quot;.
         /// Serialized Name: CertificatePatchResource.properties.serverFarmId
         /// </param>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// Kind of resource.
         /// Serialized Name: ProxyOnlyResource.kind
         /// </param>
-        internal CertificatePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string password, string friendlyName, string subjectName, IList<string> hostNames, byte[] pfxBlob, string siteName, string selfLink, string issuer, DateTimeOffset? issueOn, DateTimeOffset? expirationOn, string thumbprint, bool? isValid, byte[] cerBlob, string publicKeyHash, HostingEnvironmentProfile hostingEnvironmentProfile, string keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? keyVaultSecretStatus, string serverFarmId, string canonicalName, string domainValidationMethod, string kind) : base(id, name, resourceType, systemData)
+        internal CertificatePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string password, string friendlyName, string subjectName, IList<string> hostNames, byte[] pfxBlob, string siteName, string selfLink, string issuer, DateTimeOffset? issueOn, DateTimeOffset? expirationOn, string thumbprint, bool? isValid, byte[] cerBlob, string publicKeyHash, HostingEnvironmentProfile hostingEnvironmentProfile, string keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? keyVaultSecretStatus, string appServicePlanId, string canonicalName, string domainValidationMethod, string kind) : base(id, name, resourceType, systemData)
         {
             Password = password;
             FriendlyName = friendlyName;
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.AppService.Models
             KeyVaultId = keyVaultId;
             KeyVaultSecretName = keyVaultSecretName;
             KeyVaultSecretStatus = keyVaultSecretStatus;
-            ServerFarmId = serverFarmId;
+            AppServicePlanId = appServicePlanId;
             CanonicalName = canonicalName;
             DomainValidationMethod = domainValidationMethod;
             Kind = kind;
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// Resource ID of the associated App Service plan, formatted as: &quot;/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}&quot;.
         /// Serialized Name: CertificatePatchResource.properties.serverFarmId
         /// </summary>
-        public string ServerFarmId { get; set; }
+        public string AppServicePlanId { get; set; }
         /// <summary>
         /// CNAME of the certificate to be issued via free certificate
         /// Serialized Name: CertificatePatchResource.properties.canonicalName

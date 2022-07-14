@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// Kind of resource.
         /// Serialized Name: ProxyOnlyResource.kind
         /// </param>
-        internal VnetContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string vnetResourceGroup, string vnetName, string vnetSubnetName, string subnetResourceId, string kind) : base(id, name, resourceType, systemData)
+        internal VnetContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string vnetResourceGroup, string vnetName, string vnetSubnetName, ResourceIdentifier subnetResourceId, string kind) : base(id, name, resourceType, systemData)
         {
             VnetResourceGroup = vnetResourceGroup;
             VnetName = vnetName;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// The ARM Resource ID of the subnet to validate
         /// Serialized Name: VnetParameters.properties.subnetResourceId
         /// </summary>
-        public string SubnetResourceId { get; set; }
+        public ResourceIdentifier SubnetResourceId { get; set; }
         /// <summary>
         /// Kind of resource.
         /// Serialized Name: ProxyOnlyResource.kind

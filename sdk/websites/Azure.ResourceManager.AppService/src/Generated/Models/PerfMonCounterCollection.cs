@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// Serialized Name: PerfMonCounterCollection.value
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal PerfMonCounterCollection(IEnumerable<PerfMonResponse> value)
+        internal PerfMonCounterCollection(IEnumerable<PerfMonResponseInfo> value)
         {
             if (value == null)
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// Link to next page of resources.
         /// Serialized Name: PerfMonCounterCollection.nextLink
         /// </param>
-        internal PerfMonCounterCollection(IReadOnlyList<PerfMonResponse> value, string nextLink)
+        internal PerfMonCounterCollection(IReadOnlyList<PerfMonResponseInfo> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// Collection of resources.
         /// Serialized Name: PerfMonCounterCollection.value
         /// </summary>
-        public IReadOnlyList<PerfMonResponse> Value { get; }
+        public IReadOnlyList<PerfMonResponseInfo> Value { get; }
         /// <summary>
         /// Link to next page of resources.
         /// Serialized Name: PerfMonCounterCollection.nextLink

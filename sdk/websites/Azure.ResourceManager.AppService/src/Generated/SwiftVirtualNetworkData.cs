@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppService
         /// Kind of resource.
         /// Serialized Name: ProxyOnlyResource.kind
         /// </param>
-        internal SwiftVirtualNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string subnetResourceId, bool? isSwiftSupported, string kind) : base(id, name, resourceType, systemData)
+        internal SwiftVirtualNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier subnetResourceId, bool? isSwiftSupported, string kind) : base(id, name, resourceType, systemData)
         {
             SubnetResourceId = subnetResourceId;
             IsSwiftSupported = isSwiftSupported;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppService
         /// The Virtual Network subnet&apos;s resource ID. This is the subnet that this Web App will join. This subnet must have a delegation to Microsoft.Web/serverFarms defined first.
         /// Serialized Name: SwiftVirtualNetwork.properties.subnetResourceId
         /// </summary>
-        public string SubnetResourceId { get; set; }
+        public ResourceIdentifier SubnetResourceId { get; set; }
         /// <summary>
         /// A flag that specifies if the scale unit this Web App is on supports Swift integration.
         /// Serialized Name: SwiftVirtualNetwork.properties.swiftSupported

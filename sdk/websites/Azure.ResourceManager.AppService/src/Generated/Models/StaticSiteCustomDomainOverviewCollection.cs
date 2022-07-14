@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// Serialized Name: StaticSiteCustomDomainOverviewCollection.value
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal StaticSiteCustomDomainOverviewCollection(IEnumerable<StaticSiteCustomDomainOverviewARMResourceData> value)
+        internal StaticSiteCustomDomainOverviewCollection(IEnumerable<StaticSiteCustomDomainOverviewARMData> value)
         {
             if (value == null)
             {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// Link to next page of resources.
         /// Serialized Name: StaticSiteCustomDomainOverviewCollection.nextLink
         /// </param>
-        internal StaticSiteCustomDomainOverviewCollection(IReadOnlyList<StaticSiteCustomDomainOverviewARMResourceData> value, string nextLink)
+        internal StaticSiteCustomDomainOverviewCollection(IReadOnlyList<StaticSiteCustomDomainOverviewARMData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// Collection of resources.
         /// Serialized Name: StaticSiteCustomDomainOverviewCollection.value
         /// </summary>
-        public IReadOnlyList<StaticSiteCustomDomainOverviewARMResourceData> Value { get; }
+        public IReadOnlyList<StaticSiteCustomDomainOverviewARMData> Value { get; }
         /// <summary>
         /// Link to next page of resources.
         /// Serialized Name: StaticSiteCustomDomainOverviewCollection.nextLink

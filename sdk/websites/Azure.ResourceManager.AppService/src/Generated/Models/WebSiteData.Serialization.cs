@@ -65,10 +65,10 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ServerFarmId))
+            if (Optional.IsDefined(AppServicePlanId))
             {
                 writer.WritePropertyName("serverFarmId");
-                writer.WriteStringValue(ServerFarmId);
+                writer.WriteStringValue(AppServicePlanId);
             }
             if (Optional.IsDefined(Reserved))
             {

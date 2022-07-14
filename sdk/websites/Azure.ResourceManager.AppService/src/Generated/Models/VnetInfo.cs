@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// Flag that is used to denote if this is VNET injection
         /// Serialized Name: VnetInfo.isSwift
         /// </param>
-        internal VnetInfo(string vnetResourceId, string certThumbprint, string certBlob, IReadOnlyList<VnetRoute> routes, bool? isResyncRequired, string dnsServers, bool? isSwift)
+        internal VnetInfo(ResourceIdentifier vnetResourceId, string certThumbprint, string certBlob, IReadOnlyList<VnetRoute> routes, bool? isResyncRequired, string dnsServers, bool? isSwift)
         {
             VnetResourceId = vnetResourceId;
             CertThumbprint = certThumbprint;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// The Virtual Network&apos;s resource ID.
         /// Serialized Name: VnetInfo.vnetResourceId
         /// </summary>
-        public string VnetResourceId { get; }
+        public ResourceIdentifier VnetResourceId { get; }
         /// <summary>
         /// The client certificate thumbprint.
         /// Serialized Name: VnetInfo.certThumbprint

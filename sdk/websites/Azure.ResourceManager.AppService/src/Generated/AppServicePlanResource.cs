@@ -605,13 +605,13 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: AppServicePlans_GetServerFarmSkus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BinaryData>> GetServerFarmSkusAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BinaryData>> GetAppServicePlanSkusAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.GetServerFarmSkus");
+            using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.GetAppServicePlanSkus");
             scope.Start();
             try
             {
-                var response = await _appServicePlanRestClient.GetServerFarmSkusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _appServicePlanRestClient.GetAppServicePlanSkusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -627,13 +627,13 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: AppServicePlans_GetServerFarmSkus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BinaryData> GetServerFarmSkus(CancellationToken cancellationToken = default)
+        public virtual Response<BinaryData> GetAppServicePlanSkus(CancellationToken cancellationToken = default)
         {
-            using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.GetServerFarmSkus");
+            using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.GetAppServicePlanSkus");
             scope.Start();
             try
             {
-                var response = _appServicePlanRestClient.GetServerFarmSkus(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _appServicePlanRestClient.GetAppServicePlanSkus(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)

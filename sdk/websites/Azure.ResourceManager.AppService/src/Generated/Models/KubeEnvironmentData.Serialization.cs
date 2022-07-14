@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService
             Optional<string> staticIp = default;
             Optional<ArcConfiguration> arcConfiguration = default;
             Optional<AppLogsConfiguration> appLogsConfiguration = default;
-            Optional<string> aksResourceID = default;
+            Optional<ResourceIdentifier> aksResourceID = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"))
@@ -219,7 +219,12 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("aksResourceID"))
                         {
-                            aksResourceID = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            aksResourceID = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                     }

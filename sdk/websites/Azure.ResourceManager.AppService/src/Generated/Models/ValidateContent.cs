@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// ARM resource ID of an App Service plan that would host the app.
         /// Serialized Name: ValidateRequest.properties.serverFarmId
         /// </summary>
-        public string ServerFarmId { get; set; }
+        public string AppServicePlanId { get; set; }
         /// <summary>
         /// Name of the target SKU for the App Service plan.
         /// Serialized Name: ValidateRequest.properties.skuName

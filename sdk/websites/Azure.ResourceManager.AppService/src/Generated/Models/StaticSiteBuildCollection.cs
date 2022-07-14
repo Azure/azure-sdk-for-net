@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// Serialized Name: StaticSiteBuildCollection.value
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal StaticSiteBuildCollection(IEnumerable<StaticSiteBuildARMResourceData> value)
+        internal StaticSiteBuildCollection(IEnumerable<StaticSiteBuildARMData> value)
         {
             if (value == null)
             {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// Link to next page of resources.
         /// Serialized Name: StaticSiteBuildCollection.nextLink
         /// </param>
-        internal StaticSiteBuildCollection(IReadOnlyList<StaticSiteBuildARMResourceData> value, string nextLink)
+        internal StaticSiteBuildCollection(IReadOnlyList<StaticSiteBuildARMData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// Collection of resources.
         /// Serialized Name: StaticSiteBuildCollection.value
         /// </summary>
-        public IReadOnlyList<StaticSiteBuildARMResourceData> Value { get; }
+        public IReadOnlyList<StaticSiteBuildARMData> Value { get; }
         /// <summary>
         /// Link to next page of resources.
         /// Serialized Name: StaticSiteBuildCollection.nextLink

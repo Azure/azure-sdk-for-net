@@ -86,6 +86,9 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/webjobs/{webJobName}: SiteWebJob
 #   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/backups/{backupId}: SiteSlotBackUp
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}: WebSite
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sourcecontrols/web: SiteSlotSourceControl
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}: SiteSlotHybridConnectionCollection
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions/{siteExtensionId}: SiteExtension
 
 override-operation-name:
   Diagnostics_ExecuteSiteAnalysis: Execute
@@ -104,7 +107,7 @@ override-operation-name:
   StaticSites_UpdateStaticSiteUser: UpdateUser
   CheckNameAvailability: CheckAppServiceNameAvailability
   AppServicePlans_ListHybridConnections: GetHybridConnectionRelays
-  AppServicePlans_GetHybridConnection: GetServerfarmHybridConnectionRelaysByNamespace
+  AppServicePlans_GetHybridConnection: GetHybridConnectionRelays
 
 no-property-type-replacement:
 - ApiManagementConfig
@@ -140,6 +143,9 @@ rename-rules:
   Ipsec: IPsec
   SSO: Sso
   URI: Uri
+  Serverfarm: AppServicePlan
+  serverFarm: AppServicePlan
+  ServerFarm: AppServicePlan
 
 rename-mapping:
   Site: WebSite
@@ -343,8 +349,33 @@ rename-mapping:
 #rename resource
   AppServiceCertificate: AppServiceCertificateInfo
   AppServiceCertificateResource: AppServicCertificate
-  SiteSlotHybridconnection: SiteSlotHybridConnection
-  SiteSiteextension: SiteExtension
+  StaticSiteARMResource: StaticSiteARM
+  StaticSiteBuildARMResource: StaticSiteBuildARM
+  StaticSiteCustomDomainOverviewARMResource: StaticSiteCustomDomainOverviewARM
+  StaticSiteUserProvidedFunctionAppARMResource: StaticSiteUserProvidedFunctionAppARM
+# same name in model
+#   VnetInfoResource: VnetInfo
+  WorkerPoolResource: WorkerPool
+  CsmPublishingProfileOptions: CsmPublishingProfile
+  StaticSiteTemplateOptions: StaticSiteTemplate
+  PrivateLinkResource: AppServicePrivateLink
+  PrivateLinkResourceProperties: AppServicePrivateLinkResourceProperties
+  AzureStoragePropertyDictionaryResource: AzureStoragePropertyDictionary
+  ContainerThrottlingData: ContainerThrottlingInfo
+  DeletedAppRestoreRequest: DeletedAppRestoreRequestInfo
+  DiagnosticData: DiagnosticInfo
+  DomainControlCenterSsoRequest: DomainControlCenterSsoRequestInfo
+  MsDeployLogEntry: MSDeployLogEntry
+  PerfMonResponse: PerfMonResponseInfo
+  PrivateLinkConnectionApprovalRequestResource: PrivateLinkConnectionApprovalRequestInfo
+  RestoreRequest: RestoreRequestInfo
+  SitePatchResource: SitePatchInfo
+  StaticSiteResetPropertiesARMResource: StaticSiteResetPropertiesARM
+  StaticSiteUserARMResource: StaticSiteUserARM
+  StaticSiteUserInvitationRequestResource: StaticSiteUserInvitationRequestInfo
+  StaticSiteUserInvitationResponseResource: StaticSiteUserInvitationResponseInfo
+  StaticSiteZipDeploymentARMResource: StaticSiteZipDeploymentARM
+  StorageMigrationResponse: StorageMigrationResponseInfo
 
 directive:
 # rename model
@@ -377,6 +408,29 @@ directive:
 #       from: SiteConfigResource
 #       to: SiteConfig
 
+# ResourceId
+  - from: Certificates.json
+    where: $.definitions.Certificate.properties.properties.properties.serverFarmId
+    transform: $["x-ms-format"] = "arm-id"
+  - from: Certificates.json
+    where: $.definitions.Certificate.properties.properties.properties.keyVaultId
+    transform: $["x-ms-format"] = "arm-id"
+# not sure
+  - from: KubeEnvironments.json
+    where: $.definitions.KubeEnvironment.properties.properties.properties.aksResourceID
+    transform: $["x-ms-format"] = "arm-id"
+  - from: KubeEnvironments.json
+    where: $.definitions.StaticSiteUserProvidedFunctionAppARMResource.properties.properties.properties.functionAppResourceId
+    transform: $["x-ms-format"] = "arm-id"
+  - from: ResourceProvider.json
+    where: $.definitions.VnetParameters.properties.properties.properties.subnetResourceId
+    transform: $["x-ms-format"] = "arm-id"
+  - from: WebApps.json
+    where: $.definitions.SwiftVirtualNetwork.properties.properties.properties.subnetResourceId
+    transform: $["x-ms-format"] = "arm-id"
+  - from: CommonDefinitions.json
+    where: $.definitions.VnetInfo.properties.vnetResourceId
+    transform: $["x-ms-format"] = "arm-id"
 # Enum rename
   - from: swagger-document
     where: $.definitions.AppServiceCertificateOrder.properties.properties.properties.appServiceCertificateNotRenewableReasons.items

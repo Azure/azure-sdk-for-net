@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("keyVaultSecretName");
                 writer.WriteStringValue(KeyVaultSecretName);
             }
-            if (Optional.IsDefined(ServerFarmId))
+            if (Optional.IsDefined(AppServicePlanId))
             {
                 writer.WritePropertyName("serverFarmId");
-                writer.WriteStringValue(ServerFarmId);
+                writer.WriteStringValue(AppServicePlanId);
             }
             if (Optional.IsDefined(CanonicalName))
             {

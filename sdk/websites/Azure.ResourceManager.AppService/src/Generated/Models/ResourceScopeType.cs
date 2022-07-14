@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppService.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string ServerFarmValue = "ServerFarm";
+        private const string AppServicePlanValue = "ServerFarm";
         private const string SubscriptionValue = "Subscription";
         private const string WebSiteValue = "WebSite";
 
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// ServerFarm
         /// Serialized Name: ResourceScopeType.ServerFarm
         /// </summary>
-        public static ResourceScopeType ServerFarm { get; } = new ResourceScopeType(ServerFarmValue);
+        public static ResourceScopeType AppServicePlan { get; } = new ResourceScopeType(AppServicePlanValue);
         /// <summary>
         /// Subscription
         /// Serialized Name: ResourceScopeType.Subscription

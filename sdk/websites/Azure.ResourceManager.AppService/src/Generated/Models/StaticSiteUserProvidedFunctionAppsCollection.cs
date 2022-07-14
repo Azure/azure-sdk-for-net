@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// Serialized Name: StaticSiteUserProvidedFunctionAppsCollection.value
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal StaticSiteUserProvidedFunctionAppsCollection(IEnumerable<StaticSiteUserProvidedFunctionAppARMResourceData> value)
+        internal StaticSiteUserProvidedFunctionAppsCollection(IEnumerable<StaticSiteUserProvidedFunctionAppARMData> value)
         {
             if (value == null)
             {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// Link to next page of resources.
         /// Serialized Name: StaticSiteUserProvidedFunctionAppsCollection.nextLink
         /// </param>
-        internal StaticSiteUserProvidedFunctionAppsCollection(IReadOnlyList<StaticSiteUserProvidedFunctionAppARMResourceData> value, string nextLink)
+        internal StaticSiteUserProvidedFunctionAppsCollection(IReadOnlyList<StaticSiteUserProvidedFunctionAppARMData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// Collection of resources.
         /// Serialized Name: StaticSiteUserProvidedFunctionAppsCollection.value
         /// </summary>
-        public IReadOnlyList<StaticSiteUserProvidedFunctionAppARMResourceData> Value { get; }
+        public IReadOnlyList<StaticSiteUserProvidedFunctionAppARMData> Value { get; }
         /// <summary>
         /// Link to next page of resources.
         /// Serialized Name: StaticSiteUserProvidedFunctionAppsCollection.nextLink

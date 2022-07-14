@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppService
         /// Kind of resource.
         /// Serialized Name: Resource.kind
         /// </param>
-        internal KubeEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, KubeEnvironmentProvisioningState? provisioningState, string deploymentErrors, bool? isInternalLoadBalancerEnabled, string defaultDomain, string staticIP, ArcConfiguration arcConfiguration, AppLogsConfiguration appLogsConfiguration, string aksResourceId, string kind) : base(id, name, resourceType, systemData, tags, location)
+        internal KubeEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, KubeEnvironmentProvisioningState? provisioningState, string deploymentErrors, bool? isInternalLoadBalancerEnabled, string defaultDomain, string staticIP, ArcConfiguration arcConfiguration, AppLogsConfiguration appLogsConfiguration, ResourceIdentifier aksResourceId, string kind) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             ProvisioningState = provisioningState;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         public AppLogsConfiguration AppLogsConfiguration { get; set; }
         /// <summary> Serialized Name: KubeEnvironment.properties.aksResourceID. </summary>
-        public string AksResourceId { get; set; }
+        public ResourceIdentifier AksResourceId { get; set; }
         /// <summary>
         /// Kind of resource.
         /// Serialized Name: Resource.kind

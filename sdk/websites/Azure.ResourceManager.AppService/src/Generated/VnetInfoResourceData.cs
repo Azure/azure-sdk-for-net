@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppService
         /// Kind of resource.
         /// Serialized Name: ProxyOnlyResource.kind
         /// </param>
-        internal VnetInfoResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string vnetResourceId, string certThumbprint, string certBlob, IReadOnlyList<VnetRoute> routes, bool? isResyncRequired, string dnsServers, bool? isSwift, string kind) : base(id, name, resourceType, systemData)
+        internal VnetInfoResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier vnetResourceId, string certThumbprint, string certBlob, IReadOnlyList<VnetRoute> routes, bool? isResyncRequired, string dnsServers, bool? isSwift, string kind) : base(id, name, resourceType, systemData)
         {
             VnetResourceId = vnetResourceId;
             CertThumbprint = certThumbprint;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppService
         /// The Virtual Network&apos;s resource ID.
         /// Serialized Name: VnetInfoResource.properties.vnetResourceId
         /// </summary>
-        public string VnetResourceId { get; set; }
+        public ResourceIdentifier VnetResourceId { get; set; }
         /// <summary>
         /// The client certificate thumbprint.
         /// Serialized Name: VnetInfoResource.properties.certThumbprint

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// Serialized Name: WorkerPoolCollection.value
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal WorkerPoolCollection(IEnumerable<WorkerPoolResourceData> value)
+        internal WorkerPoolCollection(IEnumerable<WorkerPoolData> value)
         {
             if (value == null)
             {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// Link to next page of resources.
         /// Serialized Name: WorkerPoolCollection.nextLink
         /// </param>
-        internal WorkerPoolCollection(IReadOnlyList<WorkerPoolResourceData> value, string nextLink)
+        internal WorkerPoolCollection(IReadOnlyList<WorkerPoolData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// Collection of resources.
         /// Serialized Name: WorkerPoolCollection.value
         /// </summary>
-        public IReadOnlyList<WorkerPoolResourceData> Value { get; }
+        public IReadOnlyList<WorkerPoolData> Value { get; }
         /// <summary>
         /// Link to next page of resources.
         /// Serialized Name: WorkerPoolCollection.nextLink

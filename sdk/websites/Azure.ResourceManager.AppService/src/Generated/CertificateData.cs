@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AppService
         /// Status of the Key Vault secret.
         /// Serialized Name: Certificate.properties.keyVaultSecretStatus
         /// </param>
-        /// <param name="serverFarmId">
+        /// <param name="appServicePlanId">
         /// Resource ID of the associated App Service plan, formatted as: &quot;/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}&quot;.
         /// Serialized Name: Certificate.properties.serverFarmId
         /// </param>
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppService
         /// Kind of resource.
         /// Serialized Name: Resource.kind
         /// </param>
-        internal CertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string password, string friendlyName, string subjectName, IList<string> hostNames, byte[] pfxBlob, string siteName, string selfLink, string issuer, DateTimeOffset? issueOn, DateTimeOffset? expireOn, string thumbprint, bool? isValid, byte[] cerBlob, string publicKeyHash, HostingEnvironmentProfile hostingEnvironmentProfile, string keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? keyVaultSecretStatus, string serverFarmId, string canonicalName, string domainValidationMethod, string kind) : base(id, name, resourceType, systemData, tags, location)
+        internal CertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string password, string friendlyName, string subjectName, IList<string> hostNames, byte[] pfxBlob, string siteName, string selfLink, string issuer, DateTimeOffset? issueOn, DateTimeOffset? expireOn, string thumbprint, bool? isValid, byte[] cerBlob, string publicKeyHash, HostingEnvironmentProfile hostingEnvironmentProfile, ResourceIdentifier keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? keyVaultSecretStatus, ResourceIdentifier appServicePlanId, string canonicalName, string domainValidationMethod, string kind) : base(id, name, resourceType, systemData, tags, location)
         {
             Password = password;
             FriendlyName = friendlyName;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.AppService
             KeyVaultId = keyVaultId;
             KeyVaultSecretName = keyVaultSecretName;
             KeyVaultSecretStatus = keyVaultSecretStatus;
-            ServerFarmId = serverFarmId;
+            AppServicePlanId = appServicePlanId;
             CanonicalName = canonicalName;
             DomainValidationMethod = domainValidationMethod;
             Kind = kind;
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.AppService
         /// Key Vault Csm resource Id.
         /// Serialized Name: Certificate.properties.keyVaultId
         /// </summary>
-        public string KeyVaultId { get; set; }
+        public ResourceIdentifier KeyVaultId { get; set; }
         /// <summary>
         /// Key Vault secret name.
         /// Serialized Name: Certificate.properties.keyVaultSecretName
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.AppService
         /// Resource ID of the associated App Service plan, formatted as: &quot;/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}&quot;.
         /// Serialized Name: Certificate.properties.serverFarmId
         /// </summary>
-        public string ServerFarmId { get; set; }
+        public ResourceIdentifier AppServicePlanId { get; set; }
         /// <summary>
         /// CNAME of the certificate to be issued via free certificate
         /// Serialized Name: Certificate.properties.canonicalName
