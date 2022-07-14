@@ -1,20 +1,47 @@
-variables:
-  Skip.PublishDocs: true
+parameters:
+  - name: serviceDirectory
+    type: string
+    default: ''
+  - name: services
+    type: string
+    default: ''
+  - name: operatingSystems
+    type: string
+    default: 'Linux'
+  - name: packageVersions
+    type: string
+    default: '.*'
+  - name: tests
+    type: string
+    default: ''
+  - name: arguments
+    type: string
+    default: '' 
+  - name: iterations
+    type: number
+    default: '5'
+  - name: envVars
+    type: object
+    default: {}
+  - name: additionalArguments
+    type: string
+    default: ''
 
 extends:
   template: /eng/common/pipelines/templates/jobs/perf.yml
   parameters:
-    operatingSystems: Linux
-    serviceDirectory: storage/Azure.Storage.Blobs
-    services: "^storage-blob$"
-    packageVersions: '12|source'
-    tests: '^(download)$'
-    arguments: '(10240)'
-    iterations: 1
-    additionalArguments: ''
+    variables:
+      - template: /eng/pipelines/templates/variables/globals.yml
+    operatingSystems: ${{ parameters.operatingSystems }}
     language: net
     installLanguageSteps:
-    - template: /eng/pipelines/templates/steps/install-dotnet.yml
-      parameters:
-        EnableNuGetCache: false
-
+      - template: /eng/pipelines/templates/steps/install-dotnet.yml
+        parameters:
+          EnableNuGetCache: false
+    serviceDirectory: ${{ parameters.serviceDirectory }}
+    services: ${{ parameters.services }}
+    packageVersions: ${{ parameters.pacakgeVersions }}
+    tests: ${{ parameters.tests }}
+    arguments: ${{ parameters.arguments }}
+    iterations: ${{ parameters.iterations }}
+    additionalArguments: ${{ parameters.additionalArguments }}

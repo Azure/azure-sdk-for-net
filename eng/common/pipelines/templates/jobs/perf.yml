@@ -1,7 +1,16 @@
 parameters:
+  - name: variables
+    type: object
+    default: []
   - name: operatingSystems
     type: string
+    default: 'Linux'
+  - name: language
+    type: string
     default: ''
+  - name: installLanguageSteps
+    type: stepList
+    default: []
   - name: serviceDirectory
     type: string
     default: ''
@@ -20,18 +29,12 @@ parameters:
   - name: iterations
     type: number
     default: '5'
-  - name: envVars
-    type: object
-    default: {}
   - name: additionalArguments
     type: string
     default: ''
-  - name: language
-    type: string
-    default: ''
-  - name: installLanguageSteps
-    type: stepList
-    default: []
+  - name: envVars
+    type: object
+    default: {}
 
 resources:
   repositories:
@@ -40,6 +43,9 @@ resources:
     endpoint: Azure
     name: Azure/azure-sdk-tools
     ref: main
+
+variables:
+  - ${{ parameters.variables }}
 
 jobs:
 - job: Perf
