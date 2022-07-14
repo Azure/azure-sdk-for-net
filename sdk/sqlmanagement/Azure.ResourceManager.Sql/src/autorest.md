@@ -43,6 +43,7 @@ format-by-name-rules:
   'defaultSecondaryLocation': 'azure-location'
   'privateLinkServiceId': 'arm-id'
   'resourceType': 'resource-type'
+  'ClientIP': "ip-address"
 
 keep-plural-enums:
   - DiffBackupIntervalInHours
