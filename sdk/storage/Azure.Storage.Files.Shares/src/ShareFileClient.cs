@@ -1953,7 +1953,7 @@ namespace Azure.Storage.Files.Shares
             HttpRange range,
             bool rangeGetContentHash,
             ShareFileRequestConditions conditions,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
         {
             return DownloadInternal(
                 range,
@@ -2062,7 +2062,7 @@ namespace Azure.Storage.Files.Shares
             HttpRange range,
             bool rangeGetContentHash,
             ShareFileRequestConditions conditions,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
         {
             return await DownloadInternal(
                 range,
