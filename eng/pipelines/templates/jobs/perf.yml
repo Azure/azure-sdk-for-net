@@ -1,4 +1,7 @@
 parameters:
+  - name: operatingSystems
+    type: string
+    default: 'Linux'
   - name: serviceDirectory
     type: string
     default: ''
@@ -26,84 +29,20 @@ parameters:
 
 variables:
   - template: /eng/pipelines/templates/variables/globals.yml
-  - name: Pool
-    value: 'azsdk-pool-mms-ubuntu-2004-perf'
-  - name: OSVmImage
-    value: 'MMSUbuntu20.04'
 
-resources:
-  repositories:
-  - repository: azure-sdk-tools
-    type: github
-    endpoint: Azure
-    name: Azure/azure-sdk-tools
-    ref: main
-
-jobs:
-- job: Perf
-  timeoutInMinutes: 360
-  pool:
-    name: $(Pool)
-    vmImage: $(OSVmImage)
-  steps:
-    - checkout: self
-      path: s
-
-    - checkout: azure-sdk-tools
-      path: s/azure-sdk-tools
-
-    - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
-      parameters:
-        AgentImage: $(OSVmImage)
-
+extends:
+  template: /eng/common/pipelines/templates/jobs/perf.yml
+  parameters:
+    operatingSystems: ${{ parameters.operatingSystems }}
+    serviceDirectory: ${{ parameters.serviceDirectory }}
+    services: ${{ parameters.services }}
+    packageVersions: ${{ parameters.packageVersions }}
+    tests: ${{ parameters.tests }}
+    arguments: ${{ parameters.arguments }}
+    iterations: ${{ parameters.iterations }}
+    additionalArguments: ${{ parameters.additionalArguments }}
+    language: net
+    installLanguageSteps:
     - template: /eng/pipelines/templates/steps/install-dotnet.yml
       parameters:
         EnableNuGetCache: false
-
-    - template: /eng/common/TestResources/deploy-test-resources.yml
-      parameters:
-        ServiceDirectory: ${{ parameters.serviceDirectory }}
-        Location: westus
-        ResourceType: perf
-
-    - pwsh: |
-        set-content -path config.yml -value "WorkingDirectories:"
-        add-content -path config.yml -value "  Net: $(Agent.BuildDirectory)/s"
-      workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation
-      displayName: Create config.yml
-
-    - script: >-
-        dotnet run -- run
-        --no-sync
-        --languages net
-        --services "${{ parameters.services }}"
-        --package-versions "${{ parameters.packageVersions }}"
-        --tests "${{ parameters.tests }}"
-        --arguments "${{ parameters.arguments }}"
-        --iterations ${{ parameters.iterations }}
-        ${{ parameters.additionalArguments }}
-      workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation
-      env:
-        ${{ each var in parameters.EnvVars }}:
-          ${{ var.key }}: ${{ var.value }}
-      displayName: Run perf tests
-
-    - pwsh: |
-        get-content results.csv
-      workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation/results
-      displayName: Print results.csv
-
-    - pwsh: |
-        get-content results.json
-      workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation/results
-      displayName: Print results.json
-
-    - task: PublishPipelineArtifact@1
-      inputs:
-        targetPath: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation/results
-        artifactName: results
-
-    - template: /eng/common/TestResources/remove-test-resources.yml
-      parameters:
-        ServiceDirectory: ${{ parameters.serviceDirectory }}
-        ResourceType: perf
