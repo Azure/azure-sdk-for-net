@@ -22,10 +22,10 @@ parameters:
     default: '.*'
   - name: tests
     type: string
-    default: ''
+    default: '.*'
   - name: arguments
     type: string
-    default: '' 
+    default: '.*'
   - name: iterations
     type: number
     default: '5'
