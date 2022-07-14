@@ -40,7 +40,7 @@ extends:
           EnableNuGetCache: false
     serviceDirectory: ${{ parameters.serviceDirectory }}
     services: ${{ parameters.services }}
-    packageVersions: ${{ parameters.pacakgeVersions }}
+    packageVersions: ${{ parameters.packageVersions }}
     tests: ${{ parameters.tests }}
     arguments: ${{ parameters.arguments }}
     iterations: ${{ parameters.iterations }}
