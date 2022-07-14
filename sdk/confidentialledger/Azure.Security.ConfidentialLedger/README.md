@@ -41,55 +41,19 @@ export AZURE_CLIENT_ID="generated app id"
 export AZURE_CLIENT_SECRET="random password"
 export AZURE_TENANT_ID="tenant id"
 ```
-Then, `DefaultAzureCredential` will be able to authenticate the `ConfidentialLedgerClient`.
+Then, `DefaultAzureCredential` will be able to authenticate the `ConfidentialLedgerClient`. Note that it is possible to use [DefaultAzureCredential][default_cred_ref] to authenticate using other mechanisms, as described in its documentation.
 
-Constructing the client also requires your Confidential Ledger's URL and id, which you can get from the Azure CLI or the Azure Portal.  When you have retrieved those values, please replace instances of `"my-ledger-id"` and `"https://my-ledger-url.confidential-ledger.azure.com"` in the examples below
+Constructing the client also requires your Confidential Ledger's URI, which you can obtain from the Azure Portal page for your Confidential Ledger in the `Ledger URI` field under the `Properties` section, or from Azure CLI. When you have retrieved the `Ledger URI`, please use it to replace `"https://my-ledger-url.confidential-ledger.azure.com"` in the example below.
 
-Because Confidential Ledgers use self-signed certificates securely generated and stored in an SGX enclave, the certificate for each Confidential Ledger  must first be retrieved from the Confidential Ledger Identity Service.
-
-```C# Snippet:GetIdentity
-Uri identityServiceEndpoint = new("https://identity.confidential-ledger.core.azure.com") // The hostname from the identityServiceUri
-var identityClient = new ConfidentialLedgerIdentityServiceClient(identityServiceEndpoint);
-
-// Get the ledger's  TLS certificate for our ledger.
-string ledgerId = "<the ledger id>"; // ex. "my-ledger" from "https://my-ledger.eastus.cloudapp.azure.com"
-Response response = identityClient.GetLedgerIdentity(ledgerId);
-X509Certificate2 ledgerTlsCert = ConfidentialLedgerIdentityServiceClient.ParseCertificate(response);
-```
-
-Now we can construct the `ConfidentialLedgerClient` with a transport configuration that trusts the `ledgerTlsCert`.
+> Note: Confidential Ledger Clients accept advanced configuration via a third argument, `options`, which is not shown in this example. See the [ConfidentialLedgerClient][azure_confidential_ledger_client] documentation for details. 
 
 ```C# Snippet:CreateClient
-// Create a certificate chain rooted with our TLS cert.
-X509Chain certificateChain = new();
-certificateChain.ChainPolicy.RevocationMode = X509RevocationMode.NoCheck;
-certificateChain.ChainPolicy.RevocationFlag = X509RevocationFlag.ExcludeRoot;
-certificateChain.ChainPolicy.VerificationFlags = X509VerificationFlags.AllowUnknownCertificateAuthority;
-certificateChain.ChainPolicy.VerificationTime = DateTime.Now;
-certificateChain.ChainPolicy.UrlRetrievalTimeout = new TimeSpan(0, 0, 0);
-certificateChain.ChainPolicy.ExtraStore.Add(ledgerTlsCert);
-
-var f = certificateChain.Build(ledgerTlsCert);
-
-// Define a validation function to ensure that the ledger certificate is trusted by the ledger identity TLS certificate.
-bool CertValidationCheck(HttpRequestMessage httpRequestMessage, X509Certificate2 cert, X509Chain x509Chain, SslPolicyErrors sslPolicyErrors)
-{
-    bool isChainValid = certificateChain.Build(cert);
-    if (!isChainValid) return false;
-
-    var isCertSignedByTheTlsCert = certificateChain.ChainElements.Cast<X509ChainElement>()
-        .Any(x => x.Certificate.Thumbprint == ledgerTlsCert.Thumbprint);
-    return isCertSignedByTheTlsCert;
-}
-
-// Create an HttpClientHandler to use our certValidationCheck function.
-var httpHandler = new HttpClientHandler();
-httpHandler.ServerCertificateCustomValidationCallback = CertValidationCheck;
-
-// Create the ledger client using a transport that uses our custom ServerCertificateCustomValidationCallback.
-var options = new ConfidentialLedgerClientOptions { Transport = new HttpClientTransport(httpHandler) };
-var ledgerClient = new ConfidentialLedgerClient(TestEnvironment.ConfidentialLedgerUrl, new DefaultAzureCredential(), options);
+var ledgerClient = new ConfidentialLedgerClient(new Uri("https://my-ledger-url.confidential-ledger.azure.com"), new DefaultAzureCredential());
 ```
+
+This example creates a Confidential Ledger Client, `ledgerClient`, which is authenticated to and ready to interact with your Confidential Ledger. See below for examples of using your new `ledgerClient` to interact with your Confidential Ledger. 
+
+> Security Note: By default when a Confidential Ledger Client is created it will connect to Azure's Confidential Ledger Identity Service to obtain the latest TLS service certificate for your Ledger in order to secure connections to Ledger Nodes. The details of this process are available for inspection in the [source code][client_construction_src]. This behaviour can be overridden by setting the `options` argument when creating the Ledger Client.
 
 ## Key concepts
 
@@ -428,10 +392,12 @@ For more information see the [Code of Conduct FAQ][coc_faq] or contact
 [style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
 [client_src]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/confidentialledger/Azure.Security.ConfidentialLedger
+[client_construction_src]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/confidentialledger/Azure.Security.ConfidentialLedger/src/ConfidentialLedgerClient.cs
 [client_nuget_package]: https://www.nuget.org/packages?q=Azure.Security.ConfidentialLedger
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_cloud_shell]: https://shell.azure.com/bash
 [azure_confidential_computing]: https://azure.microsoft.com/solutions/confidential-compute
+[azure_confidential_ledger_client]: https://docs.azure.cn/en-us/dotnet/api/azure.storage.confidentialledger.confidentialledgerclient.-ctor?view=azure-dotnet-preview#azure-storage-confidentialledger-confidentialledgerclient-ctor(system-uri-azure-core-tokencredential-azure-storage-confidentialledger-confidentialledgerclientoptions)
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [ccf]: https://github.com/Microsoft/CCF
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity
