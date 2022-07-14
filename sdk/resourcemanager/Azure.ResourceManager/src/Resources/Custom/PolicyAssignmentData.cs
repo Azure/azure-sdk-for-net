@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> The location of the policy assignment. Only required when utilizing managed identity. </param>
-        /// <param name="identity"> The managed identity associated with the policy assignment. </param>
+        /// <param name="managedIdentity"> The managed identity associated with the policy assignment. </param>
         /// <param name="displayName"> The display name of the policy assignment. </param>
         /// <param name="policyDefinitionId"> The ID of the policy definition or policy set definition being assigned. </param>
         /// <param name="scope"> The scope for the policy assignment. </param>
@@ -39,12 +40,10 @@ namespace Azure.ResourceManager.Resources
         /// <param name="metadata"> The policy assignment metadata. Metadata is an open ended object and is typically a collection of key value pairs. </param>
         /// <param name="enforcementMode"> The policy assignment enforcement mode. Possible values are Default and DoNotEnforce. </param>
         /// <param name="nonComplianceMessages"> The messages that describe why a resource is non-compliant with the policy. </param>
-#pragma warning disable CS0618 // This type is obsolete and will be removed in a future release.
-        internal PolicyAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, SystemAssignedServiceIdentity identity, string displayName, string policyDefinitionId, string scope, IList<string> excludedScopes, IDictionary<string, ArmPolicyParameterValue> parameters, string description, BinaryData metadata, EnforcementMode? enforcementMode, IList<NonComplianceMessage> nonComplianceMessages) : base(id, name, resourceType, systemData)
+        internal PolicyAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ManagedServiceIdentity managedIdentity, string displayName, string policyDefinitionId, string scope, IList<string> excludedScopes, IDictionary<string, ArmPolicyParameterValue> parameters, string description, BinaryData metadata, EnforcementMode? enforcementMode, IList<NonComplianceMessage> nonComplianceMessages) : base(id, name, resourceType, systemData)
         {
             Location = location;
-            Identity = identity;
-#pragma warning restore CS0618 // This type is obsolete and will be removed in a future release.
+            ManagedIdentity = managedIdentity;
             DisplayName = displayName;
             PolicyDefinitionId = policyDefinitionId;
             Scope = scope;
@@ -58,10 +57,19 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> The location of the policy assignment. Only required when utilizing managed identity. </summary>
         public AzureLocation? Location { get; set; }
-#pragma warning disable CS0618 // This type is obsolete and will be removed in a future release.
+
+        private SystemAssignedServiceIdentity _identity;
         /// <summary> The managed identity associated with the policy assignment. </summary>
-        public SystemAssignedServiceIdentity Identity { get; set; }
-#pragma warning restore CS0618 // This type is obsolete and will be removed in a future release.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public SystemAssignedServiceIdentity Identity
+        {
+            get { return _identity ??= new SystemAssignedServiceIdentity(ManagedIdentity.PrincipalId, ManagedIdentity.TenantId, ManagedIdentity.ManagedServiceIdentityType.ToString()); }
+            set { ManagedIdentity = new ManagedServiceIdentity(value.SystemAssignedServiceIdentityType.ToString()); }
+        }
+
+        /// <summary> The managed identity associated with the policy assignment. </summary>
+        public ManagedServiceIdentity ManagedIdentity { get; set; }
+
         /// <summary> The display name of the policy assignment. </summary>
         public string DisplayName { get; set; }
         /// <summary> The ID of the policy definition or policy set definition being assigned. </summary>

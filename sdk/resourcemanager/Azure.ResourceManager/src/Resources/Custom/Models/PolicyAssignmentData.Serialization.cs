@@ -22,11 +22,10 @@ namespace Azure.ResourceManager.Resources
                 writer.WritePropertyName("location");
                 writer.WriteStringValue(Location.Value);
             }
-#pragma warning disable CS0618 // This type is obsolete and will be removed in a future release.
-            if (Optional.IsDefined(Identity))
+            if (Optional.IsDefined(ManagedIdentity))
             {
                 writer.WritePropertyName("identity");
-                JsonSerializer.Serialize(writer, Identity);
+                JsonSerializer.Serialize(writer, ManagedIdentity);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
@@ -97,7 +96,7 @@ namespace Azure.ResourceManager.Resources
         internal static PolicyAssignmentData DeserializePolicyAssignmentData(JsonElement element)
         {
             Optional<AzureLocation> location = default;
-            Optional<SystemAssignedServiceIdentity> identity = default;
+            Optional<ManagedServiceIdentity> identity = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -130,7 +129,7 @@ namespace Azure.ResourceManager.Resources
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<SystemAssignedServiceIdentity>(property.Value.ToString());
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -257,7 +256,6 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             return new PolicyAssignmentData(id, name, type, systemData.Value, Optional.ToNullable(location), identity, displayName.Value, policyDefinitionId.Value, scope.Value, Optional.ToList(notScopes), Optional.ToDictionary(parameters), description.Value, metadata.Value, Optional.ToNullable(enforcementMode), Optional.ToList(nonComplianceMessages));
-#pragma warning restore CS0618 // This type is obsolete and will be removed in a future release.
         }
     }
 }
