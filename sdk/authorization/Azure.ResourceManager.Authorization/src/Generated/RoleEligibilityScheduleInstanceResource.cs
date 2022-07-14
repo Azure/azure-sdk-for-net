@@ -94,8 +94,8 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<RoleEligibilityScheduleInstanceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _roleEligibilityScheduleInstanceClientDiagnostics.CreateScope("RoleEligibilityScheduleInstanceResource.Get");
-            scope.Start();
+            using var scope0 = _roleEligibilityScheduleInstanceClientDiagnostics.CreateScope("RoleEligibilityScheduleInstanceResource.Get");
+            scope0.Start();
             try
             {
                 var response = await _roleEligibilityScheduleInstanceRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Authorization
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }
@@ -118,8 +118,8 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<RoleEligibilityScheduleInstanceResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _roleEligibilityScheduleInstanceClientDiagnostics.CreateScope("RoleEligibilityScheduleInstanceResource.Get");
-            scope.Start();
+            using var scope0 = _roleEligibilityScheduleInstanceClientDiagnostics.CreateScope("RoleEligibilityScheduleInstanceResource.Get");
+            scope0.Start();
             try
             {
                 var response = _roleEligibilityScheduleInstanceRestClient.Get(Id.Parent, Id.Name, cancellationToken);
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Authorization
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }

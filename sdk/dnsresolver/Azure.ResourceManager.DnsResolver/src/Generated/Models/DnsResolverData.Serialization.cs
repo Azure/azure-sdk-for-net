@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DnsResolver
             Optional<SystemData> systemData = default;
             WritableSubResource virtualNetwork = default;
             Optional<DnsResolverState> dnsResolverState = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<DnsResolverProvisioningState> provisioningState = default;
             Optional<string> resourceGuid = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DnsResolver
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new DnsResolverProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("resourceGuid"))

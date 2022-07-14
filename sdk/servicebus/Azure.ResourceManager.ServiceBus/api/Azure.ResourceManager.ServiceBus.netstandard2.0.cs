@@ -420,11 +420,11 @@ namespace Azure.ResourceManager.ServiceBus
     public partial class ServiceBusRuleData : Azure.ResourceManager.Models.ResourceData
     {
         public ServiceBusRuleData() { }
-        public Azure.ResourceManager.ServiceBus.Models.FilterAction Action { get { throw null; } set { } }
-        public Azure.ResourceManager.ServiceBus.Models.CorrelationFilter CorrelationFilter { get { throw null; } set { } }
-        public Azure.ResourceManager.ServiceBus.Models.FilterType? FilterType { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceBus.Models.ServiceBusFilterAction Action { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceBus.Models.ServiceBusCorrelationFilter CorrelationFilter { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceBus.Models.ServiceBusFilterType? FilterType { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
-        public Azure.ResourceManager.ServiceBus.Models.SqlFilter SqlFilter { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceBus.Models.ServiceBusSqlFilter SqlFilter { get { throw null; } set { } }
     }
     public partial class ServiceBusRuleResource : Azure.ResourceManager.ArmResource
     {
@@ -589,36 +589,10 @@ namespace Azure.ResourceManager.ServiceBus
 }
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    public partial class CorrelationFilter
-    {
-        public CorrelationFilter() { }
-        public string ContentType { get { throw null; } set { } }
-        public string CorrelationId { get { throw null; } set { } }
-        public string Label { get { throw null; } set { } }
-        public string MessageId { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Properties { get { throw null; } }
-        public string ReplyTo { get { throw null; } set { } }
-        public string ReplyToSessionId { get { throw null; } set { } }
-        public bool? RequiresPreprocessing { get { throw null; } set { } }
-        public string SendTo { get { throw null; } set { } }
-        public string SessionId { get { throw null; } set { } }
-    }
     public partial class FailoverProperties
     {
         public FailoverProperties() { }
         public bool? IsSafeFailover { get { throw null; } set { } }
-    }
-    public partial class FilterAction
-    {
-        public FilterAction() { }
-        public int? CompatibilityLevel { get { throw null; } set { } }
-        public bool? RequiresPreprocessing { get { throw null; } set { } }
-        public string SqlExpression { get { throw null; } set { } }
-    }
-    public enum FilterType
-    {
-        SqlFilter = 0,
-        CorrelationFilter = 1,
     }
     public partial class MessageCountDetails
     {
@@ -675,6 +649,20 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public bool? IsDurable { get { throw null; } set { } }
         public bool? IsShared { get { throw null; } set { } }
     }
+    public partial class ServiceBusCorrelationFilter
+    {
+        public ServiceBusCorrelationFilter() { }
+        public System.Collections.Generic.IDictionary<string, string> ApplicationProperties { get { throw null; } }
+        public string ContentType { get { throw null; } set { } }
+        public string CorrelationId { get { throw null; } set { } }
+        public string MessageId { get { throw null; } set { } }
+        public string ReplyTo { get { throw null; } set { } }
+        public string ReplyToSessionId { get { throw null; } set { } }
+        public bool? RequiresPreprocessing { get { throw null; } set { } }
+        public string SendTo { get { throw null; } set { } }
+        public string SessionId { get { throw null; } set { } }
+        public string Subject { get { throw null; } set { } }
+    }
     public enum ServiceBusDisasterRecoveryProvisioningState
     {
         Accepted = 0,
@@ -710,6 +698,18 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public static implicit operator Azure.ResourceManager.ServiceBus.Models.ServiceBusEncryptionKeySource (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ServiceBus.Models.ServiceBusEncryptionKeySource left, Azure.ResourceManager.ServiceBus.Models.ServiceBusEncryptionKeySource right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class ServiceBusFilterAction
+    {
+        public ServiceBusFilterAction() { }
+        public int? CompatibilityLevel { get { throw null; } set { } }
+        public bool? RequiresPreprocessing { get { throw null; } set { } }
+        public string SqlExpression { get { throw null; } set { } }
+    }
+    public enum ServiceBusFilterType
+    {
+        SqlFilter = 0,
+        CorrelationFilter = 1,
     }
     public partial class ServiceBusKeyVaultProperties
     {
@@ -913,9 +913,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
         Standard = 1,
         Premium = 2,
     }
-    public partial class SqlFilter
+    public partial class ServiceBusSqlFilter
     {
-        public SqlFilter() { }
+        public ServiceBusSqlFilter() { }
         public int? CompatibilityLevel { get { throw null; } set { } }
         public bool? RequiresPreprocessing { get { throw null; } set { } }
         public string SqlExpression { get { throw null; } set { } }

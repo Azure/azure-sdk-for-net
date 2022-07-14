@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="dnsResolverState"> The current status of the DNS resolver. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="provisioningState"> The current provisioning state of the DNS resolver. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="resourceGuid"> The resourceGuid property of the DNS resolver resource. </param>
-        internal DnsResolverData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, WritableSubResource virtualNetwork, DnsResolverState? dnsResolverState, ProvisioningState? provisioningState, string resourceGuid) : base(id, name, resourceType, systemData, tags, location)
+        internal DnsResolverData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, WritableSubResource virtualNetwork, DnsResolverState? dnsResolverState, DnsResolverProvisioningState? provisioningState, string resourceGuid) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             VirtualNetwork = virtualNetwork;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <summary> The current status of the DNS resolver. This is a read-only property and any attempt to set this value will be ignored. </summary>
         public DnsResolverState? DnsResolverState { get; }
         /// <summary> The current provisioning state of the DNS resolver. This is a read-only property and any attempt to set this value will be ignored. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public DnsResolverProvisioningState? ProvisioningState { get; }
         /// <summary> The resourceGuid property of the DNS resolver resource. </summary>
         public string ResourceGuid { get; }
     }
