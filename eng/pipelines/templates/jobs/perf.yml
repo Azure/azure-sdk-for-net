@@ -27,6 +27,9 @@ parameters:
     type: string
     default: ''
 
+variables:
+  - template: /eng/pipelines/templates/variables/globals.yml
+
 extends:
   template: /eng/common/pipelines/templates/jobs/perf.yml
   parameters:

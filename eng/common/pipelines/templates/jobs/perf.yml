@@ -33,9 +33,6 @@ parameters:
     type: stepList
     default: []
 
-variables:
-  - template: /eng/pipelines/templates/variables/globals.yml
-
 resources:
   repositories:
   - repository: azure-sdk-tools
