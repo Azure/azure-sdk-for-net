@@ -33,6 +33,9 @@ parameters:
     type: string
     default: ''
 
+variables:
+  - template: /eng/pipelines/templates/variables/globals.yml
+
 resources:
   repositories:
   - repository: azure-sdk-tools
