@@ -33,7 +33,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 #endif
             var officeSupplieOptions = new BuildModelOptions() { Description = "Purchase order - Office supplies" };
 
-            BuildModelOperation suppliesOperation = await client.StartBuildModelAsync(officeSuppliesUri, DocumentBuildMode.Template, buildModelOptions: officeSupplieOptions);
+            BuildModelOperation suppliesOperation = await client.StartBuildModelAsync(officeSuppliesUri, DocumentBuildMode.Template, options: officeSupplieOptions);
             Response<DocumentModel> suppliesOperationResponse = await suppliesOperation.WaitForCompletionAsync();
             DocumentModel officeSuppliesModel = suppliesOperationResponse.Value;
 
@@ -44,7 +44,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 #endif
             var equipmentOptions = new BuildModelOptions() { Description = "Purchase order - Office Equipment" };
 
-            BuildModelOperation equipmentOperation = await client.StartBuildModelAsync(officeSuppliesUri, DocumentBuildMode.Template, buildModelOptions: equipmentOptions);
+            BuildModelOperation equipmentOperation = await client.StartBuildModelAsync(officeSuppliesUri, DocumentBuildMode.Template, options: equipmentOptions);
             Response<DocumentModel> equipmentOperationResponse = await equipmentOperation.WaitForCompletionAsync();
             DocumentModel officeEquipmentModel = equipmentOperationResponse.Value;
 
@@ -55,7 +55,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 #endif
             var furnitureOptions = new BuildModelOptions() { Description = "Purchase order - Furniture" };
 
-            BuildModelOperation furnitureOperation = await client.StartBuildModelAsync(officeSuppliesUri, DocumentBuildMode.Template, buildModelOptions: equipmentOptions);
+            BuildModelOperation furnitureOperation = await client.StartBuildModelAsync(officeSuppliesUri, DocumentBuildMode.Template, options: equipmentOptions);
             Response<DocumentModel> furnitureOperationResponse = await furnitureOperation.WaitForCompletionAsync();
             DocumentModel furnitureModel = furnitureOperationResponse.Value;
 
@@ -66,7 +66,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 #endif
             var cleaningOptions = new BuildModelOptions() { Description = "Purchase order - Cleaning Supplies" };
 
-            BuildModelOperation cleaningOperation = await client.StartBuildModelAsync(officeSuppliesUri, DocumentBuildMode.Template, buildModelOptions: equipmentOptions);
+            BuildModelOperation cleaningOperation = await client.StartBuildModelAsync(officeSuppliesUri, DocumentBuildMode.Template, options: equipmentOptions);
             Response<DocumentModel> cleaningOperationResponse = await cleaningOperation.WaitForCompletionAsync();
             DocumentModel cleaningSuppliesModel = cleaningOperationResponse.Value;
 
