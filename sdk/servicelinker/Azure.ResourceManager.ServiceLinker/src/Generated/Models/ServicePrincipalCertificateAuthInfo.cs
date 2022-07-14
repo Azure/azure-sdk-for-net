@@ -34,19 +34,6 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             AuthType = LinkerAuthType.ServicePrincipalCertificate;
         }
 
-        /// <summary> Initializes a new instance of ServicePrincipalCertificateAuthInfo. </summary>
-        /// <param name="authType"> The authentication type. </param>
-        /// <param name="clientId"> Application clientId for servicePrincipal auth. </param>
-        /// <param name="principalId"> Principal Id for servicePrincipal auth. </param>
-        /// <param name="certificate"> ServicePrincipal certificate for servicePrincipal auth. </param>
-        internal ServicePrincipalCertificateAuthInfo(LinkerAuthType authType, string clientId, Guid principalId, string certificate) : base(authType)
-        {
-            ClientId = clientId;
-            PrincipalId = principalId;
-            Certificate = certificate;
-            AuthType = authType;
-        }
-
         /// <summary> Application clientId for servicePrincipal auth. </summary>
         public string ClientId { get; set; }
         /// <summary> Principal Id for servicePrincipal auth. </summary>

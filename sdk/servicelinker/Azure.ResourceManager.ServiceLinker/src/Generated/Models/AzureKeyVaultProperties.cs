@@ -13,16 +13,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> Initializes a new instance of AzureKeyVaultProperties. </summary>
         public AzureKeyVaultProperties()
         {
-            AzureResourceType = AzureResourceType.KeyVault;
-        }
-
-        /// <summary> Initializes a new instance of AzureKeyVaultProperties. </summary>
-        /// <param name="azureResourceType"> The azure resource type. </param>
-        /// <param name="connectAsKubernetesCsiDriver"> True if connect via Kubernetes CSI Driver. </param>
-        internal AzureKeyVaultProperties(AzureResourceType azureResourceType, bool? connectAsKubernetesCsiDriver) : base(azureResourceType)
-        {
-            ConnectAsKubernetesCsiDriver = connectAsKubernetesCsiDriver;
-            AzureResourceType = azureResourceType;
+            AzureResourceType = Models.AzureResourceType.KeyVault;
         }
 
         /// <summary> True if connect via Kubernetes CSI Driver. </summary>
