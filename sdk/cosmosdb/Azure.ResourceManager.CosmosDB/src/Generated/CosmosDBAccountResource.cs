@@ -281,11 +281,11 @@ namespace Azure.ResourceManager.CosmosDB
             return GetMongoDBDatabases().Get(databaseName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CosmosTableResources in the CosmosDBAccount. </summary>
-        /// <returns> An object representing collection of CosmosTableResources and their operations over a CosmosTableResource. </returns>
-        public virtual CosmosTableCollection GetCosmosTables()
+        /// <summary> Gets a collection of CosmosDBTableResources in the CosmosDBAccount. </summary>
+        /// <returns> An object representing collection of CosmosDBTableResources and their operations over a CosmosDBTableResource. </returns>
+        public virtual CosmosDBTableCollection GetCosmosDBTables()
         {
-            return GetCachedClient(Client => new CosmosTableCollection(Client, Id));
+            return GetCachedClient(Client => new CosmosDBTableCollection(Client, Id));
         }
 
         /// <summary>
@@ -298,9 +298,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CosmosTableResource>> GetCosmosTableAsync(string tableName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CosmosDBTableResource>> GetCosmosDBTableAsync(string tableName, CancellationToken cancellationToken = default)
         {
-            return await GetCosmosTables().GetAsync(tableName, cancellationToken).ConfigureAwait(false);
+            return await GetCosmosDBTables().GetAsync(tableName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -313,9 +313,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CosmosTableResource> GetCosmosTable(string tableName, CancellationToken cancellationToken = default)
+        public virtual Response<CosmosDBTableResource> GetCosmosDBTable(string tableName, CancellationToken cancellationToken = default)
         {
-            return GetCosmosTables().Get(tableName, cancellationToken);
+            return GetCosmosDBTables().Get(tableName, cancellationToken);
         }
 
         /// <summary> Gets a collection of CassandraKeyspaceResources in the CosmosDBAccount. </summary>
@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="failoverParameters"> The new failover policies for the database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="failoverParameters"/> is null. </exception>
-        public virtual async Task<ArmOperation> FailoverPriorityChangeAsync(WaitUntil waitUntil, FailoverPolicies failoverParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> FailoverPriorityChangeAsync(WaitUntil waitUntil, CosmosDBFailoverPolicies failoverParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(failoverParameters, nameof(failoverParameters));
 
@@ -665,7 +665,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="failoverParameters"> The new failover policies for the database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="failoverParameters"/> is null. </exception>
-        public virtual ArmOperation FailoverPriorityChange(WaitUntil waitUntil, FailoverPolicies failoverParameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation FailoverPriorityChange(WaitUntil waitUntil, CosmosDBFailoverPolicies failoverParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(failoverParameters, nameof(failoverParameters));
 

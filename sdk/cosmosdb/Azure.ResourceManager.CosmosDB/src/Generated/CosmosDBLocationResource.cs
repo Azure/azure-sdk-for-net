@@ -101,10 +101,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="instanceId"> The instanceId GUID of a restorable database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<RestorableCosmosDBAccountResource>> GetRestorableCosmosDBAccountAsync(string instanceId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RestorableCosmosDBAccountResource>> GetRestorableCosmosDBAccountAsync(Guid instanceId, CancellationToken cancellationToken = default)
         {
             return await GetRestorableCosmosDBAccounts().GetAsync(instanceId, cancellationToken).ConfigureAwait(false);
         }
@@ -116,10 +114,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="instanceId"> The instanceId GUID of a restorable database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<RestorableCosmosDBAccountResource> GetRestorableCosmosDBAccount(string instanceId, CancellationToken cancellationToken = default)
+        public virtual Response<RestorableCosmosDBAccountResource> GetRestorableCosmosDBAccount(Guid instanceId, CancellationToken cancellationToken = default)
         {
             return GetRestorableCosmosDBAccounts().Get(instanceId, cancellationToken);
         }

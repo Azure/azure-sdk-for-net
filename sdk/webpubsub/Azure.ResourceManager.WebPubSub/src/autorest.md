@@ -102,9 +102,15 @@ directive:
   - rename-model:
       from: NetworkACL
       to:  PublicNetworkAcls
+  - rename-model:
+      from: EventHandler
+      to:  WebPubSubEventHandler
   - from: webpubsub.json
     where: $.definitions.ScaleType
     transform: $['x-ms-enum'].name = 'WebPubSubScaleType'
+  - from: webpubsub.json
+    where: $.definitions.KeyType
+    transform: $['x-ms-enum'].name = 'WebPubSubKeyType'
 
   # Change type to ResourceIdentifier
   - from: webpubsub.json
@@ -117,20 +123,21 @@ directive:
     where: $.definitions.SignalRServiceUsage.properties.id
     transform: $['x-ms-format'] = 'arm-id'
 
-  # Rename some class names of  boolean types
+  # Rename some class names of boolean types
   - from: webpubsub.json
     where: $.definitions.WebPubSubTlsSettings.properties.clientCertEnabled
     transform: $["x-ms-client-name"] = 'isClientCertEnabled'
   - from: webpubsub.json
     where: $.definitions.WebPubSubProperties.properties.disableAadAuth
-    transform: $["x-ms-client-name"] = 'isDisableAadAuth'
+    transform: $["x-ms-client-name"] = 'isAadAuthDisabled'
   - from: webpubsub.json
     where: $.definitions.WebPubSubProperties.properties.disableLocalAuth
-    transform: $["x-ms-client-name"] = 'isDisableLocalAuth'
-  - from: webpubsub.json
+    transform: $["x-ms-client-name"] = 'isLocalAuthDisabled'
+
+  # Change ManagedIdentity to common identity type(ManagedServiceIdentity)
+  - from: swagger-document
     where: $.definitions.ManagedIdentityType
-    transform: >
-      $.enum = ["None", "SystemAssigned", "UserAssigned", "SystemAssigned, UserAssigned"];
+    transform: $.enum.push("SystemAssigned, UserAssigned")
     reason: Temporary workaround to match with common type.
   - from: webpubsub.json
     where: $.definitions.WebPubSub.properties.identity

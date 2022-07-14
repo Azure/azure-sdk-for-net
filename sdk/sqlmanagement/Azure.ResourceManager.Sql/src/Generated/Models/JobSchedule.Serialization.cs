@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(ScheduleType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(Interval))
             {

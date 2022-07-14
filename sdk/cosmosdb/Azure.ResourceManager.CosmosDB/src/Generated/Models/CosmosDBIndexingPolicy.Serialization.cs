@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Automatic))
+            if (Optional.IsDefined(IsAutomatic))
             {
                 writer.WritePropertyName("automatic");
-                writer.WriteBooleanValue(Automatic.Value);
+                writer.WriteBooleanValue(IsAutomatic.Value);
             }
             if (Optional.IsDefined(IndexingMode))
             {

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("ipAddress");
-            writer.WriteStringValue(IPAddress);
+            writer.WriteStringValue(IPAddress.ToString());
             if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port");
@@ -27,13 +28,13 @@ namespace Azure.ResourceManager.DnsResolver.Models
 
         internal static TargetDnsServer DeserializeTargetDnsServer(JsonElement element)
         {
-            string ipAddress = default;
+            IPAddress ipAddress = default;
             Optional<int> port = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipAddress"))
                 {
-                    ipAddress = property.Value.GetString();
+                    ipAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("port"))

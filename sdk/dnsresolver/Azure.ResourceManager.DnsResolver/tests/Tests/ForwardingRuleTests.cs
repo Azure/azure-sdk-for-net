@@ -1,13 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-using System.Threading.Tasks;
-using NUnit.Framework;
-using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources.Models;
-using Azure.Core;
-using Azure.ResourceManager.DnsResolver.Models;
-using System.Linq;
+
 using System.Collections.Generic;
+using System.Net;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.TestFramework;
+using Azure.ResourceManager.DnsResolver.Models;
+using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DnsResolver.Tests
 {
@@ -51,13 +52,13 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             dnsResolver = (await resourceGroup.Value.GetDnsResolvers().CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverName, dnsResolverData)).Value;
             dnsForwardingRulesetCollection = resourceGroup.Value.GetDnsForwardingRulesets();
 
-            var outboundEndpointData = new OutboundEndpointData(this.DefaultLocation, new WritableSubResource
+            var outboundEndpointData = new DnsResolverOutboundEndpointData(this.DefaultLocation, new WritableSubResource
             {
                 Id = new ResourceIdentifier(subnetId),
             });
 
             var outboundEndpointName = Recording.GenerateAssetName("outboundEndpoint-");
-            var outboundEndpoint = await dnsResolver.GetOutboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, outboundEndpointName, outboundEndpointData);
+            var outboundEndpoint = await dnsResolver.GetDnsResolverOutboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, outboundEndpointName, outboundEndpointData);
 
             outboundEndpointId = outboundEndpoint.Value.Id;
 
@@ -83,18 +84,18 @@ namespace Azure.ResourceManager.DnsResolver.Tests
         public async Task CreateForwardingRule()
         {
             // ARRANGE
-            var forwardingRuleData = new ForwardingRuleData("test.com.", new List<TargetDnsServer>
+            var forwardingRuleData = new DnsForwardingRuleData("test.com.", new List<TargetDnsServer>
             {
-                new TargetDnsServer("10.0.0.3")
+                new TargetDnsServer(IPAddress.Parse("10.0.0.3"))
             });
 
             var forwardingRuleName = Recording.GenerateAssetName("forwardingRule-");
 
             // ACT
-            var createdForwardingRule = await dnsForwardingRuleset.GetForwardingRules().CreateOrUpdateAsync(WaitUntil.Completed, forwardingRuleName, forwardingRuleData);
+            var createdForwardingRule = await dnsForwardingRuleset.GetDnsForwardingRules().CreateOrUpdateAsync(WaitUntil.Completed, forwardingRuleName, forwardingRuleData);
 
             // ASSERT
-            Assert.AreEqual(createdForwardingRule.Value.Data.ProvisioningState, ProvisioningState.Succeeded);
+            Assert.AreEqual(createdForwardingRule.Value.Data.ProvisioningState, DnsResolverProvisioningState.Succeeded);
         }
 
         [Test]
@@ -102,16 +103,16 @@ namespace Azure.ResourceManager.DnsResolver.Tests
         public async Task GetForwardingRule()
         {
             // ARRANGE
-            var forwardingRuleData = new ForwardingRuleData("test.com.", new List<TargetDnsServer>
+            var forwardingRuleData = new DnsForwardingRuleData("test.com.", new List<TargetDnsServer>
             {
-                new TargetDnsServer("10.0.0.3")
+                new TargetDnsServer(IPAddress.Parse("10.0.0.3"))
             });
 
             var forwardingRuleName = Recording.GenerateAssetName("forwardingRule-");
-            await dnsForwardingRuleset.GetForwardingRules().CreateOrUpdateAsync(WaitUntil.Completed, forwardingRuleName, forwardingRuleData);
+            await dnsForwardingRuleset.GetDnsForwardingRules().CreateOrUpdateAsync(WaitUntil.Completed, forwardingRuleName, forwardingRuleData);
 
             // ACT
-            var retrievedForwardingRule = await dnsForwardingRuleset.GetForwardingRules().GetAsync(forwardingRuleName);
+            var retrievedForwardingRule = await dnsForwardingRuleset.GetDnsForwardingRules().GetAsync(forwardingRuleName);
 
             // ASSERT
             Assert.AreEqual(retrievedForwardingRule.Value.Data.Name, forwardingRuleName);
@@ -122,18 +123,18 @@ namespace Azure.ResourceManager.DnsResolver.Tests
         public async Task UpdateForwardingRule()
         {
             // ARRANGE
-            var forwardingRuleData = new ForwardingRuleData("test.com.", new List<TargetDnsServer>
+            var forwardingRuleData = new DnsForwardingRuleData("test.com.", new List<TargetDnsServer>
             {
-                new TargetDnsServer("10.0.0.3")
+                new TargetDnsServer(IPAddress.Parse("10.0.0.3"))
             });
 
             var forwardingRuleName = Recording.GenerateAssetName("forwardingRule-");
-            var createdForwardingRule = await dnsForwardingRuleset.GetForwardingRules().CreateOrUpdateAsync(WaitUntil.Completed, forwardingRuleName, forwardingRuleData);
+            var createdForwardingRule = await dnsForwardingRuleset.GetDnsForwardingRules().CreateOrUpdateAsync(WaitUntil.Completed, forwardingRuleName, forwardingRuleData);
 
             var newTagKey = Recording.GenerateAlphaNumericId("tagKey");
             var newTagValue = Recording.GenerateAlphaNumericId("tagValue");
 
-            var patchableForwardingRuleData = new ForwardingRulePatch();
+            var patchableForwardingRuleData = new DnsForwardingRulePatch();
             patchableForwardingRuleData.Metadata.Add(newTagKey, newTagValue);
 
             // ACT
@@ -148,19 +149,19 @@ namespace Azure.ResourceManager.DnsResolver.Tests
         public async Task RemoveForwardingRule()
         {
             // ARRANGE
-            var forwardingRuleData = new ForwardingRuleData("test.com.", new List<TargetDnsServer>
+            var forwardingRuleData = new DnsForwardingRuleData("test.com.", new List<TargetDnsServer>
             {
-                new TargetDnsServer("10.0.0.3")
+                new TargetDnsServer(IPAddress.Parse("10.0.0.3"))
             });
 
             var forwardingRuleName = Recording.GenerateAssetName("forwardingRule-");
-            var createdForwardingRule = await dnsForwardingRuleset.GetForwardingRules().CreateOrUpdateAsync(WaitUntil.Completed, forwardingRuleName, forwardingRuleData);
+            var createdForwardingRule = await dnsForwardingRuleset.GetDnsForwardingRules().CreateOrUpdateAsync(WaitUntil.Completed, forwardingRuleName, forwardingRuleData);
 
             // ACT
             await createdForwardingRule.Value.DeleteAsync(WaitUntil.Completed);
 
             // ASSERT
-            var getForwardingRule = await dnsForwardingRuleset.GetForwardingRules().ExistsAsync(forwardingRuleName);
+            var getForwardingRule = await dnsForwardingRuleset.GetDnsForwardingRules().ExistsAsync(forwardingRuleName);
             Assert.AreEqual(getForwardingRule.Value, false);
         }
     }

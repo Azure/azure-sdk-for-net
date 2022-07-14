@@ -19,6 +19,8 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  '*IPAddress': 'ip-address'
+  'ResourceGuid': 'uuid'
 
 rename-rules:
   CPU: Cpu
@@ -42,5 +44,23 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  DnsForwardingRulesetName: rulesetName
 
+rename-mapping:
+  ProvisioningState: DnsResolverProvisioningState
+  ForwardingRule: DnsForwardingRule
+  ForwardingRuleState: DnsForwardingRuleState
+  ForwardingRule.properties.forwardingRuleState: DnsForwardingRuleState
+  ForwardingRulePatch.properties.forwardingRuleState: DnsForwardingRuleState
+  InboundEndpoint: DnsResolverInboundEndpoint
+  IpConfiguration: InboundEndpointIpConfiguration
+  IpAllocationMethod: InboundEndpointIPAllocationMethod
+  OutboundEndpoint: DnsResolverOutboundEndpoint
+  VirtualNetworkLink: DnsForwardingRulesetVirtualNetworkLink
+
+directive:
+  - from: dnsresolver.json
+    where: $.definitions
+    transform: >
+      $.VirtualNetworkDnsForwardingRuleset.properties.id['x-ms-format'] = 'arm-id';
 ```
