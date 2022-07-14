@@ -16,6 +16,15 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             SecretType = LinkerSecretType.KeyVaultSecretUri;
         }
 
+        /// <summary> Initializes a new instance of KeyVaultSecretUriSecretInfo. </summary>
+        /// <param name="secretType"> The secret type. </param>
+        /// <param name="value"> URI to the keyvault secret. </param>
+        internal KeyVaultSecretUriSecretInfo(LinkerSecretType secretType, string value) : base(secretType)
+        {
+            Value = value;
+            SecretType = secretType;
+        }
+
         /// <summary> URI to the keyvault secret. </summary>
         public string Value { get; set; }
     }

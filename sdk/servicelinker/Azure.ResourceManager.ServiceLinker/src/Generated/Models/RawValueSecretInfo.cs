@@ -16,6 +16,15 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             SecretType = LinkerSecretType.RawValue;
         }
 
+        /// <summary> Initializes a new instance of RawValueSecretInfo. </summary>
+        /// <param name="secretType"> The secret type. </param>
+        /// <param name="value"> The actual value of the secret. </param>
+        internal RawValueSecretInfo(LinkerSecretType secretType, string value) : base(secretType)
+        {
+            Value = value;
+            SecretType = secretType;
+        }
+
         /// <summary> The actual value of the secret. </summary>
         public string Value { get; set; }
     }

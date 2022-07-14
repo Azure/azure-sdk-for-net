@@ -15,5 +15,12 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         {
             AuthType = LinkerAuthType.SystemAssignedIdentity;
         }
+
+        /// <summary> Initializes a new instance of SystemAssignedIdentityAuthInfo. </summary>
+        /// <param name="authType"> The authentication type. </param>
+        internal SystemAssignedIdentityAuthInfo(LinkerAuthType authType) : base(authType)
+        {
+            AuthType = authType;
+        }
     }
 }

@@ -34,6 +34,19 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             AuthType = LinkerAuthType.ServicePrincipalSecret;
         }
 
+        /// <summary> Initializes a new instance of ServicePrincipalSecretAuthInfo. </summary>
+        /// <param name="authType"> The authentication type. </param>
+        /// <param name="clientId"> ServicePrincipal application clientId for servicePrincipal auth. </param>
+        /// <param name="principalId"> Principal Id for servicePrincipal auth. </param>
+        /// <param name="secret"> Secret for servicePrincipal auth. </param>
+        internal ServicePrincipalSecretAuthInfo(LinkerAuthType authType, string clientId, Guid principalId, string secret) : base(authType)
+        {
+            ClientId = clientId;
+            PrincipalId = principalId;
+            Secret = secret;
+            AuthType = authType;
+        }
+
         /// <summary> ServicePrincipal application clientId for servicePrincipal auth. </summary>
         public string ClientId { get; set; }
         /// <summary> Principal Id for servicePrincipal auth. </summary>

@@ -15,7 +15,22 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> Initializes a new instance of AzureResourceInfo. </summary>
         public AzureResourceInfo()
         {
-            TargetServiceType = Models.TargetServiceType.AzureResource;
+            TargetServiceType = TargetServiceType.AzureResource;
+        }
+
+        /// <summary> Initializes a new instance of AzureResourceInfo. </summary>
+        /// <param name="targetServiceType"> The target service type. </param>
+        /// <param name="id"> The Id of azure resource. </param>
+        /// <param name="resourceProperties">
+        /// The azure resource connection related properties.
+        /// Please note <see cref="AzureResourceBaseProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultProperties"/>.
+        /// </param>
+        internal AzureResourceInfo(TargetServiceType targetServiceType, ResourceIdentifier id, AzureResourceBaseProperties resourceProperties) : base(targetServiceType)
+        {
+            Id = id;
+            ResourceProperties = resourceProperties;
+            TargetServiceType = targetServiceType;
         }
 
         /// <summary> The Id of azure resource. </summary>

@@ -8,7 +8,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    public partial class SecretBaseInfo : IUtf8JsonSerializable
+    public abstract partial class SecretBaseInfo : IUtf8JsonSerializable
     {
         internal static SecretBaseInfo DeserializeSecretBaseInfo(JsonElement element)
         {

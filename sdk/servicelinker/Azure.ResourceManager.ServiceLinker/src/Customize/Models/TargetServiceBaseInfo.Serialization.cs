@@ -8,7 +8,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    public partial class TargetServiceBaseInfo : IUtf8JsonSerializable
+    public abstract partial class TargetServiceBaseInfo : IUtf8JsonSerializable
     {
         internal static TargetServiceBaseInfo DeserializeTargetServiceBaseInfo(JsonElement element)
         {

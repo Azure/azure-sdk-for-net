@@ -14,5 +14,19 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// </summary>
     public partial class AzureResourceBaseProperties
     {
+        /// <summary> Initializes a new instance of AzureResourceBaseProperties. </summary>
+        public AzureResourceBaseProperties()
+        {
+        }
+
+        /// <summary> Initializes a new instance of AzureResourceBaseProperties. </summary>
+        /// <param name="azureResourceType"> The azure resource type. </param>
+        internal AzureResourceBaseProperties(AzureResourceType azureResourceType)
+        {
+            AzureResourceType = azureResourceType;
+        }
+
+        /// <summary> The azure resource type. </summary>
+        internal AzureResourceType AzureResourceType { get; set; }
     }
 }
