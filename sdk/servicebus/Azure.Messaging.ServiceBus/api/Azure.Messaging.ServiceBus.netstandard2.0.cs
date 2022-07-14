@@ -105,6 +105,7 @@ namespace Azure.Messaging.ServiceBus
     public partial class ServiceBusClientOptions
     {
         public ServiceBusClientOptions() { }
+        public System.Uri CustomEndpointAddress { get { throw null; } set { } }
         public bool EnableCrossEntityTransactions { get { throw null; } set { } }
         public Azure.Messaging.ServiceBus.ServiceBusRetryOptions RetryOptions { get { throw null; } set { } }
         public Azure.Messaging.ServiceBus.ServiceBusTransportType TransportType { get { throw null; } set { } }
