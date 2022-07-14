@@ -29,7 +29,7 @@ extends:
   parameters:
     variables:
       - template: /eng/pipelines/templates/variables/globals.yml
-    language: net
+    language: Net
     installLanguageSteps:
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
         parameters:
