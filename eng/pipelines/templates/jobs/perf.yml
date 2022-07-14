@@ -39,10 +39,6 @@ extends:
     iterations: ${{ parameters.iterations }}
     additionalArguments: ${{ parameters.additionalArguments }}
     language: net
-    installLanguageSteps:
-    - template: /eng/pipelines/templates/steps/install-dotnet.yml
-      parameters:
-        EnableNuGetCache: false
 
 variables:
   Skip.PublishDocs: true
