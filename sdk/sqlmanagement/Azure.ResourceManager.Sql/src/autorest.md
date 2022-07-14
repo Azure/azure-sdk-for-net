@@ -362,3 +362,7 @@ directive:
       where: $.definitions.ServerPrivateEndpointConnection
       transform: >
           $.properties.id['x-ms-format'] = 'arm-id';
+    - from: SyncAgents.json
+      where: $.definitions.SyncAgentLinkedDatabaseProperties
+      transform: >
+          $.properties.databaseId['format'] = 'uuid';

@@ -6688,7 +6688,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         public SecurityEvent() { }
         public string ApplicationName { get { throw null; } }
-        public string ClientIP { get { throw null; } }
+        public System.Net.IPAddress ClientIP { get { throw null; } }
         public string Database { get { throw null; } }
         public System.DateTimeOffset? EventOn { get { throw null; } }
         public string PrincipalName { get { throw null; } }
@@ -7309,7 +7309,7 @@ namespace Azure.ResourceManager.Sql.Models
     public partial class SyncAgentLinkedDatabase : Azure.ResourceManager.Models.ResourceData
     {
         public SyncAgentLinkedDatabase() { }
-        public string DatabaseId { get { throw null; } }
+        public System.Guid? DatabaseId { get { throw null; } }
         public string DatabaseName { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.SyncMemberDbType? DatabaseType { get { throw null; } }
         public string Description { get { throw null; } }
