@@ -50,7 +50,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         public override Uri ServiceEndpoint { get; }
 
         /// <summary>
-        ///   The endpoint for the Service Bus service to be used when establising the connection.
+        ///   The endpoint for the Service Bus service to be used when establishing the connection.
         /// </summary>
         ///
         public Uri ConnectionEndpoint { get; }
