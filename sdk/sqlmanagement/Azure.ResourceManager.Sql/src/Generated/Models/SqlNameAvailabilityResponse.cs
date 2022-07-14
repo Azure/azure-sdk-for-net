@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="isAvailable"> True if the name is available, otherwise false. </param>
         /// <param name="reason"> The reason code explaining why the name is unavailable. Will be undefined if the name is available. </param>
         /// <param name="message"> A message explaining why the name is unavailable. Will be undefined if the name is available. </param>
-        internal SqlNameAvailabilityResponse(string name, bool? isAvailable, SqlNameAvailabilityReason? reason, string message)
+        internal SqlNameAvailabilityResponse(string name, bool? isAvailable, SqlNameUnavailableReason? reason, string message)
         {
             Name = name;
             IsAvailable = isAvailable;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> True if the name is available, otherwise false. </summary>
         public bool? IsAvailable { get; }
         /// <summary> The reason code explaining why the name is unavailable. Will be undefined if the name is available. </summary>
-        public SqlNameAvailabilityReason? Reason { get; }
+        public SqlNameUnavailableReason? Reason { get; }
         /// <summary> A message explaining why the name is unavailable. Will be undefined if the name is available. </summary>
         public string Message { get; }
     }

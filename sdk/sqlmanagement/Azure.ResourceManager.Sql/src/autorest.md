@@ -146,6 +146,7 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}/scans/{scanId}: SqlDatabaseVulnerabilityAssessmentScan
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/serverTrustCertificates/{certificateName}: ManagedInstanceServerTrustCertificate
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupShortTermRetentionPolicies/{policyName}: ManagedBackupShortTermRetentionPolicy
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}: ManagedDatabaseSchema
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}: ManagedDatabaseTable
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}: ManagedDatabaseColumn
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/{sensitivityLabelSource}: ManagedDatabaseSensitivityLabel
@@ -174,7 +175,7 @@ rename-mapping:
   LedgerDigestUploads: LedgerDigestUpload
   ServerDevOpsAuditingSettings: SqlServerDevOpsAuditingSetting
   ManagedDatabaseRestoreDetailsResult: ManagedDatabaseRestoreDetail
-  CheckNameAvailabilityReason: SqlNameAvailabilityReason
+  CheckNameAvailabilityReason: SqlNameUnavailableReason
   CheckNameAvailabilityResourceType: SqlNameAvailabilityResourceType
   CheckNameAvailabilityRequest: SqlNameAvailabilityContent
   CreateMode: SqlDatabaseCreateMode
@@ -329,8 +330,8 @@ directive:
     - from: LocationCapabilities.json
       where: $.definitions.ManagedInstanceVcoresCapability.properties
       transform: >
-          $.instancePoolSupported['x-ms-client-name'] = 'IsInstancePoolSupported'；
-          $.standaloneSupported['x-ms-client-name'] = 'IsStandaloneSupported'；
+          $.instancePoolSupported['x-ms-client-name'] = 'IsInstancePoolSupported';
+          $.standaloneSupported['x-ms-client-name'] = 'IsStandaloneSupported';
     - from: swagger-document
       where: $.definitions..enabled
       transform: >

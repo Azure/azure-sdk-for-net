@@ -17,46 +17,46 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A Class representing a ManagedInstanceDatabaseSchema along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagedInstanceDatabaseSchemaResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetManagedInstanceDatabaseSchemaResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ManagedDatabaseResource" /> using the GetManagedInstanceDatabaseSchema method.
+    /// A Class representing a ManagedDatabaseSchema along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagedDatabaseSchemaResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetManagedDatabaseSchemaResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ManagedDatabaseResource" /> using the GetManagedDatabaseSchema method.
     /// </summary>
-    public partial class ManagedInstanceDatabaseSchemaResource : ArmResource
+    public partial class ManagedDatabaseSchemaResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ManagedInstanceDatabaseSchemaResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="ManagedDatabaseSchemaResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _managedInstanceDatabaseSchemaManagedDatabaseSchemasClientDiagnostics;
-        private readonly ManagedDatabaseSchemasRestOperations _managedInstanceDatabaseSchemaManagedDatabaseSchemasRestClient;
+        private readonly ClientDiagnostics _managedDatabaseSchemaClientDiagnostics;
+        private readonly ManagedDatabaseSchemasRestOperations _managedDatabaseSchemaRestClient;
         private readonly DatabaseSchemaData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="ManagedInstanceDatabaseSchemaResource"/> class for mocking. </summary>
-        protected ManagedInstanceDatabaseSchemaResource()
+        /// <summary> Initializes a new instance of the <see cref="ManagedDatabaseSchemaResource"/> class for mocking. </summary>
+        protected ManagedDatabaseSchemaResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ManagedInstanceDatabaseSchemaResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "ManagedDatabaseSchemaResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ManagedInstanceDatabaseSchemaResource(ArmClient client, DatabaseSchemaData data) : this(client, data.Id)
+        internal ManagedDatabaseSchemaResource(ArmClient client, DatabaseSchemaData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ManagedInstanceDatabaseSchemaResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedDatabaseSchemaResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ManagedInstanceDatabaseSchemaResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ManagedDatabaseSchemaResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _managedInstanceDatabaseSchemaManagedDatabaseSchemasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string managedInstanceDatabaseSchemaManagedDatabaseSchemasApiVersion);
-            _managedInstanceDatabaseSchemaManagedDatabaseSchemasRestClient = new ManagedDatabaseSchemasRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedInstanceDatabaseSchemaManagedDatabaseSchemasApiVersion);
+            _managedDatabaseSchemaClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string managedDatabaseSchemaApiVersion);
+            _managedDatabaseSchemaRestClient = new ManagedDatabaseSchemasRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedDatabaseSchemaApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ManagedDatabaseTableResources in the ManagedInstanceDatabaseSchema. </summary>
+        /// <summary> Gets a collection of ManagedDatabaseTableResources in the ManagedDatabaseSchema. </summary>
         /// <returns> An object representing collection of ManagedDatabaseTableResources and their operations over a ManagedDatabaseTableResource. </returns>
         public virtual ManagedDatabaseTableCollection GetManagedDatabaseTables()
         {
@@ -129,16 +129,16 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ManagedDatabaseSchemas_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ManagedInstanceDatabaseSchemaResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedDatabaseSchemaResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _managedInstanceDatabaseSchemaManagedDatabaseSchemasClientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaResource.Get");
+            using var scope = _managedDatabaseSchemaClientDiagnostics.CreateScope("ManagedDatabaseSchemaResource.Get");
             scope.Start();
             try
             {
-                var response = await _managedInstanceDatabaseSchemaManagedDatabaseSchemasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _managedDatabaseSchemaRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedInstanceDatabaseSchemaResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedDatabaseSchemaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -153,16 +153,16 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ManagedDatabaseSchemas_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagedInstanceDatabaseSchemaResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ManagedDatabaseSchemaResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _managedInstanceDatabaseSchemaManagedDatabaseSchemasClientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaResource.Get");
+            using var scope = _managedDatabaseSchemaClientDiagnostics.CreateScope("ManagedDatabaseSchemaResource.Get");
             scope.Start();
             try
             {
-                var response = _managedInstanceDatabaseSchemaManagedDatabaseSchemasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _managedDatabaseSchemaRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedInstanceDatabaseSchemaResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedDatabaseSchemaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

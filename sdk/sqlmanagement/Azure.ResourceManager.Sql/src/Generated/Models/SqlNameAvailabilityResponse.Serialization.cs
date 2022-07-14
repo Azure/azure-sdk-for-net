@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
         {
             Optional<string> name = default;
             Optional<bool> available = default;
-            Optional<SqlNameAvailabilityReason> reason = default;
+            Optional<SqlNameUnavailableReason> reason = default;
             Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    reason = property.Value.GetString().ToSqlNameAvailabilityReason();
+                    reason = property.Value.GetString().ToSqlNameUnavailableReason();
                     continue;
                 }
                 if (property.NameEquals("message"))

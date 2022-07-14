@@ -1379,20 +1379,20 @@ namespace Azure.ResourceManager.Sql
         }
         #endregion
 
-        #region ManagedInstanceDatabaseSchemaResource
+        #region ManagedDatabaseSchemaResource
         /// <summary>
-        /// Gets an object representing a <see cref="ManagedInstanceDatabaseSchemaResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedInstanceDatabaseSchemaResource.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceDatabaseSchemaResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ManagedDatabaseSchemaResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedDatabaseSchemaResource.CreateResourceIdentifier" /> to create a <see cref="ManagedDatabaseSchemaResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedInstanceDatabaseSchemaResource" /> object. </returns>
-        public static ManagedInstanceDatabaseSchemaResource GetManagedInstanceDatabaseSchemaResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedDatabaseSchemaResource" /> object. </returns>
+        public static ManagedDatabaseSchemaResource GetManagedDatabaseSchemaResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ManagedInstanceDatabaseSchemaResource.ValidateResourceId(id);
-                return new ManagedInstanceDatabaseSchemaResource(client, id);
+                ManagedDatabaseSchemaResource.ValidateResourceId(id);
+                return new ManagedDatabaseSchemaResource(client, id);
             }
             );
         }
