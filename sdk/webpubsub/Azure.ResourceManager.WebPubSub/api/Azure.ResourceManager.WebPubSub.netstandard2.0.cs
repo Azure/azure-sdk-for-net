@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.WebPubSub
         public string HostName { get { throw null; } }
         public string HostNamePrefix { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public bool? IsAadAuthDisabled { get { throw null; } set { } }
         public bool? IsClientCertEnabled { get { throw null; } set { } }
-        public bool? IsDisableAadAuth { get { throw null; } set { } }
-        public bool? IsDisableLocalAuth { get { throw null; } set { } }
+        public bool? IsLocalAuthDisabled { get { throw null; } set { } }
         public Azure.ResourceManager.WebPubSub.Models.LiveTraceConfiguration LiveTraceConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.WebPubSub.Models.WebPubSubNetworkAcls NetworkAcls { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.WebPubSub.WebPubSubPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
@@ -231,14 +231,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public string Size { get { throw null; } }
         public Azure.ResourceManager.WebPubSub.Models.WebPubSubSkuTier? Tier { get { throw null; } set { } }
     }
-    public partial class EventHandler
-    {
-        public EventHandler(string urlTemplate) { }
-        public Azure.ResourceManager.WebPubSub.Models.UpstreamAuthSettings Auth { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> SystemEvents { get { throw null; } }
-        public string UrlTemplate { get { throw null; } set { } }
-        public string UserEventPattern { get { throw null; } set { } }
-    }
     public partial class LiveTraceCategory
     {
         public LiveTraceCategory() { }
@@ -325,11 +317,19 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public static bool operator !=(Azure.ResourceManager.WebPubSub.Models.UpstreamAuthType left, Azure.ResourceManager.WebPubSub.Models.UpstreamAuthType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class WebPubSubEventHandler
+    {
+        public WebPubSubEventHandler(string urlTemplate) { }
+        public Azure.ResourceManager.WebPubSub.Models.UpstreamAuthSettings Auth { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> SystemEvents { get { throw null; } }
+        public string UrlTemplate { get { throw null; } set { } }
+        public string UserEventPattern { get { throw null; } set { } }
+    }
     public partial class WebPubSubHubProperties
     {
         public WebPubSubHubProperties() { }
         public string AnonymousConnectPolicy { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.WebPubSub.Models.EventHandler> EventHandlers { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.WebPubSub.Models.WebPubSubEventHandler> EventHandlers { get { throw null; } }
     }
     public partial class WebPubSubKeys
     {
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         private readonly int _dummyPrimitive;
         public WebPubSubRequestType(string value) { throw null; }
         public static Azure.ResourceManager.WebPubSub.Models.WebPubSubRequestType ClientConnection { get { throw null; } }
-        public static Azure.ResourceManager.WebPubSub.Models.WebPubSubRequestType Restapi { get { throw null; } }
+        public static Azure.ResourceManager.WebPubSub.Models.WebPubSubRequestType RestApi { get { throw null; } }
         public static Azure.ResourceManager.WebPubSub.Models.WebPubSubRequestType ServerConnection { get { throw null; } }
         public static Azure.ResourceManager.WebPubSub.Models.WebPubSubRequestType Trace { get { throw null; } }
         public bool Equals(Azure.ResourceManager.WebPubSub.Models.WebPubSubRequestType other) { throw null; }

@@ -19,6 +19,8 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  '*IPAddress': 'ip-address'
+  'ResourceGuid': 'uuid'
 
 rename-rules:
   CPU: Cpu

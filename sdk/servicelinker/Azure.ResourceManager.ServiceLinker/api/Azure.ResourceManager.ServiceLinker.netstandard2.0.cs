@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ServiceLinker
 }
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    public partial class AuthBaseInfo
+    public abstract partial class AuthBaseInfo
     {
         public AuthBaseInfo() { }
     }
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public AzureKeyVaultProperties() { }
         public bool? ConnectAsKubernetesCsiDriver { get { throw null; } set { } }
     }
-    public partial class AzureResourceBaseProperties
+    public abstract partial class AzureResourceBaseProperties
     {
         public AzureResourceBaseProperties() { }
     }
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceLinker.Models.SecretBaseInfo SecretInfo { get { throw null; } set { } }
     }
-    public partial class SecretBaseInfo
+    public abstract partial class SecretBaseInfo
     {
         public SecretBaseInfo() { }
     }
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     {
         public SystemAssignedIdentityAuthInfo() { }
     }
-    public partial class TargetServiceBaseInfo
+    public abstract partial class TargetServiceBaseInfo
     {
         public TargetServiceBaseInfo() { }
     }
