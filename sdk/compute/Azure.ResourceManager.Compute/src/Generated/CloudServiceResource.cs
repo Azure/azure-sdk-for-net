@@ -702,11 +702,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="updateDomain"> Specifies an integer value that identifies the update domain. Update domains are identified with a zero-based index: the first update domain has an ID of 0, the second has an ID of 1, and so on. </param>
         /// <param name="updateDomainIdentifier"> The update domain object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="updateDomainIdentifier"/> is null. </exception>
-        public virtual async Task<ArmOperation> WalkUpdateDomainAsync(WaitUntil waitUntil, int updateDomain, UpdateDomainIdentifier updateDomainIdentifier, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> WalkUpdateDomainAsync(WaitUntil waitUntil, int updateDomain, UpdateDomainIdentifier updateDomainIdentifier = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(updateDomainIdentifier, nameof(updateDomainIdentifier));
-
             using var scope = _cloudServicesUpdateDomainClientDiagnostics.CreateScope("CloudServiceResource.WalkUpdateDomain");
             scope.Start();
             try
@@ -733,11 +730,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="updateDomain"> Specifies an integer value that identifies the update domain. Update domains are identified with a zero-based index: the first update domain has an ID of 0, the second has an ID of 1, and so on. </param>
         /// <param name="updateDomainIdentifier"> The update domain object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="updateDomainIdentifier"/> is null. </exception>
-        public virtual ArmOperation WalkUpdateDomain(WaitUntil waitUntil, int updateDomain, UpdateDomainIdentifier updateDomainIdentifier, CancellationToken cancellationToken = default)
+        public virtual ArmOperation WalkUpdateDomain(WaitUntil waitUntil, int updateDomain, UpdateDomainIdentifier updateDomainIdentifier = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(updateDomainIdentifier, nameof(updateDomainIdentifier));
-
             using var scope = _cloudServicesUpdateDomainClientDiagnostics.CreateScope("CloudServiceResource.WalkUpdateDomain");
             scope.Start();
             try
