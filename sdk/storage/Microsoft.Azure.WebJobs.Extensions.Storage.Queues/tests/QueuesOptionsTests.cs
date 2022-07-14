@@ -3,8 +3,10 @@
 
 using System;
 using Azure.Storage.Queues;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
 using Microsoft.Azure.WebJobs.Host;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
@@ -22,6 +24,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             Assert.AreEqual(8 * processorCount, options.NewBatchThreshold);
             Assert.AreEqual(QueuePollingIntervals.DefaultMaximum, options.MaxPollingInterval);
             Assert.AreEqual(QueueMessageEncoding.Base64, options.MessageEncoding);
+            Assert.AreEqual(Constants.MaxDepthDefault, options.JsonSerializerSettings.MaxDepth);
+            Assert.AreEqual(DateParseHandling.DateTimeOffset, options.JsonSerializerSettings.DateParseHandling);
+            Assert.AreEqual(NullValueHandling.Ignore, options.JsonSerializerSettings.NullValueHandling);
+            Assert.AreEqual(Formatting.Indented, options.JsonSerializerSettings.Formatting);
+            Assert.AreEqual(Constants.MaxDepthDefault, options.JsonSerializerSettings.MaxDepth);
         }
 
         [Test]
@@ -73,6 +80,30 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             var options = jo.ToObject<QueuesOptions>();
             Assert.AreEqual(TimeSpan.FromMilliseconds(5000), options.MaxPollingInterval);
             Assert.AreEqual(QueueMessageEncoding.Base64, options.MessageEncoding);
+        }
+
+        [Test]
+        public void JsonSerializationSettings_CanGetAndSetValue()
+        {
+            int processorCount = Environment.ProcessorCount;
+
+            QueuesOptions options = new QueuesOptions()
+            {
+                JsonSerializerSettings = new JsonSerializerSettings()
+                {
+                    MaxDepth = 64
+                }
+            };
+            Assert.AreEqual(64, options.JsonSerializerSettings.MaxDepth);
+
+            QueuesOptions options2 = new QueuesOptions()
+            {
+                JsonSerializerSettings = new JsonSerializerSettings()
+                {
+                    Formatting = Formatting.None
+                }
+            };
+            Assert.AreEqual(Formatting.None, options2.JsonSerializerSettings.Formatting);
         }
     }
 }

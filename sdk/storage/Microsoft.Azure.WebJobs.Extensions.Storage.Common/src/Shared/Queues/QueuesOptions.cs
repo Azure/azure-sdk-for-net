@@ -7,6 +7,7 @@ using System.Globalization;
 using Azure.Storage.Queues;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Protocols;
 using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Azure.WebJobs.Hosting;
 using Newtonsoft.Json;
@@ -37,6 +38,7 @@ namespace Microsoft.Azure.WebJobs.Host
         private TimeSpan _visibilityTimeout = TimeSpan.Zero;
         private int _maxDequeueCount = DefaultMaxDequeueCount;
         private QueueMessageEncoding _messageEncoding = QueueMessageEncoding.Base64;
+        private JsonSerializerSettings _jsonSerializerSettings = JsonSerialization.Settings;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="QueuesOptions"/> class.
@@ -201,6 +203,21 @@ namespace Microsoft.Azure.WebJobs.Host
             }
         }
 
+        /// <summary>
+        /// Gets or sets the JSON serialization settings to use when binding to POCOs.
+        /// </summary>
+#pragma warning disable AZC0014 // Avoid using banned types in public API
+        public JsonSerializerSettings JsonSerializerSettings {
+            get
+            {
+                return _jsonSerializerSettings;
+            }
+            set
+            {
+                _jsonSerializerSettings = value;
+            }
+        }
+
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         string IOptionsFormatter.Format()
@@ -228,6 +245,7 @@ namespace Microsoft.Azure.WebJobs.Host
             copy._messageEncoding = _messageEncoding;
             copy._newBatchThreshold = _newBatchThreshold;
             copy._visibilityTimeout = _visibilityTimeout;
+            copy.JsonSerializerSettings = JsonSerializerSettings;
             return copy;
         }
     }

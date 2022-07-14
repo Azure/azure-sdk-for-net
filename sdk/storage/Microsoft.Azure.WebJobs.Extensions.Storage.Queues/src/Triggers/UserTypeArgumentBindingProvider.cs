@@ -20,17 +20,21 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
     internal class UserTypeArgumentBindingProvider : IQueueTriggerArgumentBindingProvider
     {
         private readonly ILoggerFactory _loggerFactory;
+        private readonly JsonSerializerSettings _jsonSerializerSettings;
 
-        public UserTypeArgumentBindingProvider(ILoggerFactory loggerFactory)
+        public UserTypeArgumentBindingProvider(
+            ILoggerFactory loggerFactory,
+            JsonSerializerSettings jsonSerializerSettings = default)
         {
             _loggerFactory = loggerFactory;
+            _jsonSerializerSettings = jsonSerializerSettings ?? JsonSerialization.Settings;
         }
 
         public ITriggerDataArgumentBinding<QueueMessage> TryCreate(ParameterInfo parameter)
         {
             // At indexing time, attempt to bind all types.
             // (Whether or not actual binding is possible depends on the message shape at runtime.)
-            return new UserTypeArgumentBinding(parameter.ParameterType, _loggerFactory);
+            return new UserTypeArgumentBinding(parameter.ParameterType, _loggerFactory, _jsonSerializerSettings);
         }
 
         private class UserTypeArgumentBinding : ITriggerDataArgumentBinding<QueueMessage>
@@ -38,12 +42,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
             private readonly Type _valueType;
             private readonly IBindingDataProvider _bindingDataProvider;
             private readonly ILoggerFactory _loggerFactory;
+            private readonly JsonSerializerSettings _jsonSerializerSettings;
 
-            public UserTypeArgumentBinding(Type valueType, ILoggerFactory loggerFactory)
+            public UserTypeArgumentBinding(
+                Type valueType,
+                ILoggerFactory loggerFactory,
+                JsonSerializerSettings jsonSerializerSettings)
             {
                 _valueType = valueType;
                 _bindingDataProvider = BindingDataProvider.FromType(_valueType);
                 _loggerFactory = loggerFactory;
+                _jsonSerializerSettings = jsonSerializerSettings;
             }
 
             public Type ValueType
@@ -66,7 +75,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
                 object convertedValue;
                 try
                 {
-                    convertedValue = JsonConvert.DeserializeObject(value.Body.ToValidUTF8String(), ValueType, JsonSerialization.Settings);
+                    convertedValue = JsonConvert.DeserializeObject(value.Body.ToValidUTF8String(), ValueType, _jsonSerializerSettings);
                 }
                 catch (JsonException e)
                 {

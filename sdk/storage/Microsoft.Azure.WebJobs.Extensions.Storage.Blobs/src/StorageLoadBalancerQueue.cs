@@ -44,7 +44,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
                ILoggerFactory loggerFactory)
         {
             _queueServiceClientProvider = queueServiceClientProvider;
-            _queueOptions = queueOptions.Value;
+            _queueOptions = queueOptions?.Value ?? new QueuesOptions()
+            {
+                JsonSerializerSettings = JsonSerialization.Settings
+            };
             _exceptionHandler = exceptionHandler;
             _sharedWatcher = sharedWatcher;
             _loggerFactory = loggerFactory;
@@ -70,7 +73,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             {
                 string contents = JsonConvert.SerializeObject(
                     item,
-                    JsonSerialization.Settings);
+                    _parent._queueOptions.JsonSerializerSettings);
 
                 await _queue.AddMessageAndCreateIfNotExistsAsync(BinaryData.FromString(contents), cancellationToken).ConfigureAwait(false);
 

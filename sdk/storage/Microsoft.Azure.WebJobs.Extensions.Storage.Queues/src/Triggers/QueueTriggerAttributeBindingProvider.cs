@@ -59,7 +59,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
                 new ConverterArgumentBindingProvider<string>(new StorageQueueMessageToStringConverter(), loggerFactory),
                 new ConverterArgumentBindingProvider<byte[]>(new StorageQueueMessageToByteArrayConverter(), loggerFactory),
                 new ConverterArgumentBindingProvider<BinaryData>(new StorageQueueMessageToBinaryDataConverter(), loggerFactory),
-                new UserTypeArgumentBindingProvider(loggerFactory)); // Must come last, because it will attempt to bind all types.
+                new UserTypeArgumentBindingProvider(loggerFactory, _queueOptions.JsonSerializerSettings)); // Must come last, because it will attempt to bind all types.
         }
 
         public Task<ITriggerBinding> TryCreateAsync(TriggerBindingProviderContext context)

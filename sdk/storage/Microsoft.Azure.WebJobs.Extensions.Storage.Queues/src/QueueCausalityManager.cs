@@ -8,6 +8,7 @@ using Azure.Storage.Queues.Models;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Protocols;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
@@ -28,10 +29,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         private const string ParentGuidFieldName = "$AzureWebJobsParentId";
 
         private readonly ILogger<QueueCausalityManager> _logger;
+        internal readonly JsonSerializerSettings jsonSerializerSettings;
 
-        public QueueCausalityManager(ILoggerFactory loggerFactory)
+        public QueueCausalityManager(ILoggerFactory loggerFactory, JsonSerializerSettings settings = default)
         {
             _logger = loggerFactory.CreateLogger<QueueCausalityManager>();
+            jsonSerializerSettings = settings ?? JsonSerialization.Settings;
         }
 
         public static void SetOwner(Guid functionOwner, JObject token)
@@ -60,7 +63,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             IDictionary<string, JToken> json;
             try
             {
-                json = JsonSerialization.ParseJObject(text);
+                json = JsonSerialization.ParseJObject(text, jsonSerializerSettings);
             }
             catch (Exception)
             {

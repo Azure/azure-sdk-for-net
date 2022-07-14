@@ -14,6 +14,7 @@ using Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Config;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Config
@@ -26,8 +27,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Config
         private readonly QueueTriggerAttributeBindingProvider _triggerProvider;
         private readonly QueueCausalityManager _queueCausalityManager;
 
-        public QueuesExtensionConfigProvider(QueueServiceClientProvider queueServiceClientProvider, IContextGetter<IMessageEnqueuedWatcher> contextGetter,
-            QueueTriggerAttributeBindingProvider triggerProvider, QueueCausalityManager queueCausalityManager)
+        public QueuesExtensionConfigProvider(
+            QueueServiceClientProvider queueServiceClientProvider,
+            IContextGetter<IMessageEnqueuedWatcher> contextGetter,
+            QueueTriggerAttributeBindingProvider triggerProvider,
+            QueueCausalityManager queueCausalityManager)
         {
             _contextGetter = contextGetter;
             _queueServiceClientProvider = queueServiceClientProvider;
@@ -62,6 +66,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Config
             private IContextGetter<IMessageEnqueuedWatcher> _messageEnqueuedWatcherGetter;
 
             private QueueCausalityManager _queueCausalityManager;
+            private static JsonSerializerSettings _jsonSerializerSettings;
 
             public void Initialize(
                 ExtensionConfigContext context,
@@ -72,6 +77,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Config
                 _queueServiceClientProvider = queueServiceClientProvider;
                 _messageEnqueuedWatcherGetter = contextGetter;
                 _queueCausalityManager = queueCausalityManager;
+                _jsonSerializerSettings = queueCausalityManager.jsonSerializerSettings;
 
                 // IStorageQueueMessage is the core testing interface
                 var binding = context.AddBindingRule<QueueAttribute>();
@@ -107,14 +113,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Config
 
             private static QueueMessage ConvertJObjectToCloudQueueMessage(JObject obj, QueueAttribute attrResolved)
             {
-                var json = obj.ToString(); // convert to JSon
+                var json = obj.ToString(); // convert to JSON
                 return ConvertStringToCloudQueueMessage(json, attrResolved);
             }
 
             // Hook JObject serialization to so we can stamp the object with a causality marker.
             private static Task<JObject> SerializeToJobject(object input, ValueBindingContext context)
             {
-                JObject objectToken = JObject.FromObject(input, JsonSerialization.Serializer);
+                JObject objectToken = JObject.FromObject(input, JsonSerializer.CreateDefault(_jsonSerializerSettings));
                 var functionInstanceId = context.FunctionInstanceId;
                 QueueCausalityManager.SetOwner(functionInstanceId, objectToken);
 

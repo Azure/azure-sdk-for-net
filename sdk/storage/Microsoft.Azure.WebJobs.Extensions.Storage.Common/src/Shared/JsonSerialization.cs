@@ -13,7 +13,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Protocols
     /// <summary>Provides the standard <see cref="JsonSerializerSettings"/> used by protocol data.</summary>
     internal static class JsonSerialization
     {
-        private static readonly JsonSerializerSettings JsonSerializerSettings = new JsonSerializerSettings
+        private static readonly JsonSerializerSettings JsonSerializerSettings = new JsonSerializerSettings()
         {
             // The default value, DateParseHandling.DateTime, drops time zone information from DateTimeOffets.
             // This value appears to work well with both DateTimes (without time zone information) and DateTimeOffsets.
@@ -36,48 +36,48 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Protocols
             get { return JsonSerializer; }
         }
 
-        internal static void ApplySettings(JsonReader reader)
+        internal static void ApplySettings(JsonReader reader, JsonSerializerSettings settings)
         {
             if (reader == null)
             {
                 return;
             }
 
-            reader.Culture = JsonSerializerSettings.Culture;
-            reader.DateFormatString = JsonSerializerSettings.DateFormatString;
-            reader.DateParseHandling = JsonSerializerSettings.DateParseHandling;
-            reader.DateTimeZoneHandling = JsonSerializerSettings.DateTimeZoneHandling;
-            reader.FloatParseHandling = Serializer.FloatParseHandling;
-            reader.MaxDepth = JsonSerializerSettings.MaxDepth;
+            reader.Culture = settings.Culture;
+            reader.DateFormatString = settings.DateFormatString;
+            reader.DateParseHandling = settings.DateParseHandling;
+            reader.DateTimeZoneHandling = settings.DateTimeZoneHandling;
+            reader.FloatParseHandling = settings.FloatParseHandling;
+            reader.MaxDepth = settings.MaxDepth;
         }
 
-        internal static void ApplySettings(JsonWriter writer)
+        internal static void ApplySettings(JsonWriter writer, JsonSerializerSettings settings)
         {
             if (writer == null)
             {
                 return;
             }
 
-            writer.Culture = JsonSerializerSettings.Culture;
-            writer.DateFormatHandling = JsonSerializerSettings.DateFormatHandling;
-            writer.DateFormatString = JsonSerializerSettings.DateFormatString;
-            writer.DateTimeZoneHandling = JsonSerializerSettings.DateTimeZoneHandling;
-            writer.FloatFormatHandling = JsonSerializerSettings.FloatFormatHandling;
-            writer.Formatting = JsonSerializerSettings.Formatting;
-            writer.StringEscapeHandling = JsonSerializerSettings.StringEscapeHandling;
+            writer.Culture = settings.Culture;
+            writer.DateFormatHandling = settings.DateFormatHandling;
+            writer.DateFormatString = settings.DateFormatString;
+            writer.DateTimeZoneHandling = settings.DateTimeZoneHandling;
+            writer.FloatFormatHandling = settings.FloatFormatHandling;
+            writer.Formatting = settings.Formatting;
+            writer.StringEscapeHandling = settings.StringEscapeHandling;
         }
 
-        internal static JsonTextReader CreateJsonTextReader(TextReader reader)
+        internal static JsonTextReader CreateJsonTextReader(TextReader reader, JsonSerializerSettings settings)
         {
             JsonTextReader jsonReader = new JsonTextReader(reader);
-            ApplySettings(jsonReader);
+            ApplySettings(jsonReader, settings);
             return jsonReader;
         }
 
-        internal static JsonTextWriter CreateJsonTextWriter(TextWriter textWriter)
+        internal static JsonTextWriter CreateJsonTextWriter(TextWriter textWriter, JsonSerializerSettings settings)
         {
             JsonTextWriter jsonWriter = new JsonTextWriter(textWriter);
-            ApplySettings(jsonWriter);
+            ApplySettings(jsonWriter, settings);
             return jsonWriter;
         }
 
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Protocols
             return (input.StartsWith("{", StringComparison.OrdinalIgnoreCase) && input.EndsWith("}", StringComparison.OrdinalIgnoreCase));
         }
 
-        internal static JObject ParseJObject(string json)
+        internal static JObject ParseJObject(string json, JsonSerializerSettings settings)
         {
             if (json == null)
             {
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Protocols
             try
             {
                 stringReader = new StringReader(json);
-                using (JsonTextReader jsonReader = CreateJsonTextReader(stringReader))
+                using (JsonTextReader jsonReader = CreateJsonTextReader(stringReader, settings))
                 {
                     stringReader = null;
                     JObject parsed = null;

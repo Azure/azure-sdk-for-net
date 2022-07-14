@@ -19,6 +19,8 @@ using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using Microsoft.Azure.WebJobs.Host;
+using Microsoft.Extensions.Options;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 {
@@ -32,19 +34,33 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
         private readonly ConcurrentDictionary<string, BlobQueueRegistration> _registrations;
         private readonly BlobTriggerSource _blobTriggerSource;
         private readonly ILogger<BlobListener> _logger;
+        private readonly QueuesOptions _options;
 
-        public BlobQueueTriggerExecutor(BlobTriggerSource blobTriggerSource, IBlobWrittenWatcher blobWrittenWatcher, ILogger<BlobListener> logger)
-            : this(BlobCausalityReader.Instance, blobTriggerSource, blobWrittenWatcher, logger)
+        public BlobQueueTriggerExecutor(
+            BlobTriggerSource blobTriggerSource,
+            IBlobWrittenWatcher blobWrittenWatcher,
+            ILogger<BlobListener> logger,
+            IOptions<QueuesOptions> options = default)
+            : this(BlobCausalityReader.Instance, blobTriggerSource, blobWrittenWatcher, logger, options)
         {
         }
 
-        public BlobQueueTriggerExecutor(IBlobCausalityReader causalityReader, BlobTriggerSource blobTriggerSource, IBlobWrittenWatcher blobWrittenWatcher, ILogger<BlobListener> logger)
+        public BlobQueueTriggerExecutor(
+            IBlobCausalityReader causalityReader,
+            BlobTriggerSource blobTriggerSource,
+            IBlobWrittenWatcher blobWrittenWatcher,
+            ILogger<BlobListener> logger,
+            IOptions<QueuesOptions> options = default)
         {
             _causalityReader = causalityReader;
             _blobTriggerSource = blobTriggerSource;
             _blobWrittenWatcher = blobWrittenWatcher;
             _registrations = new ConcurrentDictionary<string, BlobQueueRegistration>();
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _options = options?.Value ?? new QueuesOptions()
+            {
+                JsonSerializerSettings = JsonSerialization.Settings
+            };
         }
 
         public bool TryGetRegistration(string functionId, out BlobQueueRegistration registration)
@@ -59,7 +75,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
         public async Task<FunctionResult> ExecuteAsync(QueueMessage value, CancellationToken cancellationToken)
         {
-            BlobTriggerMessage message = JsonConvert.DeserializeObject<BlobTriggerMessage>(value.Body.ToValidUTF8String(), JsonSerialization.Settings);
+            BlobTriggerMessage message = JsonConvert.DeserializeObject<BlobTriggerMessage>(value.Body.ToValidUTF8String(), _options.JsonSerializerSettings);
 
             if (message == null)
             {

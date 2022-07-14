@@ -97,7 +97,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             return new QueuesOptions()
             {
                 BatchSize = batchSize,
-                NewBatchThreshold = newBatchThreshold,
+                NewBatchThreshold = newBatchThreshold
             };
         }
 
