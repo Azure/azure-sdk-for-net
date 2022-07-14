@@ -54,23 +54,23 @@ namespace Azure.ResourceManager.DnsResolver.Tests
         public async Task CreateInboundEndpoint()
         {
             // ARRANGE
-            var inboundEndpointData = new InboundEndpointData(this.DefaultLocation, new List<IPConfiguration>
+            var inboundEndpointData = new DnsResolverInboundEndpointData(this.DefaultLocation, new List<InboundEndpointIPConfiguration>
             {
-                new IPConfiguration(new WritableSubResource
+                new InboundEndpointIPConfiguration(new WritableSubResource
                 {
                     Id = new ResourceIdentifier(subnetId),
                 },
                 privateIPAddress: null,
-                IPAllocationMethod.Dynamic)
+                InboundEndpointIPAllocationMethod.Dynamic)
             });
 
             var inboundEndpointName = Recording.GenerateAssetName("inboundEndpoint-");
 
             // ACT
-            var inboundEndpoint = await dnsResolver.GetInboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, inboundEndpointName, inboundEndpointData);
+            var inboundEndpoint = await dnsResolver.GetDnsResolverInboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, inboundEndpointName, inboundEndpointData);
 
             // ASSERT
-            Assert.AreEqual(inboundEndpoint.Value.Data.ProvisioningState, ProvisioningState.Succeeded);
+            Assert.AreEqual(inboundEndpoint.Value.Data.ProvisioningState, DnsResolverProvisioningState.Succeeded);
         }
 
         [Test]
@@ -78,21 +78,21 @@ namespace Azure.ResourceManager.DnsResolver.Tests
         public async Task GetInboundEndpoint()
         {
             // ARRANGE
-            var inboundEndpointData = new InboundEndpointData(this.DefaultLocation, new List<IPConfiguration>
+            var inboundEndpointData = new DnsResolverInboundEndpointData(this.DefaultLocation, new List<InboundEndpointIPConfiguration>
             {
-                new IPConfiguration(new WritableSubResource
+                new InboundEndpointIPConfiguration(new WritableSubResource
                 {
                     Id = new ResourceIdentifier(subnetId),
                 },
                 privateIPAddress: null,
-                IPAllocationMethod.Dynamic)
+                InboundEndpointIPAllocationMethod.Dynamic)
             });
 
             var inboundEndpointName = Recording.GenerateAssetName("inboundEndpoint-");
-            await dnsResolver.GetInboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, inboundEndpointName, inboundEndpointData);
+            await dnsResolver.GetDnsResolverInboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, inboundEndpointName, inboundEndpointData);
 
             // ACT
-            var retrievedInboundEndpoint = await dnsResolver.GetInboundEndpoints().GetAsync(inboundEndpointName);
+            var retrievedInboundEndpoint = await dnsResolver.GetDnsResolverInboundEndpoints().GetAsync(inboundEndpointName);
 
             // ASSERT
             Assert.AreEqual(retrievedInboundEndpoint.Value.Data.Name, inboundEndpointName);
@@ -104,18 +104,18 @@ namespace Azure.ResourceManager.DnsResolver.Tests
         public async Task UpdateInboundEndpoint()
         {
             // ARRANGE
-            var inboundEndpointData = new InboundEndpointData(this.DefaultLocation, new List<IPConfiguration>
+            var inboundEndpointData = new DnsResolverInboundEndpointData(this.DefaultLocation, new List<InboundEndpointIPConfiguration>
             {
-                new IPConfiguration(new WritableSubResource
+                new InboundEndpointIPConfiguration(new WritableSubResource
                 {
                     Id = new ResourceIdentifier(subnetId),
                 },
                 privateIPAddress: null,
-                IPAllocationMethod.Dynamic)
+                InboundEndpointIPAllocationMethod.Dynamic)
             });
 
             var inboundEndpointName = Recording.GenerateAssetName("inboundEndpoint-");
-            var createdInboundEndpoint = await dnsResolver.GetInboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, inboundEndpointName, inboundEndpointData);
+            var createdInboundEndpoint = await dnsResolver.GetDnsResolverInboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, inboundEndpointName, inboundEndpointData);
 
             var newTagKey = Recording.GenerateAlphaNumericId("tagKey");
             var newTagValue = Recording.GenerateAlphaNumericId("tagValue");
@@ -132,24 +132,24 @@ namespace Azure.ResourceManager.DnsResolver.Tests
         public async Task RemoveInboundEndpoint()
         {
             // ARRANGE
-            var inboundEndpointData = new InboundEndpointData(this.DefaultLocation, new List<IPConfiguration>
+            var inboundEndpointData = new DnsResolverInboundEndpointData(this.DefaultLocation, new List<InboundEndpointIPConfiguration>
             {
-                new IPConfiguration(new WritableSubResource
+                new InboundEndpointIPConfiguration(new WritableSubResource
                 {
                     Id = new ResourceIdentifier(subnetId),
                 },
                 privateIPAddress: null,
-                IPAllocationMethod.Dynamic)
+                InboundEndpointIPAllocationMethod.Dynamic)
             });
 
             var inboundEndpointName = Recording.GenerateAssetName("inboundEndpoint-");
-            var createdInboundEndpoint = await dnsResolver.GetInboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, inboundEndpointName, inboundEndpointData);
+            var createdInboundEndpoint = await dnsResolver.GetDnsResolverInboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, inboundEndpointName, inboundEndpointData);
 
             // ACT
             await createdInboundEndpoint.Value.DeleteAsync(WaitUntil.Completed);
 
             // ASSERT
-            var getInboundEndpointResult = await dnsResolver.GetInboundEndpoints().ExistsAsync(inboundEndpointName);
+            var getInboundEndpointResult = await dnsResolver.GetDnsResolverInboundEndpoints().ExistsAsync(inboundEndpointName);
             Assert.AreEqual(getInboundEndpointResult.Value, false);
         }
     }
