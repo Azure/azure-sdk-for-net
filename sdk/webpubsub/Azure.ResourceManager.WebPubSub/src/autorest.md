@@ -127,4 +127,14 @@ directive:
   - from: webpubsub.json
     where: $.definitions.WebPubSubProperties.properties.disableLocalAuth
     transform: $["x-ms-client-name"] = 'isDisableLocalAuth'
+  - from: webpubsub.json
+    where: $.definitions.ManagedIdentityType
+    transform: >
+      $.enum = ["None", "SystemAssigned", "UserAssigned", "SystemAssigned, UserAssigned"];
+    reason: Temporary workaround to match with common type.
+  - from: webpubsub.json
+    where: $.definitions.WebPubSub.properties.identity
+    transform: >
+      $.description = "The managed identity response. Current supported identity types: SystemAssigned, UserAssigned, None.";
+    reason: Temporary workaround to update description.
 ```
