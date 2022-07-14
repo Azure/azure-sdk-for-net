@@ -132,12 +132,12 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             ledgerClient.PostLedgerEntry(
                 waitUntil: WaitUntil.Completed,
                 RequestContent.Create(
-                    new { contents = "Hello from Chris!", subLedgerId = "Chris' messages" }));
+                    new { contents = "Hello from Chris!", collectionId = "Chris' messages" }));
 
             ledgerClient.PostLedgerEntry(
                 waitUntil: WaitUntil.Completed,
                 RequestContent.Create(
-                    new { contents = "Hello from Allison!", subLedgerId = "Allison's messages" }));
+                    new { contents = "Hello from Allison!", collectionId = "Allison's messages" }));
 
             #endregion
 
@@ -156,10 +156,10 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 #else
             transactionId = postOperation.Id;
 #endif
-            string subLedgerId = "subledger:0";
+            string collectionId = "collection:0";
 
-            // Provide both the transactionId and subLedgerId.
-            Response getBySubledgerResponse = ledgerClient.GetLedgerEntry(transactionId,  subLedgerId);
+            // Provide both the transactionId and collectionId.
+            Response getByCollectionResponse = ledgerClient.GetLedgerEntry(transactionId,  collectionId);
 
             // Try until the entry is available.
             bool loaded = false;
@@ -167,7 +167,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             string contents = null;
             while (!loaded)
             {
-                loaded = JsonDocument.Parse(getBySubledgerResponse.Content)
+                loaded = JsonDocument.Parse(getByCollectionResponse.Content)
                     .RootElement
                     .TryGetProperty("entry", out element);
                 if (loaded)
@@ -176,22 +176,22 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
                 }
                 else
                 {
-                    getBySubledgerResponse = ledgerClient.GetLedgerEntry(transactionId, subLedgerId);
+                    getByCollectionResponse = ledgerClient.GetLedgerEntry(transactionId, collectionId);
                 }
             }
 
             Console.WriteLine(contents); // "Hello world!"
 
             // Now just provide the transactionId.
-            getBySubledgerResponse = ledgerClient.GetLedgerEntry(transactionId);
+            getByCollectionResponse = ledgerClient.GetLedgerEntry(transactionId);
 
-            string subLedgerId2 = JsonDocument.Parse(getBySubledgerResponse.Content)
+            string collectionId2 = JsonDocument.Parse(getByCollectionResponse.Content)
                 .RootElement
                 .GetProperty("entry")
-                .GetProperty("subLedgerId")
+                .GetProperty("collectionId")
                 .GetString();
 
-            Console.WriteLine($"{subLedgerId} == {subLedgerId2}");
+            Console.WriteLine($"{collectionId} == {collectionId2}");
 
             #endregion
 
@@ -203,14 +203,14 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             ledgerClient.PostLedgerEntry(
                 waitUntil: WaitUntil.Completed,
                 RequestContent.Create(new { contents = "Hello world 1" }));
-            PostLedgerEntryOperation subLedgerPostOperation = ledgerClient.PostLedgerEntry(
+            PostLedgerEntryOperation collectionPostOperation = ledgerClient.PostLedgerEntry(
                 waitUntil: WaitUntil.Completed,
-                RequestContent.Create(new { contents = "Hello world sub-ledger 0" }),
-                "my sub-ledger") as PostLedgerEntryOperation;
+                RequestContent.Create(new { contents = "Hello world collection 0" }),
+                "my collection") as PostLedgerEntryOperation;
             ledgerClient.PostLedgerEntry(
                 waitUntil: WaitUntil.Completed,
-                RequestContent.Create(new { contents = "Hello world sub-ledger 1" }),
-                "my sub-ledger");
+                RequestContent.Create(new { contents = "Hello world collection 1" }),
+                "my collection");
 #if SNIPPET
             string transactionId = firstPostOperation.Id;
 #else
@@ -228,7 +228,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
                     .GetString();
             }
 
-            // The ledger entry written at the transactionId in firstResponse is retrieved from the default sub-ledger.
+            // The ledger entry written at the transactionId in firstResponse is retrieved from the default collection.
             Response getResponse = ledgerClient.GetLedgerEntry(transactionId);
 
             // Try until the entry is available.
@@ -246,7 +246,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
                 }
                 else
                 {
-                    getResponse = ledgerClient.GetLedgerEntry(transactionId, subLedgerId);
+                    getResponse = ledgerClient.GetLedgerEntry(transactionId, collectionId);
                 }
             }
 
@@ -258,7 +258,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 
             Console.WriteLine(firstEntryContents); // "Hello world 0"
 
-            // This will return the latest entry available in the default sub-ledger.
+            // This will return the latest entry available in the default collection.
             getResponse = ledgerClient.GetCurrentLedgerEntry();
 
             // Try until the entry is available.
@@ -280,16 +280,16 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
                 }
             }
 
-            Console.WriteLine($"The latest ledger entry from the default sub-ledger is {latestDefaultSubLedger}"); //"Hello world 1"
+            Console.WriteLine($"The latest ledger entry from the default collection is {latestDefaultSubLedger}"); //"Hello world 1"
 
-            // The ledger entry written at subLedgerTransactionId is retrieved from the sub-ledger 'sub-ledger'.
-            string subLedgerTransactionId = subLedgerPostOperation.Id;
+            // The ledger entry written at collectionTransactionId is retrieved from the collection 'collection'.
+            string collectionTransactionId = collectionPostOperation.Id;
 
-            getResponse = ledgerClient.GetLedgerEntry(subLedgerTransactionId, "my sub-ledger");
+            getResponse = ledgerClient.GetLedgerEntry(collectionTransactionId, "my collection");
             // Try until the entry is available.
             loaded = false;
             element = default;
-            string subLedgerEntry = null;
+            string collectionEntry = null;
             while (!loaded)
             {
                 loaded = JsonDocument.Parse(getResponse.Content)
@@ -297,30 +297,30 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
                     .TryGetProperty("entry", out element);
                 if (loaded)
                 {
-                    subLedgerEntry = element.GetProperty("contents").GetString();
+                    collectionEntry = element.GetProperty("contents").GetString();
                 }
                 else
                 {
-                    getResponse = ledgerClient.GetLedgerEntry(subLedgerTransactionId, "my sub-ledger");
+                    getResponse = ledgerClient.GetLedgerEntry(collectionTransactionId, "my collection");
                 }
             }
 
-            Console.WriteLine(subLedgerEntry); // "Hello world sub-ledger 0"
+            Console.WriteLine(collectionEntry); // "Hello world collection 0"
 
-            // This will return the latest entry available in the sub-ledger.
-            getResponse = ledgerClient.GetCurrentLedgerEntry("my sub-ledger");
+            // This will return the latest entry available in the collection.
+            getResponse = ledgerClient.GetCurrentLedgerEntry("my collection");
             string latestSubLedger = JsonDocument.Parse(getResponse.Content)
                 .RootElement
                 .GetProperty("contents")
                 .GetString();
 
-            Console.WriteLine($"The latest ledger entry from the sub-ledger is {latestSubLedger}"); // "Hello world sub-ledger 1"
+            Console.WriteLine($"The latest ledger entry from the collection is {latestSubLedger}"); // "Hello world collection 1"
 
             #endregion
 
             #region Snippet:RangedQuery
 
-            ledgerClient.GetLedgerEntries(fromTransactionId: "2.1", toTransactionId: subLedgerTransactionId);
+            ledgerClient.GetLedgerEntries(fromTransactionId: "2.1", toTransactionId: collectionTransactionId);
 
             #endregion
 
