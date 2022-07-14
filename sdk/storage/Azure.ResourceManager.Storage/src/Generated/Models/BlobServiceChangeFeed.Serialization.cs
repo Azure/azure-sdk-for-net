@@ -10,15 +10,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class ChangeFeed : IUtf8JsonSerializable
+    public partial class BlobServiceChangeFeed : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(RetentionInDays))
             {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteEndObject();
         }
 
-        internal static ChangeFeed DeserializeChangeFeed(JsonElement element)
+        internal static BlobServiceChangeFeed DeserializeBlobServiceChangeFeed(JsonElement element)
         {
             Optional<bool> enabled = default;
             Optional<int> retentionInDays = default;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new ChangeFeed(Optional.ToNullable(enabled), Optional.ToNullable(retentionInDays));
+            return new BlobServiceChangeFeed(Optional.ToNullable(enabled), Optional.ToNullable(retentionInDays));
         }
     }
 }

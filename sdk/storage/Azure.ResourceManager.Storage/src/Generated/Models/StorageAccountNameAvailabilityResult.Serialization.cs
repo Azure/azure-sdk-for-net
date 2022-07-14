@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class CheckNameAvailabilityResult
+    public partial class StorageAccountNameAvailabilityResult
     {
-        internal static CheckNameAvailabilityResult DeserializeCheckNameAvailabilityResult(JsonElement element)
+        internal static StorageAccountNameAvailabilityResult DeserializeStorageAccountNameAvailabilityResult(JsonElement element)
         {
             Optional<bool> nameAvailable = default;
             Optional<StorageAccountNameUnavailableReason> reason = default;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new CheckNameAvailabilityResult(Optional.ToNullable(nameAvailable), Optional.ToNullable(reason), message.Value);
+            return new StorageAccountNameAvailabilityResult(Optional.ToNullable(nameAvailable), Optional.ToNullable(reason), message.Value);
         }
     }
 }
