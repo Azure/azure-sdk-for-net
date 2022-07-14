@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 Location = AzureLocation.WestUS,
                 Subnet = virtualNetwork.Data.Subnets[0],
                 ManualPrivateLinkServiceConnections = {
-                    new PrivateLinkServiceConnection
+                    new NetworkPrivateLinkServiceConnection
                     {
                         Name = Recording.GenerateAssetName("pec"),
                         // TODO: externalize or create the service on-demand, like virtual network
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             return (await _resourceGroup.GetPrivateEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, name, privateEndpointData)).Value;
         }
 
-        private void VerifyPrivateEndpointConnections(PrivateLinkServiceConnection expectedValue, CosmosDBPrivateEndpointConnectionResource actualValue)
+        private void VerifyPrivateEndpointConnections(NetworkPrivateLinkServiceConnection expectedValue, CosmosDBPrivateEndpointConnectionResource actualValue)
         {
             // Services will give diffferent ids and names for the incoming private endpoint connections, so comparing them is meaningless
             //Assert.AreEqual(expectedValue.Id, actualValue.Id);

@@ -186,8 +186,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> clientCertExclusionPaths = default;
             Optional<bool> hostNamesDisabled = default;
             Optional<string> customDomainVerificationId = default;
-            Optional<string> outboundIpAddresses = default;
-            Optional<string> possibleOutboundIpAddresses = default;
+            Optional<string> outboundIPAddresses = default;
+            Optional<string> possibleOutboundIPAddresses = default;
             Optional<int> containerSize = default;
             Optional<int> dailyMemoryTimeQuota = default;
             Optional<DateTimeOffset> suspendedTill = default;
@@ -486,12 +486,12 @@ namespace Azure.ResourceManager.AppService.Models
                         }
                         if (property0.NameEquals("outboundIpAddresses"))
                         {
-                            outboundIpAddresses = property0.Value.GetString();
+                            outboundIPAddresses = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("possibleOutboundIpAddresses"))
                         {
-                            possibleOutboundIpAddresses = property0.Value.GetString();
+                            possibleOutboundIPAddresses = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("containerSize"))

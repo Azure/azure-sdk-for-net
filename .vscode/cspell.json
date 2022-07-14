@@ -572,7 +572,14 @@
         "Rscript",
         "VCPUs"
         ]
-    }  
+    },  
+    {
+      "filename": "**/sdk/reservations/**/*.cs",
+      "words": [
+        "Msrp",
+        "Hana"
+        ]
+    }
   ],
   "allowCompoundWords": true
 }

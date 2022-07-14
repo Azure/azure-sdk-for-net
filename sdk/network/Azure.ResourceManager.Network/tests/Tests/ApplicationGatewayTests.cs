@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network.Tests
                 new ApplicationGatewaySslCertificate()
                 {
                     Name = sslCertName,
-                    Data = Convert.ToBase64String(cert.Export(X509ContentType.Pfx, password)),
+                    Data = BinaryData.FromString(Convert.ToBase64String(cert.Export(X509ContentType.Pfx, password))),
                     Password = password
                 }
             };
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Tests
                 new ApplicationGatewayAuthenticationCertificate()
                 {
                     Name = authCertName,
-                    Data = Convert.ToBase64String(cert.Export(X509ContentType.Cert))
+                    Data = BinaryData.FromString(Convert.ToBase64String(cert.Export(X509ContentType.Cert)))
                 };
         }
 
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network.Tests
                         PickHostNameFromBackendHttpSettings = true,
                         Match = new ApplicationGatewayProbeHealthResponseMatch
                         {
-                            Body = "helloworld",
+                            Body = BinaryData.FromString("helloworld"),
                             StatusCodes = {"200-300","403"}
                         }
                     }

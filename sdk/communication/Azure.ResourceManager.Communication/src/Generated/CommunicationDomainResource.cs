@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="content"> Type of verification to be initiated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> InitiateVerificationAsync(WaitUntil waitUntil, VerificationContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> InitiateVerificationAsync(WaitUntil waitUntil, DomainsRecordVerificationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="content"> Type of verification to be initiated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation InitiateVerification(WaitUntil waitUntil, VerificationContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation InitiateVerification(WaitUntil waitUntil, DomainsRecordVerificationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="content"> Type of verification to be canceled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> CancelVerificationAsync(WaitUntil waitUntil, VerificationContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> CancelVerificationAsync(WaitUntil waitUntil, DomainsRecordVerificationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="content"> Type of verification to be canceled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation CancelVerification(WaitUntil waitUntil, VerificationContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation CancelVerification(WaitUntil waitUntil, DomainsRecordVerificationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         internal static KeyVaultNetworkRuleSet DeserializeKeyVaultNetworkRuleSet(JsonElement element)
         {
             Optional<KeyVaultNetworkRuleBypassOption> bypass = default;
-            Optional<NetworkRuleAction> defaultAction = default;
+            Optional<KeyVaultNetworkRuleAction> defaultAction = default;
             Optional<IList<KeyVaultIPRule>> ipRules = default;
             Optional<IList<KeyVaultVirtualNetworkRule>> virtualNetworkRules = default;
             foreach (var property in element.EnumerateObject())
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    defaultAction = new NetworkRuleAction(property.Value.GetString());
+                    defaultAction = new KeyVaultNetworkRuleAction(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ipRules"))

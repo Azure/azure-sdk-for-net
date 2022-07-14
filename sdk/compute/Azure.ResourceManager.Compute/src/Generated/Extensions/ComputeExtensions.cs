@@ -1012,10 +1012,10 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ImageResource> GetImagesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DiskImageResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DiskImageResource> GetDiskImagesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetImagesAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetDiskImagesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1025,10 +1025,10 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ImageResource> GetImages(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DiskImageResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DiskImageResource> GetDiskImages(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetImages(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetDiskImages(cancellationToken);
         }
 
         /// <summary>
@@ -1335,9 +1335,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="includeExtendedLocations"> To Include Extended Locations information or not in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ComputeResourceSku" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ComputeResourceSku> GetResourceSkusAsync(this SubscriptionResource subscriptionResource, string filter = null, string includeExtendedLocations = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ComputeResourceSku> GetComputeResourceSkusAsync(this SubscriptionResource subscriptionResource, string filter = null, string includeExtendedLocations = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetResourceSkusAsync(filter, includeExtendedLocations, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetComputeResourceSkusAsync(filter, includeExtendedLocations, cancellationToken);
         }
 
         /// <summary>
@@ -1350,9 +1350,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="includeExtendedLocations"> To Include Extended Locations information or not in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ComputeResourceSku" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ComputeResourceSku> GetResourceSkus(this SubscriptionResource subscriptionResource, string filter = null, string includeExtendedLocations = null, CancellationToken cancellationToken = default)
+        public static Pageable<ComputeResourceSku> GetComputeResourceSkus(this SubscriptionResource subscriptionResource, string filter = null, string includeExtendedLocations = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetResourceSkus(filter, includeExtendedLocations, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetComputeResourceSkus(filter, includeExtendedLocations, cancellationToken);
         }
 
         /// <summary>
@@ -1430,15 +1430,15 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: VirtualMachineScaleSets_Get
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set. </param>
         /// <param name="expand"> The expand expression to apply on the operation. &apos;UserData&apos; retrieves the UserData property of the VM scale set that was provided by the user during the VM scale set Create/Update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vmScaleSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmScaleSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<VirtualMachineScaleSetResource>> GetVirtualMachineScaleSetAsync(this ResourceGroupResource resourceGroupResource, string vmScaleSetName, VirtualMachineScaleSetGetExpand? expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<VirtualMachineScaleSetResource>> GetVirtualMachineScaleSetAsync(this ResourceGroupResource resourceGroupResource, string virtualMachineScaleSetName, VirtualMachineScaleSetGetExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetVirtualMachineScaleSets().GetAsync(vmScaleSetName, expand, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetVirtualMachineScaleSets().GetAsync(virtualMachineScaleSetName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1447,15 +1447,15 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: VirtualMachineScaleSets_Get
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set. </param>
         /// <param name="expand"> The expand expression to apply on the operation. &apos;UserData&apos; retrieves the UserData property of the VM scale set that was provided by the user during the VM scale set Create/Update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vmScaleSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmScaleSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<VirtualMachineScaleSetResource> GetVirtualMachineScaleSet(this ResourceGroupResource resourceGroupResource, string vmScaleSetName, VirtualMachineScaleSetGetExpand? expand = null, CancellationToken cancellationToken = default)
+        public static Response<VirtualMachineScaleSetResource> GetVirtualMachineScaleSet(this ResourceGroupResource resourceGroupResource, string virtualMachineScaleSetName, VirtualMachineScaleSetGetExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetVirtualMachineScaleSets().Get(vmScaleSetName, expand, cancellationToken);
+            return resourceGroupResource.GetVirtualMachineScaleSets().Get(virtualMachineScaleSetName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of VirtualMachineResources in the ResourceGroupResource. </summary>
@@ -1664,12 +1664,12 @@ namespace Azure.ResourceManager.Compute
             return resourceGroupResource.GetSshPublicKeys().Get(sshPublicKeyName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ImageResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of DiskImageResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ImageResources and their operations over a ImageResource. </returns>
-        public static ImageCollection GetImages(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of DiskImageResources and their operations over a DiskImageResource. </returns>
+        public static DiskImageCollection GetDiskImages(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetImages();
+            return GetExtensionClient(resourceGroupResource).GetDiskImages();
         }
 
         /// <summary>
@@ -1684,9 +1684,9 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ImageResource>> GetImageAsync(this ResourceGroupResource resourceGroupResource, string imageName, string expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<DiskImageResource>> GetDiskImageAsync(this ResourceGroupResource resourceGroupResource, string imageName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetImages().GetAsync(imageName, expand, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetDiskImages().GetAsync(imageName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1701,9 +1701,9 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ImageResource> GetImage(this ResourceGroupResource resourceGroupResource, string imageName, string expand = null, CancellationToken cancellationToken = default)
+        public static Response<DiskImageResource> GetDiskImage(this ResourceGroupResource resourceGroupResource, string imageName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetImages().Get(imageName, expand, cancellationToken);
+            return resourceGroupResource.GetDiskImages().Get(imageName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of RestorePointGroupResources in the ResourceGroupResource. </summary>
@@ -2281,20 +2281,20 @@ namespace Azure.ResourceManager.Compute
         }
         #endregion
 
-        #region ImageResource
+        #region DiskImageResource
         /// <summary>
-        /// Gets an object representing an <see cref="ImageResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ImageResource.CreateResourceIdentifier" /> to create an <see cref="ImageResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DiskImageResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DiskImageResource.CreateResourceIdentifier" /> to create a <see cref="DiskImageResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ImageResource" /> object. </returns>
-        public static ImageResource GetImageResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DiskImageResource" /> object. </returns>
+        public static DiskImageResource GetDiskImageResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ImageResource.ValidateResourceId(id);
-                return new ImageResource(client, id);
+                DiskImageResource.ValidateResourceId(id);
+                return new DiskImageResource(client, id);
             }
             );
         }

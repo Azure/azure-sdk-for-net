@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="managedIdentities"> List of user assigned identities for the application, each mapped to a friendly name. </param>
         /// <param name="provisioningState"> The current deployment or provisioning state, which only appears in the response. </param>
         /// <param name="typeName"> The application type name as defined in the application manifest. </param>
-        /// <param name="eTag"> Azure resource etag. </param>
-        internal ApplicationResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string typeVersion, IDictionary<string, string> parameters, ApplicationUpgradePolicy upgradePolicy, long? minimumNodes, long? maximumNodes, bool? removeApplicationCapacity, IList<ApplicationMetricDescription> metrics, IList<ApplicationUserAssignedIdentity> managedIdentities, string provisioningState, string typeName, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="etag"> Azure resource etag. </param>
+        internal ApplicationResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string typeVersion, IDictionary<string, string> parameters, ApplicationUpgradePolicy upgradePolicy, long? minimumNodes, long? maximumNodes, bool? removeApplicationCapacity, IList<ApplicationMetricDescription> metrics, IList<ApplicationUserAssignedIdentity> managedIdentities, string provisioningState, string typeName, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             TypeVersion = typeVersion;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ServiceFabric
             ManagedIdentities = managedIdentities;
             ProvisioningState = provisioningState;
             TypeName = typeName;
-            ETag = eTag;
+            ETag = etag;
         }
 
         /// <summary> Describes the managed identities for an Azure resource. </summary>

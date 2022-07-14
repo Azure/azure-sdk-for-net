@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Migrate
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="eTag"> The etag of the resource. </param>
+        /// <param name="etag"> The etag of the resource. </param>
         /// <param name="identity"> Defines the MSI properties of the Move Collection. </param>
         /// <param name="properties"> Defines the move collection properties. </param>
-        internal MoveCollectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? eTag, Identity identity, MoveCollectionProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        internal MoveCollectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, Identity identity, MoveCollectionProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
-            ETag = eTag;
+            ETag = etag;
             Identity = identity;
             Properties = properties;
         }

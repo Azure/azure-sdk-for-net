@@ -16,5 +16,11 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         [JsonPropertyName(DigitalTwinsJsonPropertyNames.MetadataPropertyLastUpdateTime)]
         public DateTimeOffset LastUpdatedOn { get; set; }
+
+        /// <summary>
+        /// The date and time the value of the property was sourced.
+        /// </summary>
+        [JsonPropertyName(DigitalTwinsJsonPropertyNames.MetadataPropertySourceTime)]
+        public DateTimeOffset? SourceTime { get; set; }
     }
 }

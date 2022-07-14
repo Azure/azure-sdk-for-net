@@ -11,12 +11,14 @@
 - Type `WebPubSubSku` renamed to `BillingInfoSku`.
 - Type `SkuCapacity` renamed to `WebPubSubSkuCapacity`.
 - Type `ScaleType` renamed to `WebPubSubScaleType`.
+- Type `KeyType` renamed to `WebPubSubKeyType`.
 - Type `PrivateLinkResource` renamed to `WebPubSubPrivateLink`.
 - Type `SharedPrivateLinkResource` renamed to `WebPubSubSharedPrivateLink`.
 - Type `NameAvailability` renamed to `WebPubSubNameAvailability`.
 - Type `NameAvailabilityParameters` renamed to `WebPubSubNameAvailabilityParameters`.
 - Type `SharedPrivateLinkResourceStatus` renamed to `WebPubSubSharedPrivateLinkResourceStatus`.
 - Type of `privateLinkResourceId` change to `ResourceIdentifier`
+- Some fields named `Enabled` are renamed to `IsEnabled`,and type changes to `boolean`
 
 ### Bugs Fixed
 

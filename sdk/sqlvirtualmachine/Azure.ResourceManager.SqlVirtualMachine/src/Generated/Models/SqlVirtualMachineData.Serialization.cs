@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             Optional<SqlImageSku> sqlImageSku = default;
             Optional<string> sqlVirtualMachineGroupResourceId = default;
             Optional<WsfcDomainCredentials> wsfcDomainCredentials = default;
-            Optional<string> wsfcStaticIp = default;
+            Optional<string> wsfcStaticIP = default;
             Optional<AutoPatchingSettings> autoPatchingSettings = default;
             Optional<AutoBackupSettings> autoBackupSettings = default;
             Optional<KeyVaultCredentialSettings> keyVaultCredentialSettings = default;
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                         }
                         if (property0.NameEquals("wsfcStaticIp"))
                         {
-                            wsfcStaticIp = property0.Value.GetString();
+                            wsfcStaticIP = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("autoPatchingSettings"))
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                     continue;
                 }
             }
-            return new SqlVirtualMachineData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, virtualMachineResourceId.Value, provisioningState.Value, sqlImageOffer.Value, Optional.ToNullable(sqlServerLicenseType), Optional.ToNullable(sqlManagement), Optional.ToNullable(sqlImageSku), sqlVirtualMachineGroupResourceId.Value, wsfcDomainCredentials.Value, wsfcStaticIp.Value, autoPatchingSettings.Value, autoBackupSettings.Value, keyVaultCredentialSettings.Value, serverConfigurationsManagementSettings.Value, storageConfigurationSettings.Value, assessmentSettings.Value);
+            return new SqlVirtualMachineData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, virtualMachineResourceId.Value, provisioningState.Value, sqlImageOffer.Value, Optional.ToNullable(sqlServerLicenseType), Optional.ToNullable(sqlManagement), Optional.ToNullable(sqlImageSku), sqlVirtualMachineGroupResourceId.Value, wsfcDomainCredentials.Value, wsfcStaticIP.Value, autoPatchingSettings.Value, autoBackupSettings.Value, keyVaultCredentialSettings.Value, serverConfigurationsManagementSettings.Value, storageConfigurationSettings.Value, assessmentSettings.Value);
         }
     }
 }

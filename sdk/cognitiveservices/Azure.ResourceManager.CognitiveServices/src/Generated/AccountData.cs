@@ -33,14 +33,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="sku"> The resource model definition representing SKU. </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <param name="properties"> Properties of Cognitive Services account. </param>
-        /// <param name="eTag"> Resource Etag. </param>
-        internal AccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, CognitiveServicesSku sku, ManagedServiceIdentity identity, AccountProperties properties, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="etag"> Resource Etag. </param>
+        internal AccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, CognitiveServicesSku sku, ManagedServiceIdentity identity, AccountProperties properties, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
         {
             Kind = kind;
             Sku = sku;
             Identity = identity;
             Properties = properties;
-            ETag = eTag;
+            ETag = etag;
         }
 
         /// <summary> The Kind of the resource. </summary>
