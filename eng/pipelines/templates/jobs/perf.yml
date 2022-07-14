@@ -28,7 +28,7 @@ parameters:
     default: ''
 
 variables:
-  - template: /eng/pipelines/templates/variables/globals.yml
+  foo: bar
 
 extends:
   template: /eng/common/pipelines/templates/jobs/perf.yml
