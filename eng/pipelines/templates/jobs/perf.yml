@@ -1,13 +1,13 @@
 parameters:
+  - name: operatingSystems
+    type: string
+    default: 'Linux'
   - name: serviceDirectory
     type: string
     default: ''
   - name: services
     type: string
     default: ''
-  - name: operatingSystems
-    type: string
-    default: 'Linux'
   - name: packageVersions
     type: string
     default: '.*'
