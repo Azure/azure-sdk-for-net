@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- The `CertValidationCheck` callback for `ConfidentialLedgerClient` instances now checks the final certificate in the server's certificate chain matches the trusted TLS certificate. Previously this callback checked the thumbprint of the trusted TLS certificate was present anywhere in the server's certificate chain.
+
 ## 1.0.0-beta.3 (2022-07-07)
 
 ### Breaking Changes

@@ -166,45 +166,42 @@ namespace Azure.Security.ConfidentialLedger
             var ledgerId = ledgerUri.Host.Substring(0, ledgerUri.Host.IndexOf('.'));
             Response response = identityClient.GetLedgerIdentity(ledgerId, new());
 
-            // extract the ECC PEM value from the response.
-            var eccPem = JsonDocument.Parse(response.Content)
-                .RootElement
-                .GetProperty("ledgerTlsCertificate")
-                .GetString();
-
-            // construct an X509Certificate2 with the ECC PEM value.
-            return GetCertFromPEM(eccPem);
+            // Construct an X509Certificate2 from the response.
+            X509Certificate2 ledgerTlsCert = ConfidentialLedgerIdentityServiceClient.ParseCertificate(response);
+            return ledgerTlsCert;
         }
 
         private static HttpPipelineTransportOptions GetIdentityServerTlsCertAndTrust(X509Certificate2 identityServiceCert = null)
         {
             X509Chain certificateChain = new();
+            // Revocation is not required by CCF. Hence revocation checks must be skipped to avoid validation failing unecessarily.
             certificateChain.ChainPolicy.RevocationMode = X509RevocationMode.NoCheck;
-            certificateChain.ChainPolicy.RevocationFlag = X509RevocationFlag.ExcludeRoot;
+            // Add the ledger identity TLS certificate to the ExtraStore.
+            certificateChain.ChainPolicy.ExtraStore.Add(identityServiceCert);
+            // AllowUnknownCertificateAuthority will NOT allow validation of all unknown self-signed certificates.
+            // It extends trust to the ExtraStore, which in this case contains the trusted ledger identity TLS certificate.
+            // This makes it possible for validation of certificate chains terminating in the ledger identity TLS certificate to pass.
+            // Note: .NET 5 introduced `CustomTrustStore` but we cannot use that here as we must support older versions of .NET.
             certificateChain.ChainPolicy.VerificationFlags = X509VerificationFlags.AllowUnknownCertificateAuthority;
             certificateChain.ChainPolicy.VerificationTime = DateTime.Now;
-            certificateChain.ChainPolicy.UrlRetrievalTimeout = new TimeSpan(0, 0, 0);
-            certificateChain.ChainPolicy.ExtraStore.Add(identityServiceCert);
 
-            // Define a validation function to ensure that the ledger certificate is trusted by the ledger identity TLS certificate.
+            // Define a validation function to ensure that certificates presented to the client only pass validation if
+            // they are trusted by the ledger identity TLS certificate.
             bool CertValidationCheck(X509Certificate2 cert)
             {
+                // Validate the presented certificate chain, using the ChainPolicy defined above.
+                // Note: this check will allow certificates signed by standard CAs as well as those signed by the ledger identity TLS certificate.
                 bool isChainValid = certificateChain.Build(cert);
                 if (!isChainValid)
                     return false;
 
-                var isCertSignedByTheTlsCert = certificateChain.ChainElements.Cast<X509ChainElement>()
-                    .Any(x => x.Certificate.Thumbprint == identityServiceCert.Thumbprint);
-                return isCertSignedByTheTlsCert;
+                // Ensure that the presented certificate chain passes validation only if it is rooted in the the ledger identity TLS certificate.
+                var rootCert = certificateChain.ChainElements[certificateChain.ChainElements.Count - 1].Certificate;
+                var isChainRootedinTheTlsCert = rootCert.RawData.SequenceEqual(identityServiceCert.RawData);
+                return isChainRootedinTheTlsCert;
             }
 
             return new HttpPipelineTransportOptions { ServerCertificateCustomValidationCallback = args => CertValidationCheck(args.Certificate) };
-        }
-
-        private static X509Certificate2 GetCertFromPEM(string eccPem)
-        {
-            var span = new ReadOnlySpan<char>(eccPem.ToCharArray());
-            return PemReader.LoadCertificate(span, null, PemReader.KeyType.Auto, true);
         }
     }
 }
