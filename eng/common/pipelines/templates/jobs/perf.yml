@@ -30,8 +30,8 @@ parameters:
     type: string
     default: ''
   - name: installLanguageSteps
-    type: string
-    default: ''
+    type: stepList
+    default: []
 
 variables:
   - template: /eng/pipelines/templates/variables/globals.yml
