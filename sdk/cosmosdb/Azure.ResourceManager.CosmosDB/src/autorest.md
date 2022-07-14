@@ -198,7 +198,7 @@ rename-mapping:
   ClusterResourceProperties.cassandraAuditLoggingEnabled: IsCassandraAuditLoggingEnabled
   ClusterResourceProperties.deallocated : IsDeallocated
   ClusterResourceProperties.repairEnabled: IsRepairEnabled
-  CommandPostBody.readwrite: IsReadwrite
+  CommandPostBody.readwrite: AllowWrite
   IndexingPolicy.automatic: IsAutomatic
   ManagedCassandraReaperStatus.healthy: IsHealthy
   MongoIndexOptions.unique: IsUnique

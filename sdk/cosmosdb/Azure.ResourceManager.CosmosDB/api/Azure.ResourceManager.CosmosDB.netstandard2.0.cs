@@ -1428,11 +1428,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class CassandraCommandPostBody
     {
         public CassandraCommandPostBody(string command, string host) { }
+        public bool? AllowWrite { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Arguments { get { throw null; } }
         public bool? CassandraStopStart { get { throw null; } set { } }
         public string Command { get { throw null; } }
         public string Host { get { throw null; } }
-        public bool? IsReadwrite { get { throw null; } set { } }
     }
     public partial class CassandraConnectionError
     {
