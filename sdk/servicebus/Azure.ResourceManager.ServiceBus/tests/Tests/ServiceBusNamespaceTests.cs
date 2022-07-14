@@ -66,11 +66,11 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                 {
                     Tier = ServiceBusSkuTier.Premium
                 },
-                ZoneRedundant = true
+                IsZoneRedundant = true
             };
             ServiceBusNamespaceResource serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, parameters)).Value;
             VerifyNamespaceProperties(serviceBusNamespace, false);
-            Assert.IsTrue(serviceBusNamespace.Data.ZoneRedundant);
+            Assert.IsTrue(serviceBusNamespace.Data.IsZoneRedundant);
         }
 
         [Test]

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -45,11 +46,11 @@ namespace Azure.ResourceManager.Storage.Models
             string domainName = default;
             string netBiosDomainName = default;
             string forestName = default;
-            string domainGuid = default;
+            Guid domainGuid = default;
             string domainSid = default;
             string azureStorageSid = default;
             Optional<string> samAccountName = default;
-            Optional<ActiveDirectoryPropertiesAccountType> accountType = default;
+            Optional<ActiveDirectoryAccountType> accountType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("domainName"))
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (property.NameEquals("domainGuid"))
                 {
-                    domainGuid = property.Value.GetString();
+                    domainGuid = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("domainSid"))
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.Storage.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    accountType = new ActiveDirectoryPropertiesAccountType(property.Value.GetString());
+                    accountType = new ActiveDirectoryAccountType(property.Value.GetString());
                     continue;
                 }
             }

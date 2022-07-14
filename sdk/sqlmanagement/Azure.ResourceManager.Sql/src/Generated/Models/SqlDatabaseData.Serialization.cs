@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("catalogCollation");
                 writer.WriteStringValue(CatalogCollation.Value.ToString());
             }
-            if (Optional.IsDefined(ZoneRedundant))
+            if (Optional.IsDefined(IsZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant");
-                writer.WriteBooleanValue(ZoneRedundant.Value);
+                writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
             if (Optional.IsDefined(LicenseType))
             {
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Sql
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<CreateMode> createMode = default;
+            Optional<SqlDatabaseCreateMode> createMode = default;
             Optional<string> collation = default;
             Optional<long> maxSizeBytes = default;
             Optional<SampleSchemaName> sampleName = default;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Sql
             Optional<string> currentServiceObjectiveName = default;
             Optional<string> requestedServiceObjectiveName = default;
             Optional<AzureLocation> defaultSecondaryLocation = default;
-            Optional<string> failoverGroupId = default;
+            Optional<ResourceIdentifier> failoverGroupId = default;
             Optional<DateTimeOffset> restorePointInTime = default;
             Optional<DateTimeOffset> sourceDatabaseDeletionDate = default;
             Optional<ResourceIdentifier> recoveryServicesRecoveryPointId = default;
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            createMode = new CreateMode(property0.Value.GetString());
+                            createMode = new SqlDatabaseCreateMode(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("collation"))
@@ -417,7 +417,12 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("failoverGroupId"))
                         {
-                            failoverGroupId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            failoverGroupId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("restorePointInTime"))

@@ -21,18 +21,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Initializes a new instance of ManagedCassandraReaperStatus. </summary>
-        /// <param name="healthy"></param>
+        /// <param name="isHealthy"></param>
         /// <param name="repairRunIds"> Dictionary of &lt;string&gt;. </param>
         /// <param name="repairSchedules"> Dictionary of &lt;string&gt;. </param>
-        internal ManagedCassandraReaperStatus(bool? healthy, IReadOnlyDictionary<string, string> repairRunIds, IReadOnlyDictionary<string, string> repairSchedules)
+        internal ManagedCassandraReaperStatus(bool? isHealthy, IReadOnlyDictionary<string, string> repairRunIds, IReadOnlyDictionary<string, string> repairSchedules)
         {
-            Healthy = healthy;
+            IsHealthy = isHealthy;
             RepairRunIds = repairRunIds;
             RepairSchedules = repairSchedules;
         }
 
-        /// <summary> Gets the healthy. </summary>
-        public bool? Healthy { get; }
+        /// <summary> Gets the is healthy. </summary>
+        public bool? IsHealthy { get; }
         /// <summary> Dictionary of &lt;string&gt;. </summary>
         public IReadOnlyDictionary<string, string> RepairRunIds { get; }
         /// <summary> Dictionary of &lt;string&gt;. </summary>

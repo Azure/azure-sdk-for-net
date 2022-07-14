@@ -116,10 +116,10 @@ namespace Azure.IoT.DeviceUpdate
     }
     public partial class DeviceUpdateClientOptions : Azure.Core.ClientOptions
     {
-        public DeviceUpdateClientOptions(Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions.ServiceVersion version = Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions.ServiceVersion.V2022_07_01_preview) { }
+        public DeviceUpdateClientOptions(Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions.ServiceVersion version = Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions.ServiceVersion.V2022_07_01_Preview) { }
         public enum ServiceVersion
         {
-            V2022_07_01_preview = 1,
+            V2022_07_01_Preview = 1,
         }
     }
 }

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="version"> The version of the deleted blob container. </param>
-        /// <param name="deleted"> Indicates whether the blob container was deleted. </param>
+        /// <param name="isDeleted"> Indicates whether the blob container was deleted. </param>
         /// <param name="deletedOn"> Blob container deletion time. </param>
         /// <param name="remainingRetentionDays"> Remaining retention days for soft deleted blob container. </param>
         /// <param name="defaultEncryptionScope"> Default the container to use specified encryption scope for all writes. </param>
@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.Storage
         /// <param name="enableNfsV3RootSquash"> Enable NFSv3 root squash on blob container. </param>
         /// <param name="enableNfsV3AllSquash"> Enable NFSv3 all squash on blob container. </param>
         /// <param name="etag"> Resource Etag. </param>
-        internal BlobContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string version, bool? deleted, DateTimeOffset? deletedOn, int? remainingRetentionDays, string defaultEncryptionScope, bool? denyEncryptionScopeOverride, StoragePublicAccess? publicAccess, DateTimeOffset? lastModifiedOn, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDuration? leaseDuration, IDictionary<string, string> metadata, ImmutabilityPolicyProperties immutabilityPolicy, LegalHoldProperties legalHold, bool? hasLegalHold, bool? hasImmutabilityPolicy, ImmutableStorageWithVersioning immutableStorageWithVersioning, bool? enableNfsV3RootSquash, bool? enableNfsV3AllSquash, ETag? etag) : base(id, name, resourceType, systemData)
+        internal BlobContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string version, bool? isDeleted, DateTimeOffset? deletedOn, int? remainingRetentionDays, string defaultEncryptionScope, bool? denyEncryptionScopeOverride, StoragePublicAccess? publicAccess, DateTimeOffset? lastModifiedOn, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDuration? leaseDuration, IDictionary<string, string> metadata, ImmutabilityPolicyProperties immutabilityPolicy, LegalHoldProperties legalHold, bool? hasLegalHold, bool? hasImmutabilityPolicy, ImmutableStorageWithVersioning immutableStorageWithVersioning, bool? enableNfsV3RootSquash, bool? enableNfsV3AllSquash, ETag? etag) : base(id, name, resourceType, systemData)
         {
             Version = version;
-            Deleted = deleted;
+            IsDeleted = isDeleted;
             DeletedOn = deletedOn;
             RemainingRetentionDays = remainingRetentionDays;
             DefaultEncryptionScope = defaultEncryptionScope;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Storage
         /// <summary> The version of the deleted blob container. </summary>
         public string Version { get; }
         /// <summary> Indicates whether the blob container was deleted. </summary>
-        public bool? Deleted { get; }
+        public bool? IsDeleted { get; }
         /// <summary> Blob container deletion time. </summary>
         public DateTimeOffset? DeletedOn { get; }
         /// <summary> Remaining retention days for soft deleted blob container. </summary>

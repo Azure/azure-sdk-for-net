@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Sql
             Optional<int> stepId = default;
             Optional<Guid> jobExecutionId = default;
             Optional<JobExecutionLifecycle> lifecycle = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<JobExecutionProvisioningState> provisioningState = default;
             Optional<DateTimeOffset> createTime = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new JobExecutionProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("createTime"))

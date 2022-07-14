@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("tenantId");
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(AzureADOnlyAuthentication))
+            if (Optional.IsDefined(IsAzureADOnlyAuthenticationEnabled))
             {
                 writer.WritePropertyName("azureADOnlyAuthentication");
-                writer.WriteBooleanValue(AzureADOnlyAuthentication.Value);
+                writer.WriteBooleanValue(IsAzureADOnlyAuthenticationEnabled.Value);
             }
             writer.WriteEndObject();
         }

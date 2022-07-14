@@ -107,11 +107,11 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ManagedInstanceDatabaseSchemaResources in the ManagedDatabase. </summary>
-        /// <returns> An object representing collection of ManagedInstanceDatabaseSchemaResources and their operations over a ManagedInstanceDatabaseSchemaResource. </returns>
-        public virtual ManagedInstanceDatabaseSchemaCollection GetManagedInstanceDatabaseSchemas()
+        /// <summary> Gets a collection of ManagedDatabaseSchemaResources in the ManagedDatabase. </summary>
+        /// <returns> An object representing collection of ManagedDatabaseSchemaResources and their operations over a ManagedDatabaseSchemaResource. </returns>
+        public virtual ManagedDatabaseSchemaCollection GetManagedDatabaseSchemas()
         {
-            return GetCachedClient(Client => new ManagedInstanceDatabaseSchemaCollection(Client, Id));
+            return GetCachedClient(Client => new ManagedDatabaseSchemaCollection(Client, Id));
         }
 
         /// <summary>
@@ -124,9 +124,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ManagedInstanceDatabaseSchemaResource>> GetManagedInstanceDatabaseSchemaAsync(string schemaName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedDatabaseSchemaResource>> GetManagedDatabaseSchemaAsync(string schemaName, CancellationToken cancellationToken = default)
         {
-            return await GetManagedInstanceDatabaseSchemas().GetAsync(schemaName, cancellationToken).ConfigureAwait(false);
+            return await GetManagedDatabaseSchemas().GetAsync(schemaName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -139,9 +139,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ManagedInstanceDatabaseSchemaResource> GetManagedInstanceDatabaseSchema(string schemaName, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedDatabaseSchemaResource> GetManagedDatabaseSchema(string schemaName, CancellationToken cancellationToken = default)
         {
-            return GetManagedInstanceDatabaseSchemas().Get(schemaName, cancellationToken);
+            return GetManagedDatabaseSchemas().Get(schemaName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ManagedDatabaseVulnerabilityAssessmentResources in the ManagedDatabase. </summary>
