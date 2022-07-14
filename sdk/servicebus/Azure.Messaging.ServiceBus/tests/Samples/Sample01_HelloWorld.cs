@@ -272,7 +272,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             #region Snippet:ServiceBusCustomEndpoint
             // Connect to the service using a custom endpoint
             string connectionString = "<connection_string>";
-            string customEndpoint = "<custom_endpoint";
+            string customEndpoint = "<custom_endpoint>";
 
             var options = new ServiceBusClientOptions
             {
