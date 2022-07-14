@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="virtualWan"> The VirtualWAN to which the vpnSite belongs. </param>
         /// <param name="deviceProperties"> The device properties. </param>
         /// <param name="ipAddress"> The ip-address for the vpn-site. </param>
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="isSecuritySite"> IsSecuritySite flag. </param>
         /// <param name="vpnSiteLinks"> List of all vpn site links. </param>
         /// <param name="o365Policy"> Office365 Policy. </param>
-        internal VpnSiteData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? eTag, WritableSubResource virtualWan, DeviceProperties deviceProperties, string ipAddress, string siteKey, AddressSpace addressSpace, BgpSettings bgpProperties, NetworkProvisioningState? provisioningState, bool? isSecuritySite, IList<VpnSiteLinkData> vpnSiteLinks, O365PolicyProperties o365Policy) : base(id, name, resourceType, location, tags)
+        internal VpnSiteData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, WritableSubResource virtualWan, DeviceProperties deviceProperties, string ipAddress, string siteKey, AddressSpace addressSpace, BgpSettings bgpProperties, NetworkProvisioningState? provisioningState, bool? isSecuritySite, IList<VpnSiteLinkData> vpnSiteLinks, O365PolicyProperties o365Policy) : base(id, name, resourceType, location, tags)
         {
-            ETag = eTag;
+            ETag = etag;
             VirtualWan = virtualWan;
             DeviceProperties = deviceProperties;
             IPAddress = ipAddress;

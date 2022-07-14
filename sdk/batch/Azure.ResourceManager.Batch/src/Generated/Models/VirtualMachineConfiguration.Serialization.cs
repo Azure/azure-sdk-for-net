@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static VirtualMachineConfiguration DeserializeVirtualMachineConfiguration(JsonElement element)
         {
-            ImageReference imageReference = default;
+            BatchImageReference imageReference = default;
             string nodeAgentSkuId = default;
             Optional<WindowsConfiguration> windowsConfiguration = default;
-            Optional<IList<DataDisk>> dataDisks = default;
+            Optional<IList<BatchVirtualMachineDataDisk>> dataDisks = default;
             Optional<string> licenseType = default;
             Optional<ContainerConfiguration> containerConfiguration = default;
             Optional<DiskEncryptionConfiguration> diskEncryptionConfiguration = default;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 if (property.NameEquals("imageReference"))
                 {
-                    imageReference = ImageReference.DeserializeImageReference(property.Value);
+                    imageReference = BatchImageReference.DeserializeBatchImageReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("nodeAgentSkuId"))
@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.Batch.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DataDisk> array = new List<DataDisk>();
+                    List<BatchVirtualMachineDataDisk> array = new List<BatchVirtualMachineDataDisk>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataDisk.DeserializeDataDisk(item));
+                        array.Add(BatchVirtualMachineDataDisk.DeserializeBatchVirtualMachineDataDisk(item));
                     }
                     dataDisks = array;
                     continue;

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="sku"> SKU properties of the API Management service. </param>
         /// <param name="identity"> Managed service identity of the Api Management service. </param>
-        /// <param name="eTag"> ETag of the resource. </param>
+        /// <param name="etag"> ETag of the resource. </param>
         /// <param name="zones"> A list of availability zones denoting where the resource needs to come from. </param>
         /// <param name="notificationSenderEmail"> Email address from which the notification will be sent. </param>
         /// <param name="provisioningState"> The current provisioning state of the API Management service which can be one of the following: Created/Activating/Succeeded/Updating/Failed/Stopped/Terminating/TerminationFailed/Deleted. </param>
@@ -68,11 +68,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="publisherEmail"> Publisher email. </param>
         /// <param name="publisherName"> Publisher name. </param>
         /// <param name="tags"> Resource tags. </param>
-        internal ApiManagementServiceResourcePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApiManagementServiceSkuProperties sku, ManagedServiceIdentity identity, ETag? eTag, IList<string> zones, string notificationSenderEmail, string provisioningState, string targetProvisioningState, DateTimeOffset? createdAtUtc, Uri gatewayUri, Uri gatewayRegionalUri, Uri portalUri, Uri managementApiUri, Uri scmUri, Uri developerPortalUri, IList<HostnameConfiguration> hostnameConfigurations, IReadOnlyList<string> publicIPAddresses, IReadOnlyList<string> privateIPAddresses, string publicIPAddressId, PublicNetworkAccess? publicNetworkAccess, VirtualNetworkConfiguration virtualNetworkConfiguration, IList<AdditionalLocation> additionalLocations, IDictionary<string, string> customProperties, IList<CertificateConfiguration> certificates, bool? enableClientCertificate, bool? disableGateway, VirtualNetworkType? virtualNetworkType, ApiVersionConstraint apiVersionConstraint, bool? restore, IList<RemotePrivateEndpointConnectionWrapper> privateEndpointConnections, PlatformVersion? platformVersion, string publisherEmail, string publisherName, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        internal ApiManagementServiceResourcePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApiManagementServiceSkuProperties sku, ManagedServiceIdentity identity, ETag? etag, IList<string> zones, string notificationSenderEmail, string provisioningState, string targetProvisioningState, DateTimeOffset? createdAtUtc, Uri gatewayUri, Uri gatewayRegionalUri, Uri portalUri, Uri managementApiUri, Uri scmUri, Uri developerPortalUri, IList<HostnameConfiguration> hostnameConfigurations, IReadOnlyList<string> publicIPAddresses, IReadOnlyList<string> privateIPAddresses, string publicIPAddressId, PublicNetworkAccess? publicNetworkAccess, VirtualNetworkConfiguration virtualNetworkConfiguration, IList<AdditionalLocation> additionalLocations, IDictionary<string, string> customProperties, IList<CertificateConfiguration> certificates, bool? enableClientCertificate, bool? disableGateway, VirtualNetworkType? virtualNetworkType, ApiVersionConstraint apiVersionConstraint, bool? restore, IList<RemotePrivateEndpointConnectionWrapper> privateEndpointConnections, PlatformVersion? platformVersion, string publisherEmail, string publisherName, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             Sku = sku;
             Identity = identity;
-            ETag = eTag;
+            ETag = etag;
             Zones = zones;
             NotificationSenderEmail = notificationSenderEmail;
             ProvisioningState = provisioningState;

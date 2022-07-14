@@ -5,8 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
+using System.Linq;
 
 namespace Azure.DigitalTwins.Core
 {
@@ -14,9 +15,16 @@ namespace Azure.DigitalTwins.Core
     internal partial class IncomingRelationshipCollection
     {
         /// <summary> Initializes a new instance of IncomingRelationshipCollection. </summary>
-        internal IncomingRelationshipCollection()
+        /// <param name="value"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal IncomingRelationshipCollection(IEnumerable<IncomingRelationship> value)
         {
-            Value = new ChangeTrackingList<IncomingRelationship>();
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of IncomingRelationshipCollection. </summary>

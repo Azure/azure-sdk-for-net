@@ -93,7 +93,23 @@ function GetDocsMsService($packageInfo, $serviceName)
   return $service
 }
 
-function GenerateDocsMsMetadata($language, $languageDisplayName, $serviceName, $tenantId, $clientId, $clientSecret, $msService) 
+function compare-and-merge-metadata ($original, $updated) {
+  $updateMetdata = ($updated.GetEnumerator() | ForEach-Object { "$($_.Key): $($_.Value)" }) -join "`r`n"
+  $updateMetdata += "`r`n"
+  if (!$original) {
+    return $updateMetdata 
+  }
+  $originalTable = ConvertFrom-StringData -StringData $original -Delimiter ":"
+  foreach ($key in $originalTable.Keys) {
+    if (!($updated.ContainsKey($key))) {
+      Write-Warning "New metadata missed the entry: $key. Adding back."
+      $updateMetdata += "$key`: $($originalTable[$key])`r`n"
+    }
+  }
+  return $updateMetdata
+}
+
+function GenerateDocsMsMetadata($originalMetadata, $language, $languageDisplayName, $serviceName, $tenantId, $clientId, $clientSecret, $msService) 
 {
   $langTitle = "Azure $serviceName SDK for $languageDisplayName"
   $langDescription = "Reference for Azure $serviceName SDK for $languageDisplayName"
@@ -113,19 +129,19 @@ function GenerateDocsMsMetadata($language, $languageDisplayName, $serviceName, $
     $msauthor = $author
   }
   $date = Get-Date -Format "MM/dd/yyyy"
-  $header = @"
----
-title: $langTitle
-description: $langDescription
-author: $author
-ms.author: $msauthor
-ms.date: $date
-ms.topic: reference
-ms.devlang: $language
-ms.service: $msService
----
-"@
-  return $header
+
+  $metadataTable = @{
+    "title"= $langTitle
+    "description"= $langDescription
+    "author"= $author
+    "ms.author"= $msauthor
+    "ms.data"= $date
+    "ms.topic"= "reference"
+    "ms.devlang"= $language
+    "ms.service"= $msService
+  }
+  $updatedMetadata = compare-and-merge-metadata -original $originalMetadata -updated $metadataTable
+  return "---`r`n$updatedMetadata---`r`n"
 }
 
 function ServiceLevelReadmeNameStyle($serviceName) {

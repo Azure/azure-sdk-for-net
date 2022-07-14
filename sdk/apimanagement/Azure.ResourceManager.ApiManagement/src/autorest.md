@@ -32,7 +32,7 @@ rename-rules:
   CPUs: Cpus
   Os: OS
   Ip: IP
-  Ips: IPs
+  Ips: IPs|ips
   ID: Id
   IDs: Ids
   VM: Vm
@@ -42,16 +42,24 @@ rename-rules:
   VPN: Vpn
   NAT: Nat
   WAN: Wan
-  Ipv4: IPv4
-  Ipv6: IPv6
-  Ipsec: IPsec
+  Ipv4: IPv4|ipv4
+  Ipv6: IPv6|ipv6
+  Ipsec: IPsec|ipsec
   SSO: Sso
   URI: Uri
-  Etag: ETag
+  Etag: ETag|etag
 
 override-operation-name:
   NetworkStatus_ListByLocation: GetNetworkStatusByLocation
 
+prepend-rp-prefix:
+- ResourceSkuCapacity
+- ResourceSkuCapacityScaleType
+
+rename-mapping:
+  OpenidConnectProviderContract: OpenIdConnectProviderContract
+  OpenidConnectProviderUpdateContract: OpenIdConnectProviderUpdateContract
+  VirtualNetworkConfiguration.vnetid: VnetId
 
 directive:
   - remove-operation: 'ApiManagementOperations_List'
@@ -60,13 +68,10 @@ directive:
     transform: >
       $.AuthorizationServerContractBaseProperties.properties.bearerTokenSendingMethods.items['x-ms-enum']['name'] = 'BearerTokenSendingMethodMode';
       $.BearerTokenSendingMethodsContract['x-ms-enum']['name'] = 'BearerTokenSendingMethodContract';
-      $.OpenidConnectProviderContract['x-ms-client-name'] = 'OpenIdConnectProviderContract';
-      $.OpenidConnectProviderUpdateContract['x-ms-client-name'] = 'OpenIdConnectProviderUpdateContract';
   - from: apimdeployment.json
     where: $.definitions
     transform: >
       $.Operation['x-ms-client-name'] = 'RestApiOperation';
-      $.VirtualNetworkConfiguration.properties.vnetid['x-ms-client-name'] = 'VnetId';
   - from: apimanagement.json
     where: $.parameters
     transform: >

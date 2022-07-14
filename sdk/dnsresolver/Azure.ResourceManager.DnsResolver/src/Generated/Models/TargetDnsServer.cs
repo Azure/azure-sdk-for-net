@@ -5,14 +5,24 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.DnsResolver.Models
 {
     /// <summary> Describes a server to forward the DNS queries to. </summary>
     public partial class TargetDnsServer
     {
         /// <summary> Initializes a new instance of TargetDnsServer. </summary>
-        public TargetDnsServer()
+        /// <param name="ipAddress"> DNS server IP address. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ipAddress"/> is null. </exception>
+        public TargetDnsServer(string ipAddress)
         {
+            if (ipAddress == null)
+            {
+                throw new ArgumentNullException(nameof(ipAddress));
+            }
+
+            IPAddress = ipAddress;
         }
 
         /// <summary> Initializes a new instance of TargetDnsServer. </summary>

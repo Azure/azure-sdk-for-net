@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="eTag"> Resource Etag. </param>
+        /// <param name="etag"> Resource Etag. </param>
         /// <param name="properties"> Properties of Cognitive Services account deployment. </param>
-        internal DeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, DeploymentProperties properties) : base(id, name, resourceType, systemData)
+        internal DeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, DeploymentProperties properties) : base(id, name, resourceType, systemData)
         {
-            ETag = eTag;
+            ETag = etag;
             Properties = properties;
         }
 

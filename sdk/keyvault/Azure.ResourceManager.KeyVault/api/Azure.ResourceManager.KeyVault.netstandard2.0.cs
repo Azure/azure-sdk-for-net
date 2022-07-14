@@ -486,7 +486,30 @@ namespace Azure.ResourceManager.KeyVault.Models
         internal KeyVaultNameAvailabilityResult() { }
         public string Message { get { throw null; } }
         public bool? NameAvailable { get { throw null; } }
-        public Azure.ResourceManager.KeyVault.Models.NameAvailabilityReason? Reason { get { throw null; } }
+        public Azure.ResourceManager.KeyVault.Models.KeyVaultNameUnavailableReason? Reason { get { throw null; } }
+    }
+    public enum KeyVaultNameUnavailableReason
+    {
+        AccountNameInvalid = 0,
+        AlreadyExists = 1,
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct KeyVaultNetworkRuleAction : System.IEquatable<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkRuleAction>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public KeyVaultNetworkRuleAction(string value) { throw null; }
+        public static Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkRuleAction Allow { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkRuleAction Deny { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkRuleAction other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkRuleAction left, Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkRuleAction right) { throw null; }
+        public static implicit operator Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkRuleAction (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkRuleAction left, Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkRuleAction right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct KeyVaultNetworkRuleBypassOption : System.IEquatable<Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkRuleBypassOption>
@@ -510,7 +533,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         public KeyVaultNetworkRuleSet() { }
         public Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkRuleBypassOption? Bypass { get { throw null; } set { } }
-        public Azure.ResourceManager.KeyVault.Models.NetworkRuleAction? DefaultAction { get { throw null; } set { } }
+        public Azure.ResourceManager.KeyVault.Models.KeyVaultNetworkRuleAction? DefaultAction { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.KeyVaultIPRule> IPRules { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.KeyVaultVirtualNetworkRule> VirtualNetworkRules { get { throw null; } }
     }
@@ -710,6 +733,24 @@ namespace Azure.ResourceManager.KeyVault.Models
         public string AddressRange { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ManagedHsmNetworkRuleAction : System.IEquatable<Azure.ResourceManager.KeyVault.Models.ManagedHsmNetworkRuleAction>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ManagedHsmNetworkRuleAction(string value) { throw null; }
+        public static Azure.ResourceManager.KeyVault.Models.ManagedHsmNetworkRuleAction Allow { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.ManagedHsmNetworkRuleAction Deny { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.KeyVault.Models.ManagedHsmNetworkRuleAction other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.ManagedHsmNetworkRuleAction left, Azure.ResourceManager.KeyVault.Models.ManagedHsmNetworkRuleAction right) { throw null; }
+        public static implicit operator Azure.ResourceManager.KeyVault.Models.ManagedHsmNetworkRuleAction (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.ManagedHsmNetworkRuleAction left, Azure.ResourceManager.KeyVault.Models.ManagedHsmNetworkRuleAction right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ManagedHsmNetworkRuleBypassOption : System.IEquatable<Azure.ResourceManager.KeyVault.Models.ManagedHsmNetworkRuleBypassOption>
     {
         private readonly object _dummy;
@@ -731,7 +772,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         public ManagedHsmNetworkRuleSet() { }
         public Azure.ResourceManager.KeyVault.Models.ManagedHsmNetworkRuleBypassOption? Bypass { get { throw null; } set { } }
-        public Azure.ResourceManager.KeyVault.Models.NetworkRuleAction? DefaultAction { get { throw null; } set { } }
+        public Azure.ResourceManager.KeyVault.Models.ManagedHsmNetworkRuleAction? DefaultAction { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.ManagedHsmIPRule> IPRules { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.ManagedHsmVirtualNetworkRule> VirtualNetworkRules { get { throw null; } }
     }
@@ -890,28 +931,5 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         public ManagedHsmVirtualNetworkRule(Azure.Core.ResourceIdentifier subnetId) { }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
-    }
-    public enum NameAvailabilityReason
-    {
-        AccountNameInvalid = 0,
-        AlreadyExists = 1,
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct NetworkRuleAction : System.IEquatable<Azure.ResourceManager.KeyVault.Models.NetworkRuleAction>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public NetworkRuleAction(string value) { throw null; }
-        public static Azure.ResourceManager.KeyVault.Models.NetworkRuleAction Allow { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.NetworkRuleAction Deny { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.KeyVault.Models.NetworkRuleAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.NetworkRuleAction left, Azure.ResourceManager.KeyVault.Models.NetworkRuleAction right) { throw null; }
-        public static implicit operator Azure.ResourceManager.KeyVault.Models.NetworkRuleAction (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.NetworkRuleAction left, Azure.ResourceManager.KeyVault.Models.NetworkRuleAction right) { throw null; }
-        public override string ToString() { throw null; }
     }
 }

@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="autoExecuteStatus"> Gets the auto-execute status (whether to let the system execute the recommendations) of this advisor. Possible values are &apos;Enabled&apos; and &apos;Disabled&apos;. </param>
         /// <param name="autoExecuteStatusInheritedFrom"> Gets the resource from which current value of auto-execute status is inherited. Auto-execute status can be set on (and inherited from) different levels in the resource hierarchy. Possible values are &apos;Subscription&apos;, &apos;Server&apos;, &apos;ElasticPool&apos;, &apos;Database&apos; and &apos;Default&apos; (when status is not explicitly set on any level). </param>
         /// <param name="recommendationsStatus"> Gets that status of recommendations for this advisor and reason for not having any recommendations. Possible values include, but are not limited to, &apos;Ok&apos; (Recommendations available),LowActivity (not enough workload to analyze), &apos;DbSeemsTuned&apos; (Database is doing well), etc. </param>
-        /// <param name="lastChecked"> Gets the time when the current resource was analyzed for recommendations by this advisor. </param>
+        /// <param name="lastCheckedOn"> Gets the time when the current resource was analyzed for recommendations by this advisor. </param>
         /// <param name="recommendedActions"> Gets the recommended actions for this advisor. </param>
-        internal AdvisorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, AdvisorStatus? advisorStatus, AutoExecuteStatus? autoExecuteStatus, AutoExecuteStatusInheritedFrom? autoExecuteStatusInheritedFrom, string recommendationsStatus, DateTimeOffset? lastChecked, IReadOnlyList<RecommendedActionData> recommendedActions) : base(id, name, resourceType, systemData)
+        internal AdvisorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, AdvisorStatus? advisorStatus, AutoExecuteStatus? autoExecuteStatus, AutoExecuteStatusInheritedFrom? autoExecuteStatusInheritedFrom, string recommendationsStatus, DateTimeOffset? lastCheckedOn, IReadOnlyList<RecommendedActionData> recommendedActions) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             Location = location;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Sql
             AutoExecuteStatus = autoExecuteStatus;
             AutoExecuteStatusInheritedFrom = autoExecuteStatusInheritedFrom;
             RecommendationsStatus = recommendationsStatus;
-            LastChecked = lastChecked;
+            LastCheckedOn = lastCheckedOn;
             RecommendedActions = recommendedActions;
         }
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets that status of recommendations for this advisor and reason for not having any recommendations. Possible values include, but are not limited to, &apos;Ok&apos; (Recommendations available),LowActivity (not enough workload to analyze), &apos;DbSeemsTuned&apos; (Database is doing well), etc. </summary>
         public string RecommendationsStatus { get; }
         /// <summary> Gets the time when the current resource was analyzed for recommendations by this advisor. </summary>
-        public DateTimeOffset? LastChecked { get; }
+        public DateTimeOffset? LastCheckedOn { get; }
         /// <summary> Gets the recommended actions for this advisor. </summary>
         public IReadOnlyList<RecommendedActionData> RecommendedActions { get; }
     }

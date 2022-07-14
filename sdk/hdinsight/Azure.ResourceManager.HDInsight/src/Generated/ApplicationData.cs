@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.HDInsight
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="eTag"> The ETag for the application. </param>
+        /// <param name="etag"> The ETag for the application. </param>
         /// <param name="tags"> The tags for the application. </param>
         /// <param name="properties"> The properties of the application. </param>
-        internal ApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, IDictionary<string, string> tags, ApplicationProperties properties) : base(id, name, resourceType, systemData)
+        internal ApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> tags, ApplicationProperties properties) : base(id, name, resourceType, systemData)
         {
-            ETag = eTag;
+            ETag = etag;
             Tags = tags;
             Properties = properties;
         }

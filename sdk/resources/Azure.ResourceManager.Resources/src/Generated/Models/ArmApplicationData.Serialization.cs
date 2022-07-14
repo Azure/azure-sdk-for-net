@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Resources
             Optional<IReadOnlyList<ArmApplicationAuthorization>> authorizations = default;
             Optional<ArmApplicationManagementMode> managementMode = default;
             Optional<ArmApplicationPackageContact> customerSupport = default;
-            Optional<ArmApplicationPackageSupportUris> supportUrls = default;
+            Optional<ArmApplicationPackageSupportUris> supportUris = default;
             Optional<IReadOnlyList<ArmApplicationArtifact>> artifacts = default;
             Optional<ArmApplicationDetails> createdBy = default;
             Optional<ArmApplicationDetails> updatedBy = default;
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Resources
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            supportUrls = ArmApplicationPackageSupportUris.DeserializeArmApplicationPackageSupportUris(property0.Value);
+                            supportUris = ArmApplicationPackageSupportUris.DeserializeArmApplicationPackageSupportUris(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("artifacts"))
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.Resources
                     continue;
                 }
             }
-            return new ArmApplicationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, managedBy.Value, sku.Value, plan, kind, identity.Value, managedResourceGroupId.Value, applicationDefinitionId.Value, parameters.Value, outputs.Value, Optional.ToNullable(provisioningState), billingDetails.Value, jitAccessPolicy.Value, Optional.ToNullable(publisherTenantId), Optional.ToList(authorizations), Optional.ToNullable(managementMode), customerSupport.Value, supportUrls.Value, Optional.ToList(artifacts), createdBy.Value, updatedBy.Value);
+            return new ArmApplicationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, managedBy.Value, sku.Value, plan, kind, identity.Value, managedResourceGroupId.Value, applicationDefinitionId.Value, parameters.Value, outputs.Value, Optional.ToNullable(provisioningState), billingDetails.Value, jitAccessPolicy.Value, Optional.ToNullable(publisherTenantId), Optional.ToList(authorizations), Optional.ToNullable(managementMode), customerSupport.Value, supportUris.Value, Optional.ToList(artifacts), createdBy.Value, updatedBy.Value);
         }
     }
 }

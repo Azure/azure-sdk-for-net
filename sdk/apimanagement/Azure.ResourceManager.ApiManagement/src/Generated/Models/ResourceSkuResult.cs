@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="resourceType"> The type of resource the SKU applies to. </param>
         /// <param name="sku"> Specifies API Management SKU. </param>
         /// <param name="capacity"> Specifies the number of API Management units. </param>
-        internal ResourceSkuResult(string resourceType, ResourceSku sku, ResourceSkuCapacity capacity)
+        internal ResourceSkuResult(string resourceType, ResourceSku sku, ApiManagementResourceSkuCapacity capacity)
         {
             ResourceType = resourceType;
             Sku = sku;
@@ -37,6 +37,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Specifies the number of API Management units. </summary>
-        public ResourceSkuCapacity Capacity { get; }
+        public ApiManagementResourceSkuCapacity Capacity { get; }
     }
 }
