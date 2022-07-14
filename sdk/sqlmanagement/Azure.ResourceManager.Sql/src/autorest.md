@@ -38,6 +38,7 @@ format-by-name-rules:
   'oldServerDnsAliasId': 'arm-id'
   'partnerLocation': 'azure-location'
   'defaultSecondaryLocation': 'azure-location'
+  'ClientIP': "ip-address"
 
 keep-plural-enums:
   - DiffBackupIntervalInHours

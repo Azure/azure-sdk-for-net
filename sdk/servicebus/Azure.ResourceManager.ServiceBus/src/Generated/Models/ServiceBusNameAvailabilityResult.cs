@@ -17,19 +17,19 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         /// <summary> Initializes a new instance of ServiceBusNameAvailabilityResult. </summary>
         /// <param name="message"> The detailed info regarding the reason associated with the namespace. </param>
-        /// <param name="nameAvailable"> Value indicating namespace is availability, true if the namespace is available; otherwise, false. </param>
+        /// <param name="isNameAvailable"> Value indicating namespace is availability, true if the namespace is available; otherwise, false. </param>
         /// <param name="reason"> The reason for unavailability of a namespace. </param>
-        internal ServiceBusNameAvailabilityResult(string message, bool? nameAvailable, ServiceBusNameUnavailableReason? reason)
+        internal ServiceBusNameAvailabilityResult(string message, bool? isNameAvailable, ServiceBusNameUnavailableReason? reason)
         {
             Message = message;
-            NameAvailable = nameAvailable;
+            IsNameAvailable = isNameAvailable;
             Reason = reason;
         }
 
         /// <summary> The detailed info regarding the reason associated with the namespace. </summary>
         public string Message { get; }
         /// <summary> Value indicating namespace is availability, true if the namespace is available; otherwise, false. </summary>
-        public bool? NameAvailable { get; }
+        public bool? IsNameAvailable { get; }
         /// <summary> The reason for unavailability of a namespace. </summary>
         public ServiceBusNameUnavailableReason? Reason { get; }
     }
