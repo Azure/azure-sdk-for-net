@@ -33,12 +33,6 @@ parameters:
     type: string
     default: ''
 
-variables:
-  - name: Pool
-    value: 'azsdk-pool-mms-ubuntu-2004-perf'
-  - name: OSVmImage
-    value: 'MMSUbuntu20.04'
-
 resources:
   repositories:
   - repository: azure-sdk-tools
