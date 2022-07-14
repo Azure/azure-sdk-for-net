@@ -10,21 +10,21 @@ using System;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Represents database metrics. </summary>
-    public partial class MetricValue
+    public partial class SqlMetricValue
     {
-        /// <summary> Initializes a new instance of MetricValue. </summary>
-        internal MetricValue()
+        /// <summary> Initializes a new instance of SqlMetricValue. </summary>
+        internal SqlMetricValue()
         {
         }
 
-        /// <summary> Initializes a new instance of MetricValue. </summary>
+        /// <summary> Initializes a new instance of SqlMetricValue. </summary>
         /// <param name="count"> The number of values for the metric. </param>
         /// <param name="average"> The average value of the metric. </param>
         /// <param name="maximum"> The max value of the metric. </param>
         /// <param name="minimum"> The min value of the metric. </param>
         /// <param name="timestamp"> The metric timestamp (ISO-8601 format). </param>
         /// <param name="total"> The total value of the metric. </param>
-        internal MetricValue(int? count, double? average, double? maximum, double? minimum, DateTimeOffset? timestamp, double? total)
+        internal SqlMetricValue(int? count, double? average, double? maximum, double? minimum, DateTimeOffset? timestamp, double? total)
         {
             Count = count;
             Average = average;

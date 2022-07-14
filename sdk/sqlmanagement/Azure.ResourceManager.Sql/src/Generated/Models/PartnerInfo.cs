@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of PartnerInfo. </summary>
         /// <param name="id"> Resource identifier of the partner server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public PartnerInfo(string id)
+        public PartnerInfo(ResourceIdentifier id)
         {
             if (id == null)
             {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="id"> Resource identifier of the partner server. </param>
         /// <param name="location"> Geo location of the partner server. </param>
         /// <param name="replicationRole"> Replication role of the partner server. </param>
-        internal PartnerInfo(string id, AzureLocation? location, FailoverGroupReplicationRole? replicationRole)
+        internal PartnerInfo(ResourceIdentifier id, AzureLocation? location, FailoverGroupReplicationRole? replicationRole)
         {
             Id = id;
             Location = location;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Resource identifier of the partner server. </summary>
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
         /// <summary> Geo location of the partner server. </summary>
         public AzureLocation? Location { get; }
         /// <summary> Replication role of the partner server. </summary>

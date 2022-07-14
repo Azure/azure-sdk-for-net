@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    internal partial class MetricListResult
+    internal partial class SqlMetricListResult
     {
-        internal static MetricListResult DeserializeMetricListResult(JsonElement element)
+        internal static SqlMetricListResult DeserializeSqlMetricListResult(JsonElement element)
         {
             IReadOnlyList<SqlMetric> value = default;
             foreach (var property in element.EnumerateObject())
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new MetricListResult(value);
+            return new SqlMetricListResult(value);
         }
     }
 }

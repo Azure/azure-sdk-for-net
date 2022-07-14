@@ -932,10 +932,10 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: MetricDefinitions_ListDatabase
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MetricDefinition" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MetricDefinition> GetMetricDefinitionsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SqlMetricDefinition" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SqlMetricDefinition> GetMetricDefinitionsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<MetricDefinition>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SqlMetricDefinition>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _metricDefinitionsClientDiagnostics.CreateScope("SqlDatabaseResource.GetMetricDefinitions");
                 scope.Start();
@@ -959,10 +959,10 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: MetricDefinitions_ListDatabase
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MetricDefinition" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MetricDefinition> GetMetricDefinitions(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SqlMetricDefinition" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SqlMetricDefinition> GetMetricDefinitions(CancellationToken cancellationToken = default)
         {
-            Page<MetricDefinition> FirstPageFunc(int? pageSizeHint)
+            Page<SqlMetricDefinition> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _metricDefinitionsClientDiagnostics.CreateScope("SqlDatabaseResource.GetMetricDefinitions");
                 scope.Start();

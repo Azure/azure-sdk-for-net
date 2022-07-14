@@ -19,8 +19,10 @@ format-by-name-rules:
   'tenantId': 'uuid'
   'etag': 'etag'
   'location': 'azure-location'
+  'locationName': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  'keyId': 'Uri'
   '*ResourceId': 'arm-id'
   '*SubnetId': 'arm-id'
   'subnetId': 'arm-id'
@@ -36,9 +38,12 @@ format-by-name-rules:
   'recoveryServicesRecoveryPointId': 'arm-id'
   'syncAgentId': 'arm-id'
   'oldServerDnsAliasId': 'arm-id'
+  'failoverGroupId': 'arm-id'
   'partnerLocation': 'azure-location'
   'defaultSecondaryLocation': 'azure-location'
-  'ClientIP': "ip-address"
+  'privateLinkServiceId': 'arm-id'
+  'resourceType': 'resource-type'
+  'clientIP': 'ip-address'
 
 keep-plural-enums:
   - DiffBackupIntervalInHours
@@ -65,12 +70,27 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  SQL: Sql
+  DTU: Dtu
+  GEO: Geo
+  GRS: Grs
+  LRS: Lrs
+  ZRS: Zrs
+  Hierarchyid: HierarchyId
+  CP1CIAS: Cp1CiAs
+
 prepend-rp-prefix:
   - DatabaseAutomaticTuning
   - DatabaseBlobAuditingPolicy
   - DatabaseSecurityAlertPolicy
   - TimeZone
   - Metric
+  - MetricListResult
+  - MetricAvalability
+  - MetricName
+  - MetricType
+  - MetricValue
+  - MetricDefinition
   - Server
   - Database
   - DayOfWeek
@@ -95,7 +115,7 @@ list-exception:
 no-property-type-replacement: ResourceMoveDefinition
 
 override-operation-name:
-  ServerTrustGroups_ListByInstance: GetServerTrustGroups
+  ServerTrustGroups_ListByInstance: GetSqlServerTrustGroups
   ManagedInstances_ListByManagedInstance: GetTopQueries
   ManagedDatabases_ListInaccessibleByInstance: GetInaccessibleManagedDatabases
   ManagedDatabaseQueries_ListByQuery: GetQueryStatistics
@@ -104,6 +124,7 @@ override-operation-name:
   Metrics_ListElasticPool: GetMetrics
   MetricDefinitions_ListElasticPool: GetMetricDefinitions
   Capabilities_ListByLocation: GetCapabilitiesByLocation
+  Servers_CheckNameAvailability: CheckSqlServerNameAvailability
 
 request-path-is-non-resource:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/queries/{queryId}
@@ -129,6 +150,7 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}/scans/{scanId}: SqlDatabaseVulnerabilityAssessmentScan
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/serverTrustCertificates/{certificateName}: ManagedInstanceServerTrustCertificate
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupShortTermRetentionPolicies/{policyName}: ManagedBackupShortTermRetentionPolicy
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}: ManagedDatabaseSchema
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}: ManagedDatabaseTable
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}: ManagedDatabaseColumn
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/{sensitivityLabelSource}: ManagedDatabaseSensitivityLabel
@@ -157,6 +179,22 @@ rename-mapping:
   LedgerDigestUploads: LedgerDigestUpload
   ServerDevOpsAuditingSettings: SqlServerDevOpsAuditingSetting
   ManagedDatabaseRestoreDetailsResult: ManagedDatabaseRestoreDetail
+  CheckNameAvailabilityReason: SqlNameUnavailableReason
+  CheckNameAvailabilityResourceType: SqlNameAvailabilityResourceType
+  CheckNameAvailabilityRequest: SqlNameAvailabilityContent
+  CreateMode: SqlDatabaseCreateMode
+  OperationMode: DatabaseExtensionOperationMode
+  ProvisioningState: JobExecutionProvisioningState
+  UnitType: SqlMetricUnitType
+  UnitDefinitionType: SqlMetricDefinitionUnitType
+  ManagedDatabaseUpdate.properties.autoCompleteRestore: AllowAutoCompleteRestore
+  ManagedDatabase.properties.autoCompleteRestore: AllowAutoCompleteRestore
+  ManagedInstanceAzureADOnlyAuthentication.properties.azureADOnlyAuthentication: IsAzureADOnlyAuthenticationEnabled
+  ServerAzureADAdministrator.properties.azureADOnlyAuthentication: IsAzureADOnlyAuthenticationEnabled
+  ServerAzureADOnlyAuthentication.properties.azureADOnlyAuthentication: IsAzureADOnlyAuthenticationEnabled
+  ManagedInstanceExternalAdministrator.azureADOnlyAuthentication: IsAzureADOnlyAuthenticationEnabled
+  ServerExternalAdministrator.azureADOnlyAuthentication: IsAzureADOnlyAuthenticationEnabled
+  SyncGroup.properties.enableConflictLogging: IsConflictLoggingEnabled
 
 directive:
     - remove-operation: DatabaseExtensions_Get # This operation is not supported
@@ -286,3 +324,58 @@ directive:
       where: $.definitions..lastChecked
       transform: >
           $['x-ms-client-name'] = 'LastCheckedOn'
+    - from: swagger-document
+      where: $.definitions..memoryOptimized
+      transform: >
+          $['x-ms-client-name'] = 'IsMemoryOptimized'
+    - from: swagger-document
+      where: $.definitions..zoneRedundant
+      transform: >
+          $['x-ms-client-name'] = 'IsZoneRedundant'
+    - from: swagger-document
+      where: $.definitions..autoRotationEnabled
+      transform: >
+          $['x-ms-client-name'] = 'IsAutoRotationEnabled'
+    - from: swagger-document
+      where: $.definitions..publicDataEndpointEnabled
+      transform: >
+          $['x-ms-client-name'] = 'IsPublicDataEndpointEnabled'
+    - from: LocationCapabilities.json
+      where: $.definitions.ManagedInstanceVcoresCapability.properties
+      transform: >
+          $.instancePoolSupported['x-ms-client-name'] = 'IsInstancePoolSupported';
+          $.standaloneSupported['x-ms-client-name'] = 'IsStandaloneSupported';
+    - from: swagger-document
+      where: $.definitions..enabled
+      transform: >
+          if ($['type'] === 'boolean')
+              $['x-ms-client-name'] = 'IsEnabled'
+    - from: swagger-document
+      where: $.definitions.ResourceWithWritableName
+      transform: >
+              $.properties.id['x-ms-format'] = 'arm-id';
+    - from: Servers.json
+      where: $.definitions.CheckNameAvailabilityResponse
+      transform: >
+          $['x-ms-client-name'] = 'SqlNameAvailabilityResponse';
+          $.properties.available['x-ms-client-name'] = 'IsAvailable';
+    - from: ManagedInstances.json
+      where: $.definitions.ManagedInstancePecProperty
+      transform: >
+          $.properties.id['x-ms-format'] = 'arm-id';
+    - from: Databases.json
+      where: $.definitions.ResourceMoveDefinition
+      transform: >
+          $.properties.id['x-ms-format'] = 'arm-id';
+    - from: FailoverGroups.json
+      where: $.definitions.PartnerInfo
+      transform: >
+          $.properties.id['x-ms-format'] = 'arm-id';
+    - from: Servers.json
+      where: $.definitions.ServerPrivateEndpointConnection
+      transform: >
+          $.properties.id['x-ms-format'] = 'arm-id';
+    - from: SyncAgents.json
+      where: $.definitions.SyncAgentLinkedDatabaseProperties
+      transform: >
+          $.properties.databaseId['format'] = 'uuid';

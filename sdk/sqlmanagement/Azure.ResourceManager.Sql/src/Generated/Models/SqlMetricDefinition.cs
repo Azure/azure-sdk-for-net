@@ -12,21 +12,21 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A database metric definition. </summary>
-    public partial class MetricDefinition
+    public partial class SqlMetricDefinition
     {
-        /// <summary> Initializes a new instance of MetricDefinition. </summary>
-        internal MetricDefinition()
+        /// <summary> Initializes a new instance of SqlMetricDefinition. </summary>
+        internal SqlMetricDefinition()
         {
             MetricAvailabilities = new ChangeTrackingList<MetricAvailability>();
         }
 
-        /// <summary> Initializes a new instance of MetricDefinition. </summary>
+        /// <summary> Initializes a new instance of SqlMetricDefinition. </summary>
         /// <param name="name"> The name information for the metric. </param>
         /// <param name="primaryAggregationType"> The primary aggregation type defining how metric values are displayed. </param>
         /// <param name="resourceUri"> The resource uri of the database. </param>
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="metricAvailabilities"> The list of database metric availabilities for the metric. </param>
-        internal MetricDefinition(MetricName name, PrimaryAggregationType? primaryAggregationType, Uri resourceUri, UnitDefinitionType? unit, IReadOnlyList<MetricAvailability> metricAvailabilities)
+        internal SqlMetricDefinition(SqlMetricName name, PrimaryAggregationType? primaryAggregationType, Uri resourceUri, SqlMetricDefinitionUnitType? unit, IReadOnlyList<MetricAvailability> metricAvailabilities)
         {
             Name = name;
             PrimaryAggregationType = primaryAggregationType;
@@ -36,13 +36,13 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The name information for the metric. </summary>
-        public MetricName Name { get; }
+        public SqlMetricName Name { get; }
         /// <summary> The primary aggregation type defining how metric values are displayed. </summary>
         public PrimaryAggregationType? PrimaryAggregationType { get; }
         /// <summary> The resource uri of the database. </summary>
         public Uri ResourceUri { get; }
         /// <summary> The unit of the metric. </summary>
-        public UnitDefinitionType? Unit { get; }
+        public SqlMetricDefinitionUnitType? Unit { get; }
         /// <summary> The list of database metric availabilities for the metric. </summary>
         public IReadOnlyList<MetricAvailability> MetricAvailabilities { get; }
     }

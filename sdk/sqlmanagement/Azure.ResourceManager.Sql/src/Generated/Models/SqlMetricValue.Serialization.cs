@@ -6,80 +6,85 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class MetricDefinition
+    public partial class SqlMetricValue
     {
-        internal static MetricDefinition DeserializeMetricDefinition(JsonElement element)
+        internal static SqlMetricValue DeserializeSqlMetricValue(JsonElement element)
         {
-            Optional<MetricName> name = default;
-            Optional<PrimaryAggregationType> primaryAggregationType = default;
-            Optional<Uri> resourceUri = default;
-            Optional<UnitDefinitionType> unit = default;
-            Optional<IReadOnlyList<MetricAvailability>> metricAvailabilities = default;
+            Optional<int> count = default;
+            Optional<double> average = default;
+            Optional<double> maximum = default;
+            Optional<double> minimum = default;
+            Optional<DateTimeOffset> timestamp = default;
+            Optional<double> total = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("count"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    name = MetricName.DeserializeMetricName(property.Value);
+                    count = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("primaryAggregationType"))
+                if (property.NameEquals("average"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    primaryAggregationType = new PrimaryAggregationType(property.Value.GetString());
+                    average = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("resourceUri"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        resourceUri = null;
-                        continue;
-                    }
-                    resourceUri = new Uri(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("unit"))
+                if (property.NameEquals("maximum"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    unit = new UnitDefinitionType(property.Value.GetString());
+                    maximum = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("metricAvailabilities"))
+                if (property.NameEquals("minimum"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MetricAvailability> array = new List<MetricAvailability>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    minimum = property.Value.GetDouble();
+                    continue;
+                }
+                if (property.NameEquals("timestamp"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        array.Add(MetricAvailability.DeserializeMetricAvailability(item));
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
                     }
-                    metricAvailabilities = array;
+                    timestamp = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("total"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    total = property.Value.GetDouble();
                     continue;
                 }
             }
-            return new MetricDefinition(name.Value, Optional.ToNullable(primaryAggregationType), resourceUri.Value, Optional.ToNullable(unit), Optional.ToList(metricAvailabilities));
+            return new SqlMetricValue(Optional.ToNullable(count), Optional.ToNullable(average), Optional.ToNullable(maximum), Optional.ToNullable(minimum), Optional.ToNullable(timestamp), Optional.ToNullable(total));
         }
     }
 }
