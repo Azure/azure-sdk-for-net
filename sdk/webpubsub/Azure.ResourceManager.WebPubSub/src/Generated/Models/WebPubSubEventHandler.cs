@@ -12,15 +12,15 @@ using Azure.Core;
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> Properties of event handler. </summary>
-    public partial class EventHandler
+    public partial class WebPubSubEventHandler
     {
-        /// <summary> Initializes a new instance of EventHandler. </summary>
+        /// <summary> Initializes a new instance of WebPubSubEventHandler. </summary>
         /// <param name="urlTemplate">
         /// Gets or sets the EventHandler URL template. You can use a predefined parameter {hub} and {event} inside the template, the value of the EventHandler URL is dynamically calculated when the client request comes in.
         /// For example, UrlTemplate can be `http://example.com/api/{hub}/{event}`. The host part can&apos;t contains parameters.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="urlTemplate"/> is null. </exception>
-        public EventHandler(string urlTemplate)
+        public WebPubSubEventHandler(string urlTemplate)
         {
             if (urlTemplate == null)
             {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             SystemEvents = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of EventHandler. </summary>
+        /// <summary> Initializes a new instance of WebPubSubEventHandler. </summary>
         /// <param name="urlTemplate">
         /// Gets or sets the EventHandler URL template. You can use a predefined parameter {hub} and {event} inside the template, the value of the EventHandler URL is dynamically calculated when the client request comes in.
         /// For example, UrlTemplate can be `http://example.com/api/{hub}/{event}`. The host part can&apos;t contains parameters.
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// </param>
         /// <param name="systemEvents"> Gets ot sets the list of system events. </param>
         /// <param name="auth"> Gets or sets the auth settings for an event handler. If not set, no auth is used. </param>
-        internal EventHandler(string urlTemplate, string userEventPattern, IList<string> systemEvents, UpstreamAuthSettings auth)
+        internal WebPubSubEventHandler(string urlTemplate, string userEventPattern, IList<string> systemEvents, UpstreamAuthSettings auth)
         {
             UrlTemplate = urlTemplate;
             UserEventPattern = userEventPattern;

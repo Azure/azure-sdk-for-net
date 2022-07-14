@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    public partial class EventHandler : IUtf8JsonSerializable
+    public partial class WebPubSubEventHandler : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             writer.WriteEndObject();
         }
 
-        internal static EventHandler DeserializeEventHandler(JsonElement element)
+        internal static WebPubSubEventHandler DeserializeWebPubSubEventHandler(JsonElement element)
         {
             string urlTemplate = default;
             Optional<string> userEventPattern = default;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     continue;
                 }
             }
-            return new EventHandler(urlTemplate, userEventPattern.Value, Optional.ToList(systemEvents), auth.Value);
+            return new WebPubSubEventHandler(urlTemplate, userEventPattern.Value, Optional.ToList(systemEvents), auth.Value);
         }
     }
 }
