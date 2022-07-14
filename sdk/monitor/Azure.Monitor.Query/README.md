@@ -20,6 +20,7 @@ The Azure Monitor Query client library is used to execute read-only queries agai
 ### Prerequisites
 
 - An [Azure subscription][azure_subscription]
+- A [TokenCredential](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet) implementation, such as an [Azure Identity library credential type](https://docs.microsoft.com/dotnet/api/overview/azure/Identity-readme#credential-classes).
 - To query Logs, you need an [Azure Log Analytics workspace][azure_monitor_create_using_portal].
 - To query Metrics, you need an Azure resource of any kind (Storage Account, Key Vault, Cosmos DB, etc.).
 
@@ -33,9 +34,9 @@ dotnet add package Azure.Monitor.Query
 
 ### Authenticate the client
 
-An authenticated client is required to query Logs or Metrics. To authenticate, create an instance of a [TokenCredential](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet) class. Pass it to the constructor of your `LogsQueryClient` or `MetricsQueryClient` class.
+An authenticated client is required to query Logs or Metrics. To authenticate, create an instance of a `TokenCredential` class. Pass it to the constructor of your `LogsQueryClient` or `MetricsQueryClient` class.
 
-To authenticate, the following examples use `DefaultAzureCredential` from the [Azure.Identity](https://www.nuget.org/packages/Azure.Identity) package:
+To authenticate, the following examples use `DefaultAzureCredential` from the `Azure.Identity` package:
 
 ```C# Snippet:CreateLogsClient
 var client = new LogsQueryClient(new DefaultAzureCredential());

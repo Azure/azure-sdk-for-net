@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             var parameters = BuildCreateUpdateOptions(null);
             var grpah = await CreateGremlinGraph(parameters);
-            Assert.AreEqual(_graphName, grpah.Data.Resource.Id);
+            Assert.AreEqual(_graphName, grpah.Data.Resource.GraphName);
             VerifyGremlinGraphCreation(grpah, parameters);
             // Seems bug in swagger definition
             //Assert.AreEqual(TestThroughput1, table.Data.Options.Throughput);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             // NOT WORKING API
             //ThroughputSettingsData throughtput = await table.GetGremlinGraphThroughputAsync();
             GremlinGraphResource graph2 = await GremlinGraphContainer.GetAsync(_graphName);
-            Assert.AreEqual(_graphName, graph2.Data.Resource.Id);
+            Assert.AreEqual(_graphName, graph2.Data.Resource.GraphName);
             VerifyGremlinGraphCreation(graph2, parameters);
             //Assert.AreEqual(TestThroughput1, table2.Data.Options.Throughput);
 
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             parameters.Options = new CosmosDBCreateUpdateConfig { Throughput = TestThroughput2 };
 
             grpah = await (await GremlinGraphContainer.CreateOrUpdateAsync(WaitUntil.Started, _graphName, parameters)).WaitForCompletionAsync();
-            Assert.AreEqual(_graphName, grpah.Data.Resource.Id);
+            Assert.AreEqual(_graphName, grpah.Data.Resource.GraphName);
             VerifyGremlinGraphCreation(grpah, parameters);
             // Seems bug in swagger definition
             graph2 = await GremlinGraphContainer.GetAsync(_graphName);
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             var indexingPolicy = new CosmosDBIndexingPolicy()
             {
-                Automatic = true,
+                IsAutomatic = true,
                 IndexingMode = CosmosDBIndexingMode.Consistent,
                 IncludedPaths = { new CosmosDBIncludedPath { Path = "/*" } },
                 ExcludedPaths = { new CosmosDBExcludedPath { Path = "/pathToNotIndex/*" } },
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         private void VerifyGremlinGraphCreation(GremlinGraphResource graph, GremlinGraphCreateOrUpdateContent gremlinGraphCreateUpdateOptions)
         {
-            Assert.AreEqual(graph.Data.Resource.Id, gremlinGraphCreateUpdateOptions.Resource.Id);
+            Assert.AreEqual(graph.Data.Resource.GraphName, gremlinGraphCreateUpdateOptions.Resource.GraphName);
             Assert.AreEqual(graph.Data.Resource.IndexingPolicy.IndexingMode.Value.ToString().ToLower(), gremlinGraphCreateUpdateOptions.Resource.IndexingPolicy.IndexingMode.Value.ToString().ToLower());
             Assert.AreEqual(graph.Data.Resource.PartitionKey.Kind, gremlinGraphCreateUpdateOptions.Resource.PartitionKey.Kind);
             Assert.AreEqual(graph.Data.Resource.PartitionKey.Paths, gremlinGraphCreateUpdateOptions.Resource.PartitionKey.Paths);
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             Assert.AreEqual(expectedValue.Data.Options, actualValue.Data.Options);
 
-            Assert.AreEqual(expectedValue.Data.Resource.Id, actualValue.Data.Resource.Id);
+            Assert.AreEqual(expectedValue.Data.Resource.GraphName, actualValue.Data.Resource.GraphName);
             Assert.AreEqual(expectedValue.Data.Resource.Rid, actualValue.Data.Resource.Rid);
             Assert.AreEqual(expectedValue.Data.Resource.Timestamp, actualValue.Data.Resource.Timestamp);
             Assert.AreEqual(expectedValue.Data.Resource.ETag, actualValue.Data.Resource.ETag);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             Assert.AreEqual(expectedValue.Data.Resource.DefaultTtl, actualValue.Data.Resource.DefaultTtl);
 
-            Assert.AreEqual(expectedValue.Data.Resource.IndexingPolicy.Automatic, actualValue.Data.Resource.IndexingPolicy.Automatic);
+            Assert.AreEqual(expectedValue.Data.Resource.IndexingPolicy.IsAutomatic, actualValue.Data.Resource.IndexingPolicy.IsAutomatic);
 
             Assert.AreEqual(expectedValue.Data.Resource.IndexingPolicy.IncludedPaths.Count, actualValue.Data.Resource.IndexingPolicy.IncludedPaths.Count);
             Assert.AreEqual(expectedValue.Data.Resource.IndexingPolicy.IncludedPaths[0].Path, actualValue.Data.Resource.IndexingPolicy.IncludedPaths[0].Path);

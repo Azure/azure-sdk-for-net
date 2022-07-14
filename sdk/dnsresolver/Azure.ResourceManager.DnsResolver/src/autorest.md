@@ -4,7 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
-require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/ccdf0b74eedb671fe038ed1a30a9be9f911ebc4f/specification/dnsresolver/resource-manager/readme.md
+require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/37072829f795ce840b8085035e8adf4721602f34/specification/dnsresolver/resource-manager/readme.md
 library-name: dnsresolver
 namespace: Azure.ResourceManager.DnsResolver
 output-folder: $(this-folder)/Generated
@@ -19,6 +19,8 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  '*IPAddress': 'ip-address'
+  'ResourceGuid': 'uuid'
 
 rename-rules:
   CPU: Cpu
@@ -42,5 +44,23 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  DnsForwardingRulesetName: rulesetName
 
+rename-mapping:
+  ProvisioningState: DnsResolverProvisioningState
+  ForwardingRule: DnsForwardingRule
+  ForwardingRuleState: DnsForwardingRuleState
+  ForwardingRule.properties.forwardingRuleState: DnsForwardingRuleState
+  ForwardingRulePatch.properties.forwardingRuleState: DnsForwardingRuleState
+  InboundEndpoint: DnsResolverInboundEndpoint
+  IpConfiguration: InboundEndpointIpConfiguration
+  IpAllocationMethod: InboundEndpointIPAllocationMethod
+  OutboundEndpoint: DnsResolverOutboundEndpoint
+  VirtualNetworkLink: DnsForwardingRulesetVirtualNetworkLink
+
+directive:
+  - from: dnsresolver.json
+    where: $.definitions
+    transform: >
+      $.VirtualNetworkDnsForwardingRuleset.properties.id['x-ms-format'] = 'arm-id';
 ```

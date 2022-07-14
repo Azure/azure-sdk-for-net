@@ -6796,7 +6796,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         public SecurityEvent() { }
         public string ApplicationName { get { throw null; } }
-        public string ClientIP { get { throw null; } }
+        public System.Net.IPAddress ClientIP { get { throw null; } }
         public string Database { get { throw null; } }
         public System.DateTimeOffset? EventOn { get { throw null; } }
         public string PrincipalName { get { throw null; } }
