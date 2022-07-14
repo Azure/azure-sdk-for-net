@@ -421,7 +421,7 @@ If an alternative host name is needed to establish the connection to the service
 ```C# Snippet:ServiceBusCustomEndpoint
 // Connect to the service using a custom endpoint
 string connectionString = "<connection_string>";
-string customEndpoint = "<custom_endpoint";
+string customEndpoint = "<custom_endpoint>";
 
 var options = new ServiceBusClientOptions
 {
