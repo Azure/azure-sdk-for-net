@@ -222,6 +222,14 @@ rename-mapping:
   RestorableSqlContainerPropertiesResource.ownerResourceId: ContainerId
   RestorableSqlDatabasePropertiesResource.ownerId: DatabaseName
   RestorableSqlDatabasePropertiesResource.ownerResourceId: DatabaseId
+  CosmosDBAccount.properties.enableFreeTier: IsFreeTierEnabled
+  CosmosDBAccount.properties.enableAnalyticalStorage: IsAnalyticalStorageEnabled
+  ContainerPartitionKey.systemKey: IsSystemKey
+  DatabaseAccountCreateUpdateParameters.properties.enableFreeTier: IsFreeTierEnabled
+  DatabaseAccountCreateUpdateParameters.properties.enableAnalyticalStorage: IsAnalyticalStorageEnabled
+  DatabaseAccountUpdateParameters.properties.enableFreeTier: IsFreeTierEnabled
+  DatabaseAccountUpdateParameters.properties.enableAnalyticalStorage: IsAnalyticalStorageEnabled
+  LocationProperties.supportsAvailabilityZone: DoesSupportsAvailabilityZone
 
 prepend-rp-prefix:
 - UniqueKey
@@ -250,6 +258,14 @@ prepend-rp-prefix:
 - FailoverPolicy
 
 directive:
+# This API is returning a collection wrapping by the model 'DatabaseAccountListConnectionStringsResult', adding this directive so that the content could be automatically flattened
+- from: swagger-document
+  where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/listConnectionStrings'].post
+  transform: >
+    $['x-ms-pageable'] = {
+          'nextLinkName': null,
+          'itemName': 'connectionStrings'
+        }
 - from: cosmos-db.json
   where: $.definitions
   transform: >
@@ -359,14 +375,6 @@ directive:
 - rename-model:
     from: SqlRoleDefinitionListResult
     to: CosmosDBSqlRoleDefinitionList
-# This API is returning a collection wrapping by the model 'DatabaseAccountListConnectionStringsResult', adding this directive so that the content could be automatically flattened
-- from: swagger-document
-  where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/listConnectionStrings'].post
-  transform: >
-    $['x-ms-pageable'] = {
-          'nextLinkName': null,
-          'itemName': 'connectionStrings'
-        }
 - rename-model:
     from: SqlRoleDefinitionGetResults
     to: CosmosDBSqlRoleDefinition
@@ -453,8 +461,6 @@ directive:
 - rename-model:
     from: SqlRoleDefinitionCreateUpdateParameters
     to: CosmosDBSqlRoleDefinitionCreateUpdateData
-# TODO: rename for notebook.json when adding it back
-
 # add a missing response code for long running operation. an issue was filed on swagger: https://github.com/Azure/azure-rest-api-specs/issues/16508
 - from: swagger-document
   where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/notebookWorkspaces/{notebookWorkspaceName}'].put
