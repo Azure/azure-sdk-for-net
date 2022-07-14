@@ -23,7 +23,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         [Test]
         public void ConstructorInitializesTheEndpointsWithDefaults()
         {
-            var options = new ServiceBusClientOptions() { CustomEndpointAddress = new Uri("http://fake.custom.com") };
+            var options = new ServiceBusClientOptions();
             var endpoint = new Uri("http://fake.endpoint.com");
             var token = new Mock<ServiceBusTokenCredential>(Mock.Of<TokenCredential>());
             var client = new AmqpClient(endpoint.Host, token.Object, options);
