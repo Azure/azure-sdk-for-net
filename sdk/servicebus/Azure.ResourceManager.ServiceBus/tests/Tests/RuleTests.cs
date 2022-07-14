@@ -84,5 +84,48 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             await rule1.DeleteAsync(WaitUntil.Completed);
             await rule2.DeleteAsync(WaitUntil.Completed);
         }
+
+        [Test]
+        [RecordedTest]
+        public async Task CreateRuleWithCorrelationFilter()
+        {
+            IgnoreTestInLiveMode();
+
+            //create namespace
+            ResourceGroupResource resourceGroup = await CreateResourceGroupAsync();
+            string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
+            ServiceBusNamespaceCollection namespaceCollection = resourceGroup.GetServiceBusNamespaces();
+            ServiceBusNamespaceResource serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new ServiceBusNamespaceData(DefaultLocation))).Value;
+
+            //create a topic
+            ServiceBusTopicCollection topicCollection = serviceBusNamespace.GetServiceBusTopics();
+            string topicName = Recording.GenerateAssetName("topic");
+            ServiceBusTopicResource topic = (await topicCollection.CreateOrUpdateAsync(WaitUntil.Completed, topicName, new ServiceBusTopicData())).Value;
+            Assert.NotNull(topic);
+            Assert.AreEqual(topic.Id.Name, topicName);
+
+            //create a subscription
+            ServiceBusSubscriptionCollection serviceBusSubscriptionCollection = topic.GetServiceBusSubscriptions();
+            string subscriptionName = Recording.GenerateAssetName("subscription");
+            ServiceBusSubscriptionData parameters = new ServiceBusSubscriptionData();
+            ServiceBusSubscriptionResource serviceBusSubscription = (await serviceBusSubscriptionCollection.CreateOrUpdateAsync(WaitUntil.Completed, subscriptionName, parameters)).Value;
+            Assert.NotNull(serviceBusSubscription);
+            Assert.AreEqual(serviceBusSubscription.Id.Name, subscriptionName);
+
+            //create rule with no filters
+            string ruleName = Recording.GenerateAssetName("rule");
+            ServiceBusRuleCollection ruleCollection = serviceBusSubscription.GetServiceBusRules();
+            ServiceBusRuleData input = new ServiceBusRuleData()
+            {
+                FilterType = ServiceBusFilterType.CorrelationFilter,
+                CorrelationFilter = new ServiceBusCorrelationFilter()
+            };
+            input.CorrelationFilter.ApplicationProperties.Add("stringKey", "stringVal");
+            input.CorrelationFilter.ApplicationProperties.Add("intKey", 5);
+            input.CorrelationFilter.ApplicationProperties.Add("dateTimeKey", Recording.Now.UtcDateTime);
+            ServiceBusRuleResource rule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, input)).Value;
+            Assert.NotNull(rule);
+            Assert.AreEqual(rule.Id.Name, ruleName);
+        }
     }
 }
