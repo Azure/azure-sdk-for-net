@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
         private const string ClientConnectionValue = "ClientConnection";
         private const string ServerConnectionValue = "ServerConnection";
         private const string RestApiValue = "RESTAPI";
