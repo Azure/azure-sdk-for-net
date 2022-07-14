@@ -17,12 +17,12 @@ parameters:
   - name: iterations
     type: number
     default: '5'
-  - name: envVars
-    type: object
-    default: {}
   - name: additionalArguments
     type: string
     default: ''
+  - name: envVars
+    type: object
+    default: {}
 
 extends:
   template: /eng/common/pipelines/templates/jobs/perf.yml
@@ -41,3 +41,4 @@ extends:
     arguments: ${{ parameters.arguments }}
     iterations: ${{ parameters.iterations }}
     additionalArguments: ${{ parameters.additionalArguments }}
+    envVars: ${{ parameters.envVars}}
