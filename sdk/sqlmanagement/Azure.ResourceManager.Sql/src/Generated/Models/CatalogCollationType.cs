@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         private const string DatabaseDefaultValue = "DATABASE_DEFAULT";
-        private const string SqlLatin1GeneralCP1CiasValue = "SQL_Latin1_General_CP1_CI_AS";
+        private const string SqlLatin1GeneralCp1CiAsValue = "SQL_Latin1_General_CP1_CI_AS";
 
         /// <summary> DATABASE_DEFAULT. </summary>
         public static CatalogCollationType DatabaseDefault { get; } = new CatalogCollationType(DatabaseDefaultValue);
         /// <summary> SQL_Latin1_General_CP1_CI_AS. </summary>
-        public static CatalogCollationType SqlLatin1GeneralCP1Cias { get; } = new CatalogCollationType(SqlLatin1GeneralCP1CiasValue);
+        public static CatalogCollationType SqlLatin1GeneralCp1CiAs { get; } = new CatalogCollationType(SqlLatin1GeneralCp1CiAsValue);
         /// <summary> Determines if two <see cref="CatalogCollationType"/> values are the same. </summary>
         public static bool operator ==(CatalogCollationType left, CatalogCollationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CatalogCollationType"/> values are not the same. </summary>

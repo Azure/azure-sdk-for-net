@@ -4613,7 +4613,7 @@ namespace Azure.ResourceManager.Sql.Models
         private readonly int _dummyPrimitive;
         public CatalogCollationType(string value) { throw null; }
         public static Azure.ResourceManager.Sql.Models.CatalogCollationType DatabaseDefault { get { throw null; } }
-        public static Azure.ResourceManager.Sql.Models.CatalogCollationType SqlLatin1GeneralCP1Cias { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.CatalogCollationType SqlLatin1GeneralCp1CiAs { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Sql.Models.CatalogCollationType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }

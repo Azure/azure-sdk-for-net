@@ -77,7 +77,7 @@ rename-rules:
   LRS: Lrs
   ZRS: Zrs
   Hierarchyid: HierarchyId
-  CIAS: Cias
+  CP1CIAS: Cp1CiAs
 
 prepend-rp-prefix:
   - DatabaseAutomaticTuning
