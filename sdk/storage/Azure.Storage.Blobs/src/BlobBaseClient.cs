@@ -1867,6 +1867,7 @@ namespace Azure.Storage.Blobs.Specialized
                 conditions,
                 progressHandler: default,
                 range: default,
+                transferValidationOverride: default,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -1922,6 +1923,7 @@ namespace Azure.Storage.Blobs.Specialized
                 conditions,
                 progressHandler: default,
                 range: default,
+                transferValidationOverride: default,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1986,6 +1988,7 @@ namespace Azure.Storage.Blobs.Specialized
                 conditions,
                 progressHandler,
                 range,
+                transferValidationOverride: default,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -2050,6 +2053,7 @@ namespace Azure.Storage.Blobs.Specialized
                 conditions,
                 progressHandler,
                 range,
+                transferValidationOverride: default,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -2101,6 +2105,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.Conditions,
                 options?.ProgressHandler,
                 options?.Range ?? default,
+                options?.TransferValidationOptions,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
