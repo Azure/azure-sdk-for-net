@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("longTermRetentionBackupResourceId");
                 writer.WriteStringValue(LongTermRetentionBackupResourceId);
             }
-            if (Optional.IsDefined(AutoCompleteRestore))
+            if (Optional.IsDefined(AllowAutoCompleteRestore))
             {
                 writer.WritePropertyName("autoCompleteRestore");
-                writer.WriteBooleanValue(AutoCompleteRestore.Value);
+                writer.WriteBooleanValue(AllowAutoCompleteRestore.Value);
             }
             if (Optional.IsDefined(LastBackupName))
             {

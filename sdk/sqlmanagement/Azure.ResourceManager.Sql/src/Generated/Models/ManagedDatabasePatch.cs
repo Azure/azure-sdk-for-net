@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The name of the Long Term Retention backup to be used for restore of this managed database. </summary>
         public ResourceIdentifier LongTermRetentionBackupResourceId { get; set; }
         /// <summary> Whether to auto complete restore of this managed database. </summary>
-        public bool? AutoCompleteRestore { get; set; }
+        public bool? AllowAutoCompleteRestore { get; set; }
         /// <summary> Last backup file name for restore of this managed database. </summary>
         public string LastBackupName { get; set; }
     }

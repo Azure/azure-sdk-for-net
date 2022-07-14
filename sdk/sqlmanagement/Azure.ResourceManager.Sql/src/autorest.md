@@ -76,6 +76,8 @@ rename-rules:
   LRS: Lrs
   ZRS: Zrs
   Hierarchyid: HierarchyId
+  CIAS: Cias
+
 prepend-rp-prefix:
   - DatabaseAutomaticTuning
   - DatabaseBlobAuditingPolicy
@@ -112,7 +114,7 @@ list-exception:
 no-property-type-replacement: ResourceMoveDefinition
 
 override-operation-name:
-  ServerTrustGroups_ListByInstance: GetServerTrustGroups
+  ServerTrustGroups_ListByInstance: GetSqlServerTrustGroups
   ManagedInstances_ListByManagedInstance: GetTopQueries
   ManagedDatabases_ListInaccessibleByInstance: GetInaccessibleManagedDatabases
   ManagedDatabaseQueries_ListByQuery: GetQueryStatistics
@@ -121,6 +123,7 @@ override-operation-name:
   Metrics_ListElasticPool: GetMetrics
   MetricDefinitions_ListElasticPool: GetMetricDefinitions
   Capabilities_ListByLocation: GetCapabilitiesByLocation
+  Servers_CheckNameAvailability: CheckSqlServerNameAvailability
 
 request-path-is-non-resource:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/queries/{queryId}
@@ -183,6 +186,15 @@ rename-mapping:
   ProvisioningState: JobExecutionProvisioningState
   UnitType: SqlMetricUnitType
   UnitDefinitionType: SqlMetricDefinitionUnitType
+  ManagedDatabaseUpdate.properties.autoCompleteRestore: AllowAutoCompleteRestore
+  ManagedDatabase.properties.autoCompleteRestore: AllowAutoCompleteRestore
+  ManagedInstanceAzureADOnlyAuthentication.properties.azureADOnlyAuthentication: IsAzureADOnlyAuthenticationEnabled
+  ServerAzureADAdministrator.properties.azureADOnlyAuthentication: IsAzureADOnlyAuthenticationEnabled
+  ServerAzureADOnlyAuthentication.properties.azureADOnlyAuthentication: IsAzureADOnlyAuthenticationEnabled
+  ManagedInstanceExternalAdministrator.azureADOnlyAuthentication: IsAzureADOnlyAuthenticationEnabled
+  ServerExternalAdministrator.azureADOnlyAuthentication: IsAzureADOnlyAuthenticationEnabled
+  SyncGroup.properties.enableConflictLogging: IsConflictLoggingEnabled
+
 directive:
     - remove-operation: DatabaseExtensions_Get # This operation is not supported
     - remove-operation: FirewallRules_Replace # This operation sends a list of rules but got a single rule in response, which is abnormal. Besides, using FirewallRules_CreateOrUpdate/FirewallRules_Delete multiple times could achieve the same goal.

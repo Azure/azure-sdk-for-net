@@ -600,9 +600,9 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="content"> The name availability request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SqlNameAvailabilityResponse>> CheckNameAvailabilityServerAsync(SqlNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlNameAvailabilityResponse>> CheckSqlServerNameAvailabilityAsync(SqlNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = SqlServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityServer");
+            using var scope = SqlServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckSqlServerNameAvailability");
             scope.Start();
             try
             {
@@ -623,9 +623,9 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="content"> The name availability request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SqlNameAvailabilityResponse> CheckNameAvailabilityServer(SqlNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<SqlNameAvailabilityResponse> CheckSqlServerNameAvailability(SqlNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = SqlServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityServer");
+            using var scope = SqlServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckSqlServerNameAvailability");
             scope.Start();
             try
             {

@@ -955,11 +955,11 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SqlServerTrustGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SqlServerTrustGroupResource> GetServerTrustGroupsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SqlServerTrustGroupResource> GetSqlServerTrustGroupsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<SqlServerTrustGroupResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _sqlServerTrustGroupServerTrustGroupsClientDiagnostics.CreateScope("ManagedInstanceResource.GetServerTrustGroups");
+                using var scope = _sqlServerTrustGroupServerTrustGroupsClientDiagnostics.CreateScope("ManagedInstanceResource.GetSqlServerTrustGroups");
                 scope.Start();
                 try
                 {
@@ -974,7 +974,7 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<SqlServerTrustGroupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _sqlServerTrustGroupServerTrustGroupsClientDiagnostics.CreateScope("ManagedInstanceResource.GetServerTrustGroups");
+                using var scope = _sqlServerTrustGroupServerTrustGroupsClientDiagnostics.CreateScope("ManagedInstanceResource.GetSqlServerTrustGroups");
                 scope.Start();
                 try
                 {
@@ -997,11 +997,11 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SqlServerTrustGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SqlServerTrustGroupResource> GetServerTrustGroups(CancellationToken cancellationToken = default)
+        public virtual Pageable<SqlServerTrustGroupResource> GetSqlServerTrustGroups(CancellationToken cancellationToken = default)
         {
             Page<SqlServerTrustGroupResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _sqlServerTrustGroupServerTrustGroupsClientDiagnostics.CreateScope("ManagedInstanceResource.GetServerTrustGroups");
+                using var scope = _sqlServerTrustGroupServerTrustGroupsClientDiagnostics.CreateScope("ManagedInstanceResource.GetSqlServerTrustGroups");
                 scope.Start();
                 try
                 {
@@ -1016,7 +1016,7 @@ namespace Azure.ResourceManager.Sql
             }
             Page<SqlServerTrustGroupResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _sqlServerTrustGroupServerTrustGroupsClientDiagnostics.CreateScope("ManagedInstanceResource.GetServerTrustGroups");
+                using var scope = _sqlServerTrustGroupServerTrustGroupsClientDiagnostics.CreateScope("ManagedInstanceResource.GetSqlServerTrustGroups");
                 scope.Start();
                 try
                 {
