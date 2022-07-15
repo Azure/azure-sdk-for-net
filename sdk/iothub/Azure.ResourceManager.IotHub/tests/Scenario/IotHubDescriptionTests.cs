@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
         public async Task Exist()
         {
             string iotHubName = Recording.GenerateAssetName("IotHub-");
-            await CreateIotHub(_resourceGroup, iotHubName,);
+            await CreateIotHub(_resourceGroup, iotHubName);
             bool isExisted = await _resourceGroup.GetIotHubDescriptions().ExistsAsync(iotHubName);
             Assert.IsTrue(isExisted);
         }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
         public async Task Get()
         {
             string iotHubName = Recording.GenerateAssetName("IotHub-");
-            await CreateIotHub(_resourceGroup, iotHubName,);
+            await CreateIotHub(_resourceGroup, iotHubName);
             var getIotHub = await _resourceGroup.GetIotHubDescriptions().GetAsync(iotHubName);
             Assert.IsNotNull(getIotHub);
             Assert.AreEqual(iotHubName, getIotHub.Value.Data.Name);
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
         public async Task GetAll()
         {
             string iotHubName = Recording.GenerateAssetName("IotHub-");
-            await CreateIotHub(_resourceGroup, iotHubName,);
+            await CreateIotHub(_resourceGroup, iotHubName);
             var list = await _resourceGroup.GetIotHubDescriptions().GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
             //Assert.AreEqual(iotHubName, list.FirstOrDefault().Data.Name);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
         public async Task Delete()
         {
             string iotHubName = Recording.GenerateAssetName("IotHub-");
-            var deleteIotHub = await CreateIotHub(_resourceGroup, iotHubName,);
+            var deleteIotHub = await CreateIotHub(_resourceGroup, iotHubName);
             bool isExisted = await _resourceGroup.GetIotHubDescriptions().ExistsAsync(iotHubName);
             Assert.IsTrue(isExisted);
             await deleteIotHub.DeleteAsync(WaitUntil.Completed);
