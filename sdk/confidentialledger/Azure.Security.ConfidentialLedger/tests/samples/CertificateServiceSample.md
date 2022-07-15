@@ -17,10 +17,8 @@ X509Certificate2 ledgerTlsCert = ConfidentialLedgerCertificateClient.ParseCertif
 X509Chain certificateChain = new();
 // Revocation is not required by CCF. Hence revocation checks must be skipped to avoid validation failing unnecessarily.
 certificateChain.ChainPolicy.RevocationMode = X509RevocationMode.NoCheck;
-
 // Add the ledger identity TLS certificate to the ExtraStore.
 certificateChain.ChainPolicy.ExtraStore.Add(ledgerTlsCert);
-
 // AllowUnknownCertificateAuthority will NOT allow validation of all unknown self-signed certificates.
 // It extends trust to the ExtraStore, which in this case contains the trusted ledger identity TLS certificate.
 // This makes it possible for validation of certificate chains terminating in the ledger identity TLS certificate to pass.
