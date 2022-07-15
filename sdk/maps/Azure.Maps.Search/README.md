@@ -63,7 +63,7 @@ SearchClient client = new SearchClient(credential, clientId);
 * Communicate with Azure Maps endpoint to request the geometry data such as a city or country outline for a set of entities
 * Communicate with Azure Maps endpoint to perform a free form search inside a single geometry or many of them
 
-Learn more about examples in [samples](https://github.com/dubiety/azure-sdk-for-net/tree/feature/maps-search/sdk/maps/Azure.Maps.Search/tests)
+Learn more about examples in [samples](https://github.com/dubiety/azure-sdk-for-net/tree/feature/maps-search/sdk/maps/Azure.Maps.Search/tests/Samples)
 
 ### Thread safety
 
@@ -96,7 +96,7 @@ For example, if you ...., a error is returned, indicating "Bad Request".400
 
 ## Next steps
 
-* [More detailed samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Search/tests)
+* [More detailed samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Search/tests/Samples)
 
 ## Contributing
 
