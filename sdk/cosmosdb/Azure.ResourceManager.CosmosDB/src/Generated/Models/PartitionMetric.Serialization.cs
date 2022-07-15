@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static PartitionMetric DeserializePartitionMetric(JsonElement element)
         {
-            Optional<string> partitionId = default;
+            Optional<Guid> partitionId = default;
             Optional<string> partitionKeyRangeId = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
@@ -28,7 +28,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 if (property.NameEquals("partitionId"))
                 {
-                    partitionId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    partitionId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("partitionKeyRangeId"))
@@ -97,7 +102,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new PartitionMetric(Optional.ToNullable(startTime), Optional.ToNullable(endTime), timeGrain.Value, Optional.ToNullable(unit), name.Value, Optional.ToList(metricValues), partitionId.Value, partitionKeyRangeId.Value);
+            return new PartitionMetric(Optional.ToNullable(startTime), Optional.ToNullable(endTime), timeGrain.Value, Optional.ToNullable(unit), name.Value, Optional.ToList(metricValues), Optional.ToNullable(partitionId), partitionKeyRangeId.Value);
         }
     }
 }

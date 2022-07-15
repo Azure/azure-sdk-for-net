@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("temporalType");
                 writer.WriteStringValue(TemporalType.Value.ToString());
             }
-            if (Optional.IsDefined(MemoryOptimized))
+            if (Optional.IsDefined(IsMemoryOptimized))
             {
                 writer.WritePropertyName("memoryOptimized");
-                writer.WriteBooleanValue(MemoryOptimized.Value);
+                writer.WriteBooleanValue(IsMemoryOptimized.Value);
             }
             if (Optional.IsDefined(IsComputed))
             {

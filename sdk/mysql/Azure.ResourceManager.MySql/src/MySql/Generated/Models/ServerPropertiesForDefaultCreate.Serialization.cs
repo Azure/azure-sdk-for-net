@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.Models
 {
-    internal partial class ServerPropertiesForDefaultCreate : IUtf8JsonSerializable
+    public partial class ServerPropertiesForDefaultCreate : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

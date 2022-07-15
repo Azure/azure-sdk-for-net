@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// 
         /// Copy, Secondary, and RestoreLongTermRetentionBackup are not supported for DataWarehouse edition.
         /// </summary>
-        public CreateMode? CreateMode { get; set; }
+        public SqlDatabaseCreateMode? CreateMode { get; set; }
         /// <summary> The collation of the database. </summary>
         public string Collation { get; set; }
         /// <summary> The max size of the database expressed in bytes. </summary>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The default secondary region for this database. </summary>
         public AzureLocation? DefaultSecondaryLocation { get; }
         /// <summary> Failover Group resource identifier that this database belongs to. </summary>
-        public string FailoverGroupId { get; }
+        public ResourceIdentifier FailoverGroupId { get; }
         /// <summary> Specifies the time that the database was deleted. </summary>
         public DateTimeOffset? SourceDatabaseDeletedOn { get; set; }
         /// <summary> The resource identifier of the recovery point associated with create operation of this database. </summary>
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Collation of the metadata catalog. </summary>
         public CatalogCollationType? CatalogCollation { get; set; }
         /// <summary> Whether or not this database is zone redundant, which means the replicas of this database will be spread across multiple availability zones. </summary>
-        public bool? ZoneRedundant { get; set; }
+        public bool? IsZoneRedundant { get; set; }
         /// <summary> The license type to apply for this database. `LicenseIncluded` if you need a license, or `BasePrice` if you have a license and are eligible for the Azure Hybrid Benefit. </summary>
         public DatabaseLicenseType? LicenseType { get; set; }
         /// <summary> The max log size for this database. </summary>

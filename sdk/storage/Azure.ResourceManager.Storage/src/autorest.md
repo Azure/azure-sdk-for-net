@@ -30,6 +30,7 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  '*Guid': 'uuid'
 
 rename-rules:
   CPU: Cpu
@@ -57,6 +58,10 @@ rename-rules:
   SKU: Sku
   SMB: Smb
   NFS: Nfs
+  LRS: Lrs
+  ZRS: Zrs
+  GRS: Grs
+  TLS: Tls
 
 prepend-rp-prefix:
 - CorsRules
@@ -142,6 +147,19 @@ rename-mapping:
   PrivateLinkResource: StoragePrivateLinkResourceData
   MigrationState: ImmutableStorageWithVersioningMigrationState
   AccessPolicy: StorageServiceAccessPolicy
+  ChangeFeed: BlobServiceChangeFeed
+  ChangeFeed.enabled: IsEnabled
+  CheckNameAvailabilityResult: StorageAccountNameAvailabilityResult
+  CheckNameAvailabilityResult.nameAvailable: IsNameAvailable
+  BlobContainer.properties.deleted: IsDeleted
+  BlobServiceProperties.properties.automaticSnapshotPolicyEnabled: IsAutomaticSnapshotPolicyEnabled
+  FileShare.properties.deleted: IsDeleted
+  DeleteRetentionPolicy.enabled: IsEnabled
+  ImmutableStorageAccount.enabled: IsEnabled
+  ImmutableStorageWithVersioning.enabled: IsEnabled
+  BlobInventoryPolicyRule.enabled: IsEnabled
+  BlobInventoryPolicySchema.enabled: IsEnabled
+  ActiveDirectoryPropertiesAccountType: ActiveDirectoryAccountType
 
 directive:
   - from: swagger-document
@@ -198,6 +216,9 @@ directive:
     transform: $["x-ms-format"] = "arm-id";
   - from: swagger-document
     where: $.definitions.ResourceAccessRule.properties.resourceId
+    transform: $["x-ms-format"] = "arm-id";
+  - from: swagger-document
+    where: $.definitions.VirtualNetworkRule.properties.id
     transform: $["x-ms-format"] = "arm-id";
   - from: swagger-document
     where: $.definitions.Encryption

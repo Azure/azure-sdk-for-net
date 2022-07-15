@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CosmosDB
     public partial class CassandraClusterData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public CassandraClusterData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.Models.SystemAssignedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CassandraClusterProperties Properties { get { throw null; } set { } }
     }
     public partial class CassandraClusterResource : Azure.ResourceManager.ArmResource
@@ -249,15 +249,15 @@ namespace Azure.ResourceManager.CosmosDB
         public bool? DisableKeyBasedMetadataWriteAccess { get { throw null; } set { } }
         public bool? DisableLocalAuth { get { throw null; } set { } }
         public string DocumentEndpoint { get { throw null; } }
-        public bool? EnableAnalyticalStorage { get { throw null; } set { } }
         public bool? EnableAutomaticFailover { get { throw null; } set { } }
         public bool? EnableCassandraConnector { get { throw null; } set { } }
-        public bool? EnableFreeTier { get { throw null; } set { } }
         public bool? EnableMultipleWriteLocations { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.FailoverPolicy> FailoverPolicies { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.CosmosDBFailoverPolicy> FailoverPolicies { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public string InstanceId { get { throw null; } }
+        public System.Guid? InstanceId { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.CosmosDBIPAddressOrRange> IPRules { get { throw null; } }
+        public bool? IsAnalyticalStorageEnabled { get { throw null; } set { } }
+        public bool? IsFreeTierEnabled { get { throw null; } set { } }
         public bool? IsVirtualNetworkFilterEnabled { get { throw null; } set { } }
         public System.Uri KeyVaultKeyUri { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountKind? Kind { get { throw null; } set { } }
@@ -283,8 +283,8 @@ namespace Azure.ResourceManager.CosmosDB
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation FailoverPriorityChange(Azure.WaitUntil waitUntil, Azure.ResourceManager.CosmosDB.Models.FailoverPolicies failoverParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> FailoverPriorityChangeAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CosmosDB.Models.FailoverPolicies failoverParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation FailoverPriorityChange(Azure.WaitUntil waitUntil, Azure.ResourceManager.CosmosDB.Models.CosmosDBFailoverPolicies failoverParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> FailoverPriorityChangeAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CosmosDB.Models.CosmosDBFailoverPolicies failoverParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBAccountResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBAccountResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.CosmosDB.CassandraKeyspaceResource> GetCassandraKeyspace(string keyspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -307,9 +307,9 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBSqlRoleDefinitionResource> GetCosmosDBSqlRoleDefinition(string roleDefinitionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBSqlRoleDefinitionResource>> GetCosmosDBSqlRoleDefinitionAsync(string roleDefinitionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.CosmosDB.CosmosDBSqlRoleDefinitionCollection GetCosmosDBSqlRoleDefinitions() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CosmosDB.CosmosTableResource> GetCosmosTable(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.CosmosTableResource>> GetCosmosTableAsync(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.CosmosDB.CosmosTableCollection GetCosmosTables() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBTableResource> GetCosmosDBTable(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBTableResource>> GetCosmosDBTableAsync(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.CosmosDB.CosmosDBTableCollection GetCosmosDBTables() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.CosmosDB.GremlinDatabaseResource> GetGremlinDatabase(string databaseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.GremlinDatabaseResource>> GetGremlinDatabaseAsync(string databaseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.CosmosDB.GremlinDatabaseCollection GetGremlinDatabases() { throw null; }
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.CosmosDB
         public static Azure.ResourceManager.CosmosDB.CosmosDBSqlStoredProcedureResource GetCosmosDBSqlStoredProcedureResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.CosmosDB.CosmosDBSqlTriggerResource GetCosmosDBSqlTriggerResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.CosmosDB.CosmosDBSqlUserDefinedFunctionResource GetCosmosDBSqlUserDefinedFunctionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.CosmosDB.CosmosTableResource GetCosmosTableResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.CosmosDB.CosmosDBTableResource GetCosmosDBTableResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.CosmosDB.CosmosTableThroughputSettingResource GetCosmosTableThroughputSettingResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.CosmosDB.GremlinDatabaseResource GetGremlinDatabaseResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.CosmosDB.GremlinDatabaseThroughputSettingResource GetGremlinDatabaseThroughputSettingResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -448,8 +448,8 @@ namespace Azure.ResourceManager.CosmosDB
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, Azure.Core.AzureLocation location) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBLocationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBLocationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CosmosDB.RestorableCosmosDBAccountResource> GetRestorableCosmosDBAccount(string instanceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.RestorableCosmosDBAccountResource>> GetRestorableCosmosDBAccountAsync(string instanceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CosmosDB.RestorableCosmosDBAccountResource> GetRestorableCosmosDBAccount(System.Guid instanceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.RestorableCosmosDBAccountResource>> GetRestorableCosmosDBAccountAsync(System.Guid instanceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.CosmosDB.RestorableCosmosDBAccountCollection GetRestorableCosmosDBAccounts() { throw null; }
     }
     public partial class CosmosDBPrivateEndpointConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CosmosDB.CosmosDBPrivateEndpointConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.CosmosDBPrivateEndpointConnectionResource>, System.Collections.IEnumerable
@@ -854,47 +854,47 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CosmosDB.CosmosDBSqlUserDefinedFunctionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CosmosDB.CosmosDBSqlUserDefinedFunctionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class CosmosTableCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CosmosDB.CosmosTableResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.CosmosTableResource>, System.Collections.IEnumerable
+    public partial class CosmosDBTableCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CosmosDB.CosmosDBTableResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.CosmosDBTableResource>, System.Collections.IEnumerable
     {
-        protected CosmosTableCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CosmosDB.CosmosTableResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string tableName, Azure.ResourceManager.CosmosDB.Models.CosmosTableCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CosmosDB.CosmosTableResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string tableName, Azure.ResourceManager.CosmosDB.Models.CosmosTableCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected CosmosDBTableCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CosmosDB.CosmosDBTableResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string tableName, Azure.ResourceManager.CosmosDB.Models.CosmosDBTableCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CosmosDB.CosmosDBTableResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string tableName, Azure.ResourceManager.CosmosDB.Models.CosmosDBTableCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CosmosDB.CosmosTableResource> Get(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.CosmosDB.CosmosTableResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.CosmosDB.CosmosTableResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.CosmosTableResource>> GetAsync(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.CosmosDB.CosmosTableResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CosmosDB.CosmosTableResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.CosmosDB.CosmosTableResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.CosmosTableResource>.GetEnumerator() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBTableResource> Get(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.CosmosDB.CosmosDBTableResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.CosmosDB.CosmosDBTableResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBTableResource>> GetAsync(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.CosmosDB.CosmosDBTableResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CosmosDB.CosmosDBTableResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.CosmosDB.CosmosDBTableResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.CosmosDBTableResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class CosmosTableData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class CosmosDBTableData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public CosmosTableData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.CosmosDB.Models.CosmosTablePropertiesConfig Options { get { throw null; } set { } }
-        public Azure.ResourceManager.CosmosDB.Models.ExtendedCosmosTableResourceInfo Resource { get { throw null; } set { } }
+        public CosmosDBTableData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public Azure.ResourceManager.CosmosDB.Models.CosmosDBTablePropertiesOptions Options { get { throw null; } set { } }
+        public Azure.ResourceManager.CosmosDB.Models.CosmosDBTablePropertiesResource Resource { get { throw null; } set { } }
     }
-    public partial class CosmosTableResource : Azure.ResourceManager.ArmResource
+    public partial class CosmosDBTableResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected CosmosTableResource() { }
-        public virtual Azure.ResourceManager.CosmosDB.CosmosTableData Data { get { throw null; } }
+        protected CosmosDBTableResource() { }
+        public virtual Azure.ResourceManager.CosmosDB.CosmosDBTableData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.CosmosDB.CosmosTableResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.CosmosTableResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBTableResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBTableResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string tableName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CosmosDB.CosmosTableResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.CosmosTableResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBTableResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBTableResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.CosmosDB.CosmosTableThroughputSettingResource GetCosmosTableThroughputSetting() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CosmosDB.CosmosTableResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.CosmosTableResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CosmosDB.CosmosTableResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.CosmosTableResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CosmosDB.CosmosTableResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.CosmosDB.Models.CosmosTableCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CosmosDB.CosmosTableResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CosmosDB.Models.CosmosTableCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBTableResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBTableResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBTableResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.CosmosDBTableResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CosmosDB.CosmosDBTableResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.CosmosDB.Models.CosmosDBTableCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CosmosDB.CosmosDBTableResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CosmosDB.Models.CosmosDBTableCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class CosmosTableThroughputSettingResource : Azure.ResourceManager.ArmResource
     {
@@ -1185,12 +1185,12 @@ namespace Azure.ResourceManager.CosmosDB
     public partial class RestorableCosmosDBAccountCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CosmosDB.RestorableCosmosDBAccountResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.RestorableCosmosDBAccountResource>, System.Collections.IEnumerable
     {
         protected RestorableCosmosDBAccountCollection() { }
-        public virtual Azure.Response<bool> Exists(string instanceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string instanceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CosmosDB.RestorableCosmosDBAccountResource> Get(string instanceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(System.Guid instanceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(System.Guid instanceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CosmosDB.RestorableCosmosDBAccountResource> Get(System.Guid instanceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.CosmosDB.RestorableCosmosDBAccountResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.CosmosDB.RestorableCosmosDBAccountResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.RestorableCosmosDBAccountResource>> GetAsync(string instanceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.RestorableCosmosDBAccountResource>> GetAsync(System.Guid instanceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.CosmosDB.RestorableCosmosDBAccountResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CosmosDB.RestorableCosmosDBAccountResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.CosmosDB.RestorableCosmosDBAccountResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.RestorableCosmosDBAccountResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -1211,21 +1211,21 @@ namespace Azure.ResourceManager.CosmosDB
         protected RestorableCosmosDBAccountResource() { }
         public virtual Azure.ResourceManager.CosmosDB.RestorableCosmosDBAccountData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, Azure.Core.AzureLocation location, string instanceId) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, Azure.Core.AzureLocation location, System.Guid instanceId) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.CosmosDB.RestorableCosmosDBAccountResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.RestorableCosmosDBAccountResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.CosmosDB.Models.RestorableMongoDBCollection> GetRestorableMongoDBCollections(string restorableMongoDBDatabaseRid = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.CosmosDB.Models.RestorableMongoDBCollection> GetRestorableMongoDBCollectionsAsync(string restorableMongoDBDatabaseRid = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.CosmosDB.Models.RestorableMongoDBDatabase> GetRestorableMongoDBDatabases(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.CosmosDB.Models.RestorableMongoDBDatabase> GetRestorableMongoDBDatabasesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.CosmosDB.Models.DatabaseRestoreResourceInfo> GetRestorableMongoDBResources(string restoreLocation = null, string restoreTimestampInUtc = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.CosmosDB.Models.DatabaseRestoreResourceInfo> GetRestorableMongoDBResourcesAsync(string restoreLocation = null, string restoreTimestampInUtc = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.CosmosDB.Models.DatabaseRestoreResourceInfo> GetRestorableMongoDBResources(Azure.Core.AzureLocation? restoreLocation = default(Azure.Core.AzureLocation?), string restoreTimestampInUtc = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.CosmosDB.Models.DatabaseRestoreResourceInfo> GetRestorableMongoDBResourcesAsync(Azure.Core.AzureLocation? restoreLocation = default(Azure.Core.AzureLocation?), string restoreTimestampInUtc = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.CosmosDB.Models.RestorableSqlContainer> GetRestorableSqlContainers(string restorableSqlDatabaseRid = null, string startTime = null, string endTime = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.CosmosDB.Models.RestorableSqlContainer> GetRestorableSqlContainersAsync(string restorableSqlDatabaseRid = null, string startTime = null, string endTime = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.CosmosDB.Models.RestorableSqlDatabase> GetRestorableSqlDatabases(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.CosmosDB.Models.RestorableSqlDatabase> GetRestorableSqlDatabasesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.CosmosDB.Models.DatabaseRestoreResourceInfo> GetRestorableSqlResources(string restoreLocation = null, string restoreTimestampInUtc = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.CosmosDB.Models.DatabaseRestoreResourceInfo> GetRestorableSqlResourcesAsync(string restoreLocation = null, string restoreTimestampInUtc = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.CosmosDB.Models.DatabaseRestoreResourceInfo> GetRestorableSqlResources(Azure.Core.AzureLocation? restoreLocation = default(Azure.Core.AzureLocation?), string restoreTimestampInUtc = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.CosmosDB.Models.DatabaseRestoreResourceInfo> GetRestorableSqlResourcesAsync(Azure.Core.AzureLocation? restoreLocation = default(Azure.Core.AzureLocation?), string restoreTimestampInUtc = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ThroughputSettingsData : Azure.ResourceManager.Models.TrackedResourceData
     {
@@ -1359,7 +1359,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public double? CpuUsage { get { throw null; } }
         public long? DiskFreeKB { get { throw null; } }
         public long? DiskUsedKB { get { throw null; } }
-        public string HostId { get { throw null; } }
+        public System.Guid? HostId { get { throw null; } }
         public string Load { get { throw null; } }
         public long? MemoryBuffersAndCachedKB { get { throw null; } }
         public long? MemoryFreeKB { get { throw null; } }
@@ -1382,20 +1382,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         public CassandraClusterProperties() { }
         public Azure.ResourceManager.CosmosDB.Models.CassandraAuthenticationMethod? AuthenticationMethod { get { throw null; } set { } }
-        public bool? CassandraAuditLoggingEnabled { get { throw null; } set { } }
         public string CassandraVersion { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.CassandraCertificate> ClientCertificates { get { throw null; } }
         public string ClusterNameOverride { get { throw null; } set { } }
-        public bool? Deallocated { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier DelegatedManagementSubnetId { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.CassandraCertificate> ExternalGossipCertificates { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.CassandraDataCenterSeedNode> ExternalSeedNodes { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.CassandraCertificate> GossipCertificates { get { throw null; } }
         public int? HoursBetweenBackups { get { throw null; } set { } }
         public string InitialCassandraAdminPassword { get { throw null; } set { } }
+        public bool? IsCassandraAuditLoggingEnabled { get { throw null; } set { } }
+        public bool? IsDeallocated { get { throw null; } set { } }
+        public bool? IsRepairEnabled { get { throw null; } set { } }
         public string PrometheusEndpointIPAddress { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.ManagedCassandraProvisioningState? ProvisioningState { get { throw null; } set { } }
-        public bool? RepairEnabled { get { throw null; } set { } }
         public string RestoreFromBackupId { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.CassandraDataCenterSeedNode> SeedNodes { get { throw null; } }
     }
@@ -1428,11 +1428,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class CassandraCommandPostBody
     {
         public CassandraCommandPostBody(string command, string host) { }
+        public bool? AllowWrite { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Arguments { get { throw null; } }
         public bool? CassandraStopStart { get { throw null; } set { } }
         public string Command { get { throw null; } }
         public string Host { get { throw null; } }
-        public bool? Readwrite { get { throw null; } set { } }
     }
     public partial class CassandraConnectionError
     {
@@ -1471,7 +1471,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public bool? AvailabilityZone { get { throw null; } set { } }
         public System.Uri BackupStorageCustomerKeyUri { get { throw null; } set { } }
         public string Base64EncodedCassandraYamlFragment { get { throw null; } set { } }
-        public string DataCenterLocation { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? DataCenterLocation { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier DelegatedSubnetId { get { throw null; } set { } }
         public int? DiskCapacity { get { throw null; } set { } }
         public string DiskSku { get { throw null; } set { } }
@@ -1490,7 +1490,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         public CassandraKeyspaceCreateOrUpdateContent(Azure.Core.AzureLocation location, Azure.ResourceManager.CosmosDB.Models.CassandraKeyspaceResourceInfo resource) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBCreateUpdateConfig Options { get { throw null; } set { } }
-        public string ResourceId { get { throw null; } set { } }
+        public string ResourceKeyspaceName { get { throw null; } set { } }
     }
     public partial class CassandraKeyspacePropertiesConfig : Azure.ResourceManager.CosmosDB.Models.CosmosDBBaseConfig
     {
@@ -1498,8 +1498,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
     }
     public partial class CassandraKeyspaceResourceInfo
     {
-        public CassandraKeyspaceResourceInfo(string id) { }
-        public string Id { get { throw null; } set { } }
+        public CassandraKeyspaceResourceInfo(string keyspaceName) { }
+        public string KeyspaceName { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CassandraNodeState : System.IEquatable<Azure.ResourceManager.CosmosDB.Models.CassandraNodeState>
@@ -1546,11 +1546,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
     }
     public partial class CassandraTableResourceInfo
     {
-        public CassandraTableResourceInfo(string id) { }
+        public CassandraTableResourceInfo(string tableName) { }
         public int? AnalyticalStorageTtl { get { throw null; } set { } }
         public int? DefaultTtl { get { throw null; } set { } }
-        public string Id { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CassandraSchema Schema { get { throw null; } set { } }
+        public string TableName { get { throw null; } set { } }
     }
     public partial class CompositePath
     {
@@ -1628,9 +1628,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class ContainerPartitionKey
     {
         public ContainerPartitionKey() { }
+        public bool? IsSystemKey { get { throw null; } }
         public Azure.ResourceManager.CosmosDB.Models.PartitionKind? Kind { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Paths { get { throw null; } }
-        public bool? SystemKey { get { throw null; } }
         public int? Version { get { throw null; } set { } }
     }
     public partial class ContinuousBackupRestoreLocation
@@ -1701,13 +1701,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string DefaultIdentity { get { throw null; } set { } }
         public bool? DisableKeyBasedMetadataWriteAccess { get { throw null; } set { } }
         public bool? DisableLocalAuth { get { throw null; } set { } }
-        public bool? EnableAnalyticalStorage { get { throw null; } set { } }
         public bool? EnableAutomaticFailover { get { throw null; } set { } }
         public bool? EnableCassandraConnector { get { throw null; } set { } }
-        public bool? EnableFreeTier { get { throw null; } set { } }
         public bool? EnableMultipleWriteLocations { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.CosmosDBIPAddressOrRange> IPRules { get { throw null; } }
+        public bool? IsAnalyticalStorageEnabled { get { throw null; } set { } }
+        public bool? IsFreeTierEnabled { get { throw null; } set { } }
         public bool? IsVirtualNetworkFilterEnabled { get { throw null; } set { } }
         public System.Uri KeyVaultKeyUri { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountKind? Kind { get { throw null; } set { } }
@@ -1804,13 +1804,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string DefaultIdentity { get { throw null; } set { } }
         public bool? DisableKeyBasedMetadataWriteAccess { get { throw null; } set { } }
         public bool? DisableLocalAuth { get { throw null; } set { } }
-        public bool? EnableAnalyticalStorage { get { throw null; } set { } }
         public bool? EnableAutomaticFailover { get { throw null; } set { } }
         public bool? EnableCassandraConnector { get { throw null; } set { } }
-        public bool? EnableFreeTier { get { throw null; } set { } }
         public bool? EnableMultipleWriteLocations { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.CosmosDBIPAddressOrRange> IPRules { get { throw null; } }
+        public bool? IsAnalyticalStorageEnabled { get { throw null; } set { } }
+        public bool? IsFreeTierEnabled { get { throw null; } set { } }
         public bool? IsVirtualNetworkFilterEnabled { get { throw null; } set { } }
         public System.Uri KeyVaultKeyUri { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
@@ -1937,6 +1937,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public CosmosDBExcludedPath() { }
         public string Path { get { throw null; } set { } }
     }
+    public partial class CosmosDBFailoverPolicies
+    {
+        public CosmosDBFailoverPolicies(System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.CosmosDBFailoverPolicy> failoverPolicies) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.CosmosDBFailoverPolicy> FailoverPolicies { get { throw null; } }
+    }
+    public partial class CosmosDBFailoverPolicy
+    {
+        public CosmosDBFailoverPolicy() { }
+        public int? FailoverPriority { get { throw null; } set { } }
+        public string Id { get { throw null; } }
+        public Azure.Core.AzureLocation? LocationName { get { throw null; } set { } }
+    }
     public partial class CosmosDBIncludedPath
     {
         public CosmosDBIncludedPath() { }
@@ -1965,11 +1977,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class CosmosDBIndexingPolicy
     {
         public CosmosDBIndexingPolicy() { }
-        public bool? Automatic { get { throw null; } set { } }
         public System.Collections.Generic.IList<System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.CompositePath>> CompositeIndexes { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.CosmosDBExcludedPath> ExcludedPaths { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.CosmosDBIncludedPath> IncludedPaths { get { throw null; } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBIndexingMode? IndexingMode { get { throw null; } set { } }
+        public bool? IsAutomatic { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.SpatialSpec> SpatialIndexes { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -2000,8 +2012,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         public CosmosDBLocationProperties() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.BackupStorageRedundancy> BackupStorageRedundancies { get { throw null; } }
+        public bool? DoesSupportsAvailabilityZone { get { throw null; } }
         public bool? IsResidencyRestricted { get { throw null; } }
-        public bool? SupportsAvailabilityZone { get { throw null; } }
     }
     public partial class CosmosDBMetricAvailability
     {
@@ -2097,9 +2109,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public CosmosDBServerVersion(string value) { throw null; }
-        public static Azure.ResourceManager.CosmosDB.Models.CosmosDBServerVersion Four0 { get { throw null; } }
-        public static Azure.ResourceManager.CosmosDB.Models.CosmosDBServerVersion Three2 { get { throw null; } }
-        public static Azure.ResourceManager.CosmosDB.Models.CosmosDBServerVersion Three6 { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDB.Models.CosmosDBServerVersion V3_2 { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDB.Models.CosmosDBServerVersion V3_6 { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDB.Models.CosmosDBServerVersion V4_0 { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDB.Models.CosmosDBServerVersion V4_2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CosmosDB.Models.CosmosDBServerVersion other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -2122,11 +2135,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
     }
     public partial class CosmosDBSqlContainerResourceInfo
     {
-        public CosmosDBSqlContainerResourceInfo(string id) { }
+        public CosmosDBSqlContainerResourceInfo(string containerName) { }
         public long? AnalyticalStorageTtl { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.ConflictResolutionPolicy ConflictResolutionPolicy { get { throw null; } set { } }
+        public string ContainerName { get { throw null; } set { } }
         public int? DefaultTtl { get { throw null; } set { } }
-        public string Id { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBIndexingPolicy IndexingPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.ContainerPartitionKey PartitionKey { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.CosmosDBUniqueKey> UniqueKeys { get { throw null; } }
@@ -2135,7 +2148,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         public CosmosDBSqlDatabaseCreateOrUpdateContent(Azure.Core.AzureLocation location, Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlDatabaseResourceInfo resource) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBCreateUpdateConfig Options { get { throw null; } set { } }
-        public string ResourceId { get { throw null; } set { } }
+        public string ResourceDatabaseName { get { throw null; } set { } }
     }
     public partial class CosmosDBSqlDatabasePropertiesConfig : Azure.ResourceManager.CosmosDB.Models.CosmosDBBaseConfig
     {
@@ -2143,8 +2156,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
     }
     public partial class CosmosDBSqlDatabaseResourceInfo
     {
-        public CosmosDBSqlDatabaseResourceInfo(string id) { }
-        public string Id { get { throw null; } set { } }
+        public CosmosDBSqlDatabaseResourceInfo(string databaseName) { }
+        public string DatabaseName { get { throw null; } set { } }
     }
     public partial class CosmosDBSqlRoleAssignmentCreateOrUpdateContent
     {
@@ -2180,9 +2193,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
     }
     public partial class CosmosDBSqlStoredProcedureResourceInfo
     {
-        public CosmosDBSqlStoredProcedureResourceInfo(string id) { }
+        public CosmosDBSqlStoredProcedureResourceInfo(string storedProcedureName) { }
         public string Body { get { throw null; } set { } }
-        public string Id { get { throw null; } set { } }
+        public string StoredProcedureName { get { throw null; } set { } }
     }
     public partial class CosmosDBSqlTriggerCreateOrUpdateContent : Azure.ResourceManager.Models.TrackedResourceData
     {
@@ -2213,9 +2226,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
     }
     public partial class CosmosDBSqlTriggerResourceInfo
     {
-        public CosmosDBSqlTriggerResourceInfo(string id) { }
+        public CosmosDBSqlTriggerResourceInfo(string triggerName) { }
         public string Body { get { throw null; } set { } }
-        public string Id { get { throw null; } set { } }
+        public string TriggerName { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlTriggerOperation? TriggerOperation { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlTriggerType? TriggerType { get { throw null; } set { } }
     }
@@ -2245,9 +2258,31 @@ namespace Azure.ResourceManager.CosmosDB.Models
     }
     public partial class CosmosDBSqlUserDefinedFunctionResourceInfo
     {
-        public CosmosDBSqlUserDefinedFunctionResourceInfo(string id) { }
+        public CosmosDBSqlUserDefinedFunctionResourceInfo(string functionName) { }
         public string Body { get { throw null; } set { } }
-        public string Id { get { throw null; } set { } }
+        public string FunctionName { get { throw null; } set { } }
+    }
+    public partial class CosmosDBTableCreateOrUpdateContent : Azure.ResourceManager.Models.TrackedResourceData
+    {
+        public CosmosDBTableCreateOrUpdateContent(Azure.Core.AzureLocation location, Azure.ResourceManager.CosmosDB.Models.CosmosDBTableResourceInfo resource) : base (default(Azure.Core.AzureLocation)) { }
+        public Azure.ResourceManager.CosmosDB.Models.CosmosDBCreateUpdateConfig Options { get { throw null; } set { } }
+        public string ResourceTableName { get { throw null; } set { } }
+    }
+    public partial class CosmosDBTablePropertiesOptions : Azure.ResourceManager.CosmosDB.Models.CosmosDBBaseConfig
+    {
+        public CosmosDBTablePropertiesOptions() { }
+    }
+    public partial class CosmosDBTablePropertiesResource : Azure.ResourceManager.CosmosDB.Models.CosmosDBTableResourceInfo
+    {
+        public CosmosDBTablePropertiesResource(string tableName) : base (default(string)) { }
+        public Azure.ETag? ETag { get { throw null; } }
+        public string Rid { get { throw null; } }
+        public float? Timestamp { get { throw null; } }
+    }
+    public partial class CosmosDBTableResourceInfo
+    {
+        public CosmosDBTableResourceInfo(string tableName) { }
+        public string TableName { get { throw null; } set { } }
     }
     public partial class CosmosDBUniqueKey
     {
@@ -2257,23 +2292,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class CosmosDBVirtualNetworkRule
     {
         public CosmosDBVirtualNetworkRule() { }
-        public string Id { get { throw null; } set { } }
-        public bool? IgnoreMissingVNetServiceEndpoint { get { throw null; } set { } }
-    }
-    public partial class CosmosTableCreateOrUpdateContent : Azure.ResourceManager.Models.TrackedResourceData
-    {
-        public CosmosTableCreateOrUpdateContent(Azure.Core.AzureLocation location, Azure.ResourceManager.CosmosDB.Models.CosmosTableResourceInfo resource) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.CosmosDB.Models.CosmosDBCreateUpdateConfig Options { get { throw null; } set { } }
-        public string ResourceId { get { throw null; } set { } }
-    }
-    public partial class CosmosTablePropertiesConfig : Azure.ResourceManager.CosmosDB.Models.CosmosDBBaseConfig
-    {
-        public CosmosTablePropertiesConfig() { }
-    }
-    public partial class CosmosTableResourceInfo
-    {
-        public CosmosTableResourceInfo(string id) { }
-        public string Id { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
+        public bool? IgnoreMissingVnetServiceEndpoint { get { throw null; } set { } }
     }
     public partial class DatabaseRestoreResourceInfo
     {
@@ -2291,28 +2311,28 @@ namespace Azure.ResourceManager.CosmosDB.Models
     }
     public partial class ExtendedCassandraKeyspaceResourceInfo : Azure.ResourceManager.CosmosDB.Models.CassandraKeyspaceResourceInfo
     {
-        public ExtendedCassandraKeyspaceResourceInfo(string id) : base (default(string)) { }
+        public ExtendedCassandraKeyspaceResourceInfo(string keyspaceName) : base (default(string)) { }
         public Azure.ETag? ETag { get { throw null; } }
         public string Rid { get { throw null; } }
         public float? Timestamp { get { throw null; } }
     }
     public partial class ExtendedCassandraTableResourceInfo : Azure.ResourceManager.CosmosDB.Models.CassandraTableResourceInfo
     {
-        public ExtendedCassandraTableResourceInfo(string id) : base (default(string)) { }
+        public ExtendedCassandraTableResourceInfo(string tableName) : base (default(string)) { }
         public Azure.ETag? ETag { get { throw null; } }
         public string Rid { get { throw null; } }
         public float? Timestamp { get { throw null; } }
     }
     public partial class ExtendedCosmosDBSqlContainerResourceInfo : Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlContainerResourceInfo
     {
-        public ExtendedCosmosDBSqlContainerResourceInfo(string id) : base (default(string)) { }
+        public ExtendedCosmosDBSqlContainerResourceInfo(string containerName) : base (default(string)) { }
         public Azure.ETag? ETag { get { throw null; } }
         public string Rid { get { throw null; } }
         public float? Timestamp { get { throw null; } }
     }
     public partial class ExtendedCosmosDBSqlDatabaseResourceInfo : Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlDatabaseResourceInfo
     {
-        public ExtendedCosmosDBSqlDatabaseResourceInfo(string id) : base (default(string)) { }
+        public ExtendedCosmosDBSqlDatabaseResourceInfo(string databaseName) : base (default(string)) { }
         public string Colls { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
         public string Rid { get { throw null; } }
@@ -2321,56 +2341,49 @@ namespace Azure.ResourceManager.CosmosDB.Models
     }
     public partial class ExtendedCosmosDBSqlStoredProcedureResourceInfo : Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlStoredProcedureResourceInfo
     {
-        public ExtendedCosmosDBSqlStoredProcedureResourceInfo(string id) : base (default(string)) { }
+        public ExtendedCosmosDBSqlStoredProcedureResourceInfo(string storedProcedureName) : base (default(string)) { }
         public Azure.ETag? ETag { get { throw null; } }
         public string Rid { get { throw null; } }
         public float? Timestamp { get { throw null; } }
     }
     public partial class ExtendedCosmosDBSqlTriggerResourceInfo : Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlTriggerResourceInfo
     {
-        public ExtendedCosmosDBSqlTriggerResourceInfo(string id) : base (default(string)) { }
+        public ExtendedCosmosDBSqlTriggerResourceInfo(string triggerName) : base (default(string)) { }
         public Azure.ETag? ETag { get { throw null; } }
         public string Rid { get { throw null; } }
         public float? Timestamp { get { throw null; } }
     }
     public partial class ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo : Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlUserDefinedFunctionResourceInfo
     {
-        public ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo(string id) : base (default(string)) { }
-        public Azure.ETag? ETag { get { throw null; } }
-        public string Rid { get { throw null; } }
-        public float? Timestamp { get { throw null; } }
-    }
-    public partial class ExtendedCosmosTableResourceInfo : Azure.ResourceManager.CosmosDB.Models.CosmosTableResourceInfo
-    {
-        public ExtendedCosmosTableResourceInfo(string id) : base (default(string)) { }
+        public ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo(string functionName) : base (default(string)) { }
         public Azure.ETag? ETag { get { throw null; } }
         public string Rid { get { throw null; } }
         public float? Timestamp { get { throw null; } }
     }
     public partial class ExtendedGremlinDatabaseResourceInfo : Azure.ResourceManager.CosmosDB.Models.GremlinDatabaseResourceInfo
     {
-        public ExtendedGremlinDatabaseResourceInfo(string id) : base (default(string)) { }
+        public ExtendedGremlinDatabaseResourceInfo(string databaseName) : base (default(string)) { }
         public Azure.ETag? ETag { get { throw null; } }
         public string Rid { get { throw null; } }
         public float? Timestamp { get { throw null; } }
     }
     public partial class ExtendedGremlinGraphResourceInfo : Azure.ResourceManager.CosmosDB.Models.GremlinGraphResourceInfo
     {
-        public ExtendedGremlinGraphResourceInfo(string id) : base (default(string)) { }
+        public ExtendedGremlinGraphResourceInfo(string graphName) : base (default(string)) { }
         public Azure.ETag? ETag { get { throw null; } }
         public string Rid { get { throw null; } }
         public float? Timestamp { get { throw null; } }
     }
     public partial class ExtendedMongoDBCollectionResourceInfo : Azure.ResourceManager.CosmosDB.Models.MongoDBCollectionResourceInfo
     {
-        public ExtendedMongoDBCollectionResourceInfo(string id) : base (default(string)) { }
+        public ExtendedMongoDBCollectionResourceInfo(string collectionName) : base (default(string)) { }
         public Azure.ETag? ETag { get { throw null; } }
         public string Rid { get { throw null; } }
         public float? Timestamp { get { throw null; } }
     }
     public partial class ExtendedMongoDBDatabaseResourceInfo : Azure.ResourceManager.CosmosDB.Models.MongoDBDatabaseResourceInfo
     {
-        public ExtendedMongoDBDatabaseResourceInfo(string id) : base (default(string)) { }
+        public ExtendedMongoDBDatabaseResourceInfo(string databaseName) : base (default(string)) { }
         public Azure.ETag? ETag { get { throw null; } }
         public string Rid { get { throw null; } }
         public float? Timestamp { get { throw null; } }
@@ -2378,39 +2391,39 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class ExtendedRestorableMongoDBCollectionResourceInfo
     {
         internal ExtendedRestorableMongoDBCollectionResourceInfo() { }
+        public string CollectionId { get { throw null; } }
+        public string CollectionName { get { throw null; } }
         public string EventTimestamp { get { throw null; } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBOperationType? OperationType { get { throw null; } }
-        public string OwnerId { get { throw null; } }
-        public string OwnerResourceId { get { throw null; } }
         public string Rid { get { throw null; } }
     }
     public partial class ExtendedRestorableMongoDBDatabaseResourceInfo
     {
         internal ExtendedRestorableMongoDBDatabaseResourceInfo() { }
+        public string DatabaseId { get { throw null; } }
+        public string DatabaseName { get { throw null; } }
         public string EventTimestamp { get { throw null; } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBOperationType? OperationType { get { throw null; } }
-        public string OwnerId { get { throw null; } }
-        public string OwnerResourceId { get { throw null; } }
         public string Rid { get { throw null; } }
     }
     public partial class ExtendedRestorableSqlContainerResourceInfo
     {
         internal ExtendedRestorableSqlContainerResourceInfo() { }
         public Azure.ResourceManager.CosmosDB.Models.RestorableSqlContainerPropertiesResourceContainer Container { get { throw null; } }
+        public string ContainerId { get { throw null; } }
+        public string ContainerName { get { throw null; } }
         public string EventTimestamp { get { throw null; } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBOperationType? OperationType { get { throw null; } }
-        public string OwnerId { get { throw null; } }
-        public string OwnerResourceId { get { throw null; } }
         public string Rid { get { throw null; } }
     }
     public partial class ExtendedRestorableSqlDatabaseResourceInfo
     {
         internal ExtendedRestorableSqlDatabaseResourceInfo() { }
         public Azure.ResourceManager.CosmosDB.Models.RestorableSqlDatabasePropertiesResourceDatabase Database { get { throw null; } }
+        public string DatabaseId { get { throw null; } }
+        public string DatabaseName { get { throw null; } }
         public string EventTimestamp { get { throw null; } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBOperationType? OperationType { get { throw null; } }
-        public string OwnerId { get { throw null; } }
-        public string OwnerResourceId { get { throw null; } }
         public string Rid { get { throw null; } }
     }
     public partial class ExtendedThroughputSettingsResourceInfo : Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsResourceInfo
@@ -2420,23 +2433,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string Rid { get { throw null; } }
         public float? Timestamp { get { throw null; } }
     }
-    public partial class FailoverPolicies
-    {
-        public FailoverPolicies(System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.FailoverPolicy> failoverPoliciesValue) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.FailoverPolicy> FailoverPoliciesValue { get { throw null; } }
-    }
-    public partial class FailoverPolicy
-    {
-        public FailoverPolicy() { }
-        public int? FailoverPriority { get { throw null; } set { } }
-        public string Id { get { throw null; } }
-        public Azure.Core.AzureLocation? LocationName { get { throw null; } set { } }
-    }
     public partial class GremlinDatabaseCreateOrUpdateContent : Azure.ResourceManager.Models.TrackedResourceData
     {
         public GremlinDatabaseCreateOrUpdateContent(Azure.Core.AzureLocation location, Azure.ResourceManager.CosmosDB.Models.GremlinDatabaseResourceInfo resource) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBCreateUpdateConfig Options { get { throw null; } set { } }
-        public string ResourceId { get { throw null; } set { } }
+        public string ResourceDatabaseName { get { throw null; } set { } }
     }
     public partial class GremlinDatabasePropertiesConfig : Azure.ResourceManager.CosmosDB.Models.CosmosDBBaseConfig
     {
@@ -2444,8 +2445,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
     }
     public partial class GremlinDatabaseResourceInfo
     {
-        public GremlinDatabaseResourceInfo(string id) { }
-        public string Id { get { throw null; } set { } }
+        public GremlinDatabaseResourceInfo(string databaseName) { }
+        public string DatabaseName { get { throw null; } set { } }
     }
     public partial class GremlinGraphCreateOrUpdateContent : Azure.ResourceManager.Models.TrackedResourceData
     {
@@ -2459,10 +2460,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
     }
     public partial class GremlinGraphResourceInfo
     {
-        public GremlinGraphResourceInfo(string id) { }
+        public GremlinGraphResourceInfo(string graphName) { }
         public Azure.ResourceManager.CosmosDB.Models.ConflictResolutionPolicy ConflictResolutionPolicy { get { throw null; } set { } }
         public int? DefaultTtl { get { throw null; } set { } }
-        public string Id { get { throw null; } set { } }
+        public string GraphName { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBIndexingPolicy IndexingPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.ContainerPartitionKey PartitionKey { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.CosmosDBUniqueKey> UniqueKeys { get { throw null; } }
@@ -2492,7 +2493,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class ManagedCassandraReaperStatus
     {
         internal ManagedCassandraReaperStatus() { }
-        public bool? Healthy { get { throw null; } }
+        public bool? IsHealthy { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> RepairRunIds { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> RepairSchedules { get { throw null; } }
     }
@@ -2508,9 +2509,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
     }
     public partial class MongoDBCollectionResourceInfo
     {
-        public MongoDBCollectionResourceInfo(string id) { }
+        public MongoDBCollectionResourceInfo(string collectionName) { }
         public int? AnalyticalStorageTtl { get { throw null; } set { } }
-        public string Id { get { throw null; } set { } }
+        public string CollectionName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.MongoIndex> Indexes { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> ShardKey { get { throw null; } }
     }
@@ -2518,7 +2519,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         public MongoDBDatabaseCreateOrUpdateContent(Azure.Core.AzureLocation location, Azure.ResourceManager.CosmosDB.Models.MongoDBDatabaseResourceInfo resource) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBCreateUpdateConfig Options { get { throw null; } set { } }
-        public string ResourceId { get { throw null; } set { } }
+        public string ResourceDatabaseName { get { throw null; } set { } }
     }
     public partial class MongoDBDatabasePropertiesConfig : Azure.ResourceManager.CosmosDB.Models.CosmosDBBaseConfig
     {
@@ -2526,8 +2527,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
     }
     public partial class MongoDBDatabaseResourceInfo
     {
-        public MongoDBDatabaseResourceInfo(string id) { }
-        public string Id { get { throw null; } set { } }
+        public MongoDBDatabaseResourceInfo(string databaseName) { }
+        public string DatabaseName { get { throw null; } set { } }
     }
     public partial class MongoIndex
     {
@@ -2539,7 +2540,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         public MongoIndexConfig() { }
         public int? ExpireAfterSeconds { get { throw null; } set { } }
-        public bool? Unique { get { throw null; } set { } }
+        public bool? IsUnique { get { throw null; } set { } }
     }
     public enum NetworkAclBypass
     {
@@ -2568,13 +2569,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class PartitionMetric : Azure.ResourceManager.CosmosDB.Models.CosmosDBBaseMetric
     {
         internal PartitionMetric() { }
-        public string PartitionId { get { throw null; } }
+        public System.Guid? PartitionId { get { throw null; } }
         public string PartitionKeyRangeId { get { throw null; } }
     }
     public partial class PartitionUsage : Azure.ResourceManager.CosmosDB.Models.CosmosDBBaseUsage
     {
         internal PartitionUsage() { }
-        public string PartitionId { get { throw null; } }
+        public System.Guid? PartitionId { get { throw null; } }
         public string PartitionKeyRangeId { get { throw null; } }
     }
     public partial class PercentileMetric
@@ -2680,7 +2681,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     }
     public partial class RestorableSqlContainerPropertiesResourceContainer : Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlContainerResourceInfo
     {
-        public RestorableSqlContainerPropertiesResourceContainer(string id) : base (default(string)) { }
+        public RestorableSqlContainerPropertiesResourceContainer(string containerName) : base (default(string)) { }
         public Azure.ETag? ETag { get { throw null; } }
         public string Rid { get { throw null; } }
         public string Self { get { throw null; } }
@@ -2693,7 +2694,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     }
     public partial class RestorableSqlDatabasePropertiesResourceDatabase : Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlDatabaseResourceInfo
     {
-        public RestorableSqlDatabasePropertiesResourceDatabase(string id) : base (default(string)) { }
+        public RestorableSqlDatabasePropertiesResourceDatabase(string databaseName) : base (default(string)) { }
         public string Colls { get { throw null; } }
         public Azure.ETag? ETag { get { throw null; } }
         public string Rid { get { throw null; } }

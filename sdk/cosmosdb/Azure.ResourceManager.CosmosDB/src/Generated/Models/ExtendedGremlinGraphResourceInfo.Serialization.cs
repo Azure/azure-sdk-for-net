@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
+            writer.WriteStringValue(GraphName);
             if (Optional.IsDefined(IndexingPolicy))
             {
                 writer.WritePropertyName("indexingPolicy");
