@@ -153,6 +153,16 @@ namespace Azure.Storage.Files.DataLake
         public bool EnableTenantDiscovery { get; set; }
 
         /// <summary>
+        /// Transfer validation options to be applied to blob uploads from this client.
+        /// </summary>
+        public UploadTransferValidationOptions UploadTransferValidationOptions { get; set; }
+
+        /// <summary>
+        /// Transfer validation options to be applied to blob downloads from this client.
+        /// </summary>
+        public DownloadTransferValidationOptions DownloadTransferValidationOptions { get; set; }
+
+        /// <summary>
         /// Add headers and query parameters in <see cref="DiagnosticsOptions.LoggedHeaderNames"/> and <see cref="DiagnosticsOptions.LoggedQueryParameters"/>
         /// </summary>
         private void AddHeadersAndQueryParameters()
