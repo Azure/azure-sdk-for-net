@@ -526,7 +526,9 @@ namespace Azure.Storage.Files.DataLake
                     uri,
                     new BlobClientOptions(clientConfiguration.ClientOptions.Version.AsBlobsVersion())
                     {
-                        Diagnostics = { IsDistributedTracingEnabled = clientConfiguration.ClientDiagnostics.IsActivityEnabled }
+                        Diagnostics = { IsDistributedTracingEnabled = clientConfiguration.ClientDiagnostics.IsActivityEnabled },
+                        UploadTransferValidationOptions = clientConfiguration.UploadTransferValidationOptions,
+                        DownloadTransferValidationOptions = clientConfiguration.DownloadTransferValidationOptions,
                     },
                     clientConfiguration.Pipeline);
             }

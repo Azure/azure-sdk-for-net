@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="startIPAddress"> The start IP address of the firewall rule. Must be IPv4 format. Use value &apos;0.0.0.0&apos; for all Azure-internal IP addresses. </param>
         /// <param name="endIPAddress"> The end IP address of the firewall rule. Must be IPv4 format. Must be greater than or equal to startIpAddress. Use value &apos;0.0.0.0&apos; for all Azure-internal IP addresses. </param>
-        internal FirewallRuleData(string id, string name, string resourceType, string startIPAddress, string endIPAddress) : base(id, name, resourceType)
+        internal FirewallRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, string startIPAddress, string endIPAddress) : base(id, name, resourceType)
         {
             StartIPAddress = startIPAddress;
             EndIPAddress = endIPAddress;

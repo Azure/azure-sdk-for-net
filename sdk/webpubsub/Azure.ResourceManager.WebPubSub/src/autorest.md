@@ -138,4 +138,10 @@ directive:
   - from: swagger-document
     where: $.definitions.ManagedIdentityType
     transform: $.enum.push("SystemAssigned, UserAssigned")
+    reason: Temporary workaround to match with common type.
+  - from: webpubsub.json
+    where: $.definitions.WebPubSub.properties.identity
+    transform: >
+      $.description = "The managed identity response. Current supported identity types: SystemAssigned, UserAssigned, None.";
+    reason: Temporary workaround to update description.
 ```

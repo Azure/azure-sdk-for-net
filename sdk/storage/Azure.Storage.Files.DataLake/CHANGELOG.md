@@ -2,6 +2,7 @@
 
 ## 12.12.0-beta.1 (Unreleased)
 - Added support for service version 2021-10-04.
+- Added support for SDK-calculated transactional checksums on data transfer.
 - Added support for flush parameter to DataLakeFileClient.Append() and .AppendAsync().
 - Added support for encryption scopes.
 - Added support for encryption scope SAS.

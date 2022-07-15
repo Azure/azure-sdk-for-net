@@ -2420,7 +2420,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             await file.FlushAsync(2 * Constants.KB);
 
             // Assert
-            Response<FileDownloadInfo> response = await file.ReadAsync(new HttpRange(Constants.KB, Constants.KB));
+            Response<FileDownloadInfo> response = await file.ReadAsync(new DataLakeFileReadOptions
+            {
+                Range = new HttpRange(Constants.KB, Constants.KB)
+            });
             Assert.AreEqual(data1.Length, response.Value.ContentLength);
             var actual = new MemoryStream();
             await response.Value.Content.CopyToAsync(actual);
@@ -2451,7 +2454,14 @@ namespace Azure.Storage.Files.DataLake.Tests
                 await file.AppendAsync(
                     content: stream,
                     offset: 0,
+<<<<<<< HEAD
                     options: options);
+=======
+                    new DataLakeFileAppendOptions
+                    {
+                        LeaseId = response.Value.LeaseId
+                    });
+>>>>>>> main
             }
         }
 
@@ -2477,7 +2487,14 @@ namespace Azure.Storage.Files.DataLake.Tests
                     file.AppendAsync(
                         content: stream,
                         offset: 0,
+<<<<<<< HEAD
                         options: options),
+=======
+                        new DataLakeFileAppendOptions
+                        {
+                            LeaseId = Recording.Random.NewGuid().ToString()
+                        }),
+>>>>>>> main
                         e => Assert.AreEqual("LeaseNotPresent", e.ErrorCode));
             }
         }
@@ -2828,7 +2845,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             Response<FileDownloadInfo> response = await fileClient.ReadAsync(
                 range: httpRange,
-                rangeGetContentHash: true);
+                conditions: default,
+                rangeGetContentHash: true,
+                cancellationToken: default
+                );
 
             // Assert
             var actual = new MemoryStream();
@@ -2855,7 +2875,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             Response<FileDownloadInfo> response = await fileClient.ReadAsync(
                 range: httpRange,
-                rangeGetContentHash: true);
+                conditions: default,
+                rangeGetContentHash: true,
+                cancellationToken: default);
 
             // Assert
             Assert.IsNotNull(response.Value.ContentHash);
@@ -2886,8 +2908,10 @@ namespace Azure.Storage.Files.DataLake.Tests
                     lease: true);
 
                 // Act
-                Response<FileDownloadInfo> response = await file.ReadAsync(
-                    conditions: conditions);
+                Response<FileDownloadInfo> response = await file.ReadAsync(new DataLakeFileReadOptions
+                {
+                    Conditions = conditions
+                });
 
                 // Assert
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -2919,8 +2943,10 @@ namespace Azure.Storage.Files.DataLake.Tests
                 await TestHelper.CatchAsync<Exception>(
                     async () =>
                     {
-                        var _ = (await file.ReadAsync(
-                            conditions: conditions)).Value;
+                        var _ = (await file.ReadAsync(new DataLakeFileReadOptions
+                        {
+                            Conditions = conditions
+                        })).Value;
                     });
             }
         }
@@ -3419,7 +3445,10 @@ namespace Azure.Storage.Files.DataLake.Tests
 
                 await Verify(await file.ReadToAsync(
                     path,
-                    conditions: new DataLakeRequestConditions() { IfModifiedSince = default }));
+                    new DataLakeFileReadToOptions
+                    {
+                        Conditions = new DataLakeRequestConditions() { IfModifiedSince = default }
+                    }));
 
                 async Task Verify(Response response)
                 {
@@ -3467,7 +3496,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 await file.ReadToAsync(
                     resultStream,
-                    conditions: new DataLakeRequestConditions() { IfModifiedSince = default });
+                    new DataLakeFileReadToOptions
+                    {
+                        Conditions = new DataLakeRequestConditions() { IfModifiedSince = default }
+                    });
                 Verify(resultStream);
             }
 

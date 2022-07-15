@@ -31,15 +31,15 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(ScheduleType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(Interval))
             {
                 writer.WritePropertyName("interval");
-                writer.WriteStringValue(Interval);
+                writer.WriteStringValue(Interval.Value, "P");
             }
             writer.WriteEndObject();
         }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<DateTimeOffset> endTime = default;
             Optional<JobScheduleType> type = default;
             Optional<bool> enabled = default;
-            Optional<string> interval = default;
+            Optional<TimeSpan> interval = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startTime"))
@@ -95,11 +95,16 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("interval"))
                 {
-                    interval = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    interval = property.Value.GetTimeSpan("P");
                     continue;
                 }
             }
-            return new JobSchedule(Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(type), Optional.ToNullable(enabled), interval.Value);
+            return new JobSchedule(Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(type), Optional.ToNullable(enabled), Optional.ToNullable(interval));
         }
     }
 }

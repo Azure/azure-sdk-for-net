@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.Storage.Tests
             {
                 CustomDomain = new StorageCustomDomain("foo.example.com")
                 {
-                    UseSubDomainName = true
+                    IsUseSubDomainNameEnabled = true
                 }
             };
             try
@@ -1257,14 +1257,14 @@ namespace Azure.ResourceManager.Storage.Tests
             _resourceGroup = await CreateResourceGroupAsync();
             StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
             StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters(kind: StorageKind.StorageV2);
-            parameters.EnableNfsV3 = false;
+            parameters.IsNfsV3Enabled = false;
             StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
 
             //validate
             VerifyAccountProperties(account, false);
             Assert.NotNull(account.Data.PrimaryEndpoints.Web);
             Assert.AreEqual(StorageKind.StorageV2, account.Data.Kind);
-            Assert.False(account.Data.EnableNfsV3);
+            Assert.False(account.Data.IsNfsV3Enabled);
         }
 
         [Test]
@@ -1670,7 +1670,7 @@ namespace Azure.ResourceManager.Storage.Tests
             {
                 account = await account.GetAsync(expand: StorageAccountExpand.GeoReplicationStats);
                 Assert.AreEqual(StorageSkuName.StandardRagrs, account.Data.Sku.Name);
-                Assert.Null(account.Data.FailoverInProgress);
+                Assert.Null(account.Data.IsFailoverInProgress);
                 location = account.Data.SecondaryLocation;
 
                 //Don't need sleep when playback, or Unit test will be very slow. Need sleep when record.

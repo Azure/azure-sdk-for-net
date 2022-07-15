@@ -67,10 +67,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("diskCapacity");
                 writer.WriteNumberValue(DiskCapacity.Value);
             }
-            if (Optional.IsDefined(AvailabilityZone))
+            if (Optional.IsDefined(DoesSupportAvailabilityZone))
             {
                 writer.WritePropertyName("availabilityZone");
-                writer.WriteBooleanValue(AvailabilityZone.Value);
+                writer.WriteBooleanValue(DoesSupportAvailabilityZone.Value);
             }
             writer.WriteEndObject();
         }

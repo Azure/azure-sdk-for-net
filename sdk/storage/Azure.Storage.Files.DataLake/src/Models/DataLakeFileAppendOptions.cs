@@ -32,6 +32,12 @@ namespace Azure.Storage.Files.DataLake.Models
         public byte[] ContentHash { get; set; }
 
         /// <summary>
+        /// Optional <see cref="UploadTransferValidationOptions"/> for using transactional
+        /// checksum validation on append.
+        /// </summary>
+        public UploadTransferValidationOptions TransferValidationOptions { get; set; }
+
+        /// <summary>
         /// Optional.  If true, the file will be flushed after the append.
         /// </summary>
         public bool? Flush { get; set; }

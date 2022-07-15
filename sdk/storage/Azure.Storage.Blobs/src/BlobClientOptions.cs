@@ -135,6 +135,16 @@ namespace Azure.Storage.Blobs
         /// </summary>
         public Uri GeoRedundantSecondaryUri { get; set; }
 
+        /// <summary>
+        /// Transfer validation options to be applied to blob uploads from this client.
+        /// </summary>
+        public UploadTransferValidationOptions UploadTransferValidationOptions { get; set; }
+
+        /// <summary>
+        /// Transfer validation options to be applied to blob downloads from this client.
+        /// </summary>
+        public DownloadTransferValidationOptions DownloadTransferValidationOptions { get; set; }
+
         #region Advanced Options
         internal ClientSideEncryptionOptions _clientSideEncryptionOptions;
         #endregion

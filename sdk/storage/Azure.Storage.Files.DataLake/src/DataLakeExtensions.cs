@@ -506,43 +506,38 @@ namespace Azure.Storage.Files.DataLake
                 BufferSize = options.BufferSize,
                 Conditions = options.Conditions.ToBlobRequestConditions(),
                 Position = options.Position,
-                // TODO #27253
-                //TransactionalHashingOptions = options.TransactionalHashingOptions
+                TransferValidationOptions = options.TransferValidationOptions
             };
         }
 
-        // TODO #27253
-        //internal static BlobDownloadOptions ToBlobBaseDownloadOptions(this DataLakeFileReadOptions options)
-        //{
-        //    if (options == null)
-        //    {
-        //        return null;
-        //    }
+        internal static BlobDownloadOptions ToBlobBaseDownloadOptions(this DataLakeFileReadOptions options)
+        {
+            if (options == null)
+            {
+                return null;
+            }
 
-        //    return new BlobDownloadOptions()
-        //    {
-        //        Range = options.Range,
-        //        Conditions = options.Conditions.ToBlobRequestConditions(),
-        //        // TODO #27253
-        //        //TransactionalHashingOptions = options.TransactionalHashingOptions
-        //    };
-        //}
+            return new BlobDownloadOptions()
+            {
+                Range = options.Range,
+                Conditions = options.Conditions.ToBlobRequestConditions(),
+                TransferValidationOptions = options.TransferValidationOptions
+            };
+        }
 
-        // TODO #27253
-        //internal static BlobDownloadToOptions ToBlobBaseDownloadToOptions(this DataLakeFileReadToOptions options)
-        //{
-        //    if (options == null)
-        //    {
-        //        return null;
-        //    }
-        //    return new BlobDownloadToOptions()
-        //    {
-        //        Conditions = options.Conditions.ToBlobRequestConditions(),
-        //        TransferOptions = options.TransferOptions,
-        //        // TODO #27253
-        //        //TransactionalHashingOptions = options.TransactionalHashingOptions
-        //    };
-        //}
+        internal static BlobDownloadToOptions ToBlobBaseDownloadToOptions(this DataLakeFileReadToOptions options)
+        {
+            if (options == null)
+            {
+                return null;
+            }
+            return new BlobDownloadToOptions()
+            {
+                Conditions = options.Conditions.ToBlobRequestConditions(),
+                TransferOptions = options.TransferOptions,
+                TransferValidationOptions = options.TransferValidationOptions
+            };
+        }
 
         internal static PathSegment ToPathSegment(this ResponseWithHeaders<PathList, FileSystemListPathsHeaders> response)
             => new PathSegment

@@ -59,7 +59,15 @@ operation-id-mappings:
   CosmosDBSqlDatabaseThroughputSetting:
       accountName: Microsoft.DocumentDB/databaseAccounts
       databaseName: Microsoft.DocumentDB/databaseAccounts/sqlDatabases
-no-property-type-replacement: CosmosDBSqlDatabaseResourceInfo;MongoDBDatabaseResourceInfo;CosmosDBTableResourceInfo;CassandraKeyspaceResourceInfo;CassandraColumn;GremlinDatabaseResourceInfo;PrivateEndpointProperty
+
+no-property-type-replacement:
+- CosmosDBSqlDatabaseResourceInfo
+- MongoDBDatabaseResourceInfo
+- CosmosDBTableResourceInfo
+- CassandraKeyspaceResourceInfo
+- CassandraColumn
+- GremlinDatabaseResourceInfo
+- PrivateEndpointProperty
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -229,7 +237,8 @@ rename-mapping:
   DatabaseAccountCreateUpdateParameters.properties.enableAnalyticalStorage: IsAnalyticalStorageEnabled
   DatabaseAccountUpdateParameters.properties.enableFreeTier: IsFreeTierEnabled
   DatabaseAccountUpdateParameters.properties.enableAnalyticalStorage: IsAnalyticalStorageEnabled
-  LocationProperties.supportsAvailabilityZone: DoesSupportsAvailabilityZone
+  LocationProperties.supportsAvailabilityZone: DoesSupportAvailabilityZone
+  DataCenterResourceProperties.availabilityZone: DoesSupportAvailabilityZone
 
 prepend-rp-prefix:
 - UniqueKey
