@@ -8,10 +8,10 @@
         "Authorization": "Sanitized",
         "Content-Length": "208",
         "Content-Type": "application/json",
-        "traceparent": "00-c4b7857fdc32b5c9522434e539110661-a47adb75c8961912-00",
+        "traceparent": "00-34887f5b6e74878eb1adacb3a5036ab0-714ff0db6b390ad6-00",
         "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220715.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "c19dbd6e127ea0c29199be09a636ee65",
+        "x-ms-client-request-id": "54b34f4ae54d789a91187f11c9f1b946",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -43,7 +43,7 @@
       "ResponseHeaders": {
         "Content-Length": "10762",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 15 Jul 2022 04:35:10 GMT",
+        "Date": "Fri, 15 Jul 2022 04:43:54 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": [
           "Accept-Encoding",
@@ -52,7 +52,7 @@
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 0F5C1A134651402DB788E1EC844EB531 Ref B: PAOEDGE0622 Ref C: 2022-07-15T04:35:11Z"
+        "X-MSEdge-Ref": "Ref A: 1E3A221B6C534CABA0A13D343842CF21 Ref B: PAOEDGE0507 Ref C: 2022-07-15T04:43:54Z"
       },
       "ResponseBody": {
         "summary": {
@@ -161,11 +161,11 @@
                   "names": [
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9"
+                      "name": "caf\u00E9/pub"
                     },
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9/pub"
+                      "name": "caf\u00E9"
                     }
                   ]
                 }
@@ -235,11 +235,11 @@
                   "names": [
                     {
                       "nameLocale": "en-US",
-                      "name": "microbrewery/beer garden"
+                      "name": "caf\u00E9/pub"
                     },
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9/pub"
+                      "name": "microbrewery/beer garden"
                     }
                   ]
                 }
@@ -308,11 +308,11 @@
                   "names": [
                     {
                       "nameLocale": "en-US",
-                      "name": "pub"
+                      "name": "caf\u00E9/pub"
                     },
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9/pub"
+                      "name": "pub"
                     }
                   ]
                 }
@@ -381,11 +381,11 @@
                   "names": [
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9"
+                      "name": "caf\u00E9/pub"
                     },
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9/pub"
+                      "name": "caf\u00E9"
                     }
                   ]
                 }
@@ -528,11 +528,11 @@
                   "names": [
                     {
                       "nameLocale": "en-US",
-                      "name": "pub"
+                      "name": "caf\u00E9/pub"
                     },
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9/pub"
+                      "name": "pub"
                     }
                   ]
                 }
@@ -674,11 +674,11 @@
                   "names": [
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9"
+                      "name": "caf\u00E9/pub"
                     },
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9/pub"
+                      "name": "caf\u00E9"
                     }
                   ]
                 }
@@ -804,7 +804,8 @@
   ],
   "Variables": {
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "1053079821"
+    "RandomSeed": "1921007187"
   }
 }
