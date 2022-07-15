@@ -379,3 +379,7 @@ directive:
       where: $.definitions.SyncAgentLinkedDatabaseProperties
       transform: >
           $.properties.databaseId['format'] = 'uuid';
+    - from: Jobs.json
+      where: $.definitions
+      transform: >
+          $.JobSchedule.properties.interval['format'] = 'duration';

@@ -160,6 +160,15 @@ rename-mapping:
   BlobInventoryPolicyRule.enabled: IsEnabled
   BlobInventoryPolicySchema.enabled: IsEnabled
   ActiveDirectoryPropertiesAccountType: ActiveDirectoryAccountType
+  StorageAccount.properties.failoverInProgress: IsFailoverInProgress
+  StorageAccount.properties.isNfsV3Enabled: IsNfsV3Enabled
+  StorageAccountCreateParameters.properties.isNfsV3Enabled: IsNfsV3Enabled
+  StorageAccount.properties.defaultToOAuthAuthentication: IsDefaultToOAuthAuthentication
+  StorageAccountCreateParameters.properties.defaultToOAuthAuthentication: IsDefaultToOAuthAuthentication
+  StorageAccountUpdateParameters.properties.defaultToOAuthAuthentication: IsDefaultToOAuthAuthentication
+  CustomDomain.useSubDomainName: IsUseSubDomainNameEnabled
+  RoutingPreference.publishMicrosoftEndpoints: IsMicrosoftEndpointsPublished
+  RoutingPreference.publishInternetEndpoints: IsInternetEndpointsPublished
 
 directive:
   - from: swagger-document
