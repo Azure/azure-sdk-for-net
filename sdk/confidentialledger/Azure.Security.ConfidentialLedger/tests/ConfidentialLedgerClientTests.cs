@@ -4,6 +4,7 @@
 using System;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Security.ConfidentialLedger.Certificate;
 using NUnit.Framework;
 
 namespace Azure.Security.ConfidentialLedger.Tests

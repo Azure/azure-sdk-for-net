@@ -8,7 +8,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.Security.ConfidentialLedger
+namespace Azure.Security.ConfidentialLedger.Certificate
 {
     /// <summary> Client options for ConfidentialLedger library clients. </summary>
     public partial class ConfidentialLedgerCertificateClientOptions : ClientOptions

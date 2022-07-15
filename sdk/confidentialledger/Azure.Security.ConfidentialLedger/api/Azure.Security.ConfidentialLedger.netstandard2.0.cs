@@ -1,13 +1,5 @@
 namespace Azure.Security.ConfidentialLedger
 {
-    public partial class ConfidentialLedgerCertificateClientOptions : Azure.Core.ClientOptions
-    {
-        public ConfidentialLedgerCertificateClientOptions(Azure.Security.ConfidentialLedger.ConfidentialLedgerCertificateClientOptions.ServiceVersion version = Azure.Security.ConfidentialLedger.ConfidentialLedgerCertificateClientOptions.ServiceVersion.V2022_05_13) { }
-        public enum ServiceVersion
-        {
-            V2022_05_13 = 1,
-        }
-    }
     public partial class ConfidentialLedgerClient
     {
         protected ConfidentialLedgerClient() { }
@@ -60,9 +52,17 @@ namespace Azure.Security.ConfidentialLedger.Certificate
     {
         protected ConfidentialLedgerCertificateClient() { }
         public ConfidentialLedgerCertificateClient(System.Uri certificateEndpoint) { }
-        public ConfidentialLedgerCertificateClient(System.Uri certificateEndpoint, Azure.Security.ConfidentialLedger.ConfidentialLedgerCertificateClientOptions options) { }
+        public ConfidentialLedgerCertificateClient(System.Uri certificateEndpoint, Azure.Security.ConfidentialLedger.Certificate.ConfidentialLedgerCertificateClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response GetLedgerIdentity(string ledgerId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetLedgerIdentityAsync(string ledgerId, Azure.RequestContext context = null) { throw null; }
+    }
+    public partial class ConfidentialLedgerCertificateClientOptions : Azure.Core.ClientOptions
+    {
+        public ConfidentialLedgerCertificateClientOptions(Azure.Security.ConfidentialLedger.Certificate.ConfidentialLedgerCertificateClientOptions.ServiceVersion version = Azure.Security.ConfidentialLedger.Certificate.ConfidentialLedgerCertificateClientOptions.ServiceVersion.V2022_05_13) { }
+        public enum ServiceVersion
+        {
+            V2022_05_13 = 1,
+        }
     }
 }
