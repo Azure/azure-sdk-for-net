@@ -256,11 +256,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var modelOperationFromList = client.GetOperationsAsync().ToEnumerableAsync().Result;
             Assert.GreaterOrEqual(modelOperationFromList.Count, 1);
 
-            ValidateModelOperationInfo(modelOperationFromList.FirstOrDefault());
+            ValidateOperationSummary(modelOperationFromList.FirstOrDefault());
 
             DocumentModelOperationInfo operationInfo = await client.GetOperationAsync(modelOperationFromList.FirstOrDefault().OperationId);
 
-            ValidateModelOperationInfo(operationInfo);
+            ValidateOperationSummary(operationInfo);
             if (operationInfo.Status == DocumentOperationStatus.Failed)
             {
                 Assert.NotNull(operationInfo.Error);
@@ -288,7 +288,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Started, trainingFilesUri, DocumentBuildMode.Template, modelId, options);
 
-            ModelOperationInfo operationSummary = client.GetOperationsAsync().ToEnumerableAsync().Result
+            DocumentModelOperationSummary operationSummary = client.GetOperationsAsync().ToEnumerableAsync().Result
                 .FirstOrDefault(op => op.OperationId == operation.Id);
 
             Assert.NotNull(operationSummary);
@@ -477,18 +477,18 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
         #endregion Composed model
 
-        private void ValidateModelOperationInfo(ModelOperationInfo model)
+        private void ValidateOperationSummary(DocumentModelOperationSummary operationSummary)
         {
-            Assert.NotNull(model.OperationId);
-            Assert.NotNull(model.Status);
-            Assert.AreNotEqual(new DateTimeOffset(), model.CreatedOn);
-            Assert.AreNotEqual(new DateTimeOffset(), model.LastUpdatedOn);
-            Assert.NotNull(model.Kind);
-            Assert.NotNull(model.ResourceLocation);
-            if (model.Status == DocumentOperationStatus.Succeeded)
+            Assert.NotNull(operationSummary.OperationId);
+            Assert.NotNull(operationSummary.Status);
+            Assert.AreNotEqual(new DateTimeOffset(), operationSummary.CreatedOn);
+            Assert.AreNotEqual(new DateTimeOffset(), operationSummary.LastUpdatedOn);
+            Assert.NotNull(operationSummary.Kind);
+            Assert.NotNull(operationSummary.ResourceLocation);
+            if (operationSummary.Status == DocumentOperationStatus.Succeeded)
             {
-                Assert.NotNull(model.PercentCompleted);
-                Assert.AreEqual(100, model.PercentCompleted);
+                Assert.NotNull(operationSummary.PercentCompleted);
+                Assert.AreEqual(100, operationSummary.PercentCompleted);
             }
         }
 

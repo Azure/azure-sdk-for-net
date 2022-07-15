@@ -12,9 +12,9 @@ using Azure.Core;
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary> Operation info. </summary>
-    public partial class ModelOperationInfo
+    public partial class DocumentModelOperationSummary
     {
-        /// <summary> Initializes a new instance of ModelOperationInfo. </summary>
+        /// <summary> Initializes a new instance of DocumentModelOperationSummary. </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="createdOn"> Date and time (UTC) when the operation was created. </param>
@@ -22,7 +22,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="kind"> Type of operation. </param>
         /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> or <paramref name="resourceLocation"/> is null. </exception>
-        internal ModelOperationInfo(string operationId, DocumentOperationStatus status, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind kind, string resourceLocation)
+        internal DocumentModelOperationSummary(string operationId, DocumentOperationStatus status, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind kind, string resourceLocation)
         {
             if (operationId == null)
             {
@@ -42,7 +42,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ModelOperationInfo. </summary>
+        /// <summary> Initializes a new instance of DocumentModelOperationSummary. </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="percentCompleted"> Operation progress (0-100). </param>
@@ -52,7 +52,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
         /// <param name="apiVersion"> API version used to create this operation. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the model. </param>
-        internal ModelOperationInfo(string operationId, DocumentOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind kind, string resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags)
+        internal DocumentModelOperationSummary(string operationId, DocumentOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind kind, string resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags)
         {
             OperationId = operationId;
             Status = status;

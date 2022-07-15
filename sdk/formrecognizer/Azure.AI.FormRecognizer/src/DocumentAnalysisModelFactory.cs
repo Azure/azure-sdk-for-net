@@ -562,7 +562,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             return new DocumentModelOperationInfo(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, apiVersion: null, tags, error, result);
         }
 
-        /// <summary> Initializes a new instance of ModelOperationInfo. </summary>
+        /// <summary> Initializes a new instance of DocumentModelOperationSummary. </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="percentCompleted"> Operation progress (0-100). </param>
@@ -571,12 +571,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="kind"> Type of operation. </param>
         /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the model. </param>
-        /// <returns> A new <see cref="DocumentAnalysis.ModelOperationInfo"/> instance for mocking. </returns>
-        public static ModelOperationInfo ModelOperationInfo(string operationId = null, DocumentOperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DocumentOperationKind kind = default, string resourceLocation = null, IReadOnlyDictionary<string, string> tags = null)
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentModelOperationSummary"/> instance for mocking. </returns>
+        public static DocumentModelOperationSummary DocumentModelOperationSummary(string operationId = null, DocumentOperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DocumentOperationKind kind = default, string resourceLocation = null, IReadOnlyDictionary<string, string> tags = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ModelOperationInfo(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, apiVersion: null, tags);
+            return new DocumentModelOperationSummary(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, apiVersion: null, tags);
         }
     }
 }
