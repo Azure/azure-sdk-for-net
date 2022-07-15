@@ -9,26 +9,26 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Security.ConfidentialLedger
 {
-    [CodeGenSuppress("ConfidentialLedgerIdentityServiceClient", typeof(Uri), typeof(TokenCredential), typeof(ConfidentialLedgerClientOptions))]
-    [CodeGenSuppress("ConfidentialLedgerIdentityServiceClient", typeof(Uri), typeof(TokenCredential))]
-    public partial class ConfidentialLedgerIdentityServiceClient
+    [CodeGenSuppress("ConfidentialLedgerCertificateClient", typeof(Uri), typeof(TokenCredential), typeof(ConfidentialLedgerClientOptions))]
+    [CodeGenSuppress("ConfidentialLedgerCertificateClient", typeof(Uri), typeof(TokenCredential))]
+    public partial class ConfidentialLedgerCertificateClient
     {
-        /// <summary> Initializes a new instance of ConfidentialLedgerIdentityServiceClient. </summary>
-        /// <param name="identityServiceUri"> The Identity Service URL, for example https://identity.accledger.azure.com. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="identityServiceUri"/> </exception>
-        public ConfidentialLedgerIdentityServiceClient(Uri identityServiceUri) : this(identityServiceUri, new ConfidentialLedgerClientOptions())
+        /// <summary> Initializes a new instance of ConfidentialLedgerCertificateClient. </summary>
+        /// <param name="certificateEndpoint"> The Identity Service URL, for example https://identity.accledger.azure.com. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateEndpoint"/> </exception>
+        public ConfidentialLedgerCertificateClient(Uri certificateEndpoint) : this(certificateEndpoint, new ConfidentialLedgerCertificateClientOptions())
         {
         }
 
-        /// <summary> Initializes a new instance of ConfidentialLedgerIdentityServiceClient. </summary>
-        /// <param name="identityServiceUri"> The Identity Service URL, for example https://identity.accledger.azure.com. </param>
+        /// <summary> Initializes a new instance of ConfidentialLedgerCertificateClient. </summary>
+        /// <param name="certificateEndpoint"> The Identity Service URL, for example https://identity.accledger.azure.com. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="identityServiceUri"/> </exception>
-        public ConfidentialLedgerIdentityServiceClient(Uri identityServiceUri, ConfidentialLedgerClientOptions options)
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateEndpoint"/> </exception>
+        public ConfidentialLedgerCertificateClient(Uri certificateEndpoint, ConfidentialLedgerCertificateClientOptions options)
         {
-            if (identityServiceUri == null)
+            if (certificateEndpoint == null)
             {
-                throw new ArgumentNullException(nameof(identityServiceUri));
+                throw new ArgumentNullException(nameof(certificateEndpoint));
             }
 
             // TODO: properly generate the client without a credential.
@@ -37,10 +37,10 @@ namespace Azure.Security.ConfidentialLedger
             {
                 // Do nothing.
             }
-            options ??= new ConfidentialLedgerClientOptions();
+            options ??= new ConfidentialLedgerCertificateClientOptions();
             ClientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
-            _identityServiceUri = identityServiceUri;
+            _certificateEndpoint = certificateEndpoint;
             _apiVersion = options.Version;
         }
 

@@ -19,7 +19,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="ledgerEndpoint"> The Confidential Ledger URL, for example https://contoso.confidentialledger.azure.com. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         public ConfidentialLedgerClient(Uri ledgerEndpoint, TokenCredential credential)
-            : this(ledgerEndpoint, credential: credential, options: new ConfidentialLedgerClientOptions(), identityServiceCert: default)
+            : this(ledgerEndpoint, credential: credential, ledgerOptions: new ConfidentialLedgerClientOptions(), identityServiceCert: default)
         { }
 
         /// <summary> Initializes a new instance of ConfidentialLedgerClient. </summary>
@@ -27,14 +27,14 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         public ConfidentialLedgerClient(Uri ledgerEndpoint, TokenCredential credential, ConfidentialLedgerClientOptions options)
-            : this(ledgerEndpoint, credential: credential, options: options, identityServiceCert: default)
+            : this(ledgerEndpoint, credential: credential, ledgerOptions: options, identityServiceCert: default)
         { }
 
         /// <summary> Initializes a new instance of ConfidentialLedgerClient. </summary>
         /// <param name="ledgerEndpoint"> The Confidential Ledger URL, for example https://contoso.confidentialledger.azure.com. </param>
         /// <param name="clientCertificate"> A <see cref="X509Certificate2"/> used to authenticate to an Azure Service. </param>
         public ConfidentialLedgerClient(Uri ledgerEndpoint, X509Certificate2 clientCertificate)
-            : this(ledgerEndpoint, clientCertificate: clientCertificate, options: new ConfidentialLedgerClientOptions(), identityServiceCert: null)
+            : this(ledgerEndpoint, clientCertificate: clientCertificate, ledgerOptions: new ConfidentialLedgerClientOptions(), identityServiceCert: null)
         { }
 
         /// <summary> Initializes a new instance of ConfidentialLedgerClient. </summary>
@@ -42,10 +42,10 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="clientCertificate"> A <see cref="X509Certificate2"/> used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         public ConfidentialLedgerClient(Uri ledgerEndpoint, X509Certificate2 clientCertificate, ConfidentialLedgerClientOptions options)
-            : this(ledgerEndpoint, clientCertificate: clientCertificate, options: options, identityServiceCert: null)
+            : this(ledgerEndpoint, clientCertificate: clientCertificate, ledgerOptions: options, identityServiceCert: null)
         { }
 
-        internal ConfidentialLedgerClient(Uri ledgerEndpoint, TokenCredential credential = null, X509Certificate2 clientCertificate = null, ConfidentialLedgerClientOptions options = null, X509Certificate2 identityServiceCert = null)
+        internal ConfidentialLedgerClient(Uri ledgerEndpoint, TokenCredential credential = null, X509Certificate2 clientCertificate = null, ConfidentialLedgerCertificateClientOptions certificateClientOptions = null , ConfidentialLedgerClientOptions ledgerOptions = null, X509Certificate2 identityServiceCert = null)
         {
             if (ledgerEndpoint == null)
             {
@@ -58,8 +58,8 @@ namespace Azure.Security.ConfidentialLedger
                 if (credential == null)
                     throw new ArgumentNullException(nameof(credential));
             }
-            var actualOptions = options ?? new ConfidentialLedgerClientOptions();
-            X509Certificate2 serviceCert = identityServiceCert ?? GetIdentityServerTlsCert(ledgerEndpoint, actualOptions);
+            var actualOptions = ledgerOptions ?? new ConfidentialLedgerClientOptions();
+            X509Certificate2 serviceCert = identityServiceCert ?? GetIdentityServerTlsCert(ledgerEndpoint, certificateClientOptions ?? new ConfidentialLedgerCertificateClientOptions());
 
             var transportOptions = GetIdentityServerTlsCertAndTrust(serviceCert);
             if (clientCertificate != null)
@@ -76,7 +76,7 @@ namespace Azure.Security.ConfidentialLedger
                     new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) },
                 transportOptions,
                 new ResponseClassifier());
-            _ledgerUri = ledgerEndpoint;
+            _ledgerEndpoint = ledgerEndpoint;
             _apiVersion = actualOptions.Version;
         }
 
@@ -108,7 +108,7 @@ namespace Azure.Security.ConfidentialLedger
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePostLedgerEntryRequest(content, collectionId, context);
+                using HttpMessage message = CreateCreateLedgerEntryRequest(content, collectionId, context);
                 var response = _pipeline.ProcessMessage(message, context);
                 response.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionIdHeaderName, out string transactionId);
 
@@ -154,7 +154,7 @@ namespace Azure.Security.ConfidentialLedger
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePostLedgerEntryRequest(content, collectionId, context);
+                using HttpMessage message = CreateCreateLedgerEntryRequest(content, collectionId, context);
                 var response = await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 response.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionIdHeaderName, out string transactionId);
 
@@ -172,9 +172,9 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        internal static X509Certificate2 GetIdentityServerTlsCert(Uri ledgerUri, ConfidentialLedgerClientOptions options, ConfidentialLedgerIdentityServiceClient client = null)
+        internal static X509Certificate2 GetIdentityServerTlsCert(Uri ledgerUri, ConfidentialLedgerCertificateClientOptions options, ConfidentialLedgerCertificateClient client = null)
         {
-            var identityClient = client ?? new ConfidentialLedgerIdentityServiceClient(new Uri("https://identity.confidential-ledger.core.azure.com"), options);
+            var identityClient = client ?? new ConfidentialLedgerCertificateClient(new Uri("https://identity.confidential-ledger.core.azure.com"), options);
 
             // Get the ledger's  TLS certificate for our ledger.
             var ledgerId = ledgerUri.Host.Substring(0, ledgerUri.Host.IndexOf('.'));

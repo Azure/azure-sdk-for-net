@@ -21,7 +21,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
             var response = new MockResponse(200);
             response.SetContent(System.Text.Json.JsonSerializer.Serialize(ledgerCert));
 
-            var cert = ConfidentialLedgerIdentityServiceClient.ParseCertificate(response);
+            var cert = ConfidentialLedgerCertificateClient.ParseCertificate(response);
 
             Assert.AreEqual("5D2E98B216B73220C960EE2978E56EEFEEACA30D", cert.Thumbprint);
         }
