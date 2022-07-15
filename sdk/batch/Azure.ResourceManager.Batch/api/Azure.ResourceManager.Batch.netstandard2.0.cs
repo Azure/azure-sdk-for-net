@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Batch
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Batch.Models.VirtualMachineFamilyCoreQuota> DedicatedCoreQuotaPerVmFamily { get { throw null; } }
         public bool? DedicatedCoreQuotaPerVmFamilyEnforced { get { throw null; } }
         public Azure.ResourceManager.Batch.Models.EncryptionProperties Encryption { get { throw null; } }
-        public Azure.ResourceManager.Batch.Models.BatchAccountIdentity Identity { get { throw null; } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } }
         public Azure.ResourceManager.Batch.Models.KeyVaultReference KeyVaultReference { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public int? LowPriorityCoreQuota { get { throw null; } }
@@ -500,21 +500,13 @@ namespace Azure.ResourceManager.Batch.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.AuthenticationMode> AllowedAuthenticationModes { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.AutoStorageBaseProperties AutoStorage { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.EncryptionProperties Encryption { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.BatchAccountIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.KeyVaultReference KeyVaultReference { get { throw null; } set { } }
         public Azure.Core.AzureLocation Location { get { throw null; } }
         public Azure.ResourceManager.Batch.Models.BatchVirtualMachineNetworkProfile NetworkProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.PoolAllocationMode? PoolAllocationMode { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.PublicNetworkAccessType? PublicNetworkAccess { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
-    public partial class BatchAccountIdentity
-    {
-        public BatchAccountIdentity(Azure.ResourceManager.Batch.Models.ResourceIdentityType resourceIdentityType) { }
-        public string PrincipalId { get { throw null; } }
-        public Azure.ResourceManager.Batch.Models.ResourceIdentityType ResourceIdentityType { get { throw null; } set { } }
-        public System.Guid? TenantId { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
     }
     public partial class BatchAccountKeys
     {
@@ -529,7 +521,7 @@ namespace Azure.ResourceManager.Batch.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.AuthenticationMode> AllowedAuthenticationModes { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.AutoStorageBaseProperties AutoStorage { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.EncryptionProperties Encryption { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.BatchAccountIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.BatchVirtualMachineNetworkProfile NetworkProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.PublicNetworkAccessType? PublicNetworkAccess { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
@@ -1002,12 +994,6 @@ namespace Azure.ResourceManager.Batch.Models
         public System.Uri HttpUri { get { throw null; } set { } }
         public string IdentityReferenceResourceId { get { throw null; } set { } }
         public System.Uri StorageContainerUri { get { throw null; } set { } }
-    }
-    public enum ResourceIdentityType
-    {
-        None = 0,
-        SystemAssigned = 1,
-        UserAssigned = 2,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ResourceType : System.IEquatable<Azure.ResourceManager.Batch.Models.ResourceType>

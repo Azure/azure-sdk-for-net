@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.MySql
         public string ByokEnforcement { get { throw null; } }
         public System.DateTimeOffset? EarliestRestoreOn { get { throw null; } set { } }
         public string FullyQualifiedDomainName { get { throw null; } set { } }
-        public Azure.ResourceManager.MySql.Models.ResourceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.MySql.Models.InfrastructureEncryption? InfrastructureEncryption { get { throw null; } set { } }
         public string MasterServerId { get { throw null; } set { } }
         public Azure.ResourceManager.MySql.Models.MinimalTlsVersionEnum? MinimalTlsVersion { get { throw null; } set { } }
@@ -1318,23 +1318,6 @@ namespace Azure.ResourceManager.MySql.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct IdentityType : System.IEquatable<Azure.ResourceManager.MySql.Models.IdentityType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public IdentityType(string value) { throw null; }
-        public static Azure.ResourceManager.MySql.Models.IdentityType SystemAssigned { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.MySql.Models.IdentityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.MySql.Models.IdentityType left, Azure.ResourceManager.MySql.Models.IdentityType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.MySql.Models.IdentityType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.MySql.Models.IdentityType left, Azure.ResourceManager.MySql.Models.IdentityType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct InfrastructureEncryption : System.IEquatable<Azure.ResourceManager.MySql.Models.InfrastructureEncryption>
     {
         private readonly object _dummy;
@@ -1581,13 +1564,6 @@ namespace Azure.ResourceManager.MySql.Models
         public int? VCore { get { throw null; } }
         public string Version { get { throw null; } }
     }
-    public partial class ResourceIdentity
-    {
-        public ResourceIdentity() { }
-        public Azure.ResourceManager.MySql.Models.IdentityType? IdentityType { get { throw null; } set { } }
-        public System.Guid? PrincipalId { get { throw null; } }
-        public System.Guid? TenantId { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SecurityAlertPolicyName : System.IEquatable<Azure.ResourceManager.MySql.Models.SecurityAlertPolicyName>
     {
@@ -1608,7 +1584,7 @@ namespace Azure.ResourceManager.MySql.Models
     public partial class ServerCreateOrUpdateContent
     {
         public ServerCreateOrUpdateContent(Azure.ResourceManager.MySql.Models.ServerPropertiesForCreate properties, Azure.Core.AzureLocation location) { }
-        public Azure.ResourceManager.MySql.Models.ResourceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Core.AzureLocation Location { get { throw null; } }
         public Azure.ResourceManager.MySql.Models.ServerPropertiesForCreate Properties { get { throw null; } }
         public Azure.ResourceManager.MySql.Models.MySqlSku Sku { get { throw null; } set { } }
@@ -1635,7 +1611,7 @@ namespace Azure.ResourceManager.MySql.Models
     {
         public ServerPatch() { }
         public string AdministratorLoginPassword { get { throw null; } set { } }
-        public Azure.ResourceManager.MySql.Models.ResourceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.MySql.Models.MinimalTlsVersionEnum? MinimalTlsVersion { get { throw null; } set { } }
         public Azure.ResourceManager.MySql.Models.PublicNetworkAccessEnum? PublicNetworkAccess { get { throw null; } set { } }
         public string ReplicationRole { get { throw null; } set { } }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.IotCentral
         public IotCentralAppData(Azure.Core.AzureLocation location, Azure.ResourceManager.IotCentral.Models.AppSkuInfo sku) : base (default(Azure.Core.AzureLocation)) { }
         public string ApplicationId { get { throw null; } }
         public string DisplayName { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.SystemAssignedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.IotCentral.Models.NetworkRuleSets NetworkRuleSets { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.IotCentral.IotCentralPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.IotCentral.Models.ProvisioningState? ProvisioningState { get { throw null; } }
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.IotCentral.Models
         public IotCentralAppPatch() { }
         public string ApplicationId { get { throw null; } }
         public string DisplayName { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.SystemAssignedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.IotCentral.Models.NetworkRuleSets NetworkRuleSets { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.IotCentral.IotCentralPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.IotCentral.Models.ProvisioningState? ProvisioningState { get { throw null; } }

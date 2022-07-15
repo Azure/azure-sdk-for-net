@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Logic
     public partial class IntegrationServiceEnvironmentData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public IntegrationServiceEnvironmentData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.Logic.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentSku Sku { get { throw null; } set { } }
     }
@@ -615,7 +615,7 @@ namespace Azure.ResourceManager.Logic
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public System.BinaryData Definition { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.FlowEndpointsConfiguration EndpointsConfiguration { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.ResourceReference IntegrationAccount { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.ResourceReference IntegrationServiceEnvironment { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Logic.Models.WorkflowParameter> Parameters { get { throw null; } }
@@ -2096,33 +2096,6 @@ namespace Azure.ResourceManager.Logic.Models
         public static bool operator ==(Azure.ResourceManager.Logic.Models.LogicSkuName left, Azure.ResourceManager.Logic.Models.LogicSkuName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Logic.Models.LogicSkuName (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Logic.Models.LogicSkuName left, Azure.ResourceManager.Logic.Models.LogicSkuName right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class ManagedServiceIdentity
-    {
-        public ManagedServiceIdentity(Azure.ResourceManager.Logic.Models.ManagedServiceIdentityType identityType) { }
-        public Azure.ResourceManager.Logic.Models.ManagedServiceIdentityType IdentityType { get { throw null; } set { } }
-        public System.Guid? PrincipalId { get { throw null; } }
-        public System.Guid? TenantId { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ManagedServiceIdentityType : System.IEquatable<Azure.ResourceManager.Logic.Models.ManagedServiceIdentityType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ManagedServiceIdentityType(string value) { throw null; }
-        public static Azure.ResourceManager.Logic.Models.ManagedServiceIdentityType None { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.ManagedServiceIdentityType SystemAssigned { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.ManagedServiceIdentityType UserAssigned { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Logic.Models.ManagedServiceIdentityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Logic.Models.ManagedServiceIdentityType left, Azure.ResourceManager.Logic.Models.ManagedServiceIdentityType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Logic.Models.ManagedServiceIdentityType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Logic.Models.ManagedServiceIdentityType left, Azure.ResourceManager.Logic.Models.ManagedServiceIdentityType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

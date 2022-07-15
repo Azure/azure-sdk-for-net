@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.PostgreSql
         public string ByokEnforcement { get { throw null; } }
         public System.DateTimeOffset? EarliestRestoreOn { get { throw null; } set { } }
         public string FullyQualifiedDomainName { get { throw null; } set { } }
-        public Azure.ResourceManager.PostgreSql.Models.ResourceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.PostgreSql.Models.InfrastructureEncryption? InfrastructureEncryption { get { throw null; } set { } }
         public string MasterServerId { get { throw null; } set { } }
         public Azure.ResourceManager.PostgreSql.Models.MinimalTlsVersionEnum? MinimalTlsVersion { get { throw null; } set { } }
@@ -1055,23 +1055,6 @@ namespace Azure.ResourceManager.PostgreSql.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct IdentityType : System.IEquatable<Azure.ResourceManager.PostgreSql.Models.IdentityType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public IdentityType(string value) { throw null; }
-        public static Azure.ResourceManager.PostgreSql.Models.IdentityType SystemAssigned { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.PostgreSql.Models.IdentityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.PostgreSql.Models.IdentityType left, Azure.ResourceManager.PostgreSql.Models.IdentityType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.PostgreSql.Models.IdentityType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.PostgreSql.Models.IdentityType left, Azure.ResourceManager.PostgreSql.Models.IdentityType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct InfrastructureEncryption : System.IEquatable<Azure.ResourceManager.PostgreSql.Models.InfrastructureEncryption>
     {
         private readonly object _dummy;
@@ -1287,13 +1270,6 @@ namespace Azure.ResourceManager.PostgreSql.Models
         public int? VCore { get { throw null; } }
         public string Version { get { throw null; } }
     }
-    public partial class ResourceIdentity
-    {
-        public ResourceIdentity() { }
-        public Azure.ResourceManager.PostgreSql.Models.IdentityType? IdentityType { get { throw null; } set { } }
-        public System.Guid? PrincipalId { get { throw null; } }
-        public System.Guid? TenantId { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SecurityAlertPolicyName : System.IEquatable<Azure.ResourceManager.PostgreSql.Models.SecurityAlertPolicyName>
     {
@@ -1314,7 +1290,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
     public partial class ServerCreateOrUpdateContent
     {
         public ServerCreateOrUpdateContent(Azure.ResourceManager.PostgreSql.Models.ServerPropertiesForCreate properties, Azure.Core.AzureLocation location) { }
-        public Azure.ResourceManager.PostgreSql.Models.ResourceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Core.AzureLocation Location { get { throw null; } }
         public Azure.ResourceManager.PostgreSql.Models.ServerPropertiesForCreate Properties { get { throw null; } }
         public Azure.ResourceManager.PostgreSql.Models.PostgreSqlSku Sku { get { throw null; } set { } }
@@ -1341,7 +1317,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
     {
         public ServerPatch() { }
         public string AdministratorLoginPassword { get { throw null; } set { } }
-        public Azure.ResourceManager.PostgreSql.Models.ResourceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.PostgreSql.Models.MinimalTlsVersionEnum? MinimalTlsVersion { get { throw null; } set { } }
         public Azure.ResourceManager.PostgreSql.Models.PublicNetworkAccessEnum? PublicNetworkAccess { get { throw null; } set { } }
         public string ReplicationRole { get { throw null; } set { } }

@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     public partial class HybridIdentityMetadataData : Azure.ResourceManager.Models.ResourceData
     {
         public HybridIdentityMetadataData() { }
-        public Azure.ResourceManager.Models.SystemAssignedServiceIdentity Identity { get { throw null; } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public string PublicKey { get { throw null; } set { } }
         public string VmId { get { throw null; } set { } }
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         public string FolderPath { get { throw null; } }
         public Azure.ResourceManager.ConnectedVMwarevSphere.Models.GuestAgentProfile GuestAgentProfile { get { throw null; } set { } }
         public Azure.ResourceManager.ConnectedVMwarevSphere.Models.HardwareProfile HardwareProfile { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.SystemAssignedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public string InstanceUuid { get { throw null; } }
         public string InventoryItemId { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
@@ -1115,7 +1115,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     {
         public VirtualMachinePatch() { }
         public Azure.ResourceManager.ConnectedVMwarevSphere.Models.HardwareProfile HardwareProfile { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.SystemAssignedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ConnectedVMwarevSphere.Models.NetworkInterfaceUpdate> NetworkInterfaces { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VirtualDiskUpdate> StorageDisks { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
