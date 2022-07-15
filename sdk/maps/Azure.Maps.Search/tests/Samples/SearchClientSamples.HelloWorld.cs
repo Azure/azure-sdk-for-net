@@ -12,6 +12,25 @@ namespace Azure.Maps.Search.Tests
 {
     public class SearchClientSamples: SamplesBase<SearchClientTestEnvironment>
     {
+        public void RouteClientViaAAD()
+        {
+            #region Snippet:InstantiateRouteClientViaAAD
+            // Create a MapsRouteClient that will authenticate through Active Directory
+            var credential = new DefaultAzureCredential();
+            var clientId = "<My Map Account Client Id>";
+            MapsRouteClient client = new MapsRouteClient(credential, clientId);
+            #endregion
+        }
+
+        public void RouteClientViaSubscriptionKey()
+        {
+            #region Snippet:InstantiateRouteClientViaSubscriptionKey
+            // Create a MapsRouteClient that will authenticate through Subscription Key (Shared key)
+            var credential = new AzureKeyCredential("<My Subscription Key>");
+            MapsRouteClient client = new MapsRouteClient(credential);
+            #endregion
+        }
+        
         [Test]
         public void SearchingAnAddress()
         {
