@@ -13,32 +13,33 @@ var identityClient = new ConfidentialLedgerCertificateClient(identityServiceEndp
 string ledgerId = "<the ledger id>"; // ex. "my-ledger" from "https://my-ledger.eastus.cloudapp.azure.com"
 Response response = identityClient.GetLedgerIdentity(ledgerId);
 X509Certificate2 ledgerTlsCert = ConfidentialLedgerCertificateClient.ParseCertificate(response);
-```
 
-Now we can construct the `ConfidentialLedgerClient` with a transport configuration that trusts the `ledgerTlsCert`.
-
-```C# Snippet:CreateClient
-// Create a certificate chain rooted with our TLS cert.
 X509Chain certificateChain = new();
+// Revocation is not required by CCF. Hence revocation checks must be skipped to avoid validation failing unnecessarily.
 certificateChain.ChainPolicy.RevocationMode = X509RevocationMode.NoCheck;
-certificateChain.ChainPolicy.RevocationFlag = X509RevocationFlag.ExcludeRoot;
+// Add the ledger identity TLS certificate to the ExtraStore.
+certificateChain.ChainPolicy.ExtraStore.Add(ledgerTlsCert);
+// AllowUnknownCertificateAuthority will NOT allow validation of all unknown self-signed certificates.
+// It extends trust to the ExtraStore, which in this case contains the trusted ledger identity TLS certificate.
+// This makes it possible for validation of certificate chains terminating in the ledger identity TLS certificate to pass.
+// Note: .NET 5 introduced `CustomTrustStore` but we cannot use that here as we must support older versions of .NET.
 certificateChain.ChainPolicy.VerificationFlags = X509VerificationFlags.AllowUnknownCertificateAuthority;
 certificateChain.ChainPolicy.VerificationTime = DateTime.Now;
-certificateChain.ChainPolicy.UrlRetrievalTimeout = new TimeSpan(0, 0, 0);
-certificateChain.ChainPolicy.ExtraStore.Add(ledgerTlsCert);
 
-var f = certificateChain.Build(ledgerTlsCert);
-
-// Define a validation function to ensure that the ledger certificate is trusted by the ledger identity TLS certificate.
+// Define a validation function to ensure that certificates presented to the client only pass validation if
+// they are trusted by the ledger identity TLS certificate.
 bool CertValidationCheck(HttpRequestMessage httpRequestMessage, X509Certificate2 cert, X509Chain x509Chain, SslPolicyErrors sslPolicyErrors)
 {
+    // Validate the presented certificate chain, using the ChainPolicy defined above.
+    // Note: this check will allow certificates signed by standard CAs as well as those signed by the ledger identity TLS certificate.
     bool isChainValid = certificateChain.Build(cert);
     if (!isChainValid)
         return false;
 
-    var isCertSignedByTheTlsCert = certificateChain.ChainElements.Cast<X509ChainElement>()
-        .Any(x => x.Certificate.Thumbprint == ledgerTlsCert.Thumbprint);
-    return isCertSignedByTheTlsCert || httpRequestMessage.RequestUri.Host == "identity.confidential-ledger.core.azure.com";
+    // Ensure that the presented certificate chain passes validation only if it is rooted in the the ledger identity TLS certificate.
+    var rootCert = certificateChain.ChainElements[certificateChain.ChainElements.Count - 1].Certificate;
+    var isChainRootedInTheTlsCert = rootCert.RawData.SequenceEqual(ledgerTlsCert.RawData);
+    return isChainRootedInTheTlsCert;
 }
 
 // Create an HttpClientHandler to use our certValidationCheck function.

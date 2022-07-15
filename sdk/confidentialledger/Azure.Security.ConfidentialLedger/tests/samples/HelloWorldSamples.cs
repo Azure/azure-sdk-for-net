@@ -20,7 +20,14 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
         [Test]
         public void HelloWorld()
         {
-            var ledgerClient = new ConfidentialLedgerClient(TestEnvironment.ConfidentialLedgerUrl, new DefaultAzureCredential());
+            #region Snippet:CreateClient
+
+#if SNIPPET
+            var ledgerClient = new ConfidentialLedgerClient(new Uri("https://my-ledger-url.confidential-ledger.azure.com"), new DefaultAzureCredential());
+#else
+            var ledgerClient = new ConfidentialLedgerClient(TestEnvironment.ConfidentialLedgerUrl, TestEnvironment.Credential);
+#endif
+#endregion
             #region Snippet:AppendToLedger
 
             Operation postOperation = ledgerClient.PostLedgerEntry(

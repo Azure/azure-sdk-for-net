@@ -45,7 +45,7 @@ namespace Azure.Security.ConfidentialLedger
             : this(ledgerEndpoint, clientCertificate: clientCertificate, ledgerOptions: options, identityServiceCert: null)
         { }
 
-        internal ConfidentialLedgerClient(Uri ledgerEndpoint, TokenCredential credential = null, X509Certificate2 clientCertificate = null, ConfidentialLedgerCertificateClientOptions certificateClientOptions = null , ConfidentialLedgerClientOptions ledgerOptions = null, X509Certificate2 identityServiceCert = null)
+        internal ConfidentialLedgerClient(Uri ledgerEndpoint, TokenCredential credential = null, X509Certificate2 clientCertificate = null, ConfidentialLedgerCertificateClientOptions certificateClientOptions = null, ConfidentialLedgerClientOptions ledgerOptions = null, X509Certificate2 identityServiceCert = null)
         {
             if (ledgerEndpoint == null)
             {
@@ -193,23 +193,31 @@ namespace Azure.Security.ConfidentialLedger
         private static HttpPipelineTransportOptions GetIdentityServerTlsCertAndTrust(X509Certificate2 identityServiceCert = null)
         {
             X509Chain certificateChain = new();
+            // Revocation is not required by CCF. Hence revocation checks must be skipped to avoid validation failing unnecessarily.
             certificateChain.ChainPolicy.RevocationMode = X509RevocationMode.NoCheck;
-            certificateChain.ChainPolicy.RevocationFlag = X509RevocationFlag.ExcludeRoot;
+            // Add the ledger identity TLS certificate to the ExtraStore.
+            certificateChain.ChainPolicy.ExtraStore.Add(identityServiceCert);
+            // AllowUnknownCertificateAuthority will NOT allow validation of all unknown self-signed certificates.
+            // It extends trust to the ExtraStore, which in this case contains the trusted ledger identity TLS certificate.
+            // This makes it possible for validation of certificate chains terminating in the ledger identity TLS certificate to pass.
+            // Note: .NET 5 introduced `CustomTrustStore` but we cannot use that here as we must support older versions of .NET.
             certificateChain.ChainPolicy.VerificationFlags = X509VerificationFlags.AllowUnknownCertificateAuthority;
             certificateChain.ChainPolicy.VerificationTime = DateTime.Now;
-            certificateChain.ChainPolicy.UrlRetrievalTimeout = new TimeSpan(0, 0, 0);
-            certificateChain.ChainPolicy.ExtraStore.Add(identityServiceCert);
 
-            // Define a validation function to ensure that the ledger certificate is trusted by the ledger identity TLS certificate.
+            // Define a validation function to ensure that certificates presented to the client only pass validation if
+            // they are trusted by the ledger identity TLS certificate.
             bool CertValidationCheck(X509Certificate2 cert)
             {
+                // Validate the presented certificate chain, using the ChainPolicy defined above.
+                // Note: this check will allow certificates signed by standard CAs as well as those signed by the ledger identity TLS certificate.
                 bool isChainValid = certificateChain.Build(cert);
                 if (!isChainValid)
                     return false;
 
-                var isCertSignedByTheTlsCert = certificateChain.ChainElements.Cast<X509ChainElement>()
-                    .Any(x => x.Certificate.Thumbprint == identityServiceCert.Thumbprint);
-                return isCertSignedByTheTlsCert;
+                // Ensure that the presented certificate chain passes validation only if it is rooted in the the ledger identity TLS certificate.
+                var rootCert = certificateChain.ChainElements[certificateChain.ChainElements.Count - 1].Certificate;
+                var isChainRootedInTheTlsCert = rootCert.RawData.SequenceEqual(identityServiceCert.RawData);
+                return isChainRootedInTheTlsCert;
             }
 
             return new HttpPipelineTransportOptions { ServerCertificateCustomValidationCallback = args => CertValidationCheck(args.Certificate) };
