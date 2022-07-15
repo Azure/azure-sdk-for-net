@@ -8,6 +8,7 @@ using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
+using Azure.Security.ConfidentialLedger.Certificate;
 using NUnit.Framework;
 
 namespace Azure.Security.ConfidentialLedger.Tests.samples

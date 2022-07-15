@@ -8,6 +8,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Security.ConfidentialLedger.Certificate;
 
 namespace Azure.Security.ConfidentialLedger
 {

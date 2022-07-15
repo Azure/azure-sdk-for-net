@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core.TestFramework;
+using Azure.Security.ConfidentialLedger.Certificate;
 using NUnit.Framework;
 
 namespace Azure.Security.ConfidentialLedger.Tests
