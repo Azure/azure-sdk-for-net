@@ -180,7 +180,7 @@ namespace Azure.Maps.Search
         }
 
         /// <summary>
-        /// Initializes a new <see cref="RequestRouteDirectionsOperation"/> instance
+        /// Initializes a new <see cref="GetSearchAddressBatchOperation"/> instance
         /// </summary>
         /// <param name="client">
         /// The client used to check for completion.

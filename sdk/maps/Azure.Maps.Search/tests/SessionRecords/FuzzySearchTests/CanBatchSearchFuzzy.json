@@ -8,10 +8,10 @@
         "Authorization": "Sanitized",
         "Content-Length": "190",
         "Content-Type": "application/json",
-        "traceparent": "00-6e7888c2b1218bdacad1269ee1b095e4-6364c4b556dd786e-00",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220617.1 (.NET 6.0.6; Microsoft Windows 10.0.19044)",
+        "traceparent": "00-a8f887db0e4d8caf106a37842b581193-80a904ff02c5b647-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220715.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "8f8c7e6fca4ad18bfeedb31948c15b74",
+        "x-ms-client-request-id": "05075d608ec0d6be93e73cdd4e6bc91d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -27,13 +27,13 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json",
-        "Date": "Fri, 17 Jun 2022 04:39:16 GMT",
+        "Date": "Fri, 15 Jul 2022 04:35:00 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: E66F08BCA10F42D0A66D9F62B80DED1D Ref B: TPE30EDGE0609 Ref C: 2022-06-17T04:39:17Z"
+        "X-MSEdge-Ref": "Ref A: 42C8AFAD25504D558A6B9E461E376F08 Ref B: PAOEDGE0622 Ref C: 2022-07-15T04:35:00Z"
       },
       "ResponseBody": {
         "batchItems": [
@@ -46,7 +46,7 @@
                 "queryTime": 9,
                 "numResults": 10,
                 "offset": 0,
-                "totalResults": 1802517,
+                "totalResults": 1802544,
                 "fuzzyLevel": 1,
                 "geoBias": {
                   "lat": 25.04,
@@ -79,11 +79,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "caf\u00E9/pub"
+                            "name": "caf\u00E9"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "caf\u00E9"
+                            "name": "caf\u00E9/pub"
                           }
                         ]
                       }
@@ -122,15 +122,7 @@
                         "lon": 121.55961
                       }
                     }
-                  ],
-                  "dataSources": {
-                    "poiDetails": [
-                      {
-                        "id": "Rm91cnNxdWFyZTo0Y2QyYTI2YTRhYTlmMDRkNjcyYzU4Y2I=",
-                        "sourceName": "Foursquare"
-                      }
-                    ]
-                  }
+                  ]
                 },
                 {
                   "type": "POI",
@@ -156,11 +148,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "caf\u00E9/pub"
+                            "name": "caf\u00E9"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "caf\u00E9"
+                            "name": "caf\u00E9/pub"
                           }
                         ]
                       }
@@ -227,11 +219,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "caf\u00E9/pub"
+                            "name": "caf\u00E9"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "caf\u00E9"
+                            "name": "caf\u00E9/pub"
                           }
                         ]
                       }
@@ -272,15 +264,7 @@
                         "lon": 121.5621
                       }
                     }
-                  ],
-                  "dataSources": {
-                    "poiDetails": [
-                      {
-                        "id": "Rm91cnNxdWFyZTo0YmEzMjAwN2Y5NjRhNTIwYmYyYzM4ZTM=",
-                        "sourceName": "Foursquare"
-                      }
-                    ]
-                  }
+                  ]
                 },
                 {
                   "type": "POI",
@@ -355,6 +339,78 @@
                       "position": {
                         "lat": 25.04064,
                         "lon": 121.56208
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "POI",
+                  "id": "158009001789613",
+                  "score": 2.5745120049,
+                  "dist": 220.2243834162837,
+                  "info": "search:ta:158009001789613-TW",
+                  "poi": {
+                    "name": "louisacoffee yi xian dian",
+                    "phone": "\u002B886 2 8780 4613",
+                    "categorySet": [
+                      {
+                        "id": 9376006
+                      }
+                    ],
+                    "categories": [
+                      "caf\u00E9/pub",
+                      "coffee shop"
+                    ],
+                    "classifications": [
+                      {
+                        "code": "CAFE_PUB",
+                        "names": [
+                          {
+                            "nameLocale": "en-US",
+                            "name": "coffee shop"
+                          },
+                          {
+                            "nameLocale": "en-US",
+                            "name": "caf\u00E9/pub"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "address": {
+                    "streetNumber": "6",
+                    "streetName": "Yixian Road Lane 50",
+                    "municipalitySubdivision": "Xinyi District",
+                    "municipality": "Taipei City",
+                    "countrySubdivision": "Taipei City",
+                    "postalCode": "110",
+                    "extendedPostalCode": "11071",
+                    "countryCode": "TW",
+                    "country": "Taiwan",
+                    "countryCodeISO3": "TWN",
+                    "freeformAddress": "6, Yixian Road Lane 50, Xinyi District, Taipei City 11071",
+                    "localName": "Xinyi District"
+                  },
+                  "position": {
+                    "lat": 25.04055,
+                    "lon": 121.5621
+                  },
+                  "viewport": {
+                    "topLeftPoint": {
+                      "lat": 25.04145,
+                      "lon": 121.56111
+                    },
+                    "btmRightPoint": {
+                      "lat": 25.03965,
+                      "lon": 121.56309
+                    }
+                  },
+                  "entryPoints": [
+                    {
+                      "type": "main",
+                      "position": {
+                        "lat": 25.04064,
+                        "lon": 121.5621
                       }
                     }
                   ]
@@ -574,78 +630,6 @@
                 },
                 {
                   "type": "POI",
-                  "id": "158009001789613",
-                  "score": 2.5745120049,
-                  "dist": 220.2243834162837,
-                  "info": "search:ta:158009001789613-TW",
-                  "poi": {
-                    "name": "louisacoffee yi xian dian",
-                    "phone": "\u002B886 2 8780 4613",
-                    "categorySet": [
-                      {
-                        "id": 9376006
-                      }
-                    ],
-                    "categories": [
-                      "caf\u00E9/pub",
-                      "coffee shop"
-                    ],
-                    "classifications": [
-                      {
-                        "code": "CAFE_PUB",
-                        "names": [
-                          {
-                            "nameLocale": "en-US",
-                            "name": "coffee shop"
-                          },
-                          {
-                            "nameLocale": "en-US",
-                            "name": "caf\u00E9/pub"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "address": {
-                    "streetNumber": "6",
-                    "streetName": "Yixian Road Lane 50",
-                    "municipalitySubdivision": "Xinyi District",
-                    "municipality": "Taipei City",
-                    "countrySubdivision": "Taipei City",
-                    "postalCode": "110",
-                    "extendedPostalCode": "11071",
-                    "countryCode": "TW",
-                    "country": "Taiwan",
-                    "countryCodeISO3": "TWN",
-                    "freeformAddress": "6, Yixian Road Lane 50, Xinyi District, Taipei City 11071",
-                    "localName": "Xinyi District"
-                  },
-                  "position": {
-                    "lat": 25.04055,
-                    "lon": 121.5621
-                  },
-                  "viewport": {
-                    "topLeftPoint": {
-                      "lat": 25.04145,
-                      "lon": 121.56111
-                    },
-                    "btmRightPoint": {
-                      "lat": 25.03965,
-                      "lon": 121.56309
-                    }
-                  },
-                  "entryPoints": [
-                    {
-                      "type": "main",
-                      "position": {
-                        "lat": 25.04064,
-                        "lon": 121.5621
-                      }
-                    }
-                  ]
-                },
-                {
-                  "type": "POI",
                   "id": "158009002360301",
                   "score": 2.5745117664,
                   "dist": 222.16072684360478,
@@ -717,15 +701,7 @@
                         "lon": 121.56212
                       }
                     }
-                  ],
-                  "dataSources": {
-                    "poiDetails": [
-                      {
-                        "id": "Rm91cnNxdWFyZTo0ZTMyNTUwZjUyYjE1MWQ1Njg2YzQ2MTk=",
-                        "sourceName": "Foursquare"
-                      }
-                    ]
-                  }
+                  ]
                 },
                 {
                   "type": "POI",
@@ -808,10 +784,10 @@
               "summary": {
                 "query": "pizza",
                 "queryType": "NON_NEAR",
-                "queryTime": 11,
+                "queryTime": 153,
                 "numResults": 10,
                 "offset": 0,
-                "totalResults": 377593,
+                "totalResults": 377579,
                 "fuzzyLevel": 1,
                 "geoBias": {
                   "lat": 25.04,
@@ -843,11 +819,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           }
                         ]
                       }
@@ -887,15 +863,7 @@
                         "lon": 121.55763
                       }
                     }
-                  ],
-                  "dataSources": {
-                    "poiDetails": [
-                      {
-                        "id": "Rm91cnNxdWFyZTo0YmRhYzhhNjJhM2EwZjQ3ZDlmNWFiYjY=",
-                        "sourceName": "Foursquare"
-                      }
-                    ]
-                  }
+                  ]
                 },
                 {
                   "type": "POI",
@@ -921,11 +889,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           }
                         ]
                       }
@@ -998,11 +966,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           }
                         ]
                       }
@@ -1042,15 +1010,7 @@
                         "lon": 121.55769
                       }
                     }
-                  ],
-                  "dataSources": {
-                    "poiDetails": [
-                      {
-                        "id": "Rm91cnNxdWFyZTo0YmM1ZGJlYzQxY2I3NmIwNTVlNjNlNmY=",
-                        "sourceName": "Foursquare"
-                      }
-                    ]
-                  }
+                  ]
                 },
                 {
                   "type": "POI",
@@ -1076,11 +1036,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           }
                         ]
                       }
@@ -1148,11 +1108,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           }
                         ]
                       }
@@ -1220,11 +1180,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           }
                         ]
                       }
@@ -1265,15 +1225,7 @@
                         "lon": 121.55672
                       }
                     }
-                  ],
-                  "dataSources": {
-                    "poiDetails": [
-                      {
-                        "id": "Rm91cnNxdWFyZTo0ZTYyZmJiNjE0OTU2NzZkNTVmZTM3Yzk=",
-                        "sourceName": "Foursquare"
-                      }
-                    ]
-                  }
+                  ]
                 },
                 {
                   "type": "POI",
@@ -1304,11 +1256,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           }
                         ]
                       }
@@ -1376,11 +1328,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           }
                         ]
                       }
@@ -1447,11 +1399,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           }
                         ]
                       }
@@ -1492,15 +1444,7 @@
                         "lon": 121.55579
                       }
                     }
-                  ],
-                  "dataSources": {
-                    "poiDetails": [
-                      {
-                        "id": "Rm91cnNxdWFyZTo1NzYzNzYxZjQ5OGVjMTIzYjk1OWRjZDI=",
-                        "sourceName": "Foursquare"
-                      }
-                    ]
-                  }
+                  ]
                 },
                 {
                   "type": "POI",
@@ -1526,11 +1470,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           }
                         ]
                       }
@@ -1570,15 +1514,7 @@
                         "lon": 121.56366
                       }
                     }
-                  ],
-                  "dataSources": {
-                    "poiDetails": [
-                      {
-                        "id": "Rm91cnNxdWFyZTo0ZDI4NDAxZTg0OWYzNzA0ZWVjYjcxNDE=",
-                        "sourceName": "Foursquare"
-                      }
-                    ]
-                  }
+                  ]
                 }
               ]
             }
@@ -1594,6 +1530,6 @@
   "Variables": {
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "898984800"
+    "RandomSeed": "1908172177"
   }
 }

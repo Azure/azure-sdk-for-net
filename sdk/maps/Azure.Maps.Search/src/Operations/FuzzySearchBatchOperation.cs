@@ -168,57 +168,169 @@ namespace Azure.Maps.Search
     /// }
     /// ```
     /// </summary>
-    public partial class SearchGetFuzzySearchBatchOperation : Operation<SearchAddressBatchResult>, IOperationSource<SearchAddressBatchResult>
+    public partial class FuzzySearchBatchOperation : Operation<SearchAddressBatchResult>
     {
-        private readonly OperationInternals<SearchAddressBatchResult> _operation;
-
         /// <summary> Initializes a new instance of SearchGetFuzzySearchBatchOperation for mocking. </summary>
-        protected SearchGetFuzzySearchBatchOperation()
+        protected FuzzySearchBatchOperation()
         {
         }
 
-        internal SearchGetFuzzySearchBatchOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        /// <summary>
+        /// Initializes a new <see cref="FuzzySearchBatchOperation"/> instance
+        /// </summary>
+        /// <param name="client">
+        /// <param name="followUpUrl">Follow up URL of the request.</param>
+        /// The client used to check for completion.
+        /// </param>
+        internal FuzzySearchBatchOperation(SearchClient client, Uri followUpUrl)
         {
-            _operation = new OperationInternals<SearchAddressBatchResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.OriginalUri, "SearchGetFuzzySearchBatchOperation");
+            Argument.AssertNotNull(client, nameof(client));
+            Argument.AssertNotNull(followUpUrl, nameof(followUpUrl));
+
+            try
+            {
+                var paths = followUpUrl.AbsolutePath.Split('/');
+                _id = paths[paths.Length - 1];
+            }
+            catch (Exception ex)
+            {
+                if (ex is FormatException || ex is UriFormatException)
+                {
+                    throw new FormatException("Invalid ID", ex);
+                }
+            }
+
+            _value = null;
+            _rawResponse = null;
+            _client = client;
+            _cancellationToken = default;
+        }
+
+        private readonly SearchClient _client;
+
+        private readonly CancellationToken _cancellationToken;
+
+        private bool _hasCompleted;
+
+        private SearchAddressBatchResult _value;
+
+        private Response _rawResponse;
+
+        private string _id;
+
+        /// <inheritdoc />
+        public override SearchAddressBatchResult Value => _value;
+
+        /// <inheritdoc />
+        public override bool HasCompleted => _hasCompleted;
+
+        /// <inheritdoc />
+        public override bool HasValue => _value != null;
+
+        /// <inheritdoc />
+        public override string Id => _id;
+
+        /// <inheritdoc />
+        public override Response GetRawResponse() => _rawResponse;
+
+        /// <inheritdoc />
+        public override Response UpdateStatus(CancellationToken cancellationToken = default) =>
+            UpdateStatusAsync(false, cancellationToken).EnsureCompleted();
+
+        /// <inheritdoc />
+        public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) =>
+            await UpdateStatusAsync(true, cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Check for the latest status of the route matrix calculation operation.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <param name="async" />
+        /// <returns>The <see cref="Response"/> with the status update.</returns>
+        private async Task<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
+        {
+            // Short-circuit when already completed (which improves mocking
+            // scenarios that won't have a client).
+            if (HasCompleted)
+            {
+                return GetRawResponse();
+            }
+
+            // Use our original CancellationToken if the user didn't provide one
+            if (cancellationToken == default)
+            {
+                cancellationToken = _cancellationToken;
+            }
+
+            // Get the latest status
+            ResponseWithHeaders<SearchGetFuzzySearchBatchHeaders> update = async
+                ? await _client.RestClient.GetFuzzySearchBatchAsync(_id, cancellationToken).ConfigureAwait(false)
+                : _client.RestClient.GetFuzzySearchBatch(_id, cancellationToken);
+
+            // Check if the operation is no longer running
+            if (update.Headers.Location == null)
+            {
+                _hasCompleted = true;
+            }
+            else
+            {
+                var uri = new Uri(update.Headers.Location);
+                var paths = uri.AbsolutePath.Split('/');
+                _id = paths[paths.Length - 1];
+            }
+
+            // Save this update as the latest raw response indicating the state
+            // of the route matrix calculation operation
+            Response response = update.GetRawResponse();
+            _rawResponse = response;
+            return response;
         }
 
         /// <inheritdoc />
-        public override string Id => _operation.Id;
+        public override async ValueTask<Response<SearchAddressBatchResult>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+            await WaitForCompletionAsync(true, cancellationToken).ConfigureAwait(false);
 
         /// <inheritdoc />
-        public override SearchAddressBatchResult Value => _operation.Value;
+        public override async ValueTask<Response<SearchAddressBatchResult>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
+            await this.WaitForCompletionAsync(true, cancellationToken).ConfigureAwait(false);
 
         /// <inheritdoc />
-        public override bool HasCompleted => _operation.HasCompleted;
+        public override Response<SearchAddressBatchResult> WaitForCompletion(CancellationToken cancellationToken = default) =>
+            this.WaitForCompletionAsync(false, cancellationToken).EnsureCompleted();
 
         /// <inheritdoc />
-        public override bool HasValue => _operation.HasValue;
+        public override Response<SearchAddressBatchResult> WaitForCompletion(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
+            this.WaitForCompletionAsync(false, cancellationToken).EnsureCompleted();
 
-        /// <inheritdoc />
-        public override Response GetRawResponse() => _operation.GetRawResponse();
-
-        /// <inheritdoc />
-        public override Response UpdateStatus(CancellationToken cancellationToken = default) => _operation.UpdateStatus(cancellationToken);
-
-        /// <inheritdoc />
-        public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
-
-        /// <inheritdoc />
-        public override ValueTask<Response<SearchAddressBatchResult>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
-
-        /// <inheritdoc />
-        public override ValueTask<Response<SearchAddressBatchResult>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
-
-        SearchAddressBatchResult IOperationSource<SearchAddressBatchResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        private async ValueTask<Response<SearchAddressBatchResult>> WaitForCompletionAsync(bool async, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            return SearchAddressBatchResult.DeserializeSearchAddressBatchResult(document.RootElement);
-        }
+            ResponseWithHeaders<SearchGetFuzzySearchBatchHeaders> update = async
+                ? await _client.RestClient.GetFuzzySearchBatchAsync(_id, cancellationToken).ConfigureAwait(false)
+                : _client.RestClient.GetFuzzySearchBatch(_id, cancellationToken);
 
-        async ValueTask<SearchAddressBatchResult> IOperationSource<SearchAddressBatchResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
-        {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return SearchAddressBatchResult.DeserializeSearchAddressBatchResult(document.RootElement);
+            Response response = update.GetRawResponse();
+
+            // Check if the operation is no longer running
+            if (update.Headers.Location == null)
+            {
+                _hasCompleted = true;
+
+                using var document = JsonDocument.Parse(response.ContentStream);
+                _value = SearchAddressBatchResult.DeserializeSearchAddressBatchResult(document.RootElement);
+                return Response.FromValue(_value, response);
+            }
+            else
+            {
+                var uri = new Uri(update.Headers.Location);
+                var paths = uri.AbsolutePath.Split('/');
+                _id = paths[paths.Length - 1];
+            }
+
+            SearchAddressBatchResult result = null;
+            return Response.FromValue(result, response);
         }
     }
 }

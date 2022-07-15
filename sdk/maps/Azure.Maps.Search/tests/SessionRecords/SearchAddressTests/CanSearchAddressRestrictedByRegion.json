@@ -6,10 +6,10 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-3f7278ae3f715af6bfe6c91023c4ebd4-17786ff3559510cb-00",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220617.1 (.NET 6.0.6; Microsoft Windows 10.0.19044)",
+        "traceparent": "00-46bd37b7f3c9bad99fbe4dd2c6eab5e2-88e07000d045320b-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220715.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "fec10246b9676ba10d25be5c978508b5",
+        "x-ms-client-request-id": "7026905746d157d8e4ef5fba68605a2b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,19 +17,19 @@
       "ResponseHeaders": {
         "Content-Length": "4856",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 17 Jun 2022 04:39:33 GMT",
+        "Date": "Fri, 15 Jul 2022 04:35:18 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: A51699006A364E1FA3FE45DF375A3F56 Ref B: TPE30EDGE0609 Ref C: 2022-06-17T04:39:33Z"
+        "X-MSEdge-Ref": "Ref A: 9C991FE6A0C541ECAFDE8D053348E0E2 Ref B: PAOEDGE0622 Ref C: 2022-07-15T04:35:19Z"
       },
       "ResponseBody": {
         "summary": {
           "query": "road",
           "queryType": "NON_NEAR",
-          "queryTime": 10,
+          "queryTime": 33,
           "numResults": 10,
           "offset": 0,
           "totalResults": 386,
@@ -355,39 +355,39 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-23590cb03d7faa35e0b8c6715130527f-f92ef2fd18e74299-00",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220617.1 (.NET 6.0.6; Microsoft Windows 10.0.19044)",
+        "traceparent": "00-3d23e53712992eab209afa1a28ab39af-c65525104db3d968-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220715.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "28195af6e04addca4e44b422c7d5fa6a",
+        "x-ms-client-request-id": "ca6888b3788d68876f34ff38ea8cc8eb",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "6985",
+        "Content-Length": "6722",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 17 Jun 2022 04:39:33 GMT",
+        "Date": "Fri, 15 Jul 2022 04:35:18 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 1D00FAE4BF514F788B30F1B07C3B4567 Ref B: TPE30EDGE0609 Ref C: 2022-06-17T04:39:33Z"
+        "X-MSEdge-Ref": "Ref A: 010F370F72324BB4A96D444ADC68B051 Ref B: PAOEDGE0622 Ref C: 2022-07-15T04:35:19Z"
       },
       "ResponseBody": {
         "summary": {
           "query": "road",
           "queryType": "NON_NEAR",
-          "queryTime": 5,
+          "queryTime": 6,
           "numResults": 10,
           "offset": 0,
-          "totalResults": 25956,
+          "totalResults": 25964,
           "fuzzyLevel": 1
         },
         "results": [
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/3553",
+            "id": "NZ/GEO/p0/854",
             "score": 2.3589038849,
             "entityType": "Municipality",
             "matchConfidence": {
@@ -435,7 +435,7 @@
           },
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/3883",
+            "id": "NZ/GEO/p0/2293",
             "score": 2.3587200642,
             "entityType": "Municipality",
             "matchConfidence": {
@@ -483,7 +483,7 @@
           },
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/286",
+            "id": "NZ/GEO/p0/3198",
             "score": 2.3586893082,
             "entityType": "Municipality",
             "matchConfidence": {
@@ -531,7 +531,7 @@
           },
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/1573",
+            "id": "NZ/GEO/p0/3290",
             "score": 2.3585665226,
             "entityType": "Municipality",
             "matchConfidence": {
@@ -579,7 +579,7 @@
           },
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/3147",
+            "id": "NZ/GEO/p0/1770",
             "score": 2.3584132195,
             "entityType": "Municipality",
             "matchConfidence": {
@@ -627,7 +627,7 @@
           },
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/3043",
+            "id": "NZ/GEO/p0/1556",
             "score": 2.0992157459,
             "entityType": "Neighbourhood",
             "matchConfidence": {
@@ -676,135 +676,129 @@
           },
           {
             "type": "Street",
-            "id": "NZ/STR/p0/6361",
+            "id": "NZ/STR/p0/8163",
             "score": 2.0962057114,
             "matchConfidence": {
-              "score": 0.7763272166993227
+              "score": 0.7978822231268424
             },
             "address": {
-              "streetName": "Conroys Road",
-              "countrySecondarySubdivision": "Otago",
-              "countryTertiarySubdivision": "Central Otago",
-              "countrySubdivision": "South Island",
-              "countryCode": "NZ",
-              "country": "New Zealand",
-              "countryCodeISO3": "NZL",
-              "freeformAddress": "Conroys Road, Central Otago"
-            },
-            "position": {
-              "lat": -45.27032,
-              "lon": 169.33167
-            },
-            "viewport": {
-              "topLeftPoint": {
-                "lat": -45.26169,
-                "lon": 169.32178
-              },
-              "btmRightPoint": {
-                "lat": -45.27967,
-                "lon": 169.34734
-              }
-            }
-          },
-          {
-            "type": "Street",
-            "id": "NZ/STR/p0/6364",
-            "score": 2.0962057114,
-            "matchConfidence": {
-              "score": 0.7770253336854853
-            },
-            "address": {
-              "streetName": "Radcliffe Road",
-              "municipality": "Christchurch",
-              "countrySecondarySubdivision": "Canterbury",
-              "countryTertiarySubdivision": "Christchurch",
-              "countrySubdivision": "South Island",
-              "countryCode": "NZ",
-              "country": "New Zealand",
-              "countryCodeISO3": "NZL",
-              "freeformAddress": "Radcliffe Road, Christchurch, Christchurch",
-              "localName": "Christchurch"
-            },
-            "position": {
-              "lat": -43.46324,
-              "lon": 172.63714
-            },
-            "viewport": {
-              "topLeftPoint": {
-                "lat": -43.45468,
-                "lon": 172.62452
-              },
-              "btmRightPoint": {
-                "lat": -43.47267,
-                "lon": 172.64931
-              }
-            }
-          },
-          {
-            "type": "Street",
-            "id": "NZ/STR/p0/6381",
-            "score": 2.0962057114,
-            "matchConfidence": {
-              "score": 0.7842035090316161
-            },
-            "address": {
-              "streetName": "Harris Road",
-              "municipalitySubdivision": "Mount Wellington",
-              "municipality": "Auckland",
+              "streetName": "West Road",
               "countrySecondarySubdivision": "Auckland",
               "countryTertiarySubdivision": "Auckland",
               "countrySubdivision": "North Island",
-              "postalCode": "1051, 1060",
               "countryCode": "NZ",
               "country": "New Zealand",
               "countryCodeISO3": "NZL",
-              "freeformAddress": "Harris Road, Mount Wellington, Auckland 1051, 1060",
-              "localName": "Mount Wellington"
+              "freeformAddress": "West Road, Auckland"
             },
             "position": {
-              "lat": -36.8952,
-              "lon": 174.83311
+              "lat": -36.99357,
+              "lon": 175.00819
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": -36.89329,
-                "lon": 174.831
+                "lat": -36.98516,
+                "lon": 175.00025
               },
               "btmRightPoint": {
-                "lat": -36.89681,
-                "lon": 174.83409
+                "lat": -37.00315,
+                "lon": 175.02276
               }
             }
           },
           {
             "type": "Street",
-            "id": "NZ/STR/p0/6384",
+            "id": "NZ/STR/p0/8168",
             "score": 2.0962057114,
             "matchConfidence": {
-              "score": 0.7842035090316161
+              "score": 0.7978822231268424
             },
             "address": {
-              "streetName": "Harris Road",
-              "countrySecondarySubdivision": "Northland",
-              "countryTertiarySubdivision": "Whangarei",
+              "streetName": "West Road",
+              "countrySecondarySubdivision": "Otago",
+              "countryTertiarySubdivision": "Clutha",
+              "countrySubdivision": "South Island",
+              "countryCode": "NZ",
+              "country": "New Zealand",
+              "countryCodeISO3": "NZL",
+              "freeformAddress": "West Road, Clutha"
+            },
+            "position": {
+              "lat": -46.09851,
+              "lon": 170.00749
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": -46.08898,
+                "lon": 169.99351
+              },
+              "btmRightPoint": {
+                "lat": -46.10696,
+                "lon": 170.01945
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "NZ/STR/p0/8173",
+            "score": 2.0962057114,
+            "matchConfidence": {
+              "score": 0.7978822231268424
+            },
+            "address": {
+              "streetName": "West Road",
+              "countrySecondarySubdivision": "Hawke\u0027s Bay",
+              "countryTertiarySubdivision": "Hastings",
               "countrySubdivision": "North Island",
               "countryCode": "NZ",
               "country": "New Zealand",
               "countryCodeISO3": "NZL",
-              "freeformAddress": "Harris Road, Whangarei"
+              "freeformAddress": "West Road, Hastings"
             },
             "position": {
-              "lat": -35.68327,
-              "lon": 174.36679
+              "lat": -39.69718,
+              "lon": 176.82306
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": -35.67233,
-                "lon": 174.35792
+                "lat": -39.68748,
+                "lon": 176.81107
               },
               "btmRightPoint": {
-                "lat": -35.69032,
-                "lon": 174.38007
+                "lat": -39.70547,
+                "lon": 176.83445
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "NZ/STR/p0/8198",
+            "score": 2.0962057114,
+            "matchConfidence": {
+              "score": 0.7842596806430951
+            },
+            "address": {
+              "streetName": "Devon Road",
+              "countrySecondarySubdivision": "Taranaki",
+              "countryTertiarySubdivision": "New Plymouth",
+              "countrySubdivision": "North Island",
+              "countryCode": "NZ",
+              "country": "New Zealand",
+              "countryCodeISO3": "NZL",
+              "freeformAddress": "Devon Road, New Plymouth"
+            },
+            "position": {
+              "lat": -39.02269,
+              "lon": 174.19004
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": -39.01296,
+                "lon": 174.17792
+              },
+              "btmRightPoint": {
+                "lat": -39.03095,
+                "lon": 174.20107
               }
             }
           }
@@ -815,6 +809,6 @@
   "Variables": {
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "543380225"
+    "RandomSeed": "1333165594"
   }
 }

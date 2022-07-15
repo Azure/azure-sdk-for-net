@@ -6,24 +6,24 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-09786a51fb23679969e1b72caa414d62-e22fd34de30c2095-00",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220617.1 (.NET 6.0.6; Microsoft Windows 10.0.19044)",
+        "traceparent": "00-84b060302a0581d261799b57fae04b40-f49fa60fcd620038-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220715.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "1a87f038c67179f2a9b736cbc93b8546",
+        "x-ms-client-request-id": "9454e4e5174ee4b39919305b5f22d569",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "6876",
+        "Content-Length": "6883",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 17 Jun 2022 04:39:33 GMT",
+        "Date": "Fri, 15 Jul 2022 04:35:19 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: B1ECD29146C74951A41F69DAFB8346B7 Ref B: TPE30EDGE0609 Ref C: 2022-06-17T04:39:33Z"
+        "X-MSEdge-Ref": "Ref A: 10168F4CB2D24B30B675AABD31775C5A Ref B: PAOEDGE0622 Ref C: 2022-07-15T04:35:19Z"
       },
       "ResponseBody": {
         "summary": {
@@ -38,7 +38,7 @@
         "results": [
           {
             "type": "Point Address",
-            "id": "US/PAD/p1/11009411",
+            "id": "US/PAD/p0/16562612",
             "score": 14.1640310287,
             "address": {
               "streetNumber": "15127",
@@ -88,7 +88,7 @@
           },
           {
             "type": "Cross Street",
-            "id": "US/XSTR/p2/1198311",
+            "id": "US/XSTR/p2/3294409",
             "score": 10.7666654587,
             "address": {
               "streetName": "Northeast 24th Street \u0026 Bel Red Road, Bellevue Redmond Road",
@@ -120,7 +120,7 @@
           },
           {
             "type": "Cross Street",
-            "id": "US/XSTR/p2/1198312",
+            "id": "US/XSTR/p2/3294410",
             "score": 10.6782073975,
             "address": {
               "streetName": "Bel Red Road, Bellevue Redmond Road \u0026 Northeast 24th Street",
@@ -152,7 +152,7 @@
           },
           {
             "type": "Cross Street",
-            "id": "US/XSTR/p0/745034",
+            "id": "US/XSTR/p0/3003507",
             "score": 10.4268474579,
             "address": {
               "streetName": "186th Avenue Northeast \u0026 Northeast 24th Street",
@@ -185,7 +185,7 @@
           },
           {
             "type": "Cross Street",
-            "id": "US/XSTR/p0/745037",
+            "id": "US/XSTR/p0/3003510",
             "score": 10.4268474579,
             "address": {
               "streetName": "Northeast 24th Street \u0026 West Lake Sammamish Parkway Northeast",
@@ -218,7 +218,7 @@
           },
           {
             "type": "Cross Street",
-            "id": "US/XSTR/p0/745038",
+            "id": "US/XSTR/p0/3003511",
             "score": 10.4268474579,
             "address": {
               "streetName": "185th Place Northeast \u0026 Northeast 24th Street",
@@ -251,7 +251,7 @@
           },
           {
             "type": "Cross Street",
-            "id": "US/XSTR/p0/745041",
+            "id": "US/XSTR/p0/3003514",
             "score": 10.4268474579,
             "address": {
               "streetName": "Northeast 24th Street \u0026 184th Avenue Northeast",
@@ -284,7 +284,7 @@
           },
           {
             "type": "Cross Street",
-            "id": "US/XSTR/p0/745042",
+            "id": "US/XSTR/p0/3003515",
             "score": 10.4268474579,
             "address": {
               "streetName": "183rd Court Northeast \u0026 Northeast 24th Street",
@@ -317,7 +317,7 @@
           },
           {
             "type": "Cross Street",
-            "id": "US/XSTR/p0/745044",
+            "id": "US/XSTR/p0/3003517",
             "score": 10.4268474579,
             "address": {
               "streetName": "182nd Avenue Northeast \u0026 Northeast 24th Street",
@@ -350,7 +350,7 @@
           },
           {
             "type": "Cross Street",
-            "id": "US/XSTR/p0/745046",
+            "id": "US/XSTR/p0/3003519",
             "score": 10.4268474579,
             "address": {
               "streetName": "180th Place Northeast \u0026 Northeast 24th Street",
@@ -388,6 +388,6 @@
   "Variables": {
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "2063180934"
+    "RandomSeed": "251759745"
   }
 }
