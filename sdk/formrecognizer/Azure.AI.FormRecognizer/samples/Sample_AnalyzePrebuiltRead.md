@@ -19,7 +19,7 @@ var client = new DocumentAnalysisClient(new Uri(endpoint), credential);
 
 ## Use the prebuilt read model to analyze a document from a URI
 
-To analyze a given file at a URI, use the `StartAnalyzeDocumentFromUri` method and pass `prebuilt-read` as the model ID. The returned value is an `AnalyzeResult` object containing data about the submitted document.
+To analyze a given file at a URI, use the `AnalyzeDocumentFromUri` method and pass `prebuilt-read` as the model ID. The returned value is an `AnalyzeResult` object containing data about the submitted document.
 
 ```C# Snippet:FormRecognizerAnalyzePrebuiltReadFromUriAsync
 Uri fileUri = new Uri("<fileUri>");
@@ -74,7 +74,7 @@ foreach (DocumentStyle style in result.Styles)
 
 ## Use the prebuilt read model to analyze a document from a file stream
 
-To analyze a given file at a file stream, use the `StartAnalyzeDocument` method and pass `prebuilt-read` as the model ID. The returned value is an `AnalyzeResult` object containing data about the submitted document.
+To analyze a given file at a file stream, use the `AnalyzeDocument` method and pass `prebuilt-read` as the model ID. The returned value is an `AnalyzeResult` object containing data about the submitted document.
 
 ```C# Snippet:FormRecognizerAnalyzePrebuiltReadFromFileAsync
 string filePath = "<filePath>";

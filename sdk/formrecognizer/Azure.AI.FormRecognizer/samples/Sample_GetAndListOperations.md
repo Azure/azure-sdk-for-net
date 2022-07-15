@@ -20,8 +20,7 @@ var client = new DocumentModelAdministrationClient(new Uri(endpoint), credential
 
 ## Get and List Document Model Operations
 
-Note that operation information only persists for 24 hours. If the operation was successful, the document model Id is provided in the `Result` property. This Id can be used with
-other methods like for example, `GetModel()`.
+Note that operation information only persists for 24 hours. If the operation was successful, the document model Id is provided in the `Result` property. This Id can be used with other methods like for example, `GetModel()`.
 If the operation failed, the error information can be accessed using the `Error` property.
 
 ```C# Snippet:FormRecognizerSampleGetAndListOperations

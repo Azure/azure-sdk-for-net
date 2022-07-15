@@ -136,7 +136,7 @@ var client = new DocumentAnalysisClient(new Uri(endpoint), new DefaultAzureCrede
 
 ### DocumentAnalysisClient
 
-`DocumentAnalysisClient` provides operations for analyzing input documents using prebuilt and custom models through the `StartAnalyzeDocument` and `StartAnalyzeDocumentFromUri` APIs. Use the `modelId` parameter to select the type of model for analysis.
+`DocumentAnalysisClient` provides operations for analyzing input documents using prebuilt and custom models through the `AnalyzeDocument` and `AnalyzeDocumentFromUri` APIs. Use the `modelId` parameter to select the type of model for analysis.
 
 Sample code snippets are provided to illustrate using a DocumentAnalysisClient [here](#examples).
 More information about analyzing documents, including supported features, locales, and document types can be found in the [service documentation][formreco_models].
@@ -159,7 +159,7 @@ Please note that models can also be built using a graphical user interface such 
 
 Because analyzing documents and building models take time, these operations are implemented as [**long-running operations**][dotnet_lro_guidelines].  Long-running operations consist of an initial request sent to the service to start an operation, followed by polling the service at intervals to determine whether the operation has completed or failed, and if it has succeeded, to get the result.
 
-For long running operations in the Azure SDK, the client exposes a `Start<operation-name>` method that returns an `Operation<T>`.  You can use the extension method `WaitForCompletionAsync()` to wait for the operation to complete and obtain its result.  A sample code snippet is provided to illustrate using long-running operations [below](#extract-layout).
+For long running operations in the Azure SDK, the client exposes a method that returns an `Operation<T>` object. You can set its parameter `waitUntil` to `WaitUntil.Completed` to wait for the operation to complete and obtain its result; or set it to `WaitUntil.Started` if you just want to start the operation and consume the result later. A sample code snippet is provided to illustrate using long-running operations [below](#extract-layout).
 
 ### Thread safety
 We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
@@ -426,7 +426,7 @@ For more information and samples see [here][analyze_prebuilt_read].
 ### Use Prebuilt Models
 Analyze data from certain types of common documents using prebuilt models provided by the Form Recognizer service.
 
-For example, to analyze fields from an invoice, use the prebuilt Invoice model provided by passing the `prebuilt-invoice` model ID into the `StartAnalyzeDocumentAsync` method:
+For example, to analyze fields from an invoice, use the prebuilt Invoice model provided by passing the `prebuilt-invoice` model ID into the `AnalyzeDocumentAsync` method:
 
 ```C# Snippet:FormRecognizerAnalyzeWithPrebuiltModelFromFileAsync
 string filePath = "<filePath>";

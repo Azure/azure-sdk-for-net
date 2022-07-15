@@ -19,7 +19,7 @@ var client = new DocumentAnalysisClient(new Uri(endpoint), credential);
 
 ## Extract the layout of a document from a URI
 
-To extract the layout from a given file at a URI, use the `StartAnalyzeDocumentFromUri` method and pass `prebuilt-layout` as the model ID. The returned value is an `AnalyzeResult` object containing data about the submitted document.
+To extract the layout from a given file at a URI, use the `AnalyzeDocumentFromUri` method and pass `prebuilt-layout` as the model ID. The returned value is an `AnalyzeResult` object containing data about the submitted document.
 
 ```C# Snippet:FormRecognizerExtractLayoutFromUriAsync
 Uri fileUri = new Uri("<fileUri>");
@@ -105,7 +105,7 @@ for (int i = 0; i < result.Tables.Count; i++)
 
 ## Extract the layout of a document from a file stream
 
-To extract the layout from a given file at a file stream, use the `StartAnalyzeDocument` method and pass `prebuilt-layout` as the model ID. The returned value is an `AnalyzeResult` object containing data about the submitted document.
+To extract the layout from a given file at a file stream, use the `AnalyzeDocument` method and pass `prebuilt-layout` as the model ID. The returned value is an `AnalyzeResult` object containing data about the submitted document.
 
 ```C# Snippet:FormRecognizerExtractLayoutFromFileAsync
 string filePath = "<filePath>";

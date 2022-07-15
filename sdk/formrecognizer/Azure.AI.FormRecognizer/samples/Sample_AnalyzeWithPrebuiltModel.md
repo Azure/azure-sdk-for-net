@@ -19,7 +19,7 @@ var client = new DocumentAnalysisClient(new Uri(endpoint), credential);
 
 ## Use a prebuilt model to analyze a document from a URI
 
-To analyze a given file at a URI, use the `StartAnalyzeDocumentFromUri` method. The returned value is an `AnalyzeResult` object containing data about the submitted document. Since we're analyzing an invoice, we'll pass the model ID `prebuilt-invoice` to the method.
+To analyze a given file at a URI, use the `AnalyzeDocumentFromUri` method. The returned value is an `AnalyzeResult` object containing data about the submitted document. Since we're analyzing an invoice, we'll pass the model ID `prebuilt-invoice` to the method.
 
 For simplicity, we are not showing all the fields that the service returns. To see the list of all the supported fields returned by service and its corresponding types, consult the [invoice model documentation][invoice_fields].
 
@@ -124,7 +124,7 @@ for (int i = 0; i < result.Documents.Count; i++)
 
 ## Use a prebuilt model to analyze a document from a file stream
 
-To analyze a given file at a file stream, use the `StartAnalyzeDocument` method. The returned value is an `AnalyzeResult` object containing data about the submitted document. Since we're analyzing an invoice, we'll pass the model ID `prebuilt-invoice` to the method.
+To analyze a given file at a file stream, use the `AnalyzeDocument` method. The returned value is an `AnalyzeResult` object containing data about the submitted document. Since we're analyzing an invoice, we'll pass the model ID `prebuilt-invoice` to the method.
 
 For simplicity, we are not showing all the fields that the service returns. To see the list of all the supported fields returned by service and its corresponding types, consult the [invoice model documentation][invoice_fields].
 

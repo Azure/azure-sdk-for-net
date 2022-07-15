@@ -71,8 +71,6 @@ await client.DeleteModelAsync(newCreatedModel.ModelId);
 
 ## Manage Models Synchronously
 
-Note that we are still making an asynchronous call to `WaitForCompletionAsync` for building a model, since this method does not have a synchronous counterpart.
-
 ```C# Snippet:FormRecognizerSampleManageModels
 var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 

@@ -19,7 +19,7 @@ var client = new DocumentAnalysisClient(new Uri(endpoint), credential);
 
 ## Use a custom model to analyze a document from a URI
 
-To analyze a given file at a URI, use the `StartAnalyzeDocumentFromUri` method. The returned value is an `AnalyzeResult` object containing data about the submitted document.
+To analyze a given file at a URI, use the `AnalyzeDocumentFromUri` method. The returned value is an `AnalyzeResult` object containing data about the submitted document.
 
 ```C# Snippet:FormRecognizerAnalyzeWithCustomModelFromUriAsync
 string modelId = "<modelId>";
@@ -49,7 +49,7 @@ foreach (AnalyzedDocument document in result.Documents)
 
 ## Use a custom model to analyze a document from a file stream
 
-To analyze a given file at a file stream, use the `StartAnalyzeDocument` method. The returned value is an `AnalyzeResult` object containing data about the submitted document.
+To analyze a given file at a file stream, use the `AnalyzeDocument` method. The returned value is an `AnalyzeResult` object containing data about the submitted document.
 
 ```C# Snippet:FormRecognizerAnalyzeWithCustomModelFromFileAsync
 string modelId = "<modelId>";
