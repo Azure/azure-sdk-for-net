@@ -4,8 +4,6 @@
 using System;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
-using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -51,7 +49,7 @@ namespace Azure.Security.ConfidentialLedger
         /// </summary>
         /// <param name="getIdentityResponse">The response from <see cref="GetLedgerIdentity"/> or <see cref="GetLedgerIdentityAsync"/>.</param>
         /// <returns>The <see cref="X509Certificate2"/>.</returns>
-        public static X509Certificate2 ParseCertificate(Response getIdentityResponse)
+        internal static X509Certificate2 ParseCertificate(Response getIdentityResponse)
         {
             var eccPem = JsonDocument.Parse(getIdentityResponse.Content)
                 .RootElement
