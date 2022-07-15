@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppService
             Optional<ResourceIdentifier> keyVaultId = default;
             Optional<string> keyVaultSecretName = default;
             Optional<KeyVaultSecretStatus> keyVaultSecretStatus = default;
-            Optional<ResourceIdentifier> serverFarmId = default;
+            Optional<ResourceIdentifier> appServicePlanId = default;
             Optional<string> canonicalName = default;
             Optional<string> domainValidationMethod = default;
             foreach (var property in element.EnumerateObject())
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.AppService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            serverFarmId = new ResourceIdentifier(property0.Value.GetString());
+                            appServicePlanId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("canonicalName"))
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new CertificateData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, password.Value, friendlyName.Value, subjectName.Value, Optional.ToList(hostNames), pfxBlob.Value, siteName.Value, selfLink.Value, issuer.Value, Optional.ToNullable(issueDate), Optional.ToNullable(expirationDate), thumbprint.Value, Optional.ToNullable(valid), cerBlob.Value, publicKeyHash.Value, hostingEnvironmentProfile.Value, keyVaultId.Value, keyVaultSecretName.Value, Optional.ToNullable(keyVaultSecretStatus), serverFarmId.Value, canonicalName.Value, domainValidationMethod.Value, kind.Value);
+            return new CertificateData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, password.Value, friendlyName.Value, subjectName.Value, Optional.ToList(hostNames), pfxBlob.Value, siteName.Value, selfLink.Value, issuer.Value, Optional.ToNullable(issueDate), Optional.ToNullable(expirationDate), thumbprint.Value, Optional.ToNullable(valid), cerBlob.Value, publicKeyHash.Value, hostingEnvironmentProfile.Value, keyVaultId.Value, keyVaultSecretName.Value, Optional.ToNullable(keyVaultSecretStatus), appServicePlanId.Value, canonicalName.Value, domainValidationMethod.Value, kind.Value);
         }
     }
 }

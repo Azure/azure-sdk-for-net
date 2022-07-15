@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         {
         }
 
-        private async Task<StaticSiteARMResourceCollection> GetStaticSiteCollectionAsync()
+        private async Task<StaticSiteARMCollection> GetStaticSiteCollectionAsync()
         {
             var resourceGroup = await CreateResourceGroupAsync();
-            return resourceGroup.GetStaticSiteARMResources();
+            return resourceGroup.GetStaticSiteARMs();
         }
 
         [TestCase]

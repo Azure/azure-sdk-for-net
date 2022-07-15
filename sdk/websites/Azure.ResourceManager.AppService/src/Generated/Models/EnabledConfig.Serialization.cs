@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.AppService.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsDetailedErrorMessagesEnabled))
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(IsDetailedErrorMessagesEnabled.Value);
+                writer.WriteBooleanValue(Enabled.Value);
             }
             writer.WriteEndObject();
         }

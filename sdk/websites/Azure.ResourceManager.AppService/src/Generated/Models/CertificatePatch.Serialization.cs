@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> keyVaultId = default;
             Optional<string> keyVaultSecretName = default;
             Optional<KeyVaultSecretStatus> keyVaultSecretStatus = default;
-            Optional<string> serverFarmId = default;
+            Optional<string> appServicePlanId = default;
             Optional<string> canonicalName = default;
             Optional<string> domainValidationMethod = default;
             foreach (var property in element.EnumerateObject())
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.AppService.Models
                         }
                         if (property0.NameEquals("serverFarmId"))
                         {
-                            serverFarmId = property0.Value.GetString();
+                            appServicePlanId = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("canonicalName"))
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new CertificatePatch(id, name, type, systemData.Value, password.Value, friendlyName.Value, subjectName.Value, Optional.ToList(hostNames), pfxBlob.Value, siteName.Value, selfLink.Value, issuer.Value, Optional.ToNullable(issueDate), Optional.ToNullable(expirationDate), thumbprint.Value, Optional.ToNullable(valid), cerBlob.Value, publicKeyHash.Value, hostingEnvironmentProfile.Value, keyVaultId.Value, keyVaultSecretName.Value, Optional.ToNullable(keyVaultSecretStatus), serverFarmId.Value, canonicalName.Value, domainValidationMethod.Value, kind.Value);
+            return new CertificatePatch(id, name, type, systemData.Value, password.Value, friendlyName.Value, subjectName.Value, Optional.ToList(hostNames), pfxBlob.Value, siteName.Value, selfLink.Value, issuer.Value, Optional.ToNullable(issueDate), Optional.ToNullable(expirationDate), thumbprint.Value, Optional.ToNullable(valid), cerBlob.Value, publicKeyHash.Value, hostingEnvironmentProfile.Value, keyVaultId.Value, keyVaultSecretName.Value, Optional.ToNullable(keyVaultSecretStatus), appServicePlanId.Value, canonicalName.Value, domainValidationMethod.Value, kind.Value);
         }
     }
 }

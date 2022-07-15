@@ -213,7 +213,7 @@ rename-mapping:
   SiteConfig.properties.requestTracingEnabled: IsRequestTracingEnabled
   SiteConfig.properties.vnetRouteAllEnabled: IsVnetRouteAllEnabled
   SiteConfig.properties.webSocketsEnabled: IsWebSocketsEnabled
-  EnabledConfig.enabled: IsDetailedErrorMessagesEnabled
+#   EnabledConfig.enabled: IsDetailedErrorMessagesEnabled
   SiteSourceControl.properties.deploymentRollbackEnabled: IsDeploymentRollbackEnabled
   StaticSiteBuildARMResource.properties.createdTimeUtc: CreatedOn
   SwiftVirtualNetwork.properties.swiftSupported: IsSwiftSupported

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         {
             var planName = Recording.GenerateAssetName("testDisk-");
             var plan = await CreateAppServicePlanAsync(planName);
-            var skus = await plan.GetServerFarmSkusAsync();
+            var skus = await plan.GetAppServicePlanSkusAsync();
             var dict = skus.Value.ToObjectFromJson() as Dictionary<string, object>;
         }
     }

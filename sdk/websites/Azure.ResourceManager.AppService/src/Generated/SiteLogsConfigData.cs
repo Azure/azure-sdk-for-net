@@ -72,14 +72,14 @@ namespace Azure.ResourceManager.AppService
         /// True if configuration is enabled, false if it is disabled and null if configuration is not set.
         /// Serialized Name: EnabledConfig.enabled
         /// </summary>
-        public bool? IsDetailedErrorMessagesEnabled
+        public bool? FailedRequestsTracingEnabled
         {
-            get => FailedRequestsTracing is null ? default : FailedRequestsTracing.IsDetailedErrorMessagesEnabled;
+            get => FailedRequestsTracing is null ? default : FailedRequestsTracing.Enabled;
             set
             {
                 if (FailedRequestsTracing is null)
                     FailedRequestsTracing = new EnabledConfig();
-                FailedRequestsTracing.IsDetailedErrorMessagesEnabled = value;
+                FailedRequestsTracing.Enabled = value;
             }
         }
 
@@ -92,14 +92,14 @@ namespace Azure.ResourceManager.AppService
         /// True if configuration is enabled, false if it is disabled and null if configuration is not set.
         /// Serialized Name: EnabledConfig.enabled
         /// </summary>
-        public bool? IsDetailedErrorMessagesEnabled
+        public bool? DetailedErrorMessagesEnabled
         {
-            get => DetailedErrorMessages is null ? default : DetailedErrorMessages.IsDetailedErrorMessagesEnabled;
+            get => DetailedErrorMessages is null ? default : DetailedErrorMessages.Enabled;
             set
             {
                 if (DetailedErrorMessages is null)
                     DetailedErrorMessages = new EnabledConfig();
-                DetailedErrorMessages.IsDetailedErrorMessagesEnabled = value;
+                DetailedErrorMessages.Enabled = value;
             }
         }
 

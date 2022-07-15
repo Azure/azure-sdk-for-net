@@ -19,19 +19,19 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of EnabledConfig. </summary>
-        /// <param name="isDetailedErrorMessagesEnabled">
+        /// <param name="enabled">
         /// True if configuration is enabled, false if it is disabled and null if configuration is not set.
         /// Serialized Name: EnabledConfig.enabled
         /// </param>
-        internal EnabledConfig(bool? isDetailedErrorMessagesEnabled)
+        internal EnabledConfig(bool? enabled)
         {
-            IsDetailedErrorMessagesEnabled = isDetailedErrorMessagesEnabled;
+            Enabled = enabled;
         }
 
         /// <summary>
         /// True if configuration is enabled, false if it is disabled and null if configuration is not set.
         /// Serialized Name: EnabledConfig.enabled
         /// </summary>
-        public bool? IsDetailedErrorMessagesEnabled { get; set; }
+        public bool? Enabled { get; set; }
     }
 }
