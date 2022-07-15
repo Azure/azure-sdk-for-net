@@ -2037,9 +2037,6 @@ namespace Azure.Storage.Blobs
         /// The following operators are supported: =, &gt;, &gt;=, &lt;, &lt;=, AND. and @container.
         /// Example expression: "tagKey"='tagValue'.
         /// </param>
-        /// <param name="states">
-        /// Specifies state options for filtering the blobs.
-        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -2053,13 +2050,8 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         public virtual Pageable<TaggedBlobItem> FindBlobsByTags(
             string tagFilterSqlExpression,
-            BlobStates states = BlobStates.None,
             CancellationToken cancellationToken = default) =>
-            new FilterBlobsAsyncCollection(
-                serviceClient: this,
-                expression: tagFilterSqlExpression,
-                states: states)
-            .ToSyncCollection(cancellationToken);
+            new FilterBlobsAsyncCollection(this, tagFilterSqlExpression).ToSyncCollection(cancellationToken);
 
         /// <summary>
         /// The Filter Blobs operation enables callers to list blobs across all containers whose tags
@@ -2076,9 +2068,6 @@ namespace Azure.Storage.Blobs
         /// The storage service supports a subset of the ANSI SQL WHERE clause grammar for the value of the where=expression query parameter.
         /// The following operators are supported: =, &gt;, &gt;=, &lt;, &lt;=, AND. and @container.
         /// Example expression: "tagKey"='tagValue'.
-        /// </param>
-        /// <param name="states">
-        /// Specifies state options for filtering the blobs.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -2093,96 +2082,12 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         public virtual AsyncPageable<TaggedBlobItem> FindBlobsByTagsAsync(
             string tagFilterSqlExpression,
-            BlobStates states = BlobStates.None,
             CancellationToken cancellationToken = default) =>
-            new FilterBlobsAsyncCollection(
-                serviceClient: this,
-                expression: tagFilterSqlExpression,
-                states: states)
-            .ToAsyncCollection(cancellationToken);
-
-        /// <summary>
-        /// The Filter Blobs operation enables callers to list blobs across all containers whose tags
-        /// match a given search expression. Filter blobs searches across all containers within a
-        /// storage account but can be scoped within the expression to a single container.
-        ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/find-blobs-by-tags">
-        /// Find Blobs by Tags</see>.
-        /// </summary>
-        /// <param name="tagFilterSqlExpression">
-        /// The where parameter finds blobs in the storage account whose tags match a given expression.
-        /// The expression must evaluate to true for a blob to be returned in the result set.
-        /// The storage service supports a subset of the ANSI SQL WHERE clause grammar for the value of the where=expression query parameter.
-        /// The following operators are supported: =, &gt;, &gt;=, &lt;, &lt;=, AND. and @container.
-        /// Example expression: "tagKey"='tagValue'.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// An <see cref="AsyncPageable{T}"/> describing the blobs.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-        public virtual Pageable<TaggedBlobItem> FindBlobsByTags(
-#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-            string tagFilterSqlExpression,
-            CancellationToken cancellationToken) =>
-            new FilterBlobsAsyncCollection(
-                serviceClient: this,
-                expression: tagFilterSqlExpression,
-                states: BlobStates.None)
-            .ToSyncCollection(cancellationToken);
-
-        /// <summary>
-        /// The Filter Blobs operation enables callers to list blobs across all containers whose tags
-        /// match a given search expression. Filter blobs searches across all containers within a
-        /// storage account but can be scoped within the expression to a single container.
-        ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/find-blobs-by-tags">
-        /// Find Blobs by Tags</see>.
-        /// </summary>
-        /// <param name="tagFilterSqlExpression">
-        /// The where parameter finds blobs in the storage account whose tags match a given expression.
-        /// The expression must evaluate to true for a blob to be returned in the result set.
-        /// The storage service supports a subset of the ANSI SQL WHERE clause grammar for the value of the where=expression query parameter.
-        /// The following operators are supported: =, &gt;, &gt;=, &lt;, &lt;=, AND. and @container.
-        /// Example expression: "tagKey"='tagValue'.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// An <see cref="AsyncPageable{T}"/> describing the blobs.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-        public virtual AsyncPageable<TaggedBlobItem> FindBlobsByTagsAsync(
-#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-            string tagFilterSqlExpression,
-            CancellationToken cancellationToken) =>
-            new FilterBlobsAsyncCollection(
-                serviceClient: this,
-                expression: tagFilterSqlExpression,
-                states: BlobStates.None)
-            .ToAsyncCollection(cancellationToken);
+            new FilterBlobsAsyncCollection(this, tagFilterSqlExpression).ToAsyncCollection(cancellationToken);
 
         internal async Task<Response<FilterBlobSegment>> FindBlobsByTagsInternal(
             string marker,
             string expression,
-            BlobStates states,
             int? pageSizeHint,
             bool async,
             CancellationToken cancellationToken)
@@ -2208,7 +2113,6 @@ namespace Azure.Storage.Blobs
                             where: expression,
                             marker: marker,
                             maxresults: pageSizeHint,
-                            include: BlobExtensions.AsIncludeItems(states),
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -2218,7 +2122,6 @@ namespace Azure.Storage.Blobs
                             where: expression,
                             marker: marker,
                             maxresults: pageSizeHint,
-                            include: BlobExtensions.AsIncludeItems(states),
                             cancellationToken: cancellationToken);
                     }
 

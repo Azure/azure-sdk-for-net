@@ -752,54 +752,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_08_06)]
-        public async Task FindBlobsByTagAsync_BlobVersions()
-        {
-            // Arrange
-            BlobServiceClient service = GetServiceClient_SharedKey();
-            await using DisposingContainer test = await GetTestContainerAsync();
-            string blobName = GetNewBlobName();
-            AppendBlobClient appendBlob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
-
-            string tagKey = "myTagKey";
-            string tagValue = "myTagValue";
-            Dictionary<string, string> tags = new Dictionary<string, string>
-            {
-                { tagKey, tagValue }
-            };
-            AppendBlobCreateOptions options = new AppendBlobCreateOptions
-            {
-                Tags = tags
-            };
-            await appendBlob.CreateAsync(options);
-
-            // Create blob again to trigger new version
-            await appendBlob.CreateAsync(options);
-
-            // It takes a few seconds for Filter Blobs to pick up new changes
-            await Delay(2000);
-
-            string expression = $"\"{tagKey}\"='{tagValue}'";
-
-            // Act
-            List<TaggedBlobItem> blobs = new List<TaggedBlobItem>();
-            await foreach (TaggedBlobItem taggedBlobItem in service.FindBlobsByTagsAsync(
-                tagFilterSqlExpression: expression,
-                states: BlobStates.Version))
-            {
-                blobs.Add(taggedBlobItem);
-            }
-            blobs = blobs.Where(r => r.BlobName == appendBlob.Name).ToList();
-
-            // Assert
-            Assert.AreEqual(2, blobs.Count);
-            Assert.IsNull(blobs[0].IsLatestVersion);
-            Assert.IsNotNull(blobs[0].VersionId);
-            Assert.IsTrue(blobs[1].IsLatestVersion);
-            Assert.IsNotNull(blobs[1].VersionId);
-        }
-
-        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task FindBlobsByTagAsync_Error()
         {
