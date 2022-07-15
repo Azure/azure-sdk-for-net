@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 
         internal static SqlVirtualMachineData DeserializeSqlVirtualMachineData(JsonElement element)
         {
-            Optional<SystemAssignedServiceIdentity> identity = default;
+            Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<SystemAssignedServiceIdentity>(property.Value.ToString());
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("tags"))

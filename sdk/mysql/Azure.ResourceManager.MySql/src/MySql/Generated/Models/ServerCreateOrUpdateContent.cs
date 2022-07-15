@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MySql.Models
 {
@@ -34,8 +35,8 @@ namespace Azure.ResourceManager.MySql.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> The Azure Active Directory identity of the server. </summary>
-        public ResourceIdentity Identity { get; set; }
+        /// <summary> The Azure Active Directory identity of the server. Current supported identity types: SystemAssigned. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The SKU (pricing tier) of the server. </summary>
         public MySqlSku Sku { get; set; }
         /// <summary>

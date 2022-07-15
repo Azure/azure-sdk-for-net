@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.IotCentral.Models
             }
         }
 
-        /// <summary> The managed identities for the IoT Central application. </summary>
-        public SystemAssignedServiceIdentity Identity { get; set; }
+        /// <summary> The managed identities for the IoT Central application. Current supported identity types: None, SystemAssigned. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The provisioning state of the application. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The ID of the application. </summary>

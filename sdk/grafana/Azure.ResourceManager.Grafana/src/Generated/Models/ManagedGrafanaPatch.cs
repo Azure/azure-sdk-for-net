@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
@@ -19,8 +20,8 @@ namespace Azure.ResourceManager.Grafana.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> The managed identity of the grafana resource. </summary>
-        public ManagedIdentity Identity { get; set; }
+        /// <summary> The managed identity of the grafana resource. Current supported identity types: None, SystemAssigned. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The new tags of the grafana resource. </summary>
         public IDictionary<string, string> Tags { get; }
     }

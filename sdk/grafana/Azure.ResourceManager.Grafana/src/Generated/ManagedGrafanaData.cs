@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.Grafana
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The Sku of the grafana resource. </param>
         /// <param name="properties"> Properties specific to the grafana resource. </param>
-        /// <param name="identity"> The managed identity of the grafana resource. </param>
-        internal ManagedGrafanaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceSku sku, ManagedGrafanaProperties properties, ManagedIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="identity"> The managed identity of the grafana resource. Current supported identity types: None, SystemAssigned. </param>
+        internal ManagedGrafanaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceSku sku, ManagedGrafanaProperties properties, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Properties = properties;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Grafana
 
         /// <summary> Properties specific to the grafana resource. </summary>
         public ManagedGrafanaProperties Properties { get; set; }
-        /// <summary> The managed identity of the grafana resource. </summary>
-        public ManagedIdentity Identity { get; set; }
+        /// <summary> The managed identity of the grafana resource. Current supported identity types: None, SystemAssigned. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
     }
 }
