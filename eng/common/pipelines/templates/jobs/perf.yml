@@ -1,38 +1,38 @@
 parameters:
-  - name: variables
+  - name: Variables
     type: object
     default: []
-  - name: operatingSystems
+  - name: OperatingSystems
     type: string
     default: 'Linux'
-  - name: language
+  - name: Language
     type: string
     default: ''
-  - name: installLanguageSteps
+  - name: InstallLanguageSteps
     type: stepList
     default: []
-  - name: serviceDirectory
+  - name: ServiceDirectory
     type: string
     default: ''
-  - name: services
+  - name: Services
     type: string
     default: ''
-  - name: packageVersions
+  - name: PackageVersions
     type: string
     default: '.*'
-  - name: tests
+  - name: Tests
     type: string
     default: '.*'
-  - name: arguments
+  - name: Arguments
     type: string
     default: '.*'
-  - name: iterations
+  - name: Iterations
     type: number
     default: '5'
-  - name: additionalArguments
+  - name: AdditionalArguments
     type: string
     default: ''
-  - name: envVars
+  - name: EnvVars
     type: object
     default: {}
 
@@ -45,19 +45,19 @@ resources:
     ref: main
 
 variables:
-  - ${{ parameters.variables }}
+  - ${{ parameters.Variables }}
 
 jobs:
 - job: Perf
   timeoutInMinutes: 360
   strategy:
     matrix:
-      ${{ if contains(parameters.operatingSystems, 'Linux') }}:
+      ${{ if contains(parameters.OperatingSystems, 'Linux') }}:
         Linux:
           Pool: 'azsdk-pool-mms-ubuntu-2004-perf'
           OsVmImage: 'MMSUbuntu20.04'
           MatrixName: 'Linux'
-      ${{ if contains(parameters.operatingSystems, 'Windows') }}:
+      ${{ if contains(parameters.OperatingSystems, 'Windows') }}:
         Windows:
           Pool: 'azsdk-pool-mms-win-2019-perf'
           OsVmImage: 'MMS2019'
@@ -76,30 +76,30 @@ jobs:
       parameters:
         AgentImage: $(OSVmImage)
 
-    - ${{ parameters.installLanguageSteps }}
+    - ${{ parameters.InstallLanguageSteps }}
 
     - template: /eng/common/TestResources/deploy-test-resources.yml
       parameters:
-        ServiceDirectory: ${{ parameters.serviceDirectory }}
+        ServiceDirectory: ${{ parameters.ServiceDirectory }}
         Location: westus
         ResourceType: perf
 
     - pwsh: |
         set-content -path config.yml -value "WorkingDirectories:"
-        add-content -path config.yml -value "  ${{ parameters.language }}: $(Agent.BuildDirectory)/s"
+        add-content -path config.yml -value "  ${{ parameters.Language }}: $(Agent.BuildDirectory)/s"
       workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation
       displayName: Create config.yml
 
     - script: >-
         dotnet run -- run
         --no-sync
-        --languages ${{ parameters.language }}
-        --services "${{ parameters.services }}"
-        --package-versions "${{ parameters.packageVersions }}"
-        --tests "${{ parameters.tests }}"
-        --arguments "${{ parameters.arguments }}"
-        --iterations ${{ parameters.iterations }}
-        ${{ parameters.additionalArguments }}
+        --languages ${{ parameters.Language }}
+        --services "${{ parameters.Services }}"
+        --package-versions "${{ parameters.PackageVersions }}"
+        --tests "${{ parameters.Tests }}"
+        --arguments "${{ parameters.Arguments }}"
+        --iterations ${{ parameters.Iterations }}
+        ${{ parameters.AdditionalArguments }}
       workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation
       env:
         ${{ each var in parameters.EnvVars }}:
@@ -126,5 +126,5 @@ jobs:
 
     - template: /eng/common/TestResources/remove-test-resources.yml
       parameters:
-        ServiceDirectory: ${{ parameters.serviceDirectory }}
+        ServiceDirectory: ${{ parameters.ServiceDirectory }}
         ResourceType: perf
