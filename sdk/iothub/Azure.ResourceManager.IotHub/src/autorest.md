@@ -57,4 +57,14 @@ directive:
       $.TestRouteResult.properties.result['x-ms-enum']['name'] = 'IotHubTestResultStatus';
       $.TestRouteResult['x-ms-client-name'] = 'IotHubTestRouteResult';
       $.TestRouteResultDetails['x-ms-client-name'] = 'IotHubTestRouteResultDetails';
+
+  - from: iothub.json
+    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}"].delete
+    transform: $.description = "Foo"
+  - from: iothub.json
+    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}"].delete
+    transform: $.responses.202.schema = {}
+  - from: iothub.json
+    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}"].delete
+    transform: $.responses.200.schema = {}
 ```

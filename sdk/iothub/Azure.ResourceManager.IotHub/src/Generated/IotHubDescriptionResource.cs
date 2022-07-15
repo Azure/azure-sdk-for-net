@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Delete an IoT hub.
+        /// Foo
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}
         /// Operation Id: IotHubResource_Delete
         /// </summary>
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Delete an IoT hub.
+        /// Foo
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}
         /// Operation Id: IotHubResource_Delete
         /// </summary>
