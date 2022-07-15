@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="content"> Parameter that describes the Regenerate Key Operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<CommunicationServiceKeys>> RegenerateKeyAsync(WaitUntil waitUntil, RegenerateKeyContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CommunicationServiceKeys>> RegenerateKeyAsync(WaitUntil waitUntil, RegenerateCommunicationServiceKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="content"> Parameter that describes the Regenerate Key Operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<CommunicationServiceKeys> RegenerateKey(WaitUntil waitUntil, RegenerateKeyContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CommunicationServiceKeys> RegenerateKey(WaitUntil waitUntil, RegenerateCommunicationServiceKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 

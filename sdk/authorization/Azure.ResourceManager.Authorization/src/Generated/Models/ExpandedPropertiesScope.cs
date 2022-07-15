@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary> Details of the resource scope. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="id"> Scope id of the resource. </param>
         /// <param name="displayName"> Display name of the resource. </param>
         /// <param name="expandedPropertiesScopeType"> Type of the resource. </param>
-        internal ExpandedPropertiesScope(string id, string displayName, string expandedPropertiesScopeType)
+        internal ExpandedPropertiesScope(ResourceIdentifier id, string displayName, string expandedPropertiesScopeType)
         {
             Id = id;
             DisplayName = displayName;
@@ -27,7 +29,7 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Scope id of the resource. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
         /// <summary> Display name of the resource. </summary>
         public string DisplayName { get; }
         /// <summary> Type of the resource. </summary>

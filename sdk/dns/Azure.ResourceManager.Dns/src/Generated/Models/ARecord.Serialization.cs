@@ -25,16 +25,16 @@ namespace Azure.ResourceManager.Dns.Models
 
         internal static ARecord DeserializeARecord(JsonElement element)
         {
-            Optional<string> iPv4Address = default;
+            Optional<string> ipv4Address = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipv4Address"))
                 {
-                    iPv4Address = property.Value.GetString();
+                    ipv4Address = property.Value.GetString();
                     continue;
                 }
             }
-            return new ARecord(iPv4Address.Value);
+            return new ARecord(ipv4Address.Value);
         }
     }
 }

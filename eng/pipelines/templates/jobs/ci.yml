@@ -152,6 +152,7 @@ jobs:
               Paths:
                 - "/*"
                 - "!SessionRecords"
+      - template: /eng/common/pipelines/templates/steps/validate-filename.yml
       - template: /eng/common/pipelines/templates/steps/check-spelling.yml
       - task: UsePythonVersion@0
         displayName: "Use Python 3.6"

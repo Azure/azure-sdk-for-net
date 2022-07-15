@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             Optional<float> sizeWindow = default;
             Optional<Serialization> serialization = default;
             Optional<Diagnostics> diagnostics = default;
-            Optional<ETag> eTag = default;
+            Optional<ETag> etag = default;
             Optional<IReadOnlyList<LastOutputEventTimestamp>> lastOutputEventTimestamps = default;
             Optional<OutputWatermarkProperties> watermarkSettings = default;
             foreach (var property in element.EnumerateObject())
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            eTag = new ETag(property0.Value.GetString());
+                            etag = new ETag(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("lastOutputEventTimestamps"))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                     continue;
                 }
             }
-            return new StreamingJobOutputData(id.Value, name.Value, type.Value, datasource.Value, timeWindow.Value, Optional.ToNullable(sizeWindow), serialization.Value, diagnostics.Value, Optional.ToNullable(eTag), Optional.ToList(lastOutputEventTimestamps), watermarkSettings.Value);
+            return new StreamingJobOutputData(id.Value, name.Value, type.Value, datasource.Value, timeWindow.Value, Optional.ToNullable(sizeWindow), serialization.Value, diagnostics.Value, Optional.ToNullable(etag), Optional.ToList(lastOutputEventTimestamps), watermarkSettings.Value);
         }
     }
 }

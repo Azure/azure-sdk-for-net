@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(KeyId))
             {
                 writer.WritePropertyName("keyId");
-                writer.WriteStringValue(KeyId);
+                writer.WriteStringValue(KeyId.AbsoluteUri);
             }
             if (Optional.IsDefined(Administrators))
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Sql
             Optional<ServerWorkspaceFeature> workspaceFeature = default;
             Optional<ResourceIdentifier> primaryUserAssignedIdentityId = default;
             Optional<Guid> federatedClientId = default;
-            Optional<string> keyId = default;
+            Optional<Uri> keyId = default;
             Optional<ServerExternalAdministrator> administrators = default;
             Optional<ServerNetworkAccessFlag> restrictOutboundNetworkAccess = default;
             foreach (var property in element.EnumerateObject())
@@ -277,7 +277,12 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("keyId"))
                         {
-                            keyId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                keyId = null;
+                                continue;
+                            }
+                            keyId = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("administrators"))

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -35,28 +36,24 @@ namespace Azure.ResourceManager.DnsResolver
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(VirtualNetwork))
-            {
-                writer.WritePropertyName("virtualNetwork");
-                JsonSerializer.Serialize(writer, VirtualNetwork);
-            }
-            writer.WriteEndObject();
+            writer.WritePropertyName("virtualNetwork");
+            JsonSerializer.Serialize(writer, VirtualNetwork); writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static DnsResolverData DeserializeDnsResolverData(JsonElement element)
         {
-            Optional<ETag> eTag = default;
+            Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<WritableSubResource> virtualNetwork = default;
+            WritableSubResource virtualNetwork = default;
             Optional<DnsResolverState> dnsResolverState = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<string> resourceGuid = default;
+            Optional<DnsResolverProvisioningState> provisioningState = default;
+            Optional<Guid> resourceGuid = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -66,7 +63,7 @@ namespace Azure.ResourceManager.DnsResolver
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    eTag = new ETag(property.Value.GetString());
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -125,11 +122,6 @@ namespace Azure.ResourceManager.DnsResolver
                     {
                         if (property0.NameEquals("virtualNetwork"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
                             virtualNetwork = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
@@ -150,19 +142,24 @@ namespace Azure.ResourceManager.DnsResolver
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new DnsResolverProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("resourceGuid"))
                         {
-                            resourceGuid = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            resourceGuid = property0.Value.GetGuid();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new DnsResolverData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(eTag), virtualNetwork, Optional.ToNullable(dnsResolverState), Optional.ToNullable(provisioningState), resourceGuid.Value);
+            return new DnsResolverData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), virtualNetwork, Optional.ToNullable(dnsResolverState), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceGuid));
         }
     }
 }

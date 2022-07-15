@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Dns
     public partial class DnsZoneData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public DnsZoneData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public string Etag { get { throw null; } set { } }
+        public string ETag { get { throw null; } set { } }
         public long? MaxNumberOfRecordSets { get { throw null; } }
         public long? MaxNumberOfRecordsPerRecordSet { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> NameServers { get { throw null; } }
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Dns
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.ARecord> ARecords { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.CaaRecord> CaaRecords { get { throw null; } }
         public string Cname { get { throw null; } set { } }
-        public string Etag { get { throw null; } set { } }
+        public string ETag { get { throw null; } set { } }
         public string Fqdn { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.MxRecord> MxRecords { get { throw null; } }

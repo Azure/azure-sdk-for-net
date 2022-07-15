@@ -6,7 +6,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 csharp: true
 namespace: Azure.ResourceManager.Storage
-require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/eca38ee0caf445cb1e79c8e7bbaf9e1dca36479a/specification/storage/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/a9e895ccfe29d0646795f7ff1cb78e185bd09529/specification/storage/resource-manager/readme.md
 tag: package-2021-09
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -30,13 +30,14 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  '*Guid': 'uuid'
 
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
   Ip: IP
-  Ips: IPs
+  Ips: IPs|ips
   ID: Id
   IDs: Ids
   VM: Vm
@@ -47,16 +48,20 @@ rename-rules:
   VPN: Vpn
   NAT: Nat
   WAN: Wan
-  Ipv4: IPv4
-  Ipv6: IPv6
-  Ipsec: IPsec
+  Ipv4: IPv4|ipv4
+  Ipv6: IPv6|ipv6
+  Ipsec: IPsec|ipsec
   SSO: Sso
   URI: Uri
+  Etag: ETag|etag
   SAS: Sas
-  Etag: ETag
   SKU: Sku
   SMB: Smb
   NFS: Nfs
+  LRS: Lrs
+  ZRS: Zrs
+  GRS: Grs
+  TLS: Tls
 
 prepend-rp-prefix:
 - CorsRules
@@ -142,6 +147,28 @@ rename-mapping:
   PrivateLinkResource: StoragePrivateLinkResourceData
   MigrationState: ImmutableStorageWithVersioningMigrationState
   AccessPolicy: StorageServiceAccessPolicy
+  ChangeFeed: BlobServiceChangeFeed
+  ChangeFeed.enabled: IsEnabled
+  CheckNameAvailabilityResult: StorageAccountNameAvailabilityResult
+  CheckNameAvailabilityResult.nameAvailable: IsNameAvailable
+  BlobContainer.properties.deleted: IsDeleted
+  BlobServiceProperties.properties.automaticSnapshotPolicyEnabled: IsAutomaticSnapshotPolicyEnabled
+  FileShare.properties.deleted: IsDeleted
+  DeleteRetentionPolicy.enabled: IsEnabled
+  ImmutableStorageAccount.enabled: IsEnabled
+  ImmutableStorageWithVersioning.enabled: IsEnabled
+  BlobInventoryPolicyRule.enabled: IsEnabled
+  BlobInventoryPolicySchema.enabled: IsEnabled
+  ActiveDirectoryPropertiesAccountType: ActiveDirectoryAccountType
+  StorageAccount.properties.failoverInProgress: IsFailoverInProgress
+  StorageAccount.properties.isNfsV3Enabled: IsNfsV3Enabled
+  StorageAccountCreateParameters.properties.isNfsV3Enabled: IsNfsV3Enabled
+  StorageAccount.properties.defaultToOAuthAuthentication: IsDefaultToOAuthAuthentication
+  StorageAccountCreateParameters.properties.defaultToOAuthAuthentication: IsDefaultToOAuthAuthentication
+  StorageAccountUpdateParameters.properties.defaultToOAuthAuthentication: IsDefaultToOAuthAuthentication
+  CustomDomain.useSubDomainName: IsUseSubDomainNameEnabled
+  RoutingPreference.publishMicrosoftEndpoints: IsMicrosoftEndpointsPublished
+  RoutingPreference.publishInternetEndpoints: IsInternetEndpointsPublished
 
 directive:
   - from: swagger-document
@@ -198,6 +225,9 @@ directive:
     transform: $["x-ms-format"] = "arm-id";
   - from: swagger-document
     where: $.definitions.ResourceAccessRule.properties.resourceId
+    transform: $["x-ms-format"] = "arm-id";
+  - from: swagger-document
+    where: $.definitions.VirtualNetworkRule.properties.id
     transform: $["x-ms-format"] = "arm-id";
   - from: swagger-document
     where: $.definitions.Encryption

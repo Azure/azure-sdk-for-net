@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task SqlContainerCreateAndUpdate()
         {
             var container = await CreateSqlContainer(null);
-            Assert.AreEqual(_containerName, container.Data.Resource.Id);
+            Assert.AreEqual(_containerName, container.Data.Resource.ContainerName);
             // Seems bug in swagger definition
             //Assert.AreEqual(TestThroughput1, container.Data.Options.Throughput);
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             // NOT WORKING API
             //ThroughputSettingsData throughtput = await container.GetMongoDBCollectionThroughputAsync();
             CosmosDBSqlContainerResource container2 = await SqlContainerCollection.GetAsync(_containerName);
-            Assert.AreEqual(_containerName, container2.Data.Resource.Id);
+            Assert.AreEqual(_containerName, container2.Data.Resource.ContainerName);
             //Assert.AreEqual(TestThroughput1, container2.Data.Options.Throughput);
 
             VerifySqlContainers(container, container2);
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             };
 
             container = (await SqlContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, _containerName, updateOptions)).Value;
-            Assert.AreEqual(_containerName, container.Data.Resource.Id);
+            Assert.AreEqual(_containerName, container.Data.Resource.ContainerName);
             container2 = await SqlContainerCollection.GetAsync(_containerName);
             VerifySqlContainers(container, container2);
         }
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             Assert.AreEqual(expectedValue.Data.Id, actualValue.Data.Id);
             Assert.AreEqual(expectedValue.Data.Name, actualValue.Data.Name);
-            Assert.AreEqual(expectedValue.Data.Resource.Id, actualValue.Data.Resource.Id);
+            Assert.AreEqual(expectedValue.Data.Resource.ContainerName, actualValue.Data.Resource.ContainerName);
             Assert.AreEqual(expectedValue.Data.Resource.IndexingPolicy.IndexingMode, actualValue.Data.Resource.IndexingPolicy.IndexingMode);
             Assert.AreEqual(expectedValue.Data.Resource.PartitionKey.Kind, actualValue.Data.Resource.PartitionKey.Kind);
             Assert.AreEqual(expectedValue.Data.Resource.PartitionKey.Paths, actualValue.Data.Resource.PartitionKey.Paths);

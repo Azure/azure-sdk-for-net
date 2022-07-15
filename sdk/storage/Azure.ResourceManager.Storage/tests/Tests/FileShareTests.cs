@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Storage.Tests
             {
                 ShareDeleteRetentionPolicy = new DeleteRetentionPolicy()
                 {
-                    Enabled = true,
+                    IsEnabled = true,
                     Days = 5
                 }
             };
@@ -187,14 +187,14 @@ namespace Azure.ResourceManager.Storage.Tests
             {
                 ShareDeleteRetentionPolicy = new DeleteRetentionPolicy()
                 {
-                    Enabled = true,
+                    IsEnabled = true,
                     Days = 5
                 }
             };
             _fileService = (await _fileService.CreateOrUpdateAsync(WaitUntil.Completed, parameter)).Value;
 
             //validate
-            Assert.IsTrue(_fileService.Data.ShareDeleteRetentionPolicy.Enabled);
+            Assert.IsTrue(_fileService.Data.ShareDeleteRetentionPolicy.IsEnabled);
             Assert.AreEqual(_fileService.Data.ShareDeleteRetentionPolicy.Days, 5);
         }
 
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Storage.Tests
             {
                 ShareDeleteRetentionPolicy = new DeleteRetentionPolicy()
                 {
-                    Enabled = true,
+                    IsEnabled = true,
                     Days = 5
                 }
             };

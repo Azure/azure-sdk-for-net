@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The properties of updating a task step. </summary>
-    internal partial class FileTaskStepUpdateParameters : TaskStepUpdateParameters
+    public partial class FileTaskStepUpdateParameters : TaskStepUpdateParameters
     {
         /// <summary> Initializes a new instance of FileTaskStepUpdateParameters. </summary>
         public FileTaskStepUpdateParameters()

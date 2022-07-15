@@ -18,5 +18,6 @@ namespace Microsoft.Azure.Management.Network.Models
     {
         public const string Predefined = "Predefined";
         public const string Custom = "Custom";
+        public const string CustomV2 = "CustomV2";
     }
 }

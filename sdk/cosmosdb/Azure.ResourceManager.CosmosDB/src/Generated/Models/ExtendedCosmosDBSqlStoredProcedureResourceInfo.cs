@@ -14,27 +14,27 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class ExtendedCosmosDBSqlStoredProcedureResourceInfo : CosmosDBSqlStoredProcedureResourceInfo
     {
         /// <summary> Initializes a new instance of ExtendedCosmosDBSqlStoredProcedureResourceInfo. </summary>
-        /// <param name="id"> Name of the Cosmos DB SQL storedProcedure. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public ExtendedCosmosDBSqlStoredProcedureResourceInfo(string id) : base(id)
+        /// <param name="storedProcedureName"> Name of the Cosmos DB SQL storedProcedure. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storedProcedureName"/> is null. </exception>
+        public ExtendedCosmosDBSqlStoredProcedureResourceInfo(string storedProcedureName) : base(storedProcedureName)
         {
-            if (id == null)
+            if (storedProcedureName == null)
             {
-                throw new ArgumentNullException(nameof(id));
+                throw new ArgumentNullException(nameof(storedProcedureName));
             }
         }
 
         /// <summary> Initializes a new instance of ExtendedCosmosDBSqlStoredProcedureResourceInfo. </summary>
-        /// <param name="id"> Name of the Cosmos DB SQL storedProcedure. </param>
+        /// <param name="storedProcedureName"> Name of the Cosmos DB SQL storedProcedure. </param>
         /// <param name="body"> Body of the Stored Procedure. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
-        /// <param name="eTag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        internal ExtendedCosmosDBSqlStoredProcedureResourceInfo(string id, string body, string rid, float? timestamp, ETag? eTag) : base(id, body)
+        /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
+        internal ExtendedCosmosDBSqlStoredProcedureResourceInfo(string storedProcedureName, string body, string rid, float? timestamp, ETag? etag) : base(storedProcedureName, body)
         {
             Rid = rid;
             Timestamp = timestamp;
-            ETag = eTag;
+            ETag = etag;
         }
 
         /// <summary> A system generated property. A unique identifier. </summary>
