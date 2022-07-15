@@ -1,6 +1,6 @@
 # Azure Maps Search client library for .NET
 
-Azure Maps Search is a library that can find route to a location or point of interests.
+Azure Maps Search is a library that can query for locations, points of interests or search within a geometric area.
 
 [Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Search/src) | [API reference documentation](https://docs.microsoft.com/rest/api/maps/) | [REST API reference documentation](https://docs.microsoft.com/rest/api/maps/search) | [Product documentation](https://docs.microsoft.com/azure/azure-maps/)
 
@@ -11,7 +11,7 @@ Azure Maps Search is a library that can find route to a location or point of int
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.Maps.Route --prerelease
+dotnet add package Azure.Maps.Search --prerelease
 ```
 
 ### Prerequisites
@@ -63,7 +63,7 @@ SearchClient client = new SearchClient(credential, clientId);
 * Communicate with Azure Maps endpoint to request the geometry data such as a city or country outline for a set of entities
 * Communicate with Azure Maps endpoint to perform a free form search inside a single geometry or many of them
 
-Learn more about examples in [samples](https://github.com/dubiety/azure-sdk-for-net/tree/feature/maps-route/sdk/maps/Azure.Maps.Route/tests)
+Learn more about examples in [samples](https://github.com/dubiety/azure-sdk-for-net/tree/feature/maps-search/sdk/maps/Azure.Maps.Search/tests)
 
 ### Thread safety
 
@@ -82,7 +82,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Route/test).
+You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Search/test).
 
 Before calling search APIs, instantiate a `SearchClient` first. Below use AAD to create the client instance:
 
