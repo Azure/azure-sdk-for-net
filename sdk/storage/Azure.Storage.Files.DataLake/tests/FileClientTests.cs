@@ -2454,14 +2454,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 await file.AppendAsync(
                     content: stream,
                     offset: 0,
-<<<<<<< HEAD
                     options: options);
-=======
-                    new DataLakeFileAppendOptions
-                    {
-                        LeaseId = response.Value.LeaseId
-                    });
->>>>>>> main
             }
         }
 
@@ -2487,14 +2480,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     file.AppendAsync(
                         content: stream,
                         offset: 0,
-<<<<<<< HEAD
                         options: options),
-=======
-                        new DataLakeFileAppendOptions
-                        {
-                            LeaseId = Recording.Random.NewGuid().ToString()
-                        }),
->>>>>>> main
                         e => Assert.AreEqual("LeaseNotPresent", e.ErrorCode));
             }
         }
