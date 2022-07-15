@@ -1468,13 +1468,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class CassandraDataCenterProperties
     {
         public CassandraDataCenterProperties() { }
-        public bool? AvailabilityZone { get { throw null; } set { } }
         public System.Uri BackupStorageCustomerKeyUri { get { throw null; } set { } }
         public string Base64EncodedCassandraYamlFragment { get { throw null; } set { } }
         public Azure.Core.AzureLocation? DataCenterLocation { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier DelegatedSubnetId { get { throw null; } set { } }
         public int? DiskCapacity { get { throw null; } set { } }
         public string DiskSku { get { throw null; } set { } }
+        public bool? DoesSupportAvailabilityZone { get { throw null; } set { } }
         public System.Uri ManagedDiskCustomerKeyUri { get { throw null; } set { } }
         public int? NodeCount { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.ManagedCassandraProvisioningState? ProvisioningState { get { throw null; } set { } }
@@ -2012,7 +2012,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         public CosmosDBLocationProperties() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.BackupStorageRedundancy> BackupStorageRedundancies { get { throw null; } }
-        public bool? DoesSupportsAvailabilityZone { get { throw null; } }
+        public bool? DoesSupportAvailabilityZone { get { throw null; } }
         public bool? IsResidencyRestricted { get { throw null; } }
     }
     public partial class CosmosDBMetricAvailability
