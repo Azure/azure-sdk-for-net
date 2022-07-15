@@ -7,10 +7,11 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Tests
 {
+    [ClientTestFixture(true, "2021-04-01", "2019-10-01")]
     public class ProviderOperationsTests : ResourceManagerTestBase
     {
-        public ProviderOperationsTests(bool isAsync)
-         : base(isAsync)//, RecordedTestMode.Record)
+        public ProviderOperationsTests(bool isAsync, string apiVersion)
+         : base(isAsync, ResourceProviderResource.ResourceType, apiVersion)//, RecordedTestMode.Record)
         {
         }
 
@@ -50,6 +51,7 @@ namespace Azure.ResourceManager.Tests
 
         [TestCase]
         [RecordedTest]
+        [ServiceVersion(Min="2021-04-01")]
         public async Task Unregister()
         {
             ResourceProviderCollection providerCollection = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceProviders();
