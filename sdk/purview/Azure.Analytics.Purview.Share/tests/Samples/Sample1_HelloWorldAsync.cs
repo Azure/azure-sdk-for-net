@@ -13,7 +13,7 @@ namespace Azure.Analytics.Share.Tests.Samples
 {
     public partial class ShareSamples: SamplesBase<ShareClientTestEnvironment>
     {
-        /* please refer to https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/Samples/Sample1.HelloWorldAsync.cs to write samples. */
+        /* please refer to TODO to write samples. */
         #region Snippet:Azure_Analytics_Share_ScenarioAsync
 
         #endregion
