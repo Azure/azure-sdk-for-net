@@ -37,7 +37,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
                     TestEnvironment.ConfidentialLedgerIdentityUrl,
                     _options);
 
-            var serviceCert = ConfidentialLedgerClient.GetIdentityServerTlsCert(TestEnvironment.ConfidentialLedgerUrl, _options, IdentityClient);
+            var serviceCert = ConfidentialLedgerClient.GetIdentityServerTlsCert(TestEnvironment.ConfidentialLedgerUrl, IdentityClient);
 
             Client = InstrumentClient(
                 new ConfidentialLedgerClient(
@@ -179,7 +179,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         {
             await Client.PostLedgerEntryAsync(
                waitUntil: WaitUntil.Completed,
-               RequestContent.Create( new { contents = Recording.GenerateAssetName("test") }));
+               RequestContent.Create(new { contents = Recording.GenerateAssetName("test") }));
 
             var result = await Client.GetCurrentLedgerEntryAsync();
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
