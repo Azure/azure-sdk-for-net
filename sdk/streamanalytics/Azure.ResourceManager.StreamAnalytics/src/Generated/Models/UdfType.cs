@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> The function type. </summary>
-    internal readonly partial struct UdfType : IEquatable<UdfType>
+    public readonly partial struct UdfType : IEquatable<UdfType>
     {
         private readonly string _value;
 

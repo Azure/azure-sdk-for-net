@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    internal partial class AzureMachineLearningServiceFunctionRetrieveDefaultDefinitionParameters : IUtf8JsonSerializable
+    public partial class AzureMachineLearningServiceFunctionRetrieveDefaultDefinitionParameters : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
