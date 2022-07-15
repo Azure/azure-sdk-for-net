@@ -51,6 +51,14 @@
              SkipNonexistentTargets="true" />
   </Target>
 
+  <Target Name="GenerateTest">
+    <MSBuild Projects="@(ProjectReference)"
+             Targets="GenerateTest"
+             BuildInParallel="$(BuildInParallel)"
+             SkipNonexistentProjects="false"
+             SkipNonexistentTargets="true" />
+  </Target>
+
   <Target Name="ExportApi">
     <MSBuild Projects="@(ProjectReference)"
              Targets="ExportApi"

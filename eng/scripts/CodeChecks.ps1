@@ -84,6 +84,11 @@ try {
         Invoke-Block {
             & dotnet msbuild $PSScriptRoot\..\service.proj /restore /t:GenerateCode /p:SDKType=$SDKType /p:ServiceDirectory=$ServiceDirectory
         }
+
+        Write-Host "Re-generating tests"
+        Invoke-Block {
+            & dotnet msbuild $PSScriptRoot\..\service.proj /restore /t:GenerateTest /p:SDKType=$SDKType /p:ServiceDirectory=$ServiceDirectory
+        }
     }
 
     Write-Host "Re-generating snippets"
