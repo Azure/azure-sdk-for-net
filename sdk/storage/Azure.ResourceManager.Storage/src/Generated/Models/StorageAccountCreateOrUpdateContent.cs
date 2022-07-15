@@ -93,11 +93,11 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Indicates whether the storage account permits requests to be authorized with the account access key via Shared Key. If false, then all requests, including shared access signatures, must be authorized with Azure Active Directory (Azure AD). The default value is null, which is equivalent to true. </summary>
         public bool? AllowSharedKeyAccess { get; set; }
         /// <summary> NFS 3.0 protocol support enabled if set to true. </summary>
-        public bool? EnableNfsV3 { get; set; }
+        public bool? IsNfsV3Enabled { get; set; }
         /// <summary> Allow or disallow cross AAD tenant object replication. The default interpretation is true for this property. </summary>
         public bool? AllowCrossTenantReplication { get; set; }
         /// <summary> A boolean flag which indicates whether the default authentication is OAuth or not. The default interpretation is false for this property. </summary>
-        public bool? DefaultToOAuthAuthentication { get; set; }
+        public bool? IsDefaultToOAuthAuthentication { get; set; }
         /// <summary> The property is immutable and can only be set to true at the account creation time. When set to true, it enables object level immutability for all the new containers in the account by default. </summary>
         public ImmutableStorageAccount ImmutableStorageWithVersioning { get; set; }
         /// <summary> Allows you to specify the type of endpoint. Set this to AzureDNSZone to create a large number of accounts in a single subscription, which creates accounts in an Azure DNS Zone and the endpoint URL will have an alphanumeric DNS Zone identifier. </summary>

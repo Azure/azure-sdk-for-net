@@ -5463,7 +5463,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         public JobSchedule() { }
         public System.DateTimeOffset? EndOn { get { throw null; } set { } }
-        public string Interval { get { throw null; } set { } }
+        public System.TimeSpan? Interval { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.JobScheduleType? ScheduleType { get { throw null; } set { } }
         public System.DateTimeOffset? StartOn { get { throw null; } set { } }

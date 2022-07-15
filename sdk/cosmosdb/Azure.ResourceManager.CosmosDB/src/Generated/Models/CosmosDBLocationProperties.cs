@@ -20,18 +20,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Initializes a new instance of CosmosDBLocationProperties. </summary>
-        /// <param name="doesSupportsAvailabilityZone"> Flag indicating whether the location supports availability zones or not. </param>
+        /// <param name="doesSupportAvailabilityZone"> Flag indicating whether the location supports availability zones or not. </param>
         /// <param name="isResidencyRestricted"> Flag indicating whether the location is residency sensitive. </param>
         /// <param name="backupStorageRedundancies"> The properties of available backup storage redundancies. </param>
-        internal CosmosDBLocationProperties(bool? doesSupportsAvailabilityZone, bool? isResidencyRestricted, IReadOnlyList<BackupStorageRedundancy> backupStorageRedundancies)
+        internal CosmosDBLocationProperties(bool? doesSupportAvailabilityZone, bool? isResidencyRestricted, IReadOnlyList<BackupStorageRedundancy> backupStorageRedundancies)
         {
-            DoesSupportsAvailabilityZone = doesSupportsAvailabilityZone;
+            DoesSupportAvailabilityZone = doesSupportAvailabilityZone;
             IsResidencyRestricted = isResidencyRestricted;
             BackupStorageRedundancies = backupStorageRedundancies;
         }
 
         /// <summary> Flag indicating whether the location supports availability zones or not. </summary>
-        public bool? DoesSupportsAvailabilityZone { get; }
+        public bool? DoesSupportAvailabilityZone { get; }
         /// <summary> Flag indicating whether the location is residency sensitive. </summary>
         public bool? IsResidencyRestricted { get; }
         /// <summary> The properties of available backup storage redundancies. </summary>

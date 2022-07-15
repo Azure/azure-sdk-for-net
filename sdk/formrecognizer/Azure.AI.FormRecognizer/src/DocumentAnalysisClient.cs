@@ -122,7 +122,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// Prebuilt model IDs can be found at <see href="https://aka.ms/azsdk/formrecognizer/models"/>.
         /// </param>
         /// <param name="document">The stream containing one or more documents to analyze.</param>
-        /// <param name="analyzeDocumentOptions">
+        /// <param name="options">
         /// A set of options available for configuring the analyze request. For example, specify the locale of the
         /// document, or which pages to analyze.
         /// </param>
@@ -131,12 +131,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// An <see cref="AnalyzeDocumentOperation"/> to wait on this long-running operation. Its <see cref="AnalyzeDocumentOperation.Value"/> upon successful
         /// completion will contain analyzed pages from the input document.
         /// </returns>
-        public virtual async Task<AnalyzeDocumentOperation> StartAnalyzeDocumentAsync(string modelId, Stream document, AnalyzeDocumentOptions analyzeDocumentOptions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<AnalyzeDocumentOperation> StartAnalyzeDocumentAsync(string modelId, Stream document, AnalyzeDocumentOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
             Argument.AssertNotNull(document, nameof(document));
 
-            analyzeDocumentOptions ??= new AnalyzeDocumentOptions();
+            options ??= new AnalyzeDocumentOptions();
 
             using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentAnalysisClient)}.{nameof(StartAnalyzeDocument)}");
             scope.Start();
@@ -146,8 +146,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 var response = await ServiceClient.AnalyzeDocumentAsync(
                     modelId,
                     ContentType1.ApplicationOctetStream,
-                    analyzeDocumentOptions.Pages.Count == 0 ? null : string.Join(",", analyzeDocumentOptions.Pages),
-                    analyzeDocumentOptions.Locale,
+                    options.Pages.Count == 0 ? null : string.Join(",", options.Pages),
+                    options.Locale,
                     Constants.DefaultStringIndexType,
                     document,
                     cancellationToken).ConfigureAwait(false);
@@ -172,7 +172,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// Prebuilt model IDs can be found at <see href="https://aka.ms/azsdk/formrecognizer/models"/>.
         /// </param>
         /// <param name="document">The stream containing one or more documents to analyze.</param>
-        /// <param name="analyzeDocumentOptions">
+        /// <param name="options">
         /// A set of options available for configuring the analyze request. For example, specify the locale of the
         /// document, or which pages to analyze.
         /// </param>
@@ -181,12 +181,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// An <see cref="AnalyzeDocumentOperation"/> to wait on this long-running operation. Its <see cref="AnalyzeDocumentOperation.Value"/> upon successful
         /// completion will contain analyzed pages from the input document.
         /// </returns>
-        public virtual AnalyzeDocumentOperation StartAnalyzeDocument(string modelId, Stream document, AnalyzeDocumentOptions analyzeDocumentOptions = default, CancellationToken cancellationToken = default)
+        public virtual AnalyzeDocumentOperation StartAnalyzeDocument(string modelId, Stream document, AnalyzeDocumentOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
             Argument.AssertNotNull(document, nameof(document));
 
-            analyzeDocumentOptions ??= new AnalyzeDocumentOptions();
+            options ??= new AnalyzeDocumentOptions();
 
             using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentAnalysisClient)}.{nameof(StartAnalyzeDocument)}");
             scope.Start();
@@ -196,8 +196,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 var response = ServiceClient.AnalyzeDocument(
                     modelId,
                     ContentType1.ApplicationOctetStream,
-                    analyzeDocumentOptions.Pages.Count == 0 ? null : string.Join(",", analyzeDocumentOptions.Pages),
-                    analyzeDocumentOptions.Locale,
+                    options.Pages.Count == 0 ? null : string.Join(",", options.Pages),
+                    options.Locale,
                     Constants.DefaultStringIndexType,
                     document,
                     cancellationToken);
@@ -222,7 +222,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// Prebuilt model IDs can be found at <see href="https://aka.ms/azsdk/formrecognizer/models"/>.
         /// </param>
         /// <param name="documentUri">The absolute URI of the remote file to analyze documents from.</param>
-        /// <param name="analyzeDocumentOptions">
+        /// <param name="options">
         /// A set of options available for configuring the analyze request. For example, specify the locale of the
         /// document, or which pages to analyze.
         /// </param>
@@ -231,12 +231,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// An <see cref="AnalyzeDocumentOperation"/> to wait on this long-running operation. Its <see cref="AnalyzeDocumentOperation.Value"/> upon successful
         /// completion will contain analyzed pages from the input document.
         /// </returns>
-        public virtual async Task<AnalyzeDocumentOperation> StartAnalyzeDocumentFromUriAsync(string modelId, Uri documentUri, AnalyzeDocumentOptions analyzeDocumentOptions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<AnalyzeDocumentOperation> StartAnalyzeDocumentFromUriAsync(string modelId, Uri documentUri, AnalyzeDocumentOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
             Argument.AssertNotNull(documentUri, nameof(documentUri));
 
-            analyzeDocumentOptions ??= new AnalyzeDocumentOptions();
+            options ??= new AnalyzeDocumentOptions();
 
             using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentAnalysisClient)}.{nameof(StartAnalyzeDocumentFromUri)}");
             scope.Start();
@@ -246,8 +246,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 var request = new AnalyzeDocumentRequest() { UrlSource = documentUri.AbsoluteUri };
                 var response = await ServiceClient.AnalyzeDocumentAsync(
                     modelId,
-                    analyzeDocumentOptions.Pages.Count == 0 ? null : string.Join(",", analyzeDocumentOptions.Pages),
-                    analyzeDocumentOptions.Locale,
+                    options.Pages.Count == 0 ? null : string.Join(",", options.Pages),
+                    options.Locale,
                     Constants.DefaultStringIndexType,
                     request,
                     cancellationToken).ConfigureAwait(false);
@@ -272,7 +272,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// Prebuilt model IDs can be found at <see href="https://aka.ms/azsdk/formrecognizer/models"/>.
         /// </param>
         /// <param name="documentUri">The absolute URI of the remote file to analyze documents from.</param>
-        /// <param name="analyzeDocumentOptions">
+        /// <param name="options">
         /// A set of options available for configuring the analyze request. For example, specify the locale of the
         /// document, or which pages to analyze.
         /// </param>
@@ -281,12 +281,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// An <see cref="AnalyzeDocumentOperation"/> to wait on this long-running operation. Its <see cref="AnalyzeDocumentOperation.Value"/> upon successful
         /// completion will contain analyzed pages from the input document.
         /// </returns>
-        public virtual AnalyzeDocumentOperation StartAnalyzeDocumentFromUri(string modelId, Uri documentUri, AnalyzeDocumentOptions analyzeDocumentOptions = default, CancellationToken cancellationToken = default)
+        public virtual AnalyzeDocumentOperation StartAnalyzeDocumentFromUri(string modelId, Uri documentUri, AnalyzeDocumentOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
             Argument.AssertNotNull(documentUri, nameof(documentUri));
 
-            analyzeDocumentOptions ??= new AnalyzeDocumentOptions();
+            options ??= new AnalyzeDocumentOptions();
 
             using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentAnalysisClient)}.{nameof(StartAnalyzeDocumentFromUri)}");
             scope.Start();
@@ -296,8 +296,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 var request = new AnalyzeDocumentRequest() { UrlSource = documentUri.AbsoluteUri };
                 var response = ServiceClient.AnalyzeDocument(
                     modelId,
-                    analyzeDocumentOptions.Pages.Count == 0 ? null : string.Join(",", analyzeDocumentOptions.Pages),
-                    analyzeDocumentOptions.Locale,
+                    options.Pages.Count == 0 ? null : string.Join(",", options.Pages),
+                    options.Locale,
                     Constants.DefaultStringIndexType,
                     request,
                     cancellationToken);

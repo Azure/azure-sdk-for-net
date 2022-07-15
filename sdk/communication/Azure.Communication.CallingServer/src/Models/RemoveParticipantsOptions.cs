@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 
-namespace Azure.Communication.CallingServer
+namespace Azure.Communication.CallingServer.Models
 {
     /// <summary> The options for removing participant from a call. </summary>
     public class RemoveParticipantsOptions
@@ -18,7 +18,7 @@ namespace Azure.Communication.CallingServer
         /// Remove Participants Options
         /// </summary>
         /// <param name="operationContext">The operationContext.</param>
-        public RemoveParticipantsOptions(string operationContext)
+        public RemoveParticipantsOptions(string operationContext = default)
         {
             OperationContext = operationContext;
         }

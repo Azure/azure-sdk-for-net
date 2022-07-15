@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.MySql.Models
 {
     /// <summary> The properties used to create a new server by restoring to a different region from a geo replicated backup. </summary>
-    internal partial class ServerPropertiesForGeoRestore : ServerPropertiesForCreate
+    public partial class ServerPropertiesForGeoRestore : ServerPropertiesForCreate
     {
         /// <summary> Initializes a new instance of ServerPropertiesForGeoRestore. </summary>
         /// <param name="sourceServerId"> The source server id to restore from. </param>
