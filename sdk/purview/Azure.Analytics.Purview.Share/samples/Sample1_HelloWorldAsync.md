@@ -1,6 +1,6 @@
 # <scenario_list>
 
-To use these samples, you'll first need to set up resources. See [getting started](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/purview/Azure.Analytics.Share/README.md#getting-started) for details.
+To use these samples, you'll first need to set up resources. See TODO for details.
 
 ## <scenario> asynchronously
 
@@ -10,6 +10,6 @@ You can create a client and call the client's `<operation>` method
 ```
 
 To see the full example source files, see:
-* [HelloWorld](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/purview/Azure.Analytics.Share/tests/Samples/Sample1_HelloWorldAsync.cs))
+* TODO
 
-<!-- please refer to <https://github.com/Azure/azure-sdk-for-net/main/sdk/template/Azure.Template/samples/Sample1_HelloWorldAsync.md> to write sample readme file. -->
+<!-- please refer to TODO to write sample readme file. -->
