@@ -42,47 +42,5 @@ namespace Azure.Storage.Blobs.Models
         /// REST documentation</a> for range limitation details.
         /// </summary>
         public DownloadTransferValidationOptions TransferValidationOptions { get; set; }
-
-        /// <summary>
-        /// Default constructor.
-        /// </summary>
-        public BlobDownloadOptions()
-        {
-        }
-
-        /// <summary>
-        /// Deep copy constructor.
-        /// </summary>
-        /// <param name="deepCopySource"></param>
-        private BlobDownloadOptions(BlobDownloadOptions deepCopySource)
-        {
-            Argument.AssertNotNull(deepCopySource, nameof(deepCopySource));
-
-            Range = new HttpRange(offset: deepCopySource.Range.Offset, length: deepCopySource.Range.Length);
-            Conditions = BlobRequestConditions.CloneOrDefault(deepCopySource.Conditions);
-            ProgressHandler = deepCopySource.ProgressHandler;
-            // can't access an internal deep copy in Storage.Common
-            TransferValidationOptions = deepCopySource.TransferValidationOptions == default
-                ? default
-                : new DownloadTransferValidationOptions()
-                {
-                    Algorithm = deepCopySource.TransferValidationOptions.Algorithm,
-                    Validate = deepCopySource.TransferValidationOptions.Validate
-                };
-        }
-
-        /// <summary>
-        /// Creates a deep copy of the given instance, if any.
-        /// </summary>
-        /// <param name="deepCopySource">Instance to deep copy.</param>
-        /// <returns>The deep copy, or null.</returns>
-        internal static BlobDownloadOptions CloneOrDefault(BlobDownloadOptions deepCopySource)
-        {
-            if (deepCopySource == default)
-            {
-                return default;
-            }
-            return new BlobDownloadOptions(deepCopySource);
-        }
     }
 }
