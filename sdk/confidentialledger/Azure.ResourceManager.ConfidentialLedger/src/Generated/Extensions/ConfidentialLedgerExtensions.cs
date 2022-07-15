@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         }
 
         /// <summary>
-        /// Retrieves information about all Confidential Ledger resources under the given subscription
+        /// Retrieves the properties of all Confidential Ledgers.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConfidentialLedger/ledgers
         /// Operation Id: Ledger_ListBySubscription
         /// </summary>
@@ -69,14 +69,13 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq &apos;Public&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ConfidentialLedgerResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Retrieves the properties of all Confidential Ledgers. </remarks>
         public static AsyncPageable<ConfidentialLedgerResource> GetConfidentialLedgersAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetConfidentialLedgersAsync(filter, cancellationToken);
         }
 
         /// <summary>
-        /// Retrieves information about all Confidential Ledger resources under the given subscription
+        /// Retrieves the properties of all Confidential Ledgers.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConfidentialLedger/ledgers
         /// Operation Id: Ledger_ListBySubscription
         /// </summary>
@@ -84,7 +83,6 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq &apos;Public&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ConfidentialLedgerResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Retrieves the properties of all Confidential Ledgers. </remarks>
         public static Pageable<ConfidentialLedgerResource> GetConfidentialLedgers(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetConfidentialLedgers(filter, cancellationToken);
@@ -108,7 +106,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         }
 
         /// <summary>
-        /// Retrieves information about a Confidential Ledger resource.
+        /// Retrieves the properties of a Confidential Ledger.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConfidentialLedger/ledgers/{ledgerName}
         /// Operation Id: Ledger_Get
         /// </summary>
@@ -117,7 +115,6 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ledgerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ledgerName"/> is null. </exception>
-        /// <remarks> Retrieves the properties of a Confidential Ledger. </remarks>
         [ForwardsClientCalls]
         public static async Task<Response<ConfidentialLedgerResource>> GetConfidentialLedgerAsync(this ResourceGroupResource resourceGroupResource, string ledgerName, CancellationToken cancellationToken = default)
         {
@@ -125,7 +122,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         }
 
         /// <summary>
-        /// Retrieves information about a Confidential Ledger resource.
+        /// Retrieves the properties of a Confidential Ledger.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConfidentialLedger/ledgers/{ledgerName}
         /// Operation Id: Ledger_Get
         /// </summary>
@@ -134,7 +131,6 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ledgerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ledgerName"/> is null. </exception>
-        /// <remarks> Retrieves the properties of a Confidential Ledger. </remarks>
         [ForwardsClientCalls]
         public static Response<ConfidentialLedgerResource> GetConfidentialLedger(this ResourceGroupResource resourceGroupResource, string ledgerName, CancellationToken cancellationToken = default)
         {

@@ -87,12 +87,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary>
-        /// Gets GuestAgent.
+        /// Implements GuestAgent GET method.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}/guestAgents/{name}
         /// Operation Id: GuestAgents_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Implements GuestAgent GET method. </remarks>
         public virtual async Task<Response<GuestAgentResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _guestAgentClientDiagnostics.CreateScope("GuestAgentResource.Get");
@@ -112,12 +111,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary>
-        /// Gets GuestAgent.
+        /// Implements GuestAgent GET method.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}/guestAgents/{name}
         /// Operation Id: GuestAgents_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Implements GuestAgent GET method. </remarks>
         public virtual Response<GuestAgentResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _guestAgentClientDiagnostics.CreateScope("GuestAgentResource.Get");
@@ -137,13 +135,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary>
-        /// Deletes an GuestAgent.
+        /// Implements GuestAgent DELETE method.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}/guestAgents/{name}
         /// Operation Id: GuestAgents_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Implements GuestAgent DELETE method. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _guestAgentClientDiagnostics.CreateScope("GuestAgentResource.Delete");
@@ -164,13 +161,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary>
-        /// Deletes an GuestAgent.
+        /// Implements GuestAgent DELETE method.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}/guestAgents/{name}
         /// Operation Id: GuestAgents_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Implements GuestAgent DELETE method. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _guestAgentClientDiagnostics.CreateScope("GuestAgentResource.Delete");
@@ -191,14 +187,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary>
-        /// Implements GuestAgent PUT method.
+        /// Create Or Update GuestAgent.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}/guestAgents/{name}
         /// Operation Id: GuestAgents_Create
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Create Or Update GuestAgent. </remarks>
         public virtual async Task<ArmOperation<GuestAgentResource>> UpdateAsync(WaitUntil waitUntil, GuestAgentData data = null, CancellationToken cancellationToken = default)
         {
             using var scope = _guestAgentClientDiagnostics.CreateScope("GuestAgentResource.Update");
@@ -219,14 +214,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary>
-        /// Implements GuestAgent PUT method.
+        /// Create Or Update GuestAgent.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}/guestAgents/{name}
         /// Operation Id: GuestAgents_Create
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Create Or Update GuestAgent. </remarks>
         public virtual ArmOperation<GuestAgentResource> Update(WaitUntil waitUntil, GuestAgentData data = null, CancellationToken cancellationToken = default)
         {
             using var scope = _guestAgentClientDiagnostics.CreateScope("GuestAgentResource.Update");

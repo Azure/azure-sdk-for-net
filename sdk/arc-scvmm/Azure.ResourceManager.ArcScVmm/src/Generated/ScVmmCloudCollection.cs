@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements Clouds PUT method.
+        /// Onboards the ScVmm fabric cloud as an Azure cloud resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/clouds/{cloudName}
         /// Operation Id: Clouds_CreateOrUpdate
         /// </summary>
@@ -65,7 +65,6 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="cloudName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudName"/> or <paramref name="data"/> is null. </exception>
-        /// <remarks> Onboards the ScVmm fabric cloud as an Azure cloud resource. </remarks>
         public virtual async Task<ArmOperation<ScVmmCloudResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string cloudName, ScVmmCloudData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cloudName, nameof(cloudName));
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements Clouds PUT method.
+        /// Onboards the ScVmm fabric cloud as an Azure cloud resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/clouds/{cloudName}
         /// Operation Id: Clouds_CreateOrUpdate
         /// </summary>
@@ -99,7 +98,6 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="cloudName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudName"/> or <paramref name="data"/> is null. </exception>
-        /// <remarks> Onboards the ScVmm fabric cloud as an Azure cloud resource. </remarks>
         public virtual ArmOperation<ScVmmCloudResource> CreateOrUpdate(WaitUntil waitUntil, string cloudName, ScVmmCloudData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cloudName, nameof(cloudName));
@@ -123,7 +121,7 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Gets a Cloud.
+        /// Implements Cloud GET method.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/clouds/{cloudName}
         /// Operation Id: Clouds_Get
         /// </summary>
@@ -131,7 +129,6 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="cloudName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudName"/> is null. </exception>
-        /// <remarks> Implements Cloud GET method. </remarks>
         public virtual async Task<Response<ScVmmCloudResource>> GetAsync(string cloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cloudName, nameof(cloudName));
@@ -153,7 +150,7 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Gets a Cloud.
+        /// Implements Cloud GET method.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/clouds/{cloudName}
         /// Operation Id: Clouds_Get
         /// </summary>
@@ -161,7 +158,6 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="cloudName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudName"/> is null. </exception>
-        /// <remarks> Implements Cloud GET method. </remarks>
         public virtual Response<ScVmmCloudResource> Get(string cloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cloudName, nameof(cloudName));
@@ -183,13 +179,12 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements GET Clouds in a resource group.
+        /// List of Clouds in a resource group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/clouds
         /// Operation Id: Clouds_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ScVmmCloudResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List of Clouds in a resource group. </remarks>
         public virtual AsyncPageable<ScVmmCloudResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ScVmmCloudResource>> FirstPageFunc(int? pageSizeHint)
@@ -226,13 +221,12 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements GET Clouds in a resource group.
+        /// List of Clouds in a resource group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/clouds
         /// Operation Id: Clouds_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ScVmmCloudResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List of Clouds in a resource group. </remarks>
         public virtual Pageable<ScVmmCloudResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<ScVmmCloudResource> FirstPageFunc(int? pageSizeHint)
@@ -269,7 +263,7 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Gets a Cloud.
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/clouds/{cloudName}
         /// Operation Id: Clouds_Get
         /// </summary>
@@ -277,7 +271,6 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="cloudName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudName"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string cloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cloudName, nameof(cloudName));
@@ -297,7 +290,7 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Gets a Cloud.
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/clouds/{cloudName}
         /// Operation Id: Clouds_Get
         /// </summary>
@@ -305,7 +298,6 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="cloudName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudName"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string cloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cloudName, nameof(cloudName));

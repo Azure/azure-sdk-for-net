@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get details of a top-level domain.
+        /// Description for Get details of a top-level domain.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}
         /// Operation Id: TopLevelDomains_Get
         /// </summary>
@@ -63,7 +63,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <remarks> Description for Get details of a top-level domain. </remarks>
         public virtual async Task<Response<TopLevelDomainResource>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -85,7 +84,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get details of a top-level domain.
+        /// Description for Get details of a top-level domain.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}
         /// Operation Id: TopLevelDomains_Get
         /// </summary>
@@ -93,7 +92,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <remarks> Description for Get details of a top-level domain. </remarks>
         public virtual Response<TopLevelDomainResource> Get(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -115,13 +113,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get all top-level domains supported for registration.
+        /// Description for Get all top-level domains supported for registration.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains
         /// Operation Id: TopLevelDomains_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="TopLevelDomainResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Description for Get all top-level domains supported for registration. </remarks>
         public virtual AsyncPageable<TopLevelDomainResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<TopLevelDomainResource>> FirstPageFunc(int? pageSizeHint)
@@ -158,13 +155,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get all top-level domains supported for registration.
+        /// Description for Get all top-level domains supported for registration.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains
         /// Operation Id: TopLevelDomains_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="TopLevelDomainResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Description for Get all top-level domains supported for registration. </remarks>
         public virtual Pageable<TopLevelDomainResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<TopLevelDomainResource> FirstPageFunc(int? pageSizeHint)
@@ -201,7 +197,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get details of a top-level domain.
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}
         /// Operation Id: TopLevelDomains_Get
         /// </summary>
@@ -209,7 +205,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -229,7 +224,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get details of a top-level domain.
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}
         /// Operation Id: TopLevelDomains_Get
         /// </summary>
@@ -237,7 +232,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));

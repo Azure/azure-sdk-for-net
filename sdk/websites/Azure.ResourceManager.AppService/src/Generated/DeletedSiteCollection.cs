@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get deleted app for a subscription.
+        /// Description for Get deleted app for a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
         /// Operation Id: Global_GetDeletedWebApp
         /// </summary>
@@ -68,7 +68,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
-        /// <remarks> Description for Get deleted app for a subscription. </remarks>
         public virtual async Task<Response<DeletedSiteResource>> GetAsync(string deletedSiteId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deletedSiteId, nameof(deletedSiteId));
@@ -90,7 +89,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get deleted app for a subscription.
+        /// Description for Get deleted app for a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
         /// Operation Id: Global_GetDeletedWebApp
         /// </summary>
@@ -98,7 +97,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
-        /// <remarks> Description for Get deleted app for a subscription. </remarks>
         public virtual Response<DeletedSiteResource> Get(string deletedSiteId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deletedSiteId, nameof(deletedSiteId));
@@ -120,13 +118,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get all deleted apps for a subscription.
+        /// Description for Get all deleted apps for a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites
         /// Operation Id: DeletedWebApps_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DeletedSiteResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Description for Get all deleted apps for a subscription. </remarks>
         public virtual AsyncPageable<DeletedSiteResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<DeletedSiteResource>> FirstPageFunc(int? pageSizeHint)
@@ -163,13 +160,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get all deleted apps for a subscription.
+        /// Description for Get all deleted apps for a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites
         /// Operation Id: DeletedWebApps_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeletedSiteResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Description for Get all deleted apps for a subscription. </remarks>
         public virtual Pageable<DeletedSiteResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<DeletedSiteResource> FirstPageFunc(int? pageSizeHint)
@@ -206,7 +202,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get deleted app for a subscription.
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
         /// Operation Id: Global_GetDeletedWebApp
         /// </summary>
@@ -214,7 +210,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string deletedSiteId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deletedSiteId, nameof(deletedSiteId));
@@ -234,7 +229,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get deleted app for a subscription.
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
         /// Operation Id: Global_GetDeletedWebApp
         /// </summary>
@@ -242,7 +237,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string deletedSiteId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deletedSiteId, nameof(deletedSiteId));

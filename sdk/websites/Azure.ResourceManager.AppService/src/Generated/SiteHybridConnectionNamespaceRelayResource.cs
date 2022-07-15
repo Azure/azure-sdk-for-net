@@ -87,12 +87,11 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Retrieves a specific Service Bus Hybrid Connection used by this Web App.
+        /// Description for Retrieves a specific Service Bus Hybrid Connection used by this Web App.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
         /// Operation Id: WebApps_GetHybridConnection
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Retrieves a specific Service Bus Hybrid Connection used by this Web App. </remarks>
         public virtual async Task<Response<SiteHybridConnectionNamespaceRelayResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteHybridConnectionNamespaceRelayWebAppsClientDiagnostics.CreateScope("SiteHybridConnectionNamespaceRelayResource.Get");
@@ -112,12 +111,11 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Retrieves a specific Service Bus Hybrid Connection used by this Web App.
+        /// Description for Retrieves a specific Service Bus Hybrid Connection used by this Web App.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
         /// Operation Id: WebApps_GetHybridConnection
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Retrieves a specific Service Bus Hybrid Connection used by this Web App. </remarks>
         public virtual Response<SiteHybridConnectionNamespaceRelayResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _siteHybridConnectionNamespaceRelayWebAppsClientDiagnostics.CreateScope("SiteHybridConnectionNamespaceRelayResource.Get");
@@ -137,13 +135,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Removes a Hybrid Connection from this site.
+        /// Description for Removes a Hybrid Connection from this site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
         /// Operation Id: WebApps_DeleteHybridConnection
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Removes a Hybrid Connection from this site. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _siteHybridConnectionNamespaceRelayWebAppsClientDiagnostics.CreateScope("SiteHybridConnectionNamespaceRelayResource.Delete");
@@ -164,13 +161,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Removes a Hybrid Connection from this site.
+        /// Description for Removes a Hybrid Connection from this site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
         /// Operation Id: WebApps_DeleteHybridConnection
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Removes a Hybrid Connection from this site. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _siteHybridConnectionNamespaceRelayWebAppsClientDiagnostics.CreateScope("SiteHybridConnectionNamespaceRelayResource.Delete");
@@ -191,14 +187,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Creates a new Hybrid Connection using a Service Bus relay.
+        /// Description for Creates a new Hybrid Connection using a Service Bus relay.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
         /// Operation Id: WebApps_UpdateHybridConnection
         /// </summary>
         /// <param name="data"> The details of the hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Description for Creates a new Hybrid Connection using a Service Bus relay. </remarks>
         public virtual async Task<Response<SiteHybridConnectionNamespaceRelayResource>> UpdateAsync(HybridConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -218,14 +213,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Creates a new Hybrid Connection using a Service Bus relay.
+        /// Description for Creates a new Hybrid Connection using a Service Bus relay.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
         /// Operation Id: WebApps_UpdateHybridConnection
         /// </summary>
         /// <param name="data"> The details of the hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Description for Creates a new Hybrid Connection using a Service Bus relay. </remarks>
         public virtual Response<SiteHybridConnectionNamespaceRelayResource> Update(HybridConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));

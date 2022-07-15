@@ -95,14 +95,13 @@ namespace Azure.ResourceManager.ConfidentialLedger
         }
 
         /// <summary>
-        /// Retrieves information about all Confidential Ledger resources under the given subscription
+        /// Retrieves the properties of all Confidential Ledgers.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConfidentialLedger/ledgers
         /// Operation Id: Ledger_ListBySubscription
         /// </summary>
         /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq &apos;Public&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ConfidentialLedgerResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Retrieves the properties of all Confidential Ledgers. </remarks>
         public virtual AsyncPageable<ConfidentialLedgerResource> GetConfidentialLedgersAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<ConfidentialLedgerResource>> FirstPageFunc(int? pageSizeHint)
@@ -139,14 +138,13 @@ namespace Azure.ResourceManager.ConfidentialLedger
         }
 
         /// <summary>
-        /// Retrieves information about all Confidential Ledger resources under the given subscription
+        /// Retrieves the properties of all Confidential Ledgers.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConfidentialLedger/ledgers
         /// Operation Id: Ledger_ListBySubscription
         /// </summary>
         /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq &apos;Public&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ConfidentialLedgerResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Retrieves the properties of all Confidential Ledgers. </remarks>
         public virtual Pageable<ConfidentialLedgerResource> GetConfidentialLedgers(string filter = null, CancellationToken cancellationToken = default)
         {
             Page<ConfidentialLedgerResource> FirstPageFunc(int? pageSizeHint)

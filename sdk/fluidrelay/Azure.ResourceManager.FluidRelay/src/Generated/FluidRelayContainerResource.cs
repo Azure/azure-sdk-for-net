@@ -92,7 +92,6 @@ namespace Azure.ResourceManager.FluidRelay
         /// Operation Id: FluidRelayContainers_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get a Fluid Relay container. </remarks>
         public virtual async Task<Response<FluidRelayContainerResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _fluidRelayContainerClientDiagnostics.CreateScope("FluidRelayContainerResource.Get");
@@ -117,7 +116,6 @@ namespace Azure.ResourceManager.FluidRelay
         /// Operation Id: FluidRelayContainers_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get a Fluid Relay container. </remarks>
         public virtual Response<FluidRelayContainerResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _fluidRelayContainerClientDiagnostics.CreateScope("FluidRelayContainerResource.Get");
@@ -143,7 +141,6 @@ namespace Azure.ResourceManager.FluidRelay
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Delete a Fluid Relay container. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _fluidRelayContainerClientDiagnostics.CreateScope("FluidRelayContainerResource.Delete");
@@ -170,7 +167,6 @@ namespace Azure.ResourceManager.FluidRelay
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Delete a Fluid Relay container. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _fluidRelayContainerClientDiagnostics.CreateScope("FluidRelayContainerResource.Delete");

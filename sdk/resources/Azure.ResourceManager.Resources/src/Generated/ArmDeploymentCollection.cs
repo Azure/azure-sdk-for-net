@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Deploys resources at a given scope.
+        /// You can provide the template and parameters directly in the request or link to JSON files.
         /// Request Path: /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}
         /// Operation Id: Deployments_CreateOrUpdateAtScope
         /// </summary>
@@ -56,7 +56,6 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="content"/> is null. </exception>
-        /// <remarks> You can provide the template and parameters directly in the request or link to JSON files. </remarks>
         public virtual async Task<ArmOperation<ArmDeploymentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string deploymentName, ArmDeploymentContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
@@ -80,7 +79,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Deploys resources at a given scope.
+        /// You can provide the template and parameters directly in the request or link to JSON files.
         /// Request Path: /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}
         /// Operation Id: Deployments_CreateOrUpdateAtScope
         /// </summary>
@@ -90,7 +89,6 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="content"/> is null. </exception>
-        /// <remarks> You can provide the template and parameters directly in the request or link to JSON files. </remarks>
         public virtual ArmOperation<ArmDeploymentResource> CreateOrUpdate(WaitUntil waitUntil, string deploymentName, ArmDeploymentContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));

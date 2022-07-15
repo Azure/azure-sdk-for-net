@@ -87,12 +87,11 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get a deployment by its ID for an app, or a deployment slot.
+        /// Description for Get a deployment by its ID for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/deployments/{id}
         /// Operation Id: WebApps_GetDeployment
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Get a deployment by its ID for an app, or a deployment slot. </remarks>
         public virtual async Task<Response<SiteDeploymentResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteDeploymentWebAppsClientDiagnostics.CreateScope("SiteDeploymentResource.Get");
@@ -112,12 +111,11 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get a deployment by its ID for an app, or a deployment slot.
+        /// Description for Get a deployment by its ID for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/deployments/{id}
         /// Operation Id: WebApps_GetDeployment
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Get a deployment by its ID for an app, or a deployment slot. </remarks>
         public virtual Response<SiteDeploymentResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _siteDeploymentWebAppsClientDiagnostics.CreateScope("SiteDeploymentResource.Get");
@@ -137,13 +135,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Delete a deployment by its ID for an app, or a deployment slot.
+        /// Description for Delete a deployment by its ID for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/deployments/{id}
         /// Operation Id: WebApps_DeleteDeployment
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Delete a deployment by its ID for an app, or a deployment slot. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _siteDeploymentWebAppsClientDiagnostics.CreateScope("SiteDeploymentResource.Delete");
@@ -164,13 +161,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Delete a deployment by its ID for an app, or a deployment slot.
+        /// Description for Delete a deployment by its ID for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/deployments/{id}
         /// Operation Id: WebApps_DeleteDeployment
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Delete a deployment by its ID for an app, or a deployment slot. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _siteDeploymentWebAppsClientDiagnostics.CreateScope("SiteDeploymentResource.Delete");
@@ -191,7 +187,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Create a deployment for an app, or a deployment slot.
+        /// Description for Create a deployment for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/deployments/{id}
         /// Operation Id: WebApps_CreateDeployment
         /// </summary>
@@ -199,7 +195,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> Deployment details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Description for Create a deployment for an app, or a deployment slot. </remarks>
         public virtual async Task<ArmOperation<SiteDeploymentResource>> UpdateAsync(WaitUntil waitUntil, DeploymentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -222,7 +217,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Create a deployment for an app, or a deployment slot.
+        /// Description for Create a deployment for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/deployments/{id}
         /// Operation Id: WebApps_CreateDeployment
         /// </summary>
@@ -230,7 +225,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> Deployment details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Description for Create a deployment for an app, or a deployment slot. </remarks>
         public virtual ArmOperation<SiteDeploymentResource> Update(WaitUntil waitUntil, DeploymentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -253,12 +247,11 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// List deployment log for specific deployment for an app, or a deployment slot.
+        /// Description for List deployment log for specific deployment for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/deployments/{id}/log
         /// Operation Id: WebApps_ListDeploymentLog
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for List deployment log for specific deployment for an app, or a deployment slot. </remarks>
         public virtual async Task<Response<SiteDeploymentResource>> GetDeploymentLogAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteDeploymentWebAppsClientDiagnostics.CreateScope("SiteDeploymentResource.GetDeploymentLog");
@@ -276,12 +269,11 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// List deployment log for specific deployment for an app, or a deployment slot.
+        /// Description for List deployment log for specific deployment for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/deployments/{id}/log
         /// Operation Id: WebApps_ListDeploymentLog
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for List deployment log for specific deployment for an app, or a deployment slot. </remarks>
         public virtual Response<SiteDeploymentResource> GetDeploymentLog(CancellationToken cancellationToken = default)
         {
             using var scope = _siteDeploymentWebAppsClientDiagnostics.CreateScope("SiteDeploymentResource.GetDeploymentLog");

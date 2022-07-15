@@ -87,12 +87,11 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets the details of the user provided function app registered with a static site
+        /// Description for Gets the details of the user provided function app registered with a static site
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/userProvidedFunctionApps/{functionAppName}
         /// Operation Id: StaticSites_GetUserProvidedFunctionAppForStaticSite
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Gets the details of the user provided function app registered with a static site. </remarks>
         public virtual async Task<Response<StaticSiteUserProvidedFunctionAppResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _staticSiteUserProvidedFunctionAppStaticSitesClientDiagnostics.CreateScope("StaticSiteUserProvidedFunctionAppResource.Get");
@@ -112,12 +111,11 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets the details of the user provided function app registered with a static site
+        /// Description for Gets the details of the user provided function app registered with a static site
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/userProvidedFunctionApps/{functionAppName}
         /// Operation Id: StaticSites_GetUserProvidedFunctionAppForStaticSite
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Gets the details of the user provided function app registered with a static site. </remarks>
         public virtual Response<StaticSiteUserProvidedFunctionAppResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _staticSiteUserProvidedFunctionAppStaticSitesClientDiagnostics.CreateScope("StaticSiteUserProvidedFunctionAppResource.Get");
@@ -137,13 +135,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Detach the user provided function app from the static site
+        /// Description for Detach the user provided function app from the static site
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/userProvidedFunctionApps/{functionAppName}
         /// Operation Id: StaticSites_DetachUserProvidedFunctionAppFromStaticSite
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Detach the user provided function app from the static site. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _staticSiteUserProvidedFunctionAppStaticSitesClientDiagnostics.CreateScope("StaticSiteUserProvidedFunctionAppResource.Delete");
@@ -164,13 +161,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Detach the user provided function app from the static site
+        /// Description for Detach the user provided function app from the static site
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/userProvidedFunctionApps/{functionAppName}
         /// Operation Id: StaticSites_DetachUserProvidedFunctionAppFromStaticSite
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Detach the user provided function app from the static site. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _staticSiteUserProvidedFunctionAppStaticSitesClientDiagnostics.CreateScope("StaticSiteUserProvidedFunctionAppResource.Delete");
@@ -191,7 +187,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Register a user provided function app with a static site
+        /// Description for Register a user provided function app with a static site
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/userProvidedFunctionApps/{functionAppName}
         /// Operation Id: StaticSites_RegisterUserProvidedFunctionAppWithStaticSite
         /// </summary>
@@ -200,7 +196,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="isForced"> Specify &lt;code&gt;true&lt;/code&gt; to force the update of the auth configuration on the function app even if an AzureStaticWebApps provider is already configured on the function app. The default is &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Description for Register a user provided function app with a static site. </remarks>
         public virtual async Task<ArmOperation<StaticSiteUserProvidedFunctionAppResource>> UpdateAsync(WaitUntil waitUntil, StaticSiteUserProvidedFunctionAppARMResourceData data, bool? isForced = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -223,7 +218,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Register a user provided function app with a static site
+        /// Description for Register a user provided function app with a static site
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/userProvidedFunctionApps/{functionAppName}
         /// Operation Id: StaticSites_RegisterUserProvidedFunctionAppWithStaticSite
         /// </summary>
@@ -232,7 +227,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="isForced"> Specify &lt;code&gt;true&lt;/code&gt; to force the update of the auth configuration on the function app even if an AzureStaticWebApps provider is already configured on the function app. The default is &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Description for Register a user provided function app with a static site. </remarks>
         public virtual ArmOperation<StaticSiteUserProvidedFunctionAppResource> Update(WaitUntil waitUntil, StaticSiteUserProvidedFunctionAppARMResourceData data, bool? isForced = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));

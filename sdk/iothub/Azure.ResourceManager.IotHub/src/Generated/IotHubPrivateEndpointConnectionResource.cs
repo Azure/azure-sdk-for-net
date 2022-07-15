@@ -87,12 +87,11 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get private endpoint connection
+        /// Get private endpoint connection properties
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/iotHubs/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}
         /// Operation Id: PrivateEndpointConnections_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get private endpoint connection properties. </remarks>
         public virtual async Task<Response<IotHubPrivateEndpointConnectionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _iotHubPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("IotHubPrivateEndpointConnectionResource.Get");
@@ -112,12 +111,11 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get private endpoint connection
+        /// Get private endpoint connection properties
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/iotHubs/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}
         /// Operation Id: PrivateEndpointConnections_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get private endpoint connection properties. </remarks>
         public virtual Response<IotHubPrivateEndpointConnectionResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _iotHubPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("IotHubPrivateEndpointConnectionResource.Get");
@@ -137,13 +135,12 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Delete private endpoint connection
+        /// Delete private endpoint connection with the specified name
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/iotHubs/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}
         /// Operation Id: PrivateEndpointConnections_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Delete private endpoint connection with the specified name. </remarks>
         public virtual async Task<ArmOperation<IotHubPrivateEndpointConnectionResource>> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _iotHubPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("IotHubPrivateEndpointConnectionResource.Delete");
@@ -164,13 +161,12 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Delete private endpoint connection
+        /// Delete private endpoint connection with the specified name
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/iotHubs/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}
         /// Operation Id: PrivateEndpointConnections_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Delete private endpoint connection with the specified name. </remarks>
         public virtual ArmOperation<IotHubPrivateEndpointConnectionResource> Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _iotHubPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("IotHubPrivateEndpointConnectionResource.Delete");
@@ -191,7 +187,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Update private endpoint connection
+        /// Update the status of a private endpoint connection with the specified name
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/iotHubs/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}
         /// Operation Id: PrivateEndpointConnections_Update
         /// </summary>
@@ -199,7 +195,6 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="data"> The private endpoint connection with updated properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Update the status of a private endpoint connection with the specified name. </remarks>
         public virtual async Task<ArmOperation<IotHubPrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, IotHubPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -222,7 +217,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Update private endpoint connection
+        /// Update the status of a private endpoint connection with the specified name
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/iotHubs/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}
         /// Operation Id: PrivateEndpointConnections_Update
         /// </summary>
@@ -230,7 +225,6 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="data"> The private endpoint connection with updated properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Update the status of a private endpoint connection with the specified name. </remarks>
         public virtual ArmOperation<IotHubPrivateEndpointConnectionResource> Update(WaitUntil waitUntil, IotHubPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));

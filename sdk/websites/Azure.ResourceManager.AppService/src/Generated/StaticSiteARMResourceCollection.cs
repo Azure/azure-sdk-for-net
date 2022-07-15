@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Creates a new static site in an existing resource group, or updates an existing static site.
+        /// Description for Creates a new static site in an existing resource group, or updates an existing static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
         /// Operation Id: StaticSites_CreateOrUpdateStaticSite
         /// </summary>
@@ -65,7 +65,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
-        /// <remarks> Description for Creates a new static site in an existing resource group, or updates an existing static site. </remarks>
         public virtual async Task<ArmOperation<StaticSiteARMResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, StaticSiteARMResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Creates a new static site in an existing resource group, or updates an existing static site.
+        /// Description for Creates a new static site in an existing resource group, or updates an existing static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
         /// Operation Id: StaticSites_CreateOrUpdateStaticSite
         /// </summary>
@@ -99,7 +98,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
-        /// <remarks> Description for Creates a new static site in an existing resource group, or updates an existing static site. </remarks>
         public virtual ArmOperation<StaticSiteARMResource> CreateOrUpdate(WaitUntil waitUntil, string name, StaticSiteARMResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -123,7 +121,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets the details of a static site.
+        /// Description for Gets the details of a static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
         /// Operation Id: StaticSites_GetStaticSite
         /// </summary>
@@ -131,7 +129,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <remarks> Description for Gets the details of a static site. </remarks>
         public virtual async Task<Response<StaticSiteARMResource>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -153,7 +150,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets the details of a static site.
+        /// Description for Gets the details of a static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
         /// Operation Id: StaticSites_GetStaticSite
         /// </summary>
@@ -161,7 +158,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <remarks> Description for Gets the details of a static site. </remarks>
         public virtual Response<StaticSiteARMResource> Get(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -183,13 +179,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets all static sites in the specified resource group.
+        /// Description for Gets all static sites in the specified resource group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites
         /// Operation Id: StaticSites_GetStaticSitesByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="StaticSiteARMResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Description for Gets all static sites in the specified resource group. </remarks>
         public virtual AsyncPageable<StaticSiteARMResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<StaticSiteARMResource>> FirstPageFunc(int? pageSizeHint)
@@ -226,13 +221,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets all static sites in the specified resource group.
+        /// Description for Gets all static sites in the specified resource group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites
         /// Operation Id: StaticSites_GetStaticSitesByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StaticSiteARMResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Description for Gets all static sites in the specified resource group. </remarks>
         public virtual Pageable<StaticSiteARMResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<StaticSiteARMResource> FirstPageFunc(int? pageSizeHint)
@@ -269,7 +263,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets the details of a static site.
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
         /// Operation Id: StaticSites_GetStaticSite
         /// </summary>
@@ -277,7 +271,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -297,7 +290,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets the details of a static site.
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
         /// Operation Id: StaticSites_GetStaticSite
         /// </summary>
@@ -305,7 +298,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));

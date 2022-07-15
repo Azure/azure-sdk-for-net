@@ -85,7 +85,6 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Get the regions and skus that are available for RI purchase for the specified Azure subscription. </remarks>
         public async Task<Response<IReadOnlyList<ReservationCatalog>>> GetCatalogAsync(string subscriptionId, string reservedResourceType = null, AzureLocation? location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -121,7 +120,6 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Get the regions and skus that are available for RI purchase for the specified Azure subscription. </remarks>
         public Response<IReadOnlyList<ReservationCatalog>> GetCatalog(string subscriptionId, string reservedResourceType = null, AzureLocation? location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -164,12 +162,11 @@ namespace Azure.ResourceManager.Reservations
             return message;
         }
 
-        /// <summary> Get list of applicable `Reservation`s. </summary>
+        /// <summary> Get applicable `Reservation`s that are applied to this subscription or a resource group under this subscription. </summary>
         /// <param name="subscriptionId"> Id of the subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Get applicable `Reservation`s that are applied to this subscription or a resource group under this subscription. </remarks>
         public async Task<Response<AppliedReservations>> GetAppliedReservationListAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -190,12 +187,11 @@ namespace Azure.ResourceManager.Reservations
             }
         }
 
-        /// <summary> Get list of applicable `Reservation`s. </summary>
+        /// <summary> Get applicable `Reservation`s that are applied to this subscription or a resource group under this subscription. </summary>
         /// <param name="subscriptionId"> Id of the subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Get applicable `Reservation`s that are applied to this subscription or a resource group under this subscription. </remarks>
         public Response<AppliedReservations> GetAppliedReservationList(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));

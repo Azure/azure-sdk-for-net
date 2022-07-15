@@ -102,7 +102,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
-        /// <remarks> Get version. </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<CodeVersionResource>> GetCodeVersionAsync(string version, CancellationToken cancellationToken = default)
         {
@@ -118,7 +117,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
-        /// <remarks> Get version. </remarks>
         [ForwardsClientCalls]
         public virtual Response<CodeVersionResource> GetCodeVersion(string version, CancellationToken cancellationToken = default)
         {
@@ -131,7 +129,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// Operation Id: CodeContainers_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get container. </remarks>
         public virtual async Task<Response<CodeContainerResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _codeContainerClientDiagnostics.CreateScope("CodeContainerResource.Get");
@@ -156,7 +153,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// Operation Id: CodeContainers_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get container. </remarks>
         public virtual Response<CodeContainerResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _codeContainerClientDiagnostics.CreateScope("CodeContainerResource.Get");
@@ -182,7 +178,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Delete container. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _codeContainerClientDiagnostics.CreateScope("CodeContainerResource.Delete");
@@ -209,7 +204,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Delete container. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _codeContainerClientDiagnostics.CreateScope("CodeContainerResource.Delete");
@@ -238,7 +232,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="data"> Container entity to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Create or update container. </remarks>
         public virtual async Task<ArmOperation<CodeContainerResource>> UpdateAsync(WaitUntil waitUntil, CodeContainerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -269,7 +262,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="data"> Container entity to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Create or update container. </remarks>
         public virtual ArmOperation<CodeContainerResource> Update(WaitUntil waitUntil, CodeContainerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));

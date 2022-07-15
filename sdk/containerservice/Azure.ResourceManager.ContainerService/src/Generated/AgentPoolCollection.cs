@@ -64,7 +64,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> or <paramref name="data"/> is null. </exception>
-        /// <remarks> Creates or updates an agent pool in the specified managed cluster. </remarks>
         public virtual async Task<ArmOperation<AgentPoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string agentPoolName, AgentPoolData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
@@ -98,7 +97,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> or <paramref name="data"/> is null. </exception>
-        /// <remarks> Creates or updates an agent pool in the specified managed cluster. </remarks>
         public virtual ArmOperation<AgentPoolResource> CreateOrUpdate(WaitUntil waitUntil, string agentPoolName, AgentPoolData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
@@ -130,7 +128,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> is null. </exception>
-        /// <remarks> Gets the specified managed cluster agent pool. </remarks>
         public virtual async Task<Response<AgentPoolResource>> GetAsync(string agentPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
@@ -160,7 +157,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> is null. </exception>
-        /// <remarks> Gets the specified managed cluster agent pool. </remarks>
         public virtual Response<AgentPoolResource> Get(string agentPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
@@ -188,7 +184,6 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AgentPoolResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Gets a list of agent pools in the specified managed cluster. </remarks>
         public virtual AsyncPageable<AgentPoolResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<AgentPoolResource>> FirstPageFunc(int? pageSizeHint)
@@ -231,7 +226,6 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AgentPoolResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Gets a list of agent pools in the specified managed cluster. </remarks>
         public virtual Pageable<AgentPoolResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<AgentPoolResource> FirstPageFunc(int? pageSizeHint)
@@ -268,7 +262,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Gets the specified managed cluster agent pool.
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/agentPools/{agentPoolName}
         /// Operation Id: AgentPools_Get
         /// </summary>
@@ -276,7 +270,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string agentPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
@@ -296,7 +289,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Gets the specified managed cluster agent pool.
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/agentPools/{agentPoolName}
         /// Operation Id: AgentPools_Get
         /// </summary>
@@ -304,7 +297,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string agentPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));

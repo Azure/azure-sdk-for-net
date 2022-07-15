@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Purchase `ReservationOrder`
+        /// Purchase `ReservationOrder` and create resource under the specified URI.
         /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}
         /// Operation Id: ReservationOrder_Purchase
         /// </summary>
@@ -66,7 +66,6 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="content"/> is null. </exception>
-        /// <remarks> Purchase `ReservationOrder` and create resource under the specified URI. </remarks>
         public virtual async Task<ArmOperation<ReservationOrderResponseResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string reservationOrderId, PurchaseRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
@@ -90,7 +89,7 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Purchase `ReservationOrder`
+        /// Purchase `ReservationOrder` and create resource under the specified URI.
         /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}
         /// Operation Id: ReservationOrder_Purchase
         /// </summary>
@@ -100,7 +99,6 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="content"/> is null. </exception>
-        /// <remarks> Purchase `ReservationOrder` and create resource under the specified URI. </remarks>
         public virtual ArmOperation<ReservationOrderResponseResource> CreateOrUpdate(WaitUntil waitUntil, string reservationOrderId, PurchaseRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
@@ -124,7 +122,7 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Get a specific `ReservationOrder`.
+        /// Get the details of the `ReservationOrder`.
         /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}
         /// Operation Id: ReservationOrder_Get
         /// </summary>
@@ -133,7 +131,6 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> is null. </exception>
-        /// <remarks> Get the details of the `ReservationOrder`. </remarks>
         public virtual async Task<Response<ReservationOrderResponseResource>> GetAsync(string reservationOrderId, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
@@ -155,7 +152,7 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Get a specific `ReservationOrder`.
+        /// Get the details of the `ReservationOrder`.
         /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}
         /// Operation Id: ReservationOrder_Get
         /// </summary>
@@ -164,7 +161,6 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> is null. </exception>
-        /// <remarks> Get the details of the `ReservationOrder`. </remarks>
         public virtual Response<ReservationOrderResponseResource> Get(string reservationOrderId, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
@@ -186,13 +182,12 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Get all `ReservationOrder`s.
+        /// List of all the `ReservationOrder`s that the user has access to in the current tenant.
         /// Request Path: /providers/Microsoft.Capacity/reservationOrders
         /// Operation Id: ReservationOrder_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ReservationOrderResponseResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List of all the `ReservationOrder`s that the user has access to in the current tenant. </remarks>
         public virtual AsyncPageable<ReservationOrderResponseResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ReservationOrderResponseResource>> FirstPageFunc(int? pageSizeHint)
@@ -229,13 +224,12 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Get all `ReservationOrder`s.
+        /// List of all the `ReservationOrder`s that the user has access to in the current tenant.
         /// Request Path: /providers/Microsoft.Capacity/reservationOrders
         /// Operation Id: ReservationOrder_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ReservationOrderResponseResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List of all the `ReservationOrder`s that the user has access to in the current tenant. </remarks>
         public virtual Pageable<ReservationOrderResponseResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<ReservationOrderResponseResource> FirstPageFunc(int? pageSizeHint)
@@ -272,7 +266,7 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Get a specific `ReservationOrder`.
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}
         /// Operation Id: ReservationOrder_Get
         /// </summary>
@@ -281,7 +275,6 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string reservationOrderId, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
@@ -301,7 +294,7 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Get a specific `ReservationOrder`.
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}
         /// Operation Id: ReservationOrder_Get
         /// </summary>
@@ -310,7 +303,6 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string reservationOrderId, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));

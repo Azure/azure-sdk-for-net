@@ -58,13 +58,12 @@ namespace Azure.ResourceManager.Resources
             return message;
         }
 
-        /// <summary> Gets all available geo-locations. </summary>
+        /// <summary> This operation provides all the locations that are available for resource providers; however, each resource provider may support a subset of this list. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="includeExtendedLocations"> Whether to include extended locations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> This operation provides all the locations that are available for resource providers; however, each resource provider may support a subset of this list. </remarks>
         public async Task<Response<LocationListResult>> ListLocationsAsync(string subscriptionId, bool? includeExtendedLocations = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -85,13 +84,12 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Gets all available geo-locations. </summary>
+        /// <summary> This operation provides all the locations that are available for resource providers; however, each resource provider may support a subset of this list. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="includeExtendedLocations"> Whether to include extended locations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> This operation provides all the locations that are available for resource providers; however, each resource provider may support a subset of this list. </remarks>
         public Response<LocationListResult> ListLocations(string subscriptionId, bool? includeExtendedLocations = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));

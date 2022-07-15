@@ -54,12 +54,11 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Get all top-level domains supported for registration. </summary>
+        /// <summary> Description for Get all top-level domains supported for registration. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Description for Get all top-level domains supported for registration. </remarks>
         public async Task<Response<Models.TopLevelDomainCollection>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -80,12 +79,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Get all top-level domains supported for registration. </summary>
+        /// <summary> Description for Get all top-level domains supported for registration. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Description for Get all top-level domains supported for registration. </remarks>
         public Response<Models.TopLevelDomainCollection> List(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -124,13 +122,12 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Get details of a top-level domain. </summary>
+        /// <summary> Description for Get details of a top-level domain. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="name"> Name of the top-level domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Description for Get details of a top-level domain. </remarks>
         public async Task<Response<TopLevelDomainData>> GetAsync(string subscriptionId, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -154,13 +151,12 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Get details of a top-level domain. </summary>
+        /// <summary> Description for Get details of a top-level domain. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="name"> Name of the top-level domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Description for Get details of a top-level domain. </remarks>
         public Response<TopLevelDomainData> Get(string subscriptionId, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -207,14 +203,13 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Gets all legal agreements that user needs to accept before purchasing a domain. </summary>
+        /// <summary> Description for Gets all legal agreements that user needs to accept before purchasing a domain. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="name"> Name of the top-level domain. </param>
         /// <param name="agreementOption"> Domain agreement options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="name"/> or <paramref name="agreementOption"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Description for Gets all legal agreements that user needs to accept before purchasing a domain. </remarks>
         public async Task<Response<TldLegalAgreementCollection>> ListAgreementsAsync(string subscriptionId, string name, TopLevelDomainAgreementOption agreementOption, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -237,14 +232,13 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Gets all legal agreements that user needs to accept before purchasing a domain. </summary>
+        /// <summary> Description for Gets all legal agreements that user needs to accept before purchasing a domain. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="name"> Name of the top-level domain. </param>
         /// <param name="agreementOption"> Domain agreement options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="name"/> or <paramref name="agreementOption"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Description for Gets all legal agreements that user needs to accept before purchasing a domain. </remarks>
         public Response<TldLegalAgreementCollection> ListAgreements(string subscriptionId, string name, TopLevelDomainAgreementOption agreementOption, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -281,13 +275,12 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Get all top-level domains supported for registration. </summary>
+        /// <summary> Description for Get all top-level domains supported for registration. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Description for Get all top-level domains supported for registration. </remarks>
         public async Task<Response<Models.TopLevelDomainCollection>> ListNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -309,13 +302,12 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Get all top-level domains supported for registration. </summary>
+        /// <summary> Description for Get all top-level domains supported for registration. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Description for Get all top-level domains supported for registration. </remarks>
         public Response<Models.TopLevelDomainCollection> ListNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -351,7 +343,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Gets all legal agreements that user needs to accept before purchasing a domain. </summary>
+        /// <summary> Description for Gets all legal agreements that user needs to accept before purchasing a domain. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="name"> Name of the top-level domain. </param>
@@ -359,7 +351,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="name"/> or <paramref name="agreementOption"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Description for Gets all legal agreements that user needs to accept before purchasing a domain. </remarks>
         public async Task<Response<TldLegalAgreementCollection>> ListAgreementsNextPageAsync(string nextLink, string subscriptionId, string name, TopLevelDomainAgreementOption agreementOption, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -383,7 +374,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Gets all legal agreements that user needs to accept before purchasing a domain. </summary>
+        /// <summary> Description for Gets all legal agreements that user needs to accept before purchasing a domain. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="name"> Name of the top-level domain. </param>
@@ -391,7 +382,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="name"/> or <paramref name="agreementOption"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Description for Gets all legal agreements that user needs to accept before purchasing a domain. </remarks>
         public Response<TldLegalAgreementCollection> ListAgreementsNextPage(string nextLink, string subscriptionId, string name, TopLevelDomainAgreementOption agreementOption, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));

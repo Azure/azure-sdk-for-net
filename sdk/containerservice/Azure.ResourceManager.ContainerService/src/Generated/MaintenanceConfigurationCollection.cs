@@ -64,7 +64,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configName"/> or <paramref name="data"/> is null. </exception>
-        /// <remarks> Creates or updates a maintenance configuration in the specified managed cluster. </remarks>
         public virtual async Task<ArmOperation<MaintenanceConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string configName, MaintenanceConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configName, nameof(configName));
@@ -98,7 +97,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configName"/> or <paramref name="data"/> is null. </exception>
-        /// <remarks> Creates or updates a maintenance configuration in the specified managed cluster. </remarks>
         public virtual ArmOperation<MaintenanceConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string configName, MaintenanceConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configName, nameof(configName));
@@ -130,7 +128,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configName"/> is null. </exception>
-        /// <remarks> Gets the specified maintenance configuration of a managed cluster. </remarks>
         public virtual async Task<Response<MaintenanceConfigurationResource>> GetAsync(string configName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configName, nameof(configName));
@@ -160,7 +157,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configName"/> is null. </exception>
-        /// <remarks> Gets the specified maintenance configuration of a managed cluster. </remarks>
         public virtual Response<MaintenanceConfigurationResource> Get(string configName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configName, nameof(configName));
@@ -188,7 +184,6 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MaintenanceConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Gets a list of maintenance configurations in the specified managed cluster. </remarks>
         public virtual AsyncPageable<MaintenanceConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<MaintenanceConfigurationResource>> FirstPageFunc(int? pageSizeHint)
@@ -231,7 +226,6 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MaintenanceConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Gets a list of maintenance configurations in the specified managed cluster. </remarks>
         public virtual Pageable<MaintenanceConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<MaintenanceConfigurationResource> FirstPageFunc(int? pageSizeHint)
@@ -268,7 +262,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Gets the specified maintenance configuration of a managed cluster.
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/maintenanceConfigurations/{configName}
         /// Operation Id: MaintenanceConfigurations_Get
         /// </summary>
@@ -276,7 +270,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configName"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string configName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configName, nameof(configName));
@@ -296,7 +289,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Gets the specified maintenance configuration of a managed cluster.
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/maintenanceConfigurations/{configName}
         /// Operation Id: MaintenanceConfigurations_Get
         /// </summary>
@@ -304,7 +297,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configName"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string configName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configName, nameof(configName));

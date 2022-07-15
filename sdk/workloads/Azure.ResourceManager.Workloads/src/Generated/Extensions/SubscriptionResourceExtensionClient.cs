@@ -421,13 +421,12 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Gets a list of SAP monitors in the specified subscription.
+        /// Gets a list of SAP monitors in the specified subscription. The operations returns various properties of each SAP monitor.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/monitors
         /// Operation Id: monitors_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SapMonitorResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Gets a list of SAP monitors in the specified subscription. The operations returns various properties of each SAP monitor. </remarks>
         public virtual AsyncPageable<SapMonitorResource> GetSapMonitorsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<SapMonitorResource>> FirstPageFunc(int? pageSizeHint)
@@ -464,13 +463,12 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Gets a list of SAP monitors in the specified subscription.
+        /// Gets a list of SAP monitors in the specified subscription. The operations returns various properties of each SAP monitor.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/monitors
         /// Operation Id: monitors_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SapMonitorResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Gets a list of SAP monitors in the specified subscription. The operations returns various properties of each SAP monitor. </remarks>
         public virtual Pageable<SapMonitorResource> GetSapMonitors(CancellationToken cancellationToken = default)
         {
             Page<SapMonitorResource> FirstPageFunc(int? pageSizeHint)

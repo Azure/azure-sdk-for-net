@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AlertsManagement
         }
 
         /// <summary>
-        /// Get a specific alert.
+        /// Get information related to a specific alert
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts/{alertId}
         /// Operation Id: Alerts_GetById
         /// </summary>
@@ -64,7 +64,6 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="alertId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
-        /// <remarks> Get information related to a specific alert. </remarks>
         public virtual async Task<Response<ServiceAlertResource>> GetAsync(string alertId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
@@ -86,7 +85,7 @@ namespace Azure.ResourceManager.AlertsManagement
         }
 
         /// <summary>
-        /// Get a specific alert.
+        /// Get information related to a specific alert
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts/{alertId}
         /// Operation Id: Alerts_GetById
         /// </summary>
@@ -94,7 +93,6 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="alertId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
-        /// <remarks> Get information related to a specific alert. </remarks>
         public virtual Response<ServiceAlertResource> Get(string alertId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
@@ -234,7 +232,7 @@ namespace Azure.ResourceManager.AlertsManagement
         }
 
         /// <summary>
-        /// Get a specific alert.
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts/{alertId}
         /// Operation Id: Alerts_GetById
         /// </summary>
@@ -242,7 +240,6 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="alertId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string alertId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
@@ -262,7 +259,7 @@ namespace Azure.ResourceManager.AlertsManagement
         }
 
         /// <summary>
-        /// Get a specific alert.
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts/{alertId}
         /// Operation Id: Alerts_GetById
         /// </summary>
@@ -270,7 +267,6 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="alertId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string alertId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));

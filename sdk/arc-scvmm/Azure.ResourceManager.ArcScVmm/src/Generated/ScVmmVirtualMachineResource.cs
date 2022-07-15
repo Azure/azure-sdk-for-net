@@ -90,12 +90,11 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Gets a VirtualMachine.
+        /// Implements VirtualMachine GET method.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachines/{virtualMachineName}
         /// Operation Id: VirtualMachines_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Implements VirtualMachine GET method. </remarks>
         public virtual async Task<Response<ScVmmVirtualMachineResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _scVmmVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("ScVmmVirtualMachineResource.Get");
@@ -115,12 +114,11 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Gets a VirtualMachine.
+        /// Implements VirtualMachine GET method.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachines/{virtualMachineName}
         /// Operation Id: VirtualMachines_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Implements VirtualMachine GET method. </remarks>
         public virtual Response<ScVmmVirtualMachineResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _scVmmVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("ScVmmVirtualMachineResource.Get");
@@ -140,7 +138,7 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements VirtualMachine DELETE method.
+        /// Deletes a VirtualMachine deployed on ScVmm fabric.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachines/{virtualMachineName}
         /// Operation Id: VirtualMachines_Delete
         /// </summary>
@@ -148,7 +146,6 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="retain"> Whether to just disable the VM from azure and retain the VM in the VMM. </param>
         /// <param name="force"> Forces the resource to be deleted from azure. The corresponding CR would be attempted to be deleted too. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Deletes a VirtualMachine deployed on ScVmm fabric. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? retain = null, bool? force = null, CancellationToken cancellationToken = default)
         {
             using var scope = _scVmmVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("ScVmmVirtualMachineResource.Delete");
@@ -169,7 +166,7 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements VirtualMachine DELETE method.
+        /// Deletes a VirtualMachine deployed on ScVmm fabric.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachines/{virtualMachineName}
         /// Operation Id: VirtualMachines_Delete
         /// </summary>
@@ -177,7 +174,6 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="retain"> Whether to just disable the VM from azure and retain the VM in the VMM. </param>
         /// <param name="force"> Forces the resource to be deleted from azure. The corresponding CR would be attempted to be deleted too. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Deletes a VirtualMachine deployed on ScVmm fabric. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, bool? retain = null, bool? force = null, CancellationToken cancellationToken = default)
         {
             using var scope = _scVmmVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("ScVmmVirtualMachineResource.Delete");
@@ -198,7 +194,7 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements the VirtualMachines PATCH method.
+        /// Updates the VirtualMachines resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachines/{virtualMachineName}
         /// Operation Id: VirtualMachines_Update
         /// </summary>
@@ -206,7 +202,6 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="patch"> VirtualMachines patch payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        /// <remarks> Updates the VirtualMachines resource. </remarks>
         public virtual async Task<ArmOperation<ScVmmVirtualMachineResource>> UpdateAsync(WaitUntil waitUntil, ScVmmVirtualMachinePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
@@ -229,7 +224,7 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements the VirtualMachines PATCH method.
+        /// Updates the VirtualMachines resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachines/{virtualMachineName}
         /// Operation Id: VirtualMachines_Update
         /// </summary>
@@ -237,7 +232,6 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="patch"> VirtualMachines patch payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        /// <remarks> Updates the VirtualMachines resource. </remarks>
         public virtual ArmOperation<ScVmmVirtualMachineResource> Update(WaitUntil waitUntil, ScVmmVirtualMachinePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
@@ -260,14 +254,13 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements the operation to stop a virtual machine.
+        /// Stop virtual machine.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachines/{virtualMachineName}/stop
         /// Operation Id: VirtualMachines_Stop
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Virtualmachine stop action payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Stop virtual machine. </remarks>
         public virtual async Task<ArmOperation> StopAsync(WaitUntil waitUntil, StopVirtualMachineContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _scVmmVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("ScVmmVirtualMachineResource.Stop");
@@ -288,14 +281,13 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements the operation to stop a virtual machine.
+        /// Stop virtual machine.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachines/{virtualMachineName}/stop
         /// Operation Id: VirtualMachines_Stop
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Virtualmachine stop action payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Stop virtual machine. </remarks>
         public virtual ArmOperation Stop(WaitUntil waitUntil, StopVirtualMachineContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _scVmmVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("ScVmmVirtualMachineResource.Stop");
@@ -316,13 +308,12 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements the operation to start a virtual machine.
+        /// Start virtual machine.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachines/{virtualMachineName}/start
         /// Operation Id: VirtualMachines_Start
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Start virtual machine. </remarks>
         public virtual async Task<ArmOperation> StartAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _scVmmVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("ScVmmVirtualMachineResource.Start");
@@ -343,13 +334,12 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements the operation to start a virtual machine.
+        /// Start virtual machine.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachines/{virtualMachineName}/start
         /// Operation Id: VirtualMachines_Start
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Start virtual machine. </remarks>
         public virtual ArmOperation Start(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _scVmmVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("ScVmmVirtualMachineResource.Start");
@@ -370,13 +360,12 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements the operation to restart a virtual machine.
+        /// Restart virtual machine.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachines/{virtualMachineName}/restart
         /// Operation Id: VirtualMachines_Restart
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Restart virtual machine. </remarks>
         public virtual async Task<ArmOperation> RestartAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _scVmmVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("ScVmmVirtualMachineResource.Restart");
@@ -397,13 +386,12 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements the operation to restart a virtual machine.
+        /// Restart virtual machine.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachines/{virtualMachineName}/restart
         /// Operation Id: VirtualMachines_Restart
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Restart virtual machine. </remarks>
         public virtual ArmOperation Restart(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _scVmmVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("ScVmmVirtualMachineResource.Restart");
@@ -424,14 +412,13 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements the operation to creates a checkpoint in a virtual machine.
+        /// Creates a checkpoint in virtual machine.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachines/{virtualMachineName}/createCheckpoint
         /// Operation Id: VirtualMachines_CreateCheckpoint
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="body"> Virtualmachine create checkpoint action payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Creates a checkpoint in virtual machine. </remarks>
         public virtual async Task<ArmOperation> CreateCheckpointAsync(WaitUntil waitUntil, VirtualMachineCreateCheckpoint body = null, CancellationToken cancellationToken = default)
         {
             using var scope = _scVmmVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("ScVmmVirtualMachineResource.CreateCheckpoint");
@@ -452,14 +439,13 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements the operation to creates a checkpoint in a virtual machine.
+        /// Creates a checkpoint in virtual machine.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachines/{virtualMachineName}/createCheckpoint
         /// Operation Id: VirtualMachines_CreateCheckpoint
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="body"> Virtualmachine create checkpoint action payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Creates a checkpoint in virtual machine. </remarks>
         public virtual ArmOperation CreateCheckpoint(WaitUntil waitUntil, VirtualMachineCreateCheckpoint body = null, CancellationToken cancellationToken = default)
         {
             using var scope = _scVmmVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("ScVmmVirtualMachineResource.CreateCheckpoint");
@@ -480,14 +466,13 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements the operation to delete a checkpoint in a virtual machine.
+        /// Deletes a checkpoint in virtual machine.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachines/{virtualMachineName}/deleteCheckpoint
         /// Operation Id: VirtualMachines_DeleteCheckpoint
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="body"> Virtualmachine delete checkpoint action payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Deletes a checkpoint in virtual machine. </remarks>
         public virtual async Task<ArmOperation> DeleteCheckpointAsync(WaitUntil waitUntil, VirtualMachineDeleteCheckpoint body = null, CancellationToken cancellationToken = default)
         {
             using var scope = _scVmmVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("ScVmmVirtualMachineResource.DeleteCheckpoint");
@@ -508,14 +493,13 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements the operation to delete a checkpoint in a virtual machine.
+        /// Deletes a checkpoint in virtual machine.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachines/{virtualMachineName}/deleteCheckpoint
         /// Operation Id: VirtualMachines_DeleteCheckpoint
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="body"> Virtualmachine delete checkpoint action payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Deletes a checkpoint in virtual machine. </remarks>
         public virtual ArmOperation DeleteCheckpoint(WaitUntil waitUntil, VirtualMachineDeleteCheckpoint body = null, CancellationToken cancellationToken = default)
         {
             using var scope = _scVmmVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("ScVmmVirtualMachineResource.DeleteCheckpoint");
@@ -536,14 +520,13 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements the operation to restores to a checkpoint in a virtual machine.
+        /// Restores to a checkpoint in virtual machine.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachines/{virtualMachineName}/restoreCheckpoint
         /// Operation Id: VirtualMachines_RestoreCheckpoint
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="body"> Virtualmachine restore checkpoint action payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Restores to a checkpoint in virtual machine. </remarks>
         public virtual async Task<ArmOperation> RestoreCheckpointAsync(WaitUntil waitUntil, VirtualMachineRestoreCheckpoint body = null, CancellationToken cancellationToken = default)
         {
             using var scope = _scVmmVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("ScVmmVirtualMachineResource.RestoreCheckpoint");
@@ -564,14 +547,13 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements the operation to restores to a checkpoint in a virtual machine.
+        /// Restores to a checkpoint in virtual machine.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachines/{virtualMachineName}/restoreCheckpoint
         /// Operation Id: VirtualMachines_RestoreCheckpoint
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="body"> Virtualmachine restore checkpoint action payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Restores to a checkpoint in virtual machine. </remarks>
         public virtual ArmOperation RestoreCheckpoint(WaitUntil waitUntil, VirtualMachineRestoreCheckpoint body = null, CancellationToken cancellationToken = default)
         {
             using var scope = _scVmmVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("ScVmmVirtualMachineResource.RestoreCheckpoint");
@@ -592,7 +574,7 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Gets a VirtualMachine.
+        /// Add a tag to the current resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachines/{virtualMachineName}
         /// Operation Id: VirtualMachines_Get
         /// </summary>
@@ -600,7 +582,6 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        /// <remarks> Add a tag to the current resource. </remarks>
         public virtual async Task<Response<ScVmmVirtualMachineResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -624,7 +605,7 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Gets a VirtualMachine.
+        /// Add a tag to the current resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachines/{virtualMachineName}
         /// Operation Id: VirtualMachines_Get
         /// </summary>
@@ -632,7 +613,6 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        /// <remarks> Add a tag to the current resource. </remarks>
         public virtual Response<ScVmmVirtualMachineResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -656,14 +636,13 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Gets a VirtualMachine.
+        /// Replace the tags on the resource with the given set.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachines/{virtualMachineName}
         /// Operation Id: VirtualMachines_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        /// <remarks> Replace the tags on the resource with the given set. </remarks>
         public virtual async Task<Response<ScVmmVirtualMachineResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -687,14 +666,13 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Gets a VirtualMachine.
+        /// Replace the tags on the resource with the given set.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachines/{virtualMachineName}
         /// Operation Id: VirtualMachines_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        /// <remarks> Replace the tags on the resource with the given set. </remarks>
         public virtual Response<ScVmmVirtualMachineResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -718,14 +696,13 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Gets a VirtualMachine.
+        /// Removes a tag by key from the resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachines/{virtualMachineName}
         /// Operation Id: VirtualMachines_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <remarks> Removes a tag by key from the resource. </remarks>
         public virtual async Task<Response<ScVmmVirtualMachineResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -748,14 +725,13 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Gets a VirtualMachine.
+        /// Removes a tag by key from the resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachines/{virtualMachineName}
         /// Operation Id: VirtualMachines_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <remarks> Removes a tag by key from the resource. </remarks>
         public virtual Response<ScVmmVirtualMachineResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));

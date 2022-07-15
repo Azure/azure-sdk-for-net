@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get process information by its ID for a specific scaled-out instance in a web site.
+        /// Description for Get process information by its ID for a specific scaled-out instance in a web site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/processes/{processId}
         /// Operation Id: WebApps_GetInstanceProcess
         /// </summary>
@@ -62,7 +62,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="processId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
-        /// <remarks> Description for Get process information by its ID for a specific scaled-out instance in a web site. </remarks>
         public virtual async Task<Response<SiteInstanceProcessResource>> GetAsync(string processId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(processId, nameof(processId));
@@ -84,7 +83,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get process information by its ID for a specific scaled-out instance in a web site.
+        /// Description for Get process information by its ID for a specific scaled-out instance in a web site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/processes/{processId}
         /// Operation Id: WebApps_GetInstanceProcess
         /// </summary>
@@ -92,7 +91,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="processId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
-        /// <remarks> Description for Get process information by its ID for a specific scaled-out instance in a web site. </remarks>
         public virtual Response<SiteInstanceProcessResource> Get(string processId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(processId, nameof(processId));
@@ -114,13 +112,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get list of processes for a web site, or a deployment slot, or for a specific scaled-out instance in a web site.
+        /// Description for Get list of processes for a web site, or a deployment slot, or for a specific scaled-out instance in a web site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/processes
         /// Operation Id: WebApps_ListInstanceProcesses
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SiteInstanceProcessResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Description for Get list of processes for a web site, or a deployment slot, or for a specific scaled-out instance in a web site. </remarks>
         public virtual AsyncPageable<SiteInstanceProcessResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<SiteInstanceProcessResource>> FirstPageFunc(int? pageSizeHint)
@@ -157,13 +154,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get list of processes for a web site, or a deployment slot, or for a specific scaled-out instance in a web site.
+        /// Description for Get list of processes for a web site, or a deployment slot, or for a specific scaled-out instance in a web site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/processes
         /// Operation Id: WebApps_ListInstanceProcesses
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SiteInstanceProcessResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Description for Get list of processes for a web site, or a deployment slot, or for a specific scaled-out instance in a web site. </remarks>
         public virtual Pageable<SiteInstanceProcessResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<SiteInstanceProcessResource> FirstPageFunc(int? pageSizeHint)
@@ -200,7 +196,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get process information by its ID for a specific scaled-out instance in a web site.
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/processes/{processId}
         /// Operation Id: WebApps_GetInstanceProcess
         /// </summary>
@@ -208,7 +204,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="processId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string processId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(processId, nameof(processId));
@@ -228,7 +223,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get process information by its ID for a specific scaled-out instance in a web site.
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/processes/{processId}
         /// Operation Id: WebApps_GetInstanceProcess
         /// </summary>
@@ -236,7 +231,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="processId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string processId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(processId, nameof(processId));

@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Gets publishing user. </summary>
+        /// <summary> Description for Gets publishing user. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Gets publishing user. </remarks>
         public async Task<Response<UserData>> GetPublishingUserAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetPublishingUserRequest();
@@ -75,9 +74,8 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Gets publishing user. </summary>
+        /// <summary> Description for Gets publishing user. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Gets publishing user. </remarks>
         public Response<UserData> GetPublishingUser(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetPublishingUserRequest();
@@ -117,11 +115,10 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Updates publishing user. </summary>
+        /// <summary> Description for Updates publishing user. </summary>
         /// <param name="data"> Details of publishing user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Description for Updates publishing user. </remarks>
         public async Task<Response<UserData>> UpdatePublishingUserAsync(UserData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -142,11 +139,10 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Updates publishing user. </summary>
+        /// <summary> Description for Updates publishing user. </summary>
         /// <param name="data"> Details of publishing user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Description for Updates publishing user. </remarks>
         public Response<UserData> UpdatePublishingUser(UserData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -182,9 +178,8 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Gets the source controls available for Azure websites. </summary>
+        /// <summary> Description for Gets the source controls available for Azure websites. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Gets the source controls available for Azure websites. </remarks>
         public async Task<Response<Models.SourceControlCollection>> ListSourceControlsAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateListSourceControlsRequest();
@@ -203,9 +198,8 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Gets the source controls available for Azure websites. </summary>
+        /// <summary> Description for Gets the source controls available for Azure websites. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Gets the source controls available for Azure websites. </remarks>
         public Response<Models.SourceControlCollection> ListSourceControls(CancellationToken cancellationToken = default)
         {
             using var message = CreateListSourceControlsRequest();
@@ -240,12 +234,11 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Gets source control token. </summary>
+        /// <summary> Description for Gets source control token. </summary>
         /// <param name="sourceControlType"> Type of source control. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Description for Gets source control token. </remarks>
         public async Task<Response<SourceControlData>> GetSourceControlAsync(string sourceControlType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceControlType, nameof(sourceControlType));
@@ -268,12 +261,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Gets source control token. </summary>
+        /// <summary> Description for Gets source control token. </summary>
         /// <param name="sourceControlType"> Type of source control. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Description for Gets source control token. </remarks>
         public Response<SourceControlData> GetSourceControl(string sourceControlType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceControlType, nameof(sourceControlType));
@@ -316,13 +308,12 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Updates source control token. </summary>
+        /// <summary> Description for Updates source control token. </summary>
         /// <param name="sourceControlType"> Type of source control. </param>
         /// <param name="data"> Source control token information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Description for Updates source control token. </remarks>
         public async Task<Response<SourceControlData>> UpdateSourceControlAsync(string sourceControlType, SourceControlData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceControlType, nameof(sourceControlType));
@@ -344,13 +335,12 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Updates source control token. </summary>
+        /// <summary> Description for Updates source control token. </summary>
         /// <param name="sourceControlType"> Type of source control. </param>
         /// <param name="data"> Source control token information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Description for Updates source control token. </remarks>
         public Response<SourceControlData> UpdateSourceControl(string sourceControlType, SourceControlData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceControlType, nameof(sourceControlType));
@@ -397,14 +387,13 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Gets a list of meters for a given location. </summary>
+        /// <summary> Description for Gets a list of meters for a given location. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="billingLocation"> Azure Location of billable resource. </param>
         /// <param name="osType"> App Service OS type meters used for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Description for Gets a list of meters for a given location. </remarks>
         public async Task<Response<BillingMeterCollection>> ListBillingMetersAsync(string subscriptionId, string billingLocation = null, string osType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -425,14 +414,13 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Gets a list of meters for a given location. </summary>
+        /// <summary> Description for Gets a list of meters for a given location. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="billingLocation"> Azure Location of billable resource. </param>
         /// <param name="osType"> App Service OS type meters used for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Description for Gets a list of meters for a given location. </remarks>
         public Response<BillingMeterCollection> ListBillingMeters(string subscriptionId, string billingLocation = null, string osType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -474,13 +462,12 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Check if a resource name is available. </summary>
+        /// <summary> Description for Check if a resource name is available. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="content"> Name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Description for Check if a resource name is available. </remarks>
         public async Task<Response<ResourceNameAvailability>> CheckNameAvailabilityAsync(string subscriptionId, ResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -502,13 +489,12 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Check if a resource name is available. </summary>
+        /// <summary> Description for Check if a resource name is available. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="content"> Name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Description for Check if a resource name is available. </remarks>
         public Response<ResourceNameAvailability> CheckNameAvailability(string subscriptionId, ResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -547,12 +533,11 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Gets list of available geo regions plus ministamps. </summary>
+        /// <summary> Description for Gets list of available geo regions plus ministamps. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Description for Gets list of available geo regions plus ministamps. </remarks>
         public async Task<Response<DeploymentLocations>> GetSubscriptionDeploymentLocationsAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -573,12 +558,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Gets list of available geo regions plus ministamps. </summary>
+        /// <summary> Description for Gets list of available geo regions plus ministamps. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Description for Gets list of available geo regions plus ministamps. </remarks>
         public Response<DeploymentLocations> GetSubscriptionDeploymentLocations(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -632,7 +616,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Get a list of available geographical regions. </summary>
+        /// <summary> Description for Get a list of available geographical regions. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="sku"> Name of SKU used to filter the regions. </param>
         /// <param name="linuxWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Linux workers. </param>
@@ -641,7 +625,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Description for Get a list of available geographical regions. </remarks>
         public async Task<Response<GeoRegionCollection>> ListGeoRegionsAsync(string subscriptionId, AppServiceSkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -662,7 +645,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Get a list of available geographical regions. </summary>
+        /// <summary> Description for Get a list of available geographical regions. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="sku"> Name of SKU used to filter the regions. </param>
         /// <param name="linuxWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Linux workers. </param>
@@ -671,7 +654,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Description for Get a list of available geographical regions. </remarks>
         public Response<GeoRegionCollection> ListGeoRegions(string subscriptionId, AppServiceSkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -713,13 +695,12 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> List all apps that are assigned to a hostname. </summary>
+        /// <summary> Description for List all apps that are assigned to a hostname. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="nameIdentifier"> Hostname information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="nameIdentifier"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Description for List all apps that are assigned to a hostname. </remarks>
         public async Task<Response<IdentifierCollection>> ListSiteIdentifiersAssignedToHostNameAsync(string subscriptionId, NameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -741,13 +722,12 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> List all apps that are assigned to a hostname. </summary>
+        /// <summary> Description for List all apps that are assigned to a hostname. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="nameIdentifier"> Hostname information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="nameIdentifier"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Description for List all apps that are assigned to a hostname. </remarks>
         public Response<IdentifierCollection> ListSiteIdentifiersAssignedToHostName(string subscriptionId, NameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -786,12 +766,11 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> List all premier add-on offers. </summary>
+        /// <summary> Description for List all premier add-on offers. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Description for List all premier add-on offers. </remarks>
         public async Task<Response<PremierAddOnOfferCollection>> ListPremierAddOnOffersAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -812,12 +791,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> List all premier add-on offers. </summary>
+        /// <summary> Description for List all premier add-on offers. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Description for List all premier add-on offers. </remarks>
         public Response<PremierAddOnOfferCollection> ListPremierAddOnOffers(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -855,12 +833,11 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> List all SKUs. </summary>
+        /// <summary> Description for List all SKUs. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Description for List all SKUs. </remarks>
         public async Task<Response<SkuInfos>> ListSkusAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -881,12 +858,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> List all SKUs. </summary>
+        /// <summary> Description for List all SKUs. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Description for List all SKUs. </remarks>
         public Response<SkuInfos> ListSkus(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -928,13 +904,12 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Verifies if this VNET is compatible with an App Service Environment by analyzing the Network Security Group rules. </summary>
+        /// <summary> Description for Verifies if this VNET is compatible with an App Service Environment by analyzing the Network Security Group rules. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="content"> VNET information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Description for Verifies if this VNET is compatible with an App Service Environment by analyzing the Network Security Group rules. </remarks>
         public async Task<Response<VnetValidationFailureDetails>> VerifyHostingEnvironmentVnetAsync(string subscriptionId, VnetContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -956,13 +931,12 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Verifies if this VNET is compatible with an App Service Environment by analyzing the Network Security Group rules. </summary>
+        /// <summary> Description for Verifies if this VNET is compatible with an App Service Environment by analyzing the Network Security Group rules. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="content"> VNET information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Description for Verifies if this VNET is compatible with an App Service Environment by analyzing the Network Security Group rules. </remarks>
         public Response<VnetValidationFailureDetails> VerifyHostingEnvironmentVnet(string subscriptionId, VnetContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1007,14 +981,13 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Move resources between resource groups. </summary>
+        /// <summary> Description for Move resources between resource groups. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveResourceEnvelope"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Description for Move resources between resource groups. </remarks>
         public async Task<Response> MoveAsync(string subscriptionId, string resourceGroupName, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1032,14 +1005,13 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Move resources between resource groups. </summary>
+        /// <summary> Description for Move resources between resource groups. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveResourceEnvelope"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Description for Move resources between resource groups. </remarks>
         public Response Move(string subscriptionId, string resourceGroupName, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1080,14 +1052,13 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Validate if a resource can be created. </summary>
+        /// <summary> Description for Validate if a resource can be created. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="content"> Request with the resources to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Description for Validate if a resource can be created. </remarks>
         public async Task<Response<ValidateResponse>> ValidateAsync(string subscriptionId, string resourceGroupName, ValidateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1110,14 +1081,13 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Validate if a resource can be created. </summary>
+        /// <summary> Description for Validate if a resource can be created. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="content"> Request with the resources to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Description for Validate if a resource can be created. </remarks>
         public Response<ValidateResponse> Validate(string subscriptionId, string resourceGroupName, ValidateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1163,14 +1133,13 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Validate whether a resource can be moved. </summary>
+        /// <summary> Description for Validate whether a resource can be moved. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveResourceEnvelope"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Description for Validate whether a resource can be moved. </remarks>
         public async Task<Response> ValidateMoveAsync(string subscriptionId, string resourceGroupName, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1188,14 +1157,13 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Validate whether a resource can be moved. </summary>
+        /// <summary> Description for Validate whether a resource can be moved. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveResourceEnvelope"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Description for Validate whether a resource can be moved. </remarks>
         public Response ValidateMove(string subscriptionId, string resourceGroupName, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1227,11 +1195,10 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Gets the source controls available for Azure websites. </summary>
+        /// <summary> Description for Gets the source controls available for Azure websites. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        /// <remarks> Description for Gets the source controls available for Azure websites. </remarks>
         public async Task<Response<Models.SourceControlCollection>> ListSourceControlsNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -1252,11 +1219,10 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Gets the source controls available for Azure websites. </summary>
+        /// <summary> Description for Gets the source controls available for Azure websites. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        /// <remarks> Description for Gets the source controls available for Azure websites. </remarks>
         public Response<Models.SourceControlCollection> ListSourceControlsNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -1291,7 +1257,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Gets a list of meters for a given location. </summary>
+        /// <summary> Description for Gets a list of meters for a given location. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="billingLocation"> Azure Location of billable resource. </param>
@@ -1299,7 +1265,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Description for Gets a list of meters for a given location. </remarks>
         public async Task<Response<BillingMeterCollection>> ListBillingMetersNextPageAsync(string nextLink, string subscriptionId, string billingLocation = null, string osType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -1321,7 +1286,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Gets a list of meters for a given location. </summary>
+        /// <summary> Description for Gets a list of meters for a given location. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="billingLocation"> Azure Location of billable resource. </param>
@@ -1329,7 +1294,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Description for Gets a list of meters for a given location. </remarks>
         public Response<BillingMeterCollection> ListBillingMetersNextPage(string nextLink, string subscriptionId, string billingLocation = null, string osType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -1365,7 +1329,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Get a list of available geographical regions. </summary>
+        /// <summary> Description for Get a list of available geographical regions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="sku"> Name of SKU used to filter the regions. </param>
@@ -1375,7 +1339,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Description for Get a list of available geographical regions. </remarks>
         public async Task<Response<GeoRegionCollection>> ListGeoRegionsNextPageAsync(string nextLink, string subscriptionId, AppServiceSkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -1397,7 +1360,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Get a list of available geographical regions. </summary>
+        /// <summary> Description for Get a list of available geographical regions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="sku"> Name of SKU used to filter the regions. </param>
@@ -1407,7 +1370,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Description for Get a list of available geographical regions. </remarks>
         public Response<GeoRegionCollection> ListGeoRegionsNextPage(string nextLink, string subscriptionId, AppServiceSkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -1443,14 +1405,13 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> List all apps that are assigned to a hostname. </summary>
+        /// <summary> Description for List all apps that are assigned to a hostname. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="nameIdentifier"> Hostname information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="nameIdentifier"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Description for List all apps that are assigned to a hostname. </remarks>
         public async Task<Response<IdentifierCollection>> ListSiteIdentifiersAssignedToHostNameNextPageAsync(string nextLink, string subscriptionId, NameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -1473,14 +1434,13 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> List all apps that are assigned to a hostname. </summary>
+        /// <summary> Description for List all apps that are assigned to a hostname. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="nameIdentifier"> Hostname information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="nameIdentifier"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Description for List all apps that are assigned to a hostname. </remarks>
         public Response<IdentifierCollection> ListSiteIdentifiersAssignedToHostNameNextPage(string nextLink, string subscriptionId, NameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -1517,13 +1477,12 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> List all premier add-on offers. </summary>
+        /// <summary> Description for List all premier add-on offers. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Description for List all premier add-on offers. </remarks>
         public async Task<Response<PremierAddOnOfferCollection>> ListPremierAddOnOffersNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -1545,13 +1504,12 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> List all premier add-on offers. </summary>
+        /// <summary> Description for List all premier add-on offers. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Description for List all premier add-on offers. </remarks>
         public Response<PremierAddOnOfferCollection> ListPremierAddOnOffersNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets the config reference and status of an app
+        /// Description for Gets the config reference and status of an app
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/configreferences/appsettings/{appSettingKey}
         /// Operation Id: WebApps_GetAppSettingKeyVaultReference
         /// </summary>
@@ -62,7 +62,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="appSettingKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="appSettingKey"/> is null. </exception>
-        /// <remarks> Description for Gets the config reference and status of an app. </remarks>
         public virtual async Task<Response<SiteConfigAppsettingResource>> GetAsync(string appSettingKey, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(appSettingKey, nameof(appSettingKey));
@@ -84,7 +83,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets the config reference and status of an app
+        /// Description for Gets the config reference and status of an app
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/configreferences/appsettings/{appSettingKey}
         /// Operation Id: WebApps_GetAppSettingKeyVaultReference
         /// </summary>
@@ -92,7 +91,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="appSettingKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="appSettingKey"/> is null. </exception>
-        /// <remarks> Description for Gets the config reference and status of an app. </remarks>
         public virtual Response<SiteConfigAppsettingResource> Get(string appSettingKey, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(appSettingKey, nameof(appSettingKey));
@@ -114,13 +112,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets the config reference app settings and status of an app
+        /// Description for Gets the config reference app settings and status of an app
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/configreferences/appsettings
         /// Operation Id: WebApps_GetAppSettingsKeyVaultReferences
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SiteConfigAppsettingResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Description for Gets the config reference app settings and status of an app. </remarks>
         public virtual AsyncPageable<SiteConfigAppsettingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<SiteConfigAppsettingResource>> FirstPageFunc(int? pageSizeHint)
@@ -157,13 +154,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets the config reference app settings and status of an app
+        /// Description for Gets the config reference app settings and status of an app
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/configreferences/appsettings
         /// Operation Id: WebApps_GetAppSettingsKeyVaultReferences
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SiteConfigAppsettingResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Description for Gets the config reference app settings and status of an app. </remarks>
         public virtual Pageable<SiteConfigAppsettingResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<SiteConfigAppsettingResource> FirstPageFunc(int? pageSizeHint)
@@ -200,7 +196,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets the config reference and status of an app
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/configreferences/appsettings/{appSettingKey}
         /// Operation Id: WebApps_GetAppSettingKeyVaultReference
         /// </summary>
@@ -208,7 +204,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="appSettingKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="appSettingKey"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string appSettingKey, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(appSettingKey, nameof(appSettingKey));
@@ -228,7 +223,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets the config reference and status of an app
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/configreferences/appsettings/{appSettingKey}
         /// Operation Id: WebApps_GetAppSettingKeyVaultReference
         /// </summary>
@@ -236,7 +231,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="appSettingKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="appSettingKey"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string appSettingKey, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(appSettingKey, nameof(appSettingKey));

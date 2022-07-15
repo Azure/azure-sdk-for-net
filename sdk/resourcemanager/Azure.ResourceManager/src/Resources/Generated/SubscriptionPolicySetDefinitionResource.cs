@@ -87,12 +87,11 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Retrieves a policy set definition.
+        /// This operation retrieves the policy set definition in the given subscription with the given name.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}
         /// Operation Id: PolicySetDefinitions_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> This operation retrieves the policy set definition in the given subscription with the given name. </remarks>
         public virtual async Task<Response<SubscriptionPolicySetDefinitionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _subscriptionPolicySetDefinitionPolicySetDefinitionsClientDiagnostics.CreateScope("SubscriptionPolicySetDefinitionResource.Get");
@@ -112,12 +111,11 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Retrieves a policy set definition.
+        /// This operation retrieves the policy set definition in the given subscription with the given name.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}
         /// Operation Id: PolicySetDefinitions_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> This operation retrieves the policy set definition in the given subscription with the given name. </remarks>
         public virtual Response<SubscriptionPolicySetDefinitionResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _subscriptionPolicySetDefinitionPolicySetDefinitionsClientDiagnostics.CreateScope("SubscriptionPolicySetDefinitionResource.Get");
@@ -137,13 +135,12 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Deletes a policy set definition.
+        /// This operation deletes the policy set definition in the given subscription with the given name.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}
         /// Operation Id: PolicySetDefinitions_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> This operation deletes the policy set definition in the given subscription with the given name. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _subscriptionPolicySetDefinitionPolicySetDefinitionsClientDiagnostics.CreateScope("SubscriptionPolicySetDefinitionResource.Delete");
@@ -164,13 +161,12 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Deletes a policy set definition.
+        /// This operation deletes the policy set definition in the given subscription with the given name.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}
         /// Operation Id: PolicySetDefinitions_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> This operation deletes the policy set definition in the given subscription with the given name. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _subscriptionPolicySetDefinitionPolicySetDefinitionsClientDiagnostics.CreateScope("SubscriptionPolicySetDefinitionResource.Delete");
@@ -191,7 +187,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Creates or updates a policy set definition.
+        /// This operation creates or updates a policy set definition in the given subscription with the given name.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}
         /// Operation Id: PolicySetDefinitions_CreateOrUpdate
         /// </summary>
@@ -199,7 +195,6 @@ namespace Azure.ResourceManager.Resources
         /// <param name="data"> The policy set definition properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> This operation creates or updates a policy set definition in the given subscription with the given name. </remarks>
         public virtual async Task<ArmOperation<SubscriptionPolicySetDefinitionResource>> UpdateAsync(WaitUntil waitUntil, PolicySetDefinitionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -222,7 +217,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Creates or updates a policy set definition.
+        /// This operation creates or updates a policy set definition in the given subscription with the given name.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}
         /// Operation Id: PolicySetDefinitions_CreateOrUpdate
         /// </summary>
@@ -230,7 +225,6 @@ namespace Azure.ResourceManager.Resources
         /// <param name="data"> The policy set definition properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> This operation creates or updates a policy set definition in the given subscription with the given name. </remarks>
         public virtual ArmOperation<SubscriptionPolicySetDefinitionResource> Update(WaitUntil waitUntil, PolicySetDefinitionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));

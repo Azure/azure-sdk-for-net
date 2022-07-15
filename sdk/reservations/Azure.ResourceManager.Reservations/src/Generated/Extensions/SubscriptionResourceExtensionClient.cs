@@ -73,7 +73,6 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="planId"> Plan id used to get the third party products. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Get the regions and skus that are available for RI purchase for the specified Azure subscription. </remarks>
         public virtual AsyncPageable<ReservationCatalog> GetCatalogAsync(string reservedResourceType = null, AzureLocation? location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<ReservationCatalog>> FirstPageFunc(int? pageSizeHint)
@@ -106,7 +105,6 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="planId"> Plan id used to get the third party products. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Get the regions and skus that are available for RI purchase for the specified Azure subscription. </remarks>
         public virtual Pageable<ReservationCatalog> GetCatalog(string reservedResourceType = null, AzureLocation? location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default)
         {
             Page<ReservationCatalog> FirstPageFunc(int? pageSizeHint)
@@ -128,12 +126,11 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Get list of applicable `Reservation`s.
+        /// Get applicable `Reservation`s that are applied to this subscription or a resource group under this subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Capacity/appliedReservations
         /// Operation Id: GetAppliedReservationList
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get applicable `Reservation`s that are applied to this subscription or a resource group under this subscription. </remarks>
         public virtual async Task<Response<AppliedReservations>> GetAppliedReservationListAsync(CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAppliedReservationList");
@@ -151,12 +148,11 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Get list of applicable `Reservation`s.
+        /// Get applicable `Reservation`s that are applied to this subscription or a resource group under this subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Capacity/appliedReservations
         /// Operation Id: GetAppliedReservationList
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get applicable `Reservation`s that are applied to this subscription or a resource group under this subscription. </remarks>
         public virtual Response<AppliedReservations> GetAppliedReservationList(CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAppliedReservationList");

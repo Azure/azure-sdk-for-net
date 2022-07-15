@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Create or update container groups.
+        /// Create or update container groups with specified configurations.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}
         /// Operation Id: ContainerGroups_CreateOrUpdate
         /// </summary>
@@ -65,7 +65,6 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="containerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerGroupName"/> or <paramref name="data"/> is null. </exception>
-        /// <remarks> Create or update container groups with specified configurations. </remarks>
         public virtual async Task<ArmOperation<ContainerGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string containerGroupName, ContainerGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerGroupName, nameof(containerGroupName));
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Create or update container groups.
+        /// Create or update container groups with specified configurations.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}
         /// Operation Id: ContainerGroups_CreateOrUpdate
         /// </summary>
@@ -99,7 +98,6 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="containerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerGroupName"/> or <paramref name="data"/> is null. </exception>
-        /// <remarks> Create or update container groups with specified configurations. </remarks>
         public virtual ArmOperation<ContainerGroupResource> CreateOrUpdate(WaitUntil waitUntil, string containerGroupName, ContainerGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerGroupName, nameof(containerGroupName));
@@ -123,7 +121,7 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Get the properties of the specified container group.
+        /// Gets the properties of the specified container group in the specified subscription and resource group. The operation returns the properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}
         /// Operation Id: ContainerGroups_Get
         /// </summary>
@@ -131,7 +129,6 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="containerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerGroupName"/> is null. </exception>
-        /// <remarks> Gets the properties of the specified container group in the specified subscription and resource group. The operation returns the properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes. </remarks>
         public virtual async Task<Response<ContainerGroupResource>> GetAsync(string containerGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerGroupName, nameof(containerGroupName));
@@ -153,7 +150,7 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Get the properties of the specified container group.
+        /// Gets the properties of the specified container group in the specified subscription and resource group. The operation returns the properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}
         /// Operation Id: ContainerGroups_Get
         /// </summary>
@@ -161,7 +158,6 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="containerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerGroupName"/> is null. </exception>
-        /// <remarks> Gets the properties of the specified container group in the specified subscription and resource group. The operation returns the properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes. </remarks>
         public virtual Response<ContainerGroupResource> Get(string containerGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerGroupName, nameof(containerGroupName));
@@ -183,13 +179,12 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Get a list of container groups in the specified subscription and resource group.
+        /// Get a list of container groups in a specified subscription and resource group. This operation returns properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups
         /// Operation Id: ContainerGroups_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ContainerGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Get a list of container groups in a specified subscription and resource group. This operation returns properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes. </remarks>
         public virtual AsyncPageable<ContainerGroupResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ContainerGroupResource>> FirstPageFunc(int? pageSizeHint)
@@ -226,13 +221,12 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Get a list of container groups in the specified subscription and resource group.
+        /// Get a list of container groups in a specified subscription and resource group. This operation returns properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups
         /// Operation Id: ContainerGroups_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContainerGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Get a list of container groups in a specified subscription and resource group. This operation returns properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes. </remarks>
         public virtual Pageable<ContainerGroupResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<ContainerGroupResource> FirstPageFunc(int? pageSizeHint)
@@ -269,7 +263,7 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Get the properties of the specified container group.
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}
         /// Operation Id: ContainerGroups_Get
         /// </summary>
@@ -277,7 +271,6 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="containerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerGroupName"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string containerGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerGroupName, nameof(containerGroupName));
@@ -297,7 +290,7 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Get the properties of the specified container group.
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}
         /// Operation Id: ContainerGroups_Get
         /// </summary>
@@ -305,7 +298,6 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="containerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerGroupName"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string containerGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerGroupName, nameof(containerGroupName));

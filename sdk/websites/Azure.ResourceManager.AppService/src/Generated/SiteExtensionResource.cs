@@ -88,12 +88,11 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get the status of the last MSDeploy operation.
+        /// Description for Get the status of the last MSDeploy operation.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/extensions/MSDeploy
         /// Operation Id: WebApps_GetMSDeployStatus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Get the status of the last MSDeploy operation. </remarks>
         public virtual async Task<Response<SiteExtensionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteExtensionWebAppsClientDiagnostics.CreateScope("SiteExtensionResource.Get");
@@ -113,12 +112,11 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get the status of the last MSDeploy operation.
+        /// Description for Get the status of the last MSDeploy operation.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/extensions/MSDeploy
         /// Operation Id: WebApps_GetMSDeployStatus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Get the status of the last MSDeploy operation. </remarks>
         public virtual Response<SiteExtensionResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _siteExtensionWebAppsClientDiagnostics.CreateScope("SiteExtensionResource.Get");
@@ -138,7 +136,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Invoke the MSDeploy web app extension.
+        /// Description for Invoke the MSDeploy web app extension.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/extensions/MSDeploy
         /// Operation Id: WebApps_CreateMSDeployOperation
         /// </summary>
@@ -146,7 +144,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="msDeploy"> Details of MSDeploy operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="msDeploy"/> is null. </exception>
-        /// <remarks> Description for Invoke the MSDeploy web app extension. </remarks>
         public virtual async Task<ArmOperation<SiteExtensionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, MsDeploy msDeploy, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(msDeploy, nameof(msDeploy));
@@ -169,7 +166,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Invoke the MSDeploy web app extension.
+        /// Description for Invoke the MSDeploy web app extension.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/extensions/MSDeploy
         /// Operation Id: WebApps_CreateMSDeployOperation
         /// </summary>
@@ -177,7 +174,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="msDeploy"> Details of MSDeploy operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="msDeploy"/> is null. </exception>
-        /// <remarks> Description for Invoke the MSDeploy web app extension. </remarks>
         public virtual ArmOperation<SiteExtensionResource> CreateOrUpdate(WaitUntil waitUntil, MsDeploy msDeploy, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(msDeploy, nameof(msDeploy));
@@ -200,12 +196,11 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get the MSDeploy Log for the last MSDeploy operation.
+        /// Description for Get the MSDeploy Log for the last MSDeploy operation.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/extensions/MSDeploy/log
         /// Operation Id: WebApps_GetMSDeployLog
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Get the MSDeploy Log for the last MSDeploy operation. </remarks>
         public virtual async Task<Response<MsDeployLog>> GetMSDeployLogAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteExtensionWebAppsClientDiagnostics.CreateScope("SiteExtensionResource.GetMSDeployLog");
@@ -223,12 +218,11 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get the MSDeploy Log for the last MSDeploy operation.
+        /// Description for Get the MSDeploy Log for the last MSDeploy operation.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/extensions/MSDeploy/log
         /// Operation Id: WebApps_GetMSDeployLog
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Get the MSDeploy Log for the last MSDeploy operation. </remarks>
         public virtual Response<MsDeployLog> GetMSDeployLog(CancellationToken cancellationToken = default)
         {
             using var scope = _siteExtensionWebAppsClientDiagnostics.CreateScope("SiteExtensionResource.GetMSDeployLog");

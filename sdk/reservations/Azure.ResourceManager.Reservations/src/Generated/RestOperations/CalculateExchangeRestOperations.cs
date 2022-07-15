@@ -55,14 +55,13 @@ namespace Azure.ResourceManager.Reservations
             return message;
         }
 
-        /// <summary> Calculates the refund amounts and price of the new purchases. </summary>
+        /// <summary>
+        /// Calculates price for exchanging `Reservations` if there are no policy errors.
+        /// 
+        /// </summary>
         /// <param name="content"> Request containing purchases and refunds that need to be executed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks>
-        /// Calculates price for exchanging `Reservations` if there are no policy errors.
-        /// 
-        /// </remarks>
         public async Task<Response> PostAsync(CalculateExchangeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -79,14 +78,13 @@ namespace Azure.ResourceManager.Reservations
             }
         }
 
-        /// <summary> Calculates the refund amounts and price of the new purchases. </summary>
+        /// <summary>
+        /// Calculates price for exchanging `Reservations` if there are no policy errors.
+        /// 
+        /// </summary>
         /// <param name="content"> Request containing purchases and refunds that need to be executed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks>
-        /// Calculates price for exchanging `Reservations` if there are no policy errors.
-        /// 
-        /// </remarks>
         public Response Post(CalculateExchangeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));

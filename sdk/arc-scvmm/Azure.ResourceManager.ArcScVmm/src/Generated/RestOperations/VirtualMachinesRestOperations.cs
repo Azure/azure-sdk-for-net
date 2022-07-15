@@ -57,14 +57,13 @@ namespace Azure.ResourceManager.ArcScVmm
             return message;
         }
 
-        /// <summary> Gets a VirtualMachine. </summary>
+        /// <summary> Implements VirtualMachine GET method. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualMachineName"> Name of the VirtualMachine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Implements VirtualMachine GET method. </remarks>
         public async Task<Response<ScVmmVirtualMachineData>> GetAsync(string subscriptionId, string resourceGroupName, string virtualMachineName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -89,14 +88,13 @@ namespace Azure.ResourceManager.ArcScVmm
             }
         }
 
-        /// <summary> Gets a VirtualMachine. </summary>
+        /// <summary> Implements VirtualMachine GET method. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualMachineName"> Name of the VirtualMachine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Implements VirtualMachine GET method. </remarks>
         public Response<ScVmmVirtualMachineData> Get(string subscriptionId, string resourceGroupName, string virtualMachineName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -145,7 +143,7 @@ namespace Azure.ResourceManager.ArcScVmm
             return message;
         }
 
-        /// <summary> Implements VirtualMachines PUT method. </summary>
+        /// <summary> Creates Or Updates virtual machines deployed on scvmm fabric. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualMachineName"> Name of the VirtualMachine. </param>
@@ -153,7 +151,6 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Creates Or Updates virtual machines deployed on scvmm fabric. </remarks>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string virtualMachineName, ScVmmVirtualMachineData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -173,7 +170,7 @@ namespace Azure.ResourceManager.ArcScVmm
             }
         }
 
-        /// <summary> Implements VirtualMachines PUT method. </summary>
+        /// <summary> Creates Or Updates virtual machines deployed on scvmm fabric. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualMachineName"> Name of the VirtualMachine. </param>
@@ -181,7 +178,6 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Creates Or Updates virtual machines deployed on scvmm fabric. </remarks>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string virtualMachineName, ScVmmVirtualMachineData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -229,7 +225,7 @@ namespace Azure.ResourceManager.ArcScVmm
             return message;
         }
 
-        /// <summary> Implements VirtualMachine DELETE method. </summary>
+        /// <summary> Deletes a VirtualMachine deployed on ScVmm fabric. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualMachineName"> Name of the VirtualMachine. </param>
@@ -238,7 +234,6 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Deletes a VirtualMachine deployed on ScVmm fabric. </remarks>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string virtualMachineName, bool? retain = null, bool? force = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -258,7 +253,7 @@ namespace Azure.ResourceManager.ArcScVmm
             }
         }
 
-        /// <summary> Implements VirtualMachine DELETE method. </summary>
+        /// <summary> Deletes a VirtualMachine deployed on ScVmm fabric. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualMachineName"> Name of the VirtualMachine. </param>
@@ -267,7 +262,6 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Deletes a VirtualMachine deployed on ScVmm fabric. </remarks>
         public Response Delete(string subscriptionId, string resourceGroupName, string virtualMachineName, bool? retain = null, bool? force = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -311,7 +305,7 @@ namespace Azure.ResourceManager.ArcScVmm
             return message;
         }
 
-        /// <summary> Implements the VirtualMachines PATCH method. </summary>
+        /// <summary> Updates the VirtualMachines resource. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualMachineName"> Name of the VirtualMachine. </param>
@@ -319,7 +313,6 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Updates the VirtualMachines resource. </remarks>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string virtualMachineName, ScVmmVirtualMachinePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -340,7 +333,7 @@ namespace Azure.ResourceManager.ArcScVmm
             }
         }
 
-        /// <summary> Implements the VirtualMachines PATCH method. </summary>
+        /// <summary> Updates the VirtualMachines resource. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualMachineName"> Name of the VirtualMachine. </param>
@@ -348,7 +341,6 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Updates the VirtualMachines resource. </remarks>
         public Response Update(string subscriptionId, string resourceGroupName, string virtualMachineName, ScVmmVirtualMachinePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -397,7 +389,7 @@ namespace Azure.ResourceManager.ArcScVmm
             return message;
         }
 
-        /// <summary> Implements the operation to stop a virtual machine. </summary>
+        /// <summary> Stop virtual machine. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualMachineName"> Name of the VirtualMachine. </param>
@@ -405,7 +397,6 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Stop virtual machine. </remarks>
         public async Task<Response> StopAsync(string subscriptionId, string resourceGroupName, string virtualMachineName, StopVirtualMachineContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -424,7 +415,7 @@ namespace Azure.ResourceManager.ArcScVmm
             }
         }
 
-        /// <summary> Implements the operation to stop a virtual machine. </summary>
+        /// <summary> Stop virtual machine. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualMachineName"> Name of the VirtualMachine. </param>
@@ -432,7 +423,6 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Stop virtual machine. </remarks>
         public Response Stop(string subscriptionId, string resourceGroupName, string virtualMachineName, StopVirtualMachineContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -472,14 +462,13 @@ namespace Azure.ResourceManager.ArcScVmm
             return message;
         }
 
-        /// <summary> Implements the operation to start a virtual machine. </summary>
+        /// <summary> Start virtual machine. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualMachineName"> Name of the VirtualMachine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Start virtual machine. </remarks>
         public async Task<Response> StartAsync(string subscriptionId, string resourceGroupName, string virtualMachineName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -498,14 +487,13 @@ namespace Azure.ResourceManager.ArcScVmm
             }
         }
 
-        /// <summary> Implements the operation to start a virtual machine. </summary>
+        /// <summary> Start virtual machine. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualMachineName"> Name of the VirtualMachine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Start virtual machine. </remarks>
         public Response Start(string subscriptionId, string resourceGroupName, string virtualMachineName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -545,14 +533,13 @@ namespace Azure.ResourceManager.ArcScVmm
             return message;
         }
 
-        /// <summary> Implements the operation to restart a virtual machine. </summary>
+        /// <summary> Restart virtual machine. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualMachineName"> Name of the VirtualMachine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Restart virtual machine. </remarks>
         public async Task<Response> RestartAsync(string subscriptionId, string resourceGroupName, string virtualMachineName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -571,14 +558,13 @@ namespace Azure.ResourceManager.ArcScVmm
             }
         }
 
-        /// <summary> Implements the operation to restart a virtual machine. </summary>
+        /// <summary> Restart virtual machine. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualMachineName"> Name of the VirtualMachine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Restart virtual machine. </remarks>
         public Response Restart(string subscriptionId, string resourceGroupName, string virtualMachineName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -625,7 +611,7 @@ namespace Azure.ResourceManager.ArcScVmm
             return message;
         }
 
-        /// <summary> Implements the operation to creates a checkpoint in a virtual machine. </summary>
+        /// <summary> Creates a checkpoint in virtual machine. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualMachineName"> Name of the VirtualMachine. </param>
@@ -633,7 +619,6 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Creates a checkpoint in virtual machine. </remarks>
         public async Task<Response> CreateCheckpointAsync(string subscriptionId, string resourceGroupName, string virtualMachineName, VirtualMachineCreateCheckpoint body = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -652,7 +637,7 @@ namespace Azure.ResourceManager.ArcScVmm
             }
         }
 
-        /// <summary> Implements the operation to creates a checkpoint in a virtual machine. </summary>
+        /// <summary> Creates a checkpoint in virtual machine. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualMachineName"> Name of the VirtualMachine. </param>
@@ -660,7 +645,6 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Creates a checkpoint in virtual machine. </remarks>
         public Response CreateCheckpoint(string subscriptionId, string resourceGroupName, string virtualMachineName, VirtualMachineCreateCheckpoint body = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -707,7 +691,7 @@ namespace Azure.ResourceManager.ArcScVmm
             return message;
         }
 
-        /// <summary> Implements the operation to delete a checkpoint in a virtual machine. </summary>
+        /// <summary> Deletes a checkpoint in virtual machine. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualMachineName"> Name of the VirtualMachine. </param>
@@ -715,7 +699,6 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Deletes a checkpoint in virtual machine. </remarks>
         public async Task<Response> DeleteCheckpointAsync(string subscriptionId, string resourceGroupName, string virtualMachineName, VirtualMachineDeleteCheckpoint body = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -734,7 +717,7 @@ namespace Azure.ResourceManager.ArcScVmm
             }
         }
 
-        /// <summary> Implements the operation to delete a checkpoint in a virtual machine. </summary>
+        /// <summary> Deletes a checkpoint in virtual machine. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualMachineName"> Name of the VirtualMachine. </param>
@@ -742,7 +725,6 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Deletes a checkpoint in virtual machine. </remarks>
         public Response DeleteCheckpoint(string subscriptionId, string resourceGroupName, string virtualMachineName, VirtualMachineDeleteCheckpoint body = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -789,7 +771,7 @@ namespace Azure.ResourceManager.ArcScVmm
             return message;
         }
 
-        /// <summary> Implements the operation to restores to a checkpoint in a virtual machine. </summary>
+        /// <summary> Restores to a checkpoint in virtual machine. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualMachineName"> Name of the VirtualMachine. </param>
@@ -797,7 +779,6 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Restores to a checkpoint in virtual machine. </remarks>
         public async Task<Response> RestoreCheckpointAsync(string subscriptionId, string resourceGroupName, string virtualMachineName, VirtualMachineRestoreCheckpoint body = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -816,7 +797,7 @@ namespace Azure.ResourceManager.ArcScVmm
             }
         }
 
-        /// <summary> Implements the operation to restores to a checkpoint in a virtual machine. </summary>
+        /// <summary> Restores to a checkpoint in virtual machine. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualMachineName"> Name of the VirtualMachine. </param>
@@ -824,7 +805,6 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Restores to a checkpoint in virtual machine. </remarks>
         public Response RestoreCheckpoint(string subscriptionId, string resourceGroupName, string virtualMachineName, VirtualMachineRestoreCheckpoint body = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -862,13 +842,12 @@ namespace Azure.ResourceManager.ArcScVmm
             return message;
         }
 
-        /// <summary> Implements GET VirtualMachines in a resource group. </summary>
+        /// <summary> List of VirtualMachines in a resource group. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> List of VirtualMachines in a resource group. </remarks>
         public async Task<Response<VirtualMachineListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -890,13 +869,12 @@ namespace Azure.ResourceManager.ArcScVmm
             }
         }
 
-        /// <summary> Implements GET VirtualMachines in a resource group. </summary>
+        /// <summary> List of VirtualMachines in a resource group. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> List of VirtualMachines in a resource group. </remarks>
         public Response<VirtualMachineListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -935,12 +913,11 @@ namespace Azure.ResourceManager.ArcScVmm
             return message;
         }
 
-        /// <summary> Implements GET VirtualMachines in a subscription. </summary>
+        /// <summary> List of VirtualMachines in a subscription. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> List of VirtualMachines in a subscription. </remarks>
         public async Task<Response<VirtualMachineListResult>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -961,12 +938,11 @@ namespace Azure.ResourceManager.ArcScVmm
             }
         }
 
-        /// <summary> Implements GET VirtualMachines in a subscription. </summary>
+        /// <summary> List of VirtualMachines in a subscription. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> List of VirtualMachines in a subscription. </remarks>
         public Response<VirtualMachineListResult> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1001,14 +977,13 @@ namespace Azure.ResourceManager.ArcScVmm
             return message;
         }
 
-        /// <summary> Implements GET VirtualMachines in a resource group. </summary>
+        /// <summary> List of VirtualMachines in a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> List of VirtualMachines in a resource group. </remarks>
         public async Task<Response<VirtualMachineListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -1031,14 +1006,13 @@ namespace Azure.ResourceManager.ArcScVmm
             }
         }
 
-        /// <summary> Implements GET VirtualMachines in a resource group. </summary>
+        /// <summary> List of VirtualMachines in a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> List of VirtualMachines in a resource group. </remarks>
         public Response<VirtualMachineListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -1075,13 +1049,12 @@ namespace Azure.ResourceManager.ArcScVmm
             return message;
         }
 
-        /// <summary> Implements GET VirtualMachines in a subscription. </summary>
+        /// <summary> List of VirtualMachines in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> List of VirtualMachines in a subscription. </remarks>
         public async Task<Response<VirtualMachineListResult>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -1103,13 +1076,12 @@ namespace Azure.ResourceManager.ArcScVmm
             }
         }
 
-        /// <summary> Implements GET VirtualMachines in a subscription. </summary>
+        /// <summary> List of VirtualMachines in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> List of VirtualMachines in a subscription. </remarks>
         public Response<VirtualMachineListResult> ListBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));

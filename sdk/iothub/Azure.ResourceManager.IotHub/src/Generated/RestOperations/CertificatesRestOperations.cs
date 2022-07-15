@@ -58,14 +58,13 @@ namespace Azure.ResourceManager.IotHub
             return message;
         }
 
-        /// <summary> Get the certificate list. </summary>
+        /// <summary> Returns the list of certificates. </summary>
         /// <param name="subscriptionId"> The subscription identifier. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the IoT hub. </param>
         /// <param name="resourceName"> The name of the IoT hub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Returns the list of certificates. </remarks>
         public async Task<Response<CertificateListDescription>> ListByIotHubAsync(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -88,14 +87,13 @@ namespace Azure.ResourceManager.IotHub
             }
         }
 
-        /// <summary> Get the certificate list. </summary>
+        /// <summary> Returns the list of certificates. </summary>
         /// <param name="subscriptionId"> The subscription identifier. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the IoT hub. </param>
         /// <param name="resourceName"> The name of the IoT hub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Returns the list of certificates. </remarks>
         public Response<CertificateListDescription> ListByIotHub(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -140,7 +138,7 @@ namespace Azure.ResourceManager.IotHub
             return message;
         }
 
-        /// <summary> Get the certificate. </summary>
+        /// <summary> Returns the certificate. </summary>
         /// <param name="subscriptionId"> The subscription identifier. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the IoT hub. </param>
         /// <param name="resourceName"> The name of the IoT hub. </param>
@@ -148,7 +146,6 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="certificateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Returns the certificate. </remarks>
         public async Task<Response<CertificateDescriptionData>> GetAsync(string subscriptionId, string resourceGroupName, string resourceName, string certificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -174,7 +171,7 @@ namespace Azure.ResourceManager.IotHub
             }
         }
 
-        /// <summary> Get the certificate. </summary>
+        /// <summary> Returns the certificate. </summary>
         /// <param name="subscriptionId"> The subscription identifier. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the IoT hub. </param>
         /// <param name="resourceName"> The name of the IoT hub. </param>
@@ -182,7 +179,6 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="certificateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Returns the certificate. </remarks>
         public Response<CertificateDescriptionData> Get(string subscriptionId, string resourceGroupName, string resourceName, string certificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -238,7 +234,7 @@ namespace Azure.ResourceManager.IotHub
             return message;
         }
 
-        /// <summary> Upload the certificate to the IoT hub. </summary>
+        /// <summary> Adds new or replaces existing certificate. </summary>
         /// <param name="subscriptionId"> The subscription identifier. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the IoT hub. </param>
         /// <param name="resourceName"> The name of the IoT hub. </param>
@@ -248,7 +244,6 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="certificateName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Adds new or replaces existing certificate. </remarks>
         public async Task<Response<CertificateDescriptionData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string resourceName, string certificateName, CertificateDescriptionData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -274,7 +269,7 @@ namespace Azure.ResourceManager.IotHub
             }
         }
 
-        /// <summary> Upload the certificate to the IoT hub. </summary>
+        /// <summary> Adds new or replaces existing certificate. </summary>
         /// <param name="subscriptionId"> The subscription identifier. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the IoT hub. </param>
         /// <param name="resourceName"> The name of the IoT hub. </param>
@@ -284,7 +279,6 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="certificateName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Adds new or replaces existing certificate. </remarks>
         public Response<CertificateDescriptionData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string resourceName, string certificateName, CertificateDescriptionData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -333,7 +327,7 @@ namespace Azure.ResourceManager.IotHub
             return message;
         }
 
-        /// <summary> Delete an X509 certificate. </summary>
+        /// <summary> Deletes an existing X509 certificate or does nothing if it does not exist. </summary>
         /// <param name="subscriptionId"> The subscription identifier. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the IoT hub. </param>
         /// <param name="resourceName"> The name of the IoT hub. </param>
@@ -342,7 +336,6 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="certificateName"/> or <paramref name="ifMatch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Deletes an existing X509 certificate or does nothing if it does not exist. </remarks>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string resourceName, string certificateName, string ifMatch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -363,7 +356,7 @@ namespace Azure.ResourceManager.IotHub
             }
         }
 
-        /// <summary> Delete an X509 certificate. </summary>
+        /// <summary> Deletes an existing X509 certificate or does nothing if it does not exist. </summary>
         /// <param name="subscriptionId"> The subscription identifier. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the IoT hub. </param>
         /// <param name="resourceName"> The name of the IoT hub. </param>
@@ -372,7 +365,6 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="certificateName"/> or <paramref name="ifMatch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Deletes an existing X509 certificate or does nothing if it does not exist. </remarks>
         public Response Delete(string subscriptionId, string resourceGroupName, string resourceName, string certificateName, string ifMatch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -417,7 +409,7 @@ namespace Azure.ResourceManager.IotHub
             return message;
         }
 
-        /// <summary> Generate verification code for proof of possession flow. </summary>
+        /// <summary> Generates verification code for proof of possession flow. The verification code will be used to generate a leaf certificate. </summary>
         /// <param name="subscriptionId"> The subscription identifier. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the IoT hub. </param>
         /// <param name="resourceName"> The name of the IoT hub. </param>
@@ -426,7 +418,6 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="certificateName"/> or <paramref name="ifMatch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Generates verification code for proof of possession flow. The verification code will be used to generate a leaf certificate. </remarks>
         public async Task<Response<CertificateWithNonceDescription>> GenerateVerificationCodeAsync(string subscriptionId, string resourceGroupName, string resourceName, string certificateName, string ifMatch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -451,7 +442,7 @@ namespace Azure.ResourceManager.IotHub
             }
         }
 
-        /// <summary> Generate verification code for proof of possession flow. </summary>
+        /// <summary> Generates verification code for proof of possession flow. The verification code will be used to generate a leaf certificate. </summary>
         /// <param name="subscriptionId"> The subscription identifier. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the IoT hub. </param>
         /// <param name="resourceName"> The name of the IoT hub. </param>
@@ -460,7 +451,6 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="certificateName"/> or <paramref name="ifMatch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Generates verification code for proof of possession flow. The verification code will be used to generate a leaf certificate. </remarks>
         public Response<CertificateWithNonceDescription> GenerateVerificationCode(string subscriptionId, string resourceGroupName, string resourceName, string certificateName, string ifMatch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -513,7 +503,7 @@ namespace Azure.ResourceManager.IotHub
             return message;
         }
 
-        /// <summary> Verify certificate&apos;s private key possession. </summary>
+        /// <summary> Verifies the certificate&apos;s private key possession by providing the leaf cert issued by the verifying pre uploaded certificate. </summary>
         /// <param name="subscriptionId"> The subscription identifier. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the IoT hub. </param>
         /// <param name="resourceName"> The name of the IoT hub. </param>
@@ -523,7 +513,6 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="certificateName"/>, <paramref name="ifMatch"/> or <paramref name="certificateVerificationBody"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Verifies the certificate&apos;s private key possession by providing the leaf cert issued by the verifying pre uploaded certificate. </remarks>
         public async Task<Response<CertificateDescriptionData>> VerifyAsync(string subscriptionId, string resourceGroupName, string resourceName, string certificateName, string ifMatch, CertificateVerificationDescription certificateVerificationBody, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -549,7 +538,7 @@ namespace Azure.ResourceManager.IotHub
             }
         }
 
-        /// <summary> Verify certificate&apos;s private key possession. </summary>
+        /// <summary> Verifies the certificate&apos;s private key possession by providing the leaf cert issued by the verifying pre uploaded certificate. </summary>
         /// <param name="subscriptionId"> The subscription identifier. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the IoT hub. </param>
         /// <param name="resourceName"> The name of the IoT hub. </param>
@@ -559,7 +548,6 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="certificateName"/>, <paramref name="ifMatch"/> or <paramref name="certificateVerificationBody"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Verifies the certificate&apos;s private key possession by providing the leaf cert issued by the verifying pre uploaded certificate. </remarks>
         public Response<CertificateDescriptionData> Verify(string subscriptionId, string resourceGroupName, string resourceName, string certificateName, string ifMatch, CertificateVerificationDescription certificateVerificationBody, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));

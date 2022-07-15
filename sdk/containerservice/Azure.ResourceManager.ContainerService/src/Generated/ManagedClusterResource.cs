@@ -124,7 +124,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configName"/> is null. </exception>
-        /// <remarks> Gets the specified maintenance configuration of a managed cluster. </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<MaintenanceConfigurationResource>> GetMaintenanceConfigurationAsync(string configName, CancellationToken cancellationToken = default)
         {
@@ -140,7 +139,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configName"/> is null. </exception>
-        /// <remarks> Gets the specified maintenance configuration of a managed cluster. </remarks>
         [ForwardsClientCalls]
         public virtual Response<MaintenanceConfigurationResource> GetMaintenanceConfiguration(string configName, CancellationToken cancellationToken = default)
         {
@@ -163,7 +161,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> is null. </exception>
-        /// <remarks> Gets the specified managed cluster agent pool. </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<AgentPoolResource>> GetAgentPoolAsync(string agentPoolName, CancellationToken cancellationToken = default)
         {
@@ -179,7 +176,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> is null. </exception>
-        /// <remarks> Gets the specified managed cluster agent pool. </remarks>
         [ForwardsClientCalls]
         public virtual Response<AgentPoolResource> GetAgentPool(string agentPoolName, CancellationToken cancellationToken = default)
         {
@@ -194,7 +190,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Gets the specified private endpoint connection.
+        /// To learn more about private clusters, see: https://docs.microsoft.com/azure/aks/private-clusters
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}
         /// Operation Id: PrivateEndpointConnections_Get
         /// </summary>
@@ -202,7 +198,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        /// <remarks> To learn more about private clusters, see: https://docs.microsoft.com/azure/aks/private-clusters. </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<ContainerServicePrivateEndpointConnectionResource>> GetContainerServicePrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -210,7 +205,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Gets the specified private endpoint connection.
+        /// To learn more about private clusters, see: https://docs.microsoft.com/azure/aks/private-clusters
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}
         /// Operation Id: PrivateEndpointConnections_Get
         /// </summary>
@@ -218,7 +213,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        /// <remarks> To learn more about private clusters, see: https://docs.microsoft.com/azure/aks/private-clusters. </remarks>
         [ForwardsClientCalls]
         public virtual Response<ContainerServicePrivateEndpointConnectionResource> GetContainerServicePrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -231,7 +225,6 @@ namespace Azure.ResourceManager.ContainerService
         /// Operation Id: ManagedClusters_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Gets a managed cluster. </remarks>
         public virtual async Task<Response<ManagedClusterResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _managedClusterClientDiagnostics.CreateScope("ManagedClusterResource.Get");
@@ -256,7 +249,6 @@ namespace Azure.ResourceManager.ContainerService
         /// Operation Id: ManagedClusters_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Gets a managed cluster. </remarks>
         public virtual Response<ManagedClusterResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _managedClusterClientDiagnostics.CreateScope("ManagedClusterResource.Get");
@@ -282,7 +274,6 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Deletes a managed cluster. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _managedClusterClientDiagnostics.CreateScope("ManagedClusterResource.Delete");
@@ -309,7 +300,6 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Deletes a managed cluster. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _managedClusterClientDiagnostics.CreateScope("ManagedClusterResource.Delete");
@@ -338,7 +328,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="tagsObject"> Parameters supplied to the Update Managed Cluster Tags operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
-        /// <remarks> Updates tags on a managed cluster. </remarks>
         public virtual async Task<ArmOperation<ManagedClusterResource>> UpdateAsync(WaitUntil waitUntil, TagsObject tagsObject, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tagsObject, nameof(tagsObject));
@@ -369,7 +358,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="tagsObject"> Parameters supplied to the Update Managed Cluster Tags operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
-        /// <remarks> Updates tags on a managed cluster. </remarks>
         public virtual ArmOperation<ManagedClusterResource> Update(WaitUntil waitUntil, TagsObject tagsObject, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tagsObject, nameof(tagsObject));
@@ -392,7 +380,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Gets an access profile of a managed cluster.
+        /// **WARNING**: This API will be deprecated. Instead use [ListClusterUserCredentials](https://docs.microsoft.com/rest/api/aks/managedclusters/listclusterusercredentials) or [ListClusterAdminCredentials](https://docs.microsoft.com/rest/api/aks/managedclusters/listclusteradmincredentials) .
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/accessProfiles/{roleName}/listCredential
         /// Operation Id: ManagedClusters_GetAccessProfile
         /// </summary>
@@ -400,7 +388,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="roleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleName"/> is null. </exception>
-        /// <remarks> **WARNING**: This API will be deprecated. Instead use [ListClusterUserCredentials](https://docs.microsoft.com/rest/api/aks/managedclusters/listclusterusercredentials) or [ListClusterAdminCredentials](https://docs.microsoft.com/rest/api/aks/managedclusters/listclusteradmincredentials) . </remarks>
         public virtual async Task<Response<ManagedClusterAccessProfile>> GetAccessProfileAsync(string roleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(roleName, nameof(roleName));
@@ -420,7 +407,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Gets an access profile of a managed cluster.
+        /// **WARNING**: This API will be deprecated. Instead use [ListClusterUserCredentials](https://docs.microsoft.com/rest/api/aks/managedclusters/listclusterusercredentials) or [ListClusterAdminCredentials](https://docs.microsoft.com/rest/api/aks/managedclusters/listclusteradmincredentials) .
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/accessProfiles/{roleName}/listCredential
         /// Operation Id: ManagedClusters_GetAccessProfile
         /// </summary>
@@ -428,7 +415,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="roleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleName"/> is null. </exception>
-        /// <remarks> **WARNING**: This API will be deprecated. Instead use [ListClusterUserCredentials](https://docs.microsoft.com/rest/api/aks/managedclusters/listclusterusercredentials) or [ListClusterAdminCredentials](https://docs.microsoft.com/rest/api/aks/managedclusters/listclusteradmincredentials) . </remarks>
         public virtual Response<ManagedClusterAccessProfile> GetAccessProfile(string roleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(roleName, nameof(roleName));
@@ -454,7 +440,6 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="serverFqdn"> server fqdn type for credentials to be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Lists the admin credentials of a managed cluster. </remarks>
         public virtual async Task<Response<CredentialResults>> GetClusterAdminCredentialsAsync(string serverFqdn = null, CancellationToken cancellationToken = default)
         {
             using var scope = _managedClusterClientDiagnostics.CreateScope("ManagedClusterResource.GetClusterAdminCredentials");
@@ -478,7 +463,6 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="serverFqdn"> server fqdn type for credentials to be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Lists the admin credentials of a managed cluster. </remarks>
         public virtual Response<CredentialResults> GetClusterAdminCredentials(string serverFqdn = null, CancellationToken cancellationToken = default)
         {
             using var scope = _managedClusterClientDiagnostics.CreateScope("ManagedClusterResource.GetClusterAdminCredentials");
@@ -503,7 +487,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="serverFqdn"> server fqdn type for credentials to be returned. </param>
         /// <param name="format"> Only apply to AAD clusters, specifies the format of returned kubeconfig. Format &apos;azure&apos; will return azure auth-provider kubeconfig; format &apos;exec&apos; will return exec format kubeconfig, which requires kubelogin binary in the path. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Lists the user credentials of a managed cluster. </remarks>
         public virtual async Task<Response<CredentialResults>> GetClusterUserCredentialsAsync(string serverFqdn = null, Format? format = null, CancellationToken cancellationToken = default)
         {
             using var scope = _managedClusterClientDiagnostics.CreateScope("ManagedClusterResource.GetClusterUserCredentials");
@@ -528,7 +511,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="serverFqdn"> server fqdn type for credentials to be returned. </param>
         /// <param name="format"> Only apply to AAD clusters, specifies the format of returned kubeconfig. Format &apos;azure&apos; will return azure auth-provider kubeconfig; format &apos;exec&apos; will return exec format kubeconfig, which requires kubelogin binary in the path. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Lists the user credentials of a managed cluster. </remarks>
         public virtual Response<CredentialResults> GetClusterUserCredentials(string serverFqdn = null, Format? format = null, CancellationToken cancellationToken = default)
         {
             using var scope = _managedClusterClientDiagnostics.CreateScope("ManagedClusterResource.GetClusterUserCredentials");
@@ -552,7 +534,6 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="serverFqdn"> server fqdn type for credentials to be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Lists the cluster monitoring user credentials of a managed cluster. </remarks>
         public virtual async Task<Response<CredentialResults>> GetClusterMonitoringUserCredentialsAsync(string serverFqdn = null, CancellationToken cancellationToken = default)
         {
             using var scope = _managedClusterClientDiagnostics.CreateScope("ManagedClusterResource.GetClusterMonitoringUserCredentials");
@@ -576,7 +557,6 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="serverFqdn"> server fqdn type for credentials to be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Lists the cluster monitoring user credentials of a managed cluster. </remarks>
         public virtual Response<CredentialResults> GetClusterMonitoringUserCredentials(string serverFqdn = null, CancellationToken cancellationToken = default)
         {
             using var scope = _managedClusterClientDiagnostics.CreateScope("ManagedClusterResource.GetClusterMonitoringUserCredentials");
@@ -594,7 +574,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Reset the Service Principal Profile of a managed cluster.
+        /// This action cannot be performed on a cluster that is not using a service principal
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/resetServicePrincipalProfile
         /// Operation Id: ManagedClusters_ResetServicePrincipalProfile
         /// </summary>
@@ -602,7 +582,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="managedClusterServicePrincipalProfile"> The service principal profile to set on the managed cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managedClusterServicePrincipalProfile"/> is null. </exception>
-        /// <remarks> This action cannot be performed on a cluster that is not using a service principal. </remarks>
         public virtual async Task<ArmOperation> ResetServicePrincipalProfileAsync(WaitUntil waitUntil, ManagedClusterServicePrincipalProfile managedClusterServicePrincipalProfile, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(managedClusterServicePrincipalProfile, nameof(managedClusterServicePrincipalProfile));
@@ -625,7 +604,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Reset the Service Principal Profile of a managed cluster.
+        /// This action cannot be performed on a cluster that is not using a service principal
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/resetServicePrincipalProfile
         /// Operation Id: ManagedClusters_ResetServicePrincipalProfile
         /// </summary>
@@ -633,7 +612,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="managedClusterServicePrincipalProfile"> The service principal profile to set on the managed cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managedClusterServicePrincipalProfile"/> is null. </exception>
-        /// <remarks> This action cannot be performed on a cluster that is not using a service principal. </remarks>
         public virtual ArmOperation ResetServicePrincipalProfile(WaitUntil waitUntil, ManagedClusterServicePrincipalProfile managedClusterServicePrincipalProfile, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(managedClusterServicePrincipalProfile, nameof(managedClusterServicePrincipalProfile));
@@ -664,7 +642,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="managedClusterAADProfile"> The AAD profile to set on the Managed Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managedClusterAADProfile"/> is null. </exception>
-        /// <remarks> Reset the AAD Profile of a managed cluster. </remarks>
         public virtual async Task<ArmOperation> ResetAADProfileAsync(WaitUntil waitUntil, ManagedClusterAADProfile managedClusterAADProfile, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(managedClusterAADProfile, nameof(managedClusterAADProfile));
@@ -695,7 +672,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="managedClusterAADProfile"> The AAD profile to set on the Managed Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managedClusterAADProfile"/> is null. </exception>
-        /// <remarks> Reset the AAD Profile of a managed cluster. </remarks>
         public virtual ArmOperation ResetAADProfile(WaitUntil waitUntil, ManagedClusterAADProfile managedClusterAADProfile, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(managedClusterAADProfile, nameof(managedClusterAADProfile));
@@ -718,13 +694,12 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Rotates the certificates of a managed cluster.
+        /// See [Certificate rotation](https://docs.microsoft.com/azure/aks/certificate-rotation) for more details about rotating managed cluster certificates.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/rotateClusterCertificates
         /// Operation Id: ManagedClusters_RotateClusterCertificates
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> See [Certificate rotation](https://docs.microsoft.com/azure/aks/certificate-rotation) for more details about rotating managed cluster certificates. </remarks>
         public virtual async Task<ArmOperation> RotateClusterCertificatesAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _managedClusterClientDiagnostics.CreateScope("ManagedClusterResource.RotateClusterCertificates");
@@ -745,13 +720,12 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Rotates the certificates of a managed cluster.
+        /// See [Certificate rotation](https://docs.microsoft.com/azure/aks/certificate-rotation) for more details about rotating managed cluster certificates.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/rotateClusterCertificates
         /// Operation Id: ManagedClusters_RotateClusterCertificates
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> See [Certificate rotation](https://docs.microsoft.com/azure/aks/certificate-rotation) for more details about rotating managed cluster certificates. </remarks>
         public virtual ArmOperation RotateClusterCertificates(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _managedClusterClientDiagnostics.CreateScope("ManagedClusterResource.RotateClusterCertificates");
@@ -772,13 +746,12 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Stops a Managed Cluster
+        /// This can only be performed on Azure Virtual Machine Scale set backed clusters. Stopping a cluster stops the control plane and agent nodes entirely, while maintaining all object and cluster state. A cluster does not accrue charges while it is stopped. See [stopping a cluster](https://docs.microsoft.com/azure/aks/start-stop-cluster) for more details about stopping a cluster.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/stop
         /// Operation Id: ManagedClusters_Stop
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> This can only be performed on Azure Virtual Machine Scale set backed clusters. Stopping a cluster stops the control plane and agent nodes entirely, while maintaining all object and cluster state. A cluster does not accrue charges while it is stopped. See [stopping a cluster](https://docs.microsoft.com/azure/aks/start-stop-cluster) for more details about stopping a cluster. </remarks>
         public virtual async Task<ArmOperation> StopAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _managedClusterClientDiagnostics.CreateScope("ManagedClusterResource.Stop");
@@ -799,13 +772,12 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Stops a Managed Cluster
+        /// This can only be performed on Azure Virtual Machine Scale set backed clusters. Stopping a cluster stops the control plane and agent nodes entirely, while maintaining all object and cluster state. A cluster does not accrue charges while it is stopped. See [stopping a cluster](https://docs.microsoft.com/azure/aks/start-stop-cluster) for more details about stopping a cluster.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/stop
         /// Operation Id: ManagedClusters_Stop
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> This can only be performed on Azure Virtual Machine Scale set backed clusters. Stopping a cluster stops the control plane and agent nodes entirely, while maintaining all object and cluster state. A cluster does not accrue charges while it is stopped. See [stopping a cluster](https://docs.microsoft.com/azure/aks/start-stop-cluster) for more details about stopping a cluster. </remarks>
         public virtual ArmOperation Stop(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _managedClusterClientDiagnostics.CreateScope("ManagedClusterResource.Stop");
@@ -826,13 +798,12 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Starts a previously stopped Managed Cluster
+        /// See [starting a cluster](https://docs.microsoft.com/azure/aks/start-stop-cluster) for more details about starting a cluster.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/start
         /// Operation Id: ManagedClusters_Start
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> See [starting a cluster](https://docs.microsoft.com/azure/aks/start-stop-cluster) for more details about starting a cluster. </remarks>
         public virtual async Task<ArmOperation> StartAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _managedClusterClientDiagnostics.CreateScope("ManagedClusterResource.Start");
@@ -853,13 +824,12 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Starts a previously stopped Managed Cluster
+        /// See [starting a cluster](https://docs.microsoft.com/azure/aks/start-stop-cluster) for more details about starting a cluster.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/start
         /// Operation Id: ManagedClusters_Start
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> See [starting a cluster](https://docs.microsoft.com/azure/aks/start-stop-cluster) for more details about starting a cluster. </remarks>
         public virtual ArmOperation Start(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _managedClusterClientDiagnostics.CreateScope("ManagedClusterResource.Start");
@@ -880,7 +850,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Submits a command to run against the Managed Cluster.
+        /// AKS will create a pod to run the command. This is primarily useful for private clusters. For more information see [AKS Run Command](https://docs.microsoft.com/azure/aks/private-clusters#aks-run-command-preview).
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/runCommand
         /// Operation Id: ManagedClusters_RunCommand
         /// </summary>
@@ -888,7 +858,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="content"> The run command request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks> AKS will create a pod to run the command. This is primarily useful for private clusters. For more information see [AKS Run Command](https://docs.microsoft.com/azure/aks/private-clusters#aks-run-command-preview). </remarks>
         public virtual async Task<ArmOperation<RunCommandResult>> RunCommandAsync(WaitUntil waitUntil, RunCommandContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -911,7 +880,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Submits a command to run against the Managed Cluster.
+        /// AKS will create a pod to run the command. This is primarily useful for private clusters. For more information see [AKS Run Command](https://docs.microsoft.com/azure/aks/private-clusters#aks-run-command-preview).
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/runCommand
         /// Operation Id: ManagedClusters_RunCommand
         /// </summary>
@@ -919,7 +888,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="content"> The run command request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks> AKS will create a pod to run the command. This is primarily useful for private clusters. For more information see [AKS Run Command](https://docs.microsoft.com/azure/aks/private-clusters#aks-run-command-preview). </remarks>
         public virtual ArmOperation<RunCommandResult> RunCommand(WaitUntil waitUntil, RunCommandContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -950,7 +918,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="commandId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="commandId"/> is null. </exception>
-        /// <remarks> Gets the results of a command which has been run on the Managed Cluster. </remarks>
         public virtual async Task<Response<RunCommandResult>> GetCommandResultAsync(string commandId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(commandId, nameof(commandId));
@@ -978,7 +945,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="commandId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="commandId"/> is null. </exception>
-        /// <remarks> Gets the results of a command which has been run on the Managed Cluster. </remarks>
         public virtual Response<RunCommandResult> GetCommandResult(string commandId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(commandId, nameof(commandId));
@@ -998,13 +964,12 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Gets a list of egress endpoints (network endpoints of all outbound dependencies) in the specified managed cluster.
+        /// Gets a list of egress endpoints (network endpoints of all outbound dependencies) in the specified managed cluster. The operation returns properties of each egress endpoint.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/outboundNetworkDependenciesEndpoints
         /// Operation Id: ManagedClusters_ListOutboundNetworkDependenciesEndpoints
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="OutboundEnvironmentEndpoint" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Gets a list of egress endpoints (network endpoints of all outbound dependencies) in the specified managed cluster. The operation returns properties of each egress endpoint. </remarks>
         public virtual AsyncPageable<OutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpointsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<OutboundEnvironmentEndpoint>> FirstPageFunc(int? pageSizeHint)
@@ -1041,13 +1006,12 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Gets a list of egress endpoints (network endpoints of all outbound dependencies) in the specified managed cluster.
+        /// Gets a list of egress endpoints (network endpoints of all outbound dependencies) in the specified managed cluster. The operation returns properties of each egress endpoint.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/outboundNetworkDependenciesEndpoints
         /// Operation Id: ManagedClusters_ListOutboundNetworkDependenciesEndpoints
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OutboundEnvironmentEndpoint" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Gets a list of egress endpoints (network endpoints of all outbound dependencies) in the specified managed cluster. The operation returns properties of each egress endpoint. </remarks>
         public virtual Pageable<OutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpoints(CancellationToken cancellationToken = default)
         {
             Page<OutboundEnvironmentEndpoint> FirstPageFunc(int? pageSizeHint)
@@ -1084,12 +1048,11 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Gets a list of supported Kubernetes versions for the specified agent pool.
+        /// See [supported Kubernetes versions](https://docs.microsoft.com/azure/aks/supported-kubernetes-versions) for more details about the version lifecycle.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/availableAgentPoolVersions
         /// Operation Id: AgentPools_GetAvailableAgentPoolVersions
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> See [supported Kubernetes versions](https://docs.microsoft.com/azure/aks/supported-kubernetes-versions) for more details about the version lifecycle. </remarks>
         public virtual async Task<Response<AgentPoolAvailableVersions>> GetAvailableAgentPoolVersionsAgentPoolAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _agentPoolsClientDiagnostics.CreateScope("ManagedClusterResource.GetAvailableAgentPoolVersionsAgentPool");
@@ -1107,12 +1070,11 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Gets a list of supported Kubernetes versions for the specified agent pool.
+        /// See [supported Kubernetes versions](https://docs.microsoft.com/azure/aks/supported-kubernetes-versions) for more details about the version lifecycle.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/availableAgentPoolVersions
         /// Operation Id: AgentPools_GetAvailableAgentPoolVersions
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> See [supported Kubernetes versions](https://docs.microsoft.com/azure/aks/supported-kubernetes-versions) for more details about the version lifecycle. </remarks>
         public virtual Response<AgentPoolAvailableVersions> GetAvailableAgentPoolVersionsAgentPool(CancellationToken cancellationToken = default)
         {
             using var scope = _agentPoolsClientDiagnostics.CreateScope("ManagedClusterResource.GetAvailableAgentPoolVersionsAgentPool");
@@ -1130,13 +1092,12 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Gets a list of private link resources in the specified managed cluster.
+        /// To learn more about private clusters, see: https://docs.microsoft.com/azure/aks/private-clusters
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/privateLinkResources
         /// Operation Id: PrivateLinkResources_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ContainerServicePrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> To learn more about private clusters, see: https://docs.microsoft.com/azure/aks/private-clusters. </remarks>
         public virtual AsyncPageable<ContainerServicePrivateLinkResource> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ContainerServicePrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
@@ -1158,13 +1119,12 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Gets a list of private link resources in the specified managed cluster.
+        /// To learn more about private clusters, see: https://docs.microsoft.com/azure/aks/private-clusters
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/privateLinkResources
         /// Operation Id: PrivateLinkResources_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContainerServicePrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> To learn more about private clusters, see: https://docs.microsoft.com/azure/aks/private-clusters. </remarks>
         public virtual Pageable<ContainerServicePrivateLinkResource> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
             Page<ContainerServicePrivateLinkResource> FirstPageFunc(int? pageSizeHint)
@@ -1193,7 +1153,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="containerServicePrivateLinkResource"> Parameters required in order to resolve a private link service ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerServicePrivateLinkResource"/> is null. </exception>
-        /// <remarks> Gets the private link service ID for the specified managed cluster. </remarks>
         public virtual async Task<Response<ContainerServicePrivateLinkResource>> PostResolvePrivateLinkServiceIdAsync(ContainerServicePrivateLinkResource containerServicePrivateLinkResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(containerServicePrivateLinkResource, nameof(containerServicePrivateLinkResource));
@@ -1220,7 +1179,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="containerServicePrivateLinkResource"> Parameters required in order to resolve a private link service ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerServicePrivateLinkResource"/> is null. </exception>
-        /// <remarks> Gets the private link service ID for the specified managed cluster. </remarks>
         public virtual Response<ContainerServicePrivateLinkResource> PostResolvePrivateLinkServiceId(ContainerServicePrivateLinkResource containerServicePrivateLinkResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(containerServicePrivateLinkResource, nameof(containerServicePrivateLinkResource));
@@ -1240,7 +1198,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Gets a managed cluster.
+        /// Add a tag to the current resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}
         /// Operation Id: ManagedClusters_Get
         /// </summary>
@@ -1248,7 +1206,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        /// <remarks> Add a tag to the current resource. </remarks>
         public virtual async Task<Response<ManagedClusterResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -1272,7 +1229,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Gets a managed cluster.
+        /// Add a tag to the current resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}
         /// Operation Id: ManagedClusters_Get
         /// </summary>
@@ -1280,7 +1237,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        /// <remarks> Add a tag to the current resource. </remarks>
         public virtual Response<ManagedClusterResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -1304,14 +1260,13 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Gets a managed cluster.
+        /// Replace the tags on the resource with the given set.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}
         /// Operation Id: ManagedClusters_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        /// <remarks> Replace the tags on the resource with the given set. </remarks>
         public virtual async Task<Response<ManagedClusterResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -1335,14 +1290,13 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Gets a managed cluster.
+        /// Replace the tags on the resource with the given set.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}
         /// Operation Id: ManagedClusters_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        /// <remarks> Replace the tags on the resource with the given set. </remarks>
         public virtual Response<ManagedClusterResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -1366,14 +1320,13 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Gets a managed cluster.
+        /// Removes a tag by key from the resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}
         /// Operation Id: ManagedClusters_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <remarks> Removes a tag by key from the resource. </remarks>
         public virtual async Task<Response<ManagedClusterResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -1396,14 +1349,13 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Gets a managed cluster.
+        /// Removes a tag by key from the resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}
         /// Operation Id: ManagedClusters_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <remarks> Removes a tag by key from the resource. </remarks>
         public virtual Response<ManagedClusterResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));

@@ -87,12 +87,11 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets the category of ResourceHealthMetadata to use for the given site
+        /// Description for Gets the category of ResourceHealthMetadata to use for the given site
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/resourceHealthMetadata/default
         /// Operation Id: ResourceHealthMetadata_GetBySite
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Gets the category of ResourceHealthMetadata to use for the given site. </remarks>
         public virtual async Task<Response<SiteResourceHealthMetadataResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteResourceHealthMetadataResourceHealthMetadataClientDiagnostics.CreateScope("SiteResourceHealthMetadataResource.Get");
@@ -112,12 +111,11 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets the category of ResourceHealthMetadata to use for the given site
+        /// Description for Gets the category of ResourceHealthMetadata to use for the given site
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/resourceHealthMetadata/default
         /// Operation Id: ResourceHealthMetadata_GetBySite
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Gets the category of ResourceHealthMetadata to use for the given site. </remarks>
         public virtual Response<SiteResourceHealthMetadataResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _siteResourceHealthMetadataResourceHealthMetadataClientDiagnostics.CreateScope("SiteResourceHealthMetadataResource.Get");

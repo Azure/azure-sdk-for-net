@@ -58,14 +58,13 @@ namespace Azure.ResourceManager.Communication
             return message;
         }
 
-        /// <summary> Get. </summary>
+        /// <summary> Get the EmailService and its properties. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="emailServiceName"> The name of the EmailService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="emailServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="emailServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Get the EmailService and its properties. </remarks>
         public async Task<Response<EmailServiceResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string emailServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -90,14 +89,13 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        /// <summary> Get. </summary>
+        /// <summary> Get the EmailService and its properties. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="emailServiceName"> The name of the EmailService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="emailServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="emailServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Get the EmailService and its properties. </remarks>
         public Response<EmailServiceResourceData> Get(string subscriptionId, string resourceGroupName, string emailServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -146,7 +144,7 @@ namespace Azure.ResourceManager.Communication
             return message;
         }
 
-        /// <summary> Create Or Update. </summary>
+        /// <summary> Create a new EmailService or update an existing EmailService. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="emailServiceName"> The name of the EmailService resource. </param>
@@ -154,7 +152,6 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="emailServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Create a new EmailService or update an existing EmailService. </remarks>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string emailServiceName, EmailServiceResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -174,7 +171,7 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        /// <summary> Create Or Update. </summary>
+        /// <summary> Create a new EmailService or update an existing EmailService. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="emailServiceName"> The name of the EmailService resource. </param>
@@ -182,7 +179,6 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="emailServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Create a new EmailService or update an existing EmailService. </remarks>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string emailServiceName, EmailServiceResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -222,14 +218,13 @@ namespace Azure.ResourceManager.Communication
             return message;
         }
 
-        /// <summary> Delete. </summary>
+        /// <summary> Operation to delete a EmailService. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="emailServiceName"> The name of the EmailService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="emailServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="emailServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Operation to delete a EmailService. </remarks>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string emailServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -249,14 +244,13 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        /// <summary> Delete. </summary>
+        /// <summary> Operation to delete a EmailService. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="emailServiceName"> The name of the EmailService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="emailServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="emailServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Operation to delete a EmailService. </remarks>
         public Response Delete(string subscriptionId, string resourceGroupName, string emailServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -300,7 +294,7 @@ namespace Azure.ResourceManager.Communication
             return message;
         }
 
-        /// <summary> Update. </summary>
+        /// <summary> Operation to update an existing EmailService. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="emailServiceName"> The name of the EmailService resource. </param>
@@ -308,7 +302,6 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="emailServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Operation to update an existing EmailService. </remarks>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string emailServiceName, EmailServiceResourcePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -328,7 +321,7 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        /// <summary> Update. </summary>
+        /// <summary> Operation to update an existing EmailService. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="emailServiceName"> The name of the EmailService resource. </param>
@@ -336,7 +329,6 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="emailServiceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="emailServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Operation to update an existing EmailService. </remarks>
         public Response Update(string subscriptionId, string resourceGroupName, string emailServiceName, EmailServiceResourcePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -373,12 +365,11 @@ namespace Azure.ResourceManager.Communication
             return message;
         }
 
-        /// <summary> List By Subscription. </summary>
+        /// <summary> Handles requests to list all resources in a subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Handles requests to list all resources in a subscription. </remarks>
         public async Task<Response<EmailServiceResourceList>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -399,12 +390,11 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        /// <summary> List By Subscription. </summary>
+        /// <summary> Handles requests to list all resources in a subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Handles requests to list all resources in a subscription. </remarks>
         public Response<EmailServiceResourceList> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -444,13 +434,12 @@ namespace Azure.ResourceManager.Communication
             return message;
         }
 
-        /// <summary> List By Resource Group. </summary>
+        /// <summary> Handles requests to list all resources in a resource group. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Handles requests to list all resources in a resource group. </remarks>
         public async Task<Response<EmailServiceResourceList>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -472,13 +461,12 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        /// <summary> List By Resource Group. </summary>
+        /// <summary> Handles requests to list all resources in a resource group. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Handles requests to list all resources in a resource group. </remarks>
         public Response<EmailServiceResourceList> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -517,12 +505,11 @@ namespace Azure.ResourceManager.Communication
             return message;
         }
 
-        /// <summary> List Verified Domains From Exchange Online. </summary>
+        /// <summary> Get a list of domains that are fully verified in Exchange Online. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Get a list of domains that are fully verified in Exchange Online. </remarks>
         public async Task<Response<IReadOnlyList<string>>> ListVerifiedExchangeOnlineDomainsAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -548,12 +535,11 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        /// <summary> List Verified Domains From Exchange Online. </summary>
+        /// <summary> Get a list of domains that are fully verified in Exchange Online. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Get a list of domains that are fully verified in Exchange Online. </remarks>
         public Response<IReadOnlyList<string>> ListVerifiedExchangeOnlineDomains(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -593,13 +579,12 @@ namespace Azure.ResourceManager.Communication
             return message;
         }
 
-        /// <summary> List By Subscription. </summary>
+        /// <summary> Handles requests to list all resources in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Handles requests to list all resources in a subscription. </remarks>
         public async Task<Response<EmailServiceResourceList>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -621,13 +606,12 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        /// <summary> List By Subscription. </summary>
+        /// <summary> Handles requests to list all resources in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Handles requests to list all resources in a subscription. </remarks>
         public Response<EmailServiceResourceList> ListBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -663,14 +647,13 @@ namespace Azure.ResourceManager.Communication
             return message;
         }
 
-        /// <summary> List By Resource Group. </summary>
+        /// <summary> Handles requests to list all resources in a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Handles requests to list all resources in a resource group. </remarks>
         public async Task<Response<EmailServiceResourceList>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -693,14 +676,13 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        /// <summary> List By Resource Group. </summary>
+        /// <summary> Handles requests to list all resources in a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Handles requests to list all resources in a resource group. </remarks>
         public Response<EmailServiceResourceList> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));

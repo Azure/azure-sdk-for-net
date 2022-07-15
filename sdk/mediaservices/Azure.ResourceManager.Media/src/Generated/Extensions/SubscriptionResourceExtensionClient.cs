@@ -60,13 +60,12 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// List Media Services accounts
+        /// List Media Services accounts in the subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Media/mediaservices
         /// Operation Id: Mediaservices_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MediaserviceResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List Media Services accounts in the subscription. </remarks>
         public virtual AsyncPageable<MediaserviceResource> GetMediaservicesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<MediaserviceResource>> FirstPageFunc(int? pageSizeHint)
@@ -103,13 +102,12 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// List Media Services accounts
+        /// List Media Services accounts in the subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Media/mediaservices
         /// Operation Id: Mediaservices_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MediaserviceResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List Media Services accounts in the subscription. </remarks>
         public virtual Pageable<MediaserviceResource> GetMediaservices(CancellationToken cancellationToken = default)
         {
             Page<MediaserviceResource> FirstPageFunc(int? pageSizeHint)
@@ -146,14 +144,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Check Name Availability
+        /// Checks whether the Media Service resource name is available.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/checkNameAvailability
         /// Operation Id: Locations_CheckNameAvailability
         /// </summary>
         /// <param name="locationName"> Location name. </param>
         /// <param name="content"> The request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Checks whether the Media Service resource name is available. </remarks>
         public virtual async Task<Response<EntityNameAvailabilityCheckOutput>> CheckNameAvailabilityLocationAsync(string locationName, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityLocation");
@@ -171,14 +168,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Check Name Availability
+        /// Checks whether the Media Service resource name is available.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/checkNameAvailability
         /// Operation Id: Locations_CheckNameAvailability
         /// </summary>
         /// <param name="locationName"> Location name. </param>
         /// <param name="content"> The request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Checks whether the Media Service resource name is available. </remarks>
         public virtual Response<EntityNameAvailabilityCheckOutput> CheckNameAvailabilityLocation(string locationName, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityLocation");
@@ -196,14 +192,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get operation status.
+        /// Get media service operation status.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/mediaServicesOperationStatuses/{operationId}
         /// Operation Id: MediaServicesOperationStatuses_Get
         /// </summary>
         /// <param name="locationName"> Location name. </param>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get media service operation status. </remarks>
         public virtual async Task<Response<MediaServiceOperationStatus>> GetMediaServicesOperationStatusAsync(string locationName, string operationId, CancellationToken cancellationToken = default)
         {
             using var scope = MediaServicesOperationStatusesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMediaServicesOperationStatus");
@@ -221,14 +216,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get operation status.
+        /// Get media service operation status.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/mediaServicesOperationStatuses/{operationId}
         /// Operation Id: MediaServicesOperationStatuses_Get
         /// </summary>
         /// <param name="locationName"> Location name. </param>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get media service operation status. </remarks>
         public virtual Response<MediaServiceOperationStatus> GetMediaServicesOperationStatus(string locationName, string operationId, CancellationToken cancellationToken = default)
         {
             using var scope = MediaServicesOperationStatusesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMediaServicesOperationStatus");

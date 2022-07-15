@@ -54,12 +54,11 @@ namespace Azure.ResourceManager.Workloads
             return message;
         }
 
-        /// <summary> Gets a list of SAP monitors in the specified subscription. </summary>
+        /// <summary> Gets a list of SAP monitors in the specified subscription. The operations returns various properties of each SAP monitor. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Gets a list of SAP monitors in the specified subscription. The operations returns various properties of each SAP monitor. </remarks>
         public async Task<Response<MonitorListResult>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -80,12 +79,11 @@ namespace Azure.ResourceManager.Workloads
             }
         }
 
-        /// <summary> Gets a list of SAP monitors in the specified subscription. </summary>
+        /// <summary> Gets a list of SAP monitors in the specified subscription. The operations returns various properties of each SAP monitor. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Gets a list of SAP monitors in the specified subscription. The operations returns various properties of each SAP monitor. </remarks>
         public Response<MonitorListResult> List(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -125,13 +123,12 @@ namespace Azure.ResourceManager.Workloads
             return message;
         }
 
-        /// <summary> Gets a list of SAP monitors. </summary>
+        /// <summary> Gets a list of SAP monitors in the specified resource group. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Gets a list of SAP monitors in the specified resource group. </remarks>
         public async Task<Response<MonitorListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -153,13 +150,12 @@ namespace Azure.ResourceManager.Workloads
             }
         }
 
-        /// <summary> Gets a list of SAP monitors. </summary>
+        /// <summary> Gets a list of SAP monitors in the specified resource group. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Gets a list of SAP monitors in the specified resource group. </remarks>
         public Response<MonitorListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -201,14 +197,13 @@ namespace Azure.ResourceManager.Workloads
             return message;
         }
 
-        /// <summary> Gets properties of a SAP monitor. </summary>
+        /// <summary> Gets properties of a SAP monitor for the specified subscription, resource group, and resource name. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Name of the SAP monitor resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Gets properties of a SAP monitor for the specified subscription, resource group, and resource name. </remarks>
         public async Task<Response<SapMonitorData>> GetAsync(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -233,14 +228,13 @@ namespace Azure.ResourceManager.Workloads
             }
         }
 
-        /// <summary> Gets properties of a SAP monitor. </summary>
+        /// <summary> Gets properties of a SAP monitor for the specified subscription, resource group, and resource name. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Name of the SAP monitor resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Gets properties of a SAP monitor for the specified subscription, resource group, and resource name. </remarks>
         public Response<SapMonitorData> Get(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -289,7 +283,7 @@ namespace Azure.ResourceManager.Workloads
             return message;
         }
 
-        /// <summary> Creates a SAP monitor. </summary>
+        /// <summary> Creates a SAP monitor for the specified subscription, resource group, and resource name. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Name of the SAP monitor resource. </param>
@@ -297,7 +291,6 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Creates a SAP monitor for the specified subscription, resource group, and resource name. </remarks>
         public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string monitorName, SapMonitorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -317,7 +310,7 @@ namespace Azure.ResourceManager.Workloads
             }
         }
 
-        /// <summary> Creates a SAP monitor. </summary>
+        /// <summary> Creates a SAP monitor for the specified subscription, resource group, and resource name. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Name of the SAP monitor resource. </param>
@@ -325,7 +318,6 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Creates a SAP monitor for the specified subscription, resource group, and resource name. </remarks>
         public Response Create(string subscriptionId, string resourceGroupName, string monitorName, SapMonitorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -365,14 +357,13 @@ namespace Azure.ResourceManager.Workloads
             return message;
         }
 
-        /// <summary> Deletes a SAP monitor. </summary>
+        /// <summary> Deletes a SAP monitor with the specified subscription, resource group, and SAP monitor name. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Name of the SAP monitor resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Deletes a SAP monitor with the specified subscription, resource group, and SAP monitor name. </remarks>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -392,14 +383,13 @@ namespace Azure.ResourceManager.Workloads
             }
         }
 
-        /// <summary> Deletes a SAP monitor. </summary>
+        /// <summary> Deletes a SAP monitor with the specified subscription, resource group, and SAP monitor name. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Name of the SAP monitor resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Deletes a SAP monitor with the specified subscription, resource group, and SAP monitor name. </remarks>
         public Response Delete(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -443,7 +433,7 @@ namespace Azure.ResourceManager.Workloads
             return message;
         }
 
-        /// <summary> Patches the Tags field of a SAP monitor. </summary>
+        /// <summary> Patches the Tags field of a SAP monitor for the specified subscription, resource group, and SAP monitor name. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Name of the SAP monitor resource. </param>
@@ -451,7 +441,6 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Patches the Tags field of a SAP monitor for the specified subscription, resource group, and SAP monitor name. </remarks>
         public async Task<Response<SapMonitorData>> UpdateAsync(string subscriptionId, string resourceGroupName, string monitorName, SapMonitorPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -475,7 +464,7 @@ namespace Azure.ResourceManager.Workloads
             }
         }
 
-        /// <summary> Patches the Tags field of a SAP monitor. </summary>
+        /// <summary> Patches the Tags field of a SAP monitor for the specified subscription, resource group, and SAP monitor name. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Name of the SAP monitor resource. </param>
@@ -483,7 +472,6 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Patches the Tags field of a SAP monitor for the specified subscription, resource group, and SAP monitor name. </remarks>
         public Response<SapMonitorData> Update(string subscriptionId, string resourceGroupName, string monitorName, SapMonitorPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -521,13 +509,12 @@ namespace Azure.ResourceManager.Workloads
             return message;
         }
 
-        /// <summary> Gets a list of SAP monitors in the specified subscription. </summary>
+        /// <summary> Gets a list of SAP monitors in the specified subscription. The operations returns various properties of each SAP monitor. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Gets a list of SAP monitors in the specified subscription. The operations returns various properties of each SAP monitor. </remarks>
         public async Task<Response<MonitorListResult>> ListNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -549,13 +536,12 @@ namespace Azure.ResourceManager.Workloads
             }
         }
 
-        /// <summary> Gets a list of SAP monitors in the specified subscription. </summary>
+        /// <summary> Gets a list of SAP monitors in the specified subscription. The operations returns various properties of each SAP monitor. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Gets a list of SAP monitors in the specified subscription. The operations returns various properties of each SAP monitor. </remarks>
         public Response<MonitorListResult> ListNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -591,14 +577,13 @@ namespace Azure.ResourceManager.Workloads
             return message;
         }
 
-        /// <summary> Gets a list of SAP monitors. </summary>
+        /// <summary> Gets a list of SAP monitors in the specified resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Gets a list of SAP monitors in the specified resource group. </remarks>
         public async Task<Response<MonitorListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -621,14 +606,13 @@ namespace Azure.ResourceManager.Workloads
             }
         }
 
-        /// <summary> Gets a list of SAP monitors. </summary>
+        /// <summary> Gets a list of SAP monitors in the specified resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Gets a list of SAP monitors in the specified resource group. </remarks>
         public Response<MonitorListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));

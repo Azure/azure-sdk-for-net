@@ -87,12 +87,11 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get group ID.
+        /// Get details of a group ID.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/privateLinkResources/{name}
         /// Operation Id: PrivateLinkResources_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get details of a group ID. </remarks>
         public virtual async Task<Response<MediaPrivateLinkResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _mediaPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("MediaPrivateLinkResource.Get");
@@ -112,12 +111,11 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get group ID.
+        /// Get details of a group ID.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/privateLinkResources/{name}
         /// Operation Id: PrivateLinkResources_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get details of a group ID. </remarks>
         public virtual Response<MediaPrivateLinkResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _mediaPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("MediaPrivateLinkResource.Get");

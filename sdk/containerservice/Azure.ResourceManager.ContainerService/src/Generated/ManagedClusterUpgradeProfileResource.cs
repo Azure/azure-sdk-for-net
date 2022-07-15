@@ -92,7 +92,6 @@ namespace Azure.ResourceManager.ContainerService
         /// Operation Id: ManagedClusters_GetUpgradeProfile
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Gets the upgrade profile of a managed cluster. </remarks>
         public virtual async Task<Response<ManagedClusterUpgradeProfileResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _managedClusterUpgradeProfileManagedClustersClientDiagnostics.CreateScope("ManagedClusterUpgradeProfileResource.Get");
@@ -117,7 +116,6 @@ namespace Azure.ResourceManager.ContainerService
         /// Operation Id: ManagedClusters_GetUpgradeProfile
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Gets the upgrade profile of a managed cluster. </remarks>
         public virtual Response<ManagedClusterUpgradeProfileResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _managedClusterUpgradeProfileManagedClustersClientDiagnostics.CreateScope("ManagedClusterUpgradeProfileResource.Get");

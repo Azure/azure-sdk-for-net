@@ -88,12 +88,11 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get properties of a multi-role pool.
+        /// Description for Get properties of a multi-role pool.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default
         /// Operation Id: AppServiceEnvironments_GetMultiRolePool
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Get properties of a multi-role pool. </remarks>
         public virtual async Task<Response<HostingEnvironmentMultiRolePoolResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentMultiRolePoolResource.Get");
@@ -113,12 +112,11 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get properties of a multi-role pool.
+        /// Description for Get properties of a multi-role pool.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default
         /// Operation Id: AppServiceEnvironments_GetMultiRolePool
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Get properties of a multi-role pool. </remarks>
         public virtual Response<HostingEnvironmentMultiRolePoolResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentMultiRolePoolResource.Get");
@@ -138,14 +136,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Create or update a multi-role pool.
+        /// Description for Create or update a multi-role pool.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default
         /// Operation Id: AppServiceEnvironments_UpdateMultiRolePool
         /// </summary>
         /// <param name="data"> Properties of the multi-role pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Description for Create or update a multi-role pool. </remarks>
         public virtual async Task<Response<HostingEnvironmentMultiRolePoolResource>> UpdateAsync(WorkerPoolResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -165,14 +162,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Create or update a multi-role pool.
+        /// Description for Create or update a multi-role pool.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default
         /// Operation Id: AppServiceEnvironments_UpdateMultiRolePool
         /// </summary>
         /// <param name="data"> Properties of the multi-role pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Description for Create or update a multi-role pool. </remarks>
         public virtual Response<HostingEnvironmentMultiRolePoolResource> Update(WorkerPoolResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -192,7 +188,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Create or update a multi-role pool.
+        /// Description for Create or update a multi-role pool.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default
         /// Operation Id: AppServiceEnvironments_CreateOrUpdateMultiRolePool
         /// </summary>
@@ -200,7 +196,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> Properties of the multi-role pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Description for Create or update a multi-role pool. </remarks>
         public virtual async Task<ArmOperation<HostingEnvironmentMultiRolePoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, WorkerPoolResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -223,7 +218,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Create or update a multi-role pool.
+        /// Description for Create or update a multi-role pool.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default
         /// Operation Id: AppServiceEnvironments_CreateOrUpdateMultiRolePool
         /// </summary>
@@ -231,7 +226,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> Properties of the multi-role pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Description for Create or update a multi-role pool. </remarks>
         public virtual ArmOperation<HostingEnvironmentMultiRolePoolResource> CreateOrUpdate(WaitUntil waitUntil, WorkerPoolResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -254,7 +248,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get metric definitions for a specific instance of a multi-role pool of an App Service Environment.
+        /// Description for Get metric definitions for a specific instance of a multi-role pool of an App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default/instances/{instance}/metricdefinitions
         /// Operation Id: AppServiceEnvironments_ListMultiRolePoolInstanceMetricDefinitions
         /// </summary>
@@ -263,7 +257,6 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="instance"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instance"/> is null. </exception>
         /// <returns> An async collection of <see cref="ResourceMetricDefinition" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Description for Get metric definitions for a specific instance of a multi-role pool of an App Service Environment. </remarks>
         public virtual AsyncPageable<ResourceMetricDefinition> GetMultiRolePoolInstanceMetricDefinitionsAsync(string instance, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(instance, nameof(instance));
@@ -302,7 +295,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get metric definitions for a specific instance of a multi-role pool of an App Service Environment.
+        /// Description for Get metric definitions for a specific instance of a multi-role pool of an App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default/instances/{instance}/metricdefinitions
         /// Operation Id: AppServiceEnvironments_ListMultiRolePoolInstanceMetricDefinitions
         /// </summary>
@@ -311,7 +304,6 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="instance"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instance"/> is null. </exception>
         /// <returns> A collection of <see cref="ResourceMetricDefinition" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Description for Get metric definitions for a specific instance of a multi-role pool of an App Service Environment. </remarks>
         public virtual Pageable<ResourceMetricDefinition> GetMultiRolePoolInstanceMetricDefinitions(string instance, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(instance, nameof(instance));
@@ -350,13 +342,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get metric definitions for a multi-role pool of an App Service Environment.
+        /// Description for Get metric definitions for a multi-role pool of an App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default/metricdefinitions
         /// Operation Id: AppServiceEnvironments_ListMultiRoleMetricDefinitions
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourceMetricDefinition" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Description for Get metric definitions for a multi-role pool of an App Service Environment. </remarks>
         public virtual AsyncPageable<ResourceMetricDefinition> GetMultiRoleMetricDefinitionsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ResourceMetricDefinition>> FirstPageFunc(int? pageSizeHint)
@@ -393,13 +384,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get metric definitions for a multi-role pool of an App Service Environment.
+        /// Description for Get metric definitions for a multi-role pool of an App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default/metricdefinitions
         /// Operation Id: AppServiceEnvironments_ListMultiRoleMetricDefinitions
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceMetricDefinition" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Description for Get metric definitions for a multi-role pool of an App Service Environment. </remarks>
         public virtual Pageable<ResourceMetricDefinition> GetMultiRoleMetricDefinitions(CancellationToken cancellationToken = default)
         {
             Page<ResourceMetricDefinition> FirstPageFunc(int? pageSizeHint)
@@ -436,13 +426,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get available SKUs for scaling a multi-role pool.
+        /// Description for Get available SKUs for scaling a multi-role pool.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default/skus
         /// Operation Id: AppServiceEnvironments_ListMultiRolePoolSkus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SkuInfo" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Description for Get available SKUs for scaling a multi-role pool. </remarks>
         public virtual AsyncPageable<SkuInfo> GetMultiRolePoolSkusAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<SkuInfo>> FirstPageFunc(int? pageSizeHint)
@@ -479,13 +468,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get available SKUs for scaling a multi-role pool.
+        /// Description for Get available SKUs for scaling a multi-role pool.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default/skus
         /// Operation Id: AppServiceEnvironments_ListMultiRolePoolSkus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SkuInfo" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Description for Get available SKUs for scaling a multi-role pool. </remarks>
         public virtual Pageable<SkuInfo> GetMultiRolePoolSkus(CancellationToken cancellationToken = default)
         {
             Page<SkuInfo> FirstPageFunc(int? pageSizeHint)
@@ -522,13 +510,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get usage metrics for a multi-role pool of an App Service Environment.
+        /// Description for Get usage metrics for a multi-role pool of an App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default/usages
         /// Operation Id: AppServiceEnvironments_ListMultiRoleUsages
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AppServiceUsage" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Description for Get usage metrics for a multi-role pool of an App Service Environment. </remarks>
         public virtual AsyncPageable<AppServiceUsage> GetMultiRoleUsagesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<AppServiceUsage>> FirstPageFunc(int? pageSizeHint)
@@ -565,13 +552,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get usage metrics for a multi-role pool of an App Service Environment.
+        /// Description for Get usage metrics for a multi-role pool of an App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default/usages
         /// Operation Id: AppServiceEnvironments_ListMultiRoleUsages
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppServiceUsage" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Description for Get usage metrics for a multi-role pool of an App Service Environment. </remarks>
         public virtual Pageable<AppServiceUsage> GetMultiRoleUsages(CancellationToken cancellationToken = default)
         {
             Page<AppServiceUsage> FirstPageFunc(int? pageSizeHint)

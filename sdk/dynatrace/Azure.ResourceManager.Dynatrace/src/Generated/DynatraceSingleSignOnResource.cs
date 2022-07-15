@@ -92,7 +92,6 @@ namespace Azure.ResourceManager.Dynatrace
         /// Operation Id: SingleSignOn_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get a DynatraceSingleSignOnResource. </remarks>
         public virtual async Task<Response<DynatraceSingleSignOnResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _dynatraceSingleSignOnResourceSingleSignOnClientDiagnostics.CreateScope("DynatraceSingleSignOnResource.Get");
@@ -117,7 +116,6 @@ namespace Azure.ResourceManager.Dynatrace
         /// Operation Id: SingleSignOn_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get a DynatraceSingleSignOnResource. </remarks>
         public virtual Response<DynatraceSingleSignOnResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _dynatraceSingleSignOnResourceSingleSignOnClientDiagnostics.CreateScope("DynatraceSingleSignOnResource.Get");
@@ -145,7 +143,6 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Create a DynatraceSingleSignOnResource. </remarks>
         public virtual async Task<ArmOperation<DynatraceSingleSignOnResource>> UpdateAsync(WaitUntil waitUntil, DynatraceSingleSignOnResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -176,7 +173,6 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Create a DynatraceSingleSignOnResource. </remarks>
         public virtual ArmOperation<DynatraceSingleSignOnResource> Update(WaitUntil waitUntil, DynatraceSingleSignOnResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));

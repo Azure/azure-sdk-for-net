@@ -64,28 +64,26 @@ namespace Azure.ResourceManager.ExtendedLocation
         }
 
         /// <summary>
-        /// Gets a list of Custom Locations in a subscription.
+        /// Gets a list of Custom Locations in the specified subscription. The operation returns properties of each Custom Location
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ExtendedLocation/customLocations
         /// Operation Id: CustomLocations_ListBySubscription
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CustomLocationResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Gets a list of Custom Locations in the specified subscription. The operation returns properties of each Custom Location. </remarks>
         public static AsyncPageable<CustomLocationResource> GetCustomLocationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetCustomLocationsAsync(cancellationToken);
         }
 
         /// <summary>
-        /// Gets a list of Custom Locations in a subscription.
+        /// Gets a list of Custom Locations in the specified subscription. The operation returns properties of each Custom Location
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ExtendedLocation/customLocations
         /// Operation Id: CustomLocations_ListBySubscription
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CustomLocationResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Gets a list of Custom Locations in the specified subscription. The operation returns properties of each Custom Location. </remarks>
         public static Pageable<CustomLocationResource> GetCustomLocations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetCustomLocations(cancellationToken);
@@ -109,7 +107,7 @@ namespace Azure.ResourceManager.ExtendedLocation
         }
 
         /// <summary>
-        /// Gets a Custom Location.
+        /// Gets the details of the customLocation with a specified resource group and name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
         /// Operation Id: CustomLocations_Get
         /// </summary>
@@ -118,7 +116,6 @@ namespace Azure.ResourceManager.ExtendedLocation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <remarks> Gets the details of the customLocation with a specified resource group and name. </remarks>
         [ForwardsClientCalls]
         public static async Task<Response<CustomLocationResource>> GetCustomLocationAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
@@ -126,7 +123,7 @@ namespace Azure.ResourceManager.ExtendedLocation
         }
 
         /// <summary>
-        /// Gets a Custom Location.
+        /// Gets the details of the customLocation with a specified resource group and name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
         /// Operation Id: CustomLocations_Get
         /// </summary>
@@ -135,7 +132,6 @@ namespace Azure.ResourceManager.ExtendedLocation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <remarks> Gets the details of the customLocation with a specified resource group and name. </remarks>
         [ForwardsClientCalls]
         public static Response<CustomLocationResource> GetCustomLocation(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {

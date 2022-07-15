@@ -92,7 +92,6 @@ namespace Azure.ResourceManager.Applications.Containers
         /// Operation Id: ContainerAppsRevisionReplicas_GetReplica
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get a replica for a Container App Revision. </remarks>
         public virtual async Task<Response<ContainerAppReplicaResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _containerAppReplicaContainerAppsRevisionReplicasClientDiagnostics.CreateScope("ContainerAppReplicaResource.Get");
@@ -117,7 +116,6 @@ namespace Azure.ResourceManager.Applications.Containers
         /// Operation Id: ContainerAppsRevisionReplicas_GetReplica
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get a replica for a Container App Revision. </remarks>
         public virtual Response<ContainerAppReplicaResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _containerAppReplicaContainerAppsRevisionReplicasClientDiagnostics.CreateScope("ContainerAppReplicaResource.Get");

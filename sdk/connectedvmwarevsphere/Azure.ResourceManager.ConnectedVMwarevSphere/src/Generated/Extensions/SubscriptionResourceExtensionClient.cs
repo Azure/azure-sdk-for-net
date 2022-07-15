@@ -72,13 +72,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary>
-        /// Implements GET resourcePools in a subscription.
+        /// List of resourcePools in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/resourcePools
         /// Operation Id: ResourcePools_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourcePoolResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List of resourcePools in a subscription. </remarks>
         public virtual AsyncPageable<ResourcePoolResource> GetResourcePoolsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ResourcePoolResource>> FirstPageFunc(int? pageSizeHint)
@@ -115,13 +114,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary>
-        /// Implements GET resourcePools in a subscription.
+        /// List of resourcePools in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/resourcePools
         /// Operation Id: ResourcePools_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourcePoolResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List of resourcePools in a subscription. </remarks>
         public virtual Pageable<ResourcePoolResource> GetResourcePools(CancellationToken cancellationToken = default)
         {
             Page<ResourcePoolResource> FirstPageFunc(int? pageSizeHint)
@@ -158,13 +156,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary>
-        /// Implements GET clusters in a subscription.
+        /// List of clusters in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/clusters
         /// Operation Id: Clusters_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VMwareClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List of clusters in a subscription. </remarks>
         public virtual AsyncPageable<VMwareClusterResource> GetVMwareClustersAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<VMwareClusterResource>> FirstPageFunc(int? pageSizeHint)
@@ -201,13 +198,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary>
-        /// Implements GET clusters in a subscription.
+        /// List of clusters in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/clusters
         /// Operation Id: Clusters_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VMwareClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List of clusters in a subscription. </remarks>
         public virtual Pageable<VMwareClusterResource> GetVMwareClusters(CancellationToken cancellationToken = default)
         {
             Page<VMwareClusterResource> FirstPageFunc(int? pageSizeHint)
@@ -244,13 +240,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary>
-        /// Implements GET hosts in a subscription.
+        /// List of hosts in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/hosts
         /// Operation Id: Hosts_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VMwareHostResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List of hosts in a subscription. </remarks>
         public virtual AsyncPageable<VMwareHostResource> GetVMwareHostsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<VMwareHostResource>> FirstPageFunc(int? pageSizeHint)
@@ -287,13 +282,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary>
-        /// Implements GET hosts in a subscription.
+        /// List of hosts in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/hosts
         /// Operation Id: Hosts_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VMwareHostResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List of hosts in a subscription. </remarks>
         public virtual Pageable<VMwareHostResource> GetVMwareHosts(CancellationToken cancellationToken = default)
         {
             Page<VMwareHostResource> FirstPageFunc(int? pageSizeHint)
@@ -330,13 +324,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary>
-        /// Implements GET datastores in a subscription.
+        /// List of datastores in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/datastores
         /// Operation Id: Datastores_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VMwareDatastoreResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List of datastores in a subscription. </remarks>
         public virtual AsyncPageable<VMwareDatastoreResource> GetVMwareDatastoresAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<VMwareDatastoreResource>> FirstPageFunc(int? pageSizeHint)
@@ -373,13 +366,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary>
-        /// Implements GET datastores in a subscription.
+        /// List of datastores in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/datastores
         /// Operation Id: Datastores_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VMwareDatastoreResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List of datastores in a subscription. </remarks>
         public virtual Pageable<VMwareDatastoreResource> GetVMwareDatastores(CancellationToken cancellationToken = default)
         {
             Page<VMwareDatastoreResource> FirstPageFunc(int? pageSizeHint)
@@ -416,13 +408,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary>
-        /// Implements GET vCenters in a subscription.
+        /// List of vCenters in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/vcenters
         /// Operation Id: VCenters_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VCenterResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List of vCenters in a subscription. </remarks>
         public virtual AsyncPageable<VCenterResource> GetVCentersAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<VCenterResource>> FirstPageFunc(int? pageSizeHint)
@@ -459,13 +450,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary>
-        /// Implements GET vCenters in a subscription.
+        /// List of vCenters in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/vcenters
         /// Operation Id: VCenters_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VCenterResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List of vCenters in a subscription. </remarks>
         public virtual Pageable<VCenterResource> GetVCenters(CancellationToken cancellationToken = default)
         {
             Page<VCenterResource> FirstPageFunc(int? pageSizeHint)
@@ -502,13 +492,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary>
-        /// Implements GET virtualMachines in a subscription.
+        /// List of virtualMachines in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines
         /// Operation Id: VirtualMachines_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List of virtualMachines in a subscription. </remarks>
         public virtual AsyncPageable<VirtualMachineResource> GetVirtualMachinesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<VirtualMachineResource>> FirstPageFunc(int? pageSizeHint)
@@ -545,13 +534,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary>
-        /// Implements GET virtualMachines in a subscription.
+        /// List of virtualMachines in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines
         /// Operation Id: VirtualMachines_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List of virtualMachines in a subscription. </remarks>
         public virtual Pageable<VirtualMachineResource> GetVirtualMachines(CancellationToken cancellationToken = default)
         {
             Page<VirtualMachineResource> FirstPageFunc(int? pageSizeHint)
@@ -588,13 +576,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary>
-        /// Implements GET virtualMachineTemplates in a subscription.
+        /// List of virtualMachineTemplates in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachineTemplates
         /// Operation Id: VirtualMachineTemplates_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualMachineTemplateResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List of virtualMachineTemplates in a subscription. </remarks>
         public virtual AsyncPageable<VirtualMachineTemplateResource> GetVirtualMachineTemplatesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<VirtualMachineTemplateResource>> FirstPageFunc(int? pageSizeHint)
@@ -631,13 +618,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary>
-        /// Implements GET virtualMachineTemplates in a subscription.
+        /// List of virtualMachineTemplates in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachineTemplates
         /// Operation Id: VirtualMachineTemplates_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualMachineTemplateResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List of virtualMachineTemplates in a subscription. </remarks>
         public virtual Pageable<VirtualMachineTemplateResource> GetVirtualMachineTemplates(CancellationToken cancellationToken = default)
         {
             Page<VirtualMachineTemplateResource> FirstPageFunc(int? pageSizeHint)
@@ -674,13 +660,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary>
-        /// Implements GET virtualNetworks in a subscription.
+        /// List of virtualNetworks in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/virtualNetworks
         /// Operation Id: VirtualNetworks_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List of virtualNetworks in a subscription. </remarks>
         public virtual AsyncPageable<VirtualNetworkResource> GetVirtualNetworksAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<VirtualNetworkResource>> FirstPageFunc(int? pageSizeHint)
@@ -717,13 +702,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary>
-        /// Implements GET virtualNetworks in a subscription.
+        /// List of virtualNetworks in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/virtualNetworks
         /// Operation Id: VirtualNetworks_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List of virtualNetworks in a subscription. </remarks>
         public virtual Pageable<VirtualNetworkResource> GetVirtualNetworks(CancellationToken cancellationToken = default)
         {
             Page<VirtualNetworkResource> FirstPageFunc(int? pageSizeHint)

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets the config reference and status of an app
+        /// Description for Gets the config reference and status of an app
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/connectionstrings/{connectionStringKey}
         /// Operation Id: WebApps_GetSiteConnectionStringKeyVaultReferenceSlot
         /// </summary>
@@ -62,7 +62,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionStringKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
-        /// <remarks> Description for Gets the config reference and status of an app. </remarks>
         public virtual async Task<Response<SiteSlotConfigConnectionStringResource>> GetAsync(string connectionStringKey, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionStringKey, nameof(connectionStringKey));
@@ -84,7 +83,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets the config reference and status of an app
+        /// Description for Gets the config reference and status of an app
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/connectionstrings/{connectionStringKey}
         /// Operation Id: WebApps_GetSiteConnectionStringKeyVaultReferenceSlot
         /// </summary>
@@ -92,7 +91,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionStringKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
-        /// <remarks> Description for Gets the config reference and status of an app. </remarks>
         public virtual Response<SiteSlotConfigConnectionStringResource> Get(string connectionStringKey, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionStringKey, nameof(connectionStringKey));
@@ -114,13 +112,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets the config reference app settings and status of an app
+        /// Description for Gets the config reference app settings and status of an app
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/connectionstrings
         /// Operation Id: WebApps_GetSiteConnectionStringKeyVaultReferencesSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SiteSlotConfigConnectionStringResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Description for Gets the config reference app settings and status of an app. </remarks>
         public virtual AsyncPageable<SiteSlotConfigConnectionStringResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<SiteSlotConfigConnectionStringResource>> FirstPageFunc(int? pageSizeHint)
@@ -157,13 +154,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets the config reference app settings and status of an app
+        /// Description for Gets the config reference app settings and status of an app
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/connectionstrings
         /// Operation Id: WebApps_GetSiteConnectionStringKeyVaultReferencesSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SiteSlotConfigConnectionStringResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Description for Gets the config reference app settings and status of an app. </remarks>
         public virtual Pageable<SiteSlotConfigConnectionStringResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<SiteSlotConfigConnectionStringResource> FirstPageFunc(int? pageSizeHint)
@@ -200,7 +196,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets the config reference and status of an app
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/connectionstrings/{connectionStringKey}
         /// Operation Id: WebApps_GetSiteConnectionStringKeyVaultReferenceSlot
         /// </summary>
@@ -208,7 +204,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionStringKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string connectionStringKey, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionStringKey, nameof(connectionStringKey));
@@ -228,7 +223,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets the config reference and status of an app
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/connectionstrings/{connectionStringKey}
         /// Operation Id: WebApps_GetSiteConnectionStringKeyVaultReferenceSlot
         /// </summary>
@@ -236,7 +231,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionStringKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string connectionStringKey, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionStringKey, nameof(connectionStringKey));

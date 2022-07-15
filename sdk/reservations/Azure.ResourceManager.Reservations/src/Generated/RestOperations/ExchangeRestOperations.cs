@@ -55,14 +55,13 @@ namespace Azure.ResourceManager.Reservations
             return message;
         }
 
-        /// <summary> Exchange Reservation(s). </summary>
+        /// <summary>
+        /// Returns one or more `Reservations` in exchange for one or more `Reservation` purchases.
+        /// 
+        /// </summary>
         /// <param name="content"> Request containing the refunds and purchases that need to be executed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks>
-        /// Returns one or more `Reservations` in exchange for one or more `Reservation` purchases.
-        /// 
-        /// </remarks>
         public async Task<Response> PostAsync(ExchangeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -79,14 +78,13 @@ namespace Azure.ResourceManager.Reservations
             }
         }
 
-        /// <summary> Exchange Reservation(s). </summary>
+        /// <summary>
+        /// Returns one or more `Reservations` in exchange for one or more `Reservation` purchases.
+        /// 
+        /// </summary>
         /// <param name="content"> Request containing the refunds and purchases that need to be executed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks>
-        /// Returns one or more `Reservations` in exchange for one or more `Reservation` purchases.
-        /// 
-        /// </remarks>
         public Response Post(ExchangeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));

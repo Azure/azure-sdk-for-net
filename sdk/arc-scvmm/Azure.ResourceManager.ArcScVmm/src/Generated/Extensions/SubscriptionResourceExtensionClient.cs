@@ -64,13 +64,12 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements GET VmmServers in a subscription.
+        /// List of VmmServers in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/vmmServers
         /// Operation Id: VmmServers_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ScVmmServerResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List of VmmServers in a subscription. </remarks>
         public virtual AsyncPageable<ScVmmServerResource> GetScVmmServersAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ScVmmServerResource>> FirstPageFunc(int? pageSizeHint)
@@ -107,13 +106,12 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements GET VmmServers in a subscription.
+        /// List of VmmServers in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/vmmServers
         /// Operation Id: VmmServers_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ScVmmServerResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List of VmmServers in a subscription. </remarks>
         public virtual Pageable<ScVmmServerResource> GetScVmmServers(CancellationToken cancellationToken = default)
         {
             Page<ScVmmServerResource> FirstPageFunc(int? pageSizeHint)
@@ -150,13 +148,12 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements GET Clouds in a subscription.
+        /// List of Clouds in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/clouds
         /// Operation Id: Clouds_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ScVmmCloudResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List of Clouds in a subscription. </remarks>
         public virtual AsyncPageable<ScVmmCloudResource> GetScVmmCloudsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ScVmmCloudResource>> FirstPageFunc(int? pageSizeHint)
@@ -193,13 +190,12 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements GET Clouds in a subscription.
+        /// List of Clouds in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/clouds
         /// Operation Id: Clouds_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ScVmmCloudResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List of Clouds in a subscription. </remarks>
         public virtual Pageable<ScVmmCloudResource> GetScVmmClouds(CancellationToken cancellationToken = default)
         {
             Page<ScVmmCloudResource> FirstPageFunc(int? pageSizeHint)
@@ -236,13 +232,12 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements GET VirtualNetworks in a subscription.
+        /// List of VirtualNetworks in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/virtualNetworks
         /// Operation Id: VirtualNetworks_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ScVmmVirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List of VirtualNetworks in a subscription. </remarks>
         public virtual AsyncPageable<ScVmmVirtualNetworkResource> GetScVmmVirtualNetworksAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ScVmmVirtualNetworkResource>> FirstPageFunc(int? pageSizeHint)
@@ -279,13 +274,12 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements GET VirtualNetworks in a subscription.
+        /// List of VirtualNetworks in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/virtualNetworks
         /// Operation Id: VirtualNetworks_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ScVmmVirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List of VirtualNetworks in a subscription. </remarks>
         public virtual Pageable<ScVmmVirtualNetworkResource> GetScVmmVirtualNetworks(CancellationToken cancellationToken = default)
         {
             Page<ScVmmVirtualNetworkResource> FirstPageFunc(int? pageSizeHint)
@@ -322,13 +316,12 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements GET VirtualMachines in a subscription.
+        /// List of VirtualMachines in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/virtualMachines
         /// Operation Id: VirtualMachines_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ScVmmVirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List of VirtualMachines in a subscription. </remarks>
         public virtual AsyncPageable<ScVmmVirtualMachineResource> GetScVmmVirtualMachinesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ScVmmVirtualMachineResource>> FirstPageFunc(int? pageSizeHint)
@@ -365,13 +358,12 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements GET VirtualMachines in a subscription.
+        /// List of VirtualMachines in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/virtualMachines
         /// Operation Id: VirtualMachines_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ScVmmVirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List of VirtualMachines in a subscription. </remarks>
         public virtual Pageable<ScVmmVirtualMachineResource> GetScVmmVirtualMachines(CancellationToken cancellationToken = default)
         {
             Page<ScVmmVirtualMachineResource> FirstPageFunc(int? pageSizeHint)
@@ -408,13 +400,12 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements GET VirtualMachineTemplates in a subscription.
+        /// List of VirtualMachineTemplates in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/virtualMachineTemplates
         /// Operation Id: VirtualMachineTemplates_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ScVmmVirtualMachineTemplateResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List of VirtualMachineTemplates in a subscription. </remarks>
         public virtual AsyncPageable<ScVmmVirtualMachineTemplateResource> GetScVmmVirtualMachineTemplatesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ScVmmVirtualMachineTemplateResource>> FirstPageFunc(int? pageSizeHint)
@@ -451,13 +442,12 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements GET VirtualMachineTemplates in a subscription.
+        /// List of VirtualMachineTemplates in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/virtualMachineTemplates
         /// Operation Id: VirtualMachineTemplates_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ScVmmVirtualMachineTemplateResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List of VirtualMachineTemplates in a subscription. </remarks>
         public virtual Pageable<ScVmmVirtualMachineTemplateResource> GetScVmmVirtualMachineTemplates(CancellationToken cancellationToken = default)
         {
             Page<ScVmmVirtualMachineTemplateResource> FirstPageFunc(int? pageSizeHint)
@@ -494,13 +484,12 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements GET AvailabilitySets in a subscription.
+        /// List of AvailabilitySets in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/availabilitySets
         /// Operation Id: AvailabilitySets_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ScVmmAvailabilitySetResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List of AvailabilitySets in a subscription. </remarks>
         public virtual AsyncPageable<ScVmmAvailabilitySetResource> GetScVmmAvailabilitySetsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ScVmmAvailabilitySetResource>> FirstPageFunc(int? pageSizeHint)
@@ -537,13 +526,12 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements GET AvailabilitySets in a subscription.
+        /// List of AvailabilitySets in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/availabilitySets
         /// Operation Id: AvailabilitySets_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ScVmmAvailabilitySetResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List of AvailabilitySets in a subscription. </remarks>
         public virtual Pageable<ScVmmAvailabilitySetResource> GetScVmmAvailabilitySets(CancellationToken cancellationToken = default)
         {
             Page<ScVmmAvailabilitySetResource> FirstPageFunc(int? pageSizeHint)

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Get a specific `ReservationOrder`.
+        /// Get the details of the `ReservationOrder`.
         /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}
         /// Operation Id: ReservationOrder_Get
         /// </summary>
@@ -47,7 +47,6 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> is null. </exception>
-        /// <remarks> Get the details of the `ReservationOrder`. </remarks>
         [ForwardsClientCalls]
         public static async Task<Response<ReservationOrderResponseResource>> GetReservationOrderResponseAsync(this TenantResource tenantResource, string reservationOrderId, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -55,7 +54,7 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Get a specific `ReservationOrder`.
+        /// Get the details of the `ReservationOrder`.
         /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}
         /// Operation Id: ReservationOrder_Get
         /// </summary>
@@ -65,7 +64,6 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> is null. </exception>
-        /// <remarks> Get the details of the `ReservationOrder`. </remarks>
         [ForwardsClientCalls]
         public static Response<ReservationOrderResponseResource> GetReservationOrderResponse(this TenantResource tenantResource, string reservationOrderId, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -111,7 +109,7 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Calculate price for a `ReservationOrder`.
+        /// Calculate price for placing a `ReservationOrder`.
         /// Request Path: /providers/Microsoft.Capacity/calculatePrice
         /// Operation Id: ReservationOrder_Calculate
         /// </summary>
@@ -119,7 +117,6 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="content"> Information needed for calculate or purchase reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks> Calculate price for placing a `ReservationOrder`. </remarks>
         public static async Task<Response<CalculatePriceResponse>> CalculateReservationOrderAsync(this TenantResource tenantResource, PurchaseRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -128,7 +125,7 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Calculate price for a `ReservationOrder`.
+        /// Calculate price for placing a `ReservationOrder`.
         /// Request Path: /providers/Microsoft.Capacity/calculatePrice
         /// Operation Id: ReservationOrder_Calculate
         /// </summary>
@@ -136,7 +133,6 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="content"> Information needed for calculate or purchase reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks> Calculate price for placing a `ReservationOrder`. </remarks>
         public static Response<CalculatePriceResponse> CalculateReservationOrder(this TenantResource tenantResource, PurchaseRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -145,35 +141,34 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Get operations.
+        /// List all the operations.
         /// Request Path: /providers/Microsoft.Capacity/operations
         /// Operation Id: Operation_List
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="OperationResponse" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List all the operations. </remarks>
         public static AsyncPageable<OperationResponse> GetOperationsAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenantResource).GetOperationsAsync(cancellationToken);
         }
 
         /// <summary>
-        /// Get operations.
+        /// List all the operations.
         /// Request Path: /providers/Microsoft.Capacity/operations
         /// Operation Id: Operation_List
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OperationResponse" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List all the operations. </remarks>
         public static Pageable<OperationResponse> GetOperations(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenantResource).GetOperations(cancellationToken);
         }
 
         /// <summary>
-        /// Calculates the refund amounts and price of the new purchases.
+        /// Calculates price for exchanging `Reservations` if there are no policy errors.
+        /// 
         /// Request Path: /providers/Microsoft.Capacity/calculateExchange
         /// Operation Id: CalculateExchange_Post
         /// </summary>
@@ -182,10 +177,6 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="content"> Request containing purchases and refunds that need to be executed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks>
-        /// Calculates price for exchanging `Reservations` if there are no policy errors.
-        /// 
-        /// </remarks>
         public static async Task<ArmOperation<CalculateExchangeOperationResultResponse>> PostCalculateExchangeAsync(this TenantResource tenantResource, WaitUntil waitUntil, CalculateExchangeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -194,7 +185,8 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Calculates the refund amounts and price of the new purchases.
+        /// Calculates price for exchanging `Reservations` if there are no policy errors.
+        /// 
         /// Request Path: /providers/Microsoft.Capacity/calculateExchange
         /// Operation Id: CalculateExchange_Post
         /// </summary>
@@ -203,10 +195,6 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="content"> Request containing purchases and refunds that need to be executed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks>
-        /// Calculates price for exchanging `Reservations` if there are no policy errors.
-        /// 
-        /// </remarks>
         public static ArmOperation<CalculateExchangeOperationResultResponse> PostCalculateExchange(this TenantResource tenantResource, WaitUntil waitUntil, CalculateExchangeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -215,7 +203,8 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Exchange Reservation(s)
+        /// Returns one or more `Reservations` in exchange for one or more `Reservation` purchases.
+        /// 
         /// Request Path: /providers/Microsoft.Capacity/exchange
         /// Operation Id: Exchange_Post
         /// </summary>
@@ -224,10 +213,6 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="content"> Request containing the refunds and purchases that need to be executed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks>
-        /// Returns one or more `Reservations` in exchange for one or more `Reservation` purchases.
-        /// 
-        /// </remarks>
         public static async Task<ArmOperation<ExchangeOperationResultResponse>> PostExchangeAsync(this TenantResource tenantResource, WaitUntil waitUntil, ExchangeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -236,7 +221,8 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Exchange Reservation(s)
+        /// Returns one or more `Reservations` in exchange for one or more `Reservation` purchases.
+        /// 
         /// Request Path: /providers/Microsoft.Capacity/exchange
         /// Operation Id: Exchange_Post
         /// </summary>
@@ -245,10 +231,6 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="content"> Request containing the refunds and purchases that need to be executed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks>
-        /// Returns one or more `Reservations` in exchange for one or more `Reservation` purchases.
-        /// 
-        /// </remarks>
         public static ArmOperation<ExchangeOperationResultResponse> PostExchange(this TenantResource tenantResource, WaitUntil waitUntil, ExchangeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -378,7 +360,6 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="planId"> Plan id used to get the third party products. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Get the regions and skus that are available for RI purchase for the specified Azure subscription. </remarks>
         public static AsyncPageable<ReservationCatalog> GetCatalogAsync(this SubscriptionResource subscriptionResource, string reservedResourceType = null, AzureLocation? location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetCatalogAsync(reservedResourceType, location, publisherId, offerId, planId, cancellationToken);
@@ -397,33 +378,30 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="planId"> Plan id used to get the third party products. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Get the regions and skus that are available for RI purchase for the specified Azure subscription. </remarks>
         public static Pageable<ReservationCatalog> GetCatalog(this SubscriptionResource subscriptionResource, string reservedResourceType = null, AzureLocation? location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetCatalog(reservedResourceType, location, publisherId, offerId, planId, cancellationToken);
         }
 
         /// <summary>
-        /// Get list of applicable `Reservation`s.
+        /// Get applicable `Reservation`s that are applied to this subscription or a resource group under this subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Capacity/appliedReservations
         /// Operation Id: GetAppliedReservationList
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get applicable `Reservation`s that are applied to this subscription or a resource group under this subscription. </remarks>
         public static async Task<Response<AppliedReservations>> GetAppliedReservationListAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return await GetExtensionClient(subscriptionResource).GetAppliedReservationListAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Get list of applicable `Reservation`s.
+        /// Get applicable `Reservation`s that are applied to this subscription or a resource group under this subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Capacity/appliedReservations
         /// Operation Id: GetAppliedReservationList
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get applicable `Reservation`s that are applied to this subscription or a resource group under this subscription. </remarks>
         public static Response<AppliedReservations> GetAppliedReservationList(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetAppliedReservationList(cancellationToken);

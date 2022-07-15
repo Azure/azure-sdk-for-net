@@ -164,13 +164,12 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Calculate price for a `ReservationOrder`.
+        /// Calculate price for placing a `ReservationOrder`.
         /// Request Path: /providers/Microsoft.Capacity/calculatePrice
         /// Operation Id: ReservationOrder_Calculate
         /// </summary>
         /// <param name="content"> Information needed for calculate or purchase reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Calculate price for placing a `ReservationOrder`. </remarks>
         public virtual async Task<Response<CalculatePriceResponse>> CalculateReservationOrderAsync(PurchaseRequestContent content, CancellationToken cancellationToken = default)
         {
             using var scope = ReservationOrderResponseReservationOrderClientDiagnostics.CreateScope("TenantResourceExtensionClient.CalculateReservationOrder");
@@ -188,13 +187,12 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Calculate price for a `ReservationOrder`.
+        /// Calculate price for placing a `ReservationOrder`.
         /// Request Path: /providers/Microsoft.Capacity/calculatePrice
         /// Operation Id: ReservationOrder_Calculate
         /// </summary>
         /// <param name="content"> Information needed for calculate or purchase reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Calculate price for placing a `ReservationOrder`. </remarks>
         public virtual Response<CalculatePriceResponse> CalculateReservationOrder(PurchaseRequestContent content, CancellationToken cancellationToken = default)
         {
             using var scope = ReservationOrderResponseReservationOrderClientDiagnostics.CreateScope("TenantResourceExtensionClient.CalculateReservationOrder");
@@ -212,13 +210,12 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Get operations.
+        /// List all the operations.
         /// Request Path: /providers/Microsoft.Capacity/operations
         /// Operation Id: Operation_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="OperationResponse" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List all the operations. </remarks>
         public virtual AsyncPageable<OperationResponse> GetOperationsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<OperationResponse>> FirstPageFunc(int? pageSizeHint)
@@ -255,13 +252,12 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Get operations.
+        /// List all the operations.
         /// Request Path: /providers/Microsoft.Capacity/operations
         /// Operation Id: Operation_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OperationResponse" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List all the operations. </remarks>
         public virtual Pageable<OperationResponse> GetOperations(CancellationToken cancellationToken = default)
         {
             Page<OperationResponse> FirstPageFunc(int? pageSizeHint)
@@ -298,17 +294,14 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Calculates the refund amounts and price of the new purchases.
+        /// Calculates price for exchanging `Reservations` if there are no policy errors.
+        /// 
         /// Request Path: /providers/Microsoft.Capacity/calculateExchange
         /// Operation Id: CalculateExchange_Post
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Request containing purchases and refunds that need to be executed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks>
-        /// Calculates price for exchanging `Reservations` if there are no policy errors.
-        /// 
-        /// </remarks>
         public virtual async Task<ArmOperation<CalculateExchangeOperationResultResponse>> PostCalculateExchangeAsync(WaitUntil waitUntil, CalculateExchangeContent content, CancellationToken cancellationToken = default)
         {
             using var scope = CalculateExchangeClientDiagnostics.CreateScope("TenantResourceExtensionClient.PostCalculateExchange");
@@ -329,17 +322,14 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Calculates the refund amounts and price of the new purchases.
+        /// Calculates price for exchanging `Reservations` if there are no policy errors.
+        /// 
         /// Request Path: /providers/Microsoft.Capacity/calculateExchange
         /// Operation Id: CalculateExchange_Post
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Request containing purchases and refunds that need to be executed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks>
-        /// Calculates price for exchanging `Reservations` if there are no policy errors.
-        /// 
-        /// </remarks>
         public virtual ArmOperation<CalculateExchangeOperationResultResponse> PostCalculateExchange(WaitUntil waitUntil, CalculateExchangeContent content, CancellationToken cancellationToken = default)
         {
             using var scope = CalculateExchangeClientDiagnostics.CreateScope("TenantResourceExtensionClient.PostCalculateExchange");
@@ -360,17 +350,14 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Exchange Reservation(s)
+        /// Returns one or more `Reservations` in exchange for one or more `Reservation` purchases.
+        /// 
         /// Request Path: /providers/Microsoft.Capacity/exchange
         /// Operation Id: Exchange_Post
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Request containing the refunds and purchases that need to be executed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks>
-        /// Returns one or more `Reservations` in exchange for one or more `Reservation` purchases.
-        /// 
-        /// </remarks>
         public virtual async Task<ArmOperation<ExchangeOperationResultResponse>> PostExchangeAsync(WaitUntil waitUntil, ExchangeContent content, CancellationToken cancellationToken = default)
         {
             using var scope = ExchangeClientDiagnostics.CreateScope("TenantResourceExtensionClient.PostExchange");
@@ -391,17 +378,14 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Exchange Reservation(s)
+        /// Returns one or more `Reservations` in exchange for one or more `Reservation` purchases.
+        /// 
         /// Request Path: /providers/Microsoft.Capacity/exchange
         /// Operation Id: Exchange_Post
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Request containing the refunds and purchases that need to be executed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks>
-        /// Returns one or more `Reservations` in exchange for one or more `Reservation` purchases.
-        /// 
-        /// </remarks>
         public virtual ArmOperation<ExchangeOperationResultResponse> PostExchange(WaitUntil waitUntil, ExchangeContent content, CancellationToken cancellationToken = default)
         {
             using var scope = ExchangeClientDiagnostics.CreateScope("TenantResourceExtensionClient.PostExchange");

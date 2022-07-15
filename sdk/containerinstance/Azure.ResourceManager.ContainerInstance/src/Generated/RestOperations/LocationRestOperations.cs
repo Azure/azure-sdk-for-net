@@ -127,13 +127,12 @@ namespace Azure.ResourceManager.ContainerInstance
             return message;
         }
 
-        /// <summary> Get the list of cached images. </summary>
+        /// <summary> Get the list of cached images on specific OS type for a subscription in a region. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="location"> The identifier for the physical azure location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Get the list of cached images on specific OS type for a subscription in a region. </remarks>
         public async Task<Response<CachedImagesListResult>> ListCachedImagesAsync(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -154,13 +153,12 @@ namespace Azure.ResourceManager.ContainerInstance
             }
         }
 
-        /// <summary> Get the list of cached images. </summary>
+        /// <summary> Get the list of cached images on specific OS type for a subscription in a region. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="location"> The identifier for the physical azure location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Get the list of cached images on specific OS type for a subscription in a region. </remarks>
         public Response<CachedImagesListResult> ListCachedImages(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -200,13 +198,12 @@ namespace Azure.ResourceManager.ContainerInstance
             return message;
         }
 
-        /// <summary> Get the list of capabilities of the location. </summary>
+        /// <summary> Get the list of CPU/memory/GPU capabilities of a region. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="location"> The identifier for the physical azure location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Get the list of CPU/memory/GPU capabilities of a region. </remarks>
         public async Task<Response<CapabilitiesListResult>> ListCapabilitiesAsync(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -227,13 +224,12 @@ namespace Azure.ResourceManager.ContainerInstance
             }
         }
 
-        /// <summary> Get the list of capabilities of the location. </summary>
+        /// <summary> Get the list of CPU/memory/GPU capabilities of a region. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="location"> The identifier for the physical azure location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Get the list of CPU/memory/GPU capabilities of a region. </remarks>
         public Response<CapabilitiesListResult> ListCapabilities(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -268,14 +264,13 @@ namespace Azure.ResourceManager.ContainerInstance
             return message;
         }
 
-        /// <summary> Get the list of cached images. </summary>
+        /// <summary> Get the list of cached images on specific OS type for a subscription in a region. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="location"> The identifier for the physical azure location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Get the list of cached images on specific OS type for a subscription in a region. </remarks>
         public async Task<Response<CachedImagesListResult>> ListCachedImagesNextPageAsync(string nextLink, string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -297,14 +292,13 @@ namespace Azure.ResourceManager.ContainerInstance
             }
         }
 
-        /// <summary> Get the list of cached images. </summary>
+        /// <summary> Get the list of cached images on specific OS type for a subscription in a region. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="location"> The identifier for the physical azure location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Get the list of cached images on specific OS type for a subscription in a region. </remarks>
         public Response<CachedImagesListResult> ListCachedImagesNextPage(string nextLink, string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -340,14 +334,13 @@ namespace Azure.ResourceManager.ContainerInstance
             return message;
         }
 
-        /// <summary> Get the list of capabilities of the location. </summary>
+        /// <summary> Get the list of CPU/memory/GPU capabilities of a region. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="location"> The identifier for the physical azure location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Get the list of CPU/memory/GPU capabilities of a region. </remarks>
         public async Task<Response<CapabilitiesListResult>> ListCapabilitiesNextPageAsync(string nextLink, string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -369,14 +362,13 @@ namespace Azure.ResourceManager.ContainerInstance
             }
         }
 
-        /// <summary> Get the list of capabilities of the location. </summary>
+        /// <summary> Get the list of CPU/memory/GPU capabilities of a region. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="location"> The identifier for the physical azure location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Get the list of CPU/memory/GPU capabilities of a region. </remarks>
         public Response<CapabilitiesListResult> ListCapabilitiesNextPage(string nextLink, string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));

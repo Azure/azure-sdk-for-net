@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Retrieves a policy definition in a subscription.
+        /// This operation retrieves the policy definition in the given subscription with the given name.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}
         /// Operation Id: PolicyDefinitions_Get
         /// </summary>
@@ -196,7 +196,6 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
-        /// <remarks> This operation retrieves the policy definition in the given subscription with the given name. </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<SubscriptionPolicyDefinitionResource>> GetSubscriptionPolicyDefinitionAsync(string policyDefinitionName, CancellationToken cancellationToken = default)
         {
@@ -204,7 +203,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Retrieves a policy definition in a subscription.
+        /// This operation retrieves the policy definition in the given subscription with the given name.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}
         /// Operation Id: PolicyDefinitions_Get
         /// </summary>
@@ -212,7 +211,6 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
-        /// <remarks> This operation retrieves the policy definition in the given subscription with the given name. </remarks>
         [ForwardsClientCalls]
         public virtual Response<SubscriptionPolicyDefinitionResource> GetSubscriptionPolicyDefinition(string policyDefinitionName, CancellationToken cancellationToken = default)
         {
@@ -227,7 +225,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Retrieves a policy set definition.
+        /// This operation retrieves the policy set definition in the given subscription with the given name.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}
         /// Operation Id: PolicySetDefinitions_Get
         /// </summary>
@@ -235,7 +233,6 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
-        /// <remarks> This operation retrieves the policy set definition in the given subscription with the given name. </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<SubscriptionPolicySetDefinitionResource>> GetSubscriptionPolicySetDefinitionAsync(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
@@ -243,7 +240,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Retrieves a policy set definition.
+        /// This operation retrieves the policy set definition in the given subscription with the given name.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}
         /// Operation Id: PolicySetDefinitions_Get
         /// </summary>
@@ -251,7 +248,6 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
-        /// <remarks> This operation retrieves the policy set definition in the given subscription with the given name. </remarks>
         [ForwardsClientCalls]
         public virtual Response<SubscriptionPolicySetDefinitionResource> GetSubscriptionPolicySetDefinition(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
@@ -307,7 +303,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Deletes a predefined tag value for a predefined tag name.
+        /// This operation allows deleting a value from the list of predefined values for an existing predefined tag name. The value being deleted must not be in use as a tag value for the given tag name for any resource.
         /// Request Path: /subscriptions/{subscriptionId}/tagNames/{tagName}/tagValues/{tagValue}
         /// Operation Id: Tags_DeleteValue
         /// </summary>
@@ -316,7 +312,6 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="tagName"/> or <paramref name="tagValue"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> or <paramref name="tagValue"/> is null. </exception>
-        /// <remarks> This operation allows deleting a value from the list of predefined values for an existing predefined tag name. The value being deleted must not be in use as a tag value for the given tag name for any resource. </remarks>
         public virtual async Task<Response> DeletePredefinedTagValueAsync(string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tagName, nameof(tagName));
@@ -337,7 +332,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Deletes a predefined tag value for a predefined tag name.
+        /// This operation allows deleting a value from the list of predefined values for an existing predefined tag name. The value being deleted must not be in use as a tag value for the given tag name for any resource.
         /// Request Path: /subscriptions/{subscriptionId}/tagNames/{tagName}/tagValues/{tagValue}
         /// Operation Id: Tags_DeleteValue
         /// </summary>
@@ -346,7 +341,6 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="tagName"/> or <paramref name="tagValue"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> or <paramref name="tagValue"/> is null. </exception>
-        /// <remarks> This operation allows deleting a value from the list of predefined values for an existing predefined tag name. The value being deleted must not be in use as a tag value for the given tag name for any resource. </remarks>
         public virtual Response DeletePredefinedTagValue(string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tagName, nameof(tagName));
@@ -367,7 +361,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Creates a predefined value for a predefined tag name.
+        /// This operation allows adding a value to the list of predefined values for an existing predefined tag name. A tag value can have a maximum of 256 characters.
         /// Request Path: /subscriptions/{subscriptionId}/tagNames/{tagName}/tagValues/{tagValue}
         /// Operation Id: Tags_CreateOrUpdateValue
         /// </summary>
@@ -376,7 +370,6 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="tagName"/> or <paramref name="tagValue"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> or <paramref name="tagValue"/> is null. </exception>
-        /// <remarks> This operation allows adding a value to the list of predefined values for an existing predefined tag name. A tag value can have a maximum of 256 characters. </remarks>
         public virtual async Task<Response<PredefinedTagValue>> CreateOrUpdatePredefinedTagValueAsync(string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tagName, nameof(tagName));
@@ -397,7 +390,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Creates a predefined value for a predefined tag name.
+        /// This operation allows adding a value to the list of predefined values for an existing predefined tag name. A tag value can have a maximum of 256 characters.
         /// Request Path: /subscriptions/{subscriptionId}/tagNames/{tagName}/tagValues/{tagValue}
         /// Operation Id: Tags_CreateOrUpdateValue
         /// </summary>
@@ -406,7 +399,6 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="tagName"/> or <paramref name="tagValue"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> or <paramref name="tagValue"/> is null. </exception>
-        /// <remarks> This operation allows adding a value to the list of predefined values for an existing predefined tag name. A tag value can have a maximum of 256 characters. </remarks>
         public virtual Response<PredefinedTagValue> CreateOrUpdatePredefinedTagValue(string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tagName, nameof(tagName));
@@ -427,7 +419,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Creates a predefined tag name.
+        /// This operation allows adding a name to the list of predefined tag names for the given subscription. A tag name can have a maximum of 512 characters and is case-insensitive. Tag names cannot have the following prefixes which are reserved for Azure use: &apos;microsoft&apos;, &apos;azure&apos;, &apos;windows&apos;.
         /// Request Path: /subscriptions/{subscriptionId}/tagNames/{tagName}
         /// Operation Id: Tags_CreateOrUpdate
         /// </summary>
@@ -435,7 +427,6 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="tagName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> is null. </exception>
-        /// <remarks> This operation allows adding a name to the list of predefined tag names for the given subscription. A tag name can have a maximum of 512 characters and is case-insensitive. Tag names cannot have the following prefixes which are reserved for Azure use: &apos;microsoft&apos;, &apos;azure&apos;, &apos;windows&apos;. </remarks>
         public virtual async Task<Response<PredefinedTag>> CreateOrUpdatePredefinedTagAsync(string tagName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tagName, nameof(tagName));
@@ -455,7 +446,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Creates a predefined tag name.
+        /// This operation allows adding a name to the list of predefined tag names for the given subscription. A tag name can have a maximum of 512 characters and is case-insensitive. Tag names cannot have the following prefixes which are reserved for Azure use: &apos;microsoft&apos;, &apos;azure&apos;, &apos;windows&apos;.
         /// Request Path: /subscriptions/{subscriptionId}/tagNames/{tagName}
         /// Operation Id: Tags_CreateOrUpdate
         /// </summary>
@@ -463,7 +454,6 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="tagName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> is null. </exception>
-        /// <remarks> This operation allows adding a name to the list of predefined tag names for the given subscription. A tag name can have a maximum of 512 characters and is case-insensitive. Tag names cannot have the following prefixes which are reserved for Azure use: &apos;microsoft&apos;, &apos;azure&apos;, &apos;windows&apos;. </remarks>
         public virtual Response<PredefinedTag> CreateOrUpdatePredefinedTag(string tagName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tagName, nameof(tagName));
@@ -483,7 +473,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Deletes a predefined tag name.
+        /// This operation allows deleting a name from the list of predefined tag names for the given subscription. The name being deleted must not be in use as a tag name for any resource. All predefined values for the given name must have already been deleted.
         /// Request Path: /subscriptions/{subscriptionId}/tagNames/{tagName}
         /// Operation Id: Tags_Delete
         /// </summary>
@@ -491,7 +481,6 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="tagName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> is null. </exception>
-        /// <remarks> This operation allows deleting a name from the list of predefined tag names for the given subscription. The name being deleted must not be in use as a tag name for any resource. All predefined values for the given name must have already been deleted. </remarks>
         public virtual async Task<Response> DeletePredefinedTagAsync(string tagName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tagName, nameof(tagName));
@@ -511,7 +500,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Deletes a predefined tag name.
+        /// This operation allows deleting a name from the list of predefined tag names for the given subscription. The name being deleted must not be in use as a tag name for any resource. All predefined values for the given name must have already been deleted.
         /// Request Path: /subscriptions/{subscriptionId}/tagNames/{tagName}
         /// Operation Id: Tags_Delete
         /// </summary>
@@ -519,7 +508,6 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="tagName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> is null. </exception>
-        /// <remarks> This operation allows deleting a name from the list of predefined tag names for the given subscription. The name being deleted must not be in use as a tag name for any resource. All predefined values for the given name must have already been deleted. </remarks>
         public virtual Response DeletePredefinedTag(string tagName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tagName, nameof(tagName));
@@ -539,13 +527,12 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Gets a summary of tag usage under the subscription.
+        /// This operation performs a union of predefined tags, resource tags, resource group tags and subscription tags, and returns a summary of usage for each tag name and value under the given subscription. In case of a large number of tags, this operation may return a previously cached result.
         /// Request Path: /subscriptions/{subscriptionId}/tagNames
         /// Operation Id: Tags_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PredefinedTag" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> This operation performs a union of predefined tags, resource tags, resource group tags and subscription tags, and returns a summary of usage for each tag name and value under the given subscription. In case of a large number of tags, this operation may return a previously cached result. </remarks>
         public virtual AsyncPageable<PredefinedTag> GetAllPredefinedTagsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<PredefinedTag>> FirstPageFunc(int? pageSizeHint)
@@ -582,13 +569,12 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Gets a summary of tag usage under the subscription.
+        /// This operation performs a union of predefined tags, resource tags, resource group tags and subscription tags, and returns a summary of usage for each tag name and value under the given subscription. In case of a large number of tags, this operation may return a previously cached result.
         /// Request Path: /subscriptions/{subscriptionId}/tagNames
         /// Operation Id: Tags_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PredefinedTag" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> This operation performs a union of predefined tags, resource tags, resource group tags and subscription tags, and returns a summary of usage for each tag name and value under the given subscription. In case of a large number of tags, this operation may return a previously cached result. </remarks>
         public virtual Pageable<PredefinedTag> GetAllPredefinedTags(CancellationToken cancellationToken = default)
         {
             Page<PredefinedTag> FirstPageFunc(int? pageSizeHint)
@@ -625,14 +611,13 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Gets all available geo-locations.
+        /// This operation provides all the locations that are available for resource providers; however, each resource provider may support a subset of this list.
         /// Request Path: /subscriptions/{subscriptionId}/locations
         /// Operation Id: Subscriptions_ListLocations
         /// </summary>
         /// <param name="includeExtendedLocations"> Whether to include extended locations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="LocationExpanded" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> This operation provides all the locations that are available for resource providers; however, each resource provider may support a subset of this list. </remarks>
         public virtual AsyncPageable<LocationExpanded> GetLocationsAsync(bool? includeExtendedLocations = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<LocationExpanded>> FirstPageFunc(int? pageSizeHint)
@@ -654,14 +639,13 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Gets all available geo-locations.
+        /// This operation provides all the locations that are available for resource providers; however, each resource provider may support a subset of this list.
         /// Request Path: /subscriptions/{subscriptionId}/locations
         /// Operation Id: Subscriptions_ListLocations
         /// </summary>
         /// <param name="includeExtendedLocations"> Whether to include extended locations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LocationExpanded" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> This operation provides all the locations that are available for resource providers; however, each resource provider may support a subset of this list. </remarks>
         public virtual Pageable<LocationExpanded> GetLocations(bool? includeExtendedLocations = null, CancellationToken cancellationToken = default)
         {
             Page<LocationExpanded> FirstPageFunc(int? pageSizeHint)

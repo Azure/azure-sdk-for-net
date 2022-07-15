@@ -87,12 +87,11 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get the specified private link resource
+        /// Get the specified private link resource for the given IotHub
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/iotHubs/{resourceName}/privateLinkResources/{groupId}
         /// Operation Id: PrivateLinkResources_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get the specified private link resource for the given IotHub. </remarks>
         public virtual async Task<Response<GroupIdInformationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _groupIdInformationPrivateLinkResourcesClientDiagnostics.CreateScope("GroupIdInformationResource.Get");
@@ -112,12 +111,11 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get the specified private link resource
+        /// Get the specified private link resource for the given IotHub
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/iotHubs/{resourceName}/privateLinkResources/{groupId}
         /// Operation Id: PrivateLinkResources_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get the specified private link resource for the given IotHub. </remarks>
         public virtual Response<GroupIdInformationResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _groupIdInformationPrivateLinkResourcesClientDiagnostics.CreateScope("GroupIdInformationResource.Get");

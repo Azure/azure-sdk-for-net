@@ -87,12 +87,11 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get private endpoint connection.
+        /// Get the details of a private endpoint connection.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/privateEndpointConnections/{name}
         /// Operation Id: PrivateEndpointConnections_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get the details of a private endpoint connection. </remarks>
         public virtual async Task<Response<MediaPrivateEndpointConnectionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _mediaPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("MediaPrivateEndpointConnectionResource.Get");
@@ -112,12 +111,11 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get private endpoint connection.
+        /// Get the details of a private endpoint connection.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/privateEndpointConnections/{name}
         /// Operation Id: PrivateEndpointConnections_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get the details of a private endpoint connection. </remarks>
         public virtual Response<MediaPrivateEndpointConnectionResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _mediaPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("MediaPrivateEndpointConnectionResource.Get");
@@ -137,13 +135,12 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Delete a private endpoint connection.
+        /// Deletes a private endpoint connection.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/privateEndpointConnections/{name}
         /// Operation Id: PrivateEndpointConnections_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Deletes a private endpoint connection. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _mediaPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("MediaPrivateEndpointConnectionResource.Delete");
@@ -164,13 +161,12 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Delete a private endpoint connection.
+        /// Deletes a private endpoint connection.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/privateEndpointConnections/{name}
         /// Operation Id: PrivateEndpointConnections_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Deletes a private endpoint connection. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _mediaPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("MediaPrivateEndpointConnectionResource.Delete");
@@ -191,7 +187,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Update a private endpoint connection.
+        /// Update an existing private endpoint connection.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/privateEndpointConnections/{name}
         /// Operation Id: PrivateEndpointConnections_CreateOrUpdate
         /// </summary>
@@ -199,7 +195,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="data"> The request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Update an existing private endpoint connection. </remarks>
         public virtual async Task<ArmOperation<MediaPrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, MediaPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -222,7 +217,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Update a private endpoint connection.
+        /// Update an existing private endpoint connection.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/privateEndpointConnections/{name}
         /// Operation Id: PrivateEndpointConnections_CreateOrUpdate
         /// </summary>
@@ -230,7 +225,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="data"> The request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Update an existing private endpoint connection. </remarks>
         public virtual ArmOperation<MediaPrivateEndpointConnectionResource> Update(WaitUntil waitUntil, MediaPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));

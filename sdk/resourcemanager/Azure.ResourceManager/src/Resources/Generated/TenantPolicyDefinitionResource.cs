@@ -87,12 +87,11 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Retrieves a built-in policy definition.
+        /// This operation retrieves the built-in policy definition with the given name.
         /// Request Path: /providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}
         /// Operation Id: PolicyDefinitions_GetBuiltIn
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> This operation retrieves the built-in policy definition with the given name. </remarks>
         public virtual async Task<Response<TenantPolicyDefinitionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _tenantPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("TenantPolicyDefinitionResource.Get");
@@ -112,12 +111,11 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Retrieves a built-in policy definition.
+        /// This operation retrieves the built-in policy definition with the given name.
         /// Request Path: /providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}
         /// Operation Id: PolicyDefinitions_GetBuiltIn
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> This operation retrieves the built-in policy definition with the given name. </remarks>
         public virtual Response<TenantPolicyDefinitionResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _tenantPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("TenantPolicyDefinitionResource.Get");

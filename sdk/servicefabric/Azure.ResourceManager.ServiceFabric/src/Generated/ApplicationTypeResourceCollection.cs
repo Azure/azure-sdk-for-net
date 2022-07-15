@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary>
-        /// Creates or updates a Service Fabric application type name resource.
+        /// Create or update a Service Fabric application type name resource with the specified name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}/applicationTypes/{applicationTypeName}
         /// Operation Id: ApplicationTypes_CreateOrUpdate
         /// </summary>
@@ -64,7 +64,6 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationTypeName"/> or <paramref name="data"/> is null. </exception>
-        /// <remarks> Create or update a Service Fabric application type name resource with the specified name. </remarks>
         public virtual async Task<ArmOperation<ApplicationTypeResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string applicationTypeName, ApplicationTypeResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationTypeName, nameof(applicationTypeName));
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary>
-        /// Creates or updates a Service Fabric application type name resource.
+        /// Create or update a Service Fabric application type name resource with the specified name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}/applicationTypes/{applicationTypeName}
         /// Operation Id: ApplicationTypes_CreateOrUpdate
         /// </summary>
@@ -98,7 +97,6 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationTypeName"/> or <paramref name="data"/> is null. </exception>
-        /// <remarks> Create or update a Service Fabric application type name resource with the specified name. </remarks>
         public virtual ArmOperation<ApplicationTypeResource> CreateOrUpdate(WaitUntil waitUntil, string applicationTypeName, ApplicationTypeResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationTypeName, nameof(applicationTypeName));
@@ -122,7 +120,7 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary>
-        /// Gets a Service Fabric application type name resource.
+        /// Get a Service Fabric application type name resource created or in the process of being created in the Service Fabric cluster resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}/applicationTypes/{applicationTypeName}
         /// Operation Id: ApplicationTypes_Get
         /// </summary>
@@ -130,7 +128,6 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationTypeName"/> is null. </exception>
-        /// <remarks> Get a Service Fabric application type name resource created or in the process of being created in the Service Fabric cluster resource. </remarks>
         public virtual async Task<Response<ApplicationTypeResource>> GetAsync(string applicationTypeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationTypeName, nameof(applicationTypeName));
@@ -152,7 +149,7 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary>
-        /// Gets a Service Fabric application type name resource.
+        /// Get a Service Fabric application type name resource created or in the process of being created in the Service Fabric cluster resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}/applicationTypes/{applicationTypeName}
         /// Operation Id: ApplicationTypes_Get
         /// </summary>
@@ -160,7 +157,6 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationTypeName"/> is null. </exception>
-        /// <remarks> Get a Service Fabric application type name resource created or in the process of being created in the Service Fabric cluster resource. </remarks>
         public virtual Response<ApplicationTypeResource> Get(string applicationTypeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationTypeName, nameof(applicationTypeName));
@@ -182,13 +178,12 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary>
-        /// Gets the list of application type name resources created in the specified Service Fabric cluster resource.
+        /// Gets all application type name resources created or in the process of being created in the Service Fabric cluster resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}/applicationTypes
         /// Operation Id: ApplicationTypes_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApplicationTypeResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Gets all application type name resources created or in the process of being created in the Service Fabric cluster resource. </remarks>
         public virtual AsyncPageable<ApplicationTypeResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ApplicationTypeResource>> FirstPageFunc(int? pageSizeHint)
@@ -210,13 +205,12 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary>
-        /// Gets the list of application type name resources created in the specified Service Fabric cluster resource.
+        /// Gets all application type name resources created or in the process of being created in the Service Fabric cluster resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}/applicationTypes
         /// Operation Id: ApplicationTypes_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationTypeResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Gets all application type name resources created or in the process of being created in the Service Fabric cluster resource. </remarks>
         public virtual Pageable<ApplicationTypeResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<ApplicationTypeResource> FirstPageFunc(int? pageSizeHint)
@@ -238,7 +232,7 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary>
-        /// Gets a Service Fabric application type name resource.
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}/applicationTypes/{applicationTypeName}
         /// Operation Id: ApplicationTypes_Get
         /// </summary>
@@ -246,7 +240,6 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationTypeName"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string applicationTypeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationTypeName, nameof(applicationTypeName));
@@ -266,7 +259,7 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary>
-        /// Gets a Service Fabric application type name resource.
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}/applicationTypes/{applicationTypeName}
         /// Operation Id: ApplicationTypes_Get
         /// </summary>
@@ -274,7 +267,6 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationTypeName"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string applicationTypeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationTypeName, nameof(applicationTypeName));

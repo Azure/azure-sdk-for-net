@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> List Streaming Locators. </summary>
+        /// <summary> Lists the Streaming Locators in the account. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -80,7 +80,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Lists the Streaming Locators in the account. </remarks>
         public async Task<Response<Models.StreamingLocatorCollection>> ListAsync(string subscriptionId, string resourceGroupName, string accountName, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -103,7 +102,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> List Streaming Locators. </summary>
+        /// <summary> Lists the Streaming Locators in the account. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -113,7 +112,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Lists the Streaming Locators in the account. </remarks>
         public Response<Models.StreamingLocatorCollection> List(string subscriptionId, string resourceGroupName, string accountName, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -158,7 +156,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Get a Streaming Locator. </summary>
+        /// <summary> Get the details of a Streaming Locator in the Media Services account. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -166,7 +164,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingLocatorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingLocatorName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Get the details of a Streaming Locator in the Media Services account. </remarks>
         public async Task<Response<StreamingLocatorData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string streamingLocatorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -192,7 +189,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Get a Streaming Locator. </summary>
+        /// <summary> Get the details of a Streaming Locator in the Media Services account. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -200,7 +197,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingLocatorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingLocatorName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Get the details of a Streaming Locator in the Media Services account. </remarks>
         public Response<StreamingLocatorData> Get(string subscriptionId, string resourceGroupName, string accountName, string streamingLocatorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -252,7 +248,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Create a Streaming Locator. </summary>
+        /// <summary> Create a Streaming Locator in the Media Services account. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -261,7 +257,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="streamingLocatorName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingLocatorName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Create a Streaming Locator in the Media Services account. </remarks>
         public async Task<Response<StreamingLocatorData>> CreateAsync(string subscriptionId, string resourceGroupName, string accountName, string streamingLocatorName, StreamingLocatorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -286,7 +281,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Create a Streaming Locator. </summary>
+        /// <summary> Create a Streaming Locator in the Media Services account. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -295,7 +290,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="streamingLocatorName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingLocatorName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Create a Streaming Locator in the Media Services account. </remarks>
         public Response<StreamingLocatorData> Create(string subscriptionId, string resourceGroupName, string accountName, string streamingLocatorName, StreamingLocatorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -342,7 +336,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Delete a Streaming Locator. </summary>
+        /// <summary> Deletes a Streaming Locator in the Media Services account. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -350,7 +344,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingLocatorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingLocatorName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Deletes a Streaming Locator in the Media Services account. </remarks>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string accountName, string streamingLocatorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -370,7 +363,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Delete a Streaming Locator. </summary>
+        /// <summary> Deletes a Streaming Locator in the Media Services account. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -378,7 +371,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingLocatorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingLocatorName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Deletes a Streaming Locator in the Media Services account. </remarks>
         public Response Delete(string subscriptionId, string resourceGroupName, string accountName, string streamingLocatorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -421,7 +413,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> List Content Keys. </summary>
+        /// <summary> List Content Keys used by this Streaming Locator. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -429,7 +421,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingLocatorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingLocatorName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> List Content Keys used by this Streaming Locator. </remarks>
         public async Task<Response<ListContentKeysResponse>> ListContentKeysAsync(string subscriptionId, string resourceGroupName, string accountName, string streamingLocatorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -453,7 +444,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> List Content Keys. </summary>
+        /// <summary> List Content Keys used by this Streaming Locator. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -461,7 +452,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingLocatorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingLocatorName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> List Content Keys used by this Streaming Locator. </remarks>
         public Response<ListContentKeysResponse> ListContentKeys(string subscriptionId, string resourceGroupName, string accountName, string streamingLocatorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -508,7 +498,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> List Paths. </summary>
+        /// <summary> List Paths supported by this Streaming Locator. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -516,7 +506,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingLocatorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingLocatorName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> List Paths supported by this Streaming Locator. </remarks>
         public async Task<Response<ListPathsResponse>> ListPathsAsync(string subscriptionId, string resourceGroupName, string accountName, string streamingLocatorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -540,7 +529,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> List Paths. </summary>
+        /// <summary> List Paths supported by this Streaming Locator. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -548,7 +537,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingLocatorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="streamingLocatorName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> List Paths supported by this Streaming Locator. </remarks>
         public Response<ListPathsResponse> ListPaths(string subscriptionId, string resourceGroupName, string accountName, string streamingLocatorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -586,7 +574,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> List Streaming Locators. </summary>
+        /// <summary> Lists the Streaming Locators in the account. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
@@ -597,7 +585,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Lists the Streaming Locators in the account. </remarks>
         public async Task<Response<Models.StreamingLocatorCollection>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -621,7 +608,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> List Streaming Locators. </summary>
+        /// <summary> Lists the Streaming Locators in the account. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
@@ -632,7 +619,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Lists the Streaming Locators in the account. </remarks>
         public Response<Models.StreamingLocatorCollection> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));

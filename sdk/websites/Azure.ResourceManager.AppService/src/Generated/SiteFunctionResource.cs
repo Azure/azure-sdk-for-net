@@ -88,12 +88,11 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get function information by its ID for web site, or a deployment slot.
+        /// Description for Get function information by its ID for web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}
         /// Operation Id: WebApps_GetFunction
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Get function information by its ID for web site, or a deployment slot. </remarks>
         public virtual async Task<Response<SiteFunctionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteFunctionWebAppsClientDiagnostics.CreateScope("SiteFunctionResource.Get");
@@ -113,12 +112,11 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get function information by its ID for web site, or a deployment slot.
+        /// Description for Get function information by its ID for web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}
         /// Operation Id: WebApps_GetFunction
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Get function information by its ID for web site, or a deployment slot. </remarks>
         public virtual Response<SiteFunctionResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _siteFunctionWebAppsClientDiagnostics.CreateScope("SiteFunctionResource.Get");
@@ -138,13 +136,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Delete a function for web site, or a deployment slot.
+        /// Description for Delete a function for web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}
         /// Operation Id: WebApps_DeleteFunction
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Delete a function for web site, or a deployment slot. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _siteFunctionWebAppsClientDiagnostics.CreateScope("SiteFunctionResource.Delete");
@@ -165,13 +162,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Delete a function for web site, or a deployment slot.
+        /// Description for Delete a function for web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}
         /// Operation Id: WebApps_DeleteFunction
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Delete a function for web site, or a deployment slot. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _siteFunctionWebAppsClientDiagnostics.CreateScope("SiteFunctionResource.Delete");
@@ -192,7 +188,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Create function for web site, or a deployment slot.
+        /// Description for Create function for web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}
         /// Operation Id: WebApps_CreateFunction
         /// </summary>
@@ -200,7 +196,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> Function details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Description for Create function for web site, or a deployment slot. </remarks>
         public virtual async Task<ArmOperation<SiteFunctionResource>> UpdateAsync(WaitUntil waitUntil, FunctionEnvelopeData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -223,7 +218,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Create function for web site, or a deployment slot.
+        /// Description for Create function for web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}
         /// Operation Id: WebApps_CreateFunction
         /// </summary>
@@ -231,7 +226,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> Function details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Description for Create function for web site, or a deployment slot. </remarks>
         public virtual ArmOperation<SiteFunctionResource> Update(WaitUntil waitUntil, FunctionEnvelopeData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -254,7 +248,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Add or update a function secret.
+        /// Description for Add or update a function secret.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}/keys/{keyName}
         /// Operation Id: WebApps_CreateOrUpdateFunctionSecret
         /// </summary>
@@ -263,7 +257,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="info"/> is null. </exception>
-        /// <remarks> Description for Add or update a function secret. </remarks>
         public virtual async Task<Response<KeyInfo>> CreateOrUpdateFunctionSecretAsync(string keyName, KeyInfo info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
@@ -284,7 +277,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Add or update a function secret.
+        /// Description for Add or update a function secret.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}/keys/{keyName}
         /// Operation Id: WebApps_CreateOrUpdateFunctionSecret
         /// </summary>
@@ -293,7 +286,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="info"/> is null. </exception>
-        /// <remarks> Description for Add or update a function secret. </remarks>
         public virtual Response<KeyInfo> CreateOrUpdateFunctionSecret(string keyName, KeyInfo info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
@@ -314,7 +306,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Delete a function secret.
+        /// Description for Delete a function secret.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}/keys/{keyName}
         /// Operation Id: WebApps_DeleteFunctionSecret
         /// </summary>
@@ -322,7 +314,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
-        /// <remarks> Description for Delete a function secret. </remarks>
         public virtual async Task<Response> DeleteFunctionSecretAsync(string keyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
@@ -342,7 +333,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Delete a function secret.
+        /// Description for Delete a function secret.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}/keys/{keyName}
         /// Operation Id: WebApps_DeleteFunctionSecret
         /// </summary>
@@ -350,7 +341,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
-        /// <remarks> Description for Delete a function secret. </remarks>
         public virtual Response DeleteFunctionSecret(string keyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
@@ -370,12 +360,11 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get function keys for a function in a web site, or a deployment slot.
+        /// Description for Get function keys for a function in a web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}/listkeys
         /// Operation Id: WebApps_ListFunctionKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Get function keys for a function in a web site, or a deployment slot. </remarks>
         public virtual async Task<Response<StringDictionary>> GetFunctionKeysAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteFunctionWebAppsClientDiagnostics.CreateScope("SiteFunctionResource.GetFunctionKeys");
@@ -393,12 +382,11 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get function keys for a function in a web site, or a deployment slot.
+        /// Description for Get function keys for a function in a web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}/listkeys
         /// Operation Id: WebApps_ListFunctionKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Get function keys for a function in a web site, or a deployment slot. </remarks>
         public virtual Response<StringDictionary> GetFunctionKeys(CancellationToken cancellationToken = default)
         {
             using var scope = _siteFunctionWebAppsClientDiagnostics.CreateScope("SiteFunctionResource.GetFunctionKeys");
@@ -416,12 +404,11 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get function secrets for a function in a web site, or a deployment slot.
+        /// Description for Get function secrets for a function in a web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}/listsecrets
         /// Operation Id: WebApps_ListFunctionSecrets
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Get function secrets for a function in a web site, or a deployment slot. </remarks>
         public virtual async Task<Response<FunctionSecrets>> GetFunctionSecretsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteFunctionWebAppsClientDiagnostics.CreateScope("SiteFunctionResource.GetFunctionSecrets");
@@ -439,12 +426,11 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get function secrets for a function in a web site, or a deployment slot.
+        /// Description for Get function secrets for a function in a web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}/listsecrets
         /// Operation Id: WebApps_ListFunctionSecrets
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Get function secrets for a function in a web site, or a deployment slot. </remarks>
         public virtual Response<FunctionSecrets> GetFunctionSecrets(CancellationToken cancellationToken = default)
         {
             using var scope = _siteFunctionWebAppsClientDiagnostics.CreateScope("SiteFunctionResource.GetFunctionSecrets");

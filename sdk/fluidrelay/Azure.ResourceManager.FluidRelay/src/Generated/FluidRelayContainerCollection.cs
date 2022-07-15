@@ -62,7 +62,6 @@ namespace Azure.ResourceManager.FluidRelay
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="fluidRelayContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fluidRelayContainerName"/> is null. </exception>
-        /// <remarks> Get a Fluid Relay container. </remarks>
         public virtual async Task<Response<FluidRelayContainerResource>> GetAsync(string fluidRelayContainerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fluidRelayContainerName, nameof(fluidRelayContainerName));
@@ -92,7 +91,6 @@ namespace Azure.ResourceManager.FluidRelay
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="fluidRelayContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fluidRelayContainerName"/> is null. </exception>
-        /// <remarks> Get a Fluid Relay container. </remarks>
         public virtual Response<FluidRelayContainerResource> Get(string fluidRelayContainerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fluidRelayContainerName, nameof(fluidRelayContainerName));
@@ -120,7 +118,6 @@ namespace Azure.ResourceManager.FluidRelay
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="FluidRelayContainerResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List all Fluid Relay containers which are children of a given Fluid Relay server. </remarks>
         public virtual AsyncPageable<FluidRelayContainerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<FluidRelayContainerResource>> FirstPageFunc(int? pageSizeHint)
@@ -163,7 +160,6 @@ namespace Azure.ResourceManager.FluidRelay
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FluidRelayContainerResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List all Fluid Relay containers which are children of a given Fluid Relay server. </remarks>
         public virtual Pageable<FluidRelayContainerResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<FluidRelayContainerResource> FirstPageFunc(int? pageSizeHint)
@@ -200,7 +196,7 @@ namespace Azure.ResourceManager.FluidRelay
         }
 
         /// <summary>
-        /// Get a Fluid Relay container.
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.FluidRelay/fluidRelayServers/{fluidRelayServerName}/fluidRelayContainers/{fluidRelayContainerName}
         /// Operation Id: FluidRelayContainers_Get
         /// </summary>
@@ -208,7 +204,6 @@ namespace Azure.ResourceManager.FluidRelay
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="fluidRelayContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fluidRelayContainerName"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string fluidRelayContainerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fluidRelayContainerName, nameof(fluidRelayContainerName));
@@ -228,7 +223,7 @@ namespace Azure.ResourceManager.FluidRelay
         }
 
         /// <summary>
-        /// Get a Fluid Relay container.
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.FluidRelay/fluidRelayServers/{fluidRelayServerName}/fluidRelayContainers/{fluidRelayContainerName}
         /// Operation Id: FluidRelayContainers_Get
         /// </summary>
@@ -236,7 +231,6 @@ namespace Azure.ResourceManager.FluidRelay
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="fluidRelayContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fluidRelayContainerName"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string fluidRelayContainerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fluidRelayContainerName, nameof(fluidRelayContainerName));

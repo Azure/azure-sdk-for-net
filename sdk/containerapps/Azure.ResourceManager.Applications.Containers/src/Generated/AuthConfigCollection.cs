@@ -64,7 +64,6 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="authConfigName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authConfigName"/> or <paramref name="data"/> is null. </exception>
-        /// <remarks> Create or update the AuthConfig for a Container App. </remarks>
         public virtual async Task<ArmOperation<AuthConfigResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string authConfigName, AuthConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authConfigName, nameof(authConfigName));
@@ -98,7 +97,6 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="authConfigName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authConfigName"/> or <paramref name="data"/> is null. </exception>
-        /// <remarks> Create or update the AuthConfig for a Container App. </remarks>
         public virtual ArmOperation<AuthConfigResource> CreateOrUpdate(WaitUntil waitUntil, string authConfigName, AuthConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authConfigName, nameof(authConfigName));
@@ -130,7 +128,6 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="authConfigName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authConfigName"/> is null. </exception>
-        /// <remarks> Get a AuthConfig of a Container App. </remarks>
         public virtual async Task<Response<AuthConfigResource>> GetAsync(string authConfigName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authConfigName, nameof(authConfigName));
@@ -160,7 +157,6 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="authConfigName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authConfigName"/> is null. </exception>
-        /// <remarks> Get a AuthConfig of a Container App. </remarks>
         public virtual Response<AuthConfigResource> Get(string authConfigName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authConfigName, nameof(authConfigName));
@@ -188,7 +184,6 @@ namespace Azure.ResourceManager.Applications.Containers
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AuthConfigResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Get the Container App AuthConfigs in a given resource group. </remarks>
         public virtual AsyncPageable<AuthConfigResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<AuthConfigResource>> FirstPageFunc(int? pageSizeHint)
@@ -231,7 +226,6 @@ namespace Azure.ResourceManager.Applications.Containers
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AuthConfigResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Get the Container App AuthConfigs in a given resource group. </remarks>
         public virtual Pageable<AuthConfigResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<AuthConfigResource> FirstPageFunc(int? pageSizeHint)
@@ -268,7 +262,7 @@ namespace Azure.ResourceManager.Applications.Containers
         }
 
         /// <summary>
-        /// Get a AuthConfig of a Container App.
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/authConfigs/{authConfigName}
         /// Operation Id: ContainerAppsAuthConfigs_Get
         /// </summary>
@@ -276,7 +270,6 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="authConfigName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authConfigName"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string authConfigName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authConfigName, nameof(authConfigName));
@@ -296,7 +289,7 @@ namespace Azure.ResourceManager.Applications.Containers
         }
 
         /// <summary>
-        /// Get a AuthConfig of a Container App.
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/authConfigs/{authConfigName}
         /// Operation Id: ContainerAppsAuthConfigs_Get
         /// </summary>
@@ -304,7 +297,6 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="authConfigName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authConfigName"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string authConfigName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authConfigName, nameof(authConfigName));

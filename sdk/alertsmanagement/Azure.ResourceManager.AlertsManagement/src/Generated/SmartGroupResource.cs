@@ -94,7 +94,6 @@ namespace Azure.ResourceManager.AlertsManagement
         /// Operation Id: SmartGroups_GetById
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get information related to a specific Smart Group. </remarks>
         public virtual async Task<Response<SmartGroupResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _smartGroupClientDiagnostics.CreateScope("SmartGroupResource.Get");
@@ -119,7 +118,6 @@ namespace Azure.ResourceManager.AlertsManagement
         /// Operation Id: SmartGroups_GetById
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get information related to a specific Smart Group. </remarks>
         public virtual Response<SmartGroupResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _smartGroupClientDiagnostics.CreateScope("SmartGroupResource.Get");

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get Site Analysis
+        /// Description for Get Site Analysis
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/diagnostics/{diagnosticCategory}/analyses/{analysisName}
         /// Operation Id: Diagnostics_GetSiteAnalysis
         /// </summary>
@@ -102,7 +102,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
-        /// <remarks> Description for Get Site Analysis. </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteDiagnosticAnalysisResource>> GetSiteDiagnosticAnalysisAsync(string analysisName, CancellationToken cancellationToken = default)
         {
@@ -110,7 +109,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get Site Analysis
+        /// Description for Get Site Analysis
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/diagnostics/{diagnosticCategory}/analyses/{analysisName}
         /// Operation Id: Diagnostics_GetSiteAnalysis
         /// </summary>
@@ -118,7 +117,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
-        /// <remarks> Description for Get Site Analysis. </remarks>
         [ForwardsClientCalls]
         public virtual Response<SiteDiagnosticAnalysisResource> GetSiteDiagnosticAnalysis(string analysisName, CancellationToken cancellationToken = default)
         {
@@ -133,7 +131,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get Detector
+        /// Description for Get Detector
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/diagnostics/{diagnosticCategory}/detectors/{detectorName}
         /// Operation Id: Diagnostics_GetSiteDetector
         /// </summary>
@@ -141,7 +139,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
-        /// <remarks> Description for Get Detector. </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteDiagnosticDetectorResource>> GetSiteDiagnosticDetectorAsync(string detectorName, CancellationToken cancellationToken = default)
         {
@@ -149,7 +146,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get Detector
+        /// Description for Get Detector
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/diagnostics/{diagnosticCategory}/detectors/{detectorName}
         /// Operation Id: Diagnostics_GetSiteDetector
         /// </summary>
@@ -157,7 +154,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
-        /// <remarks> Description for Get Detector. </remarks>
         [ForwardsClientCalls]
         public virtual Response<SiteDiagnosticDetectorResource> GetSiteDiagnosticDetector(string detectorName, CancellationToken cancellationToken = default)
         {
@@ -165,12 +161,11 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get Diagnostics Category
+        /// Description for Get Diagnostics Category
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/diagnostics/{diagnosticCategory}
         /// Operation Id: Diagnostics_GetSiteDiagnosticCategory
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Get Diagnostics Category. </remarks>
         public virtual async Task<Response<SiteDiagnosticResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteDiagnosticDiagnosticsClientDiagnostics.CreateScope("SiteDiagnosticResource.Get");
@@ -190,12 +185,11 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get Diagnostics Category
+        /// Description for Get Diagnostics Category
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/diagnostics/{diagnosticCategory}
         /// Operation Id: Diagnostics_GetSiteDiagnosticCategory
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Get Diagnostics Category. </remarks>
         public virtual Response<SiteDiagnosticResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _siteDiagnosticDiagnosticsClientDiagnostics.CreateScope("SiteDiagnosticResource.Get");

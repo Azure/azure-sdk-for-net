@@ -87,12 +87,11 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets all network features used by the app (or deployment slot, if specified).
+        /// Description for Gets all network features used by the app (or deployment slot, if specified).
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkFeatures/{view}
         /// Operation Id: WebApps_ListNetworkFeaturesSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Gets all network features used by the app (or deployment slot, if specified). </remarks>
         public virtual async Task<Response<NetworkFeaturesResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _networkFeaturesWebAppsClientDiagnostics.CreateScope("NetworkFeaturesResource.Get");
@@ -112,12 +111,11 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets all network features used by the app (or deployment slot, if specified).
+        /// Description for Gets all network features used by the app (or deployment slot, if specified).
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkFeatures/{view}
         /// Operation Id: WebApps_ListNetworkFeaturesSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Gets all network features used by the app (or deployment slot, if specified). </remarks>
         public virtual Response<NetworkFeaturesResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _networkFeaturesWebAppsClientDiagnostics.CreateScope("NetworkFeaturesResource.Get");

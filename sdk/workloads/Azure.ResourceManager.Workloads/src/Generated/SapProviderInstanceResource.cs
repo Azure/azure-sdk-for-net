@@ -88,12 +88,11 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Gets properties of a provider instance.
+        /// Gets properties of a provider instance for the specified subscription, resource group, SAP monitor name, and resource name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}/providerInstances/{providerInstanceName}
         /// Operation Id: ProviderInstances_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Gets properties of a provider instance for the specified subscription, resource group, SAP monitor name, and resource name. </remarks>
         public virtual async Task<Response<SapProviderInstanceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _sapProviderInstanceProviderInstancesClientDiagnostics.CreateScope("SapProviderInstanceResource.Get");
@@ -113,12 +112,11 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Gets properties of a provider instance.
+        /// Gets properties of a provider instance for the specified subscription, resource group, SAP monitor name, and resource name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}/providerInstances/{providerInstanceName}
         /// Operation Id: ProviderInstances_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Gets properties of a provider instance for the specified subscription, resource group, SAP monitor name, and resource name. </remarks>
         public virtual Response<SapProviderInstanceResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _sapProviderInstanceProviderInstancesClientDiagnostics.CreateScope("SapProviderInstanceResource.Get");
@@ -138,13 +136,12 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Deletes a provider instance.
+        /// Deletes a provider instance for the specified subscription, resource group, SAP monitor name, and resource name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}/providerInstances/{providerInstanceName}
         /// Operation Id: ProviderInstances_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Deletes a provider instance for the specified subscription, resource group, SAP monitor name, and resource name. </remarks>
         public virtual async Task<ArmOperation<OperationStatusResult>> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _sapProviderInstanceProviderInstancesClientDiagnostics.CreateScope("SapProviderInstanceResource.Delete");
@@ -165,13 +162,12 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Deletes a provider instance.
+        /// Deletes a provider instance for the specified subscription, resource group, SAP monitor name, and resource name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}/providerInstances/{providerInstanceName}
         /// Operation Id: ProviderInstances_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Deletes a provider instance for the specified subscription, resource group, SAP monitor name, and resource name. </remarks>
         public virtual ArmOperation<OperationStatusResult> Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _sapProviderInstanceProviderInstancesClientDiagnostics.CreateScope("SapProviderInstanceResource.Delete");
@@ -192,7 +188,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Creates a provider instance.
+        /// Creates a provider instance for the specified subscription, resource group, SAP monitor name, and resource name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}/providerInstances/{providerInstanceName}
         /// Operation Id: ProviderInstances_Create
         /// </summary>
@@ -200,7 +196,6 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="data"> Request body representing a provider instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Creates a provider instance for the specified subscription, resource group, SAP monitor name, and resource name. </remarks>
         public virtual async Task<ArmOperation<SapProviderInstanceResource>> UpdateAsync(WaitUntil waitUntil, SapProviderInstanceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -223,7 +218,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Creates a provider instance.
+        /// Creates a provider instance for the specified subscription, resource group, SAP monitor name, and resource name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}/providerInstances/{providerInstanceName}
         /// Operation Id: ProviderInstances_Create
         /// </summary>
@@ -231,7 +226,6 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="data"> Request body representing a provider instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Creates a provider instance for the specified subscription, resource group, SAP monitor name, and resource name. </remarks>
         public virtual ArmOperation<SapProviderInstanceResource> Update(WaitUntil waitUntil, SapProviderInstanceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));

@@ -61,7 +61,6 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagedClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Gets a list of managed clusters in the specified subscription. </remarks>
         public virtual AsyncPageable<ManagedClusterResource> GetManagedClustersAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ManagedClusterResource>> FirstPageFunc(int? pageSizeHint)
@@ -104,7 +103,6 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Gets a list of managed clusters in the specified subscription. </remarks>
         public virtual Pageable<ManagedClusterResource> GetManagedClusters(CancellationToken cancellationToken = default)
         {
             Page<ManagedClusterResource> FirstPageFunc(int? pageSizeHint)
@@ -147,7 +145,6 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SnapshotResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Gets a list of snapshots in the specified subscription. </remarks>
         public virtual AsyncPageable<SnapshotResource> GetSnapshotsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<SnapshotResource>> FirstPageFunc(int? pageSizeHint)
@@ -190,7 +187,6 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SnapshotResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Gets a list of snapshots in the specified subscription. </remarks>
         public virtual Pageable<SnapshotResource> GetSnapshots(CancellationToken cancellationToken = default)
         {
             Page<SnapshotResource> FirstPageFunc(int? pageSizeHint)

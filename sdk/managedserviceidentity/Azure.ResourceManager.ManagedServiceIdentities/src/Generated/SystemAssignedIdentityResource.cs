@@ -95,8 +95,8 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SystemAssignedIdentityResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _systemAssignedIdentityClientDiagnostics.CreateScope("SystemAssignedIdentityResource.Get");
-            scope.Start();
+            using var scope0 = _systemAssignedIdentityClientDiagnostics.CreateScope("SystemAssignedIdentityResource.Get");
+            scope0.Start();
             try
             {
                 var response = await _systemAssignedIdentityRestClient.GetByScopeAsync(Id.Parent, cancellationToken).ConfigureAwait(false);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }
@@ -119,8 +119,8 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SystemAssignedIdentityResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _systemAssignedIdentityClientDiagnostics.CreateScope("SystemAssignedIdentityResource.Get");
-            scope.Start();
+            using var scope0 = _systemAssignedIdentityClientDiagnostics.CreateScope("SystemAssignedIdentityResource.Get");
+            scope0.Start();
             try
             {
                 var response = _systemAssignedIdentityRestClient.GetByScope(Id.Parent, cancellationToken);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }
@@ -149,8 +149,8 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _systemAssignedIdentityClientDiagnostics.CreateScope("SystemAssignedIdentityResource.AddTag");
-            scope.Start();
+            using var scope0 = _systemAssignedIdentityClientDiagnostics.CreateScope("SystemAssignedIdentityResource.AddTag");
+            scope0.Start();
             try
             {
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }
@@ -180,8 +180,8 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _systemAssignedIdentityClientDiagnostics.CreateScope("SystemAssignedIdentityResource.AddTag");
-            scope.Start();
+            using var scope0 = _systemAssignedIdentityClientDiagnostics.CreateScope("SystemAssignedIdentityResource.AddTag");
+            scope0.Start();
             try
             {
                 var originalTags = GetTagResource().Get(cancellationToken);
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }
@@ -209,8 +209,8 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _systemAssignedIdentityClientDiagnostics.CreateScope("SystemAssignedIdentityResource.SetTags");
-            scope.Start();
+            using var scope0 = _systemAssignedIdentityClientDiagnostics.CreateScope("SystemAssignedIdentityResource.SetTags");
+            scope0.Start();
             try
             {
                 await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }
@@ -239,8 +239,8 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _systemAssignedIdentityClientDiagnostics.CreateScope("SystemAssignedIdentityResource.SetTags");
-            scope.Start();
+            using var scope0 = _systemAssignedIdentityClientDiagnostics.CreateScope("SystemAssignedIdentityResource.SetTags");
+            scope0.Start();
             try
             {
                 GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }
@@ -269,8 +269,8 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _systemAssignedIdentityClientDiagnostics.CreateScope("SystemAssignedIdentityResource.RemoveTag");
-            scope.Start();
+            using var scope0 = _systemAssignedIdentityClientDiagnostics.CreateScope("SystemAssignedIdentityResource.RemoveTag");
+            scope0.Start();
             try
             {
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }
@@ -298,8 +298,8 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _systemAssignedIdentityClientDiagnostics.CreateScope("SystemAssignedIdentityResource.RemoveTag");
-            scope.Start();
+            using var scope0 = _systemAssignedIdentityClientDiagnostics.CreateScope("SystemAssignedIdentityResource.RemoveTag");
+            scope0.Start();
             try
             {
                 var originalTags = GetTagResource().Get(cancellationToken);
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }

@@ -93,7 +93,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// Operation Id: Datastores_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get datastore. </remarks>
         public virtual async Task<Response<DatastoreResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _datastoreClientDiagnostics.CreateScope("DatastoreResource.Get");
@@ -118,7 +117,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// Operation Id: Datastores_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get datastore. </remarks>
         public virtual Response<DatastoreResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _datastoreClientDiagnostics.CreateScope("DatastoreResource.Get");
@@ -144,7 +142,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Delete datastore. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _datastoreClientDiagnostics.CreateScope("DatastoreResource.Delete");
@@ -171,7 +168,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Delete datastore. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _datastoreClientDiagnostics.CreateScope("DatastoreResource.Delete");
@@ -201,7 +197,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="skipValidation"> Flag to skip validation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Create or update datastore. </remarks>
         public virtual async Task<ArmOperation<DatastoreResource>> UpdateAsync(WaitUntil waitUntil, DatastoreData data, bool? skipValidation = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -233,7 +228,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="skipValidation"> Flag to skip validation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Create or update datastore. </remarks>
         public virtual ArmOperation<DatastoreResource> Update(WaitUntil waitUntil, DatastoreData data, bool? skipValidation = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -261,7 +255,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// Operation Id: Datastores_ListSecrets
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get datastore secrets. </remarks>
         public virtual async Task<Response<DatastoreSecrets>> GetSecretsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _datastoreClientDiagnostics.CreateScope("DatastoreResource.GetSecrets");
@@ -284,7 +277,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// Operation Id: Datastores_ListSecrets
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get datastore secrets. </remarks>
         public virtual Response<DatastoreSecrets> GetSecrets(CancellationToken cancellationToken = default)
         {
             using var scope = _datastoreClientDiagnostics.CreateScope("DatastoreResource.GetSecrets");

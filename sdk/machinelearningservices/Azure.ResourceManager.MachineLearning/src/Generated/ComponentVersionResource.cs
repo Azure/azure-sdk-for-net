@@ -92,7 +92,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// Operation Id: ComponentVersions_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get version. </remarks>
         public virtual async Task<Response<ComponentVersionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _componentVersionClientDiagnostics.CreateScope("ComponentVersionResource.Get");
@@ -117,7 +116,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// Operation Id: ComponentVersions_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get version. </remarks>
         public virtual Response<ComponentVersionResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _componentVersionClientDiagnostics.CreateScope("ComponentVersionResource.Get");
@@ -143,7 +141,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Delete version. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _componentVersionClientDiagnostics.CreateScope("ComponentVersionResource.Delete");
@@ -170,7 +167,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Delete version. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _componentVersionClientDiagnostics.CreateScope("ComponentVersionResource.Delete");
@@ -199,7 +195,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="data"> Version entity to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Create or update version. </remarks>
         public virtual async Task<ArmOperation<ComponentVersionResource>> UpdateAsync(WaitUntil waitUntil, ComponentVersionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -230,7 +225,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="data"> Version entity to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Create or update version. </remarks>
         public virtual ArmOperation<ComponentVersionResource> Update(WaitUntil waitUntil, ComponentVersionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));

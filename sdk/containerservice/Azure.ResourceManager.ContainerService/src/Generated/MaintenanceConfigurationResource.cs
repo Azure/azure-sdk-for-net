@@ -92,7 +92,6 @@ namespace Azure.ResourceManager.ContainerService
         /// Operation Id: MaintenanceConfigurations_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Gets the specified maintenance configuration of a managed cluster. </remarks>
         public virtual async Task<Response<MaintenanceConfigurationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _maintenanceConfigurationClientDiagnostics.CreateScope("MaintenanceConfigurationResource.Get");
@@ -117,7 +116,6 @@ namespace Azure.ResourceManager.ContainerService
         /// Operation Id: MaintenanceConfigurations_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Gets the specified maintenance configuration of a managed cluster. </remarks>
         public virtual Response<MaintenanceConfigurationResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _maintenanceConfigurationClientDiagnostics.CreateScope("MaintenanceConfigurationResource.Get");
@@ -143,7 +141,6 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Deletes a maintenance configuration. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _maintenanceConfigurationClientDiagnostics.CreateScope("MaintenanceConfigurationResource.Delete");
@@ -170,7 +167,6 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Deletes a maintenance configuration. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _maintenanceConfigurationClientDiagnostics.CreateScope("MaintenanceConfigurationResource.Delete");
@@ -199,7 +195,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="data"> The maintenance configuration to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Creates or updates a maintenance configuration in the specified managed cluster. </remarks>
         public virtual async Task<ArmOperation<MaintenanceConfigurationResource>> UpdateAsync(WaitUntil waitUntil, MaintenanceConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -230,7 +225,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="data"> The maintenance configuration to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Creates or updates a maintenance configuration in the specified managed cluster. </remarks>
         public virtual ArmOperation<MaintenanceConfigurationResource> Update(WaitUntil waitUntil, MaintenanceConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));

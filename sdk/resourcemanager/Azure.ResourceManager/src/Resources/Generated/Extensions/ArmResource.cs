@@ -24,7 +24,7 @@ namespace Azure.ResourceManager
         }
 
         /// <summary>
-        /// Retrieves a policy assignment.
+        /// This operation retrieves a single policy assignment, given its name and the scope it was created at.
         /// Request Path: /{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}
         /// Operation Id: PolicyAssignments_Get
         /// </summary>
@@ -32,7 +32,6 @@ namespace Azure.ResourceManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
-        /// <remarks> This operation retrieves a single policy assignment, given its name and the scope it was created at. </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<PolicyAssignmentResource>> GetPolicyAssignmentAsync(string policyAssignmentName, CancellationToken cancellationToken = default)
         {
@@ -40,7 +39,7 @@ namespace Azure.ResourceManager
         }
 
         /// <summary>
-        /// Retrieves a policy assignment.
+        /// This operation retrieves a single policy assignment, given its name and the scope it was created at.
         /// Request Path: /{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}
         /// Operation Id: PolicyAssignments_Get
         /// </summary>
@@ -48,7 +47,6 @@ namespace Azure.ResourceManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
-        /// <remarks> This operation retrieves a single policy assignment, given its name and the scope it was created at. </remarks>
         [ForwardsClientCalls]
         public virtual Response<PolicyAssignmentResource> GetPolicyAssignment(string policyAssignmentName, CancellationToken cancellationToken = default)
         {

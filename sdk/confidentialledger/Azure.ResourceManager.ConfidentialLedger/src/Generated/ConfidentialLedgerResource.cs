@@ -89,12 +89,11 @@ namespace Azure.ResourceManager.ConfidentialLedger
         }
 
         /// <summary>
-        /// Retrieves information about a Confidential Ledger resource.
+        /// Retrieves the properties of a Confidential Ledger.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConfidentialLedger/ledgers/{ledgerName}
         /// Operation Id: Ledger_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Retrieves the properties of a Confidential Ledger. </remarks>
         public virtual async Task<Response<ConfidentialLedgerResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _confidentialLedgerLedgerClientDiagnostics.CreateScope("ConfidentialLedgerResource.Get");
@@ -114,12 +113,11 @@ namespace Azure.ResourceManager.ConfidentialLedger
         }
 
         /// <summary>
-        /// Retrieves information about a Confidential Ledger resource.
+        /// Retrieves the properties of a Confidential Ledger.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConfidentialLedger/ledgers/{ledgerName}
         /// Operation Id: Ledger_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Retrieves the properties of a Confidential Ledger. </remarks>
         public virtual Response<ConfidentialLedgerResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _confidentialLedgerLedgerClientDiagnostics.CreateScope("ConfidentialLedgerResource.Get");
@@ -139,13 +137,12 @@ namespace Azure.ResourceManager.ConfidentialLedger
         }
 
         /// <summary>
-        /// Deletes a Confidential Ledger resource.
+        /// Deletes an existing Confidential Ledger.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConfidentialLedger/ledgers/{ledgerName}
         /// Operation Id: Ledger_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Deletes an existing Confidential Ledger. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _confidentialLedgerLedgerClientDiagnostics.CreateScope("ConfidentialLedgerResource.Delete");
@@ -166,13 +163,12 @@ namespace Azure.ResourceManager.ConfidentialLedger
         }
 
         /// <summary>
-        /// Deletes a Confidential Ledger resource.
+        /// Deletes an existing Confidential Ledger.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConfidentialLedger/ledgers/{ledgerName}
         /// Operation Id: Ledger_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Deletes an existing Confidential Ledger. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _confidentialLedgerLedgerClientDiagnostics.CreateScope("ConfidentialLedgerResource.Delete");
@@ -193,7 +189,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         }
 
         /// <summary>
-        /// Update Confidential Ledger properties
+        /// Updates properties of Confidential Ledger
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConfidentialLedger/ledgers/{ledgerName}
         /// Operation Id: Ledger_Update
         /// </summary>
@@ -201,7 +197,6 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="data"> Confidential Ledger request body for Updating Ledger. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Updates properties of Confidential Ledger. </remarks>
         public virtual async Task<ArmOperation<ConfidentialLedgerResource>> UpdateAsync(WaitUntil waitUntil, ConfidentialLedgerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -224,7 +219,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         }
 
         /// <summary>
-        /// Update Confidential Ledger properties
+        /// Updates properties of Confidential Ledger
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConfidentialLedger/ledgers/{ledgerName}
         /// Operation Id: Ledger_Update
         /// </summary>
@@ -232,7 +227,6 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="data"> Confidential Ledger request body for Updating Ledger. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Updates properties of Confidential Ledger. </remarks>
         public virtual ArmOperation<ConfidentialLedgerResource> Update(WaitUntil waitUntil, ConfidentialLedgerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -255,7 +249,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         }
 
         /// <summary>
-        /// Retrieves information about a Confidential Ledger resource.
+        /// Add a tag to the current resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConfidentialLedger/ledgers/{ledgerName}
         /// Operation Id: Ledger_Get
         /// </summary>
@@ -263,7 +257,6 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        /// <remarks> Add a tag to the current resource. </remarks>
         public virtual async Task<Response<ConfidentialLedgerResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -287,7 +280,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         }
 
         /// <summary>
-        /// Retrieves information about a Confidential Ledger resource.
+        /// Add a tag to the current resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConfidentialLedger/ledgers/{ledgerName}
         /// Operation Id: Ledger_Get
         /// </summary>
@@ -295,7 +288,6 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        /// <remarks> Add a tag to the current resource. </remarks>
         public virtual Response<ConfidentialLedgerResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -319,14 +311,13 @@ namespace Azure.ResourceManager.ConfidentialLedger
         }
 
         /// <summary>
-        /// Retrieves information about a Confidential Ledger resource.
+        /// Replace the tags on the resource with the given set.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConfidentialLedger/ledgers/{ledgerName}
         /// Operation Id: Ledger_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        /// <remarks> Replace the tags on the resource with the given set. </remarks>
         public virtual async Task<Response<ConfidentialLedgerResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -350,14 +341,13 @@ namespace Azure.ResourceManager.ConfidentialLedger
         }
 
         /// <summary>
-        /// Retrieves information about a Confidential Ledger resource.
+        /// Replace the tags on the resource with the given set.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConfidentialLedger/ledgers/{ledgerName}
         /// Operation Id: Ledger_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        /// <remarks> Replace the tags on the resource with the given set. </remarks>
         public virtual Response<ConfidentialLedgerResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -381,14 +371,13 @@ namespace Azure.ResourceManager.ConfidentialLedger
         }
 
         /// <summary>
-        /// Retrieves information about a Confidential Ledger resource.
+        /// Removes a tag by key from the resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConfidentialLedger/ledgers/{ledgerName}
         /// Operation Id: Ledger_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <remarks> Removes a tag by key from the resource. </remarks>
         public virtual async Task<Response<ConfidentialLedgerResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -411,14 +400,13 @@ namespace Azure.ResourceManager.ConfidentialLedger
         }
 
         /// <summary>
-        /// Retrieves information about a Confidential Ledger resource.
+        /// Removes a tag by key from the resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConfidentialLedger/ledgers/{ledgerName}
         /// Operation Id: Ledger_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <remarks> Removes a tag by key from the resource. </remarks>
         public virtual Response<ConfidentialLedgerResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));

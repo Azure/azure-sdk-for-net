@@ -89,12 +89,11 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get operation result.
+        /// Get media service operation result.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/mediaServicesOperationResults/{operationId}
         /// Operation Id: MediaServicesOperationResults_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get media service operation result. </remarks>
         public virtual async Task<Response<LocationMediaServicesOperationResultResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _locationMediaServicesOperationResultMediaServicesOperationResultsClientDiagnostics.CreateScope("LocationMediaServicesOperationResultResource.Get");
@@ -114,12 +113,11 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get operation result.
+        /// Get media service operation result.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/mediaServicesOperationResults/{operationId}
         /// Operation Id: MediaServicesOperationResults_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get media service operation result. </remarks>
         public virtual Response<LocationMediaServicesOperationResultResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _locationMediaServicesOperationResultMediaServicesOperationResultsClientDiagnostics.CreateScope("LocationMediaServicesOperationResultResource.Get");
@@ -139,7 +137,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get operation result.
+        /// Add a tag to the current resource.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/mediaServicesOperationResults/{operationId}
         /// Operation Id: MediaServicesOperationResults_Get
         /// </summary>
@@ -147,7 +145,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        /// <remarks> Add a tag to the current resource. </remarks>
         public virtual async Task<Response<LocationMediaServicesOperationResultResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -171,7 +168,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get operation result.
+        /// Add a tag to the current resource.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/mediaServicesOperationResults/{operationId}
         /// Operation Id: MediaServicesOperationResults_Get
         /// </summary>
@@ -179,7 +176,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        /// <remarks> Add a tag to the current resource. </remarks>
         public virtual Response<LocationMediaServicesOperationResultResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -203,14 +199,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get operation result.
+        /// Replace the tags on the resource with the given set.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/mediaServicesOperationResults/{operationId}
         /// Operation Id: MediaServicesOperationResults_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        /// <remarks> Replace the tags on the resource with the given set. </remarks>
         public virtual async Task<Response<LocationMediaServicesOperationResultResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -234,14 +229,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get operation result.
+        /// Replace the tags on the resource with the given set.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/mediaServicesOperationResults/{operationId}
         /// Operation Id: MediaServicesOperationResults_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        /// <remarks> Replace the tags on the resource with the given set. </remarks>
         public virtual Response<LocationMediaServicesOperationResultResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -265,14 +259,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get operation result.
+        /// Removes a tag by key from the resource.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/mediaServicesOperationResults/{operationId}
         /// Operation Id: MediaServicesOperationResults_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <remarks> Removes a tag by key from the resource. </remarks>
         public virtual async Task<Response<LocationMediaServicesOperationResultResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -295,14 +288,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get operation result.
+        /// Removes a tag by key from the resource.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/mediaServicesOperationResults/{operationId}
         /// Operation Id: MediaServicesOperationResults_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <remarks> Removes a tag by key from the resource. </remarks>
         public virtual Response<LocationMediaServicesOperationResultResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));

@@ -87,12 +87,11 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get an Asset Filter.
+        /// Get the details of an Asset Filter associated with the specified Asset.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/assetFilters/{filterName}
         /// Operation Id: AssetFilters_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get the details of an Asset Filter associated with the specified Asset. </remarks>
         public virtual async Task<Response<AssetFilterResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _assetFilterClientDiagnostics.CreateScope("AssetFilterResource.Get");
@@ -112,12 +111,11 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get an Asset Filter.
+        /// Get the details of an Asset Filter associated with the specified Asset.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/assetFilters/{filterName}
         /// Operation Id: AssetFilters_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get the details of an Asset Filter associated with the specified Asset. </remarks>
         public virtual Response<AssetFilterResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _assetFilterClientDiagnostics.CreateScope("AssetFilterResource.Get");
@@ -137,13 +135,12 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Delete an Asset Filter.
+        /// Deletes an Asset Filter associated with the specified Asset.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/assetFilters/{filterName}
         /// Operation Id: AssetFilters_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Deletes an Asset Filter associated with the specified Asset. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _assetFilterClientDiagnostics.CreateScope("AssetFilterResource.Delete");
@@ -164,13 +161,12 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Delete an Asset Filter.
+        /// Deletes an Asset Filter associated with the specified Asset.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/assetFilters/{filterName}
         /// Operation Id: AssetFilters_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Deletes an Asset Filter associated with the specified Asset. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _assetFilterClientDiagnostics.CreateScope("AssetFilterResource.Delete");
@@ -191,14 +187,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Update an Asset Filter
+        /// Updates an existing Asset Filter associated with the specified Asset.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/assetFilters/{filterName}
         /// Operation Id: AssetFilters_Update
         /// </summary>
         /// <param name="data"> The request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Updates an existing Asset Filter associated with the specified Asset. </remarks>
         public virtual async Task<Response<AssetFilterResource>> UpdateAsync(AssetFilterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -218,14 +213,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Update an Asset Filter
+        /// Updates an existing Asset Filter associated with the specified Asset.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/assetFilters/{filterName}
         /// Operation Id: AssetFilters_Update
         /// </summary>
         /// <param name="data"> The request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Updates an existing Asset Filter associated with the specified Asset. </remarks>
         public virtual Response<AssetFilterResource> Update(AssetFilterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));

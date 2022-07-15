@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Create a Streaming Locator
+        /// Create a Streaming Locator in the Media Services account
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/streamingLocators/{streamingLocatorName}
         /// Operation Id: StreamingLocators_Create
         /// </summary>
@@ -64,7 +64,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="streamingLocatorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="streamingLocatorName"/> or <paramref name="data"/> is null. </exception>
-        /// <remarks> Create a Streaming Locator in the Media Services account. </remarks>
         public virtual async Task<ArmOperation<StreamingLocatorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string streamingLocatorName, StreamingLocatorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(streamingLocatorName, nameof(streamingLocatorName));
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Create a Streaming Locator
+        /// Create a Streaming Locator in the Media Services account
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/streamingLocators/{streamingLocatorName}
         /// Operation Id: StreamingLocators_Create
         /// </summary>
@@ -98,7 +97,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="streamingLocatorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="streamingLocatorName"/> or <paramref name="data"/> is null. </exception>
-        /// <remarks> Create a Streaming Locator in the Media Services account. </remarks>
         public virtual ArmOperation<StreamingLocatorResource> CreateOrUpdate(WaitUntil waitUntil, string streamingLocatorName, StreamingLocatorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(streamingLocatorName, nameof(streamingLocatorName));
@@ -122,7 +120,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get a Streaming Locator
+        /// Get the details of a Streaming Locator in the Media Services account
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/streamingLocators/{streamingLocatorName}
         /// Operation Id: StreamingLocators_Get
         /// </summary>
@@ -130,7 +128,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="streamingLocatorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="streamingLocatorName"/> is null. </exception>
-        /// <remarks> Get the details of a Streaming Locator in the Media Services account. </remarks>
         public virtual async Task<Response<StreamingLocatorResource>> GetAsync(string streamingLocatorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(streamingLocatorName, nameof(streamingLocatorName));
@@ -152,7 +149,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get a Streaming Locator
+        /// Get the details of a Streaming Locator in the Media Services account
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/streamingLocators/{streamingLocatorName}
         /// Operation Id: StreamingLocators_Get
         /// </summary>
@@ -160,7 +157,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="streamingLocatorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="streamingLocatorName"/> is null. </exception>
-        /// <remarks> Get the details of a Streaming Locator in the Media Services account. </remarks>
         public virtual Response<StreamingLocatorResource> Get(string streamingLocatorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(streamingLocatorName, nameof(streamingLocatorName));
@@ -182,7 +178,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// List Streaming Locators
+        /// Lists the Streaming Locators in the account
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/streamingLocators
         /// Operation Id: StreamingLocators_List
         /// </summary>
@@ -191,7 +187,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="orderby"> Specifies the key by which the result collection should be ordered. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="StreamingLocatorResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Lists the Streaming Locators in the account. </remarks>
         public virtual AsyncPageable<StreamingLocatorResource> GetAllAsync(string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<StreamingLocatorResource>> FirstPageFunc(int? pageSizeHint)
@@ -228,7 +223,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// List Streaming Locators
+        /// Lists the Streaming Locators in the account
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/streamingLocators
         /// Operation Id: StreamingLocators_List
         /// </summary>
@@ -237,7 +232,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="orderby"> Specifies the key by which the result collection should be ordered. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StreamingLocatorResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Lists the Streaming Locators in the account. </remarks>
         public virtual Pageable<StreamingLocatorResource> GetAll(string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Page<StreamingLocatorResource> FirstPageFunc(int? pageSizeHint)
@@ -274,7 +268,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get a Streaming Locator
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/streamingLocators/{streamingLocatorName}
         /// Operation Id: StreamingLocators_Get
         /// </summary>
@@ -282,7 +276,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="streamingLocatorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="streamingLocatorName"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string streamingLocatorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(streamingLocatorName, nameof(streamingLocatorName));
@@ -302,7 +295,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get a Streaming Locator
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/streamingLocators/{streamingLocatorName}
         /// Operation Id: StreamingLocators_Get
         /// </summary>
@@ -310,7 +303,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="streamingLocatorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="streamingLocatorName"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string streamingLocatorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(streamingLocatorName, nameof(streamingLocatorName));

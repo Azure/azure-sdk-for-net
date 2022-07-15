@@ -87,12 +87,11 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Gets the specified private endpoint connection.
+        /// To learn more about private clusters, see: https://docs.microsoft.com/azure/aks/private-clusters
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}
         /// Operation Id: PrivateEndpointConnections_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> To learn more about private clusters, see: https://docs.microsoft.com/azure/aks/private-clusters. </remarks>
         public virtual async Task<Response<ContainerServicePrivateEndpointConnectionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _containerServicePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("ContainerServicePrivateEndpointConnectionResource.Get");
@@ -112,12 +111,11 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Gets the specified private endpoint connection.
+        /// To learn more about private clusters, see: https://docs.microsoft.com/azure/aks/private-clusters
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}
         /// Operation Id: PrivateEndpointConnections_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> To learn more about private clusters, see: https://docs.microsoft.com/azure/aks/private-clusters. </remarks>
         public virtual Response<ContainerServicePrivateEndpointConnectionResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _containerServicePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("ContainerServicePrivateEndpointConnectionResource.Get");
@@ -143,7 +141,6 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Deletes a private endpoint connection. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _containerServicePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("ContainerServicePrivateEndpointConnectionResource.Delete");
@@ -170,7 +167,6 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Deletes a private endpoint connection. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _containerServicePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("ContainerServicePrivateEndpointConnectionResource.Delete");
@@ -199,7 +195,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="data"> The updated private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Updates a private endpoint connection. </remarks>
         public virtual async Task<ArmOperation<ContainerServicePrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, ContainerServicePrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -230,7 +225,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="data"> The updated private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Updates a private endpoint connection. </remarks>
         public virtual ArmOperation<ContainerServicePrivateEndpointConnectionResource> Update(WaitUntil waitUntil, ContainerServicePrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
