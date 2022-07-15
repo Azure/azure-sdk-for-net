@@ -22,7 +22,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
             var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             // Check number of custom models in the FormRecognizer account, and the maximum number of models that can be stored.
-            AccountProperties accountProperties = client.GetAccountProperties();
+            ResourceInfo accountProperties = client.GetResourceInfo();
             Console.WriteLine($"Account has {accountProperties.DocumentModelCount} models.");
             Console.WriteLine($"It can have at most {accountProperties.DocumentModelLimit} models.");
 

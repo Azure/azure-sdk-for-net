@@ -478,14 +478,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         }
 
         /// <summary>
-        /// Gets the number of built models on this Cognitive Services Account and the account limits.
+        /// Gets the number of built models on this Form Recognizer resource and the resource limits.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to an <see cref="AccountProperties"/> containing
-        /// the account properties.</returns>
-        public virtual Response<AccountProperties> GetAccountProperties(CancellationToken cancellationToken = default)
+        /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to an <see cref="ResourceInfo"/> containing
+        /// the resource information.</returns>
+        public virtual Response<ResourceInfo> GetResourceInfo(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(GetAccountProperties)}");
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(GetResourceInfo)}");
             scope.Start();
 
             try
@@ -501,14 +501,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         }
 
         /// <summary>
-        /// Gets the number of built models on this Cognitive Services Account and the account limits.
+        /// Gets the number of built models on this Form Recognizer resource and the resource limits.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to an <see cref="AccountProperties"/> containing
-        /// the account properties.</returns>
-        public virtual async Task<Response<AccountProperties>> GetAccountPropertiesAsync(CancellationToken cancellationToken = default)
+        /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to an <see cref="ResourceInfo"/> containing
+        /// the resource information.</returns>
+        public virtual async Task<Response<ResourceInfo>> GetResourceInfoAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(GetAccountProperties)}");
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(GetResourceInfo)}");
             scope.Start();
 
             try

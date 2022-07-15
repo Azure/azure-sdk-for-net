@@ -13,13 +13,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// </summary>
     public static class DocumentAnalysisModelFactory
     {
-        /// <summary> Initializes a new instance of AccountProperties. </summary>
+        /// <summary> Initializes a new instance of ResourceInfo. </summary>
         /// <param name="documentModelCount"> Number of custom models in the current resource. </param>
         /// <param name="documentModelLimit"> Maximum number of custom models supported in the current resource. </param>
-        /// <returns> A new <see cref="DocumentAnalysis.AccountProperties"/> instance for mocking. </returns>
-        public static AccountProperties AccountProperties(int documentModelCount = default, int documentModelLimit = default)
+        /// <returns> A new <see cref="DocumentAnalysis.ResourceInfo"/> instance for mocking. </returns>
+        public static ResourceInfo ResourceInfo(int documentModelCount = default, int documentModelLimit = default)
         {
-            return new AccountProperties(documentModelCount, documentModelLimit);
+            return new ResourceInfo(documentModelCount, documentModelLimit);
         }
 
         /// <summary> Initializes a new instance of AddressValue. </summary>
