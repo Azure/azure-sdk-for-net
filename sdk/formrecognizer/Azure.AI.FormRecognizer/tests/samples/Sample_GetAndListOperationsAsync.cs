@@ -52,7 +52,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
             }
 
             // Get an operation by ID
-            ModelOperation specificOperation = await client.GetOperationAsync(operationId);
+            DocumentModelOperationInfo specificOperation = await client.GetOperationAsync(operationId);
 
             if (specificOperation.Status == DocumentOperationStatus.Succeeded)
             {

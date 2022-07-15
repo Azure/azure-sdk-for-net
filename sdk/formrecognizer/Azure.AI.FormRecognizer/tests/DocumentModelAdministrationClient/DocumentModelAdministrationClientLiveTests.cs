@@ -258,18 +258,18 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             ValidateModelOperationInfo(modelOperationFromList.FirstOrDefault());
 
-            ModelOperation modelOperationInfo = await client.GetOperationAsync(modelOperationFromList.FirstOrDefault().OperationId);
+            DocumentModelOperationInfo operationInfo = await client.GetOperationAsync(modelOperationFromList.FirstOrDefault().OperationId);
 
-            ValidateModelOperationInfo(modelOperationInfo);
-            if (modelOperationInfo.Status == DocumentOperationStatus.Failed)
+            ValidateModelOperationInfo(operationInfo);
+            if (operationInfo.Status == DocumentOperationStatus.Failed)
             {
-                Assert.NotNull(modelOperationInfo.Error);
-                Assert.NotNull(modelOperationInfo.Error.Code);
-                Assert.NotNull(modelOperationInfo.Error.Message);
+                Assert.NotNull(operationInfo.Error);
+                Assert.NotNull(operationInfo.Error.Code);
+                Assert.NotNull(operationInfo.Error.Message);
             }
             else
             {
-                ValidateDocumentModel(modelOperationInfo.Result);
+                ValidateDocumentModel(operationInfo.Result);
             }
         }
 
@@ -288,16 +288,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Started, trainingFilesUri, DocumentBuildMode.Template, modelId, options);
 
-            ModelOperationInfo modelOperationInfo = client.GetOperationsAsync().ToEnumerableAsync().Result
+            ModelOperationInfo operationSummary = client.GetOperationsAsync().ToEnumerableAsync().Result
                 .FirstOrDefault(op => op.OperationId == operation.Id);
 
-            Assert.NotNull(modelOperationInfo);
+            Assert.NotNull(operationSummary);
 
-            CollectionAssert.AreEquivalent(TestingTags, modelOperationInfo.Tags);
+            CollectionAssert.AreEquivalent(TestingTags, operationSummary.Tags);
 
-            ModelOperation modelOperation = await client.GetOperationAsync(operation.Id);
+            DocumentModelOperationInfo operationInfo = await client.GetOperationAsync(operation.Id);
 
-            CollectionAssert.AreEquivalent(TestingTags, modelOperation.Tags);
+            CollectionAssert.AreEquivalent(TestingTags, operationInfo.Tags);
 
             await client.DeleteModelAsync(modelId);
         }
