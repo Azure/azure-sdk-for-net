@@ -14,7 +14,7 @@ This section should include everything a developer needs to do to install and cr
 Install the Confidential Ledger client library for .NET with [NuGet][client_nuget_package]:
 
 ```dotnetcli
-dotnet add package Azure.Security.ConfidentialLedger --prerelease
+dotnet add package Azure.Security.ConfidentialLedger
 ```
 
 ### Prerequisites
@@ -43,53 +43,13 @@ export AZURE_TENANT_ID="tenant id"
 ```
 Then, `DefaultAzureCredential` will be able to authenticate the `ConfidentialLedgerClient`.
 
-Constructing the client also requires your Confidential Ledger's URL and id, which you can get from the Azure CLI or the Azure Portal.  When you have retrieved those values, please replace instances of `"my-ledger-id"` and `"https://my-ledger-url.confidential-ledger.azure.com"` in the examples below
-
-Because Confidential Ledgers use self-signed certificates securely generated and stored in an SGX enclave, the certificate for each Confidential Ledger  must first be retrieved from the Confidential Ledger Identity Service.
-
-```C# Snippet:GetIdentity
-Uri identityServiceEndpoint = new("https://identity.confidential-ledger.core.azure.com") // The hostname from the identityServiceUri
-var identityClient = new ConfidentialLedgerIdentityServiceClient(identityServiceEndpoint);
-
-// Get the ledger's  TLS certificate for our ledger.
-string ledgerId = "<the ledger id>"; // ex. "my-ledger" from "https://my-ledger.eastus.cloudapp.azure.com"
-Response response = identityClient.GetLedgerIdentity(ledgerId);
-X509Certificate2 ledgerTlsCert = ConfidentialLedgerIdentityServiceClient.ParseCertificate(response);
-```
-
-Now we can construct the `ConfidentialLedgerClient` with a transport configuration that trusts the `ledgerTlsCert`.
+Constructing the client also requires your Confidential Ledger's URI, which you can obtain from the Azure Portal page for your Confidential Ledger in the `Ledger URI` field under the `Properties` section. When you have retrieved the `Ledger URI`, please use it to replace `"https://my-ledger-url.confidential-ledger.azure.com"` in the example below.
 
 ```C# Snippet:CreateClient
-// Create a certificate chain rooted with our TLS cert.
-X509Chain certificateChain = new();
-certificateChain.ChainPolicy.RevocationMode = X509RevocationMode.NoCheck;
-certificateChain.ChainPolicy.RevocationFlag = X509RevocationFlag.ExcludeRoot;
-certificateChain.ChainPolicy.VerificationFlags = X509VerificationFlags.AllowUnknownCertificateAuthority;
-certificateChain.ChainPolicy.VerificationTime = DateTime.Now;
-certificateChain.ChainPolicy.UrlRetrievalTimeout = new TimeSpan(0, 0, 0);
-certificateChain.ChainPolicy.ExtraStore.Add(ledgerTlsCert);
-
-var f = certificateChain.Build(ledgerTlsCert);
-
-// Define a validation function to ensure that the ledger certificate is trusted by the ledger identity TLS certificate.
-bool CertValidationCheck(HttpRequestMessage httpRequestMessage, X509Certificate2 cert, X509Chain x509Chain, SslPolicyErrors sslPolicyErrors)
-{
-    bool isChainValid = certificateChain.Build(cert);
-    if (!isChainValid) return false;
-
-    var isCertSignedByTheTlsCert = certificateChain.ChainElements.Cast<X509ChainElement>()
-        .Any(x => x.Certificate.Thumbprint == ledgerTlsCert.Thumbprint);
-    return isCertSignedByTheTlsCert;
-}
-
-// Create an HttpClientHandler to use our certValidationCheck function.
-var httpHandler = new HttpClientHandler();
-httpHandler.ServerCertificateCustomValidationCallback = CertValidationCheck;
-
-// Create the ledger client using a transport that uses our custom ServerCertificateCustomValidationCallback.
-var options = new ConfidentialLedgerClientOptions { Transport = new HttpClientTransport(httpHandler) };
-var ledgerClient = new ConfidentialLedgerClient(TestEnvironment.ConfidentialLedgerUrl, new DefaultAzureCredential(), options);
+var ledgerClient = new ConfidentialLedgerClient(new Uri("https://my-ledger-url.confidential-ledger.azure.com"), new DefaultAzureCredential());
 ```
+
+> Security Note: By default when a Confidential Ledger Client is created it will connect to Azure's Confidential Ledger Identity Service to obtain the latest TLS service certificate for your Ledger in order to secure connections to Ledger Nodes. The details of this process are available in [this sample][client_construction_sample]. This behavior can be overridden by setting the `options` argument when creating the Ledger Client.
 
 ## Key concepts
 
@@ -98,10 +58,10 @@ var ledgerClient = new ConfidentialLedgerClient(TestEnvironment.ConfidentialLedg
 Every write to Confidential Ledger generates an immutable ledger entry in the service. Writes are uniquely identified by transaction ids that increment with each write.
 
 ```C# Snippet:AppendToLedger
-PostLedgerEntryOperation postOperation = ledgerClient.PostLedgerEntry(
+Operation postOperation = ledgerClient.PostLedgerEntry(
     waitUntil: WaitUntil.Completed,
     RequestContent.Create(
-        new { contents = "Hello world!" })) as PostLedgerEntryOperation;
+        new { contents = "Hello world!" }));
 
 string transactionId = postOperation.Id;
 Console.WriteLine($"Appended transaction with Id: {transactionId}");
@@ -165,12 +125,12 @@ When no sub-ledger id is specified on method calls, the Confidential Ledger serv
 Response postResponse = ledgerClient.PostLedgerEntry(
 waitUntil: WaitUntil.Completed,
     RequestContent.Create(
-        new { contents = "Hello world!" })) as PostLedgerEntryOperation;
+        new { contents = "Hello world!" }));
 string transactionId = postOperation.Id;
 string subLedgerId = "subledger:0";
 
 // Provide both the transactionId and subLedgerId.
-Response getBySubledgerResponse = ledgerClient.GetLedgerEntry(transactionId,  subLedgerId);
+Response getBySubledgerResponse = ledgerClient.GetLedgerEntry(transactionId, subLedgerId);
 
 // Try until the entry is available.
 bool loaded = false;
@@ -199,7 +159,7 @@ getBySubledgerResponse = ledgerClient.GetLedgerEntry(transactionId);
 string subLedgerId2 = JsonDocument.Parse(getBySubledgerResponse.Content)
     .RootElement
     .GetProperty("entry")
-    .GetProperty("subLedgerId")
+    .GetProperty("collectionId")
     .GetString();
 
 Console.WriteLine($"{subLedgerId} == {subLedgerId2}");
@@ -208,16 +168,16 @@ Console.WriteLine($"{subLedgerId} == {subLedgerId2}");
 Ledger entries are retrieved from sub-ledgers. When a transaction id is specified, the returned value is the value contained in the specified sub-ledger at the point in time identified by the transaction id. If no transaction id is specified, the latest available value is returned.
 
 ```C# Snippet:GetEnteryWithNoTransactionId
-PostLedgerEntryOperation firstPostOperation = ledgerClient.PostLedgerEntry(
+Operation firstPostOperation = ledgerClient.PostLedgerEntry(
     waitUntil: WaitUntil.Completed,
-    RequestContent.Create(new { contents = "Hello world 0" })) as PostLedgerEntryOperation;
+    RequestContent.Create(new { contents = "Hello world 0" }));
 ledgerClient.PostLedgerEntry(
     waitUntil: WaitUntil.Completed,
     RequestContent.Create(new { contents = "Hello world 1" }));
-PostLedgerEntryOperation subLedgerPostOperation = ledgerClient.PostLedgerEntry(
+Operation subLedgerPostOperation = ledgerClient.PostLedgerEntry(
     waitUntil: WaitUntil.Completed,
     RequestContent.Create(new { contents = "Hello world sub-ledger 0" }),
-    "my sub-ledger") as PostLedgerEntryOperation;
+    "my sub-ledger");
 ledgerClient.PostLedgerEntry(
     waitUntil: WaitUntil.Completed,
     RequestContent.Create(new { contents = "Hello world sub-ledger 1" }),
@@ -350,11 +310,13 @@ ledgerClient.CreateOrUpdateUser(
 One may want to validate details about the Confidential Ledger for a variety of reasons. For example, you may want to view details about how Microsoft may manage your Confidential Ledger as part of [Confidential Consortium Framework governance](https://microsoft.github.io/CCF/main/governance/index.html), or verify that your Confidential Ledger is indeed running in SGX enclaves. A number of client methods are provided for these use cases.
 
 ```C# Snippet:Consortium
-Response consortiumResponse = ledgerClient.GetConsortiumMembers();
-string membersJson = new StreamReader(consortiumResponse.ContentStream).ReadToEnd();
-
-// Consortium members can manage and alter the Confidential Ledger, such as by replacing unhealthy nodes.
-Console.WriteLine(membersJson);
+Pageable<BinaryData> consortiumResponse = ledgerClient.GetConsortiumMembers();
+foreach (var page in consortiumResponse)
+{
+    string membersJson = page.ToString();
+    // Consortium members can manage and alter the Confidential Ledger, such as by replacing unhealthy nodes.
+    Console.WriteLine(membersJson);
+}
 
 // The constitution is a collection of JavaScript code that defines actions available to members,
 // and vets proposals by members to execute those actions.
@@ -432,6 +394,7 @@ For more information see the [Code of Conduct FAQ][coc_faq] or contact
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_cloud_shell]: https://shell.azure.com/bash
 [azure_confidential_computing]: https://azure.microsoft.com/solutions/confidential-compute
+[client_construction_sample]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/confidentialledger/Azure.Security.ConfidentialLedger/tests/samples/CertificateServiceSample.md
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [ccf]: https://github.com/Microsoft/CCF
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity

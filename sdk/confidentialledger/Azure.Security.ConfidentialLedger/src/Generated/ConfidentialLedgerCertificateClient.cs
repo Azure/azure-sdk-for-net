@@ -10,16 +10,17 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Security.ConfidentialLedger;
 
-namespace Azure.Security.ConfidentialLedger
+namespace Azure.Security.ConfidentialLedger.Certificate
 {
-    /// <summary> The ConfidentialLedgerIdentityService service client. </summary>
-    public partial class ConfidentialLedgerIdentityServiceClient
+    /// <summary> The ConfidentialLedgerCertificate service client. </summary>
+    public partial class ConfidentialLedgerCertificateClient
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://confidential-ledger.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly Uri _identityServiceUri;
+        private readonly Uri _certificateEndpoint;
         private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
@@ -28,8 +29,8 @@ namespace Azure.Security.ConfidentialLedger
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of ConfidentialLedgerIdentityServiceClient for mocking. </summary>
-        protected ConfidentialLedgerIdentityServiceClient()
+        /// <summary> Initializes a new instance of ConfidentialLedgerCertificateClient for mocking. </summary>
+        protected ConfidentialLedgerCertificateClient()
         {
         }
 
@@ -57,7 +58,7 @@ namespace Azure.Security.ConfidentialLedger
         {
             Argument.AssertNotNullOrEmpty(ledgerId, nameof(ledgerId));
 
-            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerIdentityServiceClient.GetLedgerIdentity");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerCertificateClient.GetLedgerIdentity");
             scope.Start();
             try
             {
@@ -95,7 +96,7 @@ namespace Azure.Security.ConfidentialLedger
         {
             Argument.AssertNotNullOrEmpty(ledgerId, nameof(ledgerId));
 
-            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerIdentityServiceClient.GetLedgerIdentity");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerCertificateClient.GetLedgerIdentity");
             scope.Start();
             try
             {
@@ -115,7 +116,7 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_identityServiceUri);
+            uri.Reset(_certificateEndpoint);
             uri.AppendPath("/ledgerIdentity/", false);
             uri.AppendPath(ledgerId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
