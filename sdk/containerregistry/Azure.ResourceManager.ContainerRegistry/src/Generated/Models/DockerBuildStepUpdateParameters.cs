@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The properties for updating a docker build step. </summary>
-    internal partial class DockerBuildStepUpdateParameters : TaskStepUpdateParameters
+    public partial class DockerBuildStepUpdateParameters : TaskStepUpdateParameters
     {
         /// <summary> Initializes a new instance of DockerBuildStepUpdateParameters. </summary>
         public DockerBuildStepUpdateParameters()

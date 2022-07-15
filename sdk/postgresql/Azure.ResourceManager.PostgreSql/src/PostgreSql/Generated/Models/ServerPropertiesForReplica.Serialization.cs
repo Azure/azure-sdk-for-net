@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    internal partial class ServerPropertiesForReplica : IUtf8JsonSerializable
+    public partial class ServerPropertiesForReplica : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.PostgreSql.Models
 {
     /// <summary> The properties to create a new replica. </summary>
-    internal partial class ServerPropertiesForReplica : ServerPropertiesForCreate
+    public partial class ServerPropertiesForReplica : ServerPropertiesForCreate
     {
         /// <summary> Initializes a new instance of ServerPropertiesForReplica. </summary>
         /// <param name="sourceServerId"> The master server id to create replica from. </param>

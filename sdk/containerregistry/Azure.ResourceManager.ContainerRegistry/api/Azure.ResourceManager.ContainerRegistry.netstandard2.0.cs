@@ -774,6 +774,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public bool? NoCache { get { throw null; } set { } }
         public string Target { get { throw null; } set { } }
     }
+    public partial class DockerBuildStepUpdateParameters : Azure.ResourceManager.ContainerRegistry.Models.TaskStepUpdateParameters
+    {
+        public DockerBuildStepUpdateParameters() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ContainerRegistry.Models.Argument> Arguments { get { throw null; } }
+        public string DockerFilePath { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> ImageNames { get { throw null; } }
+        public bool? IsPushEnabled { get { throw null; } set { } }
+        public bool? NoCache { get { throw null; } set { } }
+        public string Target { get { throw null; } set { } }
+    }
     public partial class EncodedTaskRunRequest : Azure.ResourceManager.ContainerRegistry.Models.RunContent
     {
         public EncodedTaskRunRequest(string encodedTaskContent, Azure.ResourceManager.ContainerRegistry.Models.PlatformProperties platform) { }
@@ -789,6 +799,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     public partial class EncodedTaskStep : Azure.ResourceManager.ContainerRegistry.Models.TaskStepProperties
     {
         public EncodedTaskStep(string encodedTaskContent) { }
+        public string EncodedTaskContent { get { throw null; } set { } }
+        public string EncodedValuesContent { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ContainerRegistry.Models.SetValue> Values { get { throw null; } }
+    }
+    public partial class EncodedTaskStepUpdateParameters : Azure.ResourceManager.ContainerRegistry.Models.TaskStepUpdateParameters
+    {
+        public EncodedTaskStepUpdateParameters() { }
         public string EncodedTaskContent { get { throw null; } set { } }
         public string EncodedValuesContent { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ContainerRegistry.Models.SetValue> Values { get { throw null; } }
@@ -890,6 +907,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     public partial class FileTaskStep : Azure.ResourceManager.ContainerRegistry.Models.TaskStepProperties
     {
         public FileTaskStep(string taskFilePath) { }
+        public string TaskFilePath { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ContainerRegistry.Models.SetValue> Values { get { throw null; } }
+        public string ValuesFilePath { get { throw null; } set { } }
+    }
+    public partial class FileTaskStepUpdateParameters : Azure.ResourceManager.ContainerRegistry.Models.TaskStepUpdateParameters
+    {
+        public FileTaskStepUpdateParameters() { }
         public string TaskFilePath { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ContainerRegistry.Models.SetValue> Values { get { throw null; } }
         public string ValuesFilePath { get { throw null; } set { } }
