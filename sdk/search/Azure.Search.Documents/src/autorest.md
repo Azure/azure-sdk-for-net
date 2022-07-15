@@ -2,7 +2,7 @@
 
 Run `dotnet build /t:GenerateCode` in the `src` directory to generate SDK code.
 
-See the [Contributing guidelines](https://github.com/Azure/azure-sdk-for-net/blob/fe0bf0e7e84a406ec2102c194ea05ccd5011a141/sdk/search/CONTRIBUTING.md) for more details.
+See the [Contributing guidelines](https://github.com/Azure/azure-rest-api-specs/blob/1dfd790c01ccc1a81b2d4d2fb0bff981c02182b7/sdk/search/CONTRIBUTING.md) for more details.
 
 ## AutoRest Configuration
 > see https://aka.ms/autorest
@@ -11,8 +11,8 @@ See the [Contributing guidelines](https://github.com/Azure/azure-sdk-for-net/blo
 ```yaml
 title: SearchServiceClient
 input-file:
- - https://github.com/Azure/azure-rest-api-specs/blob/d850f41f89530917000d8e6bb463f42bb745b930/specification/search/data-plane/Azure.Search/preview/2021-04-30-Preview/searchindex.json
- - https://github.com/Azure/azure-rest-api-specs/blob/d850f41f89530917000d8e6bb463f42bb745b930/specification/search/data-plane/Azure.Search/preview/2021-04-30-Preview/searchservice.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/1dfd790c01ccc1a81b2d4d2fb0bff981c02182b7/specification/search/data-plane/Azure.Search/preview/2021-04-30-Preview/searchindex.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/1dfd790c01ccc1a81b2d4d2fb0bff981c02182b7/specification/search/data-plane/Azure.Search/preview/2021-04-30-Preview/searchservice.json
 generation1-convenience-client: true
 modelerfour:
     seal-single-value-enum-by-default: true
