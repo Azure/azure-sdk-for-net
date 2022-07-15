@@ -8,9 +8,11 @@
 
 ### Bugs Fixed
 
+- Updated `CreateClient` code snippet so that documented code snippets for creating Ledger clients are up to date. 
+
 ### Other Changes
 
-- The `CertValidationCheck` callback for `ConfidentialLedgerClient` instances now checks the final certificate in the server's certificate chain matches the trusted TLS certificate. Previously this callback checked the thumbprint of the trusted TLS certificate was present anywhere in the server's certificate chain.
+- The `CertValidationCheck` callback for `ConfidentialLedgerClient` instances now checks the final certificate in the server's certificate chain matches the trusted TLS certificate. Previously this callback checked if the thumbprint of the trusted TLS certificate was present anywhere in the server's certificate chain. 
 
 ## 1.0.0-beta.3 (2022-07-07)
 

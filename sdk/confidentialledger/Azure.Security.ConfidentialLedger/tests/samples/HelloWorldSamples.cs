@@ -22,61 +22,12 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
         [Test]
         public void HelloWorld()
         {
-            #region Snippet:GetIdentity
-
-#if SNIPPET
-            Uri identityServiceEndpoint = new("https://identity.confidential-ledger.core.azure.com") // The hostname from the identityServiceUri
-#else
-            Uri identityServiceEndpoint = TestEnvironment.ConfidentialLedgerIdentityUrl;
-#endif
-            var identityClient = new ConfidentialLedgerIdentityServiceClient(identityServiceEndpoint);
-
-            // Get the ledger's  TLS certificate for our ledger.
-#if SNIPPET
-            string ledgerId = "<the ledger id>"; // ex. "my-ledger" from "https://my-ledger.eastus.cloudapp.azure.com"
-#else
-            var ledgerId = TestEnvironment.ConfidentialLedgerUrl.Host;
-            ledgerId = ledgerId.Substring(0, ledgerId.IndexOf('.'));
-#endif
-            Response response = identityClient.GetLedgerIdentity(ledgerId);
-            X509Certificate2 ledgerTlsCert = ConfidentialLedgerIdentityServiceClient.ParseCertificate(response);
-
-            #endregion
-
             #region Snippet:CreateClient
 
-            // Create a certificate chain rooted with our TLS cert.
-            X509Chain certificateChain = new();
-            certificateChain.ChainPolicy.RevocationMode = X509RevocationMode.NoCheck;
-            certificateChain.ChainPolicy.RevocationFlag = X509RevocationFlag.ExcludeRoot;
-            certificateChain.ChainPolicy.VerificationFlags = X509VerificationFlags.AllowUnknownCertificateAuthority;
-            certificateChain.ChainPolicy.VerificationTime = DateTime.Now;
-            certificateChain.ChainPolicy.UrlRetrievalTimeout = new TimeSpan(0, 0, 0);
-            certificateChain.ChainPolicy.ExtraStore.Add(ledgerTlsCert);
-
-            var f = certificateChain.Build(ledgerTlsCert);
-
-            // Define a validation function to ensure that the ledger certificate is trusted by the ledger identity TLS certificate.
-            bool CertValidationCheck(HttpRequestMessage httpRequestMessage, X509Certificate2 cert, X509Chain x509Chain, SslPolicyErrors sslPolicyErrors)
-            {
-                bool isChainValid = certificateChain.Build(cert);
-                if (!isChainValid) return false;
-
-                var isCertSignedByTheTlsCert = certificateChain.ChainElements.Cast<X509ChainElement>()
-                    .Any(x => x.Certificate.Thumbprint == ledgerTlsCert.Thumbprint);
-                return isCertSignedByTheTlsCert;
-            }
-
-            // Create an HttpClientHandler to use our certValidationCheck function.
-            var httpHandler = new HttpClientHandler();
-            httpHandler.ServerCertificateCustomValidationCallback = CertValidationCheck;
-
-            // Create the ledger client using a transport that uses our custom ServerCertificateCustomValidationCallback.
-            var options = new ConfidentialLedgerClientOptions { Transport = new HttpClientTransport(httpHandler) };
 #if SNIPPET
-            var ledgerClient = new ConfidentialLedgerClient(TestEnvironment.ConfidentialLedgerUrl, new DefaultAzureCredential(), options);
+            var ledgerClient = new ConfidentialLedgerClient(new Uri("https://my-ledger-url.confidential-ledger.azure.com"), new DefaultAzureCredential());
 #else
-            var ledgerClient = new ConfidentialLedgerClient(TestEnvironment.ConfidentialLedgerUrl, TestEnvironment.Credential, options);
+            var ledgerClient = new ConfidentialLedgerClient(TestEnvironment.ConfidentialLedgerUrl, TestEnvironment.Credential);
 #endif
 
             #endregion
@@ -159,7 +110,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             string subLedgerId = "subledger:0";
 
             // Provide both the transactionId and subLedgerId.
-            Response getBySubledgerResponse = ledgerClient.GetLedgerEntry(transactionId,  subLedgerId);
+            Response getBySubledgerResponse = ledgerClient.GetLedgerEntry(transactionId, subLedgerId);
 
             // Try until the entry is available.
             bool loaded = false;

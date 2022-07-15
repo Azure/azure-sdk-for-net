@@ -134,7 +134,7 @@ string transactionId = postOperation.Id;
 string subLedgerId = "subledger:0";
 
 // Provide both the transactionId and subLedgerId.
-Response getBySubledgerResponse = ledgerClient.GetLedgerEntry(transactionId,  subLedgerId);
+Response getBySubledgerResponse = ledgerClient.GetLedgerEntry(transactionId, subLedgerId);
 
 // Try until the entry is available.
 bool loaded = false;
