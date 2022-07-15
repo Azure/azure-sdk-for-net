@@ -1,40 +1,40 @@
 parameters:
-  - name: Variables
-    type: object
-    default: []
-  - name: OperatingSystems
-    type: string
-    default: 'Linux'
-  - name: Language
-    type: string
-    default: ''
-  - name: InstallLanguageSteps
-    type: stepList
-    default: []
-  - name: ServiceDirectory
-    type: string
-    default: ''
-  - name: Services
-    type: string
-    default: ''
-  - name: PackageVersions
-    type: string
-    default: '.*'
-  - name: Tests
-    type: string
-    default: '.*'
-  - name: Arguments
-    type: string
-    default: '.*'
-  - name: Iterations
-    type: number
-    default: '5'
-  - name: AdditionalArguments
-    type: string
-    default: ''
-  - name: EnvVars
-    type: object
-    default: {}
+- name: Variables
+  type: object
+  default: []
+- name: OperatingSystems
+  type: string
+  default: 'Linux'
+- name: Language
+  type: string
+  default: ''
+- name: InstallLanguageSteps
+  type: stepList
+  default: []
+- name: ServiceDirectory
+  type: string
+  default: ''
+- name: Services
+  type: string
+  default: ''
+- name: PackageVersions
+  type: string
+  default: '.*'
+- name: Tests
+  type: string
+  default: '.*'
+- name: Arguments
+  type: string
+  default: '.*'
+- name: Iterations
+  type: number
+  default: '5'
+- name: AdditionalArguments
+  type: string
+  default: ''
+- name: EnvVars
+  type: object
+  default: {}
 
 resources:
   repositories:
@@ -45,7 +45,7 @@ resources:
     ref: main
 
 variables:
-  - ${{ parameters.Variables }}
+- ${{ parameters.Variables }}
 
 jobs:
 - job: Perf
@@ -66,65 +66,65 @@ jobs:
     name: $(Pool)
     vmImage: $(OSVmImage)
   steps:
-    - checkout: self
-      path: s
+  - checkout: self
+    path: s
 
-    - checkout: azure-sdk-tools
-      path: s/azure-sdk-tools
+  - checkout: azure-sdk-tools
+    path: s/azure-sdk-tools
 
-    - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
-      parameters:
-        AgentImage: $(OSVmImage)
+  - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
+    parameters:
+      AgentImage: $(OSVmImage)
 
-    - ${{ parameters.InstallLanguageSteps }}
+  - ${{ parameters.InstallLanguageSteps }}
 
-    - template: /eng/common/TestResources/deploy-test-resources.yml
-      parameters:
-        ServiceDirectory: ${{ parameters.ServiceDirectory }}
-        Location: westus
-        ResourceType: perf
+  - template: /eng/common/TestResources/deploy-test-resources.yml
+    parameters:
+      ServiceDirectory: ${{ parameters.ServiceDirectory }}
+      Location: westus
+      ResourceType: perf
 
-    - pwsh: |
-        set-content -path config.yml -value "WorkingDirectories:"
-        add-content -path config.yml -value "  ${{ parameters.Language }}: $(Agent.BuildDirectory)/s"
-      workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation
-      displayName: Create config.yml
+  - pwsh: |
+      set-content -path config.yml -value "WorkingDirectories:"
+      add-content -path config.yml -value "  ${{ parameters.Language }}: $(Agent.BuildDirectory)/s"
+    workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation
+    displayName: Create config.yml
 
-    - script: >-
-        dotnet run -- run
-        --no-sync
-        --languages ${{ parameters.Language }}
-        --services "${{ parameters.Services }}"
-        --package-versions "${{ parameters.PackageVersions }}"
-        --tests "${{ parameters.Tests }}"
-        --arguments "${{ parameters.Arguments }}"
-        --iterations ${{ parameters.Iterations }}
-        ${{ parameters.AdditionalArguments }}
-      workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation
-      env:
-        ${{ each var in parameters.EnvVars }}:
-          ${{ var.key }}: ${{ var.value }}
-      displayName: Run perf tests
+  - script: >-
+      dotnet run -- run
+      --no-sync
+      --languages ${{ parameters.Language }}
+      --services "${{ parameters.Services }}"
+      --package-versions "${{ parameters.PackageVersions }}"
+      --tests "${{ parameters.Tests }}"
+      --arguments "${{ parameters.Arguments }}"
+      --iterations ${{ parameters.Iterations }}
+      ${{ parameters.AdditionalArguments }}
+    workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation
+    env:
+      ${{ each var in parameters.EnvVars }}:
+        ${{ var.key }}: ${{ var.value }}
+    displayName: Run perf tests
 
-    - pwsh: |
-        get-content results.csv
-      workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation/results
-      displayName: Print results.csv
-      condition: always()
+  - pwsh: |
+      get-content results.csv
+    workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation/results
+    displayName: Print results.csv
+    condition: always()
 
-    - pwsh: |
-        get-content results.json
-      workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation/results
-      displayName: Print results.json
-      condition: always()
+  - pwsh: |
+      get-content results.json
+    workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation/results
+    displayName: Print results.json
+    condition: always()
 
-    - task: PublishPipelineArtifact@1
-      inputs:
-        targetPath: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation/results
-        artifactName: results-$(MatrixName)
-      condition: always()
+  - task: PublishPipelineArtifact@1
+    inputs:
+      targetPath: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation/results
+      artifactName: results-$(MatrixName)
+    condition: always()
 
-    - template: /eng/common/TestResources/remove-test-resources.yml
-      parameters:
-        ServiceDirectory: ${{ parameters.ServiceDirectory }}
-        ResourceType: perf
+  - template: /eng/common/TestResources/remove-test-resources.yml
+    parameters:
+      ServiceDirectory: ${{ parameters.ServiceDirectory }}
+      ResourceType: perf
