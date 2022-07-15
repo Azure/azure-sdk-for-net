@@ -1,14 +1,5 @@
 namespace Azure.Security.ConfidentialLedger
 {
-    public partial class ConfidentialLedgerCertificateClient
-    {
-        protected ConfidentialLedgerCertificateClient() { }
-        public ConfidentialLedgerCertificateClient(System.Uri certificateEndpoint) { }
-        public ConfidentialLedgerCertificateClient(System.Uri certificateEndpoint, Azure.Security.ConfidentialLedger.ConfidentialLedgerCertificateClientOptions options) { }
-        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response GetLedgerIdentity(string ledgerId, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetLedgerIdentityAsync(string ledgerId, Azure.RequestContext context = null) { throw null; }
-    }
     public partial class ConfidentialLedgerCertificateClientOptions : Azure.Core.ClientOptions
     {
         public ConfidentialLedgerCertificateClientOptions(Azure.Security.ConfidentialLedger.ConfidentialLedgerCertificateClientOptions.ServiceVersion version = Azure.Security.ConfidentialLedger.ConfidentialLedgerCertificateClientOptions.ServiceVersion.V2022_05_13) { }
@@ -61,5 +52,17 @@ namespace Azure.Security.ConfidentialLedger
         {
             V2022_05_13 = 1,
         }
+    }
+}
+namespace Azure.Security.ConfidentialLedger.Certificate
+{
+    public partial class ConfidentialLedgerCertificateClient
+    {
+        protected ConfidentialLedgerCertificateClient() { }
+        public ConfidentialLedgerCertificateClient(System.Uri certificateEndpoint) { }
+        public ConfidentialLedgerCertificateClient(System.Uri certificateEndpoint, Azure.Security.ConfidentialLedger.ConfidentialLedgerCertificateClientOptions options) { }
+        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public virtual Azure.Response GetLedgerIdentity(string ledgerId, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetLedgerIdentityAsync(string ledgerId, Azure.RequestContext context = null) { throw null; }
     }
 }
