@@ -8,7 +8,7 @@
 
 ### Bugs Fixed
 
-- Updated `CreateClient` code snippet so that documented code snippets for creating Ledger clients are up to date. 
+- Custom client `options` used when instantiating a `ConfidentialLedgerClient` are no longer also passed to the `ConfidentialLedgerIdentityServiceClient` instance used during construction of the `ConfidentialLedgerClient`, as these two clients have different requirements, in particular on certificate validation. 
 
 ### Other Changes
 
