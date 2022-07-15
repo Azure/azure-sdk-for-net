@@ -37,7 +37,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
                     TestEnvironment.ConfidentialLedgerIdentityUrl,
                     _options);
 
-            var serviceCert = ConfidentialLedgerClient.GetIdentityServerTlsCert(TestEnvironment.ConfidentialLedgerUrl, IdentityClient);
+            var serviceCert = ConfidentialLedgerClient.GetIdentityServerTlsCert(TestEnvironment.ConfidentialLedgerUrl, _options, IdentityClient);
 
             Client = InstrumentClient(
                 new ConfidentialLedgerClient(

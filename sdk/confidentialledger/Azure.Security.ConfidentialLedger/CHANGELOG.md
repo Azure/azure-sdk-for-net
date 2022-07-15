@@ -8,8 +8,6 @@
 
 ### Bugs Fixed
 
-- Custom client `options` used when instantiating a `ConfidentialLedgerClient` are no longer also passed to the `ConfidentialLedgerIdentityServiceClient` instance used during construction of the `ConfidentialLedgerClient`, as these two clients have different requirements, in particular on certificate validation. 
-
 ### Other Changes
 
 - The `CertValidationCheck` callback for `ConfidentialLedgerClient` instances now checks the final certificate in the server's certificate chain matches the trusted TLS certificate. Previously this callback checked if the thumbprint of the trusted TLS certificate was present anywhere in the server's certificate chain. 

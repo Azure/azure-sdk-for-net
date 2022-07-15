@@ -45,8 +45,6 @@ Then, `DefaultAzureCredential` will be able to authenticate the `ConfidentialLed
 
 Constructing the client also requires your Confidential Ledger's URI, which you can obtain from the Azure Portal page for your Confidential Ledger in the `Ledger URI` field under the `Properties` section, or from Azure CLI. When you have retrieved the `Ledger URI`, please use it to replace `"https://my-ledger-url.confidential-ledger.azure.com"` in the example below.
 
-> Note: Confidential Ledger Clients accept advanced configuration via a third argument, `options`, which is not shown in this example. See the [ConfidentialLedgerClient][azure_confidential_ledger_client] documentation for details. 
-
 ```C# Snippet:CreateClient
 var ledgerClient = new ConfidentialLedgerClient(new Uri("https://my-ledger-url.confidential-ledger.azure.com"), new DefaultAzureCredential());
 ```
@@ -397,7 +395,6 @@ For more information see the [Code of Conduct FAQ][coc_faq] or contact
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_cloud_shell]: https://shell.azure.com/bash
 [azure_confidential_computing]: https://azure.microsoft.com/solutions/confidential-compute
-[azure_confidential_ledger_client]: https://docs.azure.cn/en-us/dotnet/api/azure.storage.confidentialledger.confidentialledgerclient.-ctor?view=azure-dotnet-preview#azure-storage-confidentialledger-confidentialledgerclient-ctor(system-uri-azure-core-tokencredential-azure-storage-confidentialledger-confidentialledgerclientoptions)
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [ccf]: https://github.com/Microsoft/CCF
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity
