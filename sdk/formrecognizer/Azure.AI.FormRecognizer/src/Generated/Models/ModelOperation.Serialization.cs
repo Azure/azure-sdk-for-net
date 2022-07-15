@@ -17,7 +17,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         internal static ModelOperation DeserializeModelOperation(JsonElement element)
         {
             Optional<JsonElement> error = default;
-            Optional<DocumentModel> result = default;
+            Optional<DocumentModelInfo> result = default;
             string operationId = default;
             DocumentOperationStatus status = default;
             Optional<int> percentCompleted = default;
@@ -41,7 +41,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    result = DocumentModel.DeserializeDocumentModel(property.Value);
+                    result = DocumentModelInfo.DeserializeDocumentModelInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("operationId"))

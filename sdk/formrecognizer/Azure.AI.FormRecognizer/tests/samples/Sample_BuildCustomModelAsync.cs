@@ -38,7 +38,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
             // https://aka.ms/azsdk/formrecognizer/buildmode
 
             BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, trainingFileUri, DocumentBuildMode.Template);
-            DocumentModel model = operation.Value;
+            DocumentModelInfo model = operation.Value;
 
             Console.WriteLine($"  Model Id: {model.ModelId}");
             if (string.IsNullOrEmpty(model.Description))

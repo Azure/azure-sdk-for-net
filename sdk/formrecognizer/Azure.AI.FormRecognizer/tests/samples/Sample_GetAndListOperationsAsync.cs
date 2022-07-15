@@ -57,7 +57,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
             if (specificOperation.Status == DocumentOperationStatus.Succeeded)
             {
                 Console.WriteLine($"My {specificOperation.Kind} operation is completed.");
-                DocumentModel result = specificOperation.Result;
+                DocumentModelInfo result = specificOperation.Result;
                 Console.WriteLine($"Model ID: {result.ModelId}");
             }
             else if (specificOperation.Status == DocumentOperationStatus.Failed)

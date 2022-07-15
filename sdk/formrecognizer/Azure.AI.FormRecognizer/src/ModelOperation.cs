@@ -17,7 +17,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary>
         /// Initializes a new instance of ModelOperation. Used by the <see cref="DocumentAnalysisModelFactory"/>.
         /// </summary>
-        internal ModelOperation(string operationId, DocumentOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind kind, string resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags, ResponseError error, DocumentModel result) : base(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, apiVersion, tags)
+        internal ModelOperation(string operationId, DocumentOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind kind, string resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags, ResponseError error, DocumentModelInfo result) : base(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, apiVersion, tags)
         {
             _mockError = error;
             Result = result;
@@ -26,7 +26,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary> Operation result upon success. </summary>
         //TODO service is looking into fixing this so it has different return types that we can adapt.
         [CodeGenMember("Result")]
-        public DocumentModel Result { get; }
+        public DocumentModelInfo Result { get; }
 
         /// <summary> Encountered error. </summary>
         [CodeGenMember("Error")]

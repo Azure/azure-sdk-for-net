@@ -294,9 +294,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// </summary>
         /// <param name="modelId">The ID of the model to retrieve.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to a <see cref="DocumentModel"/> containing
+        /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to a <see cref="DocumentModelInfo"/> containing
         /// information about the requested model.</returns>
-        public virtual Response<DocumentModel> GetModel(string modelId, CancellationToken cancellationToken = default)
+        public virtual Response<DocumentModelInfo> GetModel(string modelId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
@@ -305,7 +305,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             try
             {
-                Response<DocumentModel> response = ServiceClient.GetModel(modelId, cancellationToken);
+                Response<DocumentModelInfo> response = ServiceClient.GetModel(modelId, cancellationToken);
                 return Response.FromValue(response.Value, response.GetRawResponse());
             }
             catch (Exception e)
@@ -320,9 +320,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// </summary>
         /// <param name="modelId">The ID of the model to retrieve.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to a <see cref="DocumentModel"/> containing
+        /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to a <see cref="DocumentModelInfo"/> containing
         /// information about the requested model.</returns>
-        public virtual async Task<Response<DocumentModel>> GetModelAsync(string modelId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DocumentModelInfo>> GetModelAsync(string modelId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
@@ -331,7 +331,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             try
             {
-                Response<DocumentModel> response = await ServiceClient.GetModelAsync(modelId, cancellationToken).ConfigureAwait(false);
+                Response<DocumentModelInfo> response = await ServiceClient.GetModelAsync(modelId, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value, response.GetRawResponse());
             }
             catch (Exception e)
@@ -528,7 +528,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// </summary>
         /// <param name="operationId">The operation ID.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to a <see cref="DocumentModel"/> containing
+        /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to a <see cref="DocumentModelInfo"/> containing
         /// information about the requested model.</returns>
         public virtual Response<ModelOperation> GetOperation(string operationId, CancellationToken cancellationToken = default)
         {
@@ -554,7 +554,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// </summary>
         /// <param name="operationId">The operation ID.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to a <see cref="DocumentModel"/> containing
+        /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to a <see cref="DocumentModelInfo"/> containing
         /// information about the requested model.</returns>
         public virtual async Task<Response<ModelOperation>> GetOperationAsync(string operationId, CancellationToken cancellationToken = default)
         {

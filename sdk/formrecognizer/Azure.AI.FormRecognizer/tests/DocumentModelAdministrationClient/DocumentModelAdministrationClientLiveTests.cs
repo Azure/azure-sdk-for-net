@@ -65,7 +65,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             Assert.IsTrue(operation.HasValue);
 
-            DocumentModel model = operation.Value;
+            DocumentModelInfo model = operation.Value;
 
             ValidateDocumentModel(model);
 
@@ -98,7 +98,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             Assert.IsTrue(operation.HasValue);
 
-            DocumentModel model = operation.Value;
+            DocumentModelInfo model = operation.Value;
 
             ValidateDocumentModel(model);
 
@@ -151,7 +151,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, trainingFilesUri, DocumentBuildMode.Template, modelId, options);
 
-            DocumentModel model = operation.Value;
+            DocumentModelInfo model = operation.Value;
 
             CollectionAssert.AreEquivalent(TestingTags, model.Tags);
         }
@@ -188,7 +188,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         {
             var client = CreateDocumentModelAdministrationClient();
 
-            DocumentModel model = await client.GetModelAsync("prebuilt-businessCard");
+            DocumentModelInfo model = await client.GetModelAsync("prebuilt-businessCard");
 
             ValidateDocumentModel(model);
             Assert.NotNull(model.Description);
@@ -216,7 +216,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             }
 
             BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, trainingFilesUri, DocumentBuildMode.Template, modelId, options);
-            DocumentModel resultModel = await client.GetModelAsync(modelId);
+            DocumentModelInfo resultModel = await client.GetModelAsync(modelId);
 
             ValidateDocumentModel(resultModel, description, TestingTags);
 
@@ -332,7 +332,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             Assert.IsTrue(operation.HasValue);
 
-            DocumentModel copiedModel = operation.Value;
+            DocumentModelInfo copiedModel = operation.Value;
 
             ValidateDocumentModel(copiedModel);
             Assert.AreEqual(targetAuth.TargetModelId, copiedModel.ModelId);
@@ -376,7 +376,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(targetModelId, tags: tags);
             CopyModelOperation operation = await sourceClient.CopyModelToAsync(WaitUntil.Completed, trainedModel.ModelId, targetAuth);
 
-            DocumentModel copiedModel = operation.Value;
+            DocumentModelInfo copiedModel = operation.Value;
 
             CollectionAssert.AreEquivalent(TestingTags, copiedModel.Tags);
 
@@ -420,7 +420,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             Assert.IsTrue(operation.HasValue);
 
-            DocumentModel composedModel = operation.Value;
+            DocumentModelInfo composedModel = operation.Value;
 
             ValidateDocumentModel(composedModel);
 
@@ -452,7 +452,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var composedModelId = Recording.GenerateId();
             BuildModelOperation operation = await client.ComposeModelAsync(WaitUntil.Completed, modelIds, composedModelId, tags: tags);
 
-            DocumentModel composedModel = operation.Value;
+            DocumentModelInfo composedModel = operation.Value;
 
             CollectionAssert.AreEquivalent(TestingTags, composedModel.Tags);
 
@@ -492,7 +492,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             }
         }
 
-        private void ValidateDocumentModel(DocumentModel model, string description = null, IReadOnlyDictionary<string, string> tags = null)
+        private void ValidateDocumentModel(DocumentModelInfo model, string description = null, IReadOnlyDictionary<string, string> tags = null)
         {
             ValidateDocumentModelSummary(model, description, tags);
 
