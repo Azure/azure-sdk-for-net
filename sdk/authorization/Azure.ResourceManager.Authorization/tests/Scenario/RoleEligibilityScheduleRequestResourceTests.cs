@@ -15,13 +15,9 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
         {
         }
 
-        public RoleDefinitionResource Definition { get; set; }
-
         private async Task<RoleEligibilityScheduleRequestCollection> GetRoleEligibilityScheduleRequestCollectionAsync()
         {
             var resourceGroup = await CreateResourceGroupAsync();
-            var definitionCollection = resourceGroup.GetRoleDefinitions();
-            Definition = (await definitionCollection.GetAllAsync().ToEnumerableAsync()).FirstOrDefault();
             return resourceGroup.GetRoleEligibilityScheduleRequests();
         }
 
