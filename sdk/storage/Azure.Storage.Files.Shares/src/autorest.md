@@ -44,11 +44,7 @@ directive:
     $.Metrics.type = "object";
 ```
 
-<<<<<<< HEAD
-### Times aren't required 
-=======
 ### Formats aren't required
->>>>>>> feature/storage/stg82base
 ``` yaml
 directive:
 - from: swagger-document
