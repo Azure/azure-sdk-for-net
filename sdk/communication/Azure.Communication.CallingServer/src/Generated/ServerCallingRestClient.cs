@@ -10,7 +10,6 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Communication.CallingServer.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -215,7 +214,7 @@ namespace Azure.Communication.CallingServer
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 202:
+                case 204:
                     return message.Response;
                 default:
                     throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -237,7 +236,7 @@ namespace Azure.Communication.CallingServer
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 202:
+                case 204:
                     return message.Response;
                 default:
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);
@@ -276,7 +275,7 @@ namespace Azure.Communication.CallingServer
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 202:
+                case 204:
                     return message.Response;
                 default:
                     throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -298,7 +297,7 @@ namespace Azure.Communication.CallingServer
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 202:
+                case 204:
                     return message.Response;
                 default:
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);

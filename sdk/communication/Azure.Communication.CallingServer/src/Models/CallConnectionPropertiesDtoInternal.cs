@@ -3,7 +3,7 @@
 
 using Azure.Core;
 
-namespace Azure.Communication.CallingServer.Models
+namespace Azure.Communication.CallingServer
 {
     [CodeGenModel("CallConnectionPropertiesDto")]
     internal partial class CallConnectionPropertiesDtoInternal
