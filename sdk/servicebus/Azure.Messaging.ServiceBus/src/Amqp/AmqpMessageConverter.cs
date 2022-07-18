@@ -850,14 +850,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return buffer;
         }
 
-        private static Data ToData(AmqpMessage message)
-        {
-            ArraySegment<byte>[] payload = message.GetPayload();
-            var buffer = new BufferListStream(payload);
-            ArraySegment<byte> value = buffer.ReadBytes((int)buffer.Length);
-            return new Data { Value = value };
-        }
-
         internal static AmqpMap GetSqlRuleFilterMap(SqlRuleFilter sqlRuleFilter)
         {
             var amqpFilterMap = new AmqpMap
