@@ -35,19 +35,20 @@ namespace Microsoft.Azure.Batch.Conventions.Files.Utilities
         }
         /*
          * No corresponding class for CloudStorageAccount in Azure.Storage.Blob SDK, remove method?
+         * Substitute StorageAccount for BlobServiceClient
          */
-        //internal static BlobContainerClient GetContainerReference(CloudStorageAccount storageAccount, string jobId)
-        //{
-        //    if (storageAccount == null)
-        //    {
-        //        throw new ArgumentNullException(nameof(storageAccount));
-        //    }
+        internal static BlobContainerClient GetContainerReference(BlobServiceClient blobServiceClient, string jobId)
+        {
+            if (blobServiceClient == null)
+            {
+                throw new ArgumentNullException(nameof(blobServiceClient));
+            }
 
-        //    Validate.IsNotNullOrEmpty(jobId, nameof(jobId));
+            Validate.IsNotNullOrEmpty(jobId, nameof(jobId));
 
-        //    var jobOutputContainerName = ContainerNameUtils.GetSafeContainerName(jobId);
-        //    return storageAccount.CreateCloudBlobClient().GetContainerReference(jobOutputContainerName);
-        //}
+            var jobOutputContainerName = ContainerNameUtils.GetSafeContainerName(jobId);
+            return blobServiceClient.GetBlobContainerClient(jobOutputContainerName);
+        }
 
 
         /*
