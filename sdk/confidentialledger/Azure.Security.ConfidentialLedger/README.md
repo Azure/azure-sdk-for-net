@@ -1,7 +1,7 @@
-# Azure Confidential Ledger client library for .NET
+# Azure confidential ledger client library for .NET
 
-Azure Confidential Ledger provides a service for logging to an immutable, tamper-proof ledger. As part of the [Azure Confidential Computing][azure_confidential_computing]
-portfolio, Azure Confidential Ledger runs in SGX enclaves. It is built on Microsoft Research's [Confidential Consortium Framework][ccf].
+Azure confidential ledger provides a service for logging to an immutable, tamper-proof ledger. As part of the [Azure Confidential Computing][azure_confidential_computing]
+portfolio, Azure confidential ledger runs in SGX enclaves. It is built on Microsoft Research's [Confidential Consortium Framework][ccf].
 
   [Source code][client_src] | [Package (NuGet)][client_nuget_package] <!--| [API reference documentation][api_reference] | [Samples][samples] -->
 
@@ -11,7 +11,7 @@ This section should include everything a developer needs to do to install and cr
 
 ### Install the package
 
-Install the Confidential Ledger client library for .NET with [NuGet][client_nuget_package]:
+Install the Azure confidential ledger client library for .NET with [NuGet][client_nuget_package]:
 
 ```dotnetcli
 dotnet add package Azure.Security.ConfidentialLedger
@@ -20,14 +20,14 @@ dotnet add package Azure.Security.ConfidentialLedger
 ### Prerequisites
 
 * An [Azure subscription][azure_sub].
-* A running instance of Azure Confidential Ledger.
-* A registered user in the Confidential Ledger with `Administrator` privileges.
+* A running instance of Azure confidential ledger.
+* A registered user in the Azure confidential ledger with `Administrator` privileges.
 
 ### Authenticate the client
 
 #### Using Azure Active Directory
 
-This document demonstrates using [DefaultAzureCredential][default_cred_ref] to authenticate to the Confidential Ledger via Azure Active Directory. However, any of the credentials offered by the [Azure.Identity][azure_identity] will be accepted.  See the [Azure.Identity][azure_identity] documentation for more information about other credentials.
+This document demonstrates using [DefaultAzureCredential][default_cred_ref] to authenticate to the confidential ledger via Azure Active Directory. However, any of the credentials offered by the [Azure.Identity][azure_identity] will be accepted.  See the [Azure.Identity][azure_identity] documentation for more information about other credentials.
 
 #### Using a client certificate
 
@@ -35,7 +35,7 @@ As an alternative to Azure Active Directory, clients may choose to use a client 
 
 ### Create a client
 
-`DefaultAzureCredential` will automatically handle most Azure SDK client scenarios. To get started, set environment variables for the AAD identity registered with your Confidential Ledger.
+`DefaultAzureCredential` will automatically handle most Azure SDK client scenarios. To get started, set environment variables for the AAD identity registered with your confidential ledger.
 ```bash
 export AZURE_CLIENT_ID="generated app id"
 export AZURE_CLIENT_SECRET="random password"
@@ -43,19 +43,19 @@ export AZURE_TENANT_ID="tenant id"
 ```
 Then, `DefaultAzureCredential` will be able to authenticate the `ConfidentialLedgerClient`.
 
-Constructing the client also requires your Confidential Ledger's URI, which you can obtain from the Azure Portal page for your Confidential Ledger in the `Ledger URI` field under the `Properties` section. When you have retrieved the `Ledger URI`, please use it to replace `"https://my-ledger-url.confidential-ledger.azure.com"` in the example below.
+Constructing the client also requires your confidential ledger's URI, which you can obtain from the Azure Portal page for your confidential ledger in the `Ledger URI` field under the `Properties` section. When you have retrieved the `Ledger URI`, please use it to replace `"https://my-ledger-url.confidential-ledger.azure.com"` in the example below.
 
 ```C# Snippet:CreateClient
 var ledgerClient = new ConfidentialLedgerClient(new Uri("https://my-ledger-url.confidential-ledger.azure.com"), new DefaultAzureCredential());
 ```
 
-> Security Note: By default when a Confidential Ledger Client is created it will connect to Azure's Confidential Ledger Identity Service to obtain the latest TLS service certificate for your Ledger in order to secure connections to Ledger Nodes. The details of this process are available in [this sample][client_construction_sample]. This behavior can be overridden by setting the `options` argument when creating the Ledger Client.
+> Security Note: By default when a confidential ledger Client is created it will connect to Azure's confidential ledger Identity Service to obtain the latest TLS service certificate for your Ledger in order to secure connections to Ledger Nodes. The details of this process are available in [this sample][client_construction_sample]. This behavior can be overridden by setting the `options` argument when creating the Ledger Client.
 
 ## Key concepts
 
 ### Ledger entries
 
-Every write to Confidential Ledger generates an immutable ledger entry in the service. Writes are uniquely identified by transaction ids that increment with each write.
+Every write to Azure confidential ledger generates an immutable ledger entry in the service. Writes are uniquely identified by transaction ids that increment with each write.
 
 ```C# Snippet:AppendToLedger
 Operation postOperation = ledgerClient.PostLedgerEntry(
@@ -67,7 +67,7 @@ string transactionId = postOperation.Id;
 Console.WriteLine($"Appended transaction with Id: {transactionId}");
 ```
 
-Since Confidential Ledger is a distributed system, rare transient failures may cause writes to be lost. For entries that must be preserved, it is advisable to verify that the write became durable. Note: It may be necessary to call `GetTransactionStatus` multiple times until it returns a "Committed" status. However, when calling `PostLedgerEntry`, a successful result indicates that the status is "Committed".
+Since Azure confidential ledger is a distributed system, rare transient failures may cause writes to be lost. For entries that must be preserved, it is advisable to verify that the write became durable. Note: It may be necessary to call `GetTransactionStatus` multiple times until it returns a "Committed" status. However, when calling `PostLedgerEntry`, a successful result indicates that the status is "Committed".
 
 ```C# Snippet:GetStatus
 Response statusResponse = ledgerClient.GetTransactionStatus(transactionId);
@@ -94,7 +94,7 @@ Console.WriteLine($"Transaction status: {status}");
 
 #### Receipts
 
-State changes to the Confidential Ledger are saved in a data structure called a Merkle tree. To cryptographically verify that writes were correctly saved, a Merkle proof, or receipt, can be retrieved for any transaction id.
+State changes to the a confidential ledger are saved in a data structure called a Merkle tree. To cryptographically verify that writes were correctly saved, a Merkle proof, or receipt, can be retrieved for any transaction id.
 
 ```C# Snippet:GetReceipt
 Response receiptResponse = ledgerClient.GetReceipt(transactionId);
@@ -103,34 +103,34 @@ string receiptJson = new StreamReader(receiptResponse.ContentStream).ReadToEnd()
 Console.WriteLine(receiptJson);
 ```
 
-#### Sub-ledgers
+#### Collections
 
-While most use cases will involve one ledger, we provide the sub-ledger feature in case different logical groups of data need to be stored in the same Confidential Ledger.
+While most use cases will involve one ledger, we provide the collections feature in case different logical groups of data need to be stored in the same confidential ledger.
 
-```C# Snippet:SubLedger
+```C# Snippet:Collection
 ledgerClient.PostLedgerEntry(
     waitUntil: WaitUntil.Completed,
     RequestContent.Create(
-        new { contents = "Hello from Chris!", subLedgerId = "Chris' messages" }));
+        new { contents = "Hello from Chris!", collectionId = "Chris' messages" }));
 
 ledgerClient.PostLedgerEntry(
     waitUntil: WaitUntil.Completed,
     RequestContent.Create(
-        new { contents = "Hello from Allison!", subLedgerId = "Allison's messages" }));
+        new { contents = "Hello from Allison!", collectionId = "Allison's messages" }));
 ```
 
-When no sub-ledger id is specified on method calls, the Confidential Ledger service will assume a constant, service-determined sub-ledger id.
+When no collection id is specified on method calls, the Azure confidential ledger service will assume a constant, service-determined collection id.
 
-```C# Snippet:NoSubLedgerId
+```C# Snippet:NoCollectionId
 Response postResponse = ledgerClient.PostLedgerEntry(
 waitUntil: WaitUntil.Completed,
     RequestContent.Create(
         new { contents = "Hello world!" }));
 string transactionId = postOperation.Id;
-string subLedgerId = "subledger:0";
+string collectionId = "collection:0";
 
-// Provide both the transactionId and subLedgerId.
-Response getBySubledgerResponse = ledgerClient.GetLedgerEntry(transactionId, subLedgerId);
+// Provide both the transactionId and collectionId.
+Response getByCollectionResponse = ledgerClient.GetLedgerEntry(transactionId, collectionId);
 
 // Try until the entry is available.
 bool loaded = false;
@@ -138,7 +138,7 @@ JsonElement element = default;
 string contents = null;
 while (!loaded)
 {
-    loaded = JsonDocument.Parse(getBySubledgerResponse.Content)
+    loaded = JsonDocument.Parse(getByCollectionResponse.Content)
         .RootElement
         .TryGetProperty("entry", out element);
     if (loaded)
@@ -147,25 +147,25 @@ while (!loaded)
     }
     else
     {
-        getBySubledgerResponse = ledgerClient.GetLedgerEntry(transactionId, subLedgerId);
+        getByCollectionResponse = ledgerClient.GetLedgerEntry(transactionId, collectionId);
     }
 }
 
 Console.WriteLine(contents); // "Hello world!"
 
 // Now just provide the transactionId.
-getBySubledgerResponse = ledgerClient.GetLedgerEntry(transactionId);
+getByCollectionResponse = ledgerClient.GetLedgerEntry(transactionId);
 
-string subLedgerId2 = JsonDocument.Parse(getBySubledgerResponse.Content)
+string collectionId2 = JsonDocument.Parse(getByCollectionResponse.Content)
     .RootElement
     .GetProperty("entry")
     .GetProperty("collectionId")
     .GetString();
 
-Console.WriteLine($"{subLedgerId} == {subLedgerId2}");
+Console.WriteLine($"{collectionId} == {collectionId2}");
 ```
 
-Ledger entries are retrieved from sub-ledgers. When a transaction id is specified, the returned value is the value contained in the specified sub-ledger at the point in time identified by the transaction id. If no transaction id is specified, the latest available value is returned.
+Ledger entries are retrieved from collections. When a transaction id is specified, the returned value is the value contained in the specified collection at the point in time identified by the transaction id. If no transaction id is specified, the latest available value is returned.
 
 ```C# Snippet:GetEnteryWithNoTransactionId
 Operation firstPostOperation = ledgerClient.PostLedgerEntry(
@@ -174,14 +174,14 @@ Operation firstPostOperation = ledgerClient.PostLedgerEntry(
 ledgerClient.PostLedgerEntry(
     waitUntil: WaitUntil.Completed,
     RequestContent.Create(new { contents = "Hello world 1" }));
-Operation subLedgerPostOperation = ledgerClient.PostLedgerEntry(
+Operation collectionPostOperation = ledgerClient.PostLedgerEntry(
     waitUntil: WaitUntil.Completed,
-    RequestContent.Create(new { contents = "Hello world sub-ledger 0" }),
-    "my sub-ledger");
+    RequestContent.Create(new { contents = "Hello world collection 0" }),
+    "my collection");
 ledgerClient.PostLedgerEntry(
     waitUntil: WaitUntil.Completed,
-    RequestContent.Create(new { contents = "Hello world sub-ledger 1" }),
-    "my sub-ledger");
+    RequestContent.Create(new { contents = "Hello world collection 1" }),
+    "my collection");
 string transactionId = firstPostOperation.Id;
 
 // Wait for the entry to be committed
@@ -195,7 +195,7 @@ while (status == "Pending")
         .GetString();
 }
 
-// The ledger entry written at the transactionId in firstResponse is retrieved from the default sub-ledger.
+// The ledger entry written at the transactionId in firstResponse is retrieved from the default collection.
 Response getResponse = ledgerClient.GetLedgerEntry(transactionId);
 
 // Try until the entry is available.
@@ -213,7 +213,7 @@ while (!loaded)
     }
     else
     {
-        getResponse = ledgerClient.GetLedgerEntry(transactionId, subLedgerId);
+        getResponse = ledgerClient.GetLedgerEntry(transactionId, collectionId);
     }
 }
 
@@ -225,13 +225,13 @@ string firstEntryContents = JsonDocument.Parse(getResponse.Content)
 
 Console.WriteLine(firstEntryContents); // "Hello world 0"
 
-// This will return the latest entry available in the default sub-ledger.
+// This will return the latest entry available in the default collection.
 getResponse = ledgerClient.GetCurrentLedgerEntry();
 
 // Try until the entry is available.
 loaded = false;
 element = default;
-string latestDefaultSubLedger = null;
+string latestDefaultCollection = null;
 while (!loaded)
 {
     loaded = JsonDocument.Parse(getResponse.Content)
@@ -239,7 +239,7 @@ while (!loaded)
         .TryGetProperty("contents", out element);
     if (loaded)
     {
-        latestDefaultSubLedger = element.GetString();
+        latestDefaultCollection = element.GetString();
     }
     else
     {
@@ -247,16 +247,16 @@ while (!loaded)
     }
 }
 
-Console.WriteLine($"The latest ledger entry from the default sub-ledger is {latestDefaultSubLedger}"); //"Hello world 1"
+Console.WriteLine($"The latest ledger entry from the default collection is {latestDefaultCollection}"); //"Hello world 1"
 
-// The ledger entry written at subLedgerTransactionId is retrieved from the sub-ledger 'sub-ledger'.
-string subLedgerTransactionId = subLedgerPostOperation.Id;
+// The ledger entry written at collectionTransactionId is retrieved from the collection 'collection'.
+string collectionTransactionId = collectionPostOperation.Id;
 
-getResponse = ledgerClient.GetLedgerEntry(subLedgerTransactionId, "my sub-ledger");
+getResponse = ledgerClient.GetLedgerEntry(collectionTransactionId, "my collection");
 // Try until the entry is available.
 loaded = false;
 element = default;
-string subLedgerEntry = null;
+string collectionEntry = null;
 while (!loaded)
 {
     loaded = JsonDocument.Parse(getResponse.Content)
@@ -264,38 +264,38 @@ while (!loaded)
         .TryGetProperty("entry", out element);
     if (loaded)
     {
-        subLedgerEntry = element.GetProperty("contents").GetString();
+        collectionEntry = element.GetProperty("contents").GetString();
     }
     else
     {
-        getResponse = ledgerClient.GetLedgerEntry(subLedgerTransactionId, "my sub-ledger");
+        getResponse = ledgerClient.GetLedgerEntry(collectionTransactionId, "my collection");
     }
 }
 
-Console.WriteLine(subLedgerEntry); // "Hello world sub-ledger 0"
+Console.WriteLine(collectionEntry); // "Hello world collection 0"
 
-// This will return the latest entry available in the sub-ledger.
-getResponse = ledgerClient.GetCurrentLedgerEntry("my sub-ledger");
-string latestSubLedger = JsonDocument.Parse(getResponse.Content)
+// This will return the latest entry available in the collection.
+getResponse = ledgerClient.GetCurrentLedgerEntry("my collection");
+string latestCollection = JsonDocument.Parse(getResponse.Content)
     .RootElement
     .GetProperty("contents")
     .GetString();
 
-Console.WriteLine($"The latest ledger entry from the sub-ledger is {latestSubLedger}"); // "Hello world sub-ledger 1"
+Console.WriteLine($"The latest ledger entry from the collection is {latestCollection}"); // "Hello world collection 1"
 ```
 
 ##### Ranged queries
 
-Ledger entries in a sub-ledger may be retrieved over a range of transaction ids.
+Ledger entries in a collection may be retrieved over a range of transaction ids.
 Note: Both ranges are optional; they can be provided individually or not at all.
 
 ```C# Snippet:RangedQuery
-ledgerClient.GetLedgerEntries(fromTransactionId: "2.1", toTransactionId: subLedgerTransactionId);
+ledgerClient.GetLedgerEntries(fromTransactionId: "2.1", toTransactionId: collectionTransactionId);
 ```
 
 ### User management
 
-Users are managed directly with the Confidential Ledger instead of through Azure. New users may be AAD-based or certificate-based.
+Users are managed directly with the confidential ledger instead of through Azure. New users may be AAD-based or certificate-based.
 
 ```C# Snippet:NewUser
 string newUserAadObjectId = "<some AAD user or service princpal object Id>";
@@ -307,14 +307,14 @@ ledgerClient.CreateOrUpdateUser(
 
 ### Confidential consortium and enclave verifications
 
-One may want to validate details about the Confidential Ledger for a variety of reasons. For example, you may want to view details about how Microsoft may manage your Confidential Ledger as part of [Confidential Consortium Framework governance](https://microsoft.github.io/CCF/main/governance/index.html), or verify that your Confidential Ledger is indeed running in SGX enclaves. A number of client methods are provided for these use cases.
+One may want to validate details about the confidential ledger for a variety of reasons. For example, you may want to view details about how Microsoft may manage your confidential ledger as part of [Confidential Consortium Framework governance](https://microsoft.github.io/CCF/main/governance/index.html), or verify that your confidential ledger is indeed running in SGX enclaves. A number of client methods are provided for these use cases.
 
 ```C# Snippet:Consortium
 Pageable<BinaryData> consortiumResponse = ledgerClient.GetConsortiumMembers();
 foreach (var page in consortiumResponse)
 {
     string membersJson = page.ToString();
-    // Consortium members can manage and alter the Confidential Ledger, such as by replacing unhealthy nodes.
+    // Consortium members can manage and alter the confidential ledger, such as by replacing unhealthy nodes.
     Console.WriteLine(membersJson);
 }
 
@@ -356,7 +356,7 @@ Coming Soon...
 
 ## Troubleshooting
 
-Response values returned from Confidential Ledger client methods are `Response` objects, which contain information about the http response such as the http `Status` property and a `Headers` object containing more information about the failure.
+Response values returned from Azure confidential ledger client methods are `Response` objects, which contain information about the http response such as the http `Status` property and a `Headers` object containing more information about the failure.
 
 ### Setting up console logging
 
@@ -372,7 +372,7 @@ To learn more about other logging mechanisms see [here][logging].
 
 ## Next steps
 
-For more extensive documentation on Azure Confidential Ledger, see the API [reference documentation](https://azure.github.io/azure-sdk-for-net/).
+For more extensive documentation on Azure confidential ledger, see the API [reference documentation](https://azure.github.io/azure-sdk-for-net/).
 You may also read more about Microsoft Research's open-source Confidential [Consortium Framework][ccf].
 
 ## Contributing
