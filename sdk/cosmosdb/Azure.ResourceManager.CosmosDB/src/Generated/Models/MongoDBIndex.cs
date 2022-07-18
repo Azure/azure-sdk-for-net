@@ -10,17 +10,17 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Cosmos DB MongoDB collection index key. </summary>
-    public partial class MongoIndex
+    public partial class MongoDBIndex
     {
-        /// <summary> Initializes a new instance of MongoIndex. </summary>
-        public MongoIndex()
+        /// <summary> Initializes a new instance of MongoDBIndex. </summary>
+        public MongoDBIndex()
         {
         }
 
-        /// <summary> Initializes a new instance of MongoIndex. </summary>
+        /// <summary> Initializes a new instance of MongoDBIndex. </summary>
         /// <param name="key"> Cosmos DB MongoDB collection index keys. </param>
         /// <param name="options"> Cosmos DB MongoDB collection index key options. </param>
-        internal MongoIndex(MongoIndexKeys key, MongoIndexConfig options)
+        internal MongoDBIndex(MongoIndexKeys key, MongoDBIndexConfig options)
         {
             Key = key;
             Options = options;
@@ -40,6 +40,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Cosmos DB MongoDB collection index key options. </summary>
-        public MongoIndexConfig Options { get; set; }
+        public MongoDBIndexConfig Options { get; set; }
     }
 }

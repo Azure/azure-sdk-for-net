@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class PercentileMetric
+    public partial class CosmosDBPercentileMetric
     {
-        internal static PercentileMetric DeserializePercentileMetric(JsonElement element)
+        internal static CosmosDBPercentileMetric DeserializeCosmosDBPercentileMetric(JsonElement element)
         {
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new PercentileMetric(Optional.ToNullable(startTime), Optional.ToNullable(endTime), timeGrain.Value, Optional.ToNullable(unit), name.Value, Optional.ToList(metricValues));
+            return new CosmosDBPercentileMetric(Optional.ToNullable(startTime), Optional.ToNullable(endTime), timeGrain.Value, Optional.ToNullable(unit), name.Value, Optional.ToList(metricValues));
         }
     }
 }

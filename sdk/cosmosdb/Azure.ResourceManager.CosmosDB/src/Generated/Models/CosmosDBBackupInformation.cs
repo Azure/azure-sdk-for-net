@@ -10,16 +10,16 @@ using System;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Backup information of a resource. </summary>
-    public partial class BackupInformation
+    public partial class CosmosDBBackupInformation
     {
-        /// <summary> Initializes a new instance of BackupInformation. </summary>
-        internal BackupInformation()
+        /// <summary> Initializes a new instance of CosmosDBBackupInformation. </summary>
+        internal CosmosDBBackupInformation()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupInformation. </summary>
+        /// <summary> Initializes a new instance of CosmosDBBackupInformation. </summary>
         /// <param name="continuousBackupInformation"> Information about the status of continuous backups. </param>
-        internal BackupInformation(ContinuousBackupInformation continuousBackupInformation)
+        internal CosmosDBBackupInformation(ContinuousBackupInformation continuousBackupInformation)
         {
             ContinuousBackupInformation = continuousBackupInformation;
         }

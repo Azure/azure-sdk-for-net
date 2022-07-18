@@ -10,52 +10,52 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class MongoIndexConfig : IUtf8JsonSerializable
+    public partial class MongoDBIndex : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExpireAfterSeconds))
+            if (Optional.IsDefined(Key))
             {
-                writer.WritePropertyName("expireAfterSeconds");
-                writer.WriteNumberValue(ExpireAfterSeconds.Value);
+                writer.WritePropertyName("key");
+                writer.WriteObjectValue(Key);
             }
-            if (Optional.IsDefined(IsUnique))
+            if (Optional.IsDefined(Options))
             {
-                writer.WritePropertyName("unique");
-                writer.WriteBooleanValue(IsUnique.Value);
+                writer.WritePropertyName("options");
+                writer.WriteObjectValue(Options);
             }
             writer.WriteEndObject();
         }
 
-        internal static MongoIndexConfig DeserializeMongoIndexConfig(JsonElement element)
+        internal static MongoDBIndex DeserializeMongoDBIndex(JsonElement element)
         {
-            Optional<int> expireAfterSeconds = default;
-            Optional<bool> unique = default;
+            Optional<MongoIndexKeys> key = default;
+            Optional<MongoDBIndexConfig> options = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("expireAfterSeconds"))
+                if (property.NameEquals("key"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    expireAfterSeconds = property.Value.GetInt32();
+                    key = MongoIndexKeys.DeserializeMongoIndexKeys(property.Value);
                     continue;
                 }
-                if (property.NameEquals("unique"))
+                if (property.NameEquals("options"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    unique = property.Value.GetBoolean();
+                    options = MongoDBIndexConfig.DeserializeMongoDBIndexConfig(property.Value);
                     continue;
                 }
             }
-            return new MongoIndexConfig(Optional.ToNullable(expireAfterSeconds), Optional.ToNullable(unique));
+            return new MongoDBIndex(key.Value, options.Value);
         }
     }
 }

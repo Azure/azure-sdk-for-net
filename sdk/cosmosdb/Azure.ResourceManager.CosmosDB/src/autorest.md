@@ -124,7 +124,6 @@ rename-mapping:
   GremlinGraphPropertiesOptions: GremlinGraphPropertiesConfig
   MongoDBCollectionPropertiesOptions: MongoDBCollectionPropertiesConfig
   MongoDBDatabasePropertiesOptions: MongoDBDatabasePropertiesConfig
-  MongoIndexOptions: MongoIndexConfig
   CosmosDBSqlContainerPropertiesOptions: CosmosDBSqlContainerPropertiesConfig
   CosmosDBSqlDatabasePropertiesOptions: CosmosDBSqlDatabasePropertiesConfig
   CosmosDBSqlDatabasePropertiesResource: ExtendedCosmosDBSqlDatabaseResourceInfo
@@ -239,6 +238,10 @@ rename-mapping:
   DatabaseAccountUpdateParameters.properties.enableAnalyticalStorage: IsAnalyticalStorageEnabled
   LocationProperties.supportsAvailabilityZone: DoesSupportAvailabilityZone
   DataCenterResourceProperties.availabilityZone: DoesSupportAvailabilityZone
+  ManagedCassandraProvisioningState: CassandraProvisioningState
+  ManagedCassandraReaperStatus: CassandraReaperStatus
+  MongoIndex: MongoDBIndex
+  MongoIndexOptions: MongoDBIndexConfig
 
 prepend-rp-prefix:
 - UniqueKey
@@ -265,6 +268,14 @@ prepend-rp-prefix:
 - VirtualNetworkRule
 - FailoverPolicies
 - FailoverPolicy
+- BackupInformation
+- ContainerPartitionKey
+- CompositePath
+- PartitionKind
+- PercentileMetric
+- PublicNetworkAccess
+- SpatialType
+- ContainerPartitionKey
 
 directive:
 # The notebook is offline due to security issues

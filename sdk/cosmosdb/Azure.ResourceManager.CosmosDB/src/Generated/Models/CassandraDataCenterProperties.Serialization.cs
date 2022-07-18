@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CassandraDataCenterProperties DeserializeCassandraDataCenterProperties(JsonElement element)
         {
-            Optional<ManagedCassandraProvisioningState> provisioningState = default;
+            Optional<CassandraProvisioningState> provisioningState = default;
             Optional<AzureLocation> dataCenterLocation = default;
             Optional<ResourceIdentifier> delegatedSubnetId = default;
             Optional<int> nodeCount = default;
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningState = new ManagedCassandraProvisioningState(property.Value.GetString());
+                    provisioningState = new CassandraProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dataCenterLocation"))

@@ -11,20 +11,20 @@ using Azure.Core;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The configuration of the partition key to be used for partitioning data into multiple partitions. </summary>
-    public partial class ContainerPartitionKey
+    public partial class CosmosDBContainerPartitionKey
     {
-        /// <summary> Initializes a new instance of ContainerPartitionKey. </summary>
-        public ContainerPartitionKey()
+        /// <summary> Initializes a new instance of CosmosDBContainerPartitionKey. </summary>
+        public CosmosDBContainerPartitionKey()
         {
             Paths = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ContainerPartitionKey. </summary>
+        /// <summary> Initializes a new instance of CosmosDBContainerPartitionKey. </summary>
         /// <param name="paths"> List of paths using which data within the container can be partitioned. </param>
         /// <param name="kind"> Indicates the kind of algorithm used for partitioning. For MultiHash, multiple partition keys (upto three maximum) are supported for container create. </param>
         /// <param name="version"> Indicates the version of the partition key definition. </param>
         /// <param name="isSystemKey"> Indicates if the container is using a system generated partition key. </param>
-        internal ContainerPartitionKey(IList<string> paths, PartitionKind? kind, int? version, bool? isSystemKey)
+        internal CosmosDBContainerPartitionKey(IList<string> paths, CosmosDBPartitionKind? kind, int? version, bool? isSystemKey)
         {
             Paths = paths;
             Kind = kind;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> List of paths using which data within the container can be partitioned. </summary>
         public IList<string> Paths { get; }
         /// <summary> Indicates the kind of algorithm used for partitioning. For MultiHash, multiple partition keys (upto three maximum) are supported for container create. </summary>
-        public PartitionKind? Kind { get; set; }
+        public CosmosDBPartitionKind? Kind { get; set; }
         /// <summary> Indicates the version of the partition key definition. </summary>
         public int? Version { get; set; }
         /// <summary> Indicates if the container is using a system generated partition key. </summary>

@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class BackupInformation
+    public partial class CosmosDBBackupInformation
     {
-        internal static BackupInformation DeserializeBackupInformation(JsonElement element)
+        internal static CosmosDBBackupInformation DeserializeCosmosDBBackupInformation(JsonElement element)
         {
             Optional<ContinuousBackupInformation> continuousBackupInformation = default;
             foreach (var property in element.EnumerateObject())
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new BackupInformation(continuousBackupInformation.Value);
+            return new CosmosDBBackupInformation(continuousBackupInformation.Value);
         }
     }
 }
