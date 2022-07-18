@@ -263,10 +263,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 _managementLink,
                 amqpRequestMessage,
                 timeout).ConfigureAwait(false);
-            var ruleDescriptions = new List<RuleProperties>();
+            List<RuleProperties> ruleDescriptions = null;
             if (response.StatusCode == AmqpResponseStatusCode.OK)
             {
                 var ruleList = response.GetListValue<AmqpMap>(ManagementConstants.Properties.Rules);
+                ruleDescriptions = new List<RuleProperties>(ruleList.Count);
                 foreach (var entry in ruleList)
                 {
                     var amqpRule = (AmqpRuleDescriptionCodec)entry[ManagementConstants.Properties.RuleDescription];
@@ -283,7 +284,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 throw response.ToMessagingContractException();
             }
 
-            return ruleDescriptions;
+            return ruleDescriptions ?? new List<RuleProperties>(0);
         }
 
         /// <summary>
