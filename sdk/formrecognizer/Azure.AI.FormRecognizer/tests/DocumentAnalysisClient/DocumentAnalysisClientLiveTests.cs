@@ -904,6 +904,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/29966")]
         public async Task StartAnalyzeDocumentCanParseMultipageInvoice(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
