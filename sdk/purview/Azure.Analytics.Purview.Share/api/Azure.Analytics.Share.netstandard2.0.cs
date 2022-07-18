@@ -60,10 +60,10 @@ namespace Azure.Analytics.Share
     }
     public partial class PurviewShareClientOptions : Azure.Core.ClientOptions
     {
-        public PurviewShareClientOptions(Azure.Analytics.Share.PurviewShareClientOptions.ServiceVersion version = Azure.Analytics.Share.PurviewShareClientOptions.ServiceVersion.V2021_09_01_preview) { }
+        public PurviewShareClientOptions(Azure.Analytics.Share.PurviewShareClientOptions.ServiceVersion version = Azure.Analytics.Share.PurviewShareClientOptions.ServiceVersion.V2021_09_01_Preview) { }
         public enum ServiceVersion
         {
-            V2021_09_01_preview = 1,
+            V2021_09_01_Preview = 1,
         }
     }
     public partial class ReceivedAssetsClient
