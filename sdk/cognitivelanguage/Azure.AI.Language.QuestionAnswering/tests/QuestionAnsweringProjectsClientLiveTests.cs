@@ -22,6 +22,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/29958")]
         public async Task SupportsAadAuthentication()
         {
             QuestionAnsweringProjectsClient client = CreateClient<QuestionAnsweringProjectsClient>(
