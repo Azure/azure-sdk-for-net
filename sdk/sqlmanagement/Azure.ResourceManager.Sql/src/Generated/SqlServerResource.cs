@@ -330,11 +330,11 @@ namespace Azure.ResourceManager.Sql
             return GetFailoverGroups().Get(failoverGroupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of FirewallRuleResources in the SqlServer. </summary>
-        /// <returns> An object representing collection of FirewallRuleResources and their operations over a FirewallRuleResource. </returns>
-        public virtual FirewallRuleCollection GetFirewallRules()
+        /// <summary> Gets a collection of SqlFirewallRuleResources in the SqlServer. </summary>
+        /// <returns> An object representing collection of SqlFirewallRuleResources and their operations over a SqlFirewallRuleResource. </returns>
+        public virtual SqlFirewallRuleCollection GetSqlFirewallRules()
         {
-            return GetCachedClient(Client => new FirewallRuleCollection(Client, Id));
+            return GetCachedClient(Client => new SqlFirewallRuleCollection(Client, Id));
         }
 
         /// <summary>
@@ -347,9 +347,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<FirewallRuleResource>> GetFirewallRuleAsync(string firewallRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlFirewallRuleResource>> GetSqlFirewallRuleAsync(string firewallRuleName, CancellationToken cancellationToken = default)
         {
-            return await GetFirewallRules().GetAsync(firewallRuleName, cancellationToken).ConfigureAwait(false);
+            return await GetSqlFirewallRules().GetAsync(firewallRuleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -362,9 +362,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<FirewallRuleResource> GetFirewallRule(string firewallRuleName, CancellationToken cancellationToken = default)
+        public virtual Response<SqlFirewallRuleResource> GetSqlFirewallRule(string firewallRuleName, CancellationToken cancellationToken = default)
         {
-            return GetFirewallRules().Get(firewallRuleName, cancellationToken);
+            return GetSqlFirewallRules().Get(firewallRuleName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SqlServerJobAgentResources in the SqlServer. </summary>
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="administratorName"> The name of server active directory administrator. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SqlServerAzureADAdministratorResource>> GetSqlServerAzureADAdministratorAsync(AdministratorName administratorName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlServerAzureADAdministratorResource>> GetSqlServerAzureADAdministratorAsync(SqlAdministratorName administratorName, CancellationToken cancellationToken = default)
         {
             return await GetSqlServerAzureADAdministrators().GetAsync(administratorName, cancellationToken).ConfigureAwait(false);
         }
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="administratorName"> The name of server active directory administrator. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<SqlServerAzureADAdministratorResource> GetSqlServerAzureADAdministrator(AdministratorName administratorName, CancellationToken cancellationToken = default)
+        public virtual Response<SqlServerAzureADAdministratorResource> GetSqlServerAzureADAdministrator(SqlAdministratorName administratorName, CancellationToken cancellationToken = default)
         {
             return GetSqlServerAzureADAdministrators().Get(administratorName, cancellationToken);
         }
@@ -1254,10 +1254,10 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ServerUsages_ListByServer
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServerUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServerUsage> GetServerUsagesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SqlServerUsage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SqlServerUsage> GetServerUsagesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ServerUsage>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SqlServerUsage>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _serverUsagesClientDiagnostics.CreateScope("SqlServerResource.GetServerUsages");
                 scope.Start();
@@ -1281,10 +1281,10 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ServerUsages_ListByServer
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServerUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServerUsage> GetServerUsages(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SqlServerUsage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SqlServerUsage> GetServerUsages(CancellationToken cancellationToken = default)
         {
-            Page<ServerUsage> FirstPageFunc(int? pageSizeHint)
+            Page<SqlServerUsage> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _serverUsagesClientDiagnostics.CreateScope("SqlServerResource.GetServerUsages");
                 scope.Start();
@@ -1308,10 +1308,10 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ServerOperations_ListByServer
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServerOperation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServerOperation> GetServerOperationsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ServerOperationData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ServerOperationData> GetServerOperationsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ServerOperation>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ServerOperationData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _serverOperationsClientDiagnostics.CreateScope("SqlServerResource.GetServerOperations");
                 scope.Start();
@@ -1326,7 +1326,7 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<ServerOperation>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ServerOperationData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _serverOperationsClientDiagnostics.CreateScope("SqlServerResource.GetServerOperations");
                 scope.Start();
@@ -1350,10 +1350,10 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ServerOperations_ListByServer
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServerOperation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServerOperation> GetServerOperations(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ServerOperationData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServerOperationData> GetServerOperations(CancellationToken cancellationToken = default)
         {
-            Page<ServerOperation> FirstPageFunc(int? pageSizeHint)
+            Page<ServerOperationData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _serverOperationsClientDiagnostics.CreateScope("SqlServerResource.GetServerOperations");
                 scope.Start();
@@ -1368,7 +1368,7 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<ServerOperation> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ServerOperationData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _serverOperationsClientDiagnostics.CreateScope("SqlServerResource.GetServerOperations");
                 scope.Start();
@@ -1452,19 +1452,19 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: Servers_ImportDatabase
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="importNewDatabaseDefinition"> The database import request parameters. </param>
+        /// <param name="databaseImportDefinition"> The database import request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="importNewDatabaseDefinition"/> is null. </exception>
-        public virtual async Task<ArmOperation<ImportExportOperationResult>> ImportDatabaseAsync(WaitUntil waitUntil, ImportNewDatabaseDefinition importNewDatabaseDefinition, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseImportDefinition"/> is null. </exception>
+        public virtual async Task<ArmOperation<ImportExportOperationResult>> ImportDatabaseAsync(WaitUntil waitUntil, DatabaseImportDefinition databaseImportDefinition, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(importNewDatabaseDefinition, nameof(importNewDatabaseDefinition));
+            Argument.AssertNotNull(databaseImportDefinition, nameof(databaseImportDefinition));
 
             using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServerResource.ImportDatabase");
             scope.Start();
             try
             {
-                var response = await _sqlServerServersRestClient.ImportDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importNewDatabaseDefinition, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<ImportExportOperationResult>(new ImportExportOperationResultOperationSource(), _sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateImportDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importNewDatabaseDefinition).Request, response, OperationFinalStateVia.Location);
+                var response = await _sqlServerServersRestClient.ImportDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseImportDefinition, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation<ImportExportOperationResult>(new ImportExportOperationResultOperationSource(), _sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateImportDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseImportDefinition).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1482,19 +1482,19 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: Servers_ImportDatabase
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="importNewDatabaseDefinition"> The database import request parameters. </param>
+        /// <param name="databaseImportDefinition"> The database import request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="importNewDatabaseDefinition"/> is null. </exception>
-        public virtual ArmOperation<ImportExportOperationResult> ImportDatabase(WaitUntil waitUntil, ImportNewDatabaseDefinition importNewDatabaseDefinition, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseImportDefinition"/> is null. </exception>
+        public virtual ArmOperation<ImportExportOperationResult> ImportDatabase(WaitUntil waitUntil, DatabaseImportDefinition databaseImportDefinition, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(importNewDatabaseDefinition, nameof(importNewDatabaseDefinition));
+            Argument.AssertNotNull(databaseImportDefinition, nameof(databaseImportDefinition));
 
             using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServerResource.ImportDatabase");
             scope.Start();
             try
             {
-                var response = _sqlServerServersRestClient.ImportDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importNewDatabaseDefinition, cancellationToken);
-                var operation = new SqlArmOperation<ImportExportOperationResult>(new ImportExportOperationResultOperationSource(), _sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateImportDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importNewDatabaseDefinition).Request, response, OperationFinalStateVia.Location);
+                var response = _sqlServerServersRestClient.ImportDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseImportDefinition, cancellationToken);
+                var operation = new SqlArmOperation<ImportExportOperationResult>(new ImportExportOperationResultOperationSource(), _sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateImportDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseImportDefinition).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

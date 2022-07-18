@@ -61,7 +61,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="body"> The create call request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<Response<CallConnectionPropertiesDto>> CreateCallAsync(CreateCallRequestInternal body, CancellationToken cancellationToken = default)
+        public async Task<Response<CallConnectionPropertiesDtoInternal>> CreateCallAsync(CreateCallRequestInternal body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -74,9 +74,9 @@ namespace Azure.Communication.CallingServer
             {
                 case 201:
                     {
-                        CallConnectionPropertiesDto value = default;
+                        CallConnectionPropertiesDtoInternal value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CallConnectionPropertiesDto.DeserializeCallConnectionPropertiesDto(document.RootElement);
+                        value = CallConnectionPropertiesDtoInternal.DeserializeCallConnectionPropertiesDtoInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -88,7 +88,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="body"> The create call request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public Response<CallConnectionPropertiesDto> CreateCall(CreateCallRequestInternal body, CancellationToken cancellationToken = default)
+        public Response<CallConnectionPropertiesDtoInternal> CreateCall(CreateCallRequestInternal body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -101,9 +101,9 @@ namespace Azure.Communication.CallingServer
             {
                 case 201:
                     {
-                        CallConnectionPropertiesDto value = default;
+                        CallConnectionPropertiesDtoInternal value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CallConnectionPropertiesDto.DeserializeCallConnectionPropertiesDto(document.RootElement);
+                        value = CallConnectionPropertiesDtoInternal.DeserializeCallConnectionPropertiesDtoInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -111,7 +111,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        internal HttpMessage CreateAnswerCallRequest(AnswerCallRequest answerCallRequest)
+        internal HttpMessage CreateAnswerCallRequest(AnswerCallRequestInternal answerCallRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -133,7 +133,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="answerCallRequest"> The answer call request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="answerCallRequest"/> is null. </exception>
-        public async Task<Response<CallConnectionPropertiesDto>> AnswerCallAsync(AnswerCallRequest answerCallRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<CallConnectionPropertiesDtoInternal>> AnswerCallAsync(AnswerCallRequestInternal answerCallRequest, CancellationToken cancellationToken = default)
         {
             if (answerCallRequest == null)
             {
@@ -146,9 +146,9 @@ namespace Azure.Communication.CallingServer
             {
                 case 200:
                     {
-                        CallConnectionPropertiesDto value = default;
+                        CallConnectionPropertiesDtoInternal value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CallConnectionPropertiesDto.DeserializeCallConnectionPropertiesDto(document.RootElement);
+                        value = CallConnectionPropertiesDtoInternal.DeserializeCallConnectionPropertiesDtoInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -160,7 +160,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="answerCallRequest"> The answer call request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="answerCallRequest"/> is null. </exception>
-        public Response<CallConnectionPropertiesDto> AnswerCall(AnswerCallRequest answerCallRequest, CancellationToken cancellationToken = default)
+        public Response<CallConnectionPropertiesDtoInternal> AnswerCall(AnswerCallRequestInternal answerCallRequest, CancellationToken cancellationToken = default)
         {
             if (answerCallRequest == null)
             {
@@ -173,9 +173,9 @@ namespace Azure.Communication.CallingServer
             {
                 case 200:
                     {
-                        CallConnectionPropertiesDto value = default;
+                        CallConnectionPropertiesDtoInternal value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CallConnectionPropertiesDto.DeserializeCallConnectionPropertiesDto(document.RootElement);
+                        value = CallConnectionPropertiesDtoInternal.DeserializeCallConnectionPropertiesDtoInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -244,7 +244,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        internal HttpMessage CreateRejectCallRequest(RejectCallRequest rejectCallRequest)
+        internal HttpMessage CreateRejectCallRequest(RejectCallRequestInternal rejectCallRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -265,7 +265,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="rejectCallRequest"> The reject call request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="rejectCallRequest"/> is null. </exception>
-        public async Task<Response> RejectCallAsync(RejectCallRequest rejectCallRequest, CancellationToken cancellationToken = default)
+        public async Task<Response> RejectCallAsync(RejectCallRequestInternal rejectCallRequest, CancellationToken cancellationToken = default)
         {
             if (rejectCallRequest == null)
             {
@@ -287,7 +287,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="rejectCallRequest"> The reject call request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="rejectCallRequest"/> is null. </exception>
-        public Response RejectCall(RejectCallRequest rejectCallRequest, CancellationToken cancellationToken = default)
+        public Response RejectCall(RejectCallRequestInternal rejectCallRequest, CancellationToken cancellationToken = default)
         {
             if (rejectCallRequest == null)
             {

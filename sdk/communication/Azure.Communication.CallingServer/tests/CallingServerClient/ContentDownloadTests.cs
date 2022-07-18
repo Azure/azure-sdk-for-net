@@ -10,6 +10,7 @@ using NUnit.Framework;
 using System.Linq;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
+using Azure.Communication.CallingServer.Models;
 
 namespace Azure.Communication.CallingServer.Tests
 {
@@ -51,7 +52,7 @@ namespace Azure.Communication.CallingServer.Tests
         {
             CallingServerClient _callingserverClient = CreateMockCallingServerClient(200, DummyRecordingMetadata);
 
-            Stream metadata = _callingserverClient.DownloadStreaming(_dummyMetadataLocation);
+            Stream metadata = _callingserverClient.GetCallRecordingClient().DownloadStreaming(_dummyMetadataLocation);
 
             VerifyExpectedMetadata(metadata);
         }
@@ -61,7 +62,7 @@ namespace Azure.Communication.CallingServer.Tests
         {
             CallingServerClient _callingserverClient = CreateMockCallingServerClient(200, DummyRecordingMetadata);
 
-            Stream metadata = await _callingserverClient.DownloadStreamingAsync(_dummyMetadataLocation);
+            Stream metadata = await _callingserverClient.GetCallRecordingClient().DownloadStreamingAsync(_dummyMetadataLocation);
 
             VerifyExpectedMetadata(metadata);
         }
@@ -71,7 +72,7 @@ namespace Azure.Communication.CallingServer.Tests
         {
             CallingServerClient _callingserverClient = CreateMockCallingServerClient(200, _dummyRecordingStream);
 
-            Response<Stream> recording = _callingserverClient.DownloadStreaming(_dummyRecordingLocation);
+            Response<Stream> recording = _callingserverClient.GetCallRecordingClient().DownloadStreaming(_dummyRecordingLocation);
 
             VerifyExpectedRecording(recording, 10);
         }
@@ -81,7 +82,7 @@ namespace Azure.Communication.CallingServer.Tests
         {
             CallingServerClient _callingserverClient = CreateMockCallingServerClient(206, _dummyRecordingStream.Take(5).ToArray(), _rangeResponseHeaders);
 
-            Response<Stream> recording = _callingserverClient.DownloadStreaming(_dummyRecordingLocation, new HttpRange(0, 4));
+            Response<Stream> recording = _callingserverClient.GetCallRecordingClient().DownloadStreaming(_dummyRecordingLocation, new HttpRange(0, 4));
 
             VerifyExpectedRecording(recording, 5);
         }
@@ -91,7 +92,7 @@ namespace Azure.Communication.CallingServer.Tests
         {
             CallingServerClient _callingserverClient = CreateMockCallingServerClient(200, _dummyRecordingStream);
 
-            Response<Stream> recording = await _callingserverClient.DownloadStreamingAsync(_dummyRecordingLocation);
+            Response<Stream> recording = await _callingserverClient.GetCallRecordingClient().DownloadStreamingAsync(_dummyRecordingLocation);
 
             VerifyExpectedRecording(recording, 10);
         }
@@ -101,7 +102,7 @@ namespace Azure.Communication.CallingServer.Tests
         {
             CallingServerClient _callingserverClient = CreateMockCallingServerClient(206, _dummyRecordingStream.Take(5).ToArray(), _rangeResponseHeaders);
 
-            Response<Stream> recording = await _callingserverClient.DownloadStreamingAsync(_dummyRecordingLocation, new HttpRange(0, 4));
+            Response<Stream> recording = await _callingserverClient.GetCallRecordingClient().DownloadStreamingAsync(_dummyRecordingLocation, new HttpRange(0, 4));
 
             VerifyExpectedRecording(recording, 5);
         }
@@ -121,7 +122,7 @@ namespace Azure.Communication.CallingServer.Tests
             CallingServerClient _callingserverClient = CreateMockCallingServerClient(206, _dummyRecordingStream, rangeHeaderResponse);
 
             Stream destination = new MemoryStream();
-            _callingserverClient.DownloadTo(_dummyRecordingLocation, destination, options);
+            _callingserverClient.GetCallRecordingClient().DownloadTo(_dummyRecordingLocation, destination, options);
 
             Assert.AreEqual(10, destination.Length);
         }
@@ -161,7 +162,7 @@ namespace Azure.Communication.CallingServer.Tests
         public void DownloadNotExistentContent_Failure_Test()
         {
             CallingServerClient _callingserverClient = CreateMockCallingServerClient(404);
-            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => _callingserverClient.DownloadStreaming(_dummyMetadataLocation));
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => _callingserverClient.GetCallRecordingClient().DownloadStreaming(_dummyMetadataLocation));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
@@ -170,7 +171,7 @@ namespace Azure.Communication.CallingServer.Tests
         public void DownloadNotExistentContentAsync_Failure_Test()
         {
             CallingServerClient _callingserverClient = CreateMockCallingServerClient(404);
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await _callingserverClient.DownloadStreamingAsync(_dummyMetadataLocation));
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await _callingserverClient.GetCallRecordingClient().DownloadStreamingAsync(_dummyMetadataLocation));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
@@ -179,7 +180,7 @@ namespace Azure.Communication.CallingServer.Tests
         public void AccessDenied_Failure_Test()
         {
             CallingServerClient _callingserverClient = CreateMockCallingServerClient(401);
-            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => _callingserverClient.DownloadStreaming(_dummyMetadataLocation));
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => _callingserverClient.GetCallRecordingClient().DownloadStreaming(_dummyMetadataLocation));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 401);
         }
@@ -188,7 +189,7 @@ namespace Azure.Communication.CallingServer.Tests
         public void AccessDeniedAsync_Failure_Test()
         {
             CallingServerClient _callingserverClient = CreateMockCallingServerClient(401);
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await _callingserverClient.DownloadStreamingAsync(_dummyMetadataLocation));
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await _callingserverClient.GetCallRecordingClient().DownloadStreamingAsync(_dummyMetadataLocation));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 401);
         }
@@ -215,7 +216,7 @@ namespace Azure.Communication.CallingServer.Tests
 
             CallingServerClient _callingserverClient = CreateMockCallingServerClient(new MockResponse[] { invalidResponse, validResponse1, validResponse2 });
             Stream destination = new MemoryStream();
-            _callingserverClient.DownloadTo(_dummyRecordingLocation, destination, options);
+            _callingserverClient.GetCallRecordingClient().DownloadTo(_dummyRecordingLocation, destination, options);
 
             Assert.AreEqual(10, destination.Length);
         }
@@ -242,7 +243,7 @@ namespace Azure.Communication.CallingServer.Tests
 
             CallingServerClient _callingserverClient = CreateMockCallingServerClient(new MockResponse[] { invalidResponse, validResponse1, validResponse2 });
             Stream destination = new MemoryStream();
-            await _callingserverClient.DownloadToAsync(_dummyRecordingLocation, destination, options);
+            await _callingserverClient.GetCallRecordingClient().DownloadToAsync(_dummyRecordingLocation, destination, options);
 
             Assert.AreEqual(10, destination.Length);
         }

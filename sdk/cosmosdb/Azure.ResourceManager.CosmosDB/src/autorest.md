@@ -59,7 +59,15 @@ operation-id-mappings:
   CosmosDBSqlDatabaseThroughputSetting:
       accountName: Microsoft.DocumentDB/databaseAccounts
       databaseName: Microsoft.DocumentDB/databaseAccounts/sqlDatabases
-no-property-type-replacement: CosmosDBSqlDatabaseResourceInfo;MongoDBDatabaseResourceInfo;CosmosDBTableResourceInfo;CassandraKeyspaceResourceInfo;CassandraColumn;GremlinDatabaseResourceInfo;PrivateEndpointProperty
+
+no-property-type-replacement:
+- CosmosDBSqlDatabaseResourceInfo
+- MongoDBDatabaseResourceInfo
+- CosmosDBTableResourceInfo
+- CassandraKeyspaceResourceInfo
+- CassandraColumn
+- GremlinDatabaseResourceInfo
+- PrivateEndpointProperty
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -116,7 +124,6 @@ rename-mapping:
   GremlinGraphPropertiesOptions: GremlinGraphPropertiesConfig
   MongoDBCollectionPropertiesOptions: MongoDBCollectionPropertiesConfig
   MongoDBDatabasePropertiesOptions: MongoDBDatabasePropertiesConfig
-  MongoIndexOptions: MongoIndexConfig
   CosmosDBSqlContainerPropertiesOptions: CosmosDBSqlContainerPropertiesConfig
   CosmosDBSqlDatabasePropertiesOptions: CosmosDBSqlDatabasePropertiesConfig
   CosmosDBSqlDatabasePropertiesResource: ExtendedCosmosDBSqlDatabaseResourceInfo
@@ -229,7 +236,12 @@ rename-mapping:
   DatabaseAccountCreateUpdateParameters.properties.enableAnalyticalStorage: IsAnalyticalStorageEnabled
   DatabaseAccountUpdateParameters.properties.enableFreeTier: IsFreeTierEnabled
   DatabaseAccountUpdateParameters.properties.enableAnalyticalStorage: IsAnalyticalStorageEnabled
-  LocationProperties.supportsAvailabilityZone: DoesSupportsAvailabilityZone
+  LocationProperties.supportsAvailabilityZone: DoesSupportAvailabilityZone
+  DataCenterResourceProperties.availabilityZone: DoesSupportAvailabilityZone
+  ManagedCassandraProvisioningState: CassandraProvisioningState
+  ManagedCassandraReaperStatus: CassandraReaperStatus
+  MongoIndex: MongoDBIndex
+  MongoIndexOptions: MongoDBIndexConfig
 
 prepend-rp-prefix:
 - UniqueKey
@@ -256,6 +268,14 @@ prepend-rp-prefix:
 - VirtualNetworkRule
 - FailoverPolicies
 - FailoverPolicy
+- BackupInformation
+- ContainerPartitionKey
+- CompositePath
+- PartitionKind
+- PercentileMetric
+- PublicNetworkAccess
+- SpatialType
+- ContainerPartitionKey
 
 directive:
 # The notebook is offline due to security issues

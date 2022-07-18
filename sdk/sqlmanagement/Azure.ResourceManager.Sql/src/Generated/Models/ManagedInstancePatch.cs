@@ -96,6 +96,6 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The Azure Active Directory administrator of the server. </summary>
         public ManagedInstanceExternalAdministrator Administrators { get; set; }
         /// <summary> The managed instance&apos;s service principal. </summary>
-        public ServicePrincipal ServicePrincipal { get; set; }
+        public SqlServicePrincipal ServicePrincipal { get; set; }
     }
 }

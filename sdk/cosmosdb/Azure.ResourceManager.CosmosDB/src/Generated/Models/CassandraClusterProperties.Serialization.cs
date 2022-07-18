@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CassandraClusterProperties DeserializeCassandraClusterProperties(JsonElement element)
         {
-            Optional<ManagedCassandraProvisioningState> provisioningState = default;
+            Optional<CassandraProvisioningState> provisioningState = default;
             Optional<string> restoreFromBackupId = default;
             Optional<ResourceIdentifier> delegatedManagementSubnetId = default;
             Optional<string> cassandraVersion = default;
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningState = new ManagedCassandraProvisioningState(property.Value.GetString());
+                    provisioningState = new CassandraProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("restoreFromBackupId"))
