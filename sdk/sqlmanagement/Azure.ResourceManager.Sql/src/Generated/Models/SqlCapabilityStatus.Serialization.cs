@@ -13,18 +13,18 @@ namespace Azure.ResourceManager.Sql.Models
     {
         public static string ToSerialString(this SqlCapabilityStatus value) => value switch
         {
+            SqlCapabilityStatus.Default => "Default",
             SqlCapabilityStatus.Visible => "Visible",
             SqlCapabilityStatus.Available => "Available",
-            SqlCapabilityStatus.Default => "Default",
             SqlCapabilityStatus.Disabled => "Disabled",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SqlCapabilityStatus value.")
         };
 
         public static SqlCapabilityStatus ToSqlCapabilityStatus(this string value)
         {
+            if (string.Equals(value, "Default", StringComparison.InvariantCultureIgnoreCase)) return SqlCapabilityStatus.Default;
             if (string.Equals(value, "Visible", StringComparison.InvariantCultureIgnoreCase)) return SqlCapabilityStatus.Visible;
             if (string.Equals(value, "Available", StringComparison.InvariantCultureIgnoreCase)) return SqlCapabilityStatus.Available;
-            if (string.Equals(value, "Default", StringComparison.InvariantCultureIgnoreCase)) return SqlCapabilityStatus.Default;
             if (string.Equals(value, "Disabled", StringComparison.InvariantCultureIgnoreCase)) return SqlCapabilityStatus.Disabled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SqlCapabilityStatus value.");
         }

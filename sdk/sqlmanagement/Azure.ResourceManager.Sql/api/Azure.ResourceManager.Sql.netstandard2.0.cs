@@ -4422,9 +4422,9 @@ namespace Azure.ResourceManager.Sql.Models
     }
     public enum AutoExecuteStatus
     {
-        Enabled = 0,
-        Disabled = 1,
-        Default = 2,
+        Default = 0,
+        Enabled = 1,
+        Disabled = 2,
     }
     public enum AutoExecuteStatusInheritedFrom
     {
@@ -4458,9 +4458,9 @@ namespace Azure.ResourceManager.Sql.Models
     }
     public enum AutomaticTuningOptionModeDesired
     {
-        Off = 0,
-        On = 1,
-        Default = 2,
+        Default = 0,
+        Off = 1,
+        On = 2,
     }
     public partial class AutomaticTuningOptions
     {
@@ -6773,9 +6773,9 @@ namespace Azure.ResourceManager.Sql.Models
     }
     public enum SqlCapabilityStatus
     {
-        Visible = 0,
-        Available = 1,
-        Default = 2,
+        Default = 0,
+        Visible = 1,
+        Available = 2,
         Disabled = 3,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -7675,8 +7675,8 @@ namespace Azure.ResourceManager.Sql.Models
     }
     public enum VulnerabilityAssessmentPolicyBaselineName
     {
-        Master = 0,
-        Default = 1,
+        Default = 0,
+        Master = 1,
     }
     public partial class VulnerabilityAssessmentRecurringScansProperties
     {

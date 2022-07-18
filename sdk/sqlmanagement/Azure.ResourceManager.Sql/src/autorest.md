@@ -227,7 +227,8 @@ rename-mapping:
   ReplicationState: ReplicationLinkState
   ServerInfo: ServerTrustGroupServerInfo
   DatabaseExtensions: SqlDatabaseExtension
-
+prompted-enum-values:
+  - Default
 directive:
     - remove-operation: DatabaseExtensions_Get # This operation is not supported
     - remove-operation: FirewallRules_Replace # This operation sends a list of rules but got a single rule in response, which is abnormal. Besides, using FirewallRules_CreateOrUpdate/FirewallRules_Delete multiple times could achieve the same goal.
