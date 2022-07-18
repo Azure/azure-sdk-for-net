@@ -464,7 +464,7 @@ namespace Azure.Core.Tests
         [Test]
         public void VerifyInterimValueInitialization()
         {
-            var operationInternal = new OperationInternal<int>(ClientDiagnostics, TestOperation.Succeeded(42), InitialResponse, interimValue: 24);
+            var operationInternal = new OperationInternal<int>(ClientDiagnostics, TestOperation.Succeeded(42), InitialResponse, interimValue: new InterimValue<int>(24));
 
             Assert.AreEqual(InitialResponse, operationInternal.RawResponse);
             Assert.False(operationInternal.HasCompleted);
@@ -475,7 +475,7 @@ namespace Azure.Core.Tests
         [Test]
         public async Task VerifyInterimAndFinalValueWhenOperationIsPending([Values(true, false)] bool async)
         {
-            var operationInternal = new OperationInternal<int>(ClientDiagnostics, TestOperation.SucceededAfter(1, 42), InitialResponse, interimValue: 24);
+            var operationInternal = new OperationInternal<int>(ClientDiagnostics, TestOperation.SucceededAfter(1, 42), InitialResponse, interimValue: new InterimValue<int>(24));
 
             Assert.AreEqual(24, operationInternal.Value);
 
@@ -492,7 +492,7 @@ namespace Azure.Core.Tests
         [Test]
         public async Task VerifyInterimAndFinalValueWhenOperationSucceeds([Values(true, false)] bool async)
         {
-            var operationInternal = new OperationInternal<int>(ClientDiagnostics, TestOperation.Succeeded(42), InitialResponse, interimValue: 24);
+            var operationInternal = new OperationInternal<int>(ClientDiagnostics, TestOperation.Succeeded(42), InitialResponse, interimValue: new InterimValue<int>(24));
 
             Assert.AreEqual(24, operationInternal.Value);
 
@@ -509,7 +509,7 @@ namespace Azure.Core.Tests
         [Test]
         public void VerifyInterimAndFinalValueWhenOperationFails([Values(true, false)] bool async)
         {
-            var operationInternal = new OperationInternal<int>(ClientDiagnostics, TestOperation.Failed(418), InitialResponse, interimValue: 24);
+            var operationInternal = new OperationInternal<int>(ClientDiagnostics, TestOperation.Failed(418), InitialResponse, interimValue: new InterimValue<int>(24));
 
             Assert.AreEqual(24, operationInternal.Value);
 

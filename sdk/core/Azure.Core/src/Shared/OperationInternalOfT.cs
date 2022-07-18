@@ -53,7 +53,7 @@ namespace Azure.Core
     {
         private readonly IOperation<T> _operation;
         private readonly AsyncLockWithValue<OperationState<T>> _stateLock;
-        private readonly T? _interimValue;
+        private readonly InterimValue<T>? _interimValue;
         private Response _rawResponse;
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace Azure.Core
             string? operationTypeName = null,
             IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null,
             DelayStrategy? fallbackStrategy = null,
-            T? interimValue = default)
+            InterimValue<T>? interimValue = null)
             : base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy)
         {
             _operation = operation;
@@ -159,9 +159,9 @@ namespace Azure.Core
                     throw state.OperationFailedException!;
                 }
 
-                if (_interimValue is not null)
+                if (_interimValue is not null && _interimValue.HasValue)
                 {
-                    return _interimValue;
+                    return _interimValue.Value;
                 }
 
                 throw new InvalidOperationException("The operation has not completed yet.");
@@ -422,6 +422,40 @@ namespace Azure.Core
         {
             Argument.AssertNotNull(rawResponse, nameof(rawResponse));
             return new OperationState<T>(rawResponse, false, default, default, default);
+        }
+    }
+
+    /// <summary>
+    /// A helper class used pass to <see cref="OperationInternal{T}"/> to indicate if the return of interim result of the long-running operation is enabled.
+    /// </summary>
+    /// <typeparam name="T">The interim result of the long-running operation. Must match the type used in <see cref="Operation{T}"/>.</typeparam>
+#pragma warning disable SA1402 // File may only contain a single type
+    internal class InterimValue<T>
+#pragma warning restore SA1402
+    {
+        private bool _hasValue;
+        private T _value;
+
+        internal InterimValue(T value)
+        {
+            _hasValue = true;
+            _value = value;
+        }
+
+        public bool HasValue {
+            get
+            {
+                return _hasValue;
+            }
+        }
+        public T Value {
+            get
+            {
+                if (!_hasValue) {
+                    throw new InvalidOperationException("The operation doesn't support returning interim result.");
+                }
+                return _value;
+            }
         }
     }
 }
