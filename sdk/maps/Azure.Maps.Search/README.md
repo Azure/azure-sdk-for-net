@@ -34,10 +34,9 @@ There are 2 ways to authenticate the client: Shared key authentication and Azure
 * Copy `Primary Key` or `Secondary Key` under **Shared Key Authentication** section
 
 ```C# Snippet:InstantiateSearchClientViaSubscriptionKey
-// Create a MapsSearchClient that will authenticate through Subscription Key (Shared key)
+// Create a SearchClient that will authenticate through Subscription Key (Shared key)
 var credential = new AzureKeyCredential("<My Subscription Key>");
-var endpoint = GetRecordedOptionalVariable("ENDPOINT_URL");
-SearchClient client = new SearchClient(credential, endpoint);
+SearchClient client = new SearchClient(credential);
 ```
 
 #### Azure AD Authentication
@@ -45,15 +44,8 @@ SearchClient client = new SearchClient(credential, endpoint);
 In order to interact with the Azure Blobs Storage service, you'll need to create an instance of the BlobServiceClient class. The [Azure Identity library](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md) makes it easy to add Azure Active Directory support for authenticating Azure SDK clients with their corresponding Azure services.
 
 To use AAD authentication, set `TENANT_ID`, `CLIENT_ID`, and `CLIENT_SECRET` to environment variable and call `DefaultAzureCredential()` method to get credential. `CLIENT_ID` and `CLIENT_SECRET` are the service principal ID and secret that can access Azure Maps account.
-
+s
 We also need **Azure Maps Client ID** which can get from Azure Maps page > Authentication tab > "Client ID" in Azure Active Directory Authentication section.
-
-```C# Snippet:InstantiateRouteClientViaAAD
-// Create a MapsRouteClient that will authenticate through Active Directory
-var credential = new DefaultAzureCredential();
-var clientId = "<My Map Account Client Id>";
-SearchClient client = new SearchClient(credential, clientId);
-```
 
 ## Key concepts
 

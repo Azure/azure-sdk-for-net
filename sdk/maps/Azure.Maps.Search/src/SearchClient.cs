@@ -16,6 +16,7 @@ using Azure.Maps.Search.Models;
 using System.Linq;
 using Azure.Core.GeoJson;
 
+
 namespace Azure.Maps.Search
 {
     /// <summary> The Search service client. </summary>
@@ -33,6 +34,7 @@ namespace Azure.Maps.Search
             RestClient = null;
         }
 
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SearchClient"/>
         /// class for the specified service instance.
@@ -41,8 +43,13 @@ namespace Azure.Maps.Search
         /// authenticate requests to the service, such as DefaultAzureCredential.</param>
         /// <param name="endpoint"> server parameter. </param>
         public SearchClient(AzureKeyCredential credential, Uri endpoint)
-            : this(credential, endpoint, new SearchClientOptions())
         {
+            Argument.AssertNotNull(credential, nameof(credential));
+            var options = new SearchClientOptions();
+            endpoint ??= new Uri("https://atlas.microsoft.com");
+            _clientDiagnostics = new ClientDiagnostics(options);
+            _pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, "subscription-key"));
+            RestClient = new SearchRestClient(_clientDiagnostics, _pipeline, endpoint, null, options.Version);
         }
 
         /// <summary> Initializes a new instance of SearchClient. </summary>

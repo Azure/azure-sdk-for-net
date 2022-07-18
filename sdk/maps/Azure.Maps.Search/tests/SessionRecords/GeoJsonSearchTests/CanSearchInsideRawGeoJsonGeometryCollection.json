@@ -6,12 +6,12 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "369",
+        "Content-Length": "364",
         "Content-Type": "application/json",
-        "traceparent": "00-1d63f000a80c7845ada41bee9a59cf1b-818020cb66b6d246-00",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220715.1 (.NET Core 3.1.27; Microsoft Windows 10.0.19044)",
+        "traceparent": "00-74670645001ac14182cdfbcb014b2c99-bb362eabdae7a94b-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220719.1 (.NET Core 3.1.27; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "3df11c2e14e1477ba41e036db05f7261",
+        "x-ms-client-request-id": "a5164e23947e55ff305fffafcd59d0ed",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -25,7 +25,7 @@
                     37.7524152343544
                   ],
                   [
-                    -122.43301391601562,
+                    -122.433013916,
                     37.70660472542312
                   ],
                   [
@@ -73,9 +73,9 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "10052",
+        "Content-Length": "9748",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 15 Jul 2022 05:49:15 GMT",
+        "Date": "Mon, 18 Jul 2022 22:42:40 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": [
           "Accept-Encoding",
@@ -84,13 +84,13 @@
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 428F474564C5409AA7A51431618A9B81 Ref B: PAOEDGE0518 Ref C: 2022-07-15T05:49:16Z"
+        "X-MSEdge-Ref": "Ref A: 3745A8F4A9E842C8924A9C382A227EC2 Ref B: PAOEDGE0519 Ref C: 2022-07-18T22:42:40Z"
       },
       "ResponseBody": {
         "summary": {
           "query": "coffee",
           "queryType": "NON_NEAR",
-          "queryTime": 12,
+          "queryTime": 67,
           "numResults": 10,
           "offset": 0,
           "totalResults": 154,
@@ -99,356 +99,8 @@
         "results": [
           {
             "type": "POI",
-            "id": "158009002024249",
-            "score": 2.1455552578,
-            "info": "search:ta:158009002024249-TW",
-            "poi": {
-              "name": "\u5341\u9593\u8336\u5C4B",
-              "phone": "\u002B886 2 2746 5008",
-              "categorySet": [
-                {
-                  "id": 9376005
-                }
-              ],
-              "url": "shijian.myshopify.com",
-              "categories": [
-                "caf\u00E9/pub",
-                "tea house"
-              ],
-              "classifications": [
-                {
-                  "code": "CAFE_PUB",
-                  "names": [
-                    {
-                      "nameLocale": "en-US",
-                      "name": "caf\u00E9/pub"
-                    },
-                    {
-                      "nameLocale": "en-US",
-                      "name": "tea house"
-                    }
-                  ]
-                }
-              ]
-            },
-            "address": {
-              "streetName": "Zhongxiao East Road Section 4 Lane 553 Alley 46",
-              "municipalitySubdivision": "Xinyi District",
-              "municipality": "Taipei City",
-              "countrySubdivision": "Taipei City",
-              "postalCode": "110",
-              "countryCode": "TW",
-              "country": "Taiwan",
-              "countryCodeISO3": "TWN",
-              "freeformAddress": "Zhongxiao East Road Section 4 Lane 553 Alley 46, Xinyi District, Taipei City 110",
-              "localName": "Xinyi District"
-            },
-            "position": {
-              "lat": 25.04411,
-              "lon": 121.56287
-            },
-            "viewport": {
-              "topLeftPoint": {
-                "lat": 25.04501,
-                "lon": 121.56188
-              },
-              "btmRightPoint": {
-                "lat": 25.04321,
-                "lon": 121.56386
-              }
-            },
-            "entryPoints": [
-              {
-                "type": "main",
-                "position": {
-                  "lat": 25.0442,
-                  "lon": 121.5628
-                }
-              }
-            ]
-          },
-          {
-            "type": "POI",
-            "id": "158009001771249",
-            "score": 2.1455354691,
-            "info": "search:ta:158009001771249-TW",
-            "poi": {
-              "name": "fa dou ka fei qing shi guan",
-              "categorySet": [
-                {
-                  "id": 9376006
-                }
-              ],
-              "categories": [
-                "caf\u00E9/pub",
-                "coffee shop"
-              ],
-              "classifications": [
-                {
-                  "code": "CAFE_PUB",
-                  "names": [
-                    {
-                      "nameLocale": "en-US",
-                      "name": "coffee shop"
-                    },
-                    {
-                      "nameLocale": "en-US",
-                      "name": "caf\u00E9/pub"
-                    }
-                  ]
-                }
-              ]
-            },
-            "address": {
-              "streetNumber": "6",
-              "streetName": "Yixian Road Lane 50",
-              "municipalitySubdivision": "Xinyi District",
-              "municipality": "Taipei City",
-              "countrySubdivision": "Taipei City",
-              "postalCode": "110",
-              "extendedPostalCode": "11071",
-              "countryCode": "TW",
-              "country": "Taiwan",
-              "countryCodeISO3": "TWN",
-              "freeformAddress": "6, Yixian Road Lane 50, Xinyi District, Taipei City 11071",
-              "localName": "Xinyi District"
-            },
-            "position": {
-              "lat": 25.04055,
-              "lon": 121.5621
-            },
-            "viewport": {
-              "topLeftPoint": {
-                "lat": 25.04145,
-                "lon": 121.56111
-              },
-              "btmRightPoint": {
-                "lat": 25.03965,
-                "lon": 121.56309
-              }
-            },
-            "entryPoints": [
-              {
-                "type": "main",
-                "position": {
-                  "lat": 25.04064,
-                  "lon": 121.5621
-                }
-              }
-            ]
-          },
-          {
-            "type": "POI",
-            "id": "158009001687300",
-            "score": 2.1455273628,
-            "info": "search:ta:158009001687300-TW",
-            "poi": {
-              "name": "yuan dou kong jian",
-              "phone": "\u002B886 2 2749 5027",
-              "categorySet": [
-                {
-                  "id": 9376002
-                }
-              ],
-              "categories": [
-                "caf\u00E9",
-                "caf\u00E9/pub"
-              ],
-              "classifications": [
-                {
-                  "code": "CAFE_PUB",
-                  "names": [
-                    {
-                      "nameLocale": "en-US",
-                      "name": "caf\u00E9/pub"
-                    },
-                    {
-                      "nameLocale": "en-US",
-                      "name": "caf\u00E9"
-                    }
-                  ]
-                }
-              ]
-            },
-            "address": {
-              "streetNumber": "2",
-              "streetName": "Zhongxiao East Road Section 4 Lane 553 Alley 6",
-              "municipalitySubdivision": "Xinyi District",
-              "municipality": "Taipei City",
-              "countrySubdivision": "Taipei City",
-              "postalCode": "110",
-              "countryCode": "TW",
-              "country": "Taiwan",
-              "countryCodeISO3": "TWN",
-              "freeformAddress": "2, Zhongxiao East Road Section 4 Lane 553 Alley 6, Xinyi District, Taipei City 110",
-              "localName": "Xinyi District"
-            },
-            "position": {
-              "lat": 25.0422,
-              "lon": 121.5629
-            },
-            "viewport": {
-              "topLeftPoint": {
-                "lat": 25.0431,
-                "lon": 121.56191
-              },
-              "btmRightPoint": {
-                "lat": 25.0413,
-                "lon": 121.56389
-              }
-            },
-            "entryPoints": [
-              {
-                "type": "main",
-                "position": {
-                  "lat": 25.04229,
-                  "lon": 121.5629
-                }
-              }
-            ]
-          },
-          {
-            "type": "POI",
-            "id": "158009002017056",
-            "score": 2.1455237865,
-            "info": "search:ta:158009002017056-TW",
-            "poi": {
-              "name": "Next Door",
-              "categorySet": [
-                {
-                  "id": 9376002
-                }
-              ],
-              "categories": [
-                "caf\u00E9",
-                "caf\u00E9/pub"
-              ],
-              "classifications": [
-                {
-                  "code": "CAFE_PUB",
-                  "names": [
-                    {
-                      "nameLocale": "en-US",
-                      "name": "caf\u00E9/pub"
-                    },
-                    {
-                      "nameLocale": "en-US",
-                      "name": "caf\u00E9"
-                    }
-                  ]
-                }
-              ]
-            },
-            "address": {
-              "streetName": "Zhongxiao East Road Section 4 Lane 553 Alley 52",
-              "municipalitySubdivision": "Xinyi District",
-              "municipality": "Taipei City",
-              "countrySubdivision": "Taipei City",
-              "postalCode": "110",
-              "countryCode": "TW",
-              "country": "Taiwan",
-              "countryCodeISO3": "TWN",
-              "freeformAddress": "Zhongxiao East Road Section 4 Lane 553 Alley 52, Xinyi District, Taipei City 110",
-              "localName": "Xinyi District"
-            },
-            "position": {
-              "lat": 25.04442,
-              "lon": 121.56268
-            },
-            "viewport": {
-              "topLeftPoint": {
-                "lat": 25.04532,
-                "lon": 121.56169
-              },
-              "btmRightPoint": {
-                "lat": 25.04352,
-                "lon": 121.56367
-              }
-            },
-            "entryPoints": [
-              {
-                "type": "main",
-                "position": {
-                  "lat": 25.04458,
-                  "lon": 121.5628
-                }
-              }
-            ]
-          },
-          {
-            "type": "POI",
-            "id": "158009001718985",
-            "score": 2.1455197334,
-            "info": "search:ta:158009001718985-TW",
-            "poi": {
-              "name": "hai xing ka fei guan",
-              "categorySet": [
-                {
-                  "id": 9376006
-                }
-              ],
-              "categories": [
-                "caf\u00E9/pub",
-                "coffee shop"
-              ],
-              "classifications": [
-                {
-                  "code": "CAFE_PUB",
-                  "names": [
-                    {
-                      "nameLocale": "en-US",
-                      "name": "coffee shop"
-                    },
-                    {
-                      "nameLocale": "en-US",
-                      "name": "caf\u00E9/pub"
-                    }
-                  ]
-                }
-              ]
-            },
-            "address": {
-              "streetNumber": "11",
-              "streetName": "Yixian Road Lane 42",
-              "municipalitySubdivision": "Xinyi District",
-              "municipality": "Taipei City",
-              "countrySubdivision": "Taipei City",
-              "postalCode": "110",
-              "extendedPostalCode": "11071",
-              "countryCode": "TW",
-              "country": "Taiwan",
-              "countryCodeISO3": "TWN",
-              "freeformAddress": "11, Yixian Road Lane 42, Xinyi District, Taipei City 11071",
-              "localName": "Xinyi District"
-            },
-            "position": {
-              "lat": 25.04031,
-              "lon": 121.56264
-            },
-            "viewport": {
-              "topLeftPoint": {
-                "lat": 25.04121,
-                "lon": 121.56165
-              },
-              "btmRightPoint": {
-                "lat": 25.03941,
-                "lon": 121.56363
-              }
-            },
-            "entryPoints": [
-              {
-                "type": "main",
-                "position": {
-                  "lat": 25.04022,
-                  "lon": 121.56261
-                }
-              }
-            ]
-          },
-          {
-            "type": "POI",
             "id": "158007000169757",
-            "score": 2.1455161572,
+            "score": 2.1456267834,
             "info": "search:ta:158007000169757-TW",
             "poi": {
               "name": "Aranzi CAFe",
@@ -516,8 +168,76 @@
           },
           {
             "type": "POI",
+            "id": "158009002040595",
+            "score": 2.1455988884,
+            "info": "search:ta:158009002040595-TW",
+            "poi": {
+              "name": "11Eleven Cafe",
+              "categorySet": [
+                {
+                  "id": 9376002
+                }
+              ],
+              "categories": [
+                "caf\u00E9",
+                "caf\u00E9/pub"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetName": "Zhongxiao East Road Section 4 Lane 553",
+              "municipalitySubdivision": "Xinyi District",
+              "municipality": "Taipei City",
+              "countrySubdivision": "Taipei City",
+              "postalCode": "110",
+              "countryCode": "TW",
+              "country": "Taiwan",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "Zhongxiao East Road Section 4 Lane 553, Xinyi District, Taipei City 110",
+              "localName": "Xinyi District"
+            },
+            "position": {
+              "lat": 25.04267,
+              "lon": 121.56265
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 25.04357,
+                "lon": 121.56166
+              },
+              "btmRightPoint": {
+                "lat": 25.04177,
+                "lon": 121.56364
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 25.04267,
+                  "lon": 121.56275
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
             "id": "840069020920449",
-            "score": 2.1455090046,
+            "score": 2.1455826759,
             "info": "search:ta:840069020920449-US",
             "poi": {
               "name": "Tea Plus",
@@ -589,17 +309,18 @@
           },
           {
             "type": "POI",
-            "id": "840069019289366",
-            "score": 2.1455082893,
-            "info": "search:ta:840069019289366-US",
+            "id": "158007000135953",
+            "score": 2.145567894,
+            "info": "search:ta:158007000135953-TW",
             "poi": {
-              "name": "Pinhole Coffee",
+              "name": "Fortune Caffe",
+              "phone": "\u002B886 2 6639 0080",
               "categorySet": [
                 {
                   "id": 9376002
                 }
               ],
-              "url": "www.pinholecoffee.com",
+              "url": "www.illy.com.tw",
               "categories": [
                 "caf\u00E9",
                 "caf\u00E9/pub"
@@ -621,81 +342,6 @@
               ]
             },
             "address": {
-              "streetNumber": "231",
-              "streetName": "Cortland Avenue",
-              "municipalitySubdivision": "Bernal Heights",
-              "municipality": "San Francisco",
-              "countrySecondarySubdivision": "San Francisco",
-              "countrySubdivision": "CA",
-              "countrySubdivisionName": "California",
-              "postalCode": "94110",
-              "extendedPostalCode": "94110-5556",
-              "countryCode": "US",
-              "country": "United States",
-              "countryCodeISO3": "USA",
-              "freeformAddress": "231 Cortland Avenue, San Francisco, CA 94110",
-              "localName": "San Francisco"
-            },
-            "position": {
-              "lat": 37.73967,
-              "lon": -122.41894
-            },
-            "viewport": {
-              "topLeftPoint": {
-                "lat": 37.74057,
-                "lon": -122.42008
-              },
-              "btmRightPoint": {
-                "lat": 37.73877,
-                "lon": -122.4178
-              }
-            },
-            "entryPoints": [
-              {
-                "type": "main",
-                "position": {
-                  "lat": 37.73949,
-                  "lon": -122.41906
-                }
-              }
-            ]
-          },
-          {
-            "type": "POI",
-            "id": "158009001762518",
-            "score": 2.1455068588,
-            "info": "search:ta:158009001762518-TW",
-            "poi": {
-              "name": "na tie zhuan mai dian",
-              "phone": "\u002B886 2 2749 5567",
-              "categorySet": [
-                {
-                  "id": 9376002
-                }
-              ],
-              "categories": [
-                "caf\u00E9",
-                "caf\u00E9/pub"
-              ],
-              "classifications": [
-                {
-                  "code": "CAFE_PUB",
-                  "names": [
-                    {
-                      "nameLocale": "en-US",
-                      "name": "caf\u00E9/pub"
-                    },
-                    {
-                      "nameLocale": "en-US",
-                      "name": "caf\u00E9"
-                    }
-                  ]
-                }
-              ]
-            },
-            "address": {
-              "streetNumber": "12",
-              "streetName": "Zhongxiao East Road Section 4 Lane 559",
               "municipalitySubdivision": "Xinyi District",
               "municipality": "Taipei City",
               "countrySubdivision": "Taipei City",
@@ -703,47 +349,257 @@
               "countryCode": "TW",
               "country": "Taiwan",
               "countryCodeISO3": "TWN",
-              "freeformAddress": "12, Zhongxiao East Road Section 4 Lane 559, Xinyi District, Taipei City 110",
+              "freeformAddress": "Xinyi District, Taipei City 110",
               "localName": "Xinyi District"
             },
             "position": {
-              "lat": 25.04206,
-              "lon": 121.56375
+              "lat": 25.04435,
+              "lon": 121.56133
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": 25.04296,
-                "lon": 121.56276
+                "lat": 25.04525,
+                "lon": 121.56034
               },
               "btmRightPoint": {
-                "lat": 25.04116,
-                "lon": 121.56474
+                "lat": 25.04345,
+                "lon": 121.56232
               }
             },
             "entryPoints": [
               {
                 "type": "main",
                 "position": {
-                  "lat": 25.04206,
-                  "lon": 121.56364
+                  "lat": 25.04471,
+                  "lon": 121.56173
                 }
               }
             ]
           },
           {
             "type": "POI",
-            "id": "158009002048140",
-            "score": 2.1455016136,
-            "info": "search:ta:158009002048140-TW",
+            "id": "158009001739582",
+            "score": 2.1455574036,
+            "info": "search:ta:158009001739582-TW",
             "poi": {
-              "name": "Xie Xie Taipei",
-              "phone": "\u002B886 2 2753 1511",
+              "name": "yi ji ka fei dian",
+              "categorySet": [
+                {
+                  "id": 9376006
+                }
+              ],
+              "categories": [
+                "caf\u00E9/pub",
+                "coffee shop"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "coffee shop"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetNumber": "15",
+              "streetName": "Zhongxiao East Road Section 4 Lane 553 Alley 6",
+              "municipalitySubdivision": "Xinyi District",
+              "municipality": "Taipei City",
+              "countrySubdivision": "Taipei City",
+              "postalCode": "110",
+              "countryCode": "TW",
+              "country": "Taiwan",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "15, Zhongxiao East Road Section 4 Lane 553 Alley 6, Xinyi District, Taipei City 110",
+              "localName": "Xinyi District"
+            },
+            "position": {
+              "lat": 25.04236,
+              "lon": 121.56345
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 25.04326,
+                "lon": 121.56246
+              },
+              "btmRightPoint": {
+                "lat": 25.04146,
+                "lon": 121.56444
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 25.04227,
+                  "lon": 121.56345
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "840069020941831",
+            "score": 2.1455490589,
+            "info": "search:ta:840069020941831-US",
+            "poi": {
+              "name": "Candlestick Coffee",
+              "phone": "\u002B1 415-467-2442",
+              "categorySet": [
+                {
+                  "id": 9376006
+                }
+              ],
+              "categories": [
+                "caf\u00E9/pub",
+                "coffee shop"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "coffee shop"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetNumber": "2155",
+              "streetName": "Bayshore Boulevard",
+              "municipalitySubdivision": "Visitacion Valley",
+              "municipality": "San Francisco",
+              "countrySecondarySubdivision": "San Francisco",
+              "countrySubdivision": "CA",
+              "countrySubdivisionName": "California",
+              "postalCode": "94134",
+              "extendedPostalCode": "94134-2455",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "2155 Bayshore Boulevard, San Francisco, CA 94134",
+              "localName": "San Francisco"
+            },
+            "position": {
+              "lat": 37.71254,
+              "lon": -122.40084
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 37.71344,
+                "lon": -122.40198
+              },
+              "btmRightPoint": {
+                "lat": 37.71164,
+                "lon": -122.3997
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 37.71276,
+                  "lon": -122.40086
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "158007000096736",
+            "score": 2.1455249786,
+            "info": "search:ta:158007000096736-TW",
+            "poi": {
+              "name": "We \u0026 Me Cafe",
+              "categorySet": [
+                {
+                  "id": 9376002
+                }
+              ],
+              "categories": [
+                "caf\u00E9",
+                "caf\u00E9/pub"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetNumber": "188-2",
+              "streetName": "Keelung Road Section 1",
+              "municipalitySubdivision": "Xinyi District",
+              "municipality": "Taipei City",
+              "countrySubdivision": "Taipei City",
+              "postalCode": "110",
+              "extendedPostalCode": "11006",
+              "countryCode": "TW",
+              "country": "Taiwan",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "188-2, Keelung Road Section 1, Xinyi District, Taipei City 11006",
+              "localName": "Xinyi District"
+            },
+            "position": {
+              "lat": 25.04201,
+              "lon": 121.5647
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 25.04291,
+                "lon": 121.56371
+              },
+              "btmRightPoint": {
+                "lat": 25.04111,
+                "lon": 121.56569
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 25.04197,
+                  "lon": 121.56479
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "158007000162764",
+            "score": 2.1455156803,
+            "info": "search:ta:158007000162764-TW",
+            "poi": {
+              "name": "\u5C0F\u78BA\u5E78\u7D05\u8336\u725B\u5976\u5408\u4F5C\u793E",
               "categorySet": [
                 {
                   "id": 9376005
                 }
               ],
-              "url": "www.xiexietea.com/cht/index.php",
               "categories": [
                 "caf\u00E9/pub",
                 "tea house"
@@ -765,7 +621,6 @@
               ]
             },
             "address": {
-              "streetName": "Zhongxiao East Road Section 4 Lane 553 Alley 22",
               "municipalitySubdivision": "Xinyi District",
               "municipality": "Taipei City",
               "countrySubdivision": "Taipei City",
@@ -773,29 +628,168 @@
               "countryCode": "TW",
               "country": "Taiwan",
               "countryCodeISO3": "TWN",
-              "freeformAddress": "Zhongxiao East Road Section 4 Lane 553 Alley 22, Xinyi District, Taipei City 110",
+              "freeformAddress": "Xinyi District, Taipei City 110",
               "localName": "Xinyi District"
             },
             "position": {
-              "lat": 25.04316,
-              "lon": 121.56323
+              "lat": 25.0443,
+              "lon": 121.56131
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": 25.04406,
-                "lon": 121.56224
+                "lat": 25.0452,
+                "lon": 121.56032
               },
               "btmRightPoint": {
-                "lat": 25.04226,
-                "lon": 121.56422
+                "lat": 25.0434,
+                "lon": 121.5623
               }
             },
             "entryPoints": [
               {
                 "type": "main",
                 "position": {
-                  "lat": 25.04325,
-                  "lon": 121.56323
+                  "lat": 25.04474,
+                  "lon": 121.56169
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "158009001815645",
+            "score": 2.1455147266,
+            "info": "search:ta:158009001815645-TW",
+            "poi": {
+              "name": "shuang ou ka fei guan",
+              "phone": "\u002B886 2 2763 1063",
+              "categorySet": [
+                {
+                  "id": 9376002
+                }
+              ],
+              "categories": [
+                "caf\u00E9",
+                "caf\u00E9/pub"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetNumber": "8",
+              "streetName": "Zhongxiao East Road Section 4 Lane 559",
+              "municipalitySubdivision": "Xinyi District",
+              "municipality": "Taipei City",
+              "countrySubdivision": "Taipei City",
+              "postalCode": "110",
+              "countryCode": "TW",
+              "country": "Taiwan",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "8, Zhongxiao East Road Section 4 Lane 559, Xinyi District, Taipei City 110",
+              "localName": "Xinyi District"
+            },
+            "position": {
+              "lat": 25.04194,
+              "lon": 121.56374
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 25.04284,
+                "lon": 121.56275
+              },
+              "btmRightPoint": {
+                "lat": 25.04104,
+                "lon": 121.56473
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 25.04195,
+                  "lon": 121.56364
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "158009001991695",
+            "score": 2.1455109119,
+            "info": "search:ta:158009001991695-TW",
+            "poi": {
+              "name": "A Day",
+              "phone": "\u002B886 2 2766 7776",
+              "categorySet": [
+                {
+                  "id": 9376002
+                }
+              ],
+              "categories": [
+                "caf\u00E9",
+                "caf\u00E9/pub"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetName": "Zhongxiao East Road Section 4 Lane 553 Alley 46",
+              "municipalitySubdivision": "Xinyi District",
+              "municipality": "Taipei City",
+              "countrySubdivision": "Taipei City",
+              "postalCode": "110",
+              "countryCode": "TW",
+              "country": "Taiwan",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "Zhongxiao East Road Section 4 Lane 553 Alley 46, Xinyi District, Taipei City 110",
+              "localName": "Xinyi District"
+            },
+            "position": {
+              "lat": 25.04429,
+              "lon": 121.56349
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 25.04519,
+                "lon": 121.5625
+              },
+              "btmRightPoint": {
+                "lat": 25.04339,
+                "lon": 121.56448
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 25.04419,
+                  "lon": 121.56348
                 }
               }
             ]
@@ -808,6 +802,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "114507025"
+    "RandomSeed": "1957950392"
   }
 }

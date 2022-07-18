@@ -70,7 +70,7 @@ namespace Azure.Maps.Search.Tests
                             37.7524152343544
                         ],
                         [
-                            -122.43301391601563,
+                            -122.433013916015625,
                             37.706604725423119
                         ],
                         [
@@ -86,7 +86,7 @@ namespace Azure.Maps.Search.Tests
             }";
             GeoPolygon polygon = JsonSerializer.Deserialize<GeoPolygon>(polygonString);
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
-                   async () => await client.SearchInsideGeometryAsync("", polygon));
+                async () => await client.SearchInsideGeometryAsync("", polygon));
             Assert.AreEqual(400, ex.Status);
         }
 
@@ -104,7 +104,7 @@ namespace Azure.Maps.Search.Tests
                             37.7524152343544
                         ],
                         [
-                            -122.43301391601563,
+                            -122.433013916015625,
                             37.706604725423119
                         ],
                         [
@@ -138,7 +138,7 @@ namespace Azure.Maps.Search.Tests
                         37.7524152343544
                     ],
                     [
-                        -122.43301391601563,
+                        -122.433013916015625,
                         37.706604725423119
                     ],
                     [
@@ -166,7 +166,7 @@ namespace Azure.Maps.Search.Tests
             var sfPolygon = new GeoPolygon(new[]
             {
                 new GeoPosition(-122.43576049804686, 37.7524152343544),
-                new GeoPosition(-122.43301391601563, 37.706604725423119),
+                new GeoPosition(-122.433013916015625, 37.706604725423119),
                 new GeoPosition(-122.36434936523438, 37.712059855877314),
                 new GeoPosition(-122.43576049804686, 37.7524152343544)
             });
@@ -201,10 +201,10 @@ namespace Azure.Maps.Search.Tests
                         ""type"": ""Polygon"",
                         ""coordinates"": [
                             [
-                                [-122.43576049804686,37.7524152343544],
-                                [-122.43301391601563,37.706604725423119],
+                                [-122.43576049804686,37.752415234354402],
+                                [-122.4330139160,37.706604725423119],
                                 [-122.36434936523438,37.712059855877314],
-                                [-122.43576049804686,37.7524152343544]
+                                [-122.43576049804686,37.752415234354402]
                             ]
                         ]
                     },

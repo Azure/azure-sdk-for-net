@@ -16,7 +16,10 @@ namespace Azure.Maps.Search
     public partial class SearchClient
     {
         protected SearchClient() { }
+
+        public SearchClient(Azure.AzureKeyCredential credential, System.Uri endpoint) { }
         public SearchClient(Azure.AzureKeyCredential credential, System.Uri endpoint = null, Azure.Maps.Search.SearchClientOptions options = null) { }
+        public SearchClient(Azure.Core.TokenCredential credential, System.Uri endpoint, string clientId) { }
         public SearchClient(Azure.Core.TokenCredential credential, System.Uri endpoint = null, string clientId = null, Azure.Maps.Search.SearchClientOptions options = null) { }
         public virtual Azure.Response<Azure.Maps.Search.Models.SearchAddressResult> FuzzySearch(string query, Azure.Maps.Search.Models.FuzzySearchOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Search.Models.SearchAddressResult>> FuzzySearchAsync(string query, Azure.Maps.Search.Models.FuzzySearchOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

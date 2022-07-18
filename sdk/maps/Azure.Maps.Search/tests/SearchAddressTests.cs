@@ -136,7 +136,7 @@ namespace Azure.Maps.Search.Tests
                 new SearchAddressQuery("Millenium", new SearchAddressOptions { CountryFilter = new[] { "US" }}),
             });
 
-            var searchResult = await operation.WaitForCompletionAsync();
+            var searchResult = operation.WaitForCompletion();
             Assert.AreEqual("Redmond", searchResult.Value.BatchItems.First().Results.First().Address.Municipality);
             Assert.AreEqual("Tucson", searchResult.Value.BatchItems[1].Results.First().Address.Municipality);
         }

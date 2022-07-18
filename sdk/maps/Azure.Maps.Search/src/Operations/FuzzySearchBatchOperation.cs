@@ -327,7 +327,7 @@ namespace Azure.Maps.Search
                 var uri = new Uri(update.Headers.Location);
                 var paths = uri.AbsolutePath.Split('/');
                 _id = paths[paths.Length - 1];
-            }
+            } 
 
             SearchAddressBatchResult result = null;
             return Response.FromValue(result, response);

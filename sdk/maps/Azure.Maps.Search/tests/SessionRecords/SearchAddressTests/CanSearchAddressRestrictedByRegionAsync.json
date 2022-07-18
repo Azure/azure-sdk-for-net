@@ -6,10 +6,10 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-3a867cbececb3acc7a95332b00b433e7-a97971c31bb52dc8-00",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220715.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
+        "traceparent": "00-c5f94c9e379ffd0b7d9b026cba924257-27db015abd919ec4-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220719.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "3ced294beebd5adfc6c696202257ff38",
+        "x-ms-client-request-id": "a92560ce2f5ad5d96f62b058f8000915",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,19 +17,19 @@
       "ResponseHeaders": {
         "Content-Length": "4855",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 15 Jul 2022 05:48:19 GMT",
+        "Date": "Mon, 18 Jul 2022 22:08:16 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: B56CA7D40CF749BF92660CC1C6C3827C Ref B: PAOEDGE0507 Ref C: 2022-07-15T05:48:20Z"
+        "X-MSEdge-Ref": "Ref A: BC9040FBF5CD426CAC953C313E858CBB Ref B: PAOEDGE0611 Ref C: 2022-07-18T22:08:16Z"
       },
       "ResponseBody": {
         "summary": {
           "query": "road",
           "queryType": "NON_NEAR",
-          "queryTime": 7,
+          "queryTime": 9,
           "numResults": 10,
           "offset": 0,
           "totalResults": 386,
@@ -355,24 +355,24 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-70c36750e0a1d662bf00c7511edd67d8-ab3c07d40e2df697-00",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220715.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
+        "traceparent": "00-edffbce4b0bb54156960dc7ad2222e65-88261f44bbd08ac8-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220719.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "ad04a214b7f74539eb6d472c40531a5b",
+        "x-ms-client-request-id": "65d95b6d756f08ba652e9e48a3de4a07",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "6722",
+        "Content-Length": "7056",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 15 Jul 2022 05:48:19 GMT",
+        "Date": "Mon, 18 Jul 2022 22:08:16 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 94A19AA87F0A43D89517C659956B34FF Ref B: PAOEDGE0507 Ref C: 2022-07-15T05:48:20Z"
+        "X-MSEdge-Ref": "Ref A: EED8CAE8CBEC42C5852E05660B8BBECF Ref B: PAOEDGE0611 Ref C: 2022-07-18T22:08:16Z"
       },
       "ResponseBody": {
         "summary": {
@@ -381,13 +381,13 @@
           "queryTime": 6,
           "numResults": 10,
           "offset": 0,
-          "totalResults": 25964,
+          "totalResults": 25966,
           "fuzzyLevel": 1
         },
         "results": [
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/854",
+            "id": "NZ/GEO/p0/4517",
             "score": 2.3589038849,
             "entityType": "Municipality",
             "matchConfidence": {
@@ -435,7 +435,7 @@
           },
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/2293",
+            "id": "NZ/GEO/p0/2542",
             "score": 2.3587200642,
             "entityType": "Municipality",
             "matchConfidence": {
@@ -483,7 +483,7 @@
           },
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/3198",
+            "id": "NZ/GEO/p0/3090",
             "score": 2.3586893082,
             "entityType": "Municipality",
             "matchConfidence": {
@@ -531,7 +531,7 @@
           },
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/3290",
+            "id": "NZ/GEO/p0/243",
             "score": 2.3585665226,
             "entityType": "Municipality",
             "matchConfidence": {
@@ -579,7 +579,7 @@
           },
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/1770",
+            "id": "NZ/GEO/p0/1581",
             "score": 2.3584132195,
             "entityType": "Municipality",
             "matchConfidence": {
@@ -627,7 +627,7 @@
           },
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/1556",
+            "id": "NZ/GEO/p0/2934",
             "score": 2.0992157459,
             "entityType": "Neighbourhood",
             "matchConfidence": {
@@ -676,129 +676,138 @@
           },
           {
             "type": "Street",
-            "id": "NZ/STR/p0/8163",
+            "id": "NZ/STR/p0/5",
             "score": 2.0962057114,
             "matchConfidence": {
-              "score": 0.7978822231268424
+              "score": 0.7786911304553967
             },
             "address": {
-              "streetName": "West Road",
-              "countrySecondarySubdivision": "Auckland",
-              "countryTertiarySubdivision": "Auckland",
+              "streetName": "Whaka Road",
+              "municipality": "Taihape",
+              "countrySecondarySubdivision": "Manawatu Wanganui",
+              "countryTertiarySubdivision": "Rangitikei",
               "countrySubdivision": "North Island",
+              "postalCode": "4782, 4796",
               "countryCode": "NZ",
               "country": "New Zealand",
               "countryCodeISO3": "NZL",
-              "freeformAddress": "West Road, Auckland"
+              "freeformAddress": "Whaka Road, Taihape, Taihape 4782, 4796",
+              "localName": "Taihape"
             },
             "position": {
-              "lat": -36.99357,
-              "lon": 175.00819
+              "lat": -39.70729,
+              "lon": 175.65029
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": -36.98516,
-                "lon": 175.00025
+                "lat": -39.6983,
+                "lon": 175.63871
               },
               "btmRightPoint": {
-                "lat": -37.00315,
-                "lon": 175.02276
+                "lat": -39.71628,
+                "lon": 175.66208
               }
             }
           },
           {
             "type": "Street",
-            "id": "NZ/STR/p0/8168",
+            "id": "NZ/STR/p0/12",
             "score": 2.0962057114,
             "matchConfidence": {
-              "score": 0.7978822231268424
+              "score": 0.7786911304553967
             },
             "address": {
-              "streetName": "West Road",
-              "countrySecondarySubdivision": "Otago",
-              "countryTertiarySubdivision": "Clutha",
-              "countrySubdivision": "South Island",
-              "countryCode": "NZ",
-              "country": "New Zealand",
-              "countryCodeISO3": "NZL",
-              "freeformAddress": "West Road, Clutha"
-            },
-            "position": {
-              "lat": -46.09851,
-              "lon": 170.00749
-            },
-            "viewport": {
-              "topLeftPoint": {
-                "lat": -46.08898,
-                "lon": 169.99351
-              },
-              "btmRightPoint": {
-                "lat": -46.10696,
-                "lon": 170.01945
-              }
-            }
-          },
-          {
-            "type": "Street",
-            "id": "NZ/STR/p0/8173",
-            "score": 2.0962057114,
-            "matchConfidence": {
-              "score": 0.7978822231268424
-            },
-            "address": {
-              "streetName": "West Road",
-              "countrySecondarySubdivision": "Hawke\u0027s Bay",
-              "countryTertiarySubdivision": "Hastings",
-              "countrySubdivision": "North Island",
-              "countryCode": "NZ",
-              "country": "New Zealand",
-              "countryCodeISO3": "NZL",
-              "freeformAddress": "West Road, Hastings"
-            },
-            "position": {
-              "lat": -39.69718,
-              "lon": 176.82306
-            },
-            "viewport": {
-              "topLeftPoint": {
-                "lat": -39.68748,
-                "lon": 176.81107
-              },
-              "btmRightPoint": {
-                "lat": -39.70547,
-                "lon": 176.83445
-              }
-            }
-          },
-          {
-            "type": "Street",
-            "id": "NZ/STR/p0/8198",
-            "score": 2.0962057114,
-            "matchConfidence": {
-              "score": 0.7842596806430951
-            },
-            "address": {
-              "streetName": "Devon Road",
+              "streetName": "Whaka Road",
               "countrySecondarySubdivision": "Taranaki",
-              "countryTertiarySubdivision": "New Plymouth",
+              "countryTertiarySubdivision": "Stratford",
               "countrySubdivision": "North Island",
               "countryCode": "NZ",
               "country": "New Zealand",
               "countryCodeISO3": "NZL",
-              "freeformAddress": "Devon Road, New Plymouth"
+              "freeformAddress": "Whaka Road, Stratford"
             },
             "position": {
-              "lat": -39.02269,
-              "lon": 174.19004
+              "lat": -39.31779,
+              "lon": 174.73711
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": -39.01296,
-                "lon": 174.17792
+                "lat": -39.30928,
+                "lon": 174.72071
               },
               "btmRightPoint": {
-                "lat": -39.03095,
-                "lon": 174.20107
+                "lat": -39.32727,
+                "lon": 174.74395
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "NZ/STR/p0/15",
+            "score": 2.0962057114,
+            "matchConfidence": {
+              "score": 0.7763307838632383
+            },
+            "address": {
+              "streetName": "Hawkestone Road",
+              "municipality": "Marton",
+              "countrySecondarySubdivision": "Manawatu Wanganui",
+              "countryTertiarySubdivision": "Rangitikei",
+              "countrySubdivision": "North Island",
+              "postalCode": "4710, 4787",
+              "countryCode": "NZ",
+              "country": "New Zealand",
+              "countryCodeISO3": "NZL",
+              "freeformAddress": "Hawkestone Road, Marton, Marton 4710, 4787",
+              "localName": "Marton"
+            },
+            "position": {
+              "lat": -40.09207,
+              "lon": 175.38621
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": -40.08979,
+                "lon": 175.38189
+              },
+              "btmRightPoint": {
+                "lat": -40.09276,
+                "lon": 175.3912
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "NZ/STR/p0/35",
+            "score": 2.0962057114,
+            "matchConfidence": {
+              "score": 0.7754058746230005
+            },
+            "address": {
+              "streetName": "Ongo Road",
+              "municipality": "Hunterville",
+              "countrySecondarySubdivision": "Manawatu Wanganui",
+              "countryTertiarySubdivision": "Rangitikei",
+              "countrySubdivision": "North Island",
+              "postalCode": "4730, 4782, 4784",
+              "countryCode": "NZ",
+              "country": "New Zealand",
+              "countryCodeISO3": "NZL",
+              "freeformAddress": "Ongo Road, Hunterville, Hunterville 4730, 4782, 4784",
+              "localName": "Hunterville"
+            },
+            "position": {
+              "lat": -39.90215,
+              "lon": 175.52478
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": -39.89144,
+                "lon": 175.51458
+              },
+              "btmRightPoint": {
+                "lat": -39.90943,
+                "lon": 175.53802
               }
             }
           }
@@ -810,6 +819,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "1615459156"
+    "RandomSeed": "1791323723"
   }
 }

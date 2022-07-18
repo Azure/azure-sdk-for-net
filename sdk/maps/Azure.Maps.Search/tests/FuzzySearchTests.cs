@@ -70,7 +70,8 @@ namespace Azure.Maps.Search.Tests
                 new FuzzySearchQuery("pizza", new FuzzySearchOptions { Coordinates = new GeoPosition(121.56, 25.04) }),
             });
 
-            var fuzzySearchBatchResp = await operation.WaitForCompletionAsync();
+            var fuzzySearchBatchResp = operation.WaitForCompletion();
+
             Assert.AreEqual("CAFE_PUB", fuzzySearchBatchResp.Value.BatchItems.First().Results.First().PointOfInterest.Classifications.First().Code);
             Assert.AreEqual("Taipei City", fuzzySearchBatchResp.Value.BatchItems.First().Results.First().Address.Municipality);
             Assert.AreEqual("RESTAURANT", fuzzySearchBatchResp.Value.BatchItems[1].Results.First().PointOfInterest.Classifications.First().Code);

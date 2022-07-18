@@ -6,24 +6,24 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-f2a71c2b8ed0b36264b8d910748afe0f-dbce107db349b497-00",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220715.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
+        "traceparent": "00-7def9a904e3494f417d9aeb02a31a6be-303f076bcf4d18da-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220719.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "7272bbd6e0bc27222715e9907e594240",
+        "x-ms-client-request-id": "74c8102f86b31cfdc56959574d57d79c",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "8509",
+        "Content-Length": "8511",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 15 Jul 2022 05:47:59 GMT",
+        "Date": "Mon, 18 Jul 2022 22:07:59 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 77DD1703CE084172A32F800082F94DDE Ref B: PAOEDGE0507 Ref C: 2022-07-15T05:48:00Z"
+        "X-MSEdge-Ref": "Ref A: CD64C3DB80364D15B0E8ECFC1E9EB19F Ref B: PAOEDGE0611 Ref C: 2022-07-18T22:07:59Z"
       },
       "ResponseBody": {
         "summary": {
@@ -38,7 +38,7 @@
         "results": [
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/1057",
+            "id": "NZ/GEO/p0/2574",
             "score": 2.3825688362,
             "entityType": "Municipality",
             "address": {
@@ -83,7 +83,7 @@
           },
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/1775",
+            "id": "NZ/GEO/p0/1882",
             "score": 2.358474493,
             "entityType": "Municipality",
             "address": {
@@ -128,7 +128,7 @@
           },
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/4566",
+            "id": "NZ/GEO/p0/2821",
             "score": 2.1768069267,
             "entityType": "MunicipalitySubdivision",
             "address": {
@@ -174,11 +174,12 @@
           },
           {
             "type": "POI",
-            "id": "554009000525688",
+            "id": "554009000466267",
             "score": 2.1244060993,
-            "info": "search:ta:554009000525688-NZ",
+            "info": "search:ta:554009000466267-NZ",
             "poi": {
-              "name": "Milford Track",
+              "name": "Milford Helicopters",
+              "phone": "\u002B64 3-249 7845",
               "categorySet": [
                 {
                   "id": 7376
@@ -200,38 +201,39 @@
               ]
             },
             "address": {
-              "streetName": "Milford Track",
-              "municipality": "Fiordland National Park",
+              "streetNumber": "52",
+              "streetName": "Ben Loch Lane",
+              "municipality": "Te Anau",
               "countrySecondarySubdivision": "Southland",
               "countryTertiarySubdivision": "Southland",
               "countrySubdivision": "South Island",
-              "postalCode": "9679",
+              "postalCode": "9672",
               "countryCode": "NZ",
               "country": "New Zealand",
               "countryCodeISO3": "NZL",
-              "freeformAddress": "Milford Track, Fiordland National Park, Fiordland National Park 9679",
-              "localName": "Fiordland National Park"
+              "freeformAddress": "52 Ben Loch Lane, Te Anau, Te Anau 9672",
+              "localName": "Te Anau"
             },
             "position": {
-              "lat": -44.8604,
-              "lon": 167.82471
+              "lat": -45.43027,
+              "lon": 167.74263
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": -44.8595,
-                "lon": 167.82344
+                "lat": -45.42937,
+                "lon": 167.74135
               },
               "btmRightPoint": {
-                "lat": -44.8613,
-                "lon": 167.82598
+                "lat": -45.43117,
+                "lon": 167.74391
               }
             },
             "entryPoints": [
               {
                 "type": "main",
                 "position": {
-                  "lat": -44.86049,
-                  "lon": 167.82468
+                  "lat": -45.43111,
+                  "lon": 167.74332
                 }
               }
             ]
@@ -302,12 +304,11 @@
           },
           {
             "type": "POI",
-            "id": "554009000466267",
+            "id": "554009000525688",
             "score": 2.1244060993,
-            "info": "search:ta:554009000466267-NZ",
+            "info": "search:ta:554009000525688-NZ",
             "poi": {
-              "name": "Milford Helicopters",
-              "phone": "\u002B64 3-249 7845",
+              "name": "Milford Track",
               "categorySet": [
                 {
                   "id": 7376
@@ -329,39 +330,38 @@
               ]
             },
             "address": {
-              "streetNumber": "52",
-              "streetName": "Ben Loch Lane",
-              "municipality": "Te Anau",
+              "streetName": "Milford Track",
+              "municipality": "Fiordland National Park",
               "countrySecondarySubdivision": "Southland",
               "countryTertiarySubdivision": "Southland",
               "countrySubdivision": "South Island",
-              "postalCode": "9672",
+              "postalCode": "9679",
               "countryCode": "NZ",
               "country": "New Zealand",
               "countryCodeISO3": "NZL",
-              "freeformAddress": "52 Ben Loch Lane, Te Anau, Te Anau 9672",
-              "localName": "Te Anau"
+              "freeformAddress": "Milford Track, Fiordland National Park, Fiordland National Park 9679",
+              "localName": "Fiordland National Park"
             },
             "position": {
-              "lat": -45.43027,
-              "lon": 167.74263
+              "lat": -44.8604,
+              "lon": 167.82471
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": -45.42937,
-                "lon": 167.74135
+                "lat": -44.8595,
+                "lon": 167.82344
               },
               "btmRightPoint": {
-                "lat": -45.43117,
-                "lon": 167.74391
+                "lat": -44.8613,
+                "lon": 167.82598
               }
             },
             "entryPoints": [
               {
                 "type": "main",
                 "position": {
-                  "lat": -45.43111,
-                  "lon": 167.74332
+                  "lat": -44.86049,
+                  "lon": 167.82468
                 }
               }
             ]
@@ -509,7 +509,7 @@
           },
           {
             "type": "Street",
-            "id": "NZ/STR/p0/12004",
+            "id": "NZ/STR/p0/172434",
             "score": 2.0962057114,
             "address": {
               "streetName": "Milford Street",
@@ -542,7 +542,7 @@
           },
           {
             "type": "Street",
-            "id": "NZ/STR/p0/12007",
+            "id": "NZ/STR/p0/172437",
             "score": 2.0962057114,
             "address": {
               "streetName": "Milford Street",
@@ -580,6 +580,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "1408986348"
+    "RandomSeed": "73727180"
   }
 }

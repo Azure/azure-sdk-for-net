@@ -6,29 +6,29 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-957c5ec97a48677dff18810e626c49b0-193f47b780dd5060-00",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220715.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
+        "traceparent": "00-d156229549d6a5b6a25f7116deccd58c-459b1a9aa0de13d3-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220719.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "02be9a449bb53603245fd89ef104c2cc",
+        "x-ms-client-request-id": "da2d9bfe839b038da398f2bc27ff32d4",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "452",
+        "Content-Length": "451",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 15 Jul 2022 05:48:10 GMT",
+        "Date": "Mon, 18 Jul 2022 22:08:08 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: AA4831E414344F38BFB1B58761E90668 Ref B: PAOEDGE0507 Ref C: 2022-07-15T05:48:11Z"
+        "X-MSEdge-Ref": "Ref A: 7855B697487B4BCDBAF4C2AF17422EF9 Ref B: PAOEDGE0611 Ref C: 2022-07-18T22:08:08Z"
       },
       "ResponseBody": {
         "summary": {
           "numResults": 1,
-          "queryTime": 89
+          "queryTime": 118
         },
         "addresses": [
           {
@@ -36,7 +36,7 @@
               "streetName": "Niuwei Road Lane 1 \u0026 Niuwei Road",
               "municipalitySubdivision": "Puli Township",
               "municipality": "Nantou County",
-              "countrySubdivision": "T\u00E1iw\u0101n",
+              "countrySubdivision": "Taiwan",
               "postalCode": "545",
               "countryCode": "TW",
               "country": "Taiwan",
@@ -54,6 +54,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "1418804921"
+    "RandomSeed": "836317016"
   }
 }

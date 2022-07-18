@@ -6,30 +6,30 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-7bf85be03abb868c8d25d5348d8b9166-9b4884327e9d5561-00",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220715.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
+        "traceparent": "00-072285cd8979c8ec65ad219d39fb724a-034a3522f433aaa5-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220719.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "1f0ae67afc701564f3943d57a08bce25",
+        "x-ms-client-request-id": "14e6e11616b8a3c4b39185da29c94660",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "6735",
+        "Content-Length": "6842",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 15 Jul 2022 05:48:14 GMT",
+        "Date": "Mon, 18 Jul 2022 22:08:11 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: E5F0C6D978CC44B2B7F21DBF984CF8FC Ref B: PAOEDGE0507 Ref C: 2022-07-15T05:48:15Z"
+        "X-MSEdge-Ref": "Ref A: 72EADFA3EC3745E2AC0BE87EB642FB8B Ref B: PAOEDGE0611 Ref C: 2022-07-18T22:08:12Z"
       },
       "ResponseBody": {
         "summary": {
           "query": "seattle",
           "queryType": "NON_NEAR",
-          "queryTime": 8,
+          "queryTime": 58,
           "numResults": 10,
           "offset": 0,
           "totalResults": 267,
@@ -38,8 +38,8 @@
         "results": [
           {
             "type": "Geography",
-            "id": "US/GEO/p0/45260",
-            "score": 2.5828318596,
+            "id": "US/GEO/p0/88672",
+            "score": 2.582862854,
             "entityType": "Municipality",
             "matchConfidence": {
               "score": 1
@@ -86,7 +86,7 @@
           },
           {
             "type": "Geography",
-            "id": "MX/GEO/p0/24881",
+            "id": "MX/GEO/p0/56475",
             "score": 2.1768069267,
             "entityType": "MunicipalitySubdivision",
             "matchConfidence": {
@@ -133,7 +133,7 @@
           },
           {
             "type": "Geography",
-            "id": "MX/GEO/p0/24765",
+            "id": "MX/GEO/p0/56359",
             "score": 2.1554658413,
             "entityType": "MunicipalitySubdivision",
             "matchConfidence": {
@@ -180,7 +180,7 @@
           },
           {
             "type": "Geography",
-            "id": "MX/GEO/p0/24607",
+            "id": "MX/GEO/p0/56201",
             "score": 2.1345388889,
             "entityType": "MunicipalitySubdivision",
             "matchConfidence": {
@@ -227,7 +227,7 @@
           },
           {
             "type": "Street",
-            "id": "MX/STR/p0/387936",
+            "id": "MX/STR/p0/250146",
             "score": 2.1169600487,
             "matchConfidence": {
               "score": 1
@@ -260,177 +260,181 @@
           },
           {
             "type": "Street",
-            "id": "US/STR/p0/2078100",
+            "id": "US/STR/p0/506500",
             "score": 2.1169600487,
             "matchConfidence": {
               "score": 1
             },
             "address": {
-              "streetName": "East Seattle Avenue",
-              "municipality": "Ellensburg",
-              "countrySecondarySubdivision": "Kittitas",
-              "countrySubdivision": "WA",
-              "countrySubdivisionName": "Washington",
+              "streetName": "Seattle Street",
+              "municipality": "Cuyahoga Falls",
+              "countrySecondarySubdivision": "Summit",
+              "countrySubdivision": "OH",
+              "countrySubdivisionName": "Ohio",
+              "postalCode": "44221",
+              "extendedPostalCode": "44221-4452, 44221-4453, 44221-4454, 44221-4455",
               "countryCode": "US",
               "country": "United States",
               "countryCodeISO3": "USA",
-              "freeformAddress": "East Seattle Avenue, Ellensburg, WA",
-              "localName": "Ellensburg"
+              "freeformAddress": "Seattle Street, Cuyahoga Falls, OH 44221",
+              "localName": "Cuyahoga Falls"
             },
             "position": {
-              "lat": 46.98765,
-              "lon": -120.52736
+              "lat": 41.13215,
+              "lon": -81.45829
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": 46.99676,
-                "lon": -120.54071
+                "lat": 41.13366,
+                "lon": -81.45834
               },
               "btmRightPoint": {
-                "lat": 46.97877,
-                "lon": -120.51434
+                "lat": 41.13046,
+                "lon": -81.45823
               }
             }
           },
           {
             "type": "Street",
-            "id": "US/STR/p0/2078104",
-            "score": 2.1169600487,
-            "matchConfidence": {
-              "score": 1
-            },
-            "address": {
-              "streetName": "East Seattle Avenue",
-              "municipality": "Moxee",
-              "countrySecondarySubdivision": "Yakima",
-              "countrySubdivision": "WA",
-              "countrySubdivisionName": "Washington",
-              "postalCode": "98936",
-              "extendedPostalCode": "98936-1341, 98936-9036, 98936-9637, 98936-9639, 98936-9640",
-              "countryCode": "US",
-              "country": "United States",
-              "countryCodeISO3": "USA",
-              "freeformAddress": "East Seattle Avenue, Moxee, WA 98936",
-              "localName": "Moxee"
-            },
-            "position": {
-              "lat": 46.55285,
-              "lon": -120.38185
-            },
-            "viewport": {
-              "topLeftPoint": {
-                "lat": 46.55428,
-                "lon": -120.38552
-              },
-              "btmRightPoint": {
-                "lat": 46.54967,
-                "lon": -120.38036
-              }
-            }
-          },
-          {
-            "type": "Street",
-            "id": "US/STR/p0/2078876",
+            "id": "US/STR/p0/2028244",
             "score": 2.1169600487,
             "matchConfidence": {
               "score": 1
             },
             "address": {
               "streetName": "Seattle Avenue",
-              "municipality": "Wenatchee",
-              "countrySecondarySubdivision": "Chelan",
-              "countrySubdivision": "WA",
-              "countrySubdivisionName": "Washington",
-              "postalCode": "98801",
-              "extendedPostalCode": "98801-1440, 98801-1441, 98801-7538",
+              "municipality": "Sioux City",
+              "countrySecondarySubdivision": "Woodbury",
+              "countrySubdivision": "IA",
+              "countrySubdivisionName": "Iowa",
+              "postalCode": "51103",
+              "extendedPostalCode": "51103-2263, 51103-2264, 51103-2267",
               "countryCode": "US",
               "country": "United States",
               "countryCodeISO3": "USA",
-              "freeformAddress": "Seattle Avenue, Wenatchee, WA 98801",
-              "localName": "Wenatchee"
+              "freeformAddress": "Seattle Avenue, Sioux City, IA 51103",
+              "localName": "Sioux City"
             },
             "position": {
-              "lat": 47.43879,
-              "lon": -120.33607
+              "lat": 42.5094,
+              "lon": -96.45609
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": 47.43879,
-                "lon": -120.33851
+                "lat": 42.5108,
+                "lon": -96.45885
               },
               "btmRightPoint": {
-                "lat": 47.43861,
-                "lon": -120.33226
+                "lat": 42.50838,
+                "lon": -96.45275
               }
             }
           },
           {
             "type": "Street",
-            "id": "US/STR/p0/2078884",
+            "id": "US/STR/p0/2817493",
+            "score": 2.1169600487,
+            "matchConfidence": {
+              "score": 1
+            },
+            "address": {
+              "streetName": "Seattle Drive",
+              "municipality": "El Cajon",
+              "countrySecondarySubdivision": "San Diego",
+              "countrySubdivision": "CA",
+              "countrySubdivisionName": "California",
+              "postalCode": "92020",
+              "extendedPostalCode": "92020-1773, 92020-1774",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "Seattle Drive, El Cajon, CA 92020",
+              "localName": "El Cajon"
+            },
+            "position": {
+              "lat": 32.80774,
+              "lon": -117.00052
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 32.80819,
+                "lon": -117.00143
+              },
+              "btmRightPoint": {
+                "lat": 32.80666,
+                "lon": -117.00007
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "US/STR/p1/1142925",
+            "score": 2.1169600487,
+            "matchConfidence": {
+              "score": 1
+            },
+            "address": {
+              "streetName": "Seattle Street",
+              "municipality": "Northwoods",
+              "countrySecondarySubdivision": "Saint Louis County",
+              "countrySubdivision": "MO",
+              "countrySubdivisionName": "Missouri",
+              "postalCode": "63121",
+              "extendedPostalCode": "63121-3031, 63121-3032, 63121-3033, 63121-3034",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "Seattle Street, Saint Louis, MO 63121",
+              "localName": "Saint Louis"
+            },
+            "position": {
+              "lat": 38.70526,
+              "lon": -90.27657
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 38.70687,
+                "lon": -90.27695
+              },
+              "btmRightPoint": {
+                "lat": 38.70471,
+                "lon": -90.27538
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "US/STR/p1/4084702",
             "score": 2.1169600487,
             "matchConfidence": {
               "score": 1
             },
             "address": {
               "streetName": "Seattle Avenue",
-              "municipality": "Shelton",
-              "countrySecondarySubdivision": "Mason",
-              "countrySubdivision": "WA",
-              "countrySubdivisionName": "Washington",
+              "municipality": "Sebring",
+              "countrySecondarySubdivision": "Highlands",
+              "countrySubdivision": "FL",
+              "countrySubdivisionName": "Florida",
+              "postalCode": "33870",
+              "extendedPostalCode": "33870-6512, 33870-6519, 33870-6544",
               "countryCode": "US",
               "country": "United States",
               "countryCodeISO3": "USA",
-              "freeformAddress": "Seattle Avenue, Shelton, WA",
-              "localName": "Shelton"
+              "freeformAddress": "Seattle Avenue, Sebring, FL 33870",
+              "localName": "Sebring"
             },
             "position": {
-              "lat": 47.20241,
-              "lon": -123.10465
+              "lat": 27.52033,
+              "lon": -81.49827
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": 47.20256,
-                "lon": -123.10844
+                "lat": 27.52127,
+                "lon": -81.49862
               },
               "btmRightPoint": {
-                "lat": 47.20231,
-                "lon": -123.10155
-              }
-            }
-          },
-          {
-            "type": "Street",
-            "id": "US/STR/p0/2078888",
-            "score": 2.1169600487,
-            "matchConfidence": {
-              "score": 1
-            },
-            "address": {
-              "streetName": "Seattle Avenue",
-              "municipality": "Port Orchard",
-              "countrySecondarySubdivision": "Kitsap",
-              "countrySubdivision": "WA",
-              "countrySubdivisionName": "Washington",
-              "postalCode": "98366",
-              "extendedPostalCode": "98366-4538, 98366-4539, 98366-5223, 98366-5247, 98366-5248, 98366-5271",
-              "countryCode": "US",
-              "country": "United States",
-              "countryCodeISO3": "USA",
-              "freeformAddress": "Seattle Avenue, Port Orchard, WA 98366",
-              "localName": "Port Orchard"
-            },
-            "position": {
-              "lat": 47.53996,
-              "lon": -122.63266
-            },
-            "viewport": {
-              "topLeftPoint": {
-                "lat": 47.54237,
-                "lon": -122.63348
-              },
-              "btmRightPoint": {
-                "lat": 47.53801,
-                "lon": -122.63261
+                "lat": 27.51953,
+                "lon": -81.49798
               }
             }
           }
@@ -442,6 +446,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "1462102874"
+    "RandomSeed": "1767216474"
   }
 }
