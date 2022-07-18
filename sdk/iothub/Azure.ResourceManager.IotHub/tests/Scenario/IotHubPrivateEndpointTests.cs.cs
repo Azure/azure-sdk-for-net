@@ -10,7 +10,6 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.IotHub.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 

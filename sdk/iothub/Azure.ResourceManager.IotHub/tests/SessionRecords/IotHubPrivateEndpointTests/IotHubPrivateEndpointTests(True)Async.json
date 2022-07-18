@@ -6,9 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-c30dcd94f29bb4498d6b1d92121c7da8-fdfb6ad953fbb14e-00",
+        "traceparent": "00-a54f960ee6d9f742b0408db9d44007ba-978ff6e63cfed245-00",
         "User-Agent": "azsdk-net-ResourceManager/1.2.0 (.NET Core 3.1.27; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "09b1c97a670237f8987929e6f7305c47",
+        "x-ms-client-request-id": "f29596d1b7d7c4de2ce229803eca209d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,15 +17,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "747",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 15 Jul 2022 06:02:26 GMT",
+        "Date": "Mon, 18 Jul 2022 08:00:26 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "a5e0e4ce-3adb-493b-8f6d-a7c06fa3cc74",
+        "x-ms-correlation-request-id": "5ab1afe2-565b-4568-abe8-4bf8db4f6444",
         "x-ms-ratelimit-remaining-subscription-reads": "11999",
-        "x-ms-request-id": "a5e0e4ce-3adb-493b-8f6d-a7c06fa3cc74",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220715T060227Z:a5e0e4ce-3adb-493b-8f6d-a7c06fa3cc74"
+        "x-ms-request-id": "5ab1afe2-565b-4568-abe8-4bf8db4f6444",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220718T080027Z:5ab1afe2-565b-4568-abe8-4bf8db4f6444"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
@@ -56,39 +56,39 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/IotHub-RG-7187?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/IotHub-RG-8642?api-version=2021-04-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "22",
         "Content-Type": "application/json",
-        "traceparent": "00-3b3c6aed05e90d45926fce1e986cd1f3-a545850a37150b4c-00",
+        "traceparent": "00-75f6646696e12745b4893cf32ea151bb-6afeed85ac76d147-00",
         "User-Agent": "azsdk-net-ResourceManager/1.2.0 (.NET Core 3.1.27; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "b5a5f9f6badb94c73bf1e239f47f2707",
+        "x-ms-client-request-id": "dc498b48383cea7eeaa947f2260cdbb4",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "location": "westus2"
       },
-      "StatusCode": 200,
+      "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "226",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 15 Jul 2022 06:02:29 GMT",
+        "Date": "Mon, 18 Jul 2022 08:00:30 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "ca2747c7-32a4-4b13-b108-a454dc69db08",
+        "x-ms-correlation-request-id": "a5caab5b-dc83-4441-9df4-d3f98dec9278",
         "x-ms-ratelimit-remaining-subscription-writes": "1199",
-        "x-ms-request-id": "ca2747c7-32a4-4b13-b108-a454dc69db08",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220715T060230Z:ca2747c7-32a4-4b13-b108-a454dc69db08"
+        "x-ms-request-id": "a5caab5b-dc83-4441-9df4-d3f98dec9278",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220718T080030Z:a5caab5b-dc83-4441-9df4-d3f98dec9278"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/IotHub-RG-7187",
-        "name": "IotHub-RG-7187",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/IotHub-RG-8642",
+        "name": "IotHub-RG-8642",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "westus2",
         "properties": {
@@ -99,7 +99,7 @@
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
-    "RandomSeed": "178911125",
+    "RandomSeed": "2028253395",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }
