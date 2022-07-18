@@ -18,7 +18,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// <param name="configure">Exporter configuration options.</param>
         /// <returns>The instance of <see cref="MeterProviderBuilder"/> to chain the calls.</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "The objects should not be disposed.")]
-        internal static MeterProviderBuilder AddAzureMonitorStatsbeatExporter(this MeterProviderBuilder builder, Action<AzureMonitorExporterOptions> configure = null)
+        internal static MeterProviderBuilder AddStatsbeatExporter(this MeterProviderBuilder builder, Action<AzureMonitorExporterOptions> configure = null)
         {
             var options = new AzureMonitorExporterOptions();
             configure?.Invoke(options);

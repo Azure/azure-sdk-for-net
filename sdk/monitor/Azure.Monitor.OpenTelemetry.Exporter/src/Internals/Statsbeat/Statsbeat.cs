@@ -29,7 +29,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             // schedule of 24 hrs == 86400000 milliseconds.
             Sdk.CreateMeterProviderBuilder()
             .AddMeter("AttachStatsBeatMeter")
-            .AddAzureMonitorStatsbeatExporter(o =>
+            .AddStatsbeatExporter(o =>
             {
                 o.ConnectionString = StatsBeat_ConnectionString;
                 o.DisableOfflineStorage = true;
