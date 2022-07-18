@@ -314,7 +314,7 @@ Pageable<BinaryData> consortiumResponse = ledgerClient.GetConsortiumMembers();
 foreach (var page in consortiumResponse)
 {
     string membersJson = page.ToString();
-    // Consortium members can manage and alter the Confidential Ledger, such as by replacing unhealthy nodes.
+    // Consortium members can manage and alter the confidential ledger, such as by replacing unhealthy nodes.
     Console.WriteLine(membersJson);
 }
 
