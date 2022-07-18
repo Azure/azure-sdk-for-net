@@ -56,8 +56,9 @@ namespace Azure.Messaging.ServiceBus.Core
         public string UserAgent => $"azsdk-net-{ Product }/{ Version } ({ Framework }; { Platform })";
 
         /// <summary>
-        /// Client Information properties serialized with normalized names
+        ///   Client Information properties serialized with normalized names
         /// </summary>
+        ///
         public KeyValuePair<string, string>[] SerializedProperties { get; }
 
         /// <summary>
