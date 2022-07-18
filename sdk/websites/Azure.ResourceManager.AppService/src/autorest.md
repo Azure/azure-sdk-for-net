@@ -128,8 +128,8 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Serverfarm: AppServicePlan
-  serverFarm: AppServicePlan
-  ServerFarm: AppServicePlan
+#   serverFarm: AppServicePlan
+#   ServerFarm: AppServicePlan
   Etag: ETag|etag
 
 rename-mapping:

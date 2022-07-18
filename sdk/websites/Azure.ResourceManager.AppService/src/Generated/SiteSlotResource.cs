@@ -1037,15 +1037,15 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="deleteMetrics"> If true, web app metrics are also deleted. </param>
-        /// <param name="deleteEmptyAppServicePlan"> Specify false if you want to keep empty App Service plan. By default, empty App Service plan is deleted. </param>
+        /// <param name="deleteEmptyServerFarm"> Specify false if you want to keep empty App Service plan. By default, empty App Service plan is deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? deleteMetrics = null, bool? deleteEmptyAppServicePlan = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? deleteMetrics = null, bool? deleteEmptyServerFarm = null, CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlotResource.Delete");
             scope.Start();
             try
             {
-                var response = await _siteSlotWebAppsRestClient.DeleteSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deleteMetrics, deleteEmptyAppServicePlan, cancellationToken).ConfigureAwait(false);
+                var response = await _siteSlotWebAppsRestClient.DeleteSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deleteMetrics, deleteEmptyServerFarm, cancellationToken).ConfigureAwait(false);
                 var operation = new AppServiceArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -1065,15 +1065,15 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="deleteMetrics"> If true, web app metrics are also deleted. </param>
-        /// <param name="deleteEmptyAppServicePlan"> Specify false if you want to keep empty App Service plan. By default, empty App Service plan is deleted. </param>
+        /// <param name="deleteEmptyServerFarm"> Specify false if you want to keep empty App Service plan. By default, empty App Service plan is deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, bool? deleteMetrics = null, bool? deleteEmptyAppServicePlan = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, bool? deleteMetrics = null, bool? deleteEmptyServerFarm = null, CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlotResource.Delete");
             scope.Start();
             try
             {
-                var response = _siteSlotWebAppsRestClient.DeleteSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deleteMetrics, deleteEmptyAppServicePlan, cancellationToken);
+                var response = _siteSlotWebAppsRestClient.DeleteSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deleteMetrics, deleteEmptyServerFarm, cancellationToken);
                 var operation = new AppServiceArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);

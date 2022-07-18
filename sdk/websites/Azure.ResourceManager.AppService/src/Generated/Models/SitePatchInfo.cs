@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// Hostname SSL states are used to manage the SSL bindings for app&apos;s hostnames.
         /// Serialized Name: SitePatchResource.properties.hostNameSslStates
         /// </param>
-        /// <param name="appServicePlanId">
+        /// <param name="serverFarmId">
         /// Resource ID of the associated App Service plan, formatted as: &quot;/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}&quot;.
         /// Serialized Name: SitePatchResource.properties.serverFarmId
         /// </param>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// Kind of resource.
         /// Serialized Name: ProxyOnlyResource.kind
         /// </param>
-        internal SitePatchInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string state, IReadOnlyList<string> hostNames, string repositorySiteName, UsageState? usageState, bool? isEnabled, IReadOnlyList<string> enabledHostNames, SiteAvailabilityState? availabilityState, IList<HostNameSslState> hostNameSslStates, string appServicePlanId, bool? reserved, bool? isXenon, bool? isHyperV, DateTimeOffset? lastModifiedTimeOn, SiteConfigProperties siteConfig, IReadOnlyList<string> trafficManagerHostNames, bool? isScmSiteAlsoStopped, string targetSwapSlot, HostingEnvironmentProfile hostingEnvironmentProfile, bool? isClientAffinityEnabled, bool? isClientCertEnabled, ClientCertMode? clientCertMode, string clientCertExclusionPaths, bool? isHostNamesDisabled, string customDomainVerificationId, string outboundIPAddresses, string possibleOutboundIPAddresses, int? containerSize, int? dailyMemoryTimeQuota, DateTimeOffset? suspendTillOn, int? maxNumberOfWorkers, CloningInfo cloningInfo, string resourceGroup, bool? isDefaultContainer, string defaultHostName, SlotSwapStatus slotSwapStatus, bool? isHttpOnly, RedundancyMode? redundancyMode, Guid? inProgressOperationId, bool? isStorageAccountRequired, string keyVaultReferenceIdentity, string virtualNetworkSubnetId, string kind) : base(id, name, resourceType, systemData)
+        internal SitePatchInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string state, IReadOnlyList<string> hostNames, string repositorySiteName, UsageState? usageState, bool? isEnabled, IReadOnlyList<string> enabledHostNames, SiteAvailabilityState? availabilityState, IList<HostNameSslState> hostNameSslStates, string serverFarmId, bool? reserved, bool? isXenon, bool? isHyperV, DateTimeOffset? lastModifiedTimeOn, SiteConfigProperties siteConfig, IReadOnlyList<string> trafficManagerHostNames, bool? isScmSiteAlsoStopped, string targetSwapSlot, HostingEnvironmentProfile hostingEnvironmentProfile, bool? isClientAffinityEnabled, bool? isClientCertEnabled, ClientCertMode? clientCertMode, string clientCertExclusionPaths, bool? isHostNamesDisabled, string customDomainVerificationId, string outboundIPAddresses, string possibleOutboundIPAddresses, int? containerSize, int? dailyMemoryTimeQuota, DateTimeOffset? suspendTillOn, int? maxNumberOfWorkers, CloningInfo cloningInfo, string resourceGroup, bool? isDefaultContainer, string defaultHostName, SlotSwapStatus slotSwapStatus, bool? isHttpOnly, RedundancyMode? redundancyMode, Guid? inProgressOperationId, bool? isStorageAccountRequired, string keyVaultReferenceIdentity, string virtualNetworkSubnetId, string kind) : base(id, name, resourceType, systemData)
         {
             Identity = identity;
             State = state;
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.AppService.Models
             EnabledHostNames = enabledHostNames;
             AvailabilityState = availabilityState;
             HostNameSslStates = hostNameSslStates;
-            AppServicePlanId = appServicePlanId;
+            ServerFarmId = serverFarmId;
             Reserved = reserved;
             IsXenon = isXenon;
             IsHyperV = isHyperV;
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// Resource ID of the associated App Service plan, formatted as: &quot;/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}&quot;.
         /// Serialized Name: SitePatchResource.properties.serverFarmId
         /// </summary>
-        public string AppServicePlanId { get; set; }
+        public string ServerFarmId { get; set; }
         /// <summary>
         /// &lt;code&gt;true&lt;/code&gt; if reserved; otherwise, &lt;code&gt;false&lt;/code&gt;.
         /// Serialized Name: SitePatchResource.properties.reserved

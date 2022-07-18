@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppService.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string AppServicePlanValue = "ServerFarm";
+        private const string ServerFarmValue = "ServerFarm";
         private const string WebSiteValue = "Site";
         private const string MicrosoftWebHostingEnvironmentsValue = "Microsoft.Web/hostingEnvironments";
 
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// ServerFarm
         /// Serialized Name: ValidateResourceTypes.ServerFarm
         /// </summary>
-        public static ValidateResourceType AppServicePlan { get; } = new ValidateResourceType(AppServicePlanValue);
+        public static ValidateResourceType ServerFarm { get; } = new ValidateResourceType(ServerFarmValue);
         /// <summary>
         /// Site
         /// Serialized Name: ValidateResourceTypes.Site

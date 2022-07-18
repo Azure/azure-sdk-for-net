@@ -23,10 +23,10 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(AppServicePlanId))
+            if (Optional.IsDefined(ServerFarmId))
             {
                 writer.WritePropertyName("serverFarmId");
-                writer.WriteStringValue(AppServicePlanId);
+                writer.WriteStringValue(ServerFarmId);
             }
             if (Optional.IsDefined(SkuName))
             {

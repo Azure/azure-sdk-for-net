@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string name, bool? deleteMetrics, bool? deleteEmptyAppServicePlan)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string name, bool? deleteMetrics, bool? deleteEmptyServerFarm)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -362,9 +362,9 @@ namespace Azure.ResourceManager.AppService
             {
                 uri.AppendQuery("deleteMetrics", deleteMetrics.Value, true);
             }
-            if (deleteEmptyAppServicePlan != null)
+            if (deleteEmptyServerFarm != null)
             {
-                uri.AppendQuery("deleteEmptyServerFarm", deleteEmptyAppServicePlan.Value, true);
+                uri.AppendQuery("deleteEmptyServerFarm", deleteEmptyServerFarm.Value, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -378,17 +378,17 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app to delete. </param>
         /// <param name="deleteMetrics"> If true, web app metrics are also deleted. </param>
-        /// <param name="deleteEmptyAppServicePlan"> Specify false if you want to keep empty App Service plan. By default, empty App Service plan is deleted. </param>
+        /// <param name="deleteEmptyServerFarm"> Specify false if you want to keep empty App Service plan. By default, empty App Service plan is deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string name, bool? deleteMetrics = null, bool? deleteEmptyAppServicePlan = null, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string name, bool? deleteMetrics = null, bool? deleteEmptyServerFarm = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, name, deleteMetrics, deleteEmptyAppServicePlan);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, name, deleteMetrics, deleteEmptyServerFarm);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -405,17 +405,17 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app to delete. </param>
         /// <param name="deleteMetrics"> If true, web app metrics are also deleted. </param>
-        /// <param name="deleteEmptyAppServicePlan"> Specify false if you want to keep empty App Service plan. By default, empty App Service plan is deleted. </param>
+        /// <param name="deleteEmptyServerFarm"> Specify false if you want to keep empty App Service plan. By default, empty App Service plan is deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string name, bool? deleteMetrics = null, bool? deleteEmptyAppServicePlan = null, CancellationToken cancellationToken = default)
+        public Response Delete(string subscriptionId, string resourceGroupName, string name, bool? deleteMetrics = null, bool? deleteEmptyServerFarm = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, name, deleteMetrics, deleteEmptyAppServicePlan);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, name, deleteMetrics, deleteEmptyServerFarm);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -14185,7 +14185,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateDeleteSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, bool? deleteMetrics, bool? deleteEmptyAppServicePlan)
+        internal HttpMessage CreateDeleteSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, bool? deleteMetrics, bool? deleteEmptyServerFarm)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -14204,9 +14204,9 @@ namespace Azure.ResourceManager.AppService
             {
                 uri.AppendQuery("deleteMetrics", deleteMetrics.Value, true);
             }
-            if (deleteEmptyAppServicePlan != null)
+            if (deleteEmptyServerFarm != null)
             {
-                uri.AppendQuery("deleteEmptyServerFarm", deleteEmptyAppServicePlan.Value, true);
+                uri.AppendQuery("deleteEmptyServerFarm", deleteEmptyServerFarm.Value, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
@@ -14221,18 +14221,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app to delete. </param>
         /// <param name="slot"> Name of the deployment slot to delete. By default, the API deletes the production slot. </param>
         /// <param name="deleteMetrics"> If true, web app metrics are also deleted. </param>
-        /// <param name="deleteEmptyAppServicePlan"> Specify false if you want to keep empty App Service plan. By default, empty App Service plan is deleted. </param>
+        /// <param name="deleteEmptyServerFarm"> Specify false if you want to keep empty App Service plan. By default, empty App Service plan is deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, bool? deleteMetrics = null, bool? deleteEmptyAppServicePlan = null, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, bool? deleteMetrics = null, bool? deleteEmptyServerFarm = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
 
-            using var message = CreateDeleteSlotRequest(subscriptionId, resourceGroupName, name, slot, deleteMetrics, deleteEmptyAppServicePlan);
+            using var message = CreateDeleteSlotRequest(subscriptionId, resourceGroupName, name, slot, deleteMetrics, deleteEmptyServerFarm);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -14250,18 +14250,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app to delete. </param>
         /// <param name="slot"> Name of the deployment slot to delete. By default, the API deletes the production slot. </param>
         /// <param name="deleteMetrics"> If true, web app metrics are also deleted. </param>
-        /// <param name="deleteEmptyAppServicePlan"> Specify false if you want to keep empty App Service plan. By default, empty App Service plan is deleted. </param>
+        /// <param name="deleteEmptyServerFarm"> Specify false if you want to keep empty App Service plan. By default, empty App Service plan is deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response DeleteSlot(string subscriptionId, string resourceGroupName, string name, string slot, bool? deleteMetrics = null, bool? deleteEmptyAppServicePlan = null, CancellationToken cancellationToken = default)
+        public Response DeleteSlot(string subscriptionId, string resourceGroupName, string name, string slot, bool? deleteMetrics = null, bool? deleteEmptyServerFarm = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
 
-            using var message = CreateDeleteSlotRequest(subscriptionId, resourceGroupName, name, slot, deleteMetrics, deleteEmptyAppServicePlan);
+            using var message = CreateDeleteSlotRequest(subscriptionId, resourceGroupName, name, slot, deleteMetrics, deleteEmptyServerFarm);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
