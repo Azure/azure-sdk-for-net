@@ -332,7 +332,7 @@ namespace Azure.Maps.Search.Models
         public static Azure.Maps.Search.Models.GeographicEntityType CountryTertiarySubdivision { get { throw null; } }
         public static Azure.Maps.Search.Models.GeographicEntityType Municipality { get { throw null; } }
         public static Azure.Maps.Search.Models.GeographicEntityType MunicipalitySubdivision { get { throw null; } }
-        public static Azure.Maps.Search.Models.GeographicEntityType Neighbourhood { get { throw null; } }
+        public static Azure.Maps.Search.Models.GeographicEntityType Neighborhood { get { throw null; } }
         public static Azure.Maps.Search.Models.GeographicEntityType PostalCodeArea { get { throw null; } }
         public bool Equals(Azure.Maps.Search.Models.GeographicEntityType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
