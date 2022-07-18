@@ -362,7 +362,7 @@ function Get-ResourceProviderFromReadme($readmeFile) {
 
     $specName = $pathArray[-3]
     $serviceType = $pathArray[-2]
-    Write-Host "specName:  $specName, serviceType: $serviceType"
+    Write-Host "specName: $specName, serviceType: $serviceType"
 
     return $specName, $serviceType
 }
@@ -381,7 +381,7 @@ function Invoke-GenerateAndBuildSDK () {
     Write-Host "service:$service, serviceType:$serviceType"
     
     if (!$readmeFile.StartsWith("http") -And !(Test-Path -Path $readmeFile)) {
-        Write-Error "readme file $readmeFile does not exist."
+        Write-Error "readme file '$readmeFile' does not exist."
         exit 1
     }
     
@@ -582,7 +582,7 @@ function UpdateExistingSDKByInputFiles()
 
     $autorestFilesPath = Get-ChildItem -Path "$sdkRootPath/sdk"  -Filter autorest.md -Recurse | Resolve-Path -Relative
     Write-Host "Updating autorest.md files for all the changed swaggers."
-    # [System.Collections.ArrayList] $sdksInfo = @()
+    
     $sdksInfo = @()
     $regexToFindSha = "https:\/\/[^`"]*[\/][0-9a-f]{4,40}[\/]"
     foreach ($path in $autorestFilesPath) {
@@ -597,7 +597,6 @@ function UpdateExistingSDKByInputFiles()
 
                     $sdkpath = (get-item $path).Directory.Parent.FullName | Resolve-Path -Relative
                     if (!$sdksInfo.Contains($sdkpath)) {
-                        # $sdksInfo.Add($sdkpath)
                         $sdksInfo += @($sdkpath)
                     }
                     break
