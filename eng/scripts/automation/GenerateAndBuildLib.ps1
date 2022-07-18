@@ -373,7 +373,7 @@ function Get-ResourceProviderFromReadme($readmeFile) {
 
     $specName = $pathArray[-3]
     $serviceType = $pathArray[-2]
-    Write-Host "specName:$specName, serviceType: $serviceType"
+    Write-Host "specName: $specName, serviceType: $serviceType"
 
     return $specName, $serviceType
 }
