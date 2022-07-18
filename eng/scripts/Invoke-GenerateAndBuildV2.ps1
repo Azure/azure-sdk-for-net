@@ -4,6 +4,7 @@ param (
   [string]$outputJsonFile
 )
 
+. (Join-Path $PSScriptRoot ".." "common" "scripts" "Helpers" PSModule-Helpers.ps1)
 . (Join-Path $PSScriptRoot automation GenerateAndBuildLib.ps1)
 
 $inputJson = Get-Content $inputJsonFile | Out-String | ConvertFrom-Json
@@ -20,15 +21,15 @@ $downloadUrlPrefix = $inputJson.installInstructionInput.downloadUrlPrefix
 $autorestConfigYaml = ""
 if ( $null -ne $autorestConfig -and $autorestConfig -ne "") {
     $autorestConfig | Set-Content "config.md"
-    $autorestConfigYaml = Get-Content -Path .\config.md
+    $autorestConfigYaml = Get-Content -Path ./config.md
     $range = ($autorestConfigYaml | Select-String -Pattern '```').LineNumber
     if ( $range.count -gt 1) {
         $startNum = $range[0];
         $lines = $range[1] - $range[0] - 1
         $autorestConfigYaml = ($autorestConfigYaml | Select -Skip $startNum | Select -First $lines) |Out-String
     }
-    Install-Module -Name powershell-yaml -Force -Verbose -Scope CurrentUser
-    Import-Module powershell-yaml
+
+    Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
     $yml = ConvertFrom-YAML $autorestConfigYaml
     $requires = $yml["require"]
     if ($requires.Count -gt 0) {
@@ -64,17 +65,19 @@ for ($i = 0; $i -le $readmeFiles.Count - 1; $i++) {
 }
 
 #update services without readme.md
-[System.Collections.ArrayList] $serviceWithReadme = @()
+$serviceWithReadme = @()
 foreach( $readme in $readmeFiles) {
     $service, $serviceType = Get-ResourceProviderFromReadme $readme
-    $serviceWithReadme.Add($service)
+    $serviceWithReadme += @($service)
 }
-[System.Collections.ArrayList] $inputFileToGen = @()
+$inputFileToGen = @()
 foreach( $file in $inputFilePaths) {
-    $file -match "specification/(?<specName>.*)/data-plane|resource-manager"
-    if (!$serviceWithReadme.Contains($matches["specName"])) {
-        $inputFileToGen.Add($file)
+    if ( $file -match "specification/(?<specName>.*)/data-plane|resource-manager" ) {
+        if (!$serviceWithReadme.Contains($matches["specName"])) {
+            $inputFileToGen += @($file)
+        }
     }
+   
 }
 
 if ($inputFileToGen) {

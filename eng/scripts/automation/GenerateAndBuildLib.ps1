@@ -1,14 +1,17 @@
 #Requires -Version 7.0
 $CI_YAML_FILE = "ci.yml"
 
+. (Join-Path $PSScriptRoot ".." ".." "common" "scripts" "Helpers" PSModule-Helpers.ps1)
+
 #mgmt: resourceProvider to sdk package name map
 $packageNameHash = [ordered]@{"vmware" = "avs"; 
-                            "azure-kusto"="kusto";
-                            "cosmos-db"="cosmosdb";
-                            "customer-insights"="customerinsights";
-                            "monitor"="insights";
-                            "msi"="managedserviceidentity";
-                            "web"="appservice"}
+    "azure-kusto" = "kusto";
+    "cosmos-db" = "cosmosdb";
+    "customer-insights" = "customerinsights";
+    "monitor" = "insights";
+    "msi" = "managedserviceidentity";
+    "web" = "appservice"
+}
 
 function Get-SwaggerInfo()
 {
@@ -99,12 +102,11 @@ function CreateOrUpdateAutorestConfigFile() {
                 $autorestConfigYaml = ($autorestConfigYaml | Select -Skip $startNum | Select -First $lines) |Out-String
             }
 
-            Install-Module -Name powershell-yaml -Force -Verbose -Scope CurrentUser
-            Import-Module powershell-yaml
+            Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
             $yml = ConvertFrom-YAML $autorestConfigYaml
 
             $fileContent = Get-Content -Path $autorestFilePath
-            Foreach ( $key in $yml.keys) {
+            foreach ( $key in $yml.keys) {
                 if ( ($key -eq "output-folder") -or ($key -eq "require")) {
                     continue;
                 }
@@ -293,7 +295,6 @@ function New-MgmtPackageFolder() {
     } else {
       Write-Host "Path doesn't exist. create template."
       dotnet new -i $sdkPath/eng/templates/Azure.ResourceManager.Template
-    #   $CaptizedPackageName = (Get-Culture ).TextInfo.ToTitleCase($packageName)
       $CaptizedPackageName = [System.Globalization.CultureInfo]::InvariantCulture.TextInfo.ToTitleCase($packageName)
       $mgmtPackageName = "Azure.ResourceManager.$CaptizedPackageName"
       $projectFolder="$sdkPath/sdk/$packageName/Azure.ResourceManager.$CaptizedPackageName"
@@ -333,10 +334,6 @@ function Invoke-Generate() {
     )
     $sdkfolder = $sdkfolder -replace "\\", "/"
     dotnet build /t:GenerateCode  $sdkfolder/src
-    if ( !$? ) {
-        Write-Error "Failed to generate sdk."
-        exit 1
-    }
 }
 
 function Invoke-Build() {
@@ -345,10 +342,6 @@ function Invoke-Build() {
     )
     $sdkfolder = $sdkfolder -replace "\\", "/"
     dotnet build $sdkfolder
-    if ( !$? ) {
-        Write-Error "Failed to build sdk. exit code: $?"
-        exit 1
-    }
 }
 
 function Invoke-Pack() {
@@ -357,23 +350,19 @@ function Invoke-Pack() {
     )
     $sdkfolder = $sdkfolder -replace "\\", "/"
     dotnet pack $sdkfolder /p:RunApiCompat=$false
-    if ( !$? ) {
-        Write-Error "Failed to build sdk package. exit code: $?"
-        exit 1
-    }
 }
 function Get-ResourceProviderFromReadme($readmeFile) {
     $readmeFile = $readmeFile -replace "\\", "/"
     $pathArray = $readmeFile.Split("/");
 
     if ( $pathArray.Count -lt 3) {
-        Write-Error "Error: invalid readme file path."
+        Write-Error "Error: invalid readme file path. A valid readme file path should contain specName and serviceType and be of the form <specName>/<serviceType>/readme.md, e.g. specification/deviceupdate/data-plane/readme.md"
         exit 1
     }
 
     $specName = $pathArray[-3]
     $serviceType = $pathArray[-2]
-    Write-Host "specName:$specName, serviceType: $serviceType"
+    Write-Host "specName:  $specName, serviceType: $serviceType"
 
     return $specName, $serviceType
 }
@@ -392,12 +381,12 @@ function Invoke-GenerateAndBuildSDK () {
     Write-Host "service:$service, serviceType:$serviceType"
     
     if (!$readmeFile.StartsWith("http") -And !(Test-Path -Path $readmeFile)) {
-        Write-Error "readme file does not exist."
+        Write-Error "readme file $readmeFile does not exist."
         exit 1
     }
     
     $packagesToGen = @()
-    $newpackageoutput = "newPackageOutput.json"
+    $newPackageOutput = "newPackageOutput.json"
     if ( $serviceType -eq "resource-manager" ) {
         Write-Host "Generate resource-manager SDK client library."
         $package = $service
@@ -409,9 +398,9 @@ function Invoke-GenerateAndBuildSDK () {
             Write-Error "Failed to create sdk project folder. exit code: $?"
             exit 1
         }
-        $newpackageoutputJson = Get-Content $newpackageoutput | Out-String | ConvertFrom-Json
-        $packagesToGen = $packagesToGen + @($newpackageoutputJson)
-        Remove-Item $newpackageoutput
+        $newPackageOutputJson = Get-Content $newPackageOutput | Out-String | ConvertFrom-Json
+        $packagesToGen = $packagesToGen + @($newPackageOutputJson)
+        Remove-Item $newPackageOutput
     } else {
         Write-Host "Generate data-plane SDK client library."
         $namespace = ""
@@ -423,8 +412,8 @@ function Invoke-GenerateAndBuildSDK () {
                 $lines = $range[1] - $range[0] - 1
                 $autorestConfigYaml = ($autorestConfigYaml | Select -Skip $startNum | Select -First $lines) |Out-String
             }
-            Install-Module -Name powershell-yaml -Force -Verbose -Scope CurrentUser
-            Import-Module powershell-yaml
+
+            Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
             $yml = ConvertFrom-YAML $autorestConfigYaml
 
             $outputFolder = $yml["output-folder"]
@@ -439,9 +428,9 @@ function Invoke-GenerateAndBuildSDK () {
                 Write-Error "Failed to create sdk project folder. exit code: $?"
                 exit 1
             }
-            $newpackageoutputJson = Get-Content $newpackageoutput | Out-String | ConvertFrom-Json
-            $packagesToGen = $packagesToGen + @($newpackageoutputJson)
-            Remove-Item $newpackageoutput
+            $newPackageOutputJson = Get-Content $newPackageOutput | Out-String | ConvertFrom-Json
+            $packagesToGen = $packagesToGen + @($newPackageOutputJson)
+            Remove-Item $newPackageOutput
         } else {
             npx autorest --version=3.8.4 --csharp $readmeFile --csharp-sdks-folder=$sdkRootPath --skip-csproj --clear-output-folder=true
             $serviceSDKDirectory = (Join-Path $sdkRootPath "sdk" $service)
@@ -453,19 +442,19 @@ function Invoke-GenerateAndBuildSDK () {
                     Write-Error "Failed to create sdk project folder. exit code: $?"
                     exit 1
                 }
-                $newpackageoutputJson = Get-Content $newpackageoutput | Out-String | ConvertFrom-Json
-                $packagesToGen = $packagesToGen + @($newpackageoutputJson)
-                Remove-Item $newpackageoutput
+                $newPackageOutputJson = Get-Content $newPackageOutput | Out-String | ConvertFrom-Json
+                $packagesToGen = $packagesToGen + @($newPackageOutputJson)
+                Remove-Item $newPackageOutput
             }
         }
     }
 
     foreach ( $package in $packagesToGen )
     {
-        $projectFolder = $newpackageoutputJson.projectFolder
-        $path = $newpackageoutputJson.path
-        $service = $newpackageoutputJson.service
-        # $packageName = $newpackageoutputJson.packageName
+        $projectFolder = $package.projectFolder
+        $path = $package.path
+        $service = $package.service
+        # $packageName = $package.packageName
         Write-Host "projectFolder:$projectFolder"
 
         GeneratePackage -projectFolder $projectFolder -sdkRootPath $sdkRootPath -path $path -downloadUrlPrefix $downloadUrlPrefix -generatedSDKPackages $generatedSDKPackages
@@ -593,7 +582,8 @@ function UpdateExistingSDKByInputFiles()
 
     $autorestFilesPath = Get-ChildItem -Path "$sdkRootPath/sdk"  -Filter autorest.md -Recurse | Resolve-Path -Relative
     Write-Host "Updating autorest.md files for all the changed swaggers."
-    [System.Collections.ArrayList] $sdksInfo = @()
+    # [System.Collections.ArrayList] $sdksInfo = @()
+    $sdksInfo = @()
     $regexToFindSha = "https:\/\/[^`"]*[\/][0-9a-f]{4,40}[\/]"
     foreach ($path in $autorestFilesPath) {
         $fileContent = Get-Content $path
@@ -607,7 +597,8 @@ function UpdateExistingSDKByInputFiles()
 
                     $sdkpath = (get-item $path).Directory.Parent.FullName | Resolve-Path -Relative
                     if (!$sdksInfo.Contains($sdkpath)) {
-                        $sdksInfo.Add($sdkpath)
+                        # $sdksInfo.Add($sdkpath)
+                        $sdksInfo += @($sdkpath)
                     }
                     break
                 }
@@ -620,10 +611,6 @@ function UpdateExistingSDKByInputFiles()
         $path = , $sdkPath
         $projectFolder = Join-Path $sdkRootPath $sdkPath
         $projectFolder = Resolve-Path -Path $projectFolder
-        $projectFolder -match "sdk/(?<specName>.*)/data-plane|resource-manager"
-        if (!$serviceWithReadme.Contains($matches["service"])) {
-            $inputFileToGen.Add($file)
-        }
         GeneratePackage -projectFolder $projectFolder -sdkRootPath $sdkRootPath -path $path -downloadUrlPrefix "$downloadUrlPrefix" -generatedSDKPackages $generatedSDKPackages
     }
     
