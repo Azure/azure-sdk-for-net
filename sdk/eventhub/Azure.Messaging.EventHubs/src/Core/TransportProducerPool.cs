@@ -136,7 +136,7 @@ namespace Azure.Messaging.EventHubs.Core
                 // The second TryGetValue runs after the extension would have been seen, so it
                 // is intended to be sure that the item wasn't removed in the meantime.
 
-                if (!Pool.TryGetValue(partitionId, out _) && !item.ActiveInstances.Any())
+                if (!Pool.TryGetValue(partitionId, out _) && item.ActiveInstances.IsEmpty)
                 {
                     return producer.CloseAsync(CancellationToken.None);
                 }
