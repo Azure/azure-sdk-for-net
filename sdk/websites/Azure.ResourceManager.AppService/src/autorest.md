@@ -127,7 +127,7 @@ rename-rules:
   Ipsec: IPsec|ipsec
   SSO: Sso
   URI: Uri
-  Serverfarm: AppServicePlan
+#   Serverfarm: AppServicePlan
 #   serverFarm: AppServicePlan
 #   ServerFarm: AppServicePlan
   Etag: ETag|etag

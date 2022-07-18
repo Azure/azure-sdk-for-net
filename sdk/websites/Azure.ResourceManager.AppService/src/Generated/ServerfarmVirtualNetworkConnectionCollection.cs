@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class ServerfarmVirtualNetworkConnectionCollection : ArmCollection, IEnumerable<ServerfarmVirtualNetworkConnectionResource>, IAsyncEnumerable<ServerfarmVirtualNetworkConnectionResource>
     {
-        private readonly ClientDiagnostics _appServicePlanVirtualNetworkConnectionAppServicePlansClientDiagnostics;
-        private readonly AppServicePlansRestOperations _appServicePlanVirtualNetworkConnectionAppServicePlansRestClient;
+        private readonly ClientDiagnostics _serverfarmVirtualNetworkConnectionAppServicePlansClientDiagnostics;
+        private readonly AppServicePlansRestOperations _serverfarmVirtualNetworkConnectionAppServicePlansRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ServerfarmVirtualNetworkConnectionCollection"/> class for mocking. </summary>
         protected ServerfarmVirtualNetworkConnectionCollection()
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ServerfarmVirtualNetworkConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _appServicePlanVirtualNetworkConnectionAppServicePlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ServerfarmVirtualNetworkConnectionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ServerfarmVirtualNetworkConnectionResource.ResourceType, out string appServicePlanVirtualNetworkConnectionAppServicePlansApiVersion);
-            _appServicePlanVirtualNetworkConnectionAppServicePlansRestClient = new AppServicePlansRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, appServicePlanVirtualNetworkConnectionAppServicePlansApiVersion);
+            _serverfarmVirtualNetworkConnectionAppServicePlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ServerfarmVirtualNetworkConnectionResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ServerfarmVirtualNetworkConnectionResource.ResourceType, out string serverfarmVirtualNetworkConnectionAppServicePlansApiVersion);
+            _serverfarmVirtualNetworkConnectionAppServicePlansRestClient = new AppServicePlansRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serverfarmVirtualNetworkConnectionAppServicePlansApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -66,11 +66,11 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
 
-            using var scope = _appServicePlanVirtualNetworkConnectionAppServicePlansClientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnectionCollection.Get");
+            using var scope = _serverfarmVirtualNetworkConnectionAppServicePlansClientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _appServicePlanVirtualNetworkConnectionAppServicePlansRestClient.GetVnetFromServerFarmAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vnetName, cancellationToken).ConfigureAwait(false);
+                var response = await _serverfarmVirtualNetworkConnectionAppServicePlansRestClient.GetVnetFromServerFarmAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vnetName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ServerfarmVirtualNetworkConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
 
-            using var scope = _appServicePlanVirtualNetworkConnectionAppServicePlansClientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnectionCollection.Get");
+            using var scope = _serverfarmVirtualNetworkConnectionAppServicePlansClientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = _appServicePlanVirtualNetworkConnectionAppServicePlansRestClient.GetVnetFromServerFarm(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vnetName, cancellationToken);
+                var response = _serverfarmVirtualNetworkConnectionAppServicePlansRestClient.GetVnetFromServerFarm(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vnetName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ServerfarmVirtualNetworkConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -122,11 +122,11 @@ namespace Azure.ResourceManager.AppService
         {
             async Task<Page<ServerfarmVirtualNetworkConnectionResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _appServicePlanVirtualNetworkConnectionAppServicePlansClientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnectionCollection.GetAll");
+                using var scope = _serverfarmVirtualNetworkConnectionAppServicePlansClientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnectionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _appServicePlanVirtualNetworkConnectionAppServicePlansRestClient.ListVnetsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _serverfarmVirtualNetworkConnectionAppServicePlansRestClient.ListVnetsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Select(value => new ServerfarmVirtualNetworkConnectionResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -149,11 +149,11 @@ namespace Azure.ResourceManager.AppService
         {
             Page<ServerfarmVirtualNetworkConnectionResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _appServicePlanVirtualNetworkConnectionAppServicePlansClientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnectionCollection.GetAll");
+                using var scope = _serverfarmVirtualNetworkConnectionAppServicePlansClientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnectionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _appServicePlanVirtualNetworkConnectionAppServicePlansRestClient.ListVnets(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _serverfarmVirtualNetworkConnectionAppServicePlansRestClient.ListVnets(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Select(value => new ServerfarmVirtualNetworkConnectionResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -178,11 +178,11 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
 
-            using var scope = _appServicePlanVirtualNetworkConnectionAppServicePlansClientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnectionCollection.Exists");
+            using var scope = _serverfarmVirtualNetworkConnectionAppServicePlansClientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnectionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _appServicePlanVirtualNetworkConnectionAppServicePlansRestClient.GetVnetFromServerFarmAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vnetName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _serverfarmVirtualNetworkConnectionAppServicePlansRestClient.GetVnetFromServerFarmAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vnetName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -205,11 +205,11 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
 
-            using var scope = _appServicePlanVirtualNetworkConnectionAppServicePlansClientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnectionCollection.Exists");
+            using var scope = _serverfarmVirtualNetworkConnectionAppServicePlansClientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnectionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _appServicePlanVirtualNetworkConnectionAppServicePlansRestClient.GetVnetFromServerFarm(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vnetName, cancellationToken: cancellationToken);
+                var response = _serverfarmVirtualNetworkConnectionAppServicePlansRestClient.GetVnetFromServerFarm(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vnetName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class ServerfarmVirtualNetworkConnectionGatewayCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _appServicePlanVirtualNetworkConnectionGatewayAppServicePlansClientDiagnostics;
-        private readonly AppServicePlansRestOperations _appServicePlanVirtualNetworkConnectionGatewayAppServicePlansRestClient;
+        private readonly ClientDiagnostics _serverfarmVirtualNetworkConnectionGatewayAppServicePlansClientDiagnostics;
+        private readonly AppServicePlansRestOperations _serverfarmVirtualNetworkConnectionGatewayAppServicePlansRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ServerfarmVirtualNetworkConnectionGatewayCollection"/> class for mocking. </summary>
         protected ServerfarmVirtualNetworkConnectionGatewayCollection()
@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ServerfarmVirtualNetworkConnectionGatewayCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _appServicePlanVirtualNetworkConnectionGatewayAppServicePlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ServerfarmVirtualNetworkConnectionGatewayResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ServerfarmVirtualNetworkConnectionGatewayResource.ResourceType, out string appServicePlanVirtualNetworkConnectionGatewayAppServicePlansApiVersion);
-            _appServicePlanVirtualNetworkConnectionGatewayAppServicePlansRestClient = new AppServicePlansRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, appServicePlanVirtualNetworkConnectionGatewayAppServicePlansApiVersion);
+            _serverfarmVirtualNetworkConnectionGatewayAppServicePlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ServerfarmVirtualNetworkConnectionGatewayResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ServerfarmVirtualNetworkConnectionGatewayResource.ResourceType, out string serverfarmVirtualNetworkConnectionGatewayAppServicePlansApiVersion);
+            _serverfarmVirtualNetworkConnectionGatewayAppServicePlansRestClient = new AppServicePlansRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serverfarmVirtualNetworkConnectionGatewayAppServicePlansApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -66,11 +66,11 @@ namespace Azure.ResourceManager.AppService
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _appServicePlanVirtualNetworkConnectionGatewayAppServicePlansClientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnectionGatewayCollection.CreateOrUpdate");
+            using var scope = _serverfarmVirtualNetworkConnectionGatewayAppServicePlansClientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnectionGatewayCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _appServicePlanVirtualNetworkConnectionGatewayAppServicePlansRestClient.UpdateVnetGatewayAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, gatewayName, data, cancellationToken).ConfigureAwait(false);
+                var response = await _serverfarmVirtualNetworkConnectionGatewayAppServicePlansRestClient.UpdateVnetGatewayAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, gatewayName, data, cancellationToken).ConfigureAwait(false);
                 var operation = new AppServiceArmOperation<ServerfarmVirtualNetworkConnectionGatewayResource>(Response.FromValue(new ServerfarmVirtualNetworkConnectionGatewayResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.AppService
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _appServicePlanVirtualNetworkConnectionGatewayAppServicePlansClientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnectionGatewayCollection.CreateOrUpdate");
+            using var scope = _serverfarmVirtualNetworkConnectionGatewayAppServicePlansClientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnectionGatewayCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _appServicePlanVirtualNetworkConnectionGatewayAppServicePlansRestClient.UpdateVnetGateway(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, gatewayName, data, cancellationToken);
+                var response = _serverfarmVirtualNetworkConnectionGatewayAppServicePlansRestClient.UpdateVnetGateway(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, gatewayName, data, cancellationToken);
                 var operation = new AppServiceArmOperation<ServerfarmVirtualNetworkConnectionGatewayResource>(Response.FromValue(new ServerfarmVirtualNetworkConnectionGatewayResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
@@ -129,11 +129,11 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
-            using var scope = _appServicePlanVirtualNetworkConnectionGatewayAppServicePlansClientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnectionGatewayCollection.Get");
+            using var scope = _serverfarmVirtualNetworkConnectionGatewayAppServicePlansClientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnectionGatewayCollection.Get");
             scope.Start();
             try
             {
-                var response = await _appServicePlanVirtualNetworkConnectionGatewayAppServicePlansRestClient.GetVnetGatewayAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, gatewayName, cancellationToken).ConfigureAwait(false);
+                var response = await _serverfarmVirtualNetworkConnectionGatewayAppServicePlansRestClient.GetVnetGatewayAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, gatewayName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ServerfarmVirtualNetworkConnectionGatewayResource(Client, response.Value), response.GetRawResponse());
@@ -158,11 +158,11 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
-            using var scope = _appServicePlanVirtualNetworkConnectionGatewayAppServicePlansClientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnectionGatewayCollection.Get");
+            using var scope = _serverfarmVirtualNetworkConnectionGatewayAppServicePlansClientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnectionGatewayCollection.Get");
             scope.Start();
             try
             {
-                var response = _appServicePlanVirtualNetworkConnectionGatewayAppServicePlansRestClient.GetVnetGateway(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, gatewayName, cancellationToken);
+                var response = _serverfarmVirtualNetworkConnectionGatewayAppServicePlansRestClient.GetVnetGateway(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, gatewayName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ServerfarmVirtualNetworkConnectionGatewayResource(Client, response.Value), response.GetRawResponse());
@@ -187,11 +187,11 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
-            using var scope = _appServicePlanVirtualNetworkConnectionGatewayAppServicePlansClientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnectionGatewayCollection.Exists");
+            using var scope = _serverfarmVirtualNetworkConnectionGatewayAppServicePlansClientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnectionGatewayCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _appServicePlanVirtualNetworkConnectionGatewayAppServicePlansRestClient.GetVnetGatewayAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, gatewayName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _serverfarmVirtualNetworkConnectionGatewayAppServicePlansRestClient.GetVnetGatewayAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, gatewayName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -214,11 +214,11 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
-            using var scope = _appServicePlanVirtualNetworkConnectionGatewayAppServicePlansClientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnectionGatewayCollection.Exists");
+            using var scope = _serverfarmVirtualNetworkConnectionGatewayAppServicePlansClientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnectionGatewayCollection.Exists");
             scope.Start();
             try
             {
-                var response = _appServicePlanVirtualNetworkConnectionGatewayAppServicePlansRestClient.GetVnetGateway(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, gatewayName, cancellationToken: cancellationToken);
+                var response = _serverfarmVirtualNetworkConnectionGatewayAppServicePlansRestClient.GetVnetGateway(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, gatewayName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
