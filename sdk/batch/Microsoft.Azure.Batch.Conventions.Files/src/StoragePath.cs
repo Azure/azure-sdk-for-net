@@ -31,9 +31,9 @@ namespace Microsoft.Azure.Batch.Conventions.Files
     // represent the two kinds of path.
     internal abstract class StoragePath
     {
-        private readonly CloudBlobContainer _jobOutputContainer;
+        private readonly BlobContainerClient _jobOutputContainer;
 
-        protected StoragePath(CloudBlobContainer jobOutputContainer)
+        protected StoragePath(BlobContainerClient jobOutputContainer)
         {
             if (jobOutputContainer == null)
             {
