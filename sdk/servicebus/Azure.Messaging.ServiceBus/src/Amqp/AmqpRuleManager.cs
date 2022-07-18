@@ -233,8 +233,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <returns>Returns a list of rules description</returns>
         public override async Task<List<RuleProperties>> GetRulesAsync(int skip, int top, CancellationToken cancellationToken) =>
             await _retryPolicy.RunOperation(
-                async (manager, timeout, token) => await manager.GetRulesInternalAsync(timeout, skip, top).ConfigureAwait(false),
-                this,
+                static async (value, timeout, token) =>
+                {
+                    var (manager, skip, top) = value;
+                    return await manager.GetRulesInternalAsync(timeout, skip, top).ConfigureAwait(false);
+                },
+                (this, skip, top),
                 _connectionScope,
                 cancellationToken).ConfigureAwait(false);
 
