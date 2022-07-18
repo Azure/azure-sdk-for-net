@@ -71,8 +71,10 @@ namespace Microsoft.Azure.Batch.Conventions.Files.Utilities
             } while (continuationToken != null);
 
         }
-
-        internal static IEnumerable<BlobItem> BlobsFlatListing(BlobContainerClient container, string prefix = null)
+        /*
+         * Lists blobs from the specified container through flat listing
+         */
+        internal static IEnumerable<BlobItem> ListBlobs(this BlobContainerClient container, string prefix = null)
         {
             //string initialContinuationToken = null;
             IEnumerable<Page<BlobItem>> resultSegment = container.GetBlobs(prefix: prefix).AsPages();
@@ -92,7 +94,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.Utilities
             }
         }
 
-        internal static IEnumerable<BlobHierarchyItem> ListBlobsByHierachy(BlobContainerClient container, string prefix = null, string delimiter = null)
+        internal static IEnumerable<BlobHierarchyItem> ListBlobsByHierachy(this BlobContainerClient container, string prefix = null, string delimiter = null)
         {
             //string initialContinuationToken = null;
             IEnumerable<Page<BlobHierarchyItem>> resultSegment = container.GetBlobsByHierarchy(delimiter: delimiter, prefix: prefix).AsPages();
