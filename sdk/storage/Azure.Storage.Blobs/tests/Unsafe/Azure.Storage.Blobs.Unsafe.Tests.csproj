@@ -18,6 +18,10 @@
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\Azure.Storage.Common\src\Azure.Storage.Common.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="NUnit" />
+    <PackageReference Include="NUnit3TestAdapter" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="$(AzureStorageSharedTestSources)\**\Unsafe\**\*.cs" LinkBase="Shared" />
     <None Include="$(AzureStorageSharedTestSources)\*.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

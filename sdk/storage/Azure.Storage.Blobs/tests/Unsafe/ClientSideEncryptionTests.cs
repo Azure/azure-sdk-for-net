@@ -32,6 +32,7 @@ using static Moq.It;
 
 namespace Azure.Storage.Blobs.Test
 {
+    [BlobsClientTestFixture]
     public class ClientSideEncryptionTests : BlobTestBase
     {
         private static string s_algorithmName => ClientSideEncryptionTestExtensions.s_algorithmName;
@@ -265,7 +266,6 @@ namespace Azure.Storage.Blobs.Test
 #pragma warning disable CS0618 // obsolete
         [TestCase(ClientSideEncryptionVersion.V1_0)]
         [TestCase(ClientSideEncryptionVersion.V2_0)]
-        [LiveOnly]
 #pragma warning restore CS0618 // obsolete
         public void CanSwapKey(ClientSideEncryptionVersion version)
         {
@@ -309,7 +309,6 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(ClientSideEncryptionVersion.V2_0, V2.EncryptionRegionDataSize - 1000000)] // a single unalligned cipher block
         [TestCase(ClientSideEncryptionVersion.V2_0, 2 * V2.EncryptionRegionDataSize)] // multiple blocks
         [TestCase(ClientSideEncryptionVersion.V2_0, 2 * V2.EncryptionRegionDataSize - 1000000)] // multiple unalligned blocks
-        [LiveOnly] // cannot seed content encryption key
 #pragma warning restore CS0618 // obsolete
         public async Task UploadAsync(ClientSideEncryptionVersion version, long dataSize)
         {
@@ -345,7 +344,6 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(ClientSideEncryptionVersion.V2_0, V2.EncryptionRegionDataSize, V2.EncryptionRegionDataSize)]
         [TestCase(ClientSideEncryptionVersion.V2_0, V2.EncryptionRegionDataSize - 1000000, Constants.MB)]
         [TestCase(ClientSideEncryptionVersion.V2_0, 2 * V2.EncryptionRegionDataSize, 1000000)] // multiple blocks w/ unallignment
-        [LiveOnly] // cannot seed content encryption key
 #pragma warning restore CS0618 // obsolete
         public async Task OpenWriteAsync(ClientSideEncryptionVersion version, long dataSize, int bufferSize)
         {
@@ -389,7 +387,6 @@ namespace Azure.Storage.Blobs.Test
 #pragma warning disable CS0618 // obsolete
         [TestCase(ClientSideEncryptionVersion.V1_0)]
         [TestCase(ClientSideEncryptionVersion.V2_0)]
-        [LiveOnly] // cannot seed content encryption key
 #pragma warning restore CS0618 // obsolete
         public async Task OpenWriteAsyncNoOpenWriteOptions(ClientSideEncryptionVersion version)
         {
@@ -430,7 +427,6 @@ namespace Azure.Storage.Blobs.Test
 #pragma warning disable CS0618 // obsolete
         [TestCase(ClientSideEncryptionVersion.V1_0)]
         [TestCase(ClientSideEncryptionVersion.V2_0)]
-        [LiveOnly] // cannot seed content encryption key
 #pragma warning restore CS0618 // obsolete
         public async Task UploadAsync_OverwritesDeliberately_BinaryData(ClientSideEncryptionVersion version)
         {
@@ -463,7 +459,6 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [Combinatorial]
-        [LiveOnly] // cannot seed content encryption key
         public async Task UploadAsyncSplit(
             [Values(1, 2, 4, 8)] int concurrency,
             [ValueSource("GetEncryptionVersions")] ClientSideEncryptionVersion version)
@@ -515,7 +510,6 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(ClientSideEncryptionVersion.V2_0, V2.EncryptionRegionDataSize - 1000000, null)] // a single unalligned cipher block
         [TestCase(ClientSideEncryptionVersion.V2_0, 2 * V2.EncryptionRegionDataSize, null)] // multiple blocks
         [TestCase(ClientSideEncryptionVersion.V2_0, 2 * V2.EncryptionRegionDataSize - 1000000, null)] // multiple unalligned blocks
-        [LiveOnly] // cannot seed content encryption key
 #pragma warning restore CS0618 // obsolete
         public async Task RoundtripAsync(ClientSideEncryptionVersion version, long dataSize, long? initialDownloadRequestSize)
         {
@@ -553,7 +547,6 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [Combinatorial]
-        [LiveOnly] // cannot seed content encryption key
         public async Task RoundtripSplitAsync(
             [Values(1, 2, 4, 8)] int concurrency,
             [ValueSource("GetEncryptionVersions")] ClientSideEncryptionVersion version)
@@ -606,7 +599,6 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(ClientSideEncryptionVersion.V2_0, Constants.MB, 128 * Constants.KB)]
         [TestCase(ClientSideEncryptionVersion.V2_0, 2 * V2.EncryptionRegionDataSize, Constants.MB)]
         [TestCase(ClientSideEncryptionVersion.V2_0, 2 * V2.EncryptionRegionDataSize + 1000, Constants.MB + 15)]
-        [LiveOnly] // cannot seed content encryption key
 #pragma warning restore CS0618 // obsolete
         public async Task RoundtripAsyncWithOpenRead(ClientSideEncryptionVersion version, long dataSize, int bufferSize)
         {
@@ -648,7 +640,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [LiveOnly] // cannot seed content encryption key
         public async Task RoundtripWithMetadata([ValueSource("GetEncryptionVersions")] ClientSideEncryptionVersion version)
         {
             // Arrange
@@ -698,7 +689,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test] // multiple unalligned blocks
-        [LiveOnly] // cannot seed content encryption key
         public async Task KeyResolverKicksIn([ValueSource("GetEncryptionVersions")] ClientSideEncryptionVersion version)
         {
             var data = GetRandomBuffer(Constants.KB);
@@ -754,7 +744,6 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(ClientSideEncryptionVersion.V2_0, 1024, 30)] // small range inside region
         [TestCase(ClientSideEncryptionVersion.V2_0, V2.EncryptionRegionDataSize + 1024, 30)] // small range inside non-first region
         [TestCase(ClientSideEncryptionVersion.V2_0, V2.EncryptionRegionDataSize, null)] // second region to end
-        [LiveOnly] // cannot seed content encryption key
 #pragma warning restore CS0618 // obsolete
         public async Task PartialDownloadAsync(ClientSideEncryptionVersion version, int offset, int? count)
         {
@@ -807,7 +796,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [LiveOnly] // cannot seed content encryption key
         public async Task Track2DownloadTrack1Blob()
         {
             var data = GetRandomBuffer(Constants.KB);
@@ -855,7 +843,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [LiveOnly] // cannot seed content encryption key
         public async Task Track1DownloadTrack2Blob()
         {
             var data = GetRandomBuffer(Constants.KB); // ensure we have enough room in original data
@@ -904,7 +891,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [LiveOnly] // need access to keyvault service && cannot seed content encryption key
+        [LiveOnly] // need access to keyvault service
         public async Task RoundtripWithKeyvaultProvider([ValueSource("GetEncryptionVersions")] ClientSideEncryptionVersion version)
         {
             var data = GetRandomBuffer(Constants.KB);
@@ -930,7 +917,7 @@ namespace Azure.Storage.Blobs.Test
 #pragma warning disable CS0618 // obsolete
         [TestCase(ClientSideEncryptionVersion.V1_0, Constants.MB, 64*Constants.KB)]
         [TestCase(ClientSideEncryptionVersion.V2_0,  Constants.MB, 64 * Constants.KB)]
-        [LiveOnly] // need access to keyvault service && cannot seed content encryption key
+        [LiveOnly] // need access to keyvault service
 #pragma warning restore CS0618 // obsolete
         public async Task RoundtripWithKeyvaultProviderOpenRead(ClientSideEncryptionVersion version, long dataSize, int bufferSize)
         {
@@ -957,7 +944,6 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [Combinatorial]
-        [LiveOnly]
         public async Task CannotFindKeyAsync(
             [Values(true, false)] bool resolverThrows,
             [ValueSource("GetEncryptionVersions")] ClientSideEncryptionVersion version)
@@ -1012,7 +998,6 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(EncryptionBlockSize, EncryptionBlockSize)]
         [TestCase(EncryptionBlockSize, EncryptionBlockSize + 5)]
         [TestCase(EncryptionBlockSize + 5, 2 * EncryptionBlockSize)]
-        [LiveOnly]
         public async Task AppropriateRangeDownloadOnPlaintext(int rangeOffset, int? rangeLength)
         {
             var data = GetRandomBuffer(rangeOffset + (rangeLength ?? Constants.KB) + EncryptionBlockSize);
@@ -1048,7 +1033,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [LiveOnly] // cannot seed content encryption key
         [Ignore("stress test")]
         public async Task StressManyBlobsAsync([ValueSource("GetEncryptionVersions")] ClientSideEncryptionVersion version)
         {
@@ -1095,7 +1079,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [LiveOnly] // cannot seed content encryption key
         [Ignore("stress test")]
         public async Task StressLargeBlobAsync([ValueSource("GetEncryptionVersions")] ClientSideEncryptionVersion version)
         {
@@ -1137,7 +1120,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [LiveOnly]
         public async Task EncryptedReuploadSuccess([ValueSource("GetEncryptionVersions")] ClientSideEncryptionVersion version)
         {
             var originalData = GetRandomBuffer(Constants.KB);
@@ -1190,7 +1172,6 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [Combinatorial]
-        [LiveOnly]
         /// <summary>
         /// Crypto transform streams are unseekable and have no <see cref="Stream.Length"/>.
         /// When length is unknown, <see cref="PartitionedUploader{TServiceSpecificArgs, TCompleteUploadReturn}"/>
@@ -1420,7 +1401,6 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [Combinatorial]
-        [LiveOnly]
         public async Task CanRoundtripWithKeyUpdate(
             bool useOverrides,
             [ValueSource("GetEncryptionVersions")] ClientSideEncryptionVersion version)
@@ -1466,7 +1446,6 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [Combinatorial]
-        [LiveOnly] // current pipeline limitation
         public void AesGcmStreaming(
             [Values(true, false)] bool alligned,
             [Values(1, 3)] int numAuthBlocks)
