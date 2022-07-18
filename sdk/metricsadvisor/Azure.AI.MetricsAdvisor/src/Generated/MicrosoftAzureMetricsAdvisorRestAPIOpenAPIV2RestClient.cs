@@ -53,6 +53,7 @@ namespace Azure.AI.MetricsAdvisor
 
         /// <summary> Get latest usage stats. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get latest usage stats. </remarks>
         public async Task<Response<UsageStats>> GetActiveSeriesCountAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetActiveSeriesCountRequest();
@@ -73,6 +74,7 @@ namespace Azure.AI.MetricsAdvisor
 
         /// <summary> Get latest usage stats. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get latest usage stats. </remarks>
         public Response<UsageStats> GetActiveSeriesCount(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetActiveSeriesCountRequest();
@@ -109,6 +111,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Query a single anomaly alerting configuration. </summary>
         /// <param name="configurationId"> anomaly alerting configuration unique id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Query a single anomaly alerting configuration. </remarks>
         public async Task<Response<AnomalyAlertConfiguration>> GetAnomalyAlertingConfigurationAsync(Guid configurationId, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetAnomalyAlertingConfigurationRequest(configurationId);
@@ -130,6 +133,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Query a single anomaly alerting configuration. </summary>
         /// <param name="configurationId"> anomaly alerting configuration unique id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Query a single anomaly alerting configuration. </remarks>
         public Response<AnomalyAlertConfiguration> GetAnomalyAlertingConfiguration(Guid configurationId, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetAnomalyAlertingConfigurationRequest(configurationId);
@@ -172,6 +176,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> anomaly alerting configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Update anomaly alerting configuration. </remarks>
         public async Task<Response<AnomalyAlertConfiguration>> UpdateAnomalyAlertingConfigurationAsync(Guid configurationId, AnomalyAlertingConfigurationPatch body, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -200,6 +205,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> anomaly alerting configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Update anomaly alerting configuration. </remarks>
         public Response<AnomalyAlertConfiguration> UpdateAnomalyAlertingConfiguration(Guid configurationId, AnomalyAlertingConfigurationPatch body, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -241,6 +247,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Delete anomaly alerting configuration. </summary>
         /// <param name="configurationId"> anomaly alerting configuration unique id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Delete anomaly alerting configuration. </remarks>
         public async Task<Response> DeleteAnomalyAlertingConfigurationAsync(Guid configurationId, CancellationToken cancellationToken = default)
         {
             using var message = CreateDeleteAnomalyAlertingConfigurationRequest(configurationId);
@@ -257,6 +264,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Delete anomaly alerting configuration. </summary>
         /// <param name="configurationId"> anomaly alerting configuration unique id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Delete anomaly alerting configuration. </remarks>
         public Response DeleteAnomalyAlertingConfiguration(Guid configurationId, CancellationToken cancellationToken = default)
         {
             using var message = CreateDeleteAnomalyAlertingConfigurationRequest(configurationId);
@@ -292,6 +300,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> anomaly alerting configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Create anomaly alerting configuration. </remarks>
         public async Task<ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyAlertingConfigurationHeaders>> CreateAnomalyAlertingConfigurationAsync(AnomalyAlertConfiguration body, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -315,6 +324,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> anomaly alerting configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Create anomaly alerting configuration. </remarks>
         public ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyAlertingConfigurationHeaders> CreateAnomalyAlertingConfiguration(AnomalyAlertConfiguration body, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -369,6 +379,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Query alerts under anomaly alerting configuration. </remarks>
         public async Task<Response<AlertResultList>> GetAlertsByAnomalyAlertingConfigurationAsync(Guid configurationId, AlertingResultQuery body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -399,6 +410,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Query alerts under anomaly alerting configuration. </remarks>
         public Response<AlertResultList> GetAlertsByAnomalyAlertingConfiguration(Guid configurationId, AlertingResultQuery body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -455,6 +467,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
+        /// <remarks> Query anomalies under a specific alert. </remarks>
         public async Task<Response<AnomalyResultList>> GetAnomaliesFromAlertByAnomalyAlertingConfigurationAsync(Guid configurationId, string alertId, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (alertId == null)
@@ -485,6 +498,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
+        /// <remarks> Query anomalies under a specific alert. </remarks>
         public Response<AnomalyResultList> GetAnomaliesFromAlertByAnomalyAlertingConfiguration(Guid configurationId, string alertId, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (alertId == null)
@@ -541,6 +555,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
+        /// <remarks> Query incidents under a specific alert. </remarks>
         public async Task<Response<IncidentResultList>> GetIncidentsFromAlertByAnomalyAlertingConfigurationAsync(Guid configurationId, string alertId, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (alertId == null)
@@ -571,6 +586,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
+        /// <remarks> Query incidents under a specific alert. </remarks>
         public Response<IncidentResultList> GetIncidentsFromAlertByAnomalyAlertingConfiguration(Guid configurationId, string alertId, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (alertId == null)
@@ -612,6 +628,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Query a single anomaly detection configuration. </summary>
         /// <param name="configurationId"> anomaly detection configuration unique id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Query a single anomaly detection configuration. </remarks>
         public async Task<Response<AnomalyDetectionConfiguration>> GetAnomalyDetectionConfigurationAsync(Guid configurationId, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetAnomalyDetectionConfigurationRequest(configurationId);
@@ -633,6 +650,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Query a single anomaly detection configuration. </summary>
         /// <param name="configurationId"> anomaly detection configuration unique id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Query a single anomaly detection configuration. </remarks>
         public Response<AnomalyDetectionConfiguration> GetAnomalyDetectionConfiguration(Guid configurationId, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetAnomalyDetectionConfigurationRequest(configurationId);
@@ -675,6 +693,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> anomaly detection configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Update anomaly detection configuration. </remarks>
         public async Task<Response<AnomalyDetectionConfiguration>> UpdateAnomalyDetectionConfigurationAsync(Guid configurationId, AnomalyDetectionConfigurationPatch body, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -703,6 +722,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> anomaly detection configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Update anomaly detection configuration. </remarks>
         public Response<AnomalyDetectionConfiguration> UpdateAnomalyDetectionConfiguration(Guid configurationId, AnomalyDetectionConfigurationPatch body, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -744,6 +764,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Delete anomaly detection configuration. </summary>
         /// <param name="configurationId"> anomaly detection configuration unique id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Delete anomaly detection configuration. </remarks>
         public async Task<Response> DeleteAnomalyDetectionConfigurationAsync(Guid configurationId, CancellationToken cancellationToken = default)
         {
             using var message = CreateDeleteAnomalyDetectionConfigurationRequest(configurationId);
@@ -760,6 +781,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Delete anomaly detection configuration. </summary>
         /// <param name="configurationId"> anomaly detection configuration unique id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Delete anomaly detection configuration. </remarks>
         public Response DeleteAnomalyDetectionConfiguration(Guid configurationId, CancellationToken cancellationToken = default)
         {
             using var message = CreateDeleteAnomalyDetectionConfigurationRequest(configurationId);
@@ -795,6 +817,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> anomaly detection configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Create anomaly detection configuration. </remarks>
         public async Task<ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyDetectionConfigurationHeaders>> CreateAnomalyDetectionConfigurationAsync(AnomalyDetectionConfiguration body, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -818,6 +841,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> anomaly detection configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Create anomaly detection configuration. </remarks>
         public ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyDetectionConfigurationHeaders> CreateAnomalyDetectionConfiguration(AnomalyDetectionConfiguration body, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -866,6 +890,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="skip"> for paging, skipped number. </param>
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List all anomaly alerting configurations for specific anomaly detection configuration. </remarks>
         public async Task<Response<AnomalyAlertingConfigurationList>> GetAnomalyAlertingConfigurationsByAnomalyDetectionConfigurationAsync(Guid configurationId, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetAnomalyAlertingConfigurationsByAnomalyDetectionConfigurationRequest(configurationId, skip, maxpagesize);
@@ -889,6 +914,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="skip"> for paging, skipped number. </param>
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List all anomaly alerting configurations for specific anomaly detection configuration. </remarks>
         public Response<AnomalyAlertingConfigurationList> GetAnomalyAlertingConfigurationsByAnomalyDetectionConfiguration(Guid configurationId, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetAnomalyAlertingConfigurationsByAnomalyDetectionConfigurationRequest(configurationId, skip, maxpagesize);
@@ -932,6 +958,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> query series detection result request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Query series enriched by anomaly detection. </remarks>
         public async Task<Response<SeriesResultList>> GetSeriesByAnomalyDetectionConfigurationAsync(Guid configurationId, DetectionSeriesQuery body, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -960,6 +987,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> query series detection result request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Query series enriched by anomaly detection. </remarks>
         public Response<SeriesResultList> GetSeriesByAnomalyDetectionConfiguration(Guid configurationId, DetectionSeriesQuery body, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -1018,6 +1046,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Query anomalies under anomaly detection configuration. </remarks>
         public async Task<Response<AnomalyResultList>> GetAnomaliesByAnomalyDetectionConfigurationAsync(Guid configurationId, DetectionAnomalyResultQuery body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -1048,6 +1077,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Query anomalies under anomaly detection configuration. </remarks>
         public Response<AnomalyResultList> GetAnomaliesByAnomalyDetectionConfiguration(Guid configurationId, DetectionAnomalyResultQuery body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -1106,6 +1136,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Query dimension values of anomalies. </remarks>
         public async Task<Response<AnomalyDimensionList>> GetDimensionOfAnomaliesByAnomalyDetectionConfigurationAsync(Guid configurationId, AnomalyDimensionQuery body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -1136,6 +1167,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Query dimension values of anomalies. </remarks>
         public Response<AnomalyDimensionList> GetDimensionOfAnomaliesByAnomalyDetectionConfiguration(Guid configurationId, AnomalyDimensionQuery body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -1189,6 +1221,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Query incidents under anomaly detection configuration. </remarks>
         public async Task<Response<IncidentResultList>> GetIncidentsByAnomalyDetectionConfigurationAsync(Guid configurationId, DetectionIncidentResultQuery body, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -1218,6 +1251,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Query incidents under anomaly detection configuration. </remarks>
         public Response<IncidentResultList> GetIncidentsByAnomalyDetectionConfiguration(Guid configurationId, DetectionIncidentResultQuery body, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -1270,6 +1304,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="token"> the token for getting the next page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Query incidents under anomaly detection configuration. </remarks>
         public async Task<Response<IncidentResultList>> GetIncidentsByAnomalyDetectionConfigurationNextPagesAsync(Guid configurationId, int? maxpagesize = null, string token = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetIncidentsByAnomalyDetectionConfigurationNextPagesRequest(configurationId, maxpagesize, token);
@@ -1293,6 +1328,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="token"> the token for getting the next page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Query incidents under anomaly detection configuration. </remarks>
         public Response<IncidentResultList> GetIncidentsByAnomalyDetectionConfigurationNextPages(Guid configurationId, int? maxpagesize = null, string token = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetIncidentsByAnomalyDetectionConfigurationNextPagesRequest(configurationId, maxpagesize, token);
@@ -1334,6 +1370,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="incidentId"> incident id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="incidentId"/> is null. </exception>
+        /// <remarks> Query root cause for incident. </remarks>
         public async Task<Response<RootCauseList>> GetRootCauseOfIncidentByAnomalyDetectionConfigurationAsync(Guid configurationId, string incidentId, CancellationToken cancellationToken = default)
         {
             if (incidentId == null)
@@ -1362,6 +1399,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="incidentId"> incident id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="incidentId"/> is null. </exception>
+        /// <remarks> Query root cause for incident. </remarks>
         public Response<RootCauseList> GetRootCauseOfIncidentByAnomalyDetectionConfiguration(Guid configurationId, string incidentId, CancellationToken cancellationToken = default)
         {
             if (incidentId == null)
@@ -1407,6 +1445,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> Create data source credential request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Create a new data source credential. </remarks>
         public async Task<ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateCredentialHeaders>> CreateCredentialAsync(DataSourceCredentialEntity body, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -1430,6 +1469,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> Create data source credential request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Create a new data source credential. </remarks>
         public ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateCredentialHeaders> CreateCredential(DataSourceCredentialEntity body, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -1475,6 +1515,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="skip"> for paging, skipped number. </param>
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List all credentials. </remarks>
         public async Task<Response<DataSourceCredentialList>> ListCredentialsAsync(int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListCredentialsRequest(skip, maxpagesize);
@@ -1497,6 +1538,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="skip"> for paging, skipped number. </param>
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List all credentials. </remarks>
         public Response<DataSourceCredentialList> ListCredentials(int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListCredentialsRequest(skip, maxpagesize);
@@ -1539,6 +1581,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> Update data source credential request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Update a data source credential. </remarks>
         public async Task<Response<DataSourceCredentialEntity>> UpdateCredentialAsync(Guid credentialId, DataSourceCredentialPatch body, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -1567,6 +1610,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> Update data source credential request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Update a data source credential. </remarks>
         public Response<DataSourceCredentialEntity> UpdateCredential(Guid credentialId, DataSourceCredentialPatch body, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -1608,6 +1652,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Delete a data source credential. </summary>
         /// <param name="credentialId"> Data source credential unique ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Delete a data source credential. </remarks>
         public async Task<Response> DeleteCredentialAsync(Guid credentialId, CancellationToken cancellationToken = default)
         {
             using var message = CreateDeleteCredentialRequest(credentialId);
@@ -1624,6 +1669,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Delete a data source credential. </summary>
         /// <param name="credentialId"> Data source credential unique ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Delete a data source credential. </remarks>
         public Response DeleteCredential(Guid credentialId, CancellationToken cancellationToken = default)
         {
             using var message = CreateDeleteCredentialRequest(credentialId);
@@ -1655,6 +1701,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Get a data source credential. </summary>
         /// <param name="credentialId"> Data source credential unique ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get a data source credential. </remarks>
         public async Task<Response<DataSourceCredentialEntity>> GetCredentialAsync(Guid credentialId, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetCredentialRequest(credentialId);
@@ -1676,6 +1723,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Get a data source credential. </summary>
         /// <param name="credentialId"> Data source credential unique ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get a data source credential. </remarks>
         public Response<DataSourceCredentialEntity> GetCredential(Guid credentialId, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetCredentialRequest(credentialId);
@@ -1745,6 +1793,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="skip"> for paging, skipped number. </param>
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List all data feeds. </remarks>
         public async Task<Response<DataFeedList>> ListDataFeedsAsync(string dataFeedName = null, DataFeedSourceKind? dataSourceType = null, DataFeedGranularityType? granularityName = null, DataFeedStatus? status = null, string creator = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListDataFeedsRequest(dataFeedName, dataSourceType, granularityName, status, creator, skip, maxpagesize);
@@ -1772,6 +1821,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="skip"> for paging, skipped number. </param>
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List all data feeds. </remarks>
         public Response<DataFeedList> ListDataFeeds(string dataFeedName = null, DataFeedSourceKind? dataSourceType = null, DataFeedGranularityType? granularityName = null, DataFeedStatus? status = null, string creator = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListDataFeedsRequest(dataFeedName, dataSourceType, granularityName, status, creator, skip, maxpagesize);
@@ -1812,6 +1862,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> parameters to create a data feed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Create a new data feed. </remarks>
         public async Task<ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateDataFeedHeaders>> CreateDataFeedAsync(DataFeedDetail body, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -1835,6 +1886,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> parameters to create a data feed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Create a new data feed. </remarks>
         public ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateDataFeedHeaders> CreateDataFeed(DataFeedDetail body, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -1872,6 +1924,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Get a data feed by its id. </summary>
         /// <param name="dataFeedId"> The data feed unique id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get a data feed by its id. </remarks>
         public async Task<Response<DataFeedDetail>> GetDataFeedByIdAsync(Guid dataFeedId, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetDataFeedByIdRequest(dataFeedId);
@@ -1893,6 +1946,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Get a data feed by its id. </summary>
         /// <param name="dataFeedId"> The data feed unique id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get a data feed by its id. </remarks>
         public Response<DataFeedDetail> GetDataFeedById(Guid dataFeedId, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetDataFeedByIdRequest(dataFeedId);
@@ -1935,6 +1989,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> parameters to update a data feed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Update a data feed. </remarks>
         public async Task<Response<DataFeedDetail>> UpdateDataFeedAsync(Guid dataFeedId, DataFeedDetailPatch body, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -1963,6 +2018,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> parameters to update a data feed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Update a data feed. </remarks>
         public Response<DataFeedDetail> UpdateDataFeed(Guid dataFeedId, DataFeedDetailPatch body, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -2004,6 +2060,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Delete a data feed. </summary>
         /// <param name="dataFeedId"> The data feed unique id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Delete a data feed. </remarks>
         public async Task<Response> DeleteDataFeedAsync(Guid dataFeedId, CancellationToken cancellationToken = default)
         {
             using var message = CreateDeleteDataFeedRequest(dataFeedId);
@@ -2020,6 +2077,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Delete a data feed. </summary>
         /// <param name="dataFeedId"> The data feed unique id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Delete a data feed. </remarks>
         public Response DeleteDataFeed(Guid dataFeedId, CancellationToken cancellationToken = default)
         {
             using var message = CreateDeleteDataFeedRequest(dataFeedId);
@@ -2051,6 +2109,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Get a metric feedback by its id. </summary>
         /// <param name="feedbackId"> the unique feedback ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get a metric feedback by its id. </remarks>
         public async Task<Response<MetricFeedback>> GetMetricFeedbackAsync(Guid feedbackId, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetMetricFeedbackRequest(feedbackId);
@@ -2072,6 +2131,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Get a metric feedback by its id. </summary>
         /// <param name="feedbackId"> the unique feedback ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get a metric feedback by its id. </remarks>
         public Response<MetricFeedback> GetMetricFeedback(Guid feedbackId, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetMetricFeedbackRequest(feedbackId);
@@ -2122,6 +2182,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> List feedback on the given metric. </remarks>
         public async Task<Response<MetricFeedbackList>> ListMetricFeedbacksAsync(MetricFeedbackFilter body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -2151,6 +2212,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> List feedback on the given metric. </remarks>
         public Response<MetricFeedbackList> ListMetricFeedbacks(MetricFeedbackFilter body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -2196,6 +2258,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> metric feedback. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Create a new metric feedback. </remarks>
         public async Task<ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateMetricFeedbackHeaders>> CreateMetricFeedbackAsync(MetricFeedback body, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -2219,6 +2282,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> metric feedback. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Create a new metric feedback. </remarks>
         public ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateMetricFeedbackHeaders> CreateMetricFeedback(MetricFeedback body, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -2269,6 +2333,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="skip"> for paging, skipped number. </param>
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List all hooks. </remarks>
         public async Task<Response<HookList>> ListHooksAsync(string hookName = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListHooksRequest(hookName, skip, maxpagesize);
@@ -2292,6 +2357,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="skip"> for paging, skipped number. </param>
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List all hooks. </remarks>
         public Response<HookList> ListHooks(string hookName = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListHooksRequest(hookName, skip, maxpagesize);
@@ -2332,6 +2398,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> Create hook request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Create a new hook. </remarks>
         public async Task<ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateHookHeaders>> CreateHookAsync(NotificationHook body, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -2355,6 +2422,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> Create hook request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Create a new hook. </remarks>
         public ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateHookHeaders> CreateHook(NotificationHook body, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -2392,6 +2460,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Get a hook by its id. </summary>
         /// <param name="hookId"> Hook unique ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get a hook by its id. </remarks>
         public async Task<Response<NotificationHook>> GetHookAsync(Guid hookId, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetHookRequest(hookId);
@@ -2413,6 +2482,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Get a hook by its id. </summary>
         /// <param name="hookId"> Hook unique ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get a hook by its id. </remarks>
         public Response<NotificationHook> GetHook(Guid hookId, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetHookRequest(hookId);
@@ -2455,6 +2525,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> Update hook request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Update a hook. </remarks>
         public async Task<Response<NotificationHook>> UpdateHookAsync(Guid hookId, HookInfoPatch body, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -2483,6 +2554,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> Update hook request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Update a hook. </remarks>
         public Response<NotificationHook> UpdateHook(Guid hookId, HookInfoPatch body, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -2524,6 +2596,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Delete a hook. </summary>
         /// <param name="hookId"> Hook unique ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Delete a hook. </remarks>
         public async Task<Response> DeleteHookAsync(Guid hookId, CancellationToken cancellationToken = default)
         {
             using var message = CreateDeleteHookRequest(hookId);
@@ -2540,6 +2613,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Delete a hook. </summary>
         /// <param name="hookId"> Hook unique ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Delete a hook. </remarks>
         public Response DeleteHook(Guid hookId, CancellationToken cancellationToken = default)
         {
             using var message = CreateDeleteHookRequest(hookId);
@@ -2588,6 +2662,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Get data ingestion status by data feed. </remarks>
         public async Task<Response<IngestionStatusList>> GetDataFeedIngestionStatusAsync(Guid dataFeedId, IngestionStatusQueryOptions body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -2618,6 +2693,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Get data ingestion status by data feed. </remarks>
         public Response<IngestionStatusList> GetDataFeedIngestionStatus(Guid dataFeedId, IngestionStatusQueryOptions body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -2666,6 +2742,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> The backfill time range. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Reset data ingestion status by data feed to backfill data. </remarks>
         public async Task<Response> ResetDataFeedIngestionStatusAsync(Guid dataFeedId, IngestionProgressResetOptions body, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -2689,6 +2766,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> The backfill time range. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Reset data ingestion status by data feed to backfill data. </remarks>
         public Response ResetDataFeedIngestionStatus(Guid dataFeedId, IngestionProgressResetOptions body, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -2726,6 +2804,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Get data last success ingestion job timestamp by data feed. </summary>
         /// <param name="dataFeedId"> The data feed unique id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get data last success ingestion job timestamp by data feed. </remarks>
         public async Task<Response<DataFeedIngestionProgress>> GetIngestionProgressAsync(Guid dataFeedId, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetIngestionProgressRequest(dataFeedId);
@@ -2747,6 +2826,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Get data last success ingestion job timestamp by data feed. </summary>
         /// <param name="dataFeedId"> The data feed unique id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get data last success ingestion job timestamp by data feed. </remarks>
         public Response<DataFeedIngestionProgress> GetIngestionProgress(Guid dataFeedId, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetIngestionProgressRequest(dataFeedId);
@@ -2790,6 +2870,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> query time series data condition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Get time series data from metric. </remarks>
         public async Task<Response<MetricDataList>> GetMetricDataAsync(Guid metricId, MetricDataQueryOptions body, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -2818,6 +2899,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> query time series data condition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Get time series data from metric. </remarks>
         public Response<MetricDataList> GetMetricData(Guid metricId, MetricDataQueryOptions body, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -2876,6 +2958,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> List series (dimension combinations) from metric. </remarks>
         public async Task<Response<MetricSeriesList>> GetMetricSeriesAsync(Guid metricId, MetricSeriesQueryOptions body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -2906,6 +2989,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> List series (dimension combinations) from metric. </remarks>
         public Response<MetricSeriesList> GetMetricSeries(Guid metricId, MetricSeriesQueryOptions body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -2964,6 +3048,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> List dimension from certain metric. </remarks>
         public async Task<Response<MetricDimensionList>> GetMetricDimensionAsync(Guid metricId, MetricDimensionQueryOptions body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -2994,6 +3079,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> List dimension from certain metric. </remarks>
         public Response<MetricDimensionList> GetMetricDimension(Guid metricId, MetricDimensionQueryOptions body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -3046,6 +3132,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="skip"> for paging, skipped number. </param>
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List all anomaly detection configurations for specific metric. </remarks>
         public async Task<Response<AnomalyDetectionConfigurationList>> GetAnomalyDetectionConfigurationsByMetricAsync(Guid metricId, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetAnomalyDetectionConfigurationsByMetricRequest(metricId, skip, maxpagesize);
@@ -3069,6 +3156,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="skip"> for paging, skipped number. </param>
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List all anomaly detection configurations for specific metric. </remarks>
         public Response<AnomalyDetectionConfigurationList> GetAnomalyDetectionConfigurationsByMetric(Guid metricId, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetAnomalyDetectionConfigurationsByMetricRequest(metricId, skip, maxpagesize);
@@ -3122,6 +3210,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Query anomaly detection status. </remarks>
         public async Task<Response<EnrichmentStatusList>> GetEnrichmentStatusByMetricAsync(Guid metricId, EnrichmentStatusQueryOption body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -3152,6 +3241,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Query anomaly detection status. </remarks>
         public Response<EnrichmentStatusList> GetEnrichmentStatusByMetric(Guid metricId, EnrichmentStatusQueryOption body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -3199,6 +3289,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> query alerting result request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> Query alerts under anomaly alerting configuration. </remarks>
         public async Task<Response<AlertResultList>> GetAlertsByAnomalyAlertingConfigurationNextAsync(string nextLink, AlertingResultQuery body, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -3231,6 +3322,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> query alerting result request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> Query alerts under anomaly alerting configuration. </remarks>
         public Response<AlertResultList> GetAlertsByAnomalyAlertingConfigurationNext(string nextLink, AlertingResultQuery body, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -3282,6 +3374,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> query detection anomaly result request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> Query anomalies under anomaly detection configuration. </remarks>
         public async Task<Response<AnomalyResultList>> GetAnomaliesByAnomalyDetectionConfigurationNextAsync(string nextLink, DetectionAnomalyResultQuery body, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -3314,6 +3407,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> query detection anomaly result request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> Query anomalies under anomaly detection configuration. </remarks>
         public Response<AnomalyResultList> GetAnomaliesByAnomalyDetectionConfigurationNext(string nextLink, DetectionAnomalyResultQuery body, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -3365,6 +3459,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> query dimension values request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> Query dimension values of anomalies. </remarks>
         public async Task<Response<AnomalyDimensionList>> GetDimensionOfAnomaliesByAnomalyDetectionConfigurationNextAsync(string nextLink, AnomalyDimensionQuery body, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -3397,6 +3492,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> query dimension values request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> Query dimension values of anomalies. </remarks>
         public Response<AnomalyDimensionList> GetDimensionOfAnomaliesByAnomalyDetectionConfigurationNext(string nextLink, AnomalyDimensionQuery body, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -3448,6 +3544,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> metric feedback filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> List feedback on the given metric. </remarks>
         public async Task<Response<MetricFeedbackList>> ListMetricFeedbacksNextAsync(string nextLink, MetricFeedbackFilter body, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -3480,6 +3577,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> metric feedback filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> List feedback on the given metric. </remarks>
         public Response<MetricFeedbackList> ListMetricFeedbacksNext(string nextLink, MetricFeedbackFilter body, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -3531,6 +3629,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> The query time range. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> Get data ingestion status by data feed. </remarks>
         public async Task<Response<IngestionStatusList>> GetDataFeedIngestionStatusNextAsync(string nextLink, IngestionStatusQueryOptions body, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -3563,6 +3662,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> The query time range. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> Get data ingestion status by data feed. </remarks>
         public Response<IngestionStatusList> GetDataFeedIngestionStatusNext(string nextLink, IngestionStatusQueryOptions body, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -3614,6 +3714,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> filter to query series. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> List series (dimension combinations) from metric. </remarks>
         public async Task<Response<MetricSeriesList>> GetMetricSeriesNextAsync(string nextLink, MetricSeriesQueryOptions body, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -3646,6 +3747,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> filter to query series. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> List series (dimension combinations) from metric. </remarks>
         public Response<MetricSeriesList> GetMetricSeriesNext(string nextLink, MetricSeriesQueryOptions body, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -3697,6 +3799,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> query dimension option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> List dimension from certain metric. </remarks>
         public async Task<Response<MetricDimensionList>> GetMetricDimensionNextAsync(string nextLink, MetricDimensionQueryOptions body, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -3729,6 +3832,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> query dimension option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> List dimension from certain metric. </remarks>
         public Response<MetricDimensionList> GetMetricDimensionNext(string nextLink, MetricDimensionQueryOptions body, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -3780,6 +3884,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> query options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> Query anomaly detection status. </remarks>
         public async Task<Response<EnrichmentStatusList>> GetEnrichmentStatusByMetricNextAsync(string nextLink, EnrichmentStatusQueryOption body, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -3812,6 +3917,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> query options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> Query anomaly detection status. </remarks>
         public Response<EnrichmentStatusList> GetEnrichmentStatusByMetricNext(string nextLink, EnrichmentStatusQueryOption body, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -3861,6 +3967,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> Query alerts under anomaly alerting configuration. </remarks>
         public async Task<Response<AlertResultList>> GetAlertsByAnomalyAlertingConfigurationNextPageAsync(string nextLink, Guid configurationId, AlertingResultQuery body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -3896,6 +4003,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> Query alerts under anomaly alerting configuration. </remarks>
         public Response<AlertResultList> GetAlertsByAnomalyAlertingConfigurationNextPage(string nextLink, Guid configurationId, AlertingResultQuery body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -3945,6 +4053,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="alertId"/> is null. </exception>
+        /// <remarks> Query anomalies under a specific alert. </remarks>
         public async Task<Response<AnomalyResultList>> GetAnomaliesFromAlertByAnomalyAlertingConfigurationNextPageAsync(string nextLink, Guid configurationId, string alertId, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -3980,6 +4089,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="alertId"/> is null. </exception>
+        /// <remarks> Query anomalies under a specific alert. </remarks>
         public Response<AnomalyResultList> GetAnomaliesFromAlertByAnomalyAlertingConfigurationNextPage(string nextLink, Guid configurationId, string alertId, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -4029,6 +4139,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="alertId"/> is null. </exception>
+        /// <remarks> Query incidents under a specific alert. </remarks>
         public async Task<Response<IncidentResultList>> GetIncidentsFromAlertByAnomalyAlertingConfigurationNextPageAsync(string nextLink, Guid configurationId, string alertId, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -4064,6 +4175,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="alertId"/> is null. </exception>
+        /// <remarks> Query incidents under a specific alert. </remarks>
         public Response<IncidentResultList> GetIncidentsFromAlertByAnomalyAlertingConfigurationNextPage(string nextLink, Guid configurationId, string alertId, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -4112,6 +4224,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> List all anomaly alerting configurations for specific anomaly detection configuration. </remarks>
         public async Task<Response<AnomalyAlertingConfigurationList>> GetAnomalyAlertingConfigurationsByAnomalyDetectionConfigurationNextPageAsync(string nextLink, Guid configurationId, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -4142,6 +4255,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> List all anomaly alerting configurations for specific anomaly detection configuration. </remarks>
         public Response<AnomalyAlertingConfigurationList> GetAnomalyAlertingConfigurationsByAnomalyDetectionConfigurationNextPage(string nextLink, Guid configurationId, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -4187,6 +4301,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> Query anomalies under anomaly detection configuration. </remarks>
         public async Task<Response<AnomalyResultList>> GetAnomaliesByAnomalyDetectionConfigurationNextPageAsync(string nextLink, Guid configurationId, DetectionAnomalyResultQuery body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -4222,6 +4337,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> Query anomalies under anomaly detection configuration. </remarks>
         public Response<AnomalyResultList> GetAnomaliesByAnomalyDetectionConfigurationNextPage(string nextLink, Guid configurationId, DetectionAnomalyResultQuery body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -4271,6 +4387,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> Query dimension values of anomalies. </remarks>
         public async Task<Response<AnomalyDimensionList>> GetDimensionOfAnomaliesByAnomalyDetectionConfigurationNextPageAsync(string nextLink, Guid configurationId, AnomalyDimensionQuery body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -4306,6 +4423,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> Query dimension values of anomalies. </remarks>
         public Response<AnomalyDimensionList> GetDimensionOfAnomaliesByAnomalyDetectionConfigurationNextPage(string nextLink, Guid configurationId, AnomalyDimensionQuery body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -4354,6 +4472,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> Query incidents under anomaly detection configuration. </remarks>
         public async Task<Response<IncidentResultList>> GetIncidentsByAnomalyDetectionConfigurationNextPageAsync(string nextLink, Guid configurationId, DetectionIncidentResultQuery body, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -4388,6 +4507,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> Query incidents under anomaly detection configuration. </remarks>
         public Response<IncidentResultList> GetIncidentsByAnomalyDetectionConfigurationNextPage(string nextLink, Guid configurationId, DetectionIncidentResultQuery body, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -4436,6 +4556,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="token"> the token for getting the next page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> Query incidents under anomaly detection configuration. </remarks>
         public async Task<Response<IncidentResultList>> GetIncidentsByAnomalyDetectionConfigurationNextPagesNextPageAsync(string nextLink, Guid configurationId, int? maxpagesize = null, string token = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -4466,6 +4587,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="token"> the token for getting the next page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> Query incidents under anomaly detection configuration. </remarks>
         public Response<IncidentResultList> GetIncidentsByAnomalyDetectionConfigurationNextPagesNextPage(string nextLink, Guid configurationId, int? maxpagesize = null, string token = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -4509,6 +4631,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> List all credentials. </remarks>
         public async Task<Response<DataSourceCredentialList>> ListCredentialsNextPageAsync(string nextLink, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -4538,6 +4661,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> List all credentials. </remarks>
         public Response<DataSourceCredentialList> ListCredentialsNextPage(string nextLink, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -4586,6 +4710,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> List all data feeds. </remarks>
         public async Task<Response<DataFeedList>> ListDataFeedsNextPageAsync(string nextLink, string dataFeedName = null, DataFeedSourceKind? dataSourceType = null, DataFeedGranularityType? granularityName = null, DataFeedStatus? status = null, string creator = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -4620,6 +4745,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> List all data feeds. </remarks>
         public Response<DataFeedList> ListDataFeedsNextPage(string nextLink, string dataFeedName = null, DataFeedSourceKind? dataSourceType = null, DataFeedGranularityType? granularityName = null, DataFeedStatus? status = null, string creator = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -4664,6 +4790,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> List feedback on the given metric. </remarks>
         public async Task<Response<MetricFeedbackList>> ListMetricFeedbacksNextPageAsync(string nextLink, MetricFeedbackFilter body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -4698,6 +4825,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> List feedback on the given metric. </remarks>
         public Response<MetricFeedbackList> ListMetricFeedbacksNextPage(string nextLink, MetricFeedbackFilter body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -4746,6 +4874,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> List all hooks. </remarks>
         public async Task<Response<HookList>> ListHooksNextPageAsync(string nextLink, string hookName = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -4776,6 +4905,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> List all hooks. </remarks>
         public Response<HookList> ListHooksNextPage(string nextLink, string hookName = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -4821,6 +4951,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> Get data ingestion status by data feed. </remarks>
         public async Task<Response<IngestionStatusList>> GetDataFeedIngestionStatusNextPageAsync(string nextLink, Guid dataFeedId, IngestionStatusQueryOptions body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -4856,6 +4987,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> Get data ingestion status by data feed. </remarks>
         public Response<IngestionStatusList> GetDataFeedIngestionStatusNextPage(string nextLink, Guid dataFeedId, IngestionStatusQueryOptions body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -4905,6 +5037,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> List series (dimension combinations) from metric. </remarks>
         public async Task<Response<MetricSeriesList>> GetMetricSeriesNextPageAsync(string nextLink, Guid metricId, MetricSeriesQueryOptions body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -4940,6 +5073,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> List series (dimension combinations) from metric. </remarks>
         public Response<MetricSeriesList> GetMetricSeriesNextPage(string nextLink, Guid metricId, MetricSeriesQueryOptions body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -4989,6 +5123,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> List dimension from certain metric. </remarks>
         public async Task<Response<MetricDimensionList>> GetMetricDimensionNextPageAsync(string nextLink, Guid metricId, MetricDimensionQueryOptions body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -5024,6 +5159,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> List dimension from certain metric. </remarks>
         public Response<MetricDimensionList> GetMetricDimensionNextPage(string nextLink, Guid metricId, MetricDimensionQueryOptions body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -5072,6 +5208,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> List all anomaly detection configurations for specific metric. </remarks>
         public async Task<Response<AnomalyDetectionConfigurationList>> GetAnomalyDetectionConfigurationsByMetricNextPageAsync(string nextLink, Guid metricId, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -5102,6 +5239,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> List all anomaly detection configurations for specific metric. </remarks>
         public Response<AnomalyDetectionConfigurationList> GetAnomalyDetectionConfigurationsByMetricNextPage(string nextLink, Guid metricId, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -5147,6 +5285,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> Query anomaly detection status. </remarks>
         public async Task<Response<EnrichmentStatusList>> GetEnrichmentStatusByMetricNextPageAsync(string nextLink, Guid metricId, EnrichmentStatusQueryOption body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -5182,6 +5321,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> Query anomaly detection status. </remarks>
         public Response<EnrichmentStatusList> GetEnrichmentStatusByMetricNextPage(string nextLink, Guid metricId, EnrichmentStatusQueryOption body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
