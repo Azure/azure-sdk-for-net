@@ -1,0 +1,62 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/ResourceGroup/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-1349/topics/sdk-Topics-8740/subscriptions/sdk-Subscriptions-2178?api-version=2021-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-6875c40c3eceff49893e3aec1dea6720-c5836f2b31c13a40-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.0.0-alpha.20220718.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "02a60bfb0243391225c66601312f1822",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "1009",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 18 Jul 2022 02:08:51 GMT",
+        "ETag": "W/\u00223f1-z2ChNj6bR3hmSMNqY3Hjf12ybq4\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/ResourceGroup/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-1349/topics/sdk-Topics-8740/subscriptions/sdk-Subscriptions-2178",
+        "name": "sdk-Subscriptions-2178",
+        "type": "Microsoft.ServiceBus/Namespaces/Topics/Subscriptions",
+        "properties": {
+          "lockDuration": "PT1M",
+          "requiresSession": false,
+          "defaultMessageTimeToLive": "P10675199DT2H48M5.4775807S",
+          "deadLetteringOnMessageExpiration": true,
+          "deadLetteringOnFilterEvaluationExceptions": true,
+          "messageCount": 0,
+          "maxDeliveryCount": 10,
+          "status": "Active",
+          "enableBatchedOperations": true,
+          "createdAt": "2021-01-04T18:02:20.5992764Z",
+          "updatedAt": "2021-01-04T18:02:20.5992764Z",
+          "accessedAt": "2021-01-04T18:02:20.5992764Z",
+          "countDetails": {
+            "activeMessageCount": 0,
+            "deadLetterMessageCount": 0,
+            "scheduledMessageCount": 0,
+            "transferMessageCount": 0,
+            "transferDeadLetterMessageCount": 0
+          },
+          "autoDeleteOnIdle": "P10675199DT2H48M5.4775807S",
+          "forwardTo": "sdk-Topics-3065",
+          "forwardDeadLetteredMessagesTo": "sdk-Topics-3065"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1866613440",
+    "RESOURCE_MANAGER_URL": "https://localhost:8443",
+    "SERVICE_MANAGEMENT_URL": null,
+    "SUBSCRIPTION_ID": "00000000-0000-0000-0000-000000000000"
+  }
+}

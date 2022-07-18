@@ -1,0 +1,51 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://localhost:8443/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/ardsouzatestRG/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-8860/disasterRecoveryConfigs/sdk-Namespace-8860?api-version=2021-11-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "105",
+        "Content-Type": "application/json",
+        "traceparent": "00-e6d14e1ca265c84290876ffdd291c312-5139377ea3e6724e-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.0.0-alpha.20220718.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "71c3a36d6f3fb6decd4b7885656e3fa9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "partnerNamespace": "sdk-Namespace-37",
+          "alternateName": "alternameforAlias-Namespace-8860"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "439",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 18 Jul 2022 02:08:36 GMT",
+        "ETag": "W/\u00221b7-fp8gPGPt/6z3t7XXiybYoZmNzBs\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/ardsouzatestRG/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-8860/disasterRecoveryConfigs/sdk-Namespace-8860",
+        "name": "sdk-Namespace-8860",
+        "type": "Microsoft.ServiceBus/Namespaces/DisasterRecoveryConfig",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "partnerNamespace": "sdk-Namespace-37",
+          "alternateName": "alternameforAlias-Namespace-8860",
+          "role": "Primary"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1777101731",
+    "RESOURCE_MANAGER_URL": "https://localhost:8443",
+    "SERVICE_MANAGEMENT_URL": null,
+    "SUBSCRIPTION_ID": "00000000-0000-0000-0000-000000000000"
+  }
+}
