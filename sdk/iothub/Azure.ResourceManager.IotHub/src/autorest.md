@@ -59,6 +59,10 @@ directive:
       $.TestRouteResultDetails['x-ms-client-name'] = 'IotHubTestRouteResultDetails';
 
   - from: iothub.json
+    where: $.definitions.EventHubConsumerGroupInfo.properties.etag
+    transform: $["x-nullable"] = true
+
+  - from: iothub.json
     where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}"].delete
     transform: $.description = "Foo"
   - from: iothub.json
@@ -67,4 +71,6 @@ directive:
   - from: iothub.json
     where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}"].delete
     transform: $.responses.200.schema = {}
+
+
 ```
