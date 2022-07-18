@@ -348,15 +348,8 @@ namespace Azure.Messaging.EventHubs.Core
             ///
             /// <returns>A task to be resolved on when the operation has completed.</returns>
             ///
-            public virtual ValueTask DisposeAsync()
-            {
-                if (CleanUp != default)
-                {
-                    return new ValueTask(CleanUp(TransportProducer));
-                }
-
-                return new ValueTask(Task.CompletedTask);
-            }
+            public virtual ValueTask DisposeAsync() =>
+                CleanUp != default ? new ValueTask(CleanUp(TransportProducer)) : new ValueTask();
         }
     }
 }
