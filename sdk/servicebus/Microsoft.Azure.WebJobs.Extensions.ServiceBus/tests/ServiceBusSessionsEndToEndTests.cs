@@ -587,7 +587,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
-        protected static Action<IHostBuilder> SetCustomSessionInitializingHandler =>
+        private static Action<IHostBuilder> SetCustomSessionInitializingHandler =>
             builder => builder.ConfigureWebJobs(b =>
                 b.AddServiceBus(sbOptions =>
                 {
@@ -598,7 +598,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         public async Task TestSingle_CustomSessionClosingHandler()
         {
             await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "session1");
-            var host = BuildHost<TestCustomSessionClosingHandler>(SetCustomSessionInitializingHandler);
+            var host = BuildHost<TestCustomSessionClosingHandler>(SetCustomSessionClosingHandler);
             using (host)
             {
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
@@ -607,7 +607,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
-        protected static Action<IHostBuilder> SetCustomSessionClosingHandler =>
+        private static Action<IHostBuilder> SetCustomSessionClosingHandler =>
             builder => builder.ConfigureWebJobs(b =>
                 b.AddServiceBus(sbOptions =>
                 {
