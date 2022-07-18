@@ -22,22 +22,7 @@ modelerfour:
   lenient-model-deduplication: true
   naming:
     override:
-    #   Site: WebSite
-    #   AppServiceCertificateOrderPatchResource: AppServiceCertificateOrderPatch
-    #   AppServiceCertificatePatchResource: AppServiceCertificatePatch
-    #   AppServiceEnvironmentPatchResource: AppServiceEnvironmentPatchOptions
-    #   AppserviceGithubToken: AppServiceGithubToken
-    #   AppServicePlanPatchResource: AppServicePlanPatchOptions
-    #   Contact: ContactInformation 
-    #   Login: LoginInformation
-    #   MSDeploy: MsDeploy
-    #   MSDeployLog: MsDeployLog
-    #   MSDeployLogEntry: MsDeployLogEntry
-    #   Operation: OperationInformation
-    #   Recommendation: AppServiceRecommendation
-    #   Resource: AppServiceResource
       Status: OperationStatus
-    #   DetectorResponse: AppServiceDetector
       DetectorDefinitionResource: DetectorDefinition
 
 list-exception:
@@ -84,7 +69,6 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}: SiteTriggeredwebJob
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}/history/{id}: SiteTriggeredWebJobHistory
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/webjobs/{webJobName}: SiteWebJob
-#   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/backups/{backupId}: SiteSlotBackUp
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}: WebSite
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sourcecontrols/web: SiteSlotSourceControl
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}: SiteSlotHybridConnectionCollection
@@ -163,11 +147,8 @@ rename-mapping:
   Operation: OperationInformation
   Recommendation: AppServiceRecommendation
   Resource: AppServiceResource
-#   Status: OperationStatus
   DetectorResponse: AppServiceDetector
-#   DetectorDefinitionResource: DetectorDefinition
   ApiKVReference: ApiKeyVaultReference
-#   AppServiceEnvironmentResource: AppServiceEnvironment
   Domain: AppServiceDomain
 # rename property
   ValidateResourceTypes.Site: WebSite
@@ -213,7 +194,6 @@ rename-mapping:
   SiteConfig.properties.requestTracingEnabled: IsRequestTracingEnabled
   SiteConfig.properties.vnetRouteAllEnabled: IsVnetRouteAllEnabled
   SiteConfig.properties.webSocketsEnabled: IsWebSocketsEnabled
-#   EnabledConfig.enabled: IsDetailedErrorMessagesEnabled
   SiteSourceControl.properties.deploymentRollbackEnabled: IsDeploymentRollbackEnabled
   StaticSiteBuildARMResource.properties.createdTimeUtc: CreatedOn
   SwiftVirtualNetwork.properties.swiftSupported: IsSwiftSupported
@@ -379,35 +359,9 @@ rename-mapping:
   StorageMigrationResponse: StorageMigrationResponseInfo
 
 directive:
-# rename model
-#   - rename-model:
-#       from: ApiKVReference
-#       to: ApiKeyVaultReference
-# 2 AppServiceCertificate exists in 2 different files 
-#   - rename-model:
-#       from: AppServiceCertificateResource
-#       to: AppServiceCertificate
   - rename-model:
       from: AppServiceEnvironmentResource
       to: AppServiceEnvironment
-#   - rename-model:
-#       from: Certificate
-#       to: AppServiceCertificate
-#   - rename-model:
-#       from: DetectorDefinitionResource
-#       to: DetectorDefinition
-#   - rename-model:
-#       from: DetectorResponse
-#       to: AppServiceDetector
-#   - rename-model:
-#       from: Domain
-#       to: AppServiceDomain
-#   - rename-model:
-#       from: SiteConfig
-#       to: SiteConfigProperties
-#   - rename-model:
-#       from: SiteConfigResource
-#       to: SiteConfig
 
 # ResourceId
   - from: Certificates.json
@@ -504,11 +458,6 @@ directive:
     where: $.definitions.ApiManagementConfig.properties.*
     transform: >
         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties
-#     transform: >
-#         delete $["minTlsVersion"];
-#         delete $["scmMinTlsVersion"];
   - from: swagger-document
     where: $.definitions.Site.properties.properties.properties.trafficManagerHostNames
     transform: >
@@ -554,108 +503,4 @@ directive:
     transform: >
         $["format"] = "duration";
         $["x-ms-format"] = "duration-constant";
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.defaultDocuments
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.requestTracingEnabled
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.remoteDebuggingEnabled
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.logsDirectorySizeLimit
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.httpLoggingEnabled
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.detailedErrorLoggingEnabled
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.appSettings
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.connectionStrings
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.machineKey
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.handlerMappings
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.scmType
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.use32BitWorkerProcess
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.webSocketsEnabled
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.managedPipelineMode
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.virtualApplications
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.loadBalancing
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.experiments
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.limits
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.autoHealEnabled
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.autoHealRules
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.vnetRouteAllEnabled
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.vnetPrivatePortsCount
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.cors
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.push
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.apiDefinition
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.apiManagementConfig
-#     transform: >
-#         $["x-nullable"] = true;
 ```
