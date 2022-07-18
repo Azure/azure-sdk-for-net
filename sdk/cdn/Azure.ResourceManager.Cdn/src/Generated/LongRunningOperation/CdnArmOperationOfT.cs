@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Cdn
         internal CdnArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
         {
             var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia);
-            T intermediateValue = default;
+            InterimValue<T> intermediateValue = null;
             if (_operationMappings.TryGetValue(new ResourceIdentifier(request.Uri.ToUri().AbsolutePath).ResourceType, out var method) && request.Method == RequestMethod.Parse(method))
-                intermediateValue = source.CreateResult(response, default);
+                intermediateValue = new InterimValue<T>(source.CreateResult(response, default));
             _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, response, "CdnArmOperation", fallbackStrategy: new ExponentialDelayStrategy(), interimValue: intermediateValue);
         }
 
