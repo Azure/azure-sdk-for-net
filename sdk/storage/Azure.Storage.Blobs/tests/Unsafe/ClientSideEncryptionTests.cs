@@ -24,7 +24,11 @@ using Newtonsoft.Json;
 using NUnit.Framework;
 using static Azure.Storage.Constants.ClientSideEncryption;
 using static Azure.Storage.Test.Shared.ClientSideEncryptionTestExtensions;
+using static Azure.Storage.Test.Shared.KeyGenInjector;
 using static Moq.It;
+
+//TODO why is this only showing up in this test project and not others
+#pragma warning disable CA1707
 
 namespace Azure.Storage.Blobs.Test
 {
@@ -38,13 +42,22 @@ namespace Azure.Storage.Blobs.Test
         {
         }
 
+        [OneTimeSetUp]
+        public void InjectKeyGen()
+        {
+            if (Recording.Mode != RecordedTestMode.Live)
+            {
+                KeyGenInjector.InjectRecordedKeygen(this);
+            }
+        }
+
         private static IEnumerable<ClientSideEncryptionVersion> GetEncryptionVersions()
             => Enum.GetValues(typeof(ClientSideEncryptionVersion)).Cast<ClientSideEncryptionVersion>();
 
         /// <summary>
         /// Provides encryption v1 functionality clone of client logic, letting us validate the client got it right end-to-end.
         /// </summary>
-        private byte[] EncryptDataV1_0(byte[] data, byte[] key, byte[] iv)
+        private static byte[] EncryptDataV1_0(byte[] data, byte[] key, byte[] iv)
         {
             using var aesProvider = Aes.Create();
             aesProvider.Key = key;
@@ -61,7 +74,7 @@ namespace Azure.Storage.Blobs.Test
         /// Provides encryption v2 functionality clone of client logic, letting us validate the client got it right end-to-end
         /// and was not altered.
         /// </summary>
-        private ReadOnlySpan<byte> EncryptDataV2_0(ReadOnlySpan<byte> data, ReadOnlySpan<byte> key)
+        private static ReadOnlySpan<byte> EncryptDataV2_0(ReadOnlySpan<byte> data, ReadOnlySpan<byte> key)
         {
             int numEncryptionRegions = data.Length % V2.EncryptionRegionDataSize == 0
                 ? data.Length / V2.EncryptionRegionDataSize
@@ -751,7 +764,7 @@ namespace Azure.Storage.Blobs.Test
                 ClientSideEncryptionVersion.V1_0 => 16,
 #pragma warning restore CS0618 // obsolete
                 ClientSideEncryptionVersion.V2_0 => V2.EncryptionRegionDataSize,
-                _ => throw new ArgumentException()
+                _ => throw new ArgumentException("Unrecognized version.", nameof(version))
             };
             var data = GetRandomBuffer(offset + (count ?? countDefault) + 32); // ensure we have enough room in original data
             var mockKey = this.GetIKeyEncryptionKey(expectedCancellationToken: s_cancellationToken).Object;
