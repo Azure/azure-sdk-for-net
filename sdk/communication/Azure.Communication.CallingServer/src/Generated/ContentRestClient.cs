@@ -10,7 +10,6 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Communication.CallingServer.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -39,7 +38,7 @@ namespace Azure.Communication.CallingServer
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
-        internal HttpMessage CreatePlayRequest(string callConnectionId, PlayRequest playRequest)
+        internal HttpMessage CreatePlayRequest(string callConnectionId, PlayRequestInternal playRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -65,7 +64,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="playRequest"/> is null. </exception>
         /// <remarks> Plays audio to participants in the call. </remarks>
-        public async Task<Response<PlayResponse>> PlayAsync(string callConnectionId, PlayRequest playRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<PlayResponse>> PlayAsync(string callConnectionId, PlayRequestInternal playRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -98,7 +97,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="playRequest"/> is null. </exception>
         /// <remarks> Plays audio to participants in the call. </remarks>
-        public Response<PlayResponse> Play(string callConnectionId, PlayRequest playRequest, CancellationToken cancellationToken = default)
+        public Response<PlayResponse> Play(string callConnectionId, PlayRequestInternal playRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -125,7 +124,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        internal HttpMessage CreateRecordingRequest(StartCallRecordingRequest startCallRecording)
+        internal HttpMessage CreateRecordingRequest(StartCallRecordingRequestInternal startCallRecording)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -148,7 +147,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="startCallRecording"/> is null. </exception>
         /// <remarks> Start recording the call. </remarks>
-        public async Task<Response<StartCallRecordingResponse>> RecordingAsync(StartCallRecordingRequest startCallRecording, CancellationToken cancellationToken = default)
+        public async Task<Response<StartCallRecordingResponse>> RecordingAsync(StartCallRecordingRequestInternal startCallRecording, CancellationToken cancellationToken = default)
         {
             if (startCallRecording == null)
             {
@@ -176,7 +175,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="startCallRecording"/> is null. </exception>
         /// <remarks> Start recording the call. </remarks>
-        public Response<StartCallRecordingResponse> Recording(StartCallRecordingRequest startCallRecording, CancellationToken cancellationToken = default)
+        public Response<StartCallRecordingResponse> Recording(StartCallRecordingRequestInternal startCallRecording, CancellationToken cancellationToken = default)
         {
             if (startCallRecording == null)
             {

@@ -3422,6 +3422,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public string CodeId { get { throw null; } set { } }
         public string ScoringScript { get { throw null; } set { } }
     }
+    public partial class PartialDataPathAssetReference : Azure.ResourceManager.MachineLearning.Models.PartialAssetReferenceBase
+    {
+        public PartialDataPathAssetReference() { }
+        public string DatastoreId { get { throw null; } set { } }
+        public string Path { get { throw null; } set { } }
+    }
+    public partial class PartialIdAssetReference : Azure.ResourceManager.MachineLearning.Models.PartialAssetReferenceBase
+    {
+        public PartialIdAssetReference() { }
+        public string AssetId { get { throw null; } set { } }
+    }
+    public partial class PartialKubernetesOnlineDeployment : Azure.ResourceManager.MachineLearning.Models.PartialOnlineDeployment
+    {
+        public PartialKubernetesOnlineDeployment() { }
+    }
+    public partial class PartialManagedOnlineDeployment : Azure.ResourceManager.MachineLearning.Models.PartialOnlineDeployment
+    {
+        public PartialManagedOnlineDeployment() { }
+    }
     public partial class PartialManagedServiceIdentity
     {
         public PartialManagedServiceIdentity() { }
@@ -3438,6 +3457,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public System.Collections.Generic.IDictionary<string, int> MirrorTraffic { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearning.Models.PublicNetworkAccessType? PublicNetworkAccess { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, int> Traffic { get { throw null; } set { } }
+    }
+    public partial class PartialOutputPathAssetReference : Azure.ResourceManager.MachineLearning.Models.PartialAssetReferenceBase
+    {
+        public PartialOutputPathAssetReference() { }
+        public string JobId { get { throw null; } set { } }
+        public string Path { get { throw null; } set { } }
     }
     public partial class PartialSku
     {

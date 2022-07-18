@@ -61,7 +61,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
         /// <remarks> Get call connection. </remarks>
-        public async Task<Response<CallConnectionPropertiesDto>> GetCallAsync(string callConnectionId, CancellationToken cancellationToken = default)
+        public async Task<Response<CallConnectionPropertiesDtoInternal>> GetCallAsync(string callConnectionId, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -74,9 +74,9 @@ namespace Azure.Communication.CallingServer
             {
                 case 200:
                     {
-                        CallConnectionPropertiesDto value = default;
+                        CallConnectionPropertiesDtoInternal value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CallConnectionPropertiesDto.DeserializeCallConnectionPropertiesDto(document.RootElement);
+                        value = CallConnectionPropertiesDtoInternal.DeserializeCallConnectionPropertiesDtoInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -89,7 +89,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
         /// <remarks> Get call connection. </remarks>
-        public Response<CallConnectionPropertiesDto> GetCall(string callConnectionId, CancellationToken cancellationToken = default)
+        public Response<CallConnectionPropertiesDtoInternal> GetCall(string callConnectionId, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -102,9 +102,9 @@ namespace Azure.Communication.CallingServer
             {
                 case 200:
                     {
-                        CallConnectionPropertiesDto value = default;
+                        CallConnectionPropertiesDtoInternal value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CallConnectionPropertiesDto.DeserializeCallConnectionPropertiesDto(document.RootElement);
+                        value = CallConnectionPropertiesDtoInternal.DeserializeCallConnectionPropertiesDtoInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

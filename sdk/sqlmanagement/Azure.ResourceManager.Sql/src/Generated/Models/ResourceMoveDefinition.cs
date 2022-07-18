@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ResourceMoveDefinition. </summary>
         /// <param name="id"> The target ID for the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public ResourceMoveDefinition(string id)
+        public ResourceMoveDefinition(ResourceIdentifier id)
         {
             if (id == null)
             {
@@ -26,6 +27,6 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The target ID for the resource. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
     }
 }

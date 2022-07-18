@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static PartnerInfo DeserializePartnerInfo(JsonElement element)
         {
-            string id = default;
+            ResourceIdentifier id = default;
             Optional<AzureLocation> location = default;
             Optional<FailoverGroupReplicationRole> replicationRole = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("location"))

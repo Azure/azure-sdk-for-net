@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
             Optional<long> minIncrementSizeTiB = default;
             Optional<long> iopsPerBaseTiB = default;
             Optional<long> mbpsPerBaseTiB = default;
-            Optional<long> maxIops = default;
             Optional<long> maxMbps = default;
             Optional<long> maxElasticSanVolumeGroupCount = default;
             foreach (var property in element.EnumerateObject())
@@ -74,16 +73,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     mbpsPerBaseTiB = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("maxIops"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    maxIops = property.Value.GetInt64();
-                    continue;
-                }
                 if (property.NameEquals("maxMBps"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -105,7 +94,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     continue;
                 }
             }
-            return new SanTierInfo(Optional.ToNullable(maxSizeTiB), Optional.ToNullable(minSizeTiB), Optional.ToNullable(minIncrementSizeTiB), Optional.ToNullable(iopsPerBaseTiB), Optional.ToNullable(mbpsPerBaseTiB), Optional.ToNullable(maxIops), Optional.ToNullable(maxMbps), Optional.ToNullable(maxElasticSanVolumeGroupCount));
+            return new SanTierInfo(Optional.ToNullable(maxSizeTiB), Optional.ToNullable(minSizeTiB), Optional.ToNullable(minIncrementSizeTiB), Optional.ToNullable(iopsPerBaseTiB), Optional.ToNullable(mbpsPerBaseTiB), Optional.ToNullable(maxMbps), Optional.ToNullable(maxElasticSanVolumeGroupCount));
         }
     }
 }

@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.PostgreSql.Models
 {
     /// <summary> The properties used to create a new server by restoring from a backup. </summary>
-    internal partial class ServerPropertiesForRestore : ServerPropertiesForCreate
+    public partial class ServerPropertiesForRestore : ServerPropertiesForCreate
     {
         /// <summary> Initializes a new instance of ServerPropertiesForRestore. </summary>
         /// <param name="sourceServerId"> The source server id to restore from. </param>

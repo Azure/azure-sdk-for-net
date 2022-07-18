@@ -880,7 +880,10 @@ namespace Azure.Storage.Blobs.Test
                 {
                     Response<BlobAppendInfo> response = await blob.AppendBlockAsync(
                         content: stream,
-                        conditions: accessConditions);
+                        options: new AppendBlobAppendBlockOptions
+                        {
+                            Conditions = accessConditions
+                        });
 
                     // Assert
                     Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -923,7 +926,10 @@ namespace Azure.Storage.Blobs.Test
                     await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         blob.AppendBlockAsync(
                             content: stream,
-                            conditions: accessConditions),
+                            options: new AppendBlobAppendBlockOptions
+                            {
+                                Conditions = accessConditions
+                            }),
                         e => { });
                 }
             }
@@ -955,7 +961,10 @@ namespace Azure.Storage.Blobs.Test
             // Act
             Response<BlobAppendInfo> response = await blob.AppendBlockAsync(
                 content: stream,
-                conditions: conditions);
+                options: new AppendBlobAppendBlockOptions
+                {
+                    Conditions = conditions
+                });
         }
 
         [RecordedTest]
@@ -980,7 +989,10 @@ namespace Azure.Storage.Blobs.Test
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 blob.AppendBlockAsync(
                     content: stream,
-                    conditions: conditions),
+                    options: new AppendBlobAppendBlockOptions
+                    {
+                        Conditions = conditions
+                    }),
                 e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
         }
 
@@ -1020,7 +1032,10 @@ namespace Azure.Storage.Blobs.Test
             {
                 await blobFaulty.AppendBlockAsync(
                     content: stream,
-                    progressHandler: progressHandler);
+                    options: new AppendBlobAppendBlockOptions
+                    {
+                        ProgressHandler = progressHandler
+                    });
                 await WaitForProgressAsync(progressBag, data.LongLength);
                 Assert.IsTrue(progressBag.Count > 1, "Too few progress received");
                 // Changing from Assert.AreEqual because these don't always update fast enough
@@ -1058,7 +1073,10 @@ namespace Azure.Storage.Blobs.Test
             {
                 await blob.AppendBlockAsync(
                     content: stream,
-                    progressHandler: progress);
+                    options: new AppendBlobAppendBlockOptions
+                    {
+                        ProgressHandler = progress
+                    });
             }
 
             // Assert

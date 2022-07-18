@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("expireAfterSeconds");
                 writer.WriteNumberValue(ExpireAfterSeconds.Value);
             }
-            if (Optional.IsDefined(Unique))
+            if (Optional.IsDefined(IsUnique))
             {
                 writer.WritePropertyName("unique");
-                writer.WriteBooleanValue(Unique.Value);
+                writer.WriteBooleanValue(IsUnique.Value);
             }
             writer.WriteEndObject();
         }

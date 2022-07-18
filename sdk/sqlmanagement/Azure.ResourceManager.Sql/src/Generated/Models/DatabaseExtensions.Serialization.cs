@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Sql.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<OperationMode> operationMode = default;
+            Optional<DatabaseExtensionOperationMode> operationMode = default;
             Optional<StorageKeyType> storageKeyType = default;
             Optional<string> storageKey = default;
             Optional<Uri> storageUri = default;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Sql.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            operationMode = new OperationMode(property0.Value.GetString());
+                            operationMode = new DatabaseExtensionOperationMode(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("storageKeyType"))

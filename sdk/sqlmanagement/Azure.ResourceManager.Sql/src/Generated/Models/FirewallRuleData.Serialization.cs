@@ -38,16 +38,21 @@ namespace Azure.ResourceManager.Sql
 
         internal static FirewallRuleData DeserializeFirewallRuleData(JsonElement element)
         {
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
-            Optional<string> type = default;
+            Optional<ResourceType> type = default;
             Optional<string> startIPAddress = default;
             Optional<string> endIPAddress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -57,7 +62,12 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -83,7 +93,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new FirewallRuleData(id.Value, name.Value, type.Value, startIPAddress.Value, endIPAddress.Value);
+            return new FirewallRuleData(id.Value, name.Value, Optional.ToNullable(type), startIPAddress.Value, endIPAddress.Value);
         }
     }
 }

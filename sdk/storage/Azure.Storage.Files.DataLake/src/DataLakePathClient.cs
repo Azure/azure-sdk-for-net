@@ -713,7 +713,9 @@ namespace Azure.Storage.Files.DataLake
                     new BlobClientOptions(clientConfiguration.ClientOptions.Version.AsBlobsVersion())
                     {
                         Diagnostics = { IsDistributedTracingEnabled = clientConfiguration.ClientDiagnostics.IsActivityEnabled },
-                        CustomerProvidedKey = clientConfiguration.CustomerProvidedKey.ToBlobCustomerProvidedKey()
+                        CustomerProvidedKey = clientConfiguration.CustomerProvidedKey.ToBlobCustomerProvidedKey(),
+                        UploadTransferValidationOptions = clientConfiguration.UploadTransferValidationOptions,
+                        DownloadTransferValidationOptions = clientConfiguration.DownloadTransferValidationOptions,
                     },
                     clientConfiguration.Pipeline);
             }

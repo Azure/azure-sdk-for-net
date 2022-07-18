@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.Resources
         /// <remarks> Gets the entire set of tags on a resource or subscription. </remarks>
         public virtual async Task<Response<TagResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.Get");
-            scope.Start();
+            using var scope0 = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.Get");
+            scope0.Start();
             try
             {
                 var response = await _tagResourceTagsRestClient.GetAtScopeAsync(Id.Parent, cancellationToken).ConfigureAwait(false);
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Resources
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }
@@ -121,8 +121,8 @@ namespace Azure.ResourceManager.Resources
         /// <remarks> Gets the entire set of tags on a resource or subscription. </remarks>
         public virtual Response<TagResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.Get");
-            scope.Start();
+            using var scope0 = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.Get");
+            scope0.Start();
             try
             {
                 var response = _tagResourceTagsRestClient.GetAtScope(Id.Parent, cancellationToken);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Resources
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }
@@ -147,8 +147,8 @@ namespace Azure.ResourceManager.Resources
         /// <remarks> Deletes the entire set of tags on a resource or subscription. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.Delete");
-            scope.Start();
+            using var scope0 = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.Delete");
+            scope0.Start();
             try
             {
                 var response = await _tagResourceTagsRestClient.DeleteAtScopeAsync(Id.Parent, cancellationToken).ConfigureAwait(false);
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Resources
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }
@@ -174,8 +174,8 @@ namespace Azure.ResourceManager.Resources
         /// <remarks> Deletes the entire set of tags on a resource or subscription. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.Delete");
-            scope.Start();
+            using var scope0 = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.Delete");
+            scope0.Start();
             try
             {
                 var response = _tagResourceTagsRestClient.DeleteAtScope(Id.Parent, cancellationToken);
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Resources
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }
@@ -204,8 +204,8 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.Update");
-            scope.Start();
+            using var scope0 = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.Update");
+            scope0.Start();
             try
             {
                 var response = await _tagResourceTagsRestClient.UpdateAtScopeAsync(Id.Parent, patch, cancellationToken).ConfigureAwait(false);
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Resources
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }
@@ -231,8 +231,8 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.Update");
-            scope.Start();
+            using var scope0 = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.Update");
+            scope0.Start();
             try
             {
                 var response = _tagResourceTagsRestClient.UpdateAtScope(Id.Parent, patch, cancellationToken);
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Resources
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }
@@ -259,8 +259,8 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.CreateOrUpdate");
-            scope.Start();
+            using var scope0 = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.CreateOrUpdate");
+            scope0.Start();
             try
             {
                 var response = await _tagResourceTagsRestClient.CreateOrUpdateAtScopeAsync(Id.Parent, data, cancellationToken).ConfigureAwait(false);
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Resources
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }
@@ -290,8 +290,8 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.CreateOrUpdate");
-            scope.Start();
+            using var scope0 = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.CreateOrUpdate");
+            scope0.Start();
             try
             {
                 var response = _tagResourceTagsRestClient.CreateOrUpdateAtScope(Id.Parent, data, cancellationToken);
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Resources
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }

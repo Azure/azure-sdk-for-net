@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 
-namespace Azure.Communication.CallingServer
+namespace Azure.Communication.CallingServer.Models
 {
     /// <summary> The options for adding participant to a call. </summary>
     public class AddParticipantsOptions
@@ -18,7 +18,7 @@ namespace Azure.Communication.CallingServer
         public string OperationContext { get; set; }
 
         /// <summary> Timeout before invitation timesout. </summary>
-        public int InvitationTimeoutInSeconds { get; set; }
+        public int? InvitationTimeoutInSeconds { get; set; }
 
         /// <summary> The replacement CallConnectionId. </summary>
         public string ReplacementCallConnectionId { get; set; }
@@ -26,16 +26,12 @@ namespace Azure.Communication.CallingServer
         /// <summary>
         /// Add Participants Options.
         /// </summary>
-        /// <param name="alternateCallerId">The alternate caller id of the source</param>
-        /// <param name="operationContext">The operationContext.</param>
-        /// <param name="invitationTimeoutInSeconds"> Timeout before invitation timesout.</param>
-        /// <param name="replacementCallConnectionId">replacementCallConnectionId.</param>
-        public AddParticipantsOptions(PhoneNumberIdentifier alternateCallerId, string operationContext, int invitationTimeoutInSeconds, string replacementCallConnectionId)
+        public AddParticipantsOptions(PhoneNumberIdentifier alternateCallerId = default, string operationContext = default, int? invitationTimeoutInSeconds = default, string replacementCallConnectionId = default)
         {
             AlternateCallerId = alternateCallerId;
             OperationContext = operationContext;
-            this.InvitationTimeoutInSeconds = invitationTimeoutInSeconds;
-            this.ReplacementCallConnectionId = replacementCallConnectionId;
+            InvitationTimeoutInSeconds = invitationTimeoutInSeconds;
+            ReplacementCallConnectionId = replacementCallConnectionId;
         }
     }
 }
