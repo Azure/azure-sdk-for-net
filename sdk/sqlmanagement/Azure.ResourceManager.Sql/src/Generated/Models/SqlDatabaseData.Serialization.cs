@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Sql
             Optional<SampleSchemaName> sampleName = default;
             Optional<ResourceIdentifier> elasticPoolId = default;
             Optional<ResourceIdentifier> sourceDatabaseId = default;
-            Optional<DatabaseStatus> status = default;
+            Optional<SqlDatabaseStatus> status = default;
             Optional<Guid> databaseId = default;
             Optional<DateTimeOffset> creationDate = default;
             Optional<string> currentServiceObjectiveName = default;
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            status = new DatabaseStatus(property0.Value.GetString());
+                            status = new SqlDatabaseStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("databaseId"))

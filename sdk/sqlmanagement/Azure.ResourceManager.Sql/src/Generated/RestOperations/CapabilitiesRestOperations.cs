@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateListByLocationRequest(string subscriptionId, AzureLocation locationName, CapabilityGroup? include)
+        internal HttpMessage CreateListByLocationRequest(string subscriptionId, AzureLocation locationName, SqlCapabilityGroup? include)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<LocationCapabilities>> ListByLocationAsync(string subscriptionId, AzureLocation locationName, CapabilityGroup? include = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SqlLocationCapabilities>> ListByLocationAsync(string subscriptionId, AzureLocation locationName, SqlCapabilityGroup? include = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.Sql
             {
                 case 200:
                     {
-                        LocationCapabilities value = default;
+                        SqlLocationCapabilities value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = LocationCapabilities.DeserializeLocationCapabilities(document.RootElement);
+                        value = SqlLocationCapabilities.DeserializeSqlLocationCapabilities(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<LocationCapabilities> ListByLocation(string subscriptionId, AzureLocation locationName, CapabilityGroup? include = null, CancellationToken cancellationToken = default)
+        public Response<SqlLocationCapabilities> ListByLocation(string subscriptionId, AzureLocation locationName, SqlCapabilityGroup? include = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -104,9 +104,9 @@ namespace Azure.ResourceManager.Sql
             {
                 case 200:
                     {
-                        LocationCapabilities value = default;
+                        SqlLocationCapabilities value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = LocationCapabilities.DeserializeLocationCapabilities(document.RootElement);
+                        value = SqlLocationCapabilities.DeserializeSqlLocationCapabilities(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

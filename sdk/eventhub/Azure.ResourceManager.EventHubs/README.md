@@ -6,10 +6,10 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 ### Install the package
 
-Install the Azure EventHubs management library for .NET with [NuGet](https://www.nuget.org/):
+Install the Azure Event Hubs management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.ResourceManager.EventHubs --prerelease
+dotnet add package Azure.ResourceManager.EventHubs
 ```
 
 ### Prerequisites

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             IncludedPaths = new ChangeTrackingList<CosmosDBIncludedPath>();
             ExcludedPaths = new ChangeTrackingList<CosmosDBExcludedPath>();
-            CompositeIndexes = new ChangeTrackingList<IList<CompositePath>>();
+            CompositeIndexes = new ChangeTrackingList<IList<CosmosDBCompositePath>>();
             SpatialIndexes = new ChangeTrackingList<SpatialSpec>();
         }
 
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="excludedPaths"> List of paths to exclude from indexing. </param>
         /// <param name="compositeIndexes"> List of composite path list. </param>
         /// <param name="spatialIndexes"> List of spatial specifics. </param>
-        internal CosmosDBIndexingPolicy(bool? isAutomatic, CosmosDBIndexingMode? indexingMode, IList<CosmosDBIncludedPath> includedPaths, IList<CosmosDBExcludedPath> excludedPaths, IList<IList<CompositePath>> compositeIndexes, IList<SpatialSpec> spatialIndexes)
+        internal CosmosDBIndexingPolicy(bool? isAutomatic, CosmosDBIndexingMode? indexingMode, IList<CosmosDBIncludedPath> includedPaths, IList<CosmosDBExcludedPath> excludedPaths, IList<IList<CosmosDBCompositePath>> compositeIndexes, IList<SpatialSpec> spatialIndexes)
         {
             IsAutomatic = isAutomatic;
             IndexingMode = indexingMode;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> List of paths to exclude from indexing. </summary>
         public IList<CosmosDBExcludedPath> ExcludedPaths { get; }
         /// <summary> List of composite path list. </summary>
-        public IList<IList<CompositePath>> CompositeIndexes { get; }
+        public IList<IList<CosmosDBCompositePath>> CompositeIndexes { get; }
         /// <summary> List of spatial specifics. </summary>
         public IList<SpatialSpec> SpatialIndexes { get; }
     }
