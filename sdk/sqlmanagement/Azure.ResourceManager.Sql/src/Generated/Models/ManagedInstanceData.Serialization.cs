@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Sql
             Optional<ResourceIdentifier> primaryUserAssignedIdentityId = default;
             Optional<Uri> keyId = default;
             Optional<ManagedInstanceExternalAdministrator> administrators = default;
-            Optional<ServicePrincipal> servicePrincipal = default;
+            Optional<SqlServicePrincipal> servicePrincipal = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"))
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            servicePrincipal = ServicePrincipal.DeserializeServicePrincipal(property0.Value);
+                            servicePrincipal = SqlServicePrincipal.DeserializeSqlServicePrincipal(property0.Value);
                             continue;
                         }
                     }

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="supportedElasticPoolEditions"> The list of supported elastic pool editions. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
-        internal ServerVersionCapability(string name, IReadOnlyList<EditionCapability> supportedEditions, IReadOnlyList<ElasticPoolEditionCapability> supportedElasticPoolEditions, CapabilityStatus? status, string reason)
+        internal ServerVersionCapability(string name, IReadOnlyList<EditionCapability> supportedEditions, IReadOnlyList<ElasticPoolEditionCapability> supportedElasticPoolEditions, SqlCapabilityStatus? status, string reason)
         {
             Name = name;
             SupportedEditions = supportedEditions;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The list of supported elastic pool editions. </summary>
         public IReadOnlyList<ElasticPoolEditionCapability> SupportedElasticPoolEditions { get; }
         /// <summary> The status of the capability. </summary>
-        public CapabilityStatus? Status { get; }
+        public SqlCapabilityStatus? Status { get; }
         /// <summary> The reason for the capability not being available. </summary>
         public string Reason { get; }
     }

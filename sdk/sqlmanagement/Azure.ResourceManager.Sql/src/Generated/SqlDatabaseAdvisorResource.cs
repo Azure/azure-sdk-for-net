@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sql
 
         private readonly ClientDiagnostics _sqlDatabaseAdvisorDatabaseAdvisorsClientDiagnostics;
         private readonly DatabaseAdvisorsRestOperations _sqlDatabaseAdvisorDatabaseAdvisorsRestClient;
-        private readonly AdvisorData _data;
+        private readonly SqlAdvisorData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SqlDatabaseAdvisorResource"/> class for mocking. </summary>
         protected SqlDatabaseAdvisorResource()
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of the <see cref = "SqlDatabaseAdvisorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SqlDatabaseAdvisorResource(ArmClient client, AdvisorData data) : this(client, data.Id)
+        internal SqlDatabaseAdvisorResource(ArmClient client, SqlAdvisorData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual AdvisorData Data
+        public virtual SqlAdvisorData Data
         {
             get
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="data"> The requested advisor resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<SqlDatabaseAdvisorResource>> UpdateAsync(AdvisorData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlDatabaseAdvisorResource>> UpdateAsync(SqlAdvisorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="data"> The requested advisor resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<SqlDatabaseAdvisorResource> Update(AdvisorData data, CancellationToken cancellationToken = default)
+        public virtual Response<SqlDatabaseAdvisorResource> Update(SqlAdvisorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
