@@ -17,7 +17,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <summary> Initializes a new instance of AreaCodes. </summary>
         /// <param name="areaCodesValue"> Represents a list of available toll-free area codes. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="areaCodesValue"/> is null. </exception>
-        internal AreaCodes(IEnumerable<AreaCode> areaCodesValue)
+        internal AreaCodes(IEnumerable<AreaCodeResult> areaCodesValue)
         {
             if (areaCodesValue == null)
             {
@@ -30,14 +30,14 @@ namespace Azure.Communication.PhoneNumbers
         /// <summary> Initializes a new instance of AreaCodes. </summary>
         /// <param name="areaCodesValue"> Represents a list of available toll-free area codes. </param>
         /// <param name="nextLink"> Represents the URL link to the next page of phone number results. </param>
-        internal AreaCodes(IReadOnlyList<AreaCode> areaCodesValue, string nextLink)
+        internal AreaCodes(IReadOnlyList<AreaCodeResult> areaCodesValue, string nextLink)
         {
             AreaCodesValue = areaCodesValue;
             NextLink = nextLink;
         }
 
         /// <summary> Represents a list of available toll-free area codes. </summary>
-        public IReadOnlyList<AreaCode> AreaCodesValue { get; }
+        public IReadOnlyList<AreaCodeResult> AreaCodesValue { get; }
         /// <summary> Represents the URL link to the next page of phone number results. </summary>
         public string NextLink { get; }
     }

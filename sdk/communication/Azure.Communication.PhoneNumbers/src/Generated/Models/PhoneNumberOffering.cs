@@ -10,12 +10,12 @@ using System;
 namespace Azure.Communication.PhoneNumbers
 {
     /// <summary> Represents a phone number capability offering. </summary>
-    public partial class CountryCapability
+    public partial class PhoneNumberOffering
     {
-        /// <summary> Initializes a new instance of CountryCapability. </summary>
+        /// <summary> Initializes a new instance of PhoneNumberOffering. </summary>
         /// <param name="cost"> The incurred cost for a single phone number. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cost"/> is null. </exception>
-        internal CountryCapability(PhoneNumberCost cost)
+        internal PhoneNumberOffering(PhoneNumberCost cost)
         {
             if (cost == null)
             {
@@ -25,12 +25,12 @@ namespace Azure.Communication.PhoneNumbers
             Cost = cost;
         }
 
-        /// <summary> Initializes a new instance of CountryCapability. </summary>
+        /// <summary> Initializes a new instance of PhoneNumberOffering. </summary>
         /// <param name="phoneNumberType"> Represents the number type of the offering. </param>
         /// <param name="assignmentType"> Represents the assignment type of the offering. </param>
         /// <param name="availableCapabilities"> Capabilities of a phone number. </param>
         /// <param name="cost"> The incurred cost for a single phone number. </param>
-        internal CountryCapability(PhoneNumberType? phoneNumberType, PhoneNumberAssignmentType? assignmentType, PhoneNumberCapabilities availableCapabilities, PhoneNumberCost cost)
+        internal PhoneNumberOffering(PhoneNumberType? phoneNumberType, PhoneNumberAssignmentType? assignmentType, PhoneNumberCapabilities availableCapabilities, PhoneNumberCost cost)
         {
             PhoneNumberType = phoneNumberType;
             AssignmentType = assignmentType;

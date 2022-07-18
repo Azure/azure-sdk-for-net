@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
 {
-    internal partial class CapabilitiesResponse
+    internal partial class PhoneNumberOfferings
     {
-        internal static CapabilitiesResponse DeserializeCapabilitiesResponse(JsonElement element)
+        internal static PhoneNumberOfferings DeserializePhoneNumberOfferings(JsonElement element)
         {
-            Optional<IReadOnlyList<CountryCapability>> offerings = default;
+            Optional<IReadOnlyList<PhoneNumberOffering>> phoneNumberOfferings = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("offerings"))
+                if (property.NameEquals("phoneNumberOfferings"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<CountryCapability> array = new List<CountryCapability>();
+                    List<PhoneNumberOffering> array = new List<PhoneNumberOffering>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CountryCapability.DeserializeCountryCapability(item));
+                        array.Add(PhoneNumberOffering.DeserializePhoneNumberOffering(item));
                     }
-                    offerings = array;
+                    phoneNumberOfferings = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
@@ -40,7 +40,7 @@ namespace Azure.Communication.PhoneNumbers
                     continue;
                 }
             }
-            return new CapabilitiesResponse(Optional.ToList(offerings), nextLink.Value);
+            return new PhoneNumberOfferings(Optional.ToList(phoneNumberOfferings), nextLink.Value);
         }
     }
 }

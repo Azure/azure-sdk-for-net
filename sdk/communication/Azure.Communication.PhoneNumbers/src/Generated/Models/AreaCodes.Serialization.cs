@@ -15,16 +15,16 @@ namespace Azure.Communication.PhoneNumbers
     {
         internal static AreaCodes DeserializeAreaCodes(JsonElement element)
         {
-            IReadOnlyList<AreaCode> areaCodes = default;
+            IReadOnlyList<AreaCodeResult> areaCodes = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("areaCodes"))
                 {
-                    List<AreaCode> array = new List<AreaCode>();
+                    List<AreaCodeResult> array = new List<AreaCodeResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AreaCode.DeserializeAreaCode(item));
+                        array.Add(AreaCodeResult.DeserializeAreaCodeResult(item));
                     }
                     areaCodes = array;
                     continue;

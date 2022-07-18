@@ -273,7 +273,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="administrativeDivision"> An optional parameter for the name of the state or province in which to search for the area code. e.g. California. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="countryCode"/> is null. </exception>
-        public virtual AsyncPageable<PhoneNumberLocality> ListAvailableCitiesAsync(string countryCode, string acceptLanguage = null, int? skip = null, int? maxPageSize = null, string administrativeDivision = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PhoneNumberLocality> ListAvailableLocalitiesAsync(string countryCode, string acceptLanguage = null, int? skip = null, int? maxPageSize = null, string administrativeDivision = null, CancellationToken cancellationToken = default)
         {
             if (countryCode == null)
             {
@@ -282,11 +282,11 @@ namespace Azure.Communication.PhoneNumbers
 
             async Task<Page<PhoneNumberLocality>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.ListAvailableCities");
+                using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.ListAvailableLocalities");
                 scope.Start();
                 try
                 {
-                    var response = await RestClient.ListAvailableCitiesAsync(countryCode, acceptLanguage, skip, maxPageSize, administrativeDivision, cancellationToken).ConfigureAwait(false);
+                    var response = await RestClient.ListAvailableLocalitiesAsync(countryCode, acceptLanguage, skip, maxPageSize, administrativeDivision, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.PhoneNumberLocalitiesValue, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -297,11 +297,11 @@ namespace Azure.Communication.PhoneNumbers
             }
             async Task<Page<PhoneNumberLocality>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.ListAvailableCities");
+                using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.ListAvailableLocalities");
                 scope.Start();
                 try
                 {
-                    var response = await RestClient.ListAvailableCitiesNextPageAsync(nextLink, countryCode, acceptLanguage, skip, maxPageSize, administrativeDivision, cancellationToken).ConfigureAwait(false);
+                    var response = await RestClient.ListAvailableLocalitiesNextPageAsync(nextLink, countryCode, acceptLanguage, skip, maxPageSize, administrativeDivision, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.PhoneNumberLocalitiesValue, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -321,7 +321,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="administrativeDivision"> An optional parameter for the name of the state or province in which to search for the area code. e.g. California. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="countryCode"/> is null. </exception>
-        public virtual Pageable<PhoneNumberLocality> ListAvailableCities(string countryCode, string acceptLanguage = null, int? skip = null, int? maxPageSize = null, string administrativeDivision = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<PhoneNumberLocality> ListAvailableLocalities(string countryCode, string acceptLanguage = null, int? skip = null, int? maxPageSize = null, string administrativeDivision = null, CancellationToken cancellationToken = default)
         {
             if (countryCode == null)
             {
@@ -330,11 +330,11 @@ namespace Azure.Communication.PhoneNumbers
 
             Page<PhoneNumberLocality> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.ListAvailableCities");
+                using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.ListAvailableLocalities");
                 scope.Start();
                 try
                 {
-                    var response = RestClient.ListAvailableCities(countryCode, acceptLanguage, skip, maxPageSize, administrativeDivision, cancellationToken);
+                    var response = RestClient.ListAvailableLocalities(countryCode, acceptLanguage, skip, maxPageSize, administrativeDivision, cancellationToken);
                     return Page.FromValues(response.Value.PhoneNumberLocalitiesValue, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -345,11 +345,11 @@ namespace Azure.Communication.PhoneNumbers
             }
             Page<PhoneNumberLocality> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.ListAvailableCities");
+                using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.ListAvailableLocalities");
                 scope.Start();
                 try
                 {
-                    var response = RestClient.ListAvailableCitiesNextPage(nextLink, countryCode, acceptLanguage, skip, maxPageSize, administrativeDivision, cancellationToken);
+                    var response = RestClient.ListAvailableLocalitiesNextPage(nextLink, countryCode, acceptLanguage, skip, maxPageSize, administrativeDivision, cancellationToken);
                     return Page.FromValues(response.Value.PhoneNumberLocalitiesValue, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -371,14 +371,14 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="administrativeDivision"> The name of the state or province in which to search for the area code. e.g. California. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="countryCode"/> is null. </exception>
-        public virtual AsyncPageable<AreaCode> ListAreaCodesAsync(string countryCode, int? skip = null, int? maxPageSize = null, PhoneNumberType? phoneNumberType = null, AssignmentType? assignmentType = null, string locality = null, string administrativeDivision = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AreaCodeResult> ListAreaCodesAsync(string countryCode, int? skip = null, int? maxPageSize = null, PhoneNumberType? phoneNumberType = null, PhoneNumberAssignmentType? assignmentType = null, string locality = null, string administrativeDivision = null, CancellationToken cancellationToken = default)
         {
             if (countryCode == null)
             {
                 throw new ArgumentNullException(nameof(countryCode));
             }
 
-            async Task<Page<AreaCode>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AreaCodeResult>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.ListAreaCodes");
                 scope.Start();
@@ -393,7 +393,7 @@ namespace Azure.Communication.PhoneNumbers
                     throw;
                 }
             }
-            async Task<Page<AreaCode>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AreaCodeResult>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.ListAreaCodes");
                 scope.Start();
@@ -421,14 +421,14 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="administrativeDivision"> The name of the state or province in which to search for the area code. e.g. California. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="countryCode"/> is null. </exception>
-        public virtual Pageable<AreaCode> ListAreaCodes(string countryCode, int? skip = null, int? maxPageSize = null, PhoneNumberType? phoneNumberType = null, AssignmentType? assignmentType = null, string locality = null, string administrativeDivision = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<AreaCodeResult> ListAreaCodes(string countryCode, int? skip = null, int? maxPageSize = null, PhoneNumberType? phoneNumberType = null, PhoneNumberAssignmentType? assignmentType = null, string locality = null, string administrativeDivision = null, CancellationToken cancellationToken = default)
         {
             if (countryCode == null)
             {
                 throw new ArgumentNullException(nameof(countryCode));
             }
 
-            Page<AreaCode> FirstPageFunc(int? pageSizeHint)
+            Page<AreaCodeResult> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.ListAreaCodes");
                 scope.Start();
@@ -443,7 +443,7 @@ namespace Azure.Communication.PhoneNumbers
                     throw;
                 }
             }
-            Page<AreaCode> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<AreaCodeResult> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.ListAreaCodes");
                 scope.Start();
@@ -469,21 +469,21 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="maxPageSize"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="countryCode"/> is null. </exception>
-        public virtual AsyncPageable<CountryCapability> ListOfferingsAsync(string countryCode, PhoneNumberType? phoneNumberType = null, AssignmentType? assignmentType = null, int? skip = null, int? maxPageSize = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PhoneNumberOffering> ListOfferingsAsync(string countryCode, PhoneNumberType? phoneNumberType = null, PhoneNumberAssignmentType? assignmentType = null, int? skip = null, int? maxPageSize = null, CancellationToken cancellationToken = default)
         {
             if (countryCode == null)
             {
                 throw new ArgumentNullException(nameof(countryCode));
             }
 
-            async Task<Page<CountryCapability>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<PhoneNumberOffering>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.ListOfferings");
                 scope.Start();
                 try
                 {
                     var response = await RestClient.ListOfferingsAsync(countryCode, phoneNumberType, assignmentType, skip, maxPageSize, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Offerings, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.PhoneNumberOfferingsValue, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -491,14 +491,14 @@ namespace Azure.Communication.PhoneNumbers
                     throw;
                 }
             }
-            async Task<Page<CountryCapability>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<PhoneNumberOffering>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.ListOfferings");
                 scope.Start();
                 try
                 {
                     var response = await RestClient.ListOfferingsNextPageAsync(nextLink, countryCode, phoneNumberType, assignmentType, skip, maxPageSize, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Offerings, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.PhoneNumberOfferingsValue, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -517,21 +517,21 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="maxPageSize"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="countryCode"/> is null. </exception>
-        public virtual Pageable<CountryCapability> ListOfferings(string countryCode, PhoneNumberType? phoneNumberType = null, AssignmentType? assignmentType = null, int? skip = null, int? maxPageSize = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<PhoneNumberOffering> ListOfferings(string countryCode, PhoneNumberType? phoneNumberType = null, PhoneNumberAssignmentType? assignmentType = null, int? skip = null, int? maxPageSize = null, CancellationToken cancellationToken = default)
         {
             if (countryCode == null)
             {
                 throw new ArgumentNullException(nameof(countryCode));
             }
 
-            Page<CountryCapability> FirstPageFunc(int? pageSizeHint)
+            Page<PhoneNumberOffering> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.ListOfferings");
                 scope.Start();
                 try
                 {
                     var response = RestClient.ListOfferings(countryCode, phoneNumberType, assignmentType, skip, maxPageSize, cancellationToken);
-                    return Page.FromValues(response.Value.Offerings, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.PhoneNumberOfferingsValue, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -539,14 +539,14 @@ namespace Azure.Communication.PhoneNumbers
                     throw;
                 }
             }
-            Page<CountryCapability> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<PhoneNumberOffering> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.ListOfferings");
                 scope.Start();
                 try
                 {
                     var response = RestClient.ListOfferingsNextPage(nextLink, countryCode, phoneNumberType, assignmentType, skip, maxPageSize, cancellationToken);
-                    return Page.FromValues(response.Value.Offerings, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.PhoneNumberOfferingsValue, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

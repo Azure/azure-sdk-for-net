@@ -41,23 +41,23 @@ namespace Azure.Communication.PhoneNumbers
             return new PhoneNumberAdministrativeDivision(localizedName, abbreviatedName);
         }
 
-        /// <summary> Initializes a new instance of AreaCode. </summary>
-        /// <param name="areaCodeValue"> An area code as a string. </param>
-        /// <returns> A new <see cref="PhoneNumbers.AreaCode"/> instance for mocking. </returns>
-        public static AreaCode AreaCode(string areaCodeValue = null)
+        /// <summary> Initializes a new instance of AreaCodeResult. </summary>
+        /// <param name="areaCode"> An area code as a string. </param>
+        /// <returns> A new <see cref="PhoneNumbers.AreaCodeResult"/> instance for mocking. </returns>
+        public static AreaCodeResult AreaCodeResult(string areaCode = null)
         {
-            return new AreaCode(areaCodeValue);
+            return new AreaCodeResult(areaCode);
         }
 
-        /// <summary> Initializes a new instance of CountryCapability. </summary>
+        /// <summary> Initializes a new instance of PhoneNumberOffering. </summary>
         /// <param name="phoneNumberType"> Represents the number type of the offering. </param>
         /// <param name="assignmentType"> Represents the assignment type of the offering. </param>
         /// <param name="availableCapabilities"> Capabilities of a phone number. </param>
         /// <param name="cost"> The incurred cost for a single phone number. </param>
-        /// <returns> A new <see cref="PhoneNumbers.CountryCapability"/> instance for mocking. </returns>
-        public static CountryCapability CountryCapability(PhoneNumberType? phoneNumberType = null, PhoneNumberAssignmentType? assignmentType = null, PhoneNumberCapabilities availableCapabilities = null, PhoneNumberCost cost = null)
+        /// <returns> A new <see cref="PhoneNumbers.PhoneNumberOffering"/> instance for mocking. </returns>
+        public static PhoneNumberOffering PhoneNumberOffering(PhoneNumberType? phoneNumberType = null, PhoneNumberAssignmentType? assignmentType = null, PhoneNumberCapabilities availableCapabilities = null, PhoneNumberCost cost = null)
         {
-            return new CountryCapability(phoneNumberType, assignmentType, availableCapabilities, cost);
+            return new PhoneNumberOffering(phoneNumberType, assignmentType, availableCapabilities, cost);
         }
 
         /// <summary> Initializes a new instance of PhoneNumberCost. </summary>

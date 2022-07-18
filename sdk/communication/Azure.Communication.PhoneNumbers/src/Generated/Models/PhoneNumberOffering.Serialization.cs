@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
 {
-    public partial class CountryCapability
+    public partial class PhoneNumberOffering
     {
-        internal static CountryCapability DeserializeCountryCapability(JsonElement element)
+        internal static PhoneNumberOffering DeserializePhoneNumberOffering(JsonElement element)
         {
             Optional<PhoneNumberType> phoneNumberType = default;
             Optional<PhoneNumberAssignmentType> assignmentType = default;
@@ -56,7 +56,7 @@ namespace Azure.Communication.PhoneNumbers
                     continue;
                 }
             }
-            return new CountryCapability(Optional.ToNullable(phoneNumberType), Optional.ToNullable(assignmentType), availableCapabilities.Value, cost);
+            return new PhoneNumberOffering(Optional.ToNullable(phoneNumberType), Optional.ToNullable(assignmentType), availableCapabilities.Value, cost);
         }
     }
 }
