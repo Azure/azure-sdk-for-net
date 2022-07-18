@@ -101,8 +101,8 @@ namespace Azure.Messaging.EventHubs.Core
                 return new PooledProducer(EventHubProducer);
             }
 
-            var identifier = Guid.NewGuid().ToString();
-            var item = Pool.GetOrAdd(partitionId, id => new PoolItem(partitionId, TransportProducerFactory(id), removeAfterDuration));
+            var identifier = Guid.NewGuid();
+            var item = Pool.GetOrAdd(partitionId, id => new PoolItem(id, TransportProducerFactory(id), removeAfterDuration));
 
             // A race condition at this point may end with CloseAsync called on
             // the returned PoolItem if it had expired. The probability is very low and
@@ -110,8 +110,8 @@ namespace Azure.Messaging.EventHubs.Core
 
             if (item.PartitionProducer.IsClosed || !item.ActiveInstances.TryAdd(identifier, 0))
             {
-                identifier = Guid.NewGuid().ToString();
-                item = Pool.GetOrAdd(partitionId, id => new PoolItem(partitionId, TransportProducerFactory(id), removeAfterDuration));
+                identifier = Guid.NewGuid();
+                item = Pool.GetOrAdd(partitionId, id => new PoolItem(id, TransportProducerFactory(id), removeAfterDuration));
                 item.ActiveInstances.TryAdd(identifier, 0);
             }
 
@@ -257,7 +257,7 @@ namespace Azure.Messaging.EventHubs.Core
             ///   A set of unique identifiers used to track which instances of a <see cref="PoolItem" /> are active.
             /// </summary>
             ///
-            public ConcurrentDictionary<string, byte> ActiveInstances { get; } = new ConcurrentDictionary<string, byte>();
+            public ConcurrentDictionary<Guid, byte> ActiveInstances { get; } = new ConcurrentDictionary<Guid, byte>();
 
             /// <summary>
             ///   The UTC date and time when a <see cref="PoolItem" /> will become eligible for eviction.
