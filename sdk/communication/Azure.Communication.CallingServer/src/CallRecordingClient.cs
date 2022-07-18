@@ -299,7 +299,7 @@ namespace Azure.Communication.CallingServer
         /// operation downloads the recording's content.
         ///
         /// </summary>
-        /// <param name="sourceEndpoint">
+        /// <param name="sourceLocation">
         /// Recording's content's url location.
         /// </param>
         /// <param name="range">
@@ -319,11 +319,11 @@ namespace Azure.Communication.CallingServer
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<Stream>> DownloadStreamingAsync(
-            Uri sourceEndpoint,
+            Uri sourceLocation,
             HttpRange range = default,
             CancellationToken cancellationToken = default) =>
             await _contentDownloader.DownloadStreamingInternal(
-                sourceEndpoint,
+                sourceLocation,
                 range,
                 async: true,
                 cancellationToken)
@@ -334,7 +334,7 @@ namespace Azure.Communication.CallingServer
         /// operation downloads the recording's content.
         ///
         /// </summary>
-        /// <param name="sourceEndpoint">
+        /// <param name="sourceLocation">
         /// Recording's content's url location.
         /// </param>
         /// <param name="range">
@@ -354,11 +354,11 @@ namespace Azure.Communication.CallingServer
         /// a failure occurs.
         /// </remarks>
         public virtual Response<Stream> DownloadStreaming(
-            Uri sourceEndpoint,
+            Uri sourceLocation,
             HttpRange range = default,
             CancellationToken cancellationToken = default) =>
             _contentDownloader.DownloadStreamingInternal(
-                sourceEndpoint,
+                sourceLocation,
                 range,
                 async: false,
                 cancellationToken)
@@ -369,7 +369,7 @@ namespace Azure.Communication.CallingServer
         /// operation downloads the specified content using parallel requests,
         /// and writes the content to <paramref name="destinationStream"/>.
         /// </summary>
-        /// <param name="sourceEndpoint">
+        /// <param name="sourceLocation">
         /// A <see cref="Uri"/> with the Recording's content's url location.
         /// </param>
         /// <param name="destinationStream">
@@ -390,16 +390,16 @@ namespace Azure.Communication.CallingServer
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response DownloadTo(Uri sourceEndpoint, Stream destinationStream,
+        public virtual Response DownloadTo(Uri sourceLocation, Stream destinationStream,
             ContentTransferOptions transferOptions = default, CancellationToken cancellationToken = default) =>
-            _contentDownloader.StagedDownloadAsync(sourceEndpoint, destinationStream, transferOptions, async: false, cancellationToken: cancellationToken).EnsureCompleted();
+            _contentDownloader.StagedDownloadAsync(sourceLocation, destinationStream, transferOptions, async: false, cancellationToken: cancellationToken).EnsureCompleted();
 
         /// <summary>
         /// The <see cref="DownloadToAsync(Uri, Stream, ContentTransferOptions, CancellationToken)"/>
         /// operation downloads the specified content using parallel requests,
         /// and writes the content to <paramref name="destinationStream"/>.
         /// </summary>
-        /// <param name="sourceEndpoint">
+        /// <param name="sourceLocation">
         /// A <see cref="Uri"/> with the Recording's content's url location.
         /// </param>
         /// <param name="destinationStream">
@@ -420,15 +420,15 @@ namespace Azure.Communication.CallingServer
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response> DownloadToAsync(Uri sourceEndpoint, Stream destinationStream, ContentTransferOptions transferOptions = default, CancellationToken cancellationToken = default) =>
-            await _contentDownloader.StagedDownloadAsync(sourceEndpoint, destinationStream, transferOptions, async: true, cancellationToken: cancellationToken).ConfigureAwait(false);
+        public virtual async Task<Response> DownloadToAsync(Uri sourceLocation, Stream destinationStream, ContentTransferOptions transferOptions = default, CancellationToken cancellationToken = default) =>
+            await _contentDownloader.StagedDownloadAsync(sourceLocation, destinationStream, transferOptions, async: true, cancellationToken: cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// The <see cref="DownloadTo(Uri, string, ContentTransferOptions, CancellationToken)"/>
         /// operation downloads the specified content using parallel requests,
         /// and writes the content to <paramref name="destinationPath"/>.
         /// </summary>
-        /// <param name="sourceEndpoint">
+        /// <param name="sourceLocation">
         /// A <see cref="Uri"/> with the Recording's content's url location.
         /// </param>
         /// <param name="destinationPath">
@@ -449,11 +449,11 @@ namespace Azure.Communication.CallingServer
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response DownloadTo(Uri sourceEndpoint, string destinationPath,
+        public virtual Response DownloadTo(Uri sourceLocation, string destinationPath,
             ContentTransferOptions transferOptions = default, CancellationToken cancellationToken = default)
         {
             using Stream destination = File.Create(destinationPath);
-            return _contentDownloader.StagedDownloadAsync(sourceEndpoint, destination, transferOptions,
+            return _contentDownloader.StagedDownloadAsync(sourceLocation, destination, transferOptions,
                 async: false, cancellationToken: cancellationToken).EnsureCompleted();
         }
 
@@ -462,7 +462,7 @@ namespace Azure.Communication.CallingServer
         /// operation downloads the specified content using parallel requests,
         /// and writes the content to <paramref name="destinationPath"/>.
         /// </summary>
-        /// <param name="sourceEndpoint">
+        /// <param name="sourceLocation">
         /// A <see cref="Uri"/> with the Recording's content's url location.
         /// </param>
         /// <param name="destinationPath">
@@ -483,11 +483,11 @@ namespace Azure.Communication.CallingServer
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response> DownloadToAsync(Uri sourceEndpoint, string destinationPath,
+        public virtual async Task<Response> DownloadToAsync(Uri sourceLocation, string destinationPath,
             ContentTransferOptions transferOptions = default, CancellationToken cancellationToken = default)
         {
             using Stream destination = File.Create(destinationPath);
-            return await _contentDownloader.StagedDownloadAsync(sourceEndpoint, destination, transferOptions,
+            return await _contentDownloader.StagedDownloadAsync(sourceLocation, destination, transferOptions,
                 async: true, cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
@@ -495,7 +495,7 @@ namespace Azure.Communication.CallingServer
         /// The <see cref="DeleteRecording(Uri, CancellationToken)"/>
         /// operation deletes the specified content from storage.
         /// </summary>
-        /// <param name="deleteEndpoint">
+        /// <param name="recordingLocation">
         /// A <see cref="Uri"/> with the Recording's content's url location.
         /// </param>
         /// <param name="cancellationToken">
@@ -509,13 +509,13 @@ namespace Azure.Communication.CallingServer
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response DeleteRecording(Uri deleteEndpoint, CancellationToken cancellationToken = default)
+        public virtual Response DeleteRecording(Uri recordingLocation, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallRecordingClient)}.{nameof(DeleteRecording)}");
             scope.Start();
             try
             {
-                HttpMessage message = AmsDirectRequestHelpers.GetHttpMessage(this, deleteEndpoint, RequestMethod.Delete);
+                HttpMessage message = AmsDirectRequestHelpers.GetHttpMessage(this, recordingLocation, RequestMethod.Delete);
                 _pipeline.Send(message, cancellationToken);
 
                 switch (message.Response.Status)
@@ -538,7 +538,7 @@ namespace Azure.Communication.CallingServer
         /// operation deletes the specified content from storage
         /// using parallel requests.
         /// </summary>
-        /// <param name="deleteEndpoint">
+        /// <param name="recordingLocation">
         /// A <see cref="Uri"/> with the Recording's content's url location.
         /// </param>
         /// <param name="cancellationToken">
@@ -552,13 +552,13 @@ namespace Azure.Communication.CallingServer
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response> DeleteRecordingAsync(Uri deleteEndpoint, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteRecordingAsync(Uri recordingLocation, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallRecordingClient)}.{nameof(DeleteRecording)}");
             scope.Start();
             try
             {
-                HttpMessage message = AmsDirectRequestHelpers.GetHttpMessage(this, deleteEndpoint, RequestMethod.Delete);
+                HttpMessage message = AmsDirectRequestHelpers.GetHttpMessage(this, recordingLocation, RequestMethod.Delete);
                 await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
 
                 switch (message.Response.Status)
