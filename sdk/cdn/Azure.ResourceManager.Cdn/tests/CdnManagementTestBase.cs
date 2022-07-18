@@ -45,7 +45,9 @@ namespace Azure.ResourceManager.Cdn.Tests
         protected async Task<ProfileResource> CreateCdnProfile(ResourceGroupResource rg, string profileName, CdnSkuName skuName)
         {
             ProfileData input = ResourceDataHelper.CreateProfileData(skuName);
-            var lro = await rg.GetProfiles().CreateOrUpdateAsync(WaitUntil.Completed, profileName, input);
+            var lro = await rg.GetProfiles().CreateOrUpdateAsync(WaitUntil.Started, profileName, input);
+            Assert.Throws<InvalidOperationException>(() => _ = lro.Value);
+            await lro.WaitForCompletionAsync(default).ConfigureAwait(false);
             return lro.Value;
         }
 
@@ -126,7 +128,10 @@ namespace Azure.ResourceManager.Cdn.Tests
         protected async Task<CdnCustomDomainResource> CreateCdnCustomDomain(CdnEndpointResource endpoint, string customDomainName, string hostName)
         {
             CdnCustomDomainCreateOrUpdateContent input = ResourceDataHelper.CreateCdnCustomDomainData(hostName);
-            var lro = await endpoint.GetCdnCustomDomains().CreateOrUpdateAsync(WaitUntil.Completed, customDomainName, input);
+            var lro = await endpoint.GetCdnCustomDomains().CreateOrUpdateAsync(WaitUntil.Started, customDomainName, input);
+            var interimValue = lro.Value;
+            Assert.AreEqual(interimValue.Data.ResourceState, CustomDomainResourceState.Creating);
+            await lro.WaitForCompletionAsync(default).ConfigureAwait(false);
             return lro.Value;
         }
 

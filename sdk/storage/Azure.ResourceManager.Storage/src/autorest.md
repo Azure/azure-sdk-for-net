@@ -161,6 +161,9 @@ rename-mapping:
   BlobInventoryPolicySchema.enabled: IsEnabled
   ActiveDirectoryPropertiesAccountType: ActiveDirectoryAccountType
 
+enable-lro-interim-state:
+  Microsoft.Storage/storageAccounts/restoreBlobRanges: Post
+
 directive:
   - from: swagger-document
     where: $.definitions.FileShareItems.properties.value.items["$ref"]

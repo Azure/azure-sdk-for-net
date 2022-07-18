@@ -91,6 +91,9 @@ rename-mapping:
   SslProtocol: DeliveryRuleSslProtocol
   SslProtocolMatchCondition: DeliveryRuleSslProtocolMatchCondition
   
+enable-lro-interim-state:
+  Microsoft.Cdn/profiles/endpoints/customDomains: Put
+ 
 directive:
   - from: swagger-document
     where: $.definitions..parameters

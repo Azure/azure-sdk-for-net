@@ -679,6 +679,8 @@ namespace Azure.ResourceManager.Storage.Tests
                 });
             ArmOperation<BlobRestoreStatus> restoreOperation = await _storageAccount.RestoreBlobRangesAsync(WaitUntil.Started, restoreContent);
 
+            BlobRestoreStatus interimRestoreStatus = restoreOperation.Value;
+            Assert.IsTrue(interimRestoreStatus.Status == BlobRestoreProgressStatus.InProgress);
             //wait for restore completion
             BlobRestoreStatus restoreStatus = await restoreOperation.WaitForCompletionAsync();
 
