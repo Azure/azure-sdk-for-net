@@ -8,24 +8,24 @@
 namespace Azure.ResourceManager.Communication.Models
 {
     /// <summary> A class that represents a VerificationStatus record. </summary>
-    public partial class DnsRecord
+    public partial class VerificationDnsRecord
     {
-        /// <summary> Initializes a new instance of DnsRecord. </summary>
-        internal DnsRecord()
+        /// <summary> Initializes a new instance of VerificationDnsRecord. </summary>
+        internal VerificationDnsRecord()
         {
         }
 
-        /// <summary> Initializes a new instance of DnsRecord. </summary>
+        /// <summary> Initializes a new instance of VerificationDnsRecord. </summary>
         /// <param name="dnsRecordType"> Type of the DNS record. Example: TXT. </param>
         /// <param name="name"> Name of the DNS record. </param>
         /// <param name="value"> Value of the DNS record. </param>
-        /// <param name="ttl"> Represents an expiry time in seconds to represent how long this entry can be cached by the resolver, default = 3600sec. </param>
-        internal DnsRecord(string dnsRecordType, string name, string value, int? ttl)
+        /// <param name="timeToLiveInSeconds"> Represents an expiry time in seconds to represent how long this entry can be cached by the resolver, default = 3600sec. </param>
+        internal VerificationDnsRecord(string dnsRecordType, string name, string value, int? timeToLiveInSeconds)
         {
             DnsRecordType = dnsRecordType;
             Name = name;
             Value = value;
-            Ttl = ttl;
+            TimeToLiveInSeconds = timeToLiveInSeconds;
         }
 
         /// <summary> Type of the DNS record. Example: TXT. </summary>
@@ -35,6 +35,6 @@ namespace Azure.ResourceManager.Communication.Models
         /// <summary> Value of the DNS record. </summary>
         public string Value { get; }
         /// <summary> Represents an expiry time in seconds to represent how long this entry can be cached by the resolver, default = 3600sec. </summary>
-        public int? Ttl { get; }
+        public int? TimeToLiveInSeconds { get; }
     }
 }
