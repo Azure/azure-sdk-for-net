@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Mock
             var serviceBusRuleResource = GetArmClient().GetServiceBusRuleResource(serviceBusRuleResourceId);
             await serviceBusRuleResource.UpdateAsync(WaitUntil.Completed, new ServiceBusRuleData()
             {
-                FilterType = FilterType.CorrelationFilter,
-                CorrelationFilter = new CorrelationFilter()
+                FilterType = ServiceBusFilterType.CorrelationFilter,
+                CorrelationFilter = new ServiceBusCorrelationFilter()
                 {
-                    Properties =
+                    ApplicationProperties =
 {
 ["topicHint"] = "Crop",
 },
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Mock
             var serviceBusRuleResource = GetArmClient().GetServiceBusRuleResource(serviceBusRuleResourceId);
             await serviceBusRuleResource.UpdateAsync(WaitUntil.Completed, new ServiceBusRuleData()
             {
-                FilterType = FilterType.SqlFilter,
-                SqlFilter = new SqlFilter()
+                FilterType = ServiceBusFilterType.SqlFilter,
+                SqlFilter = new ServiceBusSqlFilter()
                 {
                     SqlExpression = "myproperty=test",
                 },
