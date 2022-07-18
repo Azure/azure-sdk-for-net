@@ -230,7 +230,7 @@ namespace Azure.Storage.Blobs.Test
         private async Task<byte[]> DownloadBypassDecryption(BlobClient blob)
         {
             var encryptedDataStream = new MemoryStream();
-            await InstrumentClient(new BlobClient(blob.Uri, Tenants.GetNewSharedKeyCredentials())).DownloadToAsync(encryptedDataStream, cancellationToken: s_cancellationToken);
+            await InstrumentClient(new BlobClient(blob.Uri, Tenants.GetNewSharedKeyCredentials(), GetOptions())).DownloadToAsync(encryptedDataStream, cancellationToken: s_cancellationToken);
             return encryptedDataStream.ToArray();
         }
 

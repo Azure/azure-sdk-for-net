@@ -143,7 +143,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\core\Azure
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Common.AesGcm.Tests", "Azure.Storage.Common\tests\AesGcmTests\Azure.Storage.Common.AesGcm.Tests.csproj", "{955CECCE-61B1-4832-9A42-88E95CB9ACBD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.Tests.Unsafe", "Azure.Storage.Blobs\tests\Unsafe\Azure.Storage.Blobs.Tests.Unsafe.csproj", "{47AC755B-285C-4A8B-A4C1-44CC6BB497D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.Unsafe.Tests", "Azure.Storage.Blobs\tests\Unsafe\Azure.Storage.Blobs.Unsafe.Tests.csproj", "{47AC755B-285C-4A8B-A4C1-44CC6BB497D1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
