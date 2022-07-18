@@ -159,14 +159,22 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 {
                     using var memStreamCopy = new MemoryStream((int)(memStreamSource.Length - memStreamSource.Position));
                     memStreamSource.CopyTo(memStreamCopy, StreamBufferSizeInBytes);
-                    return new ArraySegment<byte>(memStreamCopy.ToArray());
+                    if (!memStreamCopy.TryGetBuffer(out ArraySegment<byte> segment))
+                    {
+                        segment = new ArraySegment<byte>(memStreamCopy.ToArray());
+                    }
+                    return segment;
                 }
 
                 default:
                 {
-                    using var memStream = new MemoryStream(StreamBufferSizeInBytes);
-                    stream.CopyTo(memStream, StreamBufferSizeInBytes);
-                    return new ArraySegment<byte>(memStream.ToArray());
+                    using var memStreamCopy = new MemoryStream(StreamBufferSizeInBytes);
+                    stream.CopyTo(memStreamCopy, StreamBufferSizeInBytes);
+                    if (!memStreamCopy.TryGetBuffer(out ArraySegment<byte> segment))
+                    {
+                        segment = new ArraySegment<byte>(memStreamCopy.ToArray());
+                    }
+                    return segment;
                 }
             }
         }
