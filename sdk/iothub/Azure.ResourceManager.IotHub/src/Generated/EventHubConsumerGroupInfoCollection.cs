@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Add a consumer group to an Event Hub-compatible endpoint in an IoT hub
+        /// Add a consumer group to an Event Hub-compatible endpoint in an IoT hub.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/eventHubEndpoints/{eventHubEndpointName}/ConsumerGroups/{name}
         /// Operation Id: IotHubResource_CreateEventHubConsumerGroup
         /// </summary>
@@ -70,7 +70,6 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <remarks> Add a consumer group to an Event Hub-compatible endpoint in an IoT hub. </remarks>
         public virtual async Task<ArmOperation<EventHubConsumerGroupInfoResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, EventHubConsumerGroupInfoCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -94,7 +93,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Add a consumer group to an Event Hub-compatible endpoint in an IoT hub
+        /// Add a consumer group to an Event Hub-compatible endpoint in an IoT hub.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/eventHubEndpoints/{eventHubEndpointName}/ConsumerGroups/{name}
         /// Operation Id: IotHubResource_CreateEventHubConsumerGroup
         /// </summary>
@@ -104,7 +103,6 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <remarks> Add a consumer group to an Event Hub-compatible endpoint in an IoT hub. </remarks>
         public virtual ArmOperation<EventHubConsumerGroupInfoResource> CreateOrUpdate(WaitUntil waitUntil, string name, EventHubConsumerGroupInfoCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -128,7 +126,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get a consumer group from the Event Hub-compatible device-to-cloud endpoint for an IoT hub
+        /// Get a consumer group from the Event Hub-compatible device-to-cloud endpoint for an IoT hub.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/eventHubEndpoints/{eventHubEndpointName}/ConsumerGroups/{name}
         /// Operation Id: IotHubResource_GetEventHubConsumerGroup
         /// </summary>
@@ -136,7 +134,6 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <remarks> Get a consumer group from the Event Hub-compatible device-to-cloud endpoint for an IoT hub. </remarks>
         public virtual async Task<Response<EventHubConsumerGroupInfoResource>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -158,7 +155,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get a consumer group from the Event Hub-compatible device-to-cloud endpoint for an IoT hub
+        /// Get a consumer group from the Event Hub-compatible device-to-cloud endpoint for an IoT hub.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/eventHubEndpoints/{eventHubEndpointName}/ConsumerGroups/{name}
         /// Operation Id: IotHubResource_GetEventHubConsumerGroup
         /// </summary>
@@ -166,7 +163,6 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <remarks> Get a consumer group from the Event Hub-compatible device-to-cloud endpoint for an IoT hub. </remarks>
         public virtual Response<EventHubConsumerGroupInfoResource> Get(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -188,13 +184,12 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get a list of the consumer groups in the Event Hub-compatible device-to-cloud endpoint in an IoT hub
+        /// Get a list of the consumer groups in the Event Hub-compatible device-to-cloud endpoint in an IoT hub.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/eventHubEndpoints/{eventHubEndpointName}/ConsumerGroups
         /// Operation Id: IotHubResource_ListEventHubConsumerGroups
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EventHubConsumerGroupInfoResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Get a list of the consumer groups in the Event Hub-compatible device-to-cloud endpoint in an IoT hub. </remarks>
         public virtual AsyncPageable<EventHubConsumerGroupInfoResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<EventHubConsumerGroupInfoResource>> FirstPageFunc(int? pageSizeHint)
@@ -231,13 +226,12 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get a list of the consumer groups in the Event Hub-compatible device-to-cloud endpoint in an IoT hub
+        /// Get a list of the consumer groups in the Event Hub-compatible device-to-cloud endpoint in an IoT hub.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/eventHubEndpoints/{eventHubEndpointName}/ConsumerGroups
         /// Operation Id: IotHubResource_ListEventHubConsumerGroups
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EventHubConsumerGroupInfoResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Get a list of the consumer groups in the Event Hub-compatible device-to-cloud endpoint in an IoT hub. </remarks>
         public virtual Pageable<EventHubConsumerGroupInfoResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<EventHubConsumerGroupInfoResource> FirstPageFunc(int? pageSizeHint)
@@ -274,7 +268,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get a consumer group from the Event Hub-compatible device-to-cloud endpoint for an IoT hub
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/eventHubEndpoints/{eventHubEndpointName}/ConsumerGroups/{name}
         /// Operation Id: IotHubResource_GetEventHubConsumerGroup
         /// </summary>
@@ -282,7 +276,6 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -302,7 +295,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get a consumer group from the Event Hub-compatible device-to-cloud endpoint for an IoT hub
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/eventHubEndpoints/{eventHubEndpointName}/ConsumerGroups/{name}
         /// Operation Id: IotHubResource_GetEventHubConsumerGroup
         /// </summary>
@@ -310,7 +303,6 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));

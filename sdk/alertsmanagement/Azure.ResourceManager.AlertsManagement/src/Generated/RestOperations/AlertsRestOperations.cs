@@ -282,13 +282,12 @@ namespace Azure.ResourceManager.AlertsManagement
             return message;
         }
 
-        /// <summary> Get a specific alert. </summary>
+        /// <summary> Get information related to a specific alert. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="alertId"> Unique ID of an alert instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="alertId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="alertId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Get information related to a specific alert. </remarks>
         public async Task<Response<ServiceAlertData>> GetByIdAsync(string subscriptionId, string alertId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -312,13 +311,12 @@ namespace Azure.ResourceManager.AlertsManagement
             }
         }
 
-        /// <summary> Get a specific alert. </summary>
+        /// <summary> Get information related to a specific alert. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="alertId"> Unique ID of an alert instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="alertId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="alertId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Get information related to a specific alert. </remarks>
         public Response<ServiceAlertData> GetById(string subscriptionId, string alertId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));

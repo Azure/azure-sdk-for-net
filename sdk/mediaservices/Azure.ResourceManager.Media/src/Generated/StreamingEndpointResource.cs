@@ -89,12 +89,11 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get StreamingEndpoint
+        /// Gets a streaming endpoint.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints/{streamingEndpointName}
         /// Operation Id: StreamingEndpoints_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Gets a streaming endpoint. </remarks>
         public virtual async Task<Response<StreamingEndpointResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _streamingEndpointClientDiagnostics.CreateScope("StreamingEndpointResource.Get");
@@ -114,12 +113,11 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get StreamingEndpoint
+        /// Gets a streaming endpoint.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints/{streamingEndpointName}
         /// Operation Id: StreamingEndpoints_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Gets a streaming endpoint. </remarks>
         public virtual Response<StreamingEndpointResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _streamingEndpointClientDiagnostics.CreateScope("StreamingEndpointResource.Get");
@@ -139,13 +137,12 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Delete StreamingEndpoint
+        /// Deletes a streaming endpoint.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints/{streamingEndpointName}
         /// Operation Id: StreamingEndpoints_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Deletes a streaming endpoint. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _streamingEndpointClientDiagnostics.CreateScope("StreamingEndpointResource.Delete");
@@ -166,13 +163,12 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Delete StreamingEndpoint
+        /// Deletes a streaming endpoint.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints/{streamingEndpointName}
         /// Operation Id: StreamingEndpoints_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Deletes a streaming endpoint. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _streamingEndpointClientDiagnostics.CreateScope("StreamingEndpointResource.Delete");
@@ -193,7 +189,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Update StreamingEndpoint
+        /// Updates a existing streaming endpoint.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints/{streamingEndpointName}
         /// Operation Id: StreamingEndpoints_Update
         /// </summary>
@@ -201,7 +197,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="data"> Streaming endpoint properties needed for creation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Updates a existing streaming endpoint. </remarks>
         public virtual async Task<ArmOperation<StreamingEndpointResource>> UpdateAsync(WaitUntil waitUntil, StreamingEndpointData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -224,7 +219,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Update StreamingEndpoint
+        /// Updates a existing streaming endpoint.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints/{streamingEndpointName}
         /// Operation Id: StreamingEndpoints_Update
         /// </summary>
@@ -232,7 +227,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="data"> Streaming endpoint properties needed for creation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Updates a existing streaming endpoint. </remarks>
         public virtual ArmOperation<StreamingEndpointResource> Update(WaitUntil waitUntil, StreamingEndpointData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -255,13 +249,12 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// List StreamingEndpoint skus
+        /// List streaming endpoint supported skus.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints/{streamingEndpointName}/skus
         /// Operation Id: StreamingEndpoints_Skus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ArmStreamingEndpointSkuInfo" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List streaming endpoint supported skus. </remarks>
         public virtual AsyncPageable<ArmStreamingEndpointSkuInfo> SkusAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ArmStreamingEndpointSkuInfo>> FirstPageFunc(int? pageSizeHint)
@@ -283,13 +276,12 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// List StreamingEndpoint skus
+        /// List streaming endpoint supported skus.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints/{streamingEndpointName}/skus
         /// Operation Id: StreamingEndpoints_Skus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ArmStreamingEndpointSkuInfo" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List streaming endpoint supported skus. </remarks>
         public virtual Pageable<ArmStreamingEndpointSkuInfo> Skus(CancellationToken cancellationToken = default)
         {
             Page<ArmStreamingEndpointSkuInfo> FirstPageFunc(int? pageSizeHint)
@@ -311,13 +303,12 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Start StreamingEndpoint
+        /// Starts an existing streaming endpoint.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints/{streamingEndpointName}/start
         /// Operation Id: StreamingEndpoints_Start
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Starts an existing streaming endpoint. </remarks>
         public virtual async Task<ArmOperation> StartAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _streamingEndpointClientDiagnostics.CreateScope("StreamingEndpointResource.Start");
@@ -338,13 +329,12 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Start StreamingEndpoint
+        /// Starts an existing streaming endpoint.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints/{streamingEndpointName}/start
         /// Operation Id: StreamingEndpoints_Start
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Starts an existing streaming endpoint. </remarks>
         public virtual ArmOperation Start(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _streamingEndpointClientDiagnostics.CreateScope("StreamingEndpointResource.Start");
@@ -365,13 +355,12 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Stop StreamingEndpoint
+        /// Stops an existing streaming endpoint.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints/{streamingEndpointName}/stop
         /// Operation Id: StreamingEndpoints_Stop
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Stops an existing streaming endpoint. </remarks>
         public virtual async Task<ArmOperation> StopAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _streamingEndpointClientDiagnostics.CreateScope("StreamingEndpointResource.Stop");
@@ -392,13 +381,12 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Stop StreamingEndpoint
+        /// Stops an existing streaming endpoint.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints/{streamingEndpointName}/stop
         /// Operation Id: StreamingEndpoints_Stop
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Stops an existing streaming endpoint. </remarks>
         public virtual ArmOperation Stop(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _streamingEndpointClientDiagnostics.CreateScope("StreamingEndpointResource.Stop");
@@ -419,7 +407,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Scale StreamingEndpoint
+        /// Scales an existing streaming endpoint.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints/{streamingEndpointName}/scale
         /// Operation Id: StreamingEndpoints_Scale
         /// </summary>
@@ -427,7 +415,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="streamingEntityScaleUnit"> Streaming endpoint scale parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="streamingEntityScaleUnit"/> is null. </exception>
-        /// <remarks> Scales an existing streaming endpoint. </remarks>
         public virtual async Task<ArmOperation> ScaleAsync(WaitUntil waitUntil, StreamingEntityScaleUnit streamingEntityScaleUnit, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(streamingEntityScaleUnit, nameof(streamingEntityScaleUnit));
@@ -450,7 +437,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Scale StreamingEndpoint
+        /// Scales an existing streaming endpoint.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints/{streamingEndpointName}/scale
         /// Operation Id: StreamingEndpoints_Scale
         /// </summary>
@@ -458,7 +445,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="streamingEntityScaleUnit"> Streaming endpoint scale parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="streamingEntityScaleUnit"/> is null. </exception>
-        /// <remarks> Scales an existing streaming endpoint. </remarks>
         public virtual ArmOperation Scale(WaitUntil waitUntil, StreamingEntityScaleUnit streamingEntityScaleUnit, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(streamingEntityScaleUnit, nameof(streamingEntityScaleUnit));
@@ -481,7 +467,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get StreamingEndpoint
+        /// Add a tag to the current resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints/{streamingEndpointName}
         /// Operation Id: StreamingEndpoints_Get
         /// </summary>
@@ -489,7 +475,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        /// <remarks> Add a tag to the current resource. </remarks>
         public virtual async Task<Response<StreamingEndpointResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -513,7 +498,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get StreamingEndpoint
+        /// Add a tag to the current resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints/{streamingEndpointName}
         /// Operation Id: StreamingEndpoints_Get
         /// </summary>
@@ -521,7 +506,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        /// <remarks> Add a tag to the current resource. </remarks>
         public virtual Response<StreamingEndpointResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -545,14 +529,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get StreamingEndpoint
+        /// Replace the tags on the resource with the given set.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints/{streamingEndpointName}
         /// Operation Id: StreamingEndpoints_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        /// <remarks> Replace the tags on the resource with the given set. </remarks>
         public virtual async Task<Response<StreamingEndpointResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -576,14 +559,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get StreamingEndpoint
+        /// Replace the tags on the resource with the given set.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints/{streamingEndpointName}
         /// Operation Id: StreamingEndpoints_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        /// <remarks> Replace the tags on the resource with the given set. </remarks>
         public virtual Response<StreamingEndpointResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -607,14 +589,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get StreamingEndpoint
+        /// Removes a tag by key from the resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints/{streamingEndpointName}
         /// Operation Id: StreamingEndpoints_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <remarks> Removes a tag by key from the resource. </remarks>
         public virtual async Task<Response<StreamingEndpointResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -637,14 +618,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get StreamingEndpoint
+        /// Removes a tag by key from the resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints/{streamingEndpointName}
         /// Operation Id: StreamingEndpoints_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <remarks> Removes a tag by key from the resource. </remarks>
         public virtual Response<StreamingEndpointResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));

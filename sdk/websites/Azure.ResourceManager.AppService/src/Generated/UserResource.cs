@@ -88,12 +88,11 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets publishing user
+        /// Description for Gets publishing user
         /// Request Path: /providers/Microsoft.Web/publishingUsers/web
         /// Operation Id: GetPublishingUser
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Gets publishing user. </remarks>
         public virtual async Task<Response<UserResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _userClientDiagnostics.CreateScope("UserResource.Get");
@@ -113,12 +112,11 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets publishing user
+        /// Description for Gets publishing user
         /// Request Path: /providers/Microsoft.Web/publishingUsers/web
         /// Operation Id: GetPublishingUser
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Gets publishing user. </remarks>
         public virtual Response<UserResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _userClientDiagnostics.CreateScope("UserResource.Get");
@@ -138,7 +136,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Updates publishing user
+        /// Description for Updates publishing user
         /// Request Path: /providers/Microsoft.Web/publishingUsers/web
         /// Operation Id: UpdatePublishingUser
         /// </summary>
@@ -146,7 +144,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> Details of publishing user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Description for Updates publishing user. </remarks>
         public virtual async Task<ArmOperation<UserResource>> CreateOrUpdateAsync(WaitUntil waitUntil, UserData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -169,7 +166,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Updates publishing user
+        /// Description for Updates publishing user
         /// Request Path: /providers/Microsoft.Web/publishingUsers/web
         /// Operation Id: UpdatePublishingUser
         /// </summary>
@@ -177,7 +174,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> Details of publishing user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Description for Updates publishing user. </remarks>
         public virtual ArmOperation<UserResource> CreateOrUpdate(WaitUntil waitUntil, UserData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));

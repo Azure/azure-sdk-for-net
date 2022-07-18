@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get process information by its ID for a specific scaled-out instance in a web site.
+        /// Description for Get process information by its ID for a specific scaled-out instance in a web site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/processes/{processId}
         /// Operation Id: WebApps_GetInstanceProcess
         /// </summary>
@@ -109,7 +109,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="processId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
-        /// <remarks> Description for Get process information by its ID for a specific scaled-out instance in a web site. </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteInstanceProcessResource>> GetSiteInstanceProcessAsync(string processId, CancellationToken cancellationToken = default)
         {
@@ -117,7 +116,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get process information by its ID for a specific scaled-out instance in a web site.
+        /// Description for Get process information by its ID for a specific scaled-out instance in a web site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/processes/{processId}
         /// Operation Id: WebApps_GetInstanceProcess
         /// </summary>
@@ -125,7 +124,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="processId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
-        /// <remarks> Description for Get process information by its ID for a specific scaled-out instance in a web site. </remarks>
         [ForwardsClientCalls]
         public virtual Response<SiteInstanceProcessResource> GetSiteInstanceProcess(string processId, CancellationToken cancellationToken = default)
         {
@@ -133,12 +131,11 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets all scale-out instances of an app.
+        /// Description for Gets all scale-out instances of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}
         /// Operation Id: WebApps_GetInstanceInfo
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Gets all scale-out instances of an app. </remarks>
         public virtual async Task<Response<SiteInstanceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteInstanceWebAppsClientDiagnostics.CreateScope("SiteInstanceResource.Get");
@@ -158,12 +155,11 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets all scale-out instances of an app.
+        /// Description for Gets all scale-out instances of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}
         /// Operation Id: WebApps_GetInstanceInfo
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Gets all scale-out instances of an app. </remarks>
         public virtual Response<SiteInstanceResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _siteInstanceWebAppsClientDiagnostics.CreateScope("SiteInstanceResource.Get");

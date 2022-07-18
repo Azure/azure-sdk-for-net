@@ -92,7 +92,6 @@ namespace Azure.ResourceManager.Monitor
         /// Operation Id: DataCollectionRuleAssociations_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Returns the specified association. </remarks>
         public virtual async Task<Response<DataCollectionRuleAssociationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _dataCollectionRuleAssociationClientDiagnostics.CreateScope("DataCollectionRuleAssociationResource.Get");
@@ -117,7 +116,6 @@ namespace Azure.ResourceManager.Monitor
         /// Operation Id: DataCollectionRuleAssociations_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Returns the specified association. </remarks>
         public virtual Response<DataCollectionRuleAssociationResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _dataCollectionRuleAssociationClientDiagnostics.CreateScope("DataCollectionRuleAssociationResource.Get");
@@ -143,7 +141,6 @@ namespace Azure.ResourceManager.Monitor
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Deletes an association. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _dataCollectionRuleAssociationClientDiagnostics.CreateScope("DataCollectionRuleAssociationResource.Delete");
@@ -170,7 +167,6 @@ namespace Azure.ResourceManager.Monitor
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Deletes an association. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _dataCollectionRuleAssociationClientDiagnostics.CreateScope("DataCollectionRuleAssociationResource.Delete");
@@ -198,7 +194,6 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Creates or updates an association. </remarks>
         public virtual async Task<ArmOperation<DataCollectionRuleAssociationResource>> UpdateAsync(WaitUntil waitUntil, DataCollectionRuleAssociationData data = null, CancellationToken cancellationToken = default)
         {
             using var scope = _dataCollectionRuleAssociationClientDiagnostics.CreateScope("DataCollectionRuleAssociationResource.Update");
@@ -226,7 +221,6 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Creates or updates an association. </remarks>
         public virtual ArmOperation<DataCollectionRuleAssociationResource> Update(WaitUntil waitUntil, DataCollectionRuleAssociationData data = null, CancellationToken cancellationToken = default)
         {
             using var scope = _dataCollectionRuleAssociationClientDiagnostics.CreateScope("DataCollectionRuleAssociationResource.Update");

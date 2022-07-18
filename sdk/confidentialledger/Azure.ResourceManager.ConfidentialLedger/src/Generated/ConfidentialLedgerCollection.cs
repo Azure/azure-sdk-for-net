@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         }
 
         /// <summary>
-        /// Creates a  Confidential Ledger.
+        /// Creates a  Confidential Ledger with the specified ledger parameters.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConfidentialLedger/ledgers/{ledgerName}
         /// Operation Id: Ledger_Create
         /// </summary>
@@ -65,7 +65,6 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ledgerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ledgerName"/> or <paramref name="data"/> is null. </exception>
-        /// <remarks> Creates a  Confidential Ledger with the specified ledger parameters. </remarks>
         public virtual async Task<ArmOperation<ConfidentialLedgerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ledgerName, ConfidentialLedgerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ledgerName, nameof(ledgerName));
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         }
 
         /// <summary>
-        /// Creates a  Confidential Ledger.
+        /// Creates a  Confidential Ledger with the specified ledger parameters.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConfidentialLedger/ledgers/{ledgerName}
         /// Operation Id: Ledger_Create
         /// </summary>
@@ -99,7 +98,6 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ledgerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ledgerName"/> or <paramref name="data"/> is null. </exception>
-        /// <remarks> Creates a  Confidential Ledger with the specified ledger parameters. </remarks>
         public virtual ArmOperation<ConfidentialLedgerResource> CreateOrUpdate(WaitUntil waitUntil, string ledgerName, ConfidentialLedgerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ledgerName, nameof(ledgerName));
@@ -123,7 +121,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         }
 
         /// <summary>
-        /// Retrieves information about a Confidential Ledger resource.
+        /// Retrieves the properties of a Confidential Ledger.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConfidentialLedger/ledgers/{ledgerName}
         /// Operation Id: Ledger_Get
         /// </summary>
@@ -131,7 +129,6 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ledgerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ledgerName"/> is null. </exception>
-        /// <remarks> Retrieves the properties of a Confidential Ledger. </remarks>
         public virtual async Task<Response<ConfidentialLedgerResource>> GetAsync(string ledgerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ledgerName, nameof(ledgerName));
@@ -153,7 +150,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         }
 
         /// <summary>
-        /// Retrieves information about a Confidential Ledger resource.
+        /// Retrieves the properties of a Confidential Ledger.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConfidentialLedger/ledgers/{ledgerName}
         /// Operation Id: Ledger_Get
         /// </summary>
@@ -161,7 +158,6 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ledgerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ledgerName"/> is null. </exception>
-        /// <remarks> Retrieves the properties of a Confidential Ledger. </remarks>
         public virtual Response<ConfidentialLedgerResource> Get(string ledgerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ledgerName, nameof(ledgerName));
@@ -183,14 +179,13 @@ namespace Azure.ResourceManager.ConfidentialLedger
         }
 
         /// <summary>
-        /// Retrieves information about all Confidential Ledger resources under the given subscription and resource group
+        /// Retrieves the properties of all Confidential Ledgers.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConfidentialLedger/ledgers
         /// Operation Id: Ledger_ListByResourceGroup
         /// </summary>
         /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq &apos;Public&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ConfidentialLedgerResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Retrieves the properties of all Confidential Ledgers. </remarks>
         public virtual AsyncPageable<ConfidentialLedgerResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<ConfidentialLedgerResource>> FirstPageFunc(int? pageSizeHint)
@@ -227,14 +222,13 @@ namespace Azure.ResourceManager.ConfidentialLedger
         }
 
         /// <summary>
-        /// Retrieves information about all Confidential Ledger resources under the given subscription and resource group
+        /// Retrieves the properties of all Confidential Ledgers.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConfidentialLedger/ledgers
         /// Operation Id: Ledger_ListByResourceGroup
         /// </summary>
         /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq &apos;Public&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ConfidentialLedgerResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Retrieves the properties of all Confidential Ledgers. </remarks>
         public virtual Pageable<ConfidentialLedgerResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             Page<ConfidentialLedgerResource> FirstPageFunc(int? pageSizeHint)
@@ -271,7 +265,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         }
 
         /// <summary>
-        /// Retrieves information about a Confidential Ledger resource.
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConfidentialLedger/ledgers/{ledgerName}
         /// Operation Id: Ledger_Get
         /// </summary>
@@ -279,7 +273,6 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ledgerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ledgerName"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string ledgerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ledgerName, nameof(ledgerName));
@@ -299,7 +292,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         }
 
         /// <summary>
-        /// Retrieves information about a Confidential Ledger resource.
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConfidentialLedger/ledgers/{ledgerName}
         /// Operation Id: Ledger_Get
         /// </summary>
@@ -307,7 +300,6 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ledgerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ledgerName"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string ledgerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ledgerName, nameof(ledgerName));

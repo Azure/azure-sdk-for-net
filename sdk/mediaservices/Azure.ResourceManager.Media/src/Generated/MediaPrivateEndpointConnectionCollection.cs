@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Update a private endpoint connection.
+        /// Update an existing private endpoint connection.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/privateEndpointConnections/{name}
         /// Operation Id: PrivateEndpointConnections_CreateOrUpdate
         /// </summary>
@@ -64,7 +64,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
-        /// <remarks> Update an existing private endpoint connection. </remarks>
         public virtual async Task<ArmOperation<MediaPrivateEndpointConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, MediaPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Update a private endpoint connection.
+        /// Update an existing private endpoint connection.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/privateEndpointConnections/{name}
         /// Operation Id: PrivateEndpointConnections_CreateOrUpdate
         /// </summary>
@@ -98,7 +97,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
-        /// <remarks> Update an existing private endpoint connection. </remarks>
         public virtual ArmOperation<MediaPrivateEndpointConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string name, MediaPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -122,7 +120,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get private endpoint connection.
+        /// Get the details of a private endpoint connection.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/privateEndpointConnections/{name}
         /// Operation Id: PrivateEndpointConnections_Get
         /// </summary>
@@ -130,7 +128,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <remarks> Get the details of a private endpoint connection. </remarks>
         public virtual async Task<Response<MediaPrivateEndpointConnectionResource>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -152,7 +149,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get private endpoint connection.
+        /// Get the details of a private endpoint connection.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/privateEndpointConnections/{name}
         /// Operation Id: PrivateEndpointConnections_Get
         /// </summary>
@@ -160,7 +157,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <remarks> Get the details of a private endpoint connection. </remarks>
         public virtual Response<MediaPrivateEndpointConnectionResource> Get(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -182,13 +178,12 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// List private endpoint connections.
+        /// List all private endpoint connections.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/privateEndpointConnections
         /// Operation Id: PrivateEndpointConnections_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MediaPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List all private endpoint connections. </remarks>
         public virtual AsyncPageable<MediaPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<MediaPrivateEndpointConnectionResource>> FirstPageFunc(int? pageSizeHint)
@@ -210,13 +205,12 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// List private endpoint connections.
+        /// List all private endpoint connections.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/privateEndpointConnections
         /// Operation Id: PrivateEndpointConnections_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MediaPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List all private endpoint connections. </remarks>
         public virtual Pageable<MediaPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<MediaPrivateEndpointConnectionResource> FirstPageFunc(int? pageSizeHint)
@@ -238,7 +232,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get private endpoint connection.
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/privateEndpointConnections/{name}
         /// Operation Id: PrivateEndpointConnections_Get
         /// </summary>
@@ -246,7 +240,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -266,7 +259,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get private endpoint connection.
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/privateEndpointConnections/{name}
         /// Operation Id: PrivateEndpointConnections_Get
         /// </summary>
@@ -274,7 +267,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));

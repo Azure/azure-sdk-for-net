@@ -87,12 +87,11 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get process information by its ID for a specific scaled-out instance in a web site.
+        /// Description for Get process information by its ID for a specific scaled-out instance in a web site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/processes/{processId}/modules/{baseAddress}
         /// Operation Id: WebApps_GetProcessModule
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Get process information by its ID for a specific scaled-out instance in a web site. </remarks>
         public virtual async Task<Response<SiteProcessModuleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteProcessModuleWebAppsClientDiagnostics.CreateScope("SiteProcessModuleResource.Get");
@@ -112,12 +111,11 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get process information by its ID for a specific scaled-out instance in a web site.
+        /// Description for Get process information by its ID for a specific scaled-out instance in a web site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/processes/{processId}/modules/{baseAddress}
         /// Operation Id: WebApps_GetProcessModule
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Get process information by its ID for a specific scaled-out instance in a web site. </remarks>
         public virtual Response<SiteProcessModuleResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _siteProcessModuleWebAppsClientDiagnostics.CreateScope("SiteProcessModuleResource.Get");

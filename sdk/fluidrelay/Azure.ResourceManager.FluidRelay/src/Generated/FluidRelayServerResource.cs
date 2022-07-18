@@ -105,7 +105,6 @@ namespace Azure.ResourceManager.FluidRelay
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="fluidRelayContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fluidRelayContainerName"/> is null. </exception>
-        /// <remarks> Get a Fluid Relay container. </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<FluidRelayContainerResource>> GetFluidRelayContainerAsync(string fluidRelayContainerName, CancellationToken cancellationToken = default)
         {
@@ -121,7 +120,6 @@ namespace Azure.ResourceManager.FluidRelay
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="fluidRelayContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fluidRelayContainerName"/> is null. </exception>
-        /// <remarks> Get a Fluid Relay container. </remarks>
         [ForwardsClientCalls]
         public virtual Response<FluidRelayContainerResource> GetFluidRelayContainer(string fluidRelayContainerName, CancellationToken cancellationToken = default)
         {
@@ -134,7 +132,6 @@ namespace Azure.ResourceManager.FluidRelay
         /// Operation Id: FluidRelayServers_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get a Fluid Relay server. </remarks>
         public virtual async Task<Response<FluidRelayServerResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _fluidRelayServerClientDiagnostics.CreateScope("FluidRelayServerResource.Get");
@@ -159,7 +156,6 @@ namespace Azure.ResourceManager.FluidRelay
         /// Operation Id: FluidRelayServers_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get a Fluid Relay server. </remarks>
         public virtual Response<FluidRelayServerResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _fluidRelayServerClientDiagnostics.CreateScope("FluidRelayServerResource.Get");
@@ -185,7 +181,6 @@ namespace Azure.ResourceManager.FluidRelay
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Delete a Fluid Relay server. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _fluidRelayServerClientDiagnostics.CreateScope("FluidRelayServerResource.Delete");
@@ -212,7 +207,6 @@ namespace Azure.ResourceManager.FluidRelay
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Delete a Fluid Relay server. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _fluidRelayServerClientDiagnostics.CreateScope("FluidRelayServerResource.Delete");
@@ -240,7 +234,6 @@ namespace Azure.ResourceManager.FluidRelay
         /// <param name="patch"> The details of the Fluid Relay server resource included in update calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        /// <remarks> Update a Fluid Relay server. </remarks>
         public virtual async Task<Response<FluidRelayServerResource>> UpdateAsync(FluidRelayServerPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
@@ -267,7 +260,6 @@ namespace Azure.ResourceManager.FluidRelay
         /// <param name="patch"> The details of the Fluid Relay server resource included in update calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        /// <remarks> Update a Fluid Relay server. </remarks>
         public virtual Response<FluidRelayServerResource> Update(FluidRelayServerPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
@@ -294,7 +286,6 @@ namespace Azure.ResourceManager.FluidRelay
         /// <param name="content"> The details of which keys to generate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks> Regenerate the primary or secondary key for this server. </remarks>
         public virtual async Task<Response<FluidRelayServerKeys>> RegenerateKeyAsync(RegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -321,7 +312,6 @@ namespace Azure.ResourceManager.FluidRelay
         /// <param name="content"> The details of which keys to generate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks> Regenerate the primary or secondary key for this server. </remarks>
         public virtual Response<FluidRelayServerKeys> RegenerateKey(RegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -346,7 +336,6 @@ namespace Azure.ResourceManager.FluidRelay
         /// Operation Id: FluidRelayServers_GetKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get primary and secondary key for this server. </remarks>
         public virtual async Task<Response<FluidRelayServerKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _fluidRelayServerClientDiagnostics.CreateScope("FluidRelayServerResource.GetKeys");
@@ -369,7 +358,6 @@ namespace Azure.ResourceManager.FluidRelay
         /// Operation Id: FluidRelayServers_GetKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get primary and secondary key for this server. </remarks>
         public virtual Response<FluidRelayServerKeys> GetKeys(CancellationToken cancellationToken = default)
         {
             using var scope = _fluidRelayServerClientDiagnostics.CreateScope("FluidRelayServerResource.GetKeys");
@@ -387,7 +375,7 @@ namespace Azure.ResourceManager.FluidRelay
         }
 
         /// <summary>
-        /// Get a Fluid Relay server.
+        /// Add a tag to the current resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.FluidRelay/fluidRelayServers/{fluidRelayServerName}
         /// Operation Id: FluidRelayServers_Get
         /// </summary>
@@ -395,7 +383,6 @@ namespace Azure.ResourceManager.FluidRelay
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        /// <remarks> Add a tag to the current resource. </remarks>
         public virtual async Task<Response<FluidRelayServerResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -419,7 +406,7 @@ namespace Azure.ResourceManager.FluidRelay
         }
 
         /// <summary>
-        /// Get a Fluid Relay server.
+        /// Add a tag to the current resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.FluidRelay/fluidRelayServers/{fluidRelayServerName}
         /// Operation Id: FluidRelayServers_Get
         /// </summary>
@@ -427,7 +414,6 @@ namespace Azure.ResourceManager.FluidRelay
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        /// <remarks> Add a tag to the current resource. </remarks>
         public virtual Response<FluidRelayServerResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -451,14 +437,13 @@ namespace Azure.ResourceManager.FluidRelay
         }
 
         /// <summary>
-        /// Get a Fluid Relay server.
+        /// Replace the tags on the resource with the given set.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.FluidRelay/fluidRelayServers/{fluidRelayServerName}
         /// Operation Id: FluidRelayServers_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        /// <remarks> Replace the tags on the resource with the given set. </remarks>
         public virtual async Task<Response<FluidRelayServerResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -482,14 +467,13 @@ namespace Azure.ResourceManager.FluidRelay
         }
 
         /// <summary>
-        /// Get a Fluid Relay server.
+        /// Replace the tags on the resource with the given set.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.FluidRelay/fluidRelayServers/{fluidRelayServerName}
         /// Operation Id: FluidRelayServers_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        /// <remarks> Replace the tags on the resource with the given set. </remarks>
         public virtual Response<FluidRelayServerResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -513,14 +497,13 @@ namespace Azure.ResourceManager.FluidRelay
         }
 
         /// <summary>
-        /// Get a Fluid Relay server.
+        /// Removes a tag by key from the resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.FluidRelay/fluidRelayServers/{fluidRelayServerName}
         /// Operation Id: FluidRelayServers_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <remarks> Removes a tag by key from the resource. </remarks>
         public virtual async Task<Response<FluidRelayServerResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -543,14 +526,13 @@ namespace Azure.ResourceManager.FluidRelay
         }
 
         /// <summary>
-        /// Get a Fluid Relay server.
+        /// Removes a tag by key from the resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.FluidRelay/fluidRelayServers/{fluidRelayServerName}
         /// Operation Id: FluidRelayServers_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <remarks> Removes a tag by key from the resource. </remarks>
         public virtual Response<FluidRelayServerResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));

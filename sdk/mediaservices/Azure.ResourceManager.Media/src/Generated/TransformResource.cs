@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get Job
+        /// Gets a Job.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}/jobs/{jobName}
         /// Operation Id: Jobs_Get
         /// </summary>
@@ -102,7 +102,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
-        /// <remarks> Gets a Job. </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<JobResource>> GetJobAsync(string jobName, CancellationToken cancellationToken = default)
         {
@@ -110,7 +109,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get Job
+        /// Gets a Job.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}/jobs/{jobName}
         /// Operation Id: Jobs_Get
         /// </summary>
@@ -118,7 +117,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
-        /// <remarks> Gets a Job. </remarks>
         [ForwardsClientCalls]
         public virtual Response<JobResource> GetJob(string jobName, CancellationToken cancellationToken = default)
         {
@@ -126,12 +124,11 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get Transform
+        /// Gets a Transform.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}
         /// Operation Id: Transforms_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Gets a Transform. </remarks>
         public virtual async Task<Response<TransformResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _transformClientDiagnostics.CreateScope("TransformResource.Get");
@@ -151,12 +148,11 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get Transform
+        /// Gets a Transform.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}
         /// Operation Id: Transforms_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Gets a Transform. </remarks>
         public virtual Response<TransformResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _transformClientDiagnostics.CreateScope("TransformResource.Get");
@@ -176,13 +172,12 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Delete Transform
+        /// Deletes a Transform.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}
         /// Operation Id: Transforms_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Deletes a Transform. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _transformClientDiagnostics.CreateScope("TransformResource.Delete");
@@ -203,13 +198,12 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Delete Transform
+        /// Deletes a Transform.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}
         /// Operation Id: Transforms_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Deletes a Transform. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _transformClientDiagnostics.CreateScope("TransformResource.Delete");
@@ -230,14 +224,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Update Transform
+        /// Updates a Transform.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}
         /// Operation Id: Transforms_Update
         /// </summary>
         /// <param name="data"> The request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Updates a Transform. </remarks>
         public virtual async Task<Response<TransformResource>> UpdateAsync(TransformData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -257,14 +250,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Update Transform
+        /// Updates a Transform.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}
         /// Operation Id: Transforms_Update
         /// </summary>
         /// <param name="data"> The request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Updates a Transform. </remarks>
         public virtual Response<TransformResource> Update(TransformData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));

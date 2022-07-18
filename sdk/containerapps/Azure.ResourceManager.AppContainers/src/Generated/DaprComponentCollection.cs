@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Creates or updates a Dapr Component.
+        /// Creates or updates a Dapr Component in a Managed Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{componentName}
         /// Operation Id: DaprComponents_CreateOrUpdate
         /// </summary>
@@ -64,7 +64,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> or <paramref name="data"/> is null. </exception>
-        /// <remarks> Creates or updates a Dapr Component in a Managed Environment. </remarks>
         public virtual async Task<ArmOperation<DaprComponentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string componentName, DaprComponentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Creates or updates a Dapr Component.
+        /// Creates or updates a Dapr Component in a Managed Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{componentName}
         /// Operation Id: DaprComponents_CreateOrUpdate
         /// </summary>
@@ -98,7 +97,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> or <paramref name="data"/> is null. </exception>
-        /// <remarks> Creates or updates a Dapr Component in a Managed Environment. </remarks>
         public virtual ArmOperation<DaprComponentResource> CreateOrUpdate(WaitUntil waitUntil, string componentName, DaprComponentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
@@ -130,7 +128,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
-        /// <remarks> Get a dapr component. </remarks>
         public virtual async Task<Response<DaprComponentResource>> GetAsync(string componentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
@@ -160,7 +157,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
-        /// <remarks> Get a dapr component. </remarks>
         public virtual Response<DaprComponentResource> Get(string componentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
@@ -188,7 +184,6 @@ namespace Azure.ResourceManager.AppContainers
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DaprComponentResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Get the Dapr Components for a managed environment. </remarks>
         public virtual AsyncPageable<DaprComponentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<DaprComponentResource>> FirstPageFunc(int? pageSizeHint)
@@ -231,7 +226,6 @@ namespace Azure.ResourceManager.AppContainers
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DaprComponentResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Get the Dapr Components for a managed environment. </remarks>
         public virtual Pageable<DaprComponentResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<DaprComponentResource> FirstPageFunc(int? pageSizeHint)
@@ -268,7 +262,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get a dapr component.
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{componentName}
         /// Operation Id: DaprComponents_Get
         /// </summary>
@@ -276,7 +270,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string componentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
@@ -296,7 +289,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get a dapr component.
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{componentName}
         /// Operation Id: DaprComponents_Get
         /// </summary>
@@ -304,7 +297,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string componentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));

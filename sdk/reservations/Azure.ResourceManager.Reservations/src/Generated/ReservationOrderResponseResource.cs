@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Get `Reservation` details.
+        /// Get specific `Reservation` details.
         /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}
         /// Operation Id: Reservation_Get
         /// </summary>
@@ -111,7 +111,6 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationId"/> is null. </exception>
-        /// <remarks> Get specific `Reservation` details. </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<ReservationResponseResource>> GetReservationResponseAsync(string reservationId, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -119,7 +118,7 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Get `Reservation` details.
+        /// Get specific `Reservation` details.
         /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}
         /// Operation Id: Reservation_Get
         /// </summary>
@@ -128,7 +127,6 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationId"/> is null. </exception>
-        /// <remarks> Get specific `Reservation` details. </remarks>
         [ForwardsClientCalls]
         public virtual Response<ReservationResponseResource> GetReservationResponse(string reservationId, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -136,13 +134,12 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Get a specific `ReservationOrder`.
+        /// Get the details of the `ReservationOrder`.
         /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}
         /// Operation Id: ReservationOrder_Get
         /// </summary>
         /// <param name="expand"> May be used to expand the planInformation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get the details of the `ReservationOrder`. </remarks>
         public virtual async Task<Response<ReservationOrderResponseResource>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _reservationOrderResponseReservationOrderClientDiagnostics.CreateScope("ReservationOrderResponseResource.Get");
@@ -162,13 +159,12 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Get a specific `ReservationOrder`.
+        /// Get the details of the `ReservationOrder`.
         /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}
         /// Operation Id: ReservationOrder_Get
         /// </summary>
         /// <param name="expand"> May be used to expand the planInformation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get the details of the `ReservationOrder`. </remarks>
         public virtual Response<ReservationOrderResponseResource> Get(string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _reservationOrderResponseReservationOrderClientDiagnostics.CreateScope("ReservationOrderResponseResource.Get");
@@ -188,7 +184,7 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Purchase `ReservationOrder`
+        /// Purchase `ReservationOrder` and create resource under the specified URI.
         /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}
         /// Operation Id: ReservationOrder_Purchase
         /// </summary>
@@ -196,7 +192,6 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="content"> Information needed for calculate or purchase reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks> Purchase `ReservationOrder` and create resource under the specified URI. </remarks>
         public virtual async Task<ArmOperation<ReservationOrderResponseResource>> UpdateAsync(WaitUntil waitUntil, PurchaseRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -219,7 +214,7 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Purchase `ReservationOrder`
+        /// Purchase `ReservationOrder` and create resource under the specified URI.
         /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}
         /// Operation Id: ReservationOrder_Purchase
         /// </summary>
@@ -227,7 +222,6 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="content"> Information needed for calculate or purchase reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks> Purchase `ReservationOrder` and create resource under the specified URI. </remarks>
         public virtual ArmOperation<ReservationOrderResponseResource> Update(WaitUntil waitUntil, PurchaseRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -250,7 +244,7 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Split the `Reservation`.
+        /// Split a `Reservation` into two `Reservation`s with specified quantity distribution.
         /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/split
         /// Operation Id: Reservation_Split
         /// </summary>
@@ -258,7 +252,6 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="content"> Information needed to Split a reservation item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks> Split a `Reservation` into two `Reservation`s with specified quantity distribution. </remarks>
         public virtual async Task<ArmOperation<IList<ReservationResponseData>>> SplitReservationAsync(WaitUntil waitUntil, SplitContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -281,7 +274,7 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Split the `Reservation`.
+        /// Split a `Reservation` into two `Reservation`s with specified quantity distribution.
         /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/split
         /// Operation Id: Reservation_Split
         /// </summary>
@@ -289,7 +282,6 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="content"> Information needed to Split a reservation item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks> Split a `Reservation` into two `Reservation`s with specified quantity distribution. </remarks>
         public virtual ArmOperation<IList<ReservationResponseData>> SplitReservation(WaitUntil waitUntil, SplitContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -312,7 +304,7 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Merges two `Reservation`s.
+        /// Merge the specified `Reservation`s into a new `Reservation`. The two `Reservation`s being merged must have same properties.
         /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/merge
         /// Operation Id: Reservation_Merge
         /// </summary>
@@ -320,7 +312,6 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="content"> Information needed for commercial request for a reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks> Merge the specified `Reservation`s into a new `Reservation`. The two `Reservation`s being merged must have same properties. </remarks>
         public virtual async Task<ArmOperation<IList<ReservationResponseData>>> MergeReservationAsync(WaitUntil waitUntil, MergeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -343,7 +334,7 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Merges two `Reservation`s.
+        /// Merge the specified `Reservation`s into a new `Reservation`. The two `Reservation`s being merged must have same properties.
         /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/merge
         /// Operation Id: Reservation_Merge
         /// </summary>
@@ -351,7 +342,6 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="content"> Information needed for commercial request for a reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks> Merge the specified `Reservation`s into a new `Reservation`. The two `Reservation`s being merged must have same properties. </remarks>
         public virtual ArmOperation<IList<ReservationResponseData>> MergeReservation(WaitUntil waitUntil, MergeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -374,14 +364,13 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Change directory of `ReservationOrder`.
+        /// Change directory (tenant) of `ReservationOrder` and all `Reservation` under it to specified tenant id
         /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/changeDirectory
         /// Operation Id: ReservationOrder_ChangeDirectory
         /// </summary>
         /// <param name="content"> Information needed to change directory of reservation order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks> Change directory (tenant) of `ReservationOrder` and all `Reservation` under it to specified tenant id. </remarks>
         public virtual async Task<Response<ChangeDirectoryResponse>> ChangeDirectoryAsync(ChangeDirectoryContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -401,14 +390,13 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Change directory of `ReservationOrder`.
+        /// Change directory (tenant) of `ReservationOrder` and all `Reservation` under it to specified tenant id
         /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/changeDirectory
         /// Operation Id: ReservationOrder_ChangeDirectory
         /// </summary>
         /// <param name="content"> Information needed to change directory of reservation order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks> Change directory (tenant) of `ReservationOrder` and all `Reservation` under it to specified tenant id. </remarks>
         public virtual Response<ChangeDirectoryResponse> ChangeDirectory(ChangeDirectoryContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));

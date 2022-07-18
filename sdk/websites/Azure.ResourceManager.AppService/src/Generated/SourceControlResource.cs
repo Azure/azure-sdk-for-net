@@ -88,12 +88,11 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets source control token
+        /// Description for Gets source control token
         /// Request Path: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
         /// Operation Id: GetSourceControl
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Gets source control token. </remarks>
         public virtual async Task<Response<SourceControlResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _sourceControlClientDiagnostics.CreateScope("SourceControlResource.Get");
@@ -113,12 +112,11 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets source control token
+        /// Description for Gets source control token
         /// Request Path: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
         /// Operation Id: GetSourceControl
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Gets source control token. </remarks>
         public virtual Response<SourceControlResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _sourceControlClientDiagnostics.CreateScope("SourceControlResource.Get");
@@ -138,7 +136,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Updates source control token
+        /// Description for Updates source control token
         /// Request Path: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
         /// Operation Id: UpdateSourceControl
         /// </summary>
@@ -146,7 +144,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> Source control token information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Description for Updates source control token. </remarks>
         public virtual async Task<ArmOperation<SourceControlResource>> UpdateAsync(WaitUntil waitUntil, SourceControlData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -169,7 +166,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Updates source control token
+        /// Description for Updates source control token
         /// Request Path: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
         /// Operation Id: UpdateSourceControl
         /// </summary>
@@ -177,7 +174,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> Source control token information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Description for Updates source control token. </remarks>
         public virtual ArmOperation<SourceControlResource> Update(WaitUntil waitUntil, SourceControlData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));

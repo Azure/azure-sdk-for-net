@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AlertsManagement
         }
 
         /// <summary>
-        /// Get a specific alert.
+        /// Get information related to a specific alert
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts/{alertId}
         /// Operation Id: Alerts_GetById
         /// </summary>
@@ -81,7 +81,6 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="alertId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
-        /// <remarks> Get information related to a specific alert. </remarks>
         [ForwardsClientCalls]
         public static async Task<Response<ServiceAlertResource>> GetServiceAlertAsync(this SubscriptionResource subscriptionResource, string alertId, CancellationToken cancellationToken = default)
         {
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.AlertsManagement
         }
 
         /// <summary>
-        /// Get a specific alert.
+        /// Get information related to a specific alert
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts/{alertId}
         /// Operation Id: Alerts_GetById
         /// </summary>
@@ -98,7 +97,6 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="alertId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
-        /// <remarks> Get information related to a specific alert. </remarks>
         [ForwardsClientCalls]
         public static Response<ServiceAlertResource> GetServiceAlert(this SubscriptionResource subscriptionResource, string alertId, CancellationToken cancellationToken = default)
         {
@@ -123,7 +121,6 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="smartGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="smartGroupId"/> is null. </exception>
-        /// <remarks> Get information related to a specific Smart Group. </remarks>
         [ForwardsClientCalls]
         public static async Task<Response<SmartGroupResource>> GetSmartGroupAsync(this SubscriptionResource subscriptionResource, string smartGroupId, CancellationToken cancellationToken = default)
         {
@@ -140,7 +137,6 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="smartGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="smartGroupId"/> is null. </exception>
-        /// <remarks> Get information related to a specific Smart Group. </remarks>
         [ForwardsClientCalls]
         public static Response<SmartGroupResource> GetSmartGroup(this SubscriptionResource subscriptionResource, string smartGroupId, CancellationToken cancellationToken = default)
         {

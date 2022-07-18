@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Retrieves a built-in policy definition.
+        /// This operation retrieves the built-in policy definition with the given name.
         /// Request Path: /providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}
         /// Operation Id: PolicyDefinitions_GetBuiltIn
         /// </summary>
@@ -126,7 +126,6 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
-        /// <remarks> This operation retrieves the built-in policy definition with the given name. </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<TenantPolicyDefinitionResource>> GetTenantPolicyDefinitionAsync(string policyDefinitionName, CancellationToken cancellationToken = default)
         {
@@ -134,7 +133,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Retrieves a built-in policy definition.
+        /// This operation retrieves the built-in policy definition with the given name.
         /// Request Path: /providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}
         /// Operation Id: PolicyDefinitions_GetBuiltIn
         /// </summary>
@@ -142,7 +141,6 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
-        /// <remarks> This operation retrieves the built-in policy definition with the given name. </remarks>
         [ForwardsClientCalls]
         public virtual Response<TenantPolicyDefinitionResource> GetTenantPolicyDefinition(string policyDefinitionName, CancellationToken cancellationToken = default)
         {
@@ -157,7 +155,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Retrieves a built in policy set definition.
+        /// This operation retrieves the built-in policy set definition with the given name.
         /// Request Path: /providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}
         /// Operation Id: PolicySetDefinitions_GetBuiltIn
         /// </summary>
@@ -165,7 +163,6 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
-        /// <remarks> This operation retrieves the built-in policy set definition with the given name. </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<TenantPolicySetDefinitionResource>> GetTenantPolicySetDefinitionAsync(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
@@ -173,7 +170,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Retrieves a built in policy set definition.
+        /// This operation retrieves the built-in policy set definition with the given name.
         /// Request Path: /providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}
         /// Operation Id: PolicySetDefinitions_GetBuiltIn
         /// </summary>
@@ -181,7 +178,6 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
-        /// <remarks> This operation retrieves the built-in policy set definition with the given name. </remarks>
         [ForwardsClientCalls]
         public virtual Response<TenantPolicySetDefinitionResource> GetTenantPolicySetDefinition(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
@@ -196,7 +192,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Retrieves a data policy manifest.
+        /// This operation retrieves the data policy manifest with the given policy mode.
         /// Request Path: /providers/Microsoft.Authorization/dataPolicyManifests/{policyMode}
         /// Operation Id: DataPolicyManifests_GetByPolicyMode
         /// </summary>
@@ -204,7 +200,6 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyMode"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyMode"/> is null. </exception>
-        /// <remarks> This operation retrieves the data policy manifest with the given policy mode. </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataPolicyManifestResource>> GetDataPolicyManifestAsync(string policyMode, CancellationToken cancellationToken = default)
         {
@@ -212,7 +207,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Retrieves a data policy manifest.
+        /// This operation retrieves the data policy manifest with the given policy mode.
         /// Request Path: /providers/Microsoft.Authorization/dataPolicyManifests/{policyMode}
         /// Operation Id: DataPolicyManifests_GetByPolicyMode
         /// </summary>
@@ -220,7 +215,6 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyMode"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyMode"/> is null. </exception>
-        /// <remarks> This operation retrieves the data policy manifest with the given policy mode. </remarks>
         [ForwardsClientCalls]
         public virtual Response<DataPolicyManifestResource> GetDataPolicyManifest(string policyMode, CancellationToken cancellationToken = default)
         {

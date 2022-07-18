@@ -193,28 +193,26 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Gets a list of SAP monitors in the specified subscription.
+        /// Gets a list of SAP monitors in the specified subscription. The operations returns various properties of each SAP monitor.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/monitors
         /// Operation Id: monitors_List
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SapMonitorResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Gets a list of SAP monitors in the specified subscription. The operations returns various properties of each SAP monitor. </remarks>
         public static AsyncPageable<SapMonitorResource> GetSapMonitorsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetSapMonitorsAsync(cancellationToken);
         }
 
         /// <summary>
-        /// Gets a list of SAP monitors in the specified subscription.
+        /// Gets a list of SAP monitors in the specified subscription. The operations returns various properties of each SAP monitor.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/monitors
         /// Operation Id: monitors_List
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SapMonitorResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Gets a list of SAP monitors in the specified subscription. The operations returns various properties of each SAP monitor. </remarks>
         public static Pageable<SapMonitorResource> GetSapMonitors(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetSapMonitors(cancellationToken);
@@ -344,7 +342,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Gets properties of a SAP monitor.
+        /// Gets properties of a SAP monitor for the specified subscription, resource group, and resource name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}
         /// Operation Id: monitors_Get
         /// </summary>
@@ -353,7 +351,6 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
-        /// <remarks> Gets properties of a SAP monitor for the specified subscription, resource group, and resource name. </remarks>
         [ForwardsClientCalls]
         public static async Task<Response<SapMonitorResource>> GetSapMonitorAsync(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
         {
@@ -361,7 +358,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Gets properties of a SAP monitor.
+        /// Gets properties of a SAP monitor for the specified subscription, resource group, and resource name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}
         /// Operation Id: monitors_Get
         /// </summary>
@@ -370,7 +367,6 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
-        /// <remarks> Gets properties of a SAP monitor for the specified subscription, resource group, and resource name. </remarks>
         [ForwardsClientCalls]
         public static Response<SapMonitorResource> GetSapMonitor(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
         {

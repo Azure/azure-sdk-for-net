@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ContainerAppResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Get the Container Apps in a given subscription. </remarks>
         public static AsyncPageable<ContainerAppResource> GetContainerAppsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetContainerAppsAsync(cancellationToken);
@@ -49,35 +48,32 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContainerAppResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Get the Container Apps in a given subscription. </remarks>
         public static Pageable<ContainerAppResource> GetContainerApps(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetContainerApps(cancellationToken);
         }
 
         /// <summary>
-        /// Get all Environments for a subscription.
+        /// Get all Managed Environments for a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.App/managedEnvironments
         /// Operation Id: ManagedEnvironments_ListBySubscription
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagedEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Get all Managed Environments for a subscription. </remarks>
         public static AsyncPageable<ManagedEnvironmentResource> GetManagedEnvironmentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetManagedEnvironmentsAsync(cancellationToken);
         }
 
         /// <summary>
-        /// Get all Environments for a subscription.
+        /// Get all Managed Environments for a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.App/managedEnvironments
         /// Operation Id: ManagedEnvironments_ListBySubscription
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Get all Managed Environments for a subscription. </remarks>
         public static Pageable<ManagedEnvironmentResource> GetManagedEnvironments(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetManagedEnvironments(cancellationToken);
@@ -110,7 +106,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="containerAppName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerAppName"/> is null. </exception>
-        /// <remarks> Get the properties of a Container App. </remarks>
         [ForwardsClientCalls]
         public static async Task<Response<ContainerAppResource>> GetContainerAppAsync(this ResourceGroupResource resourceGroupResource, string containerAppName, CancellationToken cancellationToken = default)
         {
@@ -127,7 +122,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="containerAppName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerAppName"/> is null. </exception>
-        /// <remarks> Get the properties of a Container App. </remarks>
         [ForwardsClientCalls]
         public static Response<ContainerAppResource> GetContainerApp(this ResourceGroupResource resourceGroupResource, string containerAppName, CancellationToken cancellationToken = default)
         {
@@ -143,7 +137,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get the properties of a Managed Environment.
+        /// Get the properties of a Managed Environment used to host container apps.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}
         /// Operation Id: ManagedEnvironments_Get
         /// </summary>
@@ -152,7 +146,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
-        /// <remarks> Get the properties of a Managed Environment used to host container apps. </remarks>
         [ForwardsClientCalls]
         public static async Task<Response<ManagedEnvironmentResource>> GetManagedEnvironmentAsync(this ResourceGroupResource resourceGroupResource, string environmentName, CancellationToken cancellationToken = default)
         {
@@ -160,7 +153,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get the properties of a Managed Environment.
+        /// Get the properties of a Managed Environment used to host container apps.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}
         /// Operation Id: ManagedEnvironments_Get
         /// </summary>
@@ -169,7 +162,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
-        /// <remarks> Get the properties of a Managed Environment used to host container apps. </remarks>
         [ForwardsClientCalls]
         public static Response<ManagedEnvironmentResource> GetManagedEnvironment(this ResourceGroupResource resourceGroupResource, string environmentName, CancellationToken cancellationToken = default)
         {

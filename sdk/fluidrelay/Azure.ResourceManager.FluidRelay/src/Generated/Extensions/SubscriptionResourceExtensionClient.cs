@@ -50,7 +50,6 @@ namespace Azure.ResourceManager.FluidRelay
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="FluidRelayServerResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List all Fluid Relay servers in a subscription. </remarks>
         public virtual AsyncPageable<FluidRelayServerResource> GetFluidRelayServersAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<FluidRelayServerResource>> FirstPageFunc(int? pageSizeHint)
@@ -93,7 +92,6 @@ namespace Azure.ResourceManager.FluidRelay
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FluidRelayServerResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List all Fluid Relay servers in a subscription. </remarks>
         public virtual Pageable<FluidRelayServerResource> GetFluidRelayServers(CancellationToken cancellationToken = default)
         {
             Page<FluidRelayServerResource> FirstPageFunc(int? pageSizeHint)

@@ -54,12 +54,11 @@ namespace Azure.ResourceManager.IotHub
             return message;
         }
 
-        /// <summary> Get the number of iot hubs in the subscription. </summary>
+        /// <summary> Get the number of free and paid iot hubs in the subscription. </summary>
         /// <param name="subscriptionId"> The subscription identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Get the number of free and paid iot hubs in the subscription. </remarks>
         public async Task<Response<UserSubscriptionQuotaListResult>> GetSubscriptionQuotaAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -80,12 +79,11 @@ namespace Azure.ResourceManager.IotHub
             }
         }
 
-        /// <summary> Get the number of iot hubs in the subscription. </summary>
+        /// <summary> Get the number of free and paid iot hubs in the subscription. </summary>
         /// <param name="subscriptionId"> The subscription identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Get the number of free and paid iot hubs in the subscription. </remarks>
         public Response<UserSubscriptionQuotaListResult> GetSubscriptionQuota(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));

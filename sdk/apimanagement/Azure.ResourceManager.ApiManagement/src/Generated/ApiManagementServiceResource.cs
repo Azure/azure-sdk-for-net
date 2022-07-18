@@ -1496,13 +1496,12 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Gets available SKUs for API Management service
+        /// Gets all available SKU for a given API Management service
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/skus
         /// Operation Id: ApiManagementServiceSkus_ListAvailableServiceSkus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourceSkuResult" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Gets all available SKU for a given API Management service. </remarks>
         public virtual AsyncPageable<ResourceSkuResult> GetAvailableServiceSkusApiManagementServiceSkusAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ResourceSkuResult>> FirstPageFunc(int? pageSizeHint)
@@ -1539,13 +1538,12 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Gets available SKUs for API Management service
+        /// Gets all available SKU for a given API Management service
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/skus
         /// Operation Id: ApiManagementServiceSkus_ListAvailableServiceSkus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceSkuResult" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Gets all available SKU for a given API Management service. </remarks>
         public virtual Pageable<ResourceSkuResult> GetAvailableServiceSkusApiManagementServiceSkus(CancellationToken cancellationToken = default)
         {
             Page<ResourceSkuResult> FirstPageFunc(int? pageSizeHint)

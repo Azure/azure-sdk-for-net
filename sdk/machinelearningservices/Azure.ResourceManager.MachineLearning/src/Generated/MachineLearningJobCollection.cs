@@ -65,7 +65,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="data"/> is null. </exception>
-        /// <remarks> Creates and executes a Job. </remarks>
         public virtual async Task<ArmOperation<MachineLearningJobResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string id, MachineLearningJobData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -99,7 +98,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="data"/> is null. </exception>
-        /// <remarks> Creates and executes a Job. </remarks>
         public virtual ArmOperation<MachineLearningJobResource> CreateOrUpdate(WaitUntil waitUntil, string id, MachineLearningJobData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -131,7 +129,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <remarks> Gets a Job by name/id. </remarks>
         public virtual async Task<Response<MachineLearningJobResource>> GetAsync(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -161,7 +158,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <remarks> Gets a Job by name/id. </remarks>
         public virtual Response<MachineLearningJobResource> Get(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -195,7 +191,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="scheduleId"> The scheduled id for listing the job triggered from. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MachineLearningJobResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Lists Jobs in the workspace. </remarks>
         public virtual AsyncPageable<MachineLearningJobResource> GetAllAsync(string skip = null, string jobType = null, string tag = null, ListViewType? listViewType = null, bool? scheduled = null, string scheduleId = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<MachineLearningJobResource>> FirstPageFunc(int? pageSizeHint)
@@ -244,7 +239,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="scheduleId"> The scheduled id for listing the job triggered from. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MachineLearningJobResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Lists Jobs in the workspace. </remarks>
         public virtual Pageable<MachineLearningJobResource> GetAll(string skip = null, string jobType = null, string tag = null, ListViewType? listViewType = null, bool? scheduled = null, string scheduleId = null, CancellationToken cancellationToken = default)
         {
             Page<MachineLearningJobResource> FirstPageFunc(int? pageSizeHint)
@@ -281,7 +275,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Gets a Job by name/id.
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/jobs/{id}
         /// Operation Id: Jobs_Get
         /// </summary>
@@ -289,7 +283,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -309,7 +302,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Gets a Job by name/id.
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/jobs/{id}
         /// Operation Id: Jobs_Get
         /// </summary>
@@ -317,7 +310,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));

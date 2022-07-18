@@ -29,35 +29,33 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get all the IoT hubs in a subscription
+        /// Get all the IoT hubs in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Devices/IotHubs
         /// Operation Id: IotHubResource_ListBySubscription
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="IotHubDescriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Get all the IoT hubs in a subscription. </remarks>
         public static AsyncPageable<IotHubDescriptionResource> GetIotHubDescriptionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetIotHubDescriptionsAsync(cancellationToken);
         }
 
         /// <summary>
-        /// Get all the IoT hubs in a subscription
+        /// Get all the IoT hubs in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Devices/IotHubs
         /// Operation Id: IotHubResource_ListBySubscription
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="IotHubDescriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Get all the IoT hubs in a subscription. </remarks>
         public static Pageable<IotHubDescriptionResource> GetIotHubDescriptions(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetIotHubDescriptions(cancellationToken);
         }
 
         /// <summary>
-        /// Check if an IoT hub name is available
+        /// Check if an IoT hub name is available.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Devices/checkNameAvailability
         /// Operation Id: IotHubResource_CheckNameAvailability
         /// </summary>
@@ -65,7 +63,6 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="operationInputs"> Set the name parameter in the OperationInputs structure to the name of the IoT hub to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationInputs"/> is null. </exception>
-        /// <remarks> Check if an IoT hub name is available. </remarks>
         public static async Task<Response<IotHubNameAvailabilityInfo>> CheckNameAvailabilityIotHubResourceAsync(this SubscriptionResource subscriptionResource, OperationInputs operationInputs, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(operationInputs, nameof(operationInputs));
@@ -74,7 +71,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Check if an IoT hub name is available
+        /// Check if an IoT hub name is available.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Devices/checkNameAvailability
         /// Operation Id: IotHubResource_CheckNameAvailability
         /// </summary>
@@ -82,7 +79,6 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="operationInputs"> Set the name parameter in the OperationInputs structure to the name of the IoT hub to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationInputs"/> is null. </exception>
-        /// <remarks> Check if an IoT hub name is available. </remarks>
         public static Response<IotHubNameAvailabilityInfo> CheckNameAvailabilityIotHubResource(this SubscriptionResource subscriptionResource, OperationInputs operationInputs, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(operationInputs, nameof(operationInputs));
@@ -91,28 +87,26 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get the number of iot hubs in the subscription
+        /// Get the number of free and paid iot hubs in the subscription
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Devices/usages
         /// Operation Id: ResourceProviderCommon_GetSubscriptionQuota
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="UserSubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Get the number of free and paid iot hubs in the subscription. </remarks>
         public static AsyncPageable<UserSubscriptionQuota> GetSubscriptionQuotaResourceProviderCommonsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetSubscriptionQuotaResourceProviderCommonsAsync(cancellationToken);
         }
 
         /// <summary>
-        /// Get the number of iot hubs in the subscription
+        /// Get the number of free and paid iot hubs in the subscription
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Devices/usages
         /// Operation Id: ResourceProviderCommon_GetSubscriptionQuota
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="UserSubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Get the number of free and paid iot hubs in the subscription. </remarks>
         public static Pageable<UserSubscriptionQuota> GetSubscriptionQuotaResourceProviderCommons(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetSubscriptionQuotaResourceProviderCommons(cancellationToken);
@@ -136,7 +130,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get the non-security related metadata of an IoT hub
+        /// Get the non-security related metadata of an IoT hub.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}
         /// Operation Id: IotHubResource_Get
         /// </summary>
@@ -145,7 +139,6 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <remarks> Get the non-security related metadata of an IoT hub. </remarks>
         [ForwardsClientCalls]
         public static async Task<Response<IotHubDescriptionResource>> GetIotHubDescriptionAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
@@ -153,7 +146,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get the non-security related metadata of an IoT hub
+        /// Get the non-security related metadata of an IoT hub.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}
         /// Operation Id: IotHubResource_Get
         /// </summary>
@@ -162,7 +155,6 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <remarks> Get the non-security related metadata of an IoT hub. </remarks>
         [ForwardsClientCalls]
         public static Response<IotHubDescriptionResource> GetIotHubDescription(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {

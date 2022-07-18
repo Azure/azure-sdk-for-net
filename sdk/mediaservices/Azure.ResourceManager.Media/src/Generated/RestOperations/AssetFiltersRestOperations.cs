@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> List Asset Filters. </summary>
+        /// <summary> List Asset Filters associated with the specified Asset. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -68,7 +68,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="assetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> List Asset Filters associated with the specified Asset. </remarks>
         public async Task<Response<Models.AssetFilterCollection>> ListAsync(string subscriptionId, string resourceGroupName, string accountName, string assetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -92,7 +91,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> List Asset Filters. </summary>
+        /// <summary> List Asset Filters associated with the specified Asset. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -100,7 +99,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="assetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> List Asset Filters associated with the specified Asset. </remarks>
         public Response<Models.AssetFilterCollection> List(string subscriptionId, string resourceGroupName, string accountName, string assetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -148,7 +146,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Get an Asset Filter. </summary>
+        /// <summary> Get the details of an Asset Filter associated with the specified Asset. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -157,7 +155,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="assetName"/> or <paramref name="filterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="assetName"/> or <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Get the details of an Asset Filter associated with the specified Asset. </remarks>
         public async Task<Response<AssetFilterData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string assetName, string filterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -184,7 +181,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Get an Asset Filter. </summary>
+        /// <summary> Get the details of an Asset Filter associated with the specified Asset. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -193,7 +190,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="assetName"/> or <paramref name="filterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="assetName"/> or <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Get the details of an Asset Filter associated with the specified Asset. </remarks>
         public Response<AssetFilterData> Get(string subscriptionId, string resourceGroupName, string accountName, string assetName, string filterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -248,7 +244,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Create or update an Asset Filter. </summary>
+        /// <summary> Creates or updates an Asset Filter associated with the specified Asset. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -258,7 +254,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="assetName"/>, <paramref name="filterName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="assetName"/> or <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Creates or updates an Asset Filter associated with the specified Asset. </remarks>
         public async Task<Response<AssetFilterData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string assetName, string filterName, AssetFilterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -285,7 +280,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Create or update an Asset Filter. </summary>
+        /// <summary> Creates or updates an Asset Filter associated with the specified Asset. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -295,7 +290,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="assetName"/>, <paramref name="filterName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="assetName"/> or <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Creates or updates an Asset Filter associated with the specified Asset. </remarks>
         public Response<AssetFilterData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string accountName, string assetName, string filterName, AssetFilterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -346,7 +340,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Delete an Asset Filter. </summary>
+        /// <summary> Deletes an Asset Filter associated with the specified Asset. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -355,7 +349,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="assetName"/> or <paramref name="filterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="assetName"/> or <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Deletes an Asset Filter associated with the specified Asset. </remarks>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string accountName, string assetName, string filterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -376,7 +369,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Delete an Asset Filter. </summary>
+        /// <summary> Deletes an Asset Filter associated with the specified Asset. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -385,7 +378,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="assetName"/> or <paramref name="filterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="assetName"/> or <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Deletes an Asset Filter associated with the specified Asset. </remarks>
         public Response Delete(string subscriptionId, string resourceGroupName, string accountName, string assetName, string filterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -434,7 +426,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Update an Asset Filter. </summary>
+        /// <summary> Updates an existing Asset Filter associated with the specified Asset. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -444,7 +436,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="assetName"/>, <paramref name="filterName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="assetName"/> or <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Updates an existing Asset Filter associated with the specified Asset. </remarks>
         public async Task<Response<AssetFilterData>> UpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string assetName, string filterName, AssetFilterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -470,7 +461,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Update an Asset Filter. </summary>
+        /// <summary> Updates an existing Asset Filter associated with the specified Asset. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -480,7 +471,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="assetName"/>, <paramref name="filterName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="assetName"/> or <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Updates an existing Asset Filter associated with the specified Asset. </remarks>
         public Response<AssetFilterData> Update(string subscriptionId, string resourceGroupName, string accountName, string assetName, string filterName, AssetFilterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -520,7 +510,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> List Asset Filters. </summary>
+        /// <summary> List Asset Filters associated with the specified Asset. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
@@ -529,7 +519,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="assetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> List Asset Filters associated with the specified Asset. </remarks>
         public async Task<Response<Models.AssetFilterCollection>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string assetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -554,7 +543,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> List Asset Filters. </summary>
+        /// <summary> List Asset Filters associated with the specified Asset. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
@@ -563,7 +552,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="assetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> List Asset Filters associated with the specified Asset. </remarks>
         public Response<Models.AssetFilterCollection> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string assetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Creates or updates a Managed Environment.
+        /// Creates or updates a Managed Environment used to host container apps.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}
         /// Operation Id: ManagedEnvironments_CreateOrUpdate
         /// </summary>
@@ -65,7 +65,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> or <paramref name="data"/> is null. </exception>
-        /// <remarks> Creates or updates a Managed Environment used to host container apps. </remarks>
         public virtual async Task<ArmOperation<ManagedEnvironmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string environmentName, ManagedEnvironmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Creates or updates a Managed Environment.
+        /// Creates or updates a Managed Environment used to host container apps.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}
         /// Operation Id: ManagedEnvironments_CreateOrUpdate
         /// </summary>
@@ -99,7 +98,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> or <paramref name="data"/> is null. </exception>
-        /// <remarks> Creates or updates a Managed Environment used to host container apps. </remarks>
         public virtual ArmOperation<ManagedEnvironmentResource> CreateOrUpdate(WaitUntil waitUntil, string environmentName, ManagedEnvironmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
@@ -123,7 +121,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get the properties of a Managed Environment.
+        /// Get the properties of a Managed Environment used to host container apps.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}
         /// Operation Id: ManagedEnvironments_Get
         /// </summary>
@@ -131,7 +129,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
-        /// <remarks> Get the properties of a Managed Environment used to host container apps. </remarks>
         public virtual async Task<Response<ManagedEnvironmentResource>> GetAsync(string environmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
@@ -153,7 +150,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get the properties of a Managed Environment.
+        /// Get the properties of a Managed Environment used to host container apps.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}
         /// Operation Id: ManagedEnvironments_Get
         /// </summary>
@@ -161,7 +158,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
-        /// <remarks> Get the properties of a Managed Environment used to host container apps. </remarks>
         public virtual Response<ManagedEnvironmentResource> Get(string environmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
@@ -183,13 +179,12 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get all the Environments in a resource group.
+        /// Get all the Managed Environments in a resource group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments
         /// Operation Id: ManagedEnvironments_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagedEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Get all the Managed Environments in a resource group. </remarks>
         public virtual AsyncPageable<ManagedEnvironmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ManagedEnvironmentResource>> FirstPageFunc(int? pageSizeHint)
@@ -226,13 +221,12 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get all the Environments in a resource group.
+        /// Get all the Managed Environments in a resource group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments
         /// Operation Id: ManagedEnvironments_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Get all the Managed Environments in a resource group. </remarks>
         public virtual Pageable<ManagedEnvironmentResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<ManagedEnvironmentResource> FirstPageFunc(int? pageSizeHint)
@@ -269,7 +263,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get the properties of a Managed Environment.
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}
         /// Operation Id: ManagedEnvironments_Get
         /// </summary>
@@ -277,7 +271,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string environmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
@@ -297,7 +290,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get the properties of a Managed Environment.
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}
         /// Operation Id: ManagedEnvironments_Get
         /// </summary>
@@ -305,7 +298,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string environmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));

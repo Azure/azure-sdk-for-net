@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Create or update an Content Key Policy
+        /// Create or update a Content Key Policy in the Media Services account
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/contentKeyPolicies/{contentKeyPolicyName}
         /// Operation Id: ContentKeyPolicies_CreateOrUpdate
         /// </summary>
@@ -64,7 +64,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="contentKeyPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="contentKeyPolicyName"/> or <paramref name="data"/> is null. </exception>
-        /// <remarks> Create or update a Content Key Policy in the Media Services account. </remarks>
         public virtual async Task<ArmOperation<ContentKeyPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string contentKeyPolicyName, ContentKeyPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(contentKeyPolicyName, nameof(contentKeyPolicyName));
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Create or update an Content Key Policy
+        /// Create or update a Content Key Policy in the Media Services account
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/contentKeyPolicies/{contentKeyPolicyName}
         /// Operation Id: ContentKeyPolicies_CreateOrUpdate
         /// </summary>
@@ -98,7 +97,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="contentKeyPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="contentKeyPolicyName"/> or <paramref name="data"/> is null. </exception>
-        /// <remarks> Create or update a Content Key Policy in the Media Services account. </remarks>
         public virtual ArmOperation<ContentKeyPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string contentKeyPolicyName, ContentKeyPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(contentKeyPolicyName, nameof(contentKeyPolicyName));
@@ -122,7 +120,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get a Content Key Policy
+        /// Get the details of a Content Key Policy in the Media Services account
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/contentKeyPolicies/{contentKeyPolicyName}
         /// Operation Id: ContentKeyPolicies_Get
         /// </summary>
@@ -130,7 +128,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="contentKeyPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="contentKeyPolicyName"/> is null. </exception>
-        /// <remarks> Get the details of a Content Key Policy in the Media Services account. </remarks>
         public virtual async Task<Response<ContentKeyPolicyResource>> GetAsync(string contentKeyPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(contentKeyPolicyName, nameof(contentKeyPolicyName));
@@ -152,7 +149,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get a Content Key Policy
+        /// Get the details of a Content Key Policy in the Media Services account
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/contentKeyPolicies/{contentKeyPolicyName}
         /// Operation Id: ContentKeyPolicies_Get
         /// </summary>
@@ -160,7 +157,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="contentKeyPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="contentKeyPolicyName"/> is null. </exception>
-        /// <remarks> Get the details of a Content Key Policy in the Media Services account. </remarks>
         public virtual Response<ContentKeyPolicyResource> Get(string contentKeyPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(contentKeyPolicyName, nameof(contentKeyPolicyName));
@@ -182,7 +178,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// List Content Key Policies
+        /// Lists the Content Key Policies in the account
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/contentKeyPolicies
         /// Operation Id: ContentKeyPolicies_List
         /// </summary>
@@ -191,7 +187,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="orderby"> Specifies the key by which the result collection should be ordered. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ContentKeyPolicyResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Lists the Content Key Policies in the account. </remarks>
         public virtual AsyncPageable<ContentKeyPolicyResource> GetAllAsync(string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<ContentKeyPolicyResource>> FirstPageFunc(int? pageSizeHint)
@@ -228,7 +223,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// List Content Key Policies
+        /// Lists the Content Key Policies in the account
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/contentKeyPolicies
         /// Operation Id: ContentKeyPolicies_List
         /// </summary>
@@ -237,7 +232,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="orderby"> Specifies the key by which the result collection should be ordered. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContentKeyPolicyResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Lists the Content Key Policies in the account. </remarks>
         public virtual Pageable<ContentKeyPolicyResource> GetAll(string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Page<ContentKeyPolicyResource> FirstPageFunc(int? pageSizeHint)
@@ -274,7 +268,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get a Content Key Policy
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/contentKeyPolicies/{contentKeyPolicyName}
         /// Operation Id: ContentKeyPolicies_Get
         /// </summary>
@@ -282,7 +276,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="contentKeyPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="contentKeyPolicyName"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string contentKeyPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(contentKeyPolicyName, nameof(contentKeyPolicyName));
@@ -302,7 +295,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get a Content Key Policy
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/contentKeyPolicies/{contentKeyPolicyName}
         /// Operation Id: ContentKeyPolicies_Get
         /// </summary>
@@ -310,7 +303,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="contentKeyPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="contentKeyPolicyName"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string contentKeyPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(contentKeyPolicyName, nameof(contentKeyPolicyName));

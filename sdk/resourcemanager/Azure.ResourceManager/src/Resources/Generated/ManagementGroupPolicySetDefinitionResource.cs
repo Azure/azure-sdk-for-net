@@ -88,12 +88,11 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Retrieves a policy set definition.
+        /// This operation retrieves the policy set definition in the given management group with the given name.
         /// Request Path: /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}
         /// Operation Id: PolicySetDefinitions_GetAtManagementGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> This operation retrieves the policy set definition in the given management group with the given name. </remarks>
         public virtual async Task<Response<ManagementGroupPolicySetDefinitionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _managementGroupPolicySetDefinitionPolicySetDefinitionsClientDiagnostics.CreateScope("ManagementGroupPolicySetDefinitionResource.Get");
@@ -113,12 +112,11 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Retrieves a policy set definition.
+        /// This operation retrieves the policy set definition in the given management group with the given name.
         /// Request Path: /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}
         /// Operation Id: PolicySetDefinitions_GetAtManagementGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> This operation retrieves the policy set definition in the given management group with the given name. </remarks>
         public virtual Response<ManagementGroupPolicySetDefinitionResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _managementGroupPolicySetDefinitionPolicySetDefinitionsClientDiagnostics.CreateScope("ManagementGroupPolicySetDefinitionResource.Get");
@@ -138,13 +136,12 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Deletes a policy set definition.
+        /// This operation deletes the policy set definition in the given management group with the given name.
         /// Request Path: /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}
         /// Operation Id: PolicySetDefinitions_DeleteAtManagementGroup
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> This operation deletes the policy set definition in the given management group with the given name. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _managementGroupPolicySetDefinitionPolicySetDefinitionsClientDiagnostics.CreateScope("ManagementGroupPolicySetDefinitionResource.Delete");
@@ -165,13 +162,12 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Deletes a policy set definition.
+        /// This operation deletes the policy set definition in the given management group with the given name.
         /// Request Path: /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}
         /// Operation Id: PolicySetDefinitions_DeleteAtManagementGroup
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> This operation deletes the policy set definition in the given management group with the given name. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _managementGroupPolicySetDefinitionPolicySetDefinitionsClientDiagnostics.CreateScope("ManagementGroupPolicySetDefinitionResource.Delete");
@@ -192,7 +188,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Creates or updates a policy set definition.
+        /// This operation creates or updates a policy set definition in the given management group with the given name.
         /// Request Path: /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}
         /// Operation Id: PolicySetDefinitions_CreateOrUpdateAtManagementGroup
         /// </summary>
@@ -200,7 +196,6 @@ namespace Azure.ResourceManager.Resources
         /// <param name="data"> The policy set definition properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> This operation creates or updates a policy set definition in the given management group with the given name. </remarks>
         public virtual async Task<ArmOperation<ManagementGroupPolicySetDefinitionResource>> UpdateAsync(WaitUntil waitUntil, PolicySetDefinitionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -223,7 +218,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Creates or updates a policy set definition.
+        /// This operation creates or updates a policy set definition in the given management group with the given name.
         /// Request Path: /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}
         /// Operation Id: PolicySetDefinitions_CreateOrUpdateAtManagementGroup
         /// </summary>
@@ -231,7 +226,6 @@ namespace Azure.ResourceManager.Resources
         /// <param name="data"> The policy set definition properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> This operation creates or updates a policy set definition in the given management group with the given name. </remarks>
         public virtual ArmOperation<ManagementGroupPolicySetDefinitionResource> Update(WaitUntil waitUntil, PolicySetDefinitionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Create Or Update
+        /// Add a new Domains resource under the parent EmailService resource or update an existing Domains resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}
         /// Operation Id: Domains_CreateOrUpdate
         /// </summary>
@@ -64,7 +64,6 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> or <paramref name="data"/> is null. </exception>
-        /// <remarks> Add a new Domains resource under the parent EmailService resource or update an existing Domains resource. </remarks>
         public virtual async Task<ArmOperation<CommunicationDomainResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string domainName, CommunicationDomainResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Create Or Update
+        /// Add a new Domains resource under the parent EmailService resource or update an existing Domains resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}
         /// Operation Id: Domains_CreateOrUpdate
         /// </summary>
@@ -98,7 +97,6 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> or <paramref name="data"/> is null. </exception>
-        /// <remarks> Add a new Domains resource under the parent EmailService resource or update an existing Domains resource. </remarks>
         public virtual ArmOperation<CommunicationDomainResource> CreateOrUpdate(WaitUntil waitUntil, string domainName, CommunicationDomainResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
@@ -122,7 +120,7 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Get
+        /// Get the Domains resource and its properties.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}
         /// Operation Id: Domains_Get
         /// </summary>
@@ -130,7 +128,6 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
-        /// <remarks> Get the Domains resource and its properties. </remarks>
         public virtual async Task<Response<CommunicationDomainResource>> GetAsync(string domainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
@@ -152,7 +149,7 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Get
+        /// Get the Domains resource and its properties.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}
         /// Operation Id: Domains_Get
         /// </summary>
@@ -160,7 +157,6 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
-        /// <remarks> Get the Domains resource and its properties. </remarks>
         public virtual Response<CommunicationDomainResource> Get(string domainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
@@ -182,13 +178,12 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// List by EmailService
+        /// Handles requests to list all Domains resources under the parent EmailServices resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains
         /// Operation Id: Domains_ListByEmailServiceResource
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CommunicationDomainResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Handles requests to list all Domains resources under the parent EmailServices resource. </remarks>
         public virtual AsyncPageable<CommunicationDomainResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<CommunicationDomainResource>> FirstPageFunc(int? pageSizeHint)
@@ -225,13 +220,12 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// List by EmailService
+        /// Handles requests to list all Domains resources under the parent EmailServices resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains
         /// Operation Id: Domains_ListByEmailServiceResource
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CommunicationDomainResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Handles requests to list all Domains resources under the parent EmailServices resource. </remarks>
         public virtual Pageable<CommunicationDomainResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<CommunicationDomainResource> FirstPageFunc(int? pageSizeHint)
@@ -268,7 +262,7 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Get
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}
         /// Operation Id: Domains_Get
         /// </summary>
@@ -276,7 +270,6 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string domainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
@@ -296,7 +289,7 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Get
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}
         /// Operation Id: Domains_Get
         /// </summary>
@@ -304,7 +297,6 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string domainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));

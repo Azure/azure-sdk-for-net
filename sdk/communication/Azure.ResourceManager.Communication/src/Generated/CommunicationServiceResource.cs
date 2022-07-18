@@ -90,12 +90,11 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Get
+        /// Get the CommunicationService and its properties.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}
         /// Operation Id: CommunicationServices_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get the CommunicationService and its properties. </remarks>
         public virtual async Task<Response<CommunicationServiceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _communicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.Get");
@@ -115,12 +114,11 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Get
+        /// Get the CommunicationService and its properties.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}
         /// Operation Id: CommunicationServices_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get the CommunicationService and its properties. </remarks>
         public virtual Response<CommunicationServiceResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _communicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.Get");
@@ -140,13 +138,12 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Delete
+        /// Operation to delete a CommunicationService.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}
         /// Operation Id: CommunicationServices_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Operation to delete a CommunicationService. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _communicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.Delete");
@@ -167,13 +164,12 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Delete
+        /// Operation to delete a CommunicationService.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}
         /// Operation Id: CommunicationServices_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Operation to delete a CommunicationService. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _communicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.Delete");
@@ -194,7 +190,7 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Update
+        /// Operation to update an existing CommunicationService.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}
         /// Operation Id: CommunicationServices_Update
         /// </summary>
@@ -202,7 +198,6 @@ namespace Azure.ResourceManager.Communication
         /// <param name="patch"> Parameters for the update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        /// <remarks> Operation to update an existing CommunicationService. </remarks>
         public virtual async Task<ArmOperation<CommunicationServiceResource>> UpdateAsync(WaitUntil waitUntil, CommunicationServiceResourcePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
@@ -225,7 +220,7 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Update
+        /// Operation to update an existing CommunicationService.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}
         /// Operation Id: CommunicationServices_Update
         /// </summary>
@@ -233,7 +228,6 @@ namespace Azure.ResourceManager.Communication
         /// <param name="patch"> Parameters for the update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        /// <remarks> Operation to update an existing CommunicationService. </remarks>
         public virtual ArmOperation<CommunicationServiceResource> Update(WaitUntil waitUntil, CommunicationServiceResourcePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
@@ -256,13 +250,12 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Link Notification Hub
+        /// Links an Azure Notification Hub to this communication service.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}/linkNotificationHub
         /// Operation Id: CommunicationServices_LinkNotificationHub
         /// </summary>
         /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Links an Azure Notification Hub to this communication service. </remarks>
         public virtual async Task<Response<LinkedNotificationHub>> LinkNotificationHubAsync(LinkNotificationHubContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _communicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.LinkNotificationHub");
@@ -280,13 +273,12 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Link Notification Hub
+        /// Links an Azure Notification Hub to this communication service.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}/linkNotificationHub
         /// Operation Id: CommunicationServices_LinkNotificationHub
         /// </summary>
         /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Links an Azure Notification Hub to this communication service. </remarks>
         public virtual Response<LinkedNotificationHub> LinkNotificationHub(LinkNotificationHubContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _communicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.LinkNotificationHub");
@@ -304,12 +296,11 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// List Keys
+        /// Get the access keys of the CommunicationService resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}/listKeys
         /// Operation Id: CommunicationServices_ListKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get the access keys of the CommunicationService resource. </remarks>
         public virtual async Task<Response<CommunicationServiceKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _communicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.GetKeys");
@@ -327,12 +318,11 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// List Keys
+        /// Get the access keys of the CommunicationService resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}/listKeys
         /// Operation Id: CommunicationServices_ListKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get the access keys of the CommunicationService resource. </remarks>
         public virtual Response<CommunicationServiceKeys> GetKeys(CancellationToken cancellationToken = default)
         {
             using var scope = _communicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.GetKeys");
@@ -350,7 +340,7 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Regenerate Key
+        /// Regenerate CommunicationService access key. PrimaryKey and SecondaryKey cannot be regenerated at the same time.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}/regenerateKey
         /// Operation Id: CommunicationServices_RegenerateKey
         /// </summary>
@@ -358,7 +348,6 @@ namespace Azure.ResourceManager.Communication
         /// <param name="content"> Parameter that describes the Regenerate Key Operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks> Regenerate CommunicationService access key. PrimaryKey and SecondaryKey cannot be regenerated at the same time. </remarks>
         public virtual async Task<ArmOperation<CommunicationServiceKeys>> RegenerateKeyAsync(WaitUntil waitUntil, RegenerateCommunicationServiceKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -381,7 +370,7 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Regenerate Key
+        /// Regenerate CommunicationService access key. PrimaryKey and SecondaryKey cannot be regenerated at the same time.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}/regenerateKey
         /// Operation Id: CommunicationServices_RegenerateKey
         /// </summary>
@@ -389,7 +378,6 @@ namespace Azure.ResourceManager.Communication
         /// <param name="content"> Parameter that describes the Regenerate Key Operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks> Regenerate CommunicationService access key. PrimaryKey and SecondaryKey cannot be regenerated at the same time. </remarks>
         public virtual ArmOperation<CommunicationServiceKeys> RegenerateKey(WaitUntil waitUntil, RegenerateCommunicationServiceKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -412,7 +400,7 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Get
+        /// Add a tag to the current resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}
         /// Operation Id: CommunicationServices_Get
         /// </summary>
@@ -420,7 +408,6 @@ namespace Azure.ResourceManager.Communication
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        /// <remarks> Add a tag to the current resource. </remarks>
         public virtual async Task<Response<CommunicationServiceResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -444,7 +431,7 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Get
+        /// Add a tag to the current resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}
         /// Operation Id: CommunicationServices_Get
         /// </summary>
@@ -452,7 +439,6 @@ namespace Azure.ResourceManager.Communication
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        /// <remarks> Add a tag to the current resource. </remarks>
         public virtual Response<CommunicationServiceResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -476,14 +462,13 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Get
+        /// Replace the tags on the resource with the given set.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}
         /// Operation Id: CommunicationServices_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        /// <remarks> Replace the tags on the resource with the given set. </remarks>
         public virtual async Task<Response<CommunicationServiceResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -507,14 +492,13 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Get
+        /// Replace the tags on the resource with the given set.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}
         /// Operation Id: CommunicationServices_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        /// <remarks> Replace the tags on the resource with the given set. </remarks>
         public virtual Response<CommunicationServiceResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -538,14 +522,13 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Get
+        /// Removes a tag by key from the resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}
         /// Operation Id: CommunicationServices_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <remarks> Removes a tag by key from the resource. </remarks>
         public virtual async Task<Response<CommunicationServiceResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -568,14 +551,13 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Get
+        /// Removes a tag by key from the resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}
         /// Operation Id: CommunicationServices_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <remarks> Removes a tag by key from the resource. </remarks>
         public virtual Response<CommunicationServiceResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));

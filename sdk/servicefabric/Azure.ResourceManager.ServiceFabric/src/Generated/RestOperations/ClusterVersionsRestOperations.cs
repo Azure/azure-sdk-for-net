@@ -57,14 +57,13 @@ namespace Azure.ResourceManager.ServiceFabric
             return message;
         }
 
-        /// <summary> Gets information about a Service Fabric cluster code version available in the specified location. </summary>
+        /// <summary> Gets information about an available Service Fabric cluster code version. </summary>
         /// <param name="subscriptionId"> The customer subscription identifier. </param>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
         /// <param name="clusterVersion"> The cluster code version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="clusterVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="clusterVersion"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Gets information about an available Service Fabric cluster code version. </remarks>
         public async Task<Response<ClusterCodeVersionsListResult>> GetAsync(string subscriptionId, AzureLocation location, string clusterVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -86,14 +85,13 @@ namespace Azure.ResourceManager.ServiceFabric
             }
         }
 
-        /// <summary> Gets information about a Service Fabric cluster code version available in the specified location. </summary>
+        /// <summary> Gets information about an available Service Fabric cluster code version. </summary>
         /// <param name="subscriptionId"> The customer subscription identifier. </param>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
         /// <param name="clusterVersion"> The cluster code version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="clusterVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="clusterVersion"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Gets information about an available Service Fabric cluster code version. </remarks>
         public Response<ClusterCodeVersionsListResult> Get(string subscriptionId, AzureLocation location, string clusterVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -137,7 +135,7 @@ namespace Azure.ResourceManager.ServiceFabric
             return message;
         }
 
-        /// <summary> Gets information about a Service Fabric cluster code version available for the specified environment. </summary>
+        /// <summary> Gets information about an available Service Fabric cluster code version by environment. </summary>
         /// <param name="subscriptionId"> The customer subscription identifier. </param>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
         /// <param name="environment"> The operating system of the cluster. The default means all. </param>
@@ -145,7 +143,6 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="clusterVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="clusterVersion"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Gets information about an available Service Fabric cluster code version by environment. </remarks>
         public async Task<Response<ClusterCodeVersionsListResult>> GetByEnvironmentAsync(string subscriptionId, AzureLocation location, ClusterVersionsEnvironment environment, string clusterVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -167,7 +164,7 @@ namespace Azure.ResourceManager.ServiceFabric
             }
         }
 
-        /// <summary> Gets information about a Service Fabric cluster code version available for the specified environment. </summary>
+        /// <summary> Gets information about an available Service Fabric cluster code version by environment. </summary>
         /// <param name="subscriptionId"> The customer subscription identifier. </param>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
         /// <param name="environment"> The operating system of the cluster. The default means all. </param>
@@ -175,7 +172,6 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="clusterVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="clusterVersion"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Gets information about an available Service Fabric cluster code version by environment. </remarks>
         public Response<ClusterCodeVersionsListResult> GetByEnvironment(string subscriptionId, AzureLocation location, ClusterVersionsEnvironment environment, string clusterVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -216,13 +212,12 @@ namespace Azure.ResourceManager.ServiceFabric
             return message;
         }
 
-        /// <summary> Gets the list of Service Fabric cluster code versions available for the specified location. </summary>
+        /// <summary> Gets all available code versions for Service Fabric cluster resources by location. </summary>
         /// <param name="subscriptionId"> The customer subscription identifier. </param>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Gets all available code versions for Service Fabric cluster resources by location. </remarks>
         public async Task<Response<ClusterCodeVersionsListResult>> ListAsync(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -243,13 +238,12 @@ namespace Azure.ResourceManager.ServiceFabric
             }
         }
 
-        /// <summary> Gets the list of Service Fabric cluster code versions available for the specified location. </summary>
+        /// <summary> Gets all available code versions for Service Fabric cluster resources by location. </summary>
         /// <param name="subscriptionId"> The customer subscription identifier. </param>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Gets all available code versions for Service Fabric cluster resources by location. </remarks>
         public Response<ClusterCodeVersionsListResult> List(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -291,14 +285,13 @@ namespace Azure.ResourceManager.ServiceFabric
             return message;
         }
 
-        /// <summary> Gets the list of Service Fabric cluster code versions available for the specified environment. </summary>
+        /// <summary> Gets all available code versions for Service Fabric cluster resources by environment. </summary>
         /// <param name="subscriptionId"> The customer subscription identifier. </param>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
         /// <param name="environment"> The operating system of the cluster. The default means all. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Gets all available code versions for Service Fabric cluster resources by environment. </remarks>
         public async Task<Response<ClusterCodeVersionsListResult>> ListByEnvironmentAsync(string subscriptionId, AzureLocation location, ClusterVersionsEnvironment environment, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -319,14 +312,13 @@ namespace Azure.ResourceManager.ServiceFabric
             }
         }
 
-        /// <summary> Gets the list of Service Fabric cluster code versions available for the specified environment. </summary>
+        /// <summary> Gets all available code versions for Service Fabric cluster resources by environment. </summary>
         /// <param name="subscriptionId"> The customer subscription identifier. </param>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
         /// <param name="environment"> The operating system of the cluster. The default means all. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Gets all available code versions for Service Fabric cluster resources by environment. </remarks>
         public Response<ClusterCodeVersionsListResult> ListByEnvironment(string subscriptionId, AzureLocation location, ClusterVersionsEnvironment environment, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));

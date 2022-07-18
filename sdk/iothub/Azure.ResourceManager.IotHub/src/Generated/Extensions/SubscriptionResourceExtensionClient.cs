@@ -53,13 +53,12 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get all the IoT hubs in a subscription
+        /// Get all the IoT hubs in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Devices/IotHubs
         /// Operation Id: IotHubResource_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="IotHubDescriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Get all the IoT hubs in a subscription. </remarks>
         public virtual AsyncPageable<IotHubDescriptionResource> GetIotHubDescriptionsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<IotHubDescriptionResource>> FirstPageFunc(int? pageSizeHint)
@@ -96,13 +95,12 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get all the IoT hubs in a subscription
+        /// Get all the IoT hubs in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Devices/IotHubs
         /// Operation Id: IotHubResource_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="IotHubDescriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Get all the IoT hubs in a subscription. </remarks>
         public virtual Pageable<IotHubDescriptionResource> GetIotHubDescriptions(CancellationToken cancellationToken = default)
         {
             Page<IotHubDescriptionResource> FirstPageFunc(int? pageSizeHint)
@@ -139,13 +137,12 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Check if an IoT hub name is available
+        /// Check if an IoT hub name is available.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Devices/checkNameAvailability
         /// Operation Id: IotHubResource_CheckNameAvailability
         /// </summary>
         /// <param name="operationInputs"> Set the name parameter in the OperationInputs structure to the name of the IoT hub to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Check if an IoT hub name is available. </remarks>
         public virtual async Task<Response<IotHubNameAvailabilityInfo>> CheckNameAvailabilityIotHubResourceAsync(OperationInputs operationInputs, CancellationToken cancellationToken = default)
         {
             using var scope = IotHubResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityIotHubResource");
@@ -163,13 +160,12 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Check if an IoT hub name is available
+        /// Check if an IoT hub name is available.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Devices/checkNameAvailability
         /// Operation Id: IotHubResource_CheckNameAvailability
         /// </summary>
         /// <param name="operationInputs"> Set the name parameter in the OperationInputs structure to the name of the IoT hub to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Check if an IoT hub name is available. </remarks>
         public virtual Response<IotHubNameAvailabilityInfo> CheckNameAvailabilityIotHubResource(OperationInputs operationInputs, CancellationToken cancellationToken = default)
         {
             using var scope = IotHubResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityIotHubResource");
@@ -187,13 +183,12 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get the number of iot hubs in the subscription
+        /// Get the number of free and paid iot hubs in the subscription
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Devices/usages
         /// Operation Id: ResourceProviderCommon_GetSubscriptionQuota
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="UserSubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Get the number of free and paid iot hubs in the subscription. </remarks>
         public virtual AsyncPageable<UserSubscriptionQuota> GetSubscriptionQuotaResourceProviderCommonsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<UserSubscriptionQuota>> FirstPageFunc(int? pageSizeHint)
@@ -215,13 +210,12 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get the number of iot hubs in the subscription
+        /// Get the number of free and paid iot hubs in the subscription
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Devices/usages
         /// Operation Id: ResourceProviderCommon_GetSubscriptionQuota
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="UserSubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Get the number of free and paid iot hubs in the subscription. </remarks>
         public virtual Pageable<UserSubscriptionQuota> GetSubscriptionQuotaResourceProviderCommons(CancellationToken cancellationToken = default)
         {
             Page<UserSubscriptionQuota> FirstPageFunc(int? pageSizeHint)

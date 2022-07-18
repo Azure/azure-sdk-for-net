@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements VmmServers PUT method.
+        /// Onboards the SCVMM fabric as an Azure VmmServer resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}
         /// Operation Id: VmmServers_CreateOrUpdate
         /// </summary>
@@ -65,7 +65,6 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vmmServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmmServerName"/> or <paramref name="data"/> is null. </exception>
-        /// <remarks> Onboards the SCVMM fabric as an Azure VmmServer resource. </remarks>
         public virtual async Task<ArmOperation<ScVmmServerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vmmServerName, ScVmmServerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vmmServerName, nameof(vmmServerName));
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements VmmServers PUT method.
+        /// Onboards the SCVMM fabric as an Azure VmmServer resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}
         /// Operation Id: VmmServers_CreateOrUpdate
         /// </summary>
@@ -99,7 +98,6 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vmmServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmmServerName"/> or <paramref name="data"/> is null. </exception>
-        /// <remarks> Onboards the SCVMM fabric as an Azure VmmServer resource. </remarks>
         public virtual ArmOperation<ScVmmServerResource> CreateOrUpdate(WaitUntil waitUntil, string vmmServerName, ScVmmServerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vmmServerName, nameof(vmmServerName));
@@ -123,7 +121,7 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Gets a VMMServer.
+        /// Implements VMMServer GET method.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}
         /// Operation Id: VmmServers_Get
         /// </summary>
@@ -131,7 +129,6 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vmmServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmmServerName"/> is null. </exception>
-        /// <remarks> Implements VMMServer GET method. </remarks>
         public virtual async Task<Response<ScVmmServerResource>> GetAsync(string vmmServerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vmmServerName, nameof(vmmServerName));
@@ -153,7 +150,7 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Gets a VMMServer.
+        /// Implements VMMServer GET method.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}
         /// Operation Id: VmmServers_Get
         /// </summary>
@@ -161,7 +158,6 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vmmServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmmServerName"/> is null. </exception>
-        /// <remarks> Implements VMMServer GET method. </remarks>
         public virtual Response<ScVmmServerResource> Get(string vmmServerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vmmServerName, nameof(vmmServerName));
@@ -183,13 +179,12 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements GET VmmServers in a resource group.
+        /// List of VmmServers in a resource group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers
         /// Operation Id: VmmServers_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ScVmmServerResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List of VmmServers in a resource group. </remarks>
         public virtual AsyncPageable<ScVmmServerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ScVmmServerResource>> FirstPageFunc(int? pageSizeHint)
@@ -226,13 +221,12 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Implements GET VmmServers in a resource group.
+        /// List of VmmServers in a resource group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers
         /// Operation Id: VmmServers_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ScVmmServerResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List of VmmServers in a resource group. </remarks>
         public virtual Pageable<ScVmmServerResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<ScVmmServerResource> FirstPageFunc(int? pageSizeHint)
@@ -269,7 +263,7 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Gets a VMMServer.
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}
         /// Operation Id: VmmServers_Get
         /// </summary>
@@ -277,7 +271,6 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vmmServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmmServerName"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string vmmServerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vmmServerName, nameof(vmmServerName));
@@ -297,7 +290,7 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Gets a VMMServer.
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}
         /// Operation Id: VmmServers_Get
         /// </summary>
@@ -305,7 +298,6 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vmmServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmmServerName"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string vmmServerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vmmServerName, nameof(vmmServerName));

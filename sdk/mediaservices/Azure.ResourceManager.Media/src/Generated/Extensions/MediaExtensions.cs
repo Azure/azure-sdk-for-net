@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get operation result.
+        /// Get media service operation result.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/mediaServicesOperationResults/{operationId}
         /// Operation Id: MediaServicesOperationResults_Get
         /// </summary>
@@ -47,7 +47,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="operationId"/> is null. </exception>
-        /// <remarks> Get media service operation result. </remarks>
         [ForwardsClientCalls]
         public static async Task<Response<LocationMediaServicesOperationResultResource>> GetLocationMediaServicesOperationResultAsync(this SubscriptionResource subscriptionResource, string locationName, string operationId, CancellationToken cancellationToken = default)
         {
@@ -55,7 +54,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get operation result.
+        /// Get media service operation result.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/mediaServicesOperationResults/{operationId}
         /// Operation Id: MediaServicesOperationResults_Get
         /// </summary>
@@ -65,7 +64,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="operationId"/> is null. </exception>
-        /// <remarks> Get media service operation result. </remarks>
         [ForwardsClientCalls]
         public static Response<LocationMediaServicesOperationResultResource> GetLocationMediaServicesOperationResult(this SubscriptionResource subscriptionResource, string locationName, string operationId, CancellationToken cancellationToken = default)
         {
@@ -73,35 +71,33 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// List Media Services accounts
+        /// List Media Services accounts in the subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Media/mediaservices
         /// Operation Id: Mediaservices_ListBySubscription
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MediaserviceResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List Media Services accounts in the subscription. </remarks>
         public static AsyncPageable<MediaserviceResource> GetMediaservicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetMediaservicesAsync(cancellationToken);
         }
 
         /// <summary>
-        /// List Media Services accounts
+        /// List Media Services accounts in the subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Media/mediaservices
         /// Operation Id: Mediaservices_ListBySubscription
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MediaserviceResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List Media Services accounts in the subscription. </remarks>
         public static Pageable<MediaserviceResource> GetMediaservices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetMediaservices(cancellationToken);
         }
 
         /// <summary>
-        /// Check Name Availability
+        /// Checks whether the Media Service resource name is available.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/checkNameAvailability
         /// Operation Id: Locations_CheckNameAvailability
         /// </summary>
@@ -111,7 +107,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="content"/> is null. </exception>
-        /// <remarks> Checks whether the Media Service resource name is available. </remarks>
         public static async Task<Response<EntityNameAvailabilityCheckOutput>> CheckNameAvailabilityLocationAsync(this SubscriptionResource subscriptionResource, string locationName, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
@@ -121,7 +116,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Check Name Availability
+        /// Checks whether the Media Service resource name is available.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/checkNameAvailability
         /// Operation Id: Locations_CheckNameAvailability
         /// </summary>
@@ -131,7 +126,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="content"/> is null. </exception>
-        /// <remarks> Checks whether the Media Service resource name is available. </remarks>
         public static Response<EntityNameAvailabilityCheckOutput> CheckNameAvailabilityLocation(this SubscriptionResource subscriptionResource, string locationName, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
@@ -141,7 +135,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get operation status.
+        /// Get media service operation status.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/mediaServicesOperationStatuses/{operationId}
         /// Operation Id: MediaServicesOperationStatuses_Get
         /// </summary>
@@ -151,7 +145,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="operationId"/> is null. </exception>
-        /// <remarks> Get media service operation status. </remarks>
         public static async Task<Response<MediaServiceOperationStatus>> GetMediaServicesOperationStatusAsync(this SubscriptionResource subscriptionResource, string locationName, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
@@ -161,7 +154,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get operation status.
+        /// Get media service operation status.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/mediaServicesOperationStatuses/{operationId}
         /// Operation Id: MediaServicesOperationStatuses_Get
         /// </summary>
@@ -171,7 +164,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="operationId"/> is null. </exception>
-        /// <remarks> Get media service operation status. </remarks>
         public static Response<MediaServiceOperationStatus> GetMediaServicesOperationStatus(this SubscriptionResource subscriptionResource, string locationName, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
@@ -198,7 +190,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get a Media Services account
+        /// Get the details of a Media Services account
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}
         /// Operation Id: Mediaservices_Get
         /// </summary>
@@ -207,7 +199,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
-        /// <remarks> Get the details of a Media Services account. </remarks>
         [ForwardsClientCalls]
         public static async Task<Response<MediaserviceResource>> GetMediaserviceAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
@@ -215,7 +206,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get a Media Services account
+        /// Get the details of a Media Services account
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}
         /// Operation Id: Mediaservices_Get
         /// </summary>
@@ -224,7 +215,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
-        /// <remarks> Get the details of a Media Services account. </remarks>
         [ForwardsClientCalls]
         public static Response<MediaserviceResource> GetMediaservice(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {

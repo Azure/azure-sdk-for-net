@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get an Asset Filter.
+        /// Get the details of an Asset Filter associated with the specified Asset.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/assetFilters/{filterName}
         /// Operation Id: AssetFilters_Get
         /// </summary>
@@ -103,7 +103,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
-        /// <remarks> Get the details of an Asset Filter associated with the specified Asset. </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<AssetFilterResource>> GetAssetFilterAsync(string filterName, CancellationToken cancellationToken = default)
         {
@@ -111,7 +110,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get an Asset Filter.
+        /// Get the details of an Asset Filter associated with the specified Asset.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/assetFilters/{filterName}
         /// Operation Id: AssetFilters_Get
         /// </summary>
@@ -119,7 +118,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
-        /// <remarks> Get the details of an Asset Filter associated with the specified Asset. </remarks>
         [ForwardsClientCalls]
         public virtual Response<AssetFilterResource> GetAssetFilter(string filterName, CancellationToken cancellationToken = default)
         {
@@ -134,7 +132,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get a Track
+        /// Get the details of a Track in the Asset
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}
         /// Operation Id: Tracks_Get
         /// </summary>
@@ -142,7 +140,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="trackName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="trackName"/> is null. </exception>
-        /// <remarks> Get the details of a Track in the Asset. </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<MediaServiceAssetTrackResource>> GetMediaServiceAssetTrackAsync(string trackName, CancellationToken cancellationToken = default)
         {
@@ -150,7 +147,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get a Track
+        /// Get the details of a Track in the Asset
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}
         /// Operation Id: Tracks_Get
         /// </summary>
@@ -158,7 +155,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="trackName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="trackName"/> is null. </exception>
-        /// <remarks> Get the details of a Track in the Asset. </remarks>
         [ForwardsClientCalls]
         public virtual Response<MediaServiceAssetTrackResource> GetMediaServiceAssetTrack(string trackName, CancellationToken cancellationToken = default)
         {
@@ -166,12 +162,11 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get an Asset
+        /// Get the details of an Asset in the Media Services account
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}
         /// Operation Id: Assets_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get the details of an Asset in the Media Services account. </remarks>
         public virtual async Task<Response<AssetResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _assetClientDiagnostics.CreateScope("AssetResource.Get");
@@ -191,12 +186,11 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get an Asset
+        /// Get the details of an Asset in the Media Services account
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}
         /// Operation Id: Assets_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get the details of an Asset in the Media Services account. </remarks>
         public virtual Response<AssetResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _assetClientDiagnostics.CreateScope("AssetResource.Get");
@@ -216,13 +210,12 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Delete an Asset.
+        /// Deletes an Asset in the Media Services account
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}
         /// Operation Id: Assets_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Deletes an Asset in the Media Services account. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _assetClientDiagnostics.CreateScope("AssetResource.Delete");
@@ -243,13 +236,12 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Delete an Asset.
+        /// Deletes an Asset in the Media Services account
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}
         /// Operation Id: Assets_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Deletes an Asset in the Media Services account. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _assetClientDiagnostics.CreateScope("AssetResource.Delete");
@@ -270,14 +262,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Update an Asset
+        /// Updates an existing Asset in the Media Services account
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}
         /// Operation Id: Assets_Update
         /// </summary>
         /// <param name="data"> The request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Updates an existing Asset in the Media Services account. </remarks>
         public virtual async Task<Response<AssetResource>> UpdateAsync(AssetData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -297,14 +288,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Update an Asset
+        /// Updates an existing Asset in the Media Services account
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}
         /// Operation Id: Assets_Update
         /// </summary>
         /// <param name="data"> The request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Updates an existing Asset in the Media Services account. </remarks>
         public virtual Response<AssetResource> Update(AssetData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -324,14 +314,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// List the Asset URLs
+        /// Lists storage container URLs with shared access signatures (SAS) for uploading and downloading Asset content. The signatures are derived from the storage account keys.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/listContainerSas
         /// Operation Id: Assets_ListContainerSas
         /// </summary>
         /// <param name="content"> The request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks> Lists storage container URLs with shared access signatures (SAS) for uploading and downloading Asset content. The signatures are derived from the storage account keys. </remarks>
         public virtual async Task<Response<AssetContainerSas>> GetContainerSasAsync(ListContainerSasContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -351,14 +340,13 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// List the Asset URLs
+        /// Lists storage container URLs with shared access signatures (SAS) for uploading and downloading Asset content. The signatures are derived from the storage account keys.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/listContainerSas
         /// Operation Id: Assets_ListContainerSas
         /// </summary>
         /// <param name="content"> The request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks> Lists storage container URLs with shared access signatures (SAS) for uploading and downloading Asset content. The signatures are derived from the storage account keys. </remarks>
         public virtual Response<AssetContainerSas> GetContainerSas(ListContainerSasContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -378,12 +366,11 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Gets the Asset storage key
+        /// Gets the Asset storage encryption keys used to decrypt content created by version 2 of the Media Services API
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/getEncryptionKey
         /// Operation Id: Assets_GetEncryptionKey
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Gets the Asset storage encryption keys used to decrypt content created by version 2 of the Media Services API. </remarks>
         public virtual async Task<Response<StorageEncryptedAssetDecryptionData>> GetEncryptionKeyAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _assetClientDiagnostics.CreateScope("AssetResource.GetEncryptionKey");
@@ -401,12 +388,11 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Gets the Asset storage key
+        /// Gets the Asset storage encryption keys used to decrypt content created by version 2 of the Media Services API
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/getEncryptionKey
         /// Operation Id: Assets_GetEncryptionKey
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Gets the Asset storage encryption keys used to decrypt content created by version 2 of the Media Services API. </remarks>
         public virtual Response<StorageEncryptedAssetDecryptionData> GetEncryptionKey(CancellationToken cancellationToken = default)
         {
             using var scope = _assetClientDiagnostics.CreateScope("AssetResource.GetEncryptionKey");
@@ -424,12 +410,11 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// List Streaming Locators
+        /// Lists Streaming Locators which are associated with this asset.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/listStreamingLocators
         /// Operation Id: Assets_ListStreamingLocators
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Lists Streaming Locators which are associated with this asset. </remarks>
         public virtual async Task<Response<ListStreamingLocatorsResponse>> GetStreamingLocatorsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _assetClientDiagnostics.CreateScope("AssetResource.GetStreamingLocators");
@@ -447,12 +432,11 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// List Streaming Locators
+        /// Lists Streaming Locators which are associated with this asset.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/listStreamingLocators
         /// Operation Id: Assets_ListStreamingLocators
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Lists Streaming Locators which are associated with this asset. </remarks>
         public virtual Response<ListStreamingLocatorsResponse> GetStreamingLocators(CancellationToken cancellationToken = default)
         {
             using var scope = _assetClientDiagnostics.CreateScope("AssetResource.GetStreamingLocators");

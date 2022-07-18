@@ -59,7 +59,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="resourceType"> The resource type for which the OS options needs to be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Gets supported OS options in the specified subscription. </remarks>
         public virtual async Task<Response<OSOptionProfileResource>> GetAsync(AzureLocation location, string resourceType = null, CancellationToken cancellationToken = default)
         {
             using var scope = _osOptionProfileManagedClustersClientDiagnostics.CreateScope("OSOptionProfileCollection.Get");
@@ -86,7 +85,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="resourceType"> The resource type for which the OS options needs to be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Gets supported OS options in the specified subscription. </remarks>
         public virtual Response<OSOptionProfileResource> Get(AzureLocation location, string resourceType = null, CancellationToken cancellationToken = default)
         {
             using var scope = _osOptionProfileManagedClustersClientDiagnostics.CreateScope("OSOptionProfileCollection.Get");
@@ -106,14 +104,13 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Gets supported OS options in the specified subscription.
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/osOptions/default
         /// Operation Id: ManagedClusters_GetOSOptions
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="resourceType"> The resource type for which the OS options needs to be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(AzureLocation location, string resourceType = null, CancellationToken cancellationToken = default)
         {
             using var scope = _osOptionProfileManagedClustersClientDiagnostics.CreateScope("OSOptionProfileCollection.Exists");
@@ -131,14 +128,13 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Gets supported OS options in the specified subscription.
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/osOptions/default
         /// Operation Id: ManagedClusters_GetOSOptions
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="resourceType"> The resource type for which the OS options needs to be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(AzureLocation location, string resourceType = null, CancellationToken cancellationToken = default)
         {
             using var scope = _osOptionProfileManagedClustersClientDiagnostics.CreateScope("OSOptionProfileCollection.Exists");

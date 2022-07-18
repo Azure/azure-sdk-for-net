@@ -44,7 +44,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="resourceType"> The resource type for which the OS options needs to be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Gets supported OS options in the specified subscription. </remarks>
         [ForwardsClientCalls]
         public static async Task<Response<OSOptionProfileResource>> GetOSOptionProfileAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string resourceType = null, CancellationToken cancellationToken = default)
         {
@@ -60,7 +59,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="resourceType"> The resource type for which the OS options needs to be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Gets supported OS options in the specified subscription. </remarks>
         [ForwardsClientCalls]
         public static Response<OSOptionProfileResource> GetOSOptionProfile(this SubscriptionResource subscriptionResource, AzureLocation location, string resourceType = null, CancellationToken cancellationToken = default)
         {
@@ -75,7 +73,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagedClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Gets a list of managed clusters in the specified subscription. </remarks>
         public static AsyncPageable<ManagedClusterResource> GetManagedClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetManagedClustersAsync(cancellationToken);
@@ -89,7 +86,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Gets a list of managed clusters in the specified subscription. </remarks>
         public static Pageable<ManagedClusterResource> GetManagedClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetManagedClusters(cancellationToken);
@@ -103,7 +99,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SnapshotResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Gets a list of snapshots in the specified subscription. </remarks>
         public static AsyncPageable<SnapshotResource> GetSnapshotsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetSnapshotsAsync(cancellationToken);
@@ -117,7 +112,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SnapshotResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Gets a list of snapshots in the specified subscription. </remarks>
         public static Pageable<SnapshotResource> GetSnapshots(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetSnapshots(cancellationToken);
@@ -150,7 +144,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <remarks> Gets a managed cluster. </remarks>
         [ForwardsClientCalls]
         public static async Task<Response<ManagedClusterResource>> GetManagedClusterAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
@@ -167,7 +160,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <remarks> Gets a managed cluster. </remarks>
         [ForwardsClientCalls]
         public static Response<ManagedClusterResource> GetManagedCluster(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
@@ -192,7 +184,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <remarks> Gets a snapshot. </remarks>
         [ForwardsClientCalls]
         public static async Task<Response<SnapshotResource>> GetSnapshotAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
@@ -209,7 +200,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <remarks> Gets a snapshot. </remarks>
         [ForwardsClientCalls]
         public static Response<SnapshotResource> GetSnapshot(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {

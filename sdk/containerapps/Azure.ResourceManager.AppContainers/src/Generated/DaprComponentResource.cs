@@ -93,7 +93,6 @@ namespace Azure.ResourceManager.AppContainers
         /// Operation Id: DaprComponents_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get a dapr component. </remarks>
         public virtual async Task<Response<DaprComponentResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _daprComponentClientDiagnostics.CreateScope("DaprComponentResource.Get");
@@ -118,7 +117,6 @@ namespace Azure.ResourceManager.AppContainers
         /// Operation Id: DaprComponents_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get a dapr component. </remarks>
         public virtual Response<DaprComponentResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _daprComponentClientDiagnostics.CreateScope("DaprComponentResource.Get");
@@ -138,13 +136,12 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Delete a Dapr Component.
+        /// Delete a Dapr Component from a Managed Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{componentName}
         /// Operation Id: DaprComponents_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Delete a Dapr Component from a Managed Environment. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _daprComponentClientDiagnostics.CreateScope("DaprComponentResource.Delete");
@@ -165,13 +162,12 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Delete a Dapr Component.
+        /// Delete a Dapr Component from a Managed Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{componentName}
         /// Operation Id: DaprComponents_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Delete a Dapr Component from a Managed Environment. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _daprComponentClientDiagnostics.CreateScope("DaprComponentResource.Delete");
@@ -192,7 +188,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Creates or updates a Dapr Component.
+        /// Creates or updates a Dapr Component in a Managed Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{componentName}
         /// Operation Id: DaprComponents_CreateOrUpdate
         /// </summary>
@@ -200,7 +196,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="data"> Configuration details of the Dapr Component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Creates or updates a Dapr Component in a Managed Environment. </remarks>
         public virtual async Task<ArmOperation<DaprComponentResource>> UpdateAsync(WaitUntil waitUntil, DaprComponentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -223,7 +218,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Creates or updates a Dapr Component.
+        /// Creates or updates a Dapr Component in a Managed Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{componentName}
         /// Operation Id: DaprComponents_CreateOrUpdate
         /// </summary>
@@ -231,7 +226,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="data"> Configuration details of the Dapr Component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Creates or updates a Dapr Component in a Managed Environment. </remarks>
         public virtual ArmOperation<DaprComponentResource> Update(WaitUntil waitUntil, DaprComponentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -260,7 +254,6 @@ namespace Azure.ResourceManager.AppContainers
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AppSecret" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List secrets for a dapr component. </remarks>
         public virtual AsyncPageable<AppSecret> GetSecretsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<AppSecret>> FirstPageFunc(int? pageSizeHint)
@@ -288,7 +281,6 @@ namespace Azure.ResourceManager.AppContainers
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppSecret" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List secrets for a dapr component. </remarks>
         public virtual Pageable<AppSecret> GetSecrets(CancellationToken cancellationToken = default)
         {
             Page<AppSecret> FirstPageFunc(int? pageSizeHint)

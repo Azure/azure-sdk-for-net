@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Create or update an Account Filter
+        /// Creates or updates an Account Filter in the Media Services account.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/accountFilters/{filterName}
         /// Operation Id: AccountFilters_CreateOrUpdate
         /// </summary>
@@ -64,7 +64,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> or <paramref name="data"/> is null. </exception>
-        /// <remarks> Creates or updates an Account Filter in the Media Services account. </remarks>
         public virtual async Task<ArmOperation<AccountFilterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string filterName, AccountFilterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Create or update an Account Filter
+        /// Creates or updates an Account Filter in the Media Services account.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/accountFilters/{filterName}
         /// Operation Id: AccountFilters_CreateOrUpdate
         /// </summary>
@@ -98,7 +97,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> or <paramref name="data"/> is null. </exception>
-        /// <remarks> Creates or updates an Account Filter in the Media Services account. </remarks>
         public virtual ArmOperation<AccountFilterResource> CreateOrUpdate(WaitUntil waitUntil, string filterName, AccountFilterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
@@ -122,7 +120,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get an Account Filter.
+        /// Get the details of an Account Filter in the Media Services account.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/accountFilters/{filterName}
         /// Operation Id: AccountFilters_Get
         /// </summary>
@@ -130,7 +128,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
-        /// <remarks> Get the details of an Account Filter in the Media Services account. </remarks>
         public virtual async Task<Response<AccountFilterResource>> GetAsync(string filterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
@@ -152,7 +149,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get an Account Filter.
+        /// Get the details of an Account Filter in the Media Services account.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/accountFilters/{filterName}
         /// Operation Id: AccountFilters_Get
         /// </summary>
@@ -160,7 +157,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
-        /// <remarks> Get the details of an Account Filter in the Media Services account. </remarks>
         public virtual Response<AccountFilterResource> Get(string filterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
@@ -182,13 +178,12 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// List Account Filters
+        /// List Account Filters in the Media Services account.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/accountFilters
         /// Operation Id: AccountFilters_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AccountFilterResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List Account Filters in the Media Services account. </remarks>
         public virtual AsyncPageable<AccountFilterResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<AccountFilterResource>> FirstPageFunc(int? pageSizeHint)
@@ -225,13 +220,12 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// List Account Filters
+        /// List Account Filters in the Media Services account.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/accountFilters
         /// Operation Id: AccountFilters_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AccountFilterResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List Account Filters in the Media Services account. </remarks>
         public virtual Pageable<AccountFilterResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<AccountFilterResource> FirstPageFunc(int? pageSizeHint)
@@ -268,7 +262,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get an Account Filter.
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/accountFilters/{filterName}
         /// Operation Id: AccountFilters_Get
         /// </summary>
@@ -276,7 +270,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string filterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
@@ -296,7 +289,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Get an Account Filter.
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/accountFilters/{filterName}
         /// Operation Id: AccountFilters_Get
         /// </summary>
@@ -304,7 +297,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string filterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));

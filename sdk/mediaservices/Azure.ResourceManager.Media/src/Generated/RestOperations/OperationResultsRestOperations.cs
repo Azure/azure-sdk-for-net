@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Media
             return message;
         }
 
-        /// <summary> Get operation result. </summary>
+        /// <summary> Get asset track operation result. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -72,7 +72,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="assetName"/>, <paramref name="trackName"/> or <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="assetName"/>, <paramref name="trackName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Get asset track operation result. </remarks>
         public async Task<Response<AssetTrackData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string assetName, string trackName, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -102,7 +101,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        /// <summary> Get operation result. </summary>
+        /// <summary> Get asset track operation result. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -112,7 +111,6 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="assetName"/>, <paramref name="trackName"/> or <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="assetName"/>, <paramref name="trackName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Get asset track operation result. </remarks>
         public Response<AssetTrackData> Get(string subscriptionId, string resourceGroupName, string accountName, string assetName, string trackName, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));

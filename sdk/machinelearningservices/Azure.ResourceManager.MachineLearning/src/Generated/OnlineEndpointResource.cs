@@ -104,7 +104,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
-        /// <remarks> Get Inference Deployment Deployment. </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<OnlineDeploymentResource>> GetOnlineDeploymentAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
@@ -120,7 +119,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
-        /// <remarks> Get Inference Deployment Deployment. </remarks>
         [ForwardsClientCalls]
         public virtual Response<OnlineDeploymentResource> GetOnlineDeployment(string deploymentName, CancellationToken cancellationToken = default)
         {
@@ -133,7 +131,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// Operation Id: OnlineEndpoints_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get Online Endpoint. </remarks>
         public virtual async Task<Response<OnlineEndpointResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _onlineEndpointClientDiagnostics.CreateScope("OnlineEndpointResource.Get");
@@ -158,7 +155,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// Operation Id: OnlineEndpoints_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get Online Endpoint. </remarks>
         public virtual Response<OnlineEndpointResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _onlineEndpointClientDiagnostics.CreateScope("OnlineEndpointResource.Get");
@@ -184,7 +180,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Delete Online Endpoint (asynchronous). </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _onlineEndpointClientDiagnostics.CreateScope("OnlineEndpointResource.Delete");
@@ -211,7 +206,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Delete Online Endpoint (asynchronous). </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _onlineEndpointClientDiagnostics.CreateScope("OnlineEndpointResource.Delete");
@@ -240,7 +234,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="patch"> Online Endpoint entity to apply during operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        /// <remarks> Update Online Endpoint (asynchronous). </remarks>
         public virtual async Task<ArmOperation<OnlineEndpointResource>> UpdateAsync(WaitUntil waitUntil, OnlineEndpointPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
@@ -271,7 +264,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="patch"> Online Endpoint entity to apply during operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        /// <remarks> Update Online Endpoint (asynchronous). </remarks>
         public virtual ArmOperation<OnlineEndpointResource> Update(WaitUntil waitUntil, OnlineEndpointPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
@@ -299,7 +291,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// Operation Id: OnlineEndpoints_ListKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> List EndpointAuthKeys for an Endpoint using Key-based authentication. </remarks>
         public virtual async Task<Response<EndpointAuthKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _onlineEndpointClientDiagnostics.CreateScope("OnlineEndpointResource.GetKeys");
@@ -322,7 +313,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// Operation Id: OnlineEndpoints_ListKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> List EndpointAuthKeys for an Endpoint using Key-based authentication. </remarks>
         public virtual Response<EndpointAuthKeys> GetKeys(CancellationToken cancellationToken = default)
         {
             using var scope = _onlineEndpointClientDiagnostics.CreateScope("OnlineEndpointResource.GetKeys");
@@ -348,7 +338,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="content"> RegenerateKeys request . </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks> Regenerate EndpointAuthKeys for an Endpoint using Key-based authentication (asynchronous). </remarks>
         public virtual async Task<ArmOperation> RegenerateKeysAsync(WaitUntil waitUntil, RegenerateEndpointKeysContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -379,7 +368,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="content"> RegenerateKeys request . </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks> Regenerate EndpointAuthKeys for an Endpoint using Key-based authentication (asynchronous). </remarks>
         public virtual ArmOperation RegenerateKeys(WaitUntil waitUntil, RegenerateEndpointKeysContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -407,7 +395,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// Operation Id: OnlineEndpoints_GetToken
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Retrieve a valid AAD token for an Endpoint using AMLToken-based authentication. </remarks>
         public virtual async Task<Response<EndpointAuthToken>> GetTokenAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _onlineEndpointClientDiagnostics.CreateScope("OnlineEndpointResource.GetToken");
@@ -430,7 +417,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// Operation Id: OnlineEndpoints_GetToken
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Retrieve a valid AAD token for an Endpoint using AMLToken-based authentication. </remarks>
         public virtual Response<EndpointAuthToken> GetToken(CancellationToken cancellationToken = default)
         {
             using var scope = _onlineEndpointClientDiagnostics.CreateScope("OnlineEndpointResource.GetToken");
@@ -448,7 +434,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Get Online Endpoint.
+        /// Add a tag to the current resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/onlineEndpoints/{endpointName}
         /// Operation Id: OnlineEndpoints_Get
         /// </summary>
@@ -456,7 +442,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        /// <remarks> Add a tag to the current resource. </remarks>
         public virtual async Task<Response<OnlineEndpointResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -480,7 +465,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Get Online Endpoint.
+        /// Add a tag to the current resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/onlineEndpoints/{endpointName}
         /// Operation Id: OnlineEndpoints_Get
         /// </summary>
@@ -488,7 +473,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        /// <remarks> Add a tag to the current resource. </remarks>
         public virtual Response<OnlineEndpointResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -512,14 +496,13 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Get Online Endpoint.
+        /// Replace the tags on the resource with the given set.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/onlineEndpoints/{endpointName}
         /// Operation Id: OnlineEndpoints_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        /// <remarks> Replace the tags on the resource with the given set. </remarks>
         public virtual async Task<Response<OnlineEndpointResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -543,14 +526,13 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Get Online Endpoint.
+        /// Replace the tags on the resource with the given set.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/onlineEndpoints/{endpointName}
         /// Operation Id: OnlineEndpoints_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        /// <remarks> Replace the tags on the resource with the given set. </remarks>
         public virtual Response<OnlineEndpointResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -574,14 +556,13 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Get Online Endpoint.
+        /// Removes a tag by key from the resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/onlineEndpoints/{endpointName}
         /// Operation Id: OnlineEndpoints_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <remarks> Removes a tag by key from the resource. </remarks>
         public virtual async Task<Response<OnlineEndpointResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -604,14 +585,13 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Get Online Endpoint.
+        /// Removes a tag by key from the resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/onlineEndpoints/{endpointName}
         /// Operation Id: OnlineEndpoints_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <remarks> Removes a tag by key from the resource. </remarks>
         public virtual Response<OnlineEndpointResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));

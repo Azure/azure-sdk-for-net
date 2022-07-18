@@ -51,7 +51,6 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="filter"> Specify $filter=&apos;location eq &lt;location&gt;&apos; to filter on location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourceTypeSku" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List all the available Skus in the region and information related to them. </remarks>
         public virtual AsyncPageable<ResourceTypeSku> GetSkusAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<ResourceTypeSku>> FirstPageFunc(int? pageSizeHint)
@@ -80,7 +79,6 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="filter"> Specify $filter=&apos;location eq &lt;location&gt;&apos; to filter on location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceTypeSku" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List all the available Skus in the region and information related to them. </remarks>
         public virtual Pageable<ResourceTypeSku> GetSkus(string filter = null, CancellationToken cancellationToken = default)
         {
             Page<ResourceTypeSku> FirstPageFunc(int? pageSizeHint)

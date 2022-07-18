@@ -67,7 +67,6 @@ namespace Azure.ResourceManager.FluidRelay
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/>, <paramref name="fluidRelayServerName"/> or <paramref name="fluidRelayContainerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/>, <paramref name="fluidRelayServerName"/> or <paramref name="fluidRelayContainerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Get a Fluid Relay container. </remarks>
         public async Task<Response<FluidRelayContainerData>> GetAsync(string subscriptionId, string resourceGroup, string fluidRelayServerName, string fluidRelayContainerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -101,7 +100,6 @@ namespace Azure.ResourceManager.FluidRelay
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/>, <paramref name="fluidRelayServerName"/> or <paramref name="fluidRelayContainerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/>, <paramref name="fluidRelayServerName"/> or <paramref name="fluidRelayContainerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Get a Fluid Relay container. </remarks>
         public Response<FluidRelayContainerData> Get(string subscriptionId, string resourceGroup, string fluidRelayServerName, string fluidRelayContainerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -157,7 +155,6 @@ namespace Azure.ResourceManager.FluidRelay
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/>, <paramref name="fluidRelayServerName"/> or <paramref name="fluidRelayContainerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/>, <paramref name="fluidRelayServerName"/> or <paramref name="fluidRelayContainerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Delete a Fluid Relay container. </remarks>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroup, string fluidRelayServerName, string fluidRelayContainerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -185,7 +182,6 @@ namespace Azure.ResourceManager.FluidRelay
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/>, <paramref name="fluidRelayServerName"/> or <paramref name="fluidRelayContainerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/>, <paramref name="fluidRelayServerName"/> or <paramref name="fluidRelayContainerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Delete a Fluid Relay container. </remarks>
         public Response Delete(string subscriptionId, string resourceGroup, string fluidRelayServerName, string fluidRelayContainerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -233,7 +229,6 @@ namespace Azure.ResourceManager.FluidRelay
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/> or <paramref name="fluidRelayServerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/> or <paramref name="fluidRelayServerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> List all Fluid Relay containers which are children of a given Fluid Relay server. </remarks>
         public async Task<Response<FluidRelayContainerList>> ListByFluidRelayServersAsync(string subscriptionId, string resourceGroup, string fluidRelayServerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -263,7 +258,6 @@ namespace Azure.ResourceManager.FluidRelay
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/> or <paramref name="fluidRelayServerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/> or <paramref name="fluidRelayServerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> List all Fluid Relay containers which are children of a given Fluid Relay server. </remarks>
         public Response<FluidRelayContainerList> ListByFluidRelayServers(string subscriptionId, string resourceGroup, string fluidRelayServerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -308,7 +302,6 @@ namespace Azure.ResourceManager.FluidRelay
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/> or <paramref name="fluidRelayServerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/> or <paramref name="fluidRelayServerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> List all Fluid Relay containers which are children of a given Fluid Relay server. </remarks>
         public async Task<Response<FluidRelayContainerList>> ListByFluidRelayServersNextPageAsync(string nextLink, string subscriptionId, string resourceGroup, string fluidRelayServerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -340,7 +333,6 @@ namespace Azure.ResourceManager.FluidRelay
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/> or <paramref name="fluidRelayServerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/> or <paramref name="fluidRelayServerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> List all Fluid Relay containers which are children of a given Fluid Relay server. </remarks>
         public Response<FluidRelayContainerList> ListByFluidRelayServersNextPage(string nextLink, string subscriptionId, string resourceGroup, string fluidRelayServerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));

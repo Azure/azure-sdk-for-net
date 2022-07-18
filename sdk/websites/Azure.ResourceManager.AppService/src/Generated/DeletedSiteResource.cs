@@ -89,12 +89,11 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get deleted app for a subscription.
+        /// Description for Get deleted app for a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
         /// Operation Id: Global_GetDeletedWebApp
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Get deleted app for a subscription. </remarks>
         public virtual async Task<Response<DeletedSiteResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _deletedSiteGlobalClientDiagnostics.CreateScope("DeletedSiteResource.Get");
@@ -114,12 +113,11 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get deleted app for a subscription.
+        /// Description for Get deleted app for a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
         /// Operation Id: Global_GetDeletedWebApp
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Get deleted app for a subscription. </remarks>
         public virtual Response<DeletedSiteResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _deletedSiteGlobalClientDiagnostics.CreateScope("DeletedSiteResource.Get");
@@ -139,13 +137,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get all deleted apps for a subscription.
+        /// Description for Get all deleted apps for a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}/snapshots
         /// Operation Id: Global_GetDeletedWebAppSnapshots
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="Snapshot" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Description for Get all deleted apps for a subscription. </remarks>
         public virtual AsyncPageable<Snapshot> GetDeletedWebAppSnapshotsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<Snapshot>> FirstPageFunc(int? pageSizeHint)
@@ -167,13 +164,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get all deleted apps for a subscription.
+        /// Description for Get all deleted apps for a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}/snapshots
         /// Operation Id: Global_GetDeletedWebAppSnapshots
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="Snapshot" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Description for Get all deleted apps for a subscription. </remarks>
         public virtual Pageable<Snapshot> GetDeletedWebAppSnapshots(CancellationToken cancellationToken = default)
         {
             Page<Snapshot> FirstPageFunc(int? pageSizeHint)

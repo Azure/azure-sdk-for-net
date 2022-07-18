@@ -44,13 +44,12 @@ namespace Azure.ResourceManager.ExtendedLocations
         }
 
         /// <summary>
-        /// Gets a list of Custom Locations in a subscription.
+        /// Gets a list of Custom Locations in the specified subscription. The operation returns properties of each Custom Location
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ExtendedLocation/customLocations
         /// Operation Id: CustomLocations_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CustomLocationResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Gets a list of Custom Locations in the specified subscription. The operation returns properties of each Custom Location. </remarks>
         public virtual AsyncPageable<CustomLocationResource> GetCustomLocationsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<CustomLocationResource>> FirstPageFunc(int? pageSizeHint)
@@ -87,13 +86,12 @@ namespace Azure.ResourceManager.ExtendedLocations
         }
 
         /// <summary>
-        /// Gets a list of Custom Locations in a subscription.
+        /// Gets a list of Custom Locations in the specified subscription. The operation returns properties of each Custom Location
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ExtendedLocation/customLocations
         /// Operation Id: CustomLocations_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CustomLocationResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Gets a list of Custom Locations in the specified subscription. The operation returns properties of each Custom Location. </remarks>
         public virtual Pageable<CustomLocationResource> GetCustomLocations(CancellationToken cancellationToken = default)
         {
             Page<CustomLocationResource> FirstPageFunc(int? pageSizeHint)

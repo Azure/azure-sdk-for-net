@@ -109,12 +109,11 @@ namespace Azure.ResourceManager.ExtendedLocations
             return message;
         }
 
-        /// <summary> Gets a list of Custom Locations in a subscription. </summary>
+        /// <summary> Gets a list of Custom Locations in the specified subscription. The operation returns properties of each Custom Location. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Gets a list of Custom Locations in the specified subscription. The operation returns properties of each Custom Location. </remarks>
         public async Task<Response<CustomLocationListResult>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -135,12 +134,11 @@ namespace Azure.ResourceManager.ExtendedLocations
             }
         }
 
-        /// <summary> Gets a list of Custom Locations in a subscription. </summary>
+        /// <summary> Gets a list of Custom Locations in the specified subscription. The operation returns properties of each Custom Location. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Gets a list of Custom Locations in the specified subscription. The operation returns properties of each Custom Location. </remarks>
         public Response<CustomLocationListResult> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -180,13 +178,12 @@ namespace Azure.ResourceManager.ExtendedLocations
             return message;
         }
 
-        /// <summary> Gets a list of Custom Locations in the specified subscription and resource group. </summary>
+        /// <summary> Gets a list of Custom Locations in the specified subscription and resource group. The operation returns properties of each Custom Location. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Gets a list of Custom Locations in the specified subscription and resource group. The operation returns properties of each Custom Location. </remarks>
         public async Task<Response<CustomLocationListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -208,13 +205,12 @@ namespace Azure.ResourceManager.ExtendedLocations
             }
         }
 
-        /// <summary> Gets a list of Custom Locations in the specified subscription and resource group. </summary>
+        /// <summary> Gets a list of Custom Locations in the specified subscription and resource group. The operation returns properties of each Custom Location. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Gets a list of Custom Locations in the specified subscription and resource group. The operation returns properties of each Custom Location. </remarks>
         public Response<CustomLocationListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -256,14 +252,13 @@ namespace Azure.ResourceManager.ExtendedLocations
             return message;
         }
 
-        /// <summary> Gets a Custom Location. </summary>
+        /// <summary> Gets the details of the customLocation with a specified resource group and name. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> Custom Locations name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Gets the details of the customLocation with a specified resource group and name. </remarks>
         public async Task<Response<CustomLocationData>> GetAsync(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -288,14 +283,13 @@ namespace Azure.ResourceManager.ExtendedLocations
             }
         }
 
-        /// <summary> Gets a Custom Location. </summary>
+        /// <summary> Gets the details of the customLocation with a specified resource group and name. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> Custom Locations name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Gets the details of the customLocation with a specified resource group and name. </remarks>
         public Response<CustomLocationData> Get(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -344,7 +338,7 @@ namespace Azure.ResourceManager.ExtendedLocations
             return message;
         }
 
-        /// <summary> Creates or updates a Custom Location. </summary>
+        /// <summary> Creates or updates a Custom Location in the specified Subscription and Resource Group. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> Custom Locations name. </param>
@@ -352,7 +346,6 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Creates or updates a Custom Location in the specified Subscription and Resource Group. </remarks>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string resourceName, CustomLocationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -372,7 +365,7 @@ namespace Azure.ResourceManager.ExtendedLocations
             }
         }
 
-        /// <summary> Creates or updates a Custom Location. </summary>
+        /// <summary> Creates or updates a Custom Location in the specified Subscription and Resource Group. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> Custom Locations name. </param>
@@ -380,7 +373,6 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Creates or updates a Custom Location in the specified Subscription and Resource Group. </remarks>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string resourceName, CustomLocationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -420,14 +412,13 @@ namespace Azure.ResourceManager.ExtendedLocations
             return message;
         }
 
-        /// <summary> Deletes a Custom Location. </summary>
+        /// <summary> Deletes the Custom Location with the specified Resource Name, Resource Group, and Subscription Id. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> Custom Locations name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Deletes the Custom Location with the specified Resource Name, Resource Group, and Subscription Id. </remarks>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -446,14 +437,13 @@ namespace Azure.ResourceManager.ExtendedLocations
             }
         }
 
-        /// <summary> Deletes a Custom Location. </summary>
+        /// <summary> Deletes the Custom Location with the specified Resource Name, Resource Group, and Subscription Id. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> Custom Locations name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Deletes the Custom Location with the specified Resource Name, Resource Group, and Subscription Id. </remarks>
         public Response Delete(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -496,7 +486,7 @@ namespace Azure.ResourceManager.ExtendedLocations
             return message;
         }
 
-        /// <summary> Updates a Custom Location. </summary>
+        /// <summary> Updates a Custom Location with the specified Resource Name in the specified Resource Group and Subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> Custom Locations name. </param>
@@ -504,7 +494,6 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Updates a Custom Location with the specified Resource Name in the specified Resource Group and Subscription. </remarks>
         public async Task<Response<CustomLocationData>> UpdateAsync(string subscriptionId, string resourceGroupName, string resourceName, CustomLocationPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -528,7 +517,7 @@ namespace Azure.ResourceManager.ExtendedLocations
             }
         }
 
-        /// <summary> Updates a Custom Location. </summary>
+        /// <summary> Updates a Custom Location with the specified Resource Name in the specified Resource Group and Subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> Custom Locations name. </param>
@@ -536,7 +525,6 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Updates a Custom Location with the specified Resource Name in the specified Resource Group and Subscription. </remarks>
         public Response<CustomLocationData> Update(string subscriptionId, string resourceGroupName, string resourceName, CustomLocationPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -581,14 +569,13 @@ namespace Azure.ResourceManager.ExtendedLocations
             return message;
         }
 
-        /// <summary> Gets the list of Enabled Resource Types. </summary>
+        /// <summary> Gets the list of the Enabled Resource Types. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> Custom Locations name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Gets the list of the Enabled Resource Types. </remarks>
         public async Task<Response<EnabledResourceTypesListResult>> ListEnabledResourceTypesAsync(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -611,14 +598,13 @@ namespace Azure.ResourceManager.ExtendedLocations
             }
         }
 
-        /// <summary> Gets the list of Enabled Resource Types. </summary>
+        /// <summary> Gets the list of the Enabled Resource Types. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> Custom Locations name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Gets the list of the Enabled Resource Types. </remarks>
         public Response<EnabledResourceTypesListResult> ListEnabledResourceTypes(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -717,13 +703,12 @@ namespace Azure.ResourceManager.ExtendedLocations
             return message;
         }
 
-        /// <summary> Gets a list of Custom Locations in a subscription. </summary>
+        /// <summary> Gets a list of Custom Locations in the specified subscription. The operation returns properties of each Custom Location. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Gets a list of Custom Locations in the specified subscription. The operation returns properties of each Custom Location. </remarks>
         public async Task<Response<CustomLocationListResult>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -745,13 +730,12 @@ namespace Azure.ResourceManager.ExtendedLocations
             }
         }
 
-        /// <summary> Gets a list of Custom Locations in a subscription. </summary>
+        /// <summary> Gets a list of Custom Locations in the specified subscription. The operation returns properties of each Custom Location. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Gets a list of Custom Locations in the specified subscription. The operation returns properties of each Custom Location. </remarks>
         public Response<CustomLocationListResult> ListBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -787,14 +771,13 @@ namespace Azure.ResourceManager.ExtendedLocations
             return message;
         }
 
-        /// <summary> Gets a list of Custom Locations in the specified subscription and resource group. </summary>
+        /// <summary> Gets a list of Custom Locations in the specified subscription and resource group. The operation returns properties of each Custom Location. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Gets a list of Custom Locations in the specified subscription and resource group. The operation returns properties of each Custom Location. </remarks>
         public async Task<Response<CustomLocationListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -817,14 +800,13 @@ namespace Azure.ResourceManager.ExtendedLocations
             }
         }
 
-        /// <summary> Gets a list of Custom Locations in the specified subscription and resource group. </summary>
+        /// <summary> Gets a list of Custom Locations in the specified subscription and resource group. The operation returns properties of each Custom Location. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Gets a list of Custom Locations in the specified subscription and resource group. The operation returns properties of each Custom Location. </remarks>
         public Response<CustomLocationListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -861,7 +843,7 @@ namespace Azure.ResourceManager.ExtendedLocations
             return message;
         }
 
-        /// <summary> Gets the list of Enabled Resource Types. </summary>
+        /// <summary> Gets the list of the Enabled Resource Types. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -869,7 +851,6 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Gets the list of the Enabled Resource Types. </remarks>
         public async Task<Response<EnabledResourceTypesListResult>> ListEnabledResourceTypesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -893,7 +874,7 @@ namespace Azure.ResourceManager.ExtendedLocations
             }
         }
 
-        /// <summary> Gets the list of Enabled Resource Types. </summary>
+        /// <summary> Gets the list of the Enabled Resource Types. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -901,7 +882,6 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Gets the list of the Enabled Resource Types. </remarks>
         public Response<EnabledResourceTypesListResult> ListEnabledResourceTypesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));

@@ -105,7 +105,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="authConfigName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authConfigName"/> is null. </exception>
-        /// <remarks> Get a AuthConfig of a Container App. </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<AuthConfigResource>> GetAuthConfigAsync(string authConfigName, CancellationToken cancellationToken = default)
         {
@@ -121,7 +120,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="authConfigName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authConfigName"/> is null. </exception>
-        /// <remarks> Get a AuthConfig of a Container App. </remarks>
         [ForwardsClientCalls]
         public virtual Response<AuthConfigResource> GetAuthConfig(string authConfigName, CancellationToken cancellationToken = default)
         {
@@ -144,7 +142,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="revisionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="revisionName"/> is null. </exception>
-        /// <remarks> Get a revision of a Container App. </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<ContainerAppRevisionResource>> GetContainerAppRevisionAsync(string revisionName, CancellationToken cancellationToken = default)
         {
@@ -160,7 +157,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="revisionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="revisionName"/> is null. </exception>
-        /// <remarks> Get a revision of a Container App. </remarks>
         [ForwardsClientCalls]
         public virtual Response<ContainerAppRevisionResource> GetContainerAppRevision(string revisionName, CancellationToken cancellationToken = default)
         {
@@ -183,7 +179,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlName"/> is null. </exception>
-        /// <remarks> Get a SourceControl of a Container App. </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<SourceControlResource>> GetSourceControlAsync(string sourceControlName, CancellationToken cancellationToken = default)
         {
@@ -199,7 +194,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlName"/> is null. </exception>
-        /// <remarks> Get a SourceControl of a Container App. </remarks>
         [ForwardsClientCalls]
         public virtual Response<SourceControlResource> GetSourceControl(string sourceControlName, CancellationToken cancellationToken = default)
         {
@@ -212,7 +206,6 @@ namespace Azure.ResourceManager.AppContainers
         /// Operation Id: ContainerApps_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get the properties of a Container App. </remarks>
         public virtual async Task<Response<ContainerAppResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _containerAppClientDiagnostics.CreateScope("ContainerAppResource.Get");
@@ -237,7 +230,6 @@ namespace Azure.ResourceManager.AppContainers
         /// Operation Id: ContainerApps_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get the properties of a Container App. </remarks>
         public virtual Response<ContainerAppResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _containerAppClientDiagnostics.CreateScope("ContainerAppResource.Get");
@@ -263,7 +255,6 @@ namespace Azure.ResourceManager.AppContainers
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Delete a Container App. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _containerAppClientDiagnostics.CreateScope("ContainerAppResource.Delete");
@@ -290,7 +281,6 @@ namespace Azure.ResourceManager.AppContainers
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Delete a Container App. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _containerAppClientDiagnostics.CreateScope("ContainerAppResource.Delete");
@@ -311,7 +301,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Update properties of a Container App
+        /// Patches a Container App using JSON Merge Patch
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}
         /// Operation Id: ContainerApps_Update
         /// </summary>
@@ -319,7 +309,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="data"> Properties of a Container App that need to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Patches a Container App using JSON Merge Patch. </remarks>
         public virtual async Task<ArmOperation> UpdateAsync(WaitUntil waitUntil, ContainerAppData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -342,7 +331,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Update properties of a Container App
+        /// Patches a Container App using JSON Merge Patch
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}
         /// Operation Id: ContainerApps_Update
         /// </summary>
@@ -350,7 +339,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="data"> Properties of a Container App that need to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Patches a Container App using JSON Merge Patch. </remarks>
         public virtual ArmOperation Update(WaitUntil waitUntil, ContainerAppData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -379,7 +367,6 @@ namespace Azure.ResourceManager.AppContainers
         /// </summary>
         /// <param name="customHostname"> Custom hostname. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Analyzes a custom hostname for a Container App. </remarks>
         public virtual async Task<Response<CustomHostnameAnalysisResult>> GetCustomHostNameAnalysisAsync(string customHostname = null, CancellationToken cancellationToken = default)
         {
             using var scope = _containerAppClientDiagnostics.CreateScope("ContainerAppResource.GetCustomHostNameAnalysis");
@@ -403,7 +390,6 @@ namespace Azure.ResourceManager.AppContainers
         /// </summary>
         /// <param name="customHostname"> Custom hostname. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Analyzes a custom hostname for a Container App. </remarks>
         public virtual Response<CustomHostnameAnalysisResult> GetCustomHostNameAnalysis(string customHostname = null, CancellationToken cancellationToken = default)
         {
             using var scope = _containerAppClientDiagnostics.CreateScope("ContainerAppResource.GetCustomHostNameAnalysis");
@@ -427,7 +413,6 @@ namespace Azure.ResourceManager.AppContainers
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ContainerAppSecret" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List secrets for a container app. </remarks>
         public virtual AsyncPageable<ContainerAppSecret> GetSecretsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ContainerAppSecret>> FirstPageFunc(int? pageSizeHint)
@@ -455,7 +440,6 @@ namespace Azure.ResourceManager.AppContainers
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContainerAppSecret" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> List secrets for a container app. </remarks>
         public virtual Pageable<ContainerAppSecret> GetSecrets(CancellationToken cancellationToken = default)
         {
             Page<ContainerAppSecret> FirstPageFunc(int? pageSizeHint)
@@ -477,7 +461,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get the properties of a Container App.
+        /// Add a tag to the current resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}
         /// Operation Id: ContainerApps_Get
         /// </summary>
@@ -485,7 +469,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        /// <remarks> Add a tag to the current resource. </remarks>
         public virtual async Task<Response<ContainerAppResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -509,7 +492,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get the properties of a Container App.
+        /// Add a tag to the current resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}
         /// Operation Id: ContainerApps_Get
         /// </summary>
@@ -517,7 +500,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        /// <remarks> Add a tag to the current resource. </remarks>
         public virtual Response<ContainerAppResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -541,14 +523,13 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get the properties of a Container App.
+        /// Replace the tags on the resource with the given set.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}
         /// Operation Id: ContainerApps_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        /// <remarks> Replace the tags on the resource with the given set. </remarks>
         public virtual async Task<Response<ContainerAppResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -572,14 +553,13 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get the properties of a Container App.
+        /// Replace the tags on the resource with the given set.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}
         /// Operation Id: ContainerApps_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        /// <remarks> Replace the tags on the resource with the given set. </remarks>
         public virtual Response<ContainerAppResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -603,14 +583,13 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get the properties of a Container App.
+        /// Removes a tag by key from the resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}
         /// Operation Id: ContainerApps_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <remarks> Removes a tag by key from the resource. </remarks>
         public virtual async Task<Response<ContainerAppResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -633,14 +612,13 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get the properties of a Container App.
+        /// Removes a tag by key from the resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}
         /// Operation Id: ContainerApps_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <remarks> Removes a tag by key from the resource. </remarks>
         public virtual Response<ContainerAppResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));

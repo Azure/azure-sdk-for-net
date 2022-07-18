@@ -242,12 +242,11 @@ namespace Azure.ResourceManager.Batch
         }
 
         /// <summary>
-        /// Cancels a failed deletion of a certificate from the specified account.
+        /// If you try to delete a certificate that is being used by a pool or compute node, the status of the certificate changes to deleteFailed. If you decide that you want to continue using the certificate, you can use this operation to set the status of the certificate back to active. If you intend to delete the certificate, you do not need to run this operation after the deletion failed. You must make sure that the certificate is not being used by any resources, and then you can try again to delete the certificate.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/certificates/{certificateName}/cancelDelete
         /// Operation Id: Certificate_CancelDeletion
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> If you try to delete a certificate that is being used by a pool or compute node, the status of the certificate changes to deleteFailed. If you decide that you want to continue using the certificate, you can use this operation to set the status of the certificate back to active. If you intend to delete the certificate, you do not need to run this operation after the deletion failed. You must make sure that the certificate is not being used by any resources, and then you can try again to delete the certificate. </remarks>
         public virtual async Task<Response<CertificateResource>> CancelDeletionAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _certificateClientDiagnostics.CreateScope("CertificateResource.CancelDeletion");
@@ -265,12 +264,11 @@ namespace Azure.ResourceManager.Batch
         }
 
         /// <summary>
-        /// Cancels a failed deletion of a certificate from the specified account.
+        /// If you try to delete a certificate that is being used by a pool or compute node, the status of the certificate changes to deleteFailed. If you decide that you want to continue using the certificate, you can use this operation to set the status of the certificate back to active. If you intend to delete the certificate, you do not need to run this operation after the deletion failed. You must make sure that the certificate is not being used by any resources, and then you can try again to delete the certificate.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/certificates/{certificateName}/cancelDelete
         /// Operation Id: Certificate_CancelDeletion
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> If you try to delete a certificate that is being used by a pool or compute node, the status of the certificate changes to deleteFailed. If you decide that you want to continue using the certificate, you can use this operation to set the status of the certificate back to active. If you intend to delete the certificate, you do not need to run this operation after the deletion failed. You must make sure that the certificate is not being used by any resources, and then you can try again to delete the certificate. </remarks>
         public virtual Response<CertificateResource> CancelDeletion(CancellationToken cancellationToken = default)
         {
             using var scope = _certificateClientDiagnostics.CreateScope("CertificateResource.CancelDeletion");

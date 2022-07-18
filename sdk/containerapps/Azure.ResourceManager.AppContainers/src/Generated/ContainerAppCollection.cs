@@ -65,7 +65,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="containerAppName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerAppName"/> or <paramref name="data"/> is null. </exception>
-        /// <remarks> Create or update a Container App. </remarks>
         public virtual async Task<ArmOperation<ContainerAppResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string containerAppName, ContainerAppData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));
@@ -99,7 +98,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="containerAppName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerAppName"/> or <paramref name="data"/> is null. </exception>
-        /// <remarks> Create or update a Container App. </remarks>
         public virtual ArmOperation<ContainerAppResource> CreateOrUpdate(WaitUntil waitUntil, string containerAppName, ContainerAppData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));
@@ -131,7 +129,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="containerAppName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerAppName"/> is null. </exception>
-        /// <remarks> Get the properties of a Container App. </remarks>
         public virtual async Task<Response<ContainerAppResource>> GetAsync(string containerAppName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));
@@ -161,7 +158,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="containerAppName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerAppName"/> is null. </exception>
-        /// <remarks> Get the properties of a Container App. </remarks>
         public virtual Response<ContainerAppResource> Get(string containerAppName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));
@@ -189,7 +185,6 @@ namespace Azure.ResourceManager.AppContainers
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ContainerAppResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Get the Container Apps in a given resource group. </remarks>
         public virtual AsyncPageable<ContainerAppResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ContainerAppResource>> FirstPageFunc(int? pageSizeHint)
@@ -232,7 +227,6 @@ namespace Azure.ResourceManager.AppContainers
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContainerAppResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Get the Container Apps in a given resource group. </remarks>
         public virtual Pageable<ContainerAppResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<ContainerAppResource> FirstPageFunc(int? pageSizeHint)
@@ -269,7 +263,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get the properties of a Container App.
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}
         /// Operation Id: ContainerApps_Get
         /// </summary>
@@ -277,7 +271,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="containerAppName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerAppName"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string containerAppName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));
@@ -297,7 +290,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get the properties of a Container App.
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}
         /// Operation Id: ContainerApps_Get
         /// </summary>
@@ -305,7 +298,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="containerAppName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerAppName"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string containerAppName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));

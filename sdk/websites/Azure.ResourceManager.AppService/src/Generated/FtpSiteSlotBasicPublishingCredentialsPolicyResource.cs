@@ -87,12 +87,11 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Returns whether FTP is allowed on the site or not.
+        /// Description for Returns whether FTP is allowed on the site or not.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/ftp
         /// Operation Id: WebApps_GetFtpAllowedSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Returns whether FTP is allowed on the site or not. </remarks>
         public virtual async Task<Response<FtpSiteSlotBasicPublishingCredentialsPolicyResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _ftpSiteSlotBasicPublishingCredentialsPolicyWebAppsClientDiagnostics.CreateScope("FtpSiteSlotBasicPublishingCredentialsPolicyResource.Get");
@@ -112,12 +111,11 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Returns whether FTP is allowed on the site or not.
+        /// Description for Returns whether FTP is allowed on the site or not.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/ftp
         /// Operation Id: WebApps_GetFtpAllowedSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Returns whether FTP is allowed on the site or not. </remarks>
         public virtual Response<FtpSiteSlotBasicPublishingCredentialsPolicyResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _ftpSiteSlotBasicPublishingCredentialsPolicyWebAppsClientDiagnostics.CreateScope("FtpSiteSlotBasicPublishingCredentialsPolicyResource.Get");
@@ -137,7 +135,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Updates whether FTP is allowed on the site or not.
+        /// Description for Updates whether FTP is allowed on the site or not.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/ftp
         /// Operation Id: WebApps_UpdateFtpAllowedSlot
         /// </summary>
@@ -145,7 +143,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Description for Updates whether FTP is allowed on the site or not. </remarks>
         public virtual async Task<ArmOperation<FtpSiteSlotBasicPublishingCredentialsPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, CsmPublishingCredentialsPoliciesEntityData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -168,7 +165,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Updates whether FTP is allowed on the site or not.
+        /// Description for Updates whether FTP is allowed on the site or not.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/ftp
         /// Operation Id: WebApps_UpdateFtpAllowedSlot
         /// </summary>
@@ -176,7 +173,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Description for Updates whether FTP is allowed on the site or not. </remarks>
         public virtual ArmOperation<FtpSiteSlotBasicPublishingCredentialsPolicyResource> CreateOrUpdate(WaitUntil waitUntil, CsmPublishingCredentialsPoliciesEntityData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));

@@ -44,13 +44,12 @@ namespace Azure.ResourceManager.Migrate
         }
 
         /// <summary>
-        /// Get all Move Collections.
+        /// Get all the Move Collections in the subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Migrate/moveCollections
         /// Operation Id: MoveCollections_ListMoveCollectionsBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MoveCollectionResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Get all the Move Collections in the subscription. </remarks>
         public virtual AsyncPageable<MoveCollectionResource> GetMoveCollectionsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<MoveCollectionResource>> FirstPageFunc(int? pageSizeHint)
@@ -87,13 +86,12 @@ namespace Azure.ResourceManager.Migrate
         }
 
         /// <summary>
-        /// Get all Move Collections.
+        /// Get all the Move Collections in the subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Migrate/moveCollections
         /// Operation Id: MoveCollections_ListMoveCollectionsBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MoveCollectionResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Get all the Move Collections in the subscription. </remarks>
         public virtual Pageable<MoveCollectionResource> GetMoveCollections(CancellationToken cancellationToken = default)
         {
             Page<MoveCollectionResource> FirstPageFunc(int? pageSizeHint)

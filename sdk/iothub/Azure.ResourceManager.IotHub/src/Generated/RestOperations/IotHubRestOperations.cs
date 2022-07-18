@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.IotHub
             return message;
         }
 
-        /// <summary> Manually initiate a failover for the IoT Hub to its secondary region. </summary>
+        /// <summary> Manually initiate a failover for the IoT Hub to its secondary region. To learn more, see https://aka.ms/manualfailover. </summary>
         /// <param name="subscriptionId"> The subscription identifier. </param>
         /// <param name="resourceGroupName"> Name of the resource group containing the IoT hub resource. </param>
         /// <param name="iotHubName"> Name of the IoT hub to failover. </param>
@@ -69,7 +69,6 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="iotHubName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="iotHubName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Manually initiate a failover for the IoT Hub to its secondary region. To learn more, see https://aka.ms/manualfailover. </remarks>
         public async Task<Response> ManualFailoverAsync(string subscriptionId, string resourceGroupName, string iotHubName, FailoverContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.IotHub
             }
         }
 
-        /// <summary> Manually initiate a failover for the IoT Hub to its secondary region. </summary>
+        /// <summary> Manually initiate a failover for the IoT Hub to its secondary region. To learn more, see https://aka.ms/manualfailover. </summary>
         /// <param name="subscriptionId"> The subscription identifier. </param>
         /// <param name="resourceGroupName"> Name of the resource group containing the IoT hub resource. </param>
         /// <param name="iotHubName"> Name of the IoT hub to failover. </param>
@@ -97,7 +96,6 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="iotHubName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="iotHubName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Manually initiate a failover for the IoT Hub to its secondary region. To learn more, see https://aka.ms/manualfailover. </remarks>
         public Response ManualFailover(string subscriptionId, string resourceGroupName, string iotHubName, FailoverContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));

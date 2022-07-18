@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Upload the certificate to the IoT hub.
+        /// Adds new or replaces existing certificate.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/certificates/{certificateName}
         /// Operation Id: Certificates_CreateOrUpdate
         /// </summary>
@@ -65,7 +65,6 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> or <paramref name="data"/> is null. </exception>
-        /// <remarks> Adds new or replaces existing certificate. </remarks>
         public virtual async Task<ArmOperation<CertificateDescriptionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string certificateName, CertificateDescriptionData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Upload the certificate to the IoT hub.
+        /// Adds new or replaces existing certificate.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/certificates/{certificateName}
         /// Operation Id: Certificates_CreateOrUpdate
         /// </summary>
@@ -100,7 +99,6 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> or <paramref name="data"/> is null. </exception>
-        /// <remarks> Adds new or replaces existing certificate. </remarks>
         public virtual ArmOperation<CertificateDescriptionResource> CreateOrUpdate(WaitUntil waitUntil, string certificateName, CertificateDescriptionData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
@@ -124,7 +122,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get the certificate.
+        /// Returns the certificate.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/certificates/{certificateName}
         /// Operation Id: Certificates_Get
         /// </summary>
@@ -132,7 +130,6 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
-        /// <remarks> Returns the certificate. </remarks>
         public virtual async Task<Response<CertificateDescriptionResource>> GetAsync(string certificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
@@ -154,7 +151,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get the certificate.
+        /// Returns the certificate.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/certificates/{certificateName}
         /// Operation Id: Certificates_Get
         /// </summary>
@@ -162,7 +159,6 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
-        /// <remarks> Returns the certificate. </remarks>
         public virtual Response<CertificateDescriptionResource> Get(string certificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
@@ -184,13 +180,12 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get the certificate list.
+        /// Returns the list of certificates.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/certificates
         /// Operation Id: Certificates_ListByIotHub
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CertificateDescriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Returns the list of certificates. </remarks>
         public virtual AsyncPageable<CertificateDescriptionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<CertificateDescriptionResource>> FirstPageFunc(int? pageSizeHint)
@@ -212,13 +207,12 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get the certificate list.
+        /// Returns the list of certificates.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/certificates
         /// Operation Id: Certificates_ListByIotHub
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CertificateDescriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Returns the list of certificates. </remarks>
         public virtual Pageable<CertificateDescriptionResource> GetAll(CancellationToken cancellationToken = default)
         {
             Page<CertificateDescriptionResource> FirstPageFunc(int? pageSizeHint)
@@ -240,7 +234,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get the certificate.
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/certificates/{certificateName}
         /// Operation Id: Certificates_Get
         /// </summary>
@@ -248,7 +242,6 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(string certificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
@@ -268,7 +261,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Get the certificate.
+        /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/certificates/{certificateName}
         /// Operation Id: Certificates_Get
         /// </summary>
@@ -276,7 +269,6 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
-        /// <remarks> Checks to see if the resource exists in azure. </remarks>
         public virtual Response<bool> Exists(string certificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));

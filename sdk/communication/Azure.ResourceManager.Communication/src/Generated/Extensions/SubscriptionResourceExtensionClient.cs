@@ -49,13 +49,12 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Check Name Availability
+        /// Checks that the CommunicationService name is valid and is not already in use.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Communication/checkNameAvailability
         /// Operation Id: CommunicationServices_CheckNameAvailability
         /// </summary>
         /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Checks that the CommunicationService name is valid and is not already in use. </remarks>
         public virtual async Task<Response<CommunicationNameAvailabilityResult>> CheckCommunicationNameAvailabilityAsync(CommunicationServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = CommunicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckCommunicationNameAvailability");
@@ -73,13 +72,12 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Check Name Availability
+        /// Checks that the CommunicationService name is valid and is not already in use.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Communication/checkNameAvailability
         /// Operation Id: CommunicationServices_CheckNameAvailability
         /// </summary>
         /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Checks that the CommunicationService name is valid and is not already in use. </remarks>
         public virtual Response<CommunicationNameAvailabilityResult> CheckCommunicationNameAvailability(CommunicationServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = CommunicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckCommunicationNameAvailability");
@@ -97,13 +95,12 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// List By Subscription
+        /// Handles requests to list all resources in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Communication/communicationServices
         /// Operation Id: CommunicationServices_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CommunicationServiceResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Handles requests to list all resources in a subscription. </remarks>
         public virtual AsyncPageable<CommunicationServiceResource> GetCommunicationServiceResourcesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<CommunicationServiceResource>> FirstPageFunc(int? pageSizeHint)
@@ -140,13 +137,12 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// List By Subscription
+        /// Handles requests to list all resources in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Communication/communicationServices
         /// Operation Id: CommunicationServices_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CommunicationServiceResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Handles requests to list all resources in a subscription. </remarks>
         public virtual Pageable<CommunicationServiceResource> GetCommunicationServiceResources(CancellationToken cancellationToken = default)
         {
             Page<CommunicationServiceResource> FirstPageFunc(int? pageSizeHint)
@@ -183,13 +179,12 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// List By Subscription
+        /// Handles requests to list all resources in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Communication/emailServices
         /// Operation Id: EmailServices_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EmailServiceResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Handles requests to list all resources in a subscription. </remarks>
         public virtual AsyncPageable<EmailServiceResource> GetEmailServiceResourcesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<EmailServiceResource>> FirstPageFunc(int? pageSizeHint)
@@ -226,13 +221,12 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// List By Subscription
+        /// Handles requests to list all resources in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Communication/emailServices
         /// Operation Id: EmailServices_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EmailServiceResource" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Handles requests to list all resources in a subscription. </remarks>
         public virtual Pageable<EmailServiceResource> GetEmailServiceResources(CancellationToken cancellationToken = default)
         {
             Page<EmailServiceResource> FirstPageFunc(int? pageSizeHint)
@@ -269,13 +263,12 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// List Verified Domains From Exchange Online
+        /// Get a list of domains that are fully verified in Exchange Online.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Communication/listVerifiedExchangeOnlineDomains
         /// Operation Id: EmailServices_ListVerifiedExchangeOnlineDomains
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Get a list of domains that are fully verified in Exchange Online. </remarks>
         public virtual AsyncPageable<string> GetVerifiedExchangeOnlineDomainsEmailServicesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<string>> FirstPageFunc(int? pageSizeHint)
@@ -297,13 +290,12 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// List Verified Domains From Exchange Online
+        /// Get a list of domains that are fully verified in Exchange Online.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Communication/listVerifiedExchangeOnlineDomains
         /// Operation Id: EmailServices_ListVerifiedExchangeOnlineDomains
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Get a list of domains that are fully verified in Exchange Online. </remarks>
         public virtual Pageable<string> GetVerifiedExchangeOnlineDomainsEmailServices(CancellationToken cancellationToken = default)
         {
             Page<string> FirstPageFunc(int? pageSizeHint)

@@ -109,7 +109,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
-        /// <remarks> Get a dapr component. </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<DaprComponentResource>> GetDaprComponentAsync(string componentName, CancellationToken cancellationToken = default)
         {
@@ -125,7 +124,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
-        /// <remarks> Get a dapr component. </remarks>
         [ForwardsClientCalls]
         public virtual Response<DaprComponentResource> GetDaprComponent(string componentName, CancellationToken cancellationToken = default)
         {
@@ -148,7 +146,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
-        /// <remarks> Get the specified Certificate. </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<ContainerAppCertificateResource>> GetContainerAppCertificateAsync(string certificateName, CancellationToken cancellationToken = default)
         {
@@ -164,7 +161,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
-        /// <remarks> Get the specified Certificate. </remarks>
         [ForwardsClientCalls]
         public virtual Response<ContainerAppCertificateResource> GetContainerAppCertificate(string certificateName, CancellationToken cancellationToken = default)
         {
@@ -187,7 +183,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="storageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> is null. </exception>
-        /// <remarks> Get storage for a managedEnvironment. </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<ManagedEnvironmentStorageResource>> GetManagedEnvironmentStorageAsync(string storageName, CancellationToken cancellationToken = default)
         {
@@ -203,7 +198,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="storageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> is null. </exception>
-        /// <remarks> Get storage for a managedEnvironment. </remarks>
         [ForwardsClientCalls]
         public virtual Response<ManagedEnvironmentStorageResource> GetManagedEnvironmentStorage(string storageName, CancellationToken cancellationToken = default)
         {
@@ -211,12 +205,11 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get the properties of a Managed Environment.
+        /// Get the properties of a Managed Environment used to host container apps.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}
         /// Operation Id: ManagedEnvironments_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get the properties of a Managed Environment used to host container apps. </remarks>
         public virtual async Task<Response<ManagedEnvironmentResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _managedEnvironmentClientDiagnostics.CreateScope("ManagedEnvironmentResource.Get");
@@ -236,12 +229,11 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get the properties of a Managed Environment.
+        /// Get the properties of a Managed Environment used to host container apps.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}
         /// Operation Id: ManagedEnvironments_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get the properties of a Managed Environment used to host container apps. </remarks>
         public virtual Response<ManagedEnvironmentResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _managedEnvironmentClientDiagnostics.CreateScope("ManagedEnvironmentResource.Get");
@@ -261,13 +253,12 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Delete a Managed Environment.
+        /// Delete a Managed Environment if it does not have any container apps.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}
         /// Operation Id: ManagedEnvironments_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Delete a Managed Environment if it does not have any container apps. </remarks>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _managedEnvironmentClientDiagnostics.CreateScope("ManagedEnvironmentResource.Delete");
@@ -288,13 +279,12 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Delete a Managed Environment.
+        /// Delete a Managed Environment if it does not have any container apps.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}
         /// Operation Id: ManagedEnvironments_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Delete a Managed Environment if it does not have any container apps. </remarks>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _managedEnvironmentClientDiagnostics.CreateScope("ManagedEnvironmentResource.Delete");
@@ -315,7 +305,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Update Managed Environment&apos;s properties.
+        /// Patches a Managed Environment using JSON Merge Patch
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}
         /// Operation Id: ManagedEnvironments_Update
         /// </summary>
@@ -323,7 +313,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="data"> Configuration details of the Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Patches a Managed Environment using JSON Merge Patch. </remarks>
         public virtual async Task<ArmOperation> UpdateAsync(WaitUntil waitUntil, ManagedEnvironmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -346,7 +335,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Update Managed Environment&apos;s properties.
+        /// Patches a Managed Environment using JSON Merge Patch
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}
         /// Operation Id: ManagedEnvironments_Update
         /// </summary>
@@ -354,7 +343,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="data"> Configuration details of the Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Patches a Managed Environment using JSON Merge Patch. </remarks>
         public virtual ArmOperation Update(WaitUntil waitUntil, ManagedEnvironmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -377,14 +365,13 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Checks the resource name availability.
+        /// Checks if resource name is available.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/checkNameAvailability
         /// Operation Id: Namespaces_CheckNameAvailability
         /// </summary>
         /// <param name="content"> The check name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks> Checks if resource name is available. </remarks>
         public virtual async Task<Response<CheckNameAvailabilityResponse>> CheckContainerAppNameAvailabilityAsync(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -404,14 +391,13 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Checks the resource name availability.
+        /// Checks if resource name is available.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/checkNameAvailability
         /// Operation Id: Namespaces_CheckNameAvailability
         /// </summary>
         /// <param name="content"> The check name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks> Checks if resource name is available. </remarks>
         public virtual Response<CheckNameAvailabilityResponse> CheckContainerAppNameAvailability(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -431,7 +417,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get the properties of a Managed Environment.
+        /// Add a tag to the current resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}
         /// Operation Id: ManagedEnvironments_Get
         /// </summary>
@@ -439,7 +425,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        /// <remarks> Add a tag to the current resource. </remarks>
         public virtual async Task<Response<ManagedEnvironmentResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -463,7 +448,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get the properties of a Managed Environment.
+        /// Add a tag to the current resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}
         /// Operation Id: ManagedEnvironments_Get
         /// </summary>
@@ -471,7 +456,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        /// <remarks> Add a tag to the current resource. </remarks>
         public virtual Response<ManagedEnvironmentResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -495,14 +479,13 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get the properties of a Managed Environment.
+        /// Replace the tags on the resource with the given set.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}
         /// Operation Id: ManagedEnvironments_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        /// <remarks> Replace the tags on the resource with the given set. </remarks>
         public virtual async Task<Response<ManagedEnvironmentResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -526,14 +509,13 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get the properties of a Managed Environment.
+        /// Replace the tags on the resource with the given set.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}
         /// Operation Id: ManagedEnvironments_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        /// <remarks> Replace the tags on the resource with the given set. </remarks>
         public virtual Response<ManagedEnvironmentResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
@@ -557,14 +539,13 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get the properties of a Managed Environment.
+        /// Removes a tag by key from the resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}
         /// Operation Id: ManagedEnvironments_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <remarks> Removes a tag by key from the resource. </remarks>
         public virtual async Task<Response<ManagedEnvironmentResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
@@ -587,14 +568,13 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get the properties of a Managed Environment.
+        /// Removes a tag by key from the resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}
         /// Operation Id: ManagedEnvironments_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <remarks> Removes a tag by key from the resource. </remarks>
         public virtual Response<ManagedEnvironmentResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));

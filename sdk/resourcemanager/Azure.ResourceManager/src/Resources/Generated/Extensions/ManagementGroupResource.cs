@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ManagementGroups
         }
 
         /// <summary>
-        /// Retrieve a policy definition in a management group.
+        /// This operation retrieves the policy definition in the given management group with the given name.
         /// Request Path: /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}
         /// Operation Id: PolicyDefinitions_GetAtManagementGroup
         /// </summary>
@@ -32,7 +32,6 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
-        /// <remarks> This operation retrieves the policy definition in the given management group with the given name. </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<ManagementGroupPolicyDefinitionResource>> GetManagementGroupPolicyDefinitionAsync(string policyDefinitionName, CancellationToken cancellationToken = default)
         {
@@ -40,7 +39,7 @@ namespace Azure.ResourceManager.ManagementGroups
         }
 
         /// <summary>
-        /// Retrieve a policy definition in a management group.
+        /// This operation retrieves the policy definition in the given management group with the given name.
         /// Request Path: /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}
         /// Operation Id: PolicyDefinitions_GetAtManagementGroup
         /// </summary>
@@ -48,7 +47,6 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
-        /// <remarks> This operation retrieves the policy definition in the given management group with the given name. </remarks>
         [ForwardsClientCalls]
         public virtual Response<ManagementGroupPolicyDefinitionResource> GetManagementGroupPolicyDefinition(string policyDefinitionName, CancellationToken cancellationToken = default)
         {
@@ -63,7 +61,7 @@ namespace Azure.ResourceManager.ManagementGroups
         }
 
         /// <summary>
-        /// Retrieves a policy set definition.
+        /// This operation retrieves the policy set definition in the given management group with the given name.
         /// Request Path: /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}
         /// Operation Id: PolicySetDefinitions_GetAtManagementGroup
         /// </summary>
@@ -71,7 +69,6 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
-        /// <remarks> This operation retrieves the policy set definition in the given management group with the given name. </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<ManagementGroupPolicySetDefinitionResource>> GetManagementGroupPolicySetDefinitionAsync(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
@@ -79,7 +76,7 @@ namespace Azure.ResourceManager.ManagementGroups
         }
 
         /// <summary>
-        /// Retrieves a policy set definition.
+        /// This operation retrieves the policy set definition in the given management group with the given name.
         /// Request Path: /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}
         /// Operation Id: PolicySetDefinitions_GetAtManagementGroup
         /// </summary>
@@ -87,7 +84,6 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
-        /// <remarks> This operation retrieves the policy set definition in the given management group with the given name. </remarks>
         [ForwardsClientCalls]
         public virtual Response<ManagementGroupPolicySetDefinitionResource> GetManagementGroupPolicySetDefinition(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {

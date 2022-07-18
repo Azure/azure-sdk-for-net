@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets a snapshot of the configuration of an app at a previous point in time.
+        /// Description for Gets a snapshot of the configuration of an app at a previous point in time.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/web/snapshots/{snapshotId}
         /// Operation Id: WebApps_GetConfigurationSnapshot
         /// </summary>
@@ -108,7 +108,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="snapshotId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotId"/> is null. </exception>
-        /// <remarks> Description for Gets a snapshot of the configuration of an app at a previous point in time. </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteConfigSnapshotResource>> GetSiteConfigSnapshotAsync(string snapshotId, CancellationToken cancellationToken = default)
         {
@@ -116,7 +115,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets a snapshot of the configuration of an app at a previous point in time.
+        /// Description for Gets a snapshot of the configuration of an app at a previous point in time.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/web/snapshots/{snapshotId}
         /// Operation Id: WebApps_GetConfigurationSnapshot
         /// </summary>
@@ -124,7 +123,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="snapshotId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotId"/> is null. </exception>
-        /// <remarks> Description for Gets a snapshot of the configuration of an app at a previous point in time. </remarks>
         [ForwardsClientCalls]
         public virtual Response<SiteConfigSnapshotResource> GetSiteConfigSnapshot(string snapshotId, CancellationToken cancellationToken = default)
         {
@@ -132,12 +130,11 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets the configuration of an app, such as platform version and bitness, default documents, virtual applications, Always On, etc.
+        /// Description for Gets the configuration of an app, such as platform version and bitness, default documents, virtual applications, Always On, etc.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/web
         /// Operation Id: WebApps_GetConfiguration
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Gets the configuration of an app, such as platform version and bitness, default documents, virtual applications, Always On, etc. </remarks>
         public virtual async Task<Response<WebSiteConfigResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteConfigWebAppsClientDiagnostics.CreateScope("WebSiteConfigResource.Get");
@@ -157,12 +154,11 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets the configuration of an app, such as platform version and bitness, default documents, virtual applications, Always On, etc.
+        /// Description for Gets the configuration of an app, such as platform version and bitness, default documents, virtual applications, Always On, etc.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/web
         /// Operation Id: WebApps_GetConfiguration
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Description for Gets the configuration of an app, such as platform version and bitness, default documents, virtual applications, Always On, etc. </remarks>
         public virtual Response<WebSiteConfigResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteConfigWebAppsClientDiagnostics.CreateScope("WebSiteConfigResource.Get");
@@ -182,14 +178,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Updates the configuration of an app.
+        /// Description for Updates the configuration of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/web
         /// Operation Id: WebApps_UpdateConfiguration
         /// </summary>
         /// <param name="data"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Description for Updates the configuration of an app. </remarks>
         public virtual async Task<Response<WebSiteConfigResource>> UpdateAsync(SiteConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -209,14 +204,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Updates the configuration of an app.
+        /// Description for Updates the configuration of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/web
         /// Operation Id: WebApps_UpdateConfiguration
         /// </summary>
         /// <param name="data"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Description for Updates the configuration of an app. </remarks>
         public virtual Response<WebSiteConfigResource> Update(SiteConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -236,7 +230,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Updates the configuration of an app.
+        /// Description for Updates the configuration of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/web
         /// Operation Id: WebApps_CreateOrUpdateConfiguration
         /// </summary>
@@ -244,7 +238,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Description for Updates the configuration of an app. </remarks>
         public virtual async Task<ArmOperation<WebSiteConfigResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SiteConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -267,7 +260,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Updates the configuration of an app.
+        /// Description for Updates the configuration of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/web
         /// Operation Id: WebApps_CreateOrUpdateConfiguration
         /// </summary>
@@ -275,7 +268,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        /// <remarks> Description for Updates the configuration of an app. </remarks>
         public virtual ArmOperation<WebSiteConfigResource> CreateOrUpdate(WaitUntil waitUntil, SiteConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -298,13 +290,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets a list of web app configuration snapshots identifiers. Each element of the list contains a timestamp and the ID of the snapshot.
+        /// Description for Gets a list of web app configuration snapshots identifiers. Each element of the list contains a timestamp and the ID of the snapshot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/web/snapshots
         /// Operation Id: WebApps_ListConfigurationSnapshotInfo
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SiteConfigurationSnapshotInfo" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Description for Gets a list of web app configuration snapshots identifiers. Each element of the list contains a timestamp and the ID of the snapshot. </remarks>
         public virtual AsyncPageable<SiteConfigurationSnapshotInfo> GetConfigurationSnapshotInfoAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<SiteConfigurationSnapshotInfo>> FirstPageFunc(int? pageSizeHint)
@@ -341,13 +332,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets a list of web app configuration snapshots identifiers. Each element of the list contains a timestamp and the ID of the snapshot.
+        /// Description for Gets a list of web app configuration snapshots identifiers. Each element of the list contains a timestamp and the ID of the snapshot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/web/snapshots
         /// Operation Id: WebApps_ListConfigurationSnapshotInfo
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SiteConfigurationSnapshotInfo" /> that may take multiple service requests to iterate over. </returns>
-        /// <remarks> Description for Gets a list of web app configuration snapshots identifiers. Each element of the list contains a timestamp and the ID of the snapshot. </remarks>
         public virtual Pageable<SiteConfigurationSnapshotInfo> GetConfigurationSnapshotInfo(CancellationToken cancellationToken = default)
         {
             Page<SiteConfigurationSnapshotInfo> FirstPageFunc(int? pageSizeHint)
