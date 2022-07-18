@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class UpdateManagedInstanceDnsServersOperation : IUtf8JsonSerializable
+    public partial class ManagedInstanceUpdateDnsServersOperationData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteEndObject();
         }
 
-        internal static UpdateManagedInstanceDnsServersOperation DeserializeUpdateManagedInstanceDnsServersOperation(JsonElement element)
+        internal static ManagedInstanceUpdateDnsServersOperationData DeserializeManagedInstanceUpdateDnsServersOperationData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new UpdateManagedInstanceDnsServersOperation(id, name, type, systemData.Value, Optional.ToNullable(status));
+            return new ManagedInstanceUpdateDnsServersOperationData(id, name, type, systemData.Value, Optional.ToNullable(status));
         }
     }
 }

@@ -227,6 +227,10 @@ rename-mapping:
   ReplicationState: ReplicationLinkState
   ServerInfo: ServerTrustGroupServerInfo
   DatabaseExtensions: SqlDatabaseExtension
+  DatabaseOperation: DatabaseOperationData
+  ServerOperation: ServerOperationData
+  ElasticPoolOperation: ElasticPoolOperationData
+  UpdateManagedInstanceDnsServersOperation: ManagedInstanceUpdateDnsServersOperationData
 prompted-enum-values:
   - Default
 directive:

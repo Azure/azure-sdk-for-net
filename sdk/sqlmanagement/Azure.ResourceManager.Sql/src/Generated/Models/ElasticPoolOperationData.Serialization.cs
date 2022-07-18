@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class DatabaseOperation : IUtf8JsonSerializable
+    public partial class ElasticPoolOperationData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,19 +23,19 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteEndObject();
         }
 
-        internal static DatabaseOperation DeserializeDatabaseOperation(JsonElement element)
+        internal static ElasticPoolOperationData DeserializeElasticPoolOperationData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> databaseName = default;
+            Optional<string> elasticPoolName = default;
             Optional<string> operation = default;
             Optional<string> operationFriendlyName = default;
             Optional<int> percentComplete = default;
             Optional<string> serverName = default;
             Optional<DateTimeOffset> startTime = default;
-            Optional<ManagementOperationState> state = default;
+            Optional<string> state = default;
             Optional<int> errorCode = default;
             Optional<string> errorDescription = default;
             Optional<int> errorSeverity = default;
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Sql.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("databaseName"))
+                        if (property0.NameEquals("elasticPoolName"))
                         {
-                            databaseName = property0.Value.GetString();
+                            elasticPoolName = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("operation"))
@@ -121,12 +121,7 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("state"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            state = new ManagementOperationState(property0.Value.GetString());
+                            state = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("errorCode"))
@@ -193,7 +188,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new DatabaseOperation(id, name, type, systemData.Value, databaseName.Value, operation.Value, operationFriendlyName.Value, Optional.ToNullable(percentComplete), serverName.Value, Optional.ToNullable(startTime), Optional.ToNullable(state), Optional.ToNullable(errorCode), errorDescription.Value, Optional.ToNullable(errorSeverity), Optional.ToNullable(isUserError), Optional.ToNullable(estimatedCompletionTime), description.Value, Optional.ToNullable(isCancellable));
+            return new ElasticPoolOperationData(id, name, type, systemData.Value, elasticPoolName.Value, operation.Value, operationFriendlyName.Value, Optional.ToNullable(percentComplete), serverName.Value, Optional.ToNullable(startTime), state.Value, Optional.ToNullable(errorCode), errorDescription.Value, Optional.ToNullable(errorSeverity), Optional.ToNullable(isUserError), Optional.ToNullable(estimatedCompletionTime), description.Value, Optional.ToNullable(isCancellable));
         }
     }
 }
