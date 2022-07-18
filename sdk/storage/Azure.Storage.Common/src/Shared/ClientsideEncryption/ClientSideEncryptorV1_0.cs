@@ -64,11 +64,11 @@ namespace Azure.Storage.Cryptography
         {
             ValidateMembers();
 
-            var generatedKey = ContentEncryptionKeyGenerator.CreateKey(Constants.ClientSideEncryption.EncryptionKeySizeBits);
+            var generatedKey = ClientSideEncryptionValueGenerator.CreateKey(Constants.ClientSideEncryption.EncryptionKeySizeBits);
             EncryptionData encryptionData = default;
             Stream ciphertext = default;
 
-            using (AesCryptoServiceProvider aesProvider = new AesCryptoServiceProvider() { Key = generatedKey })
+            using (AesCryptoServiceProvider aesProvider = ClientSideEncryptionValueGenerator.GetAesProvider(generatedKey))
             {
                 encryptionData = await CreateEncryptionDataInternal(aesProvider, async, cancellationToken).ConfigureAwait(false);
 
@@ -96,7 +96,7 @@ namespace Azure.Storage.Cryptography
         {
             ValidateMembers();
 
-            var generatedKey = ContentEncryptionKeyGenerator.CreateKey(Constants.ClientSideEncryption.EncryptionKeySizeBits);
+            var generatedKey = ClientSideEncryptionValueGenerator.CreateKey(Constants.ClientSideEncryption.EncryptionKeySizeBits);
             EncryptionData encryptionData = default;
             var ciphertext = new MemoryStream();
             byte[] bufferedCiphertext = default;
@@ -151,7 +151,7 @@ namespace Azure.Storage.Cryptography
         {
             ValidateMembers();
 
-            var generatedKey = ContentEncryptionKeyGenerator.CreateKey(Constants.ClientSideEncryption.EncryptionKeySizeBits);
+            var generatedKey = ClientSideEncryptionValueGenerator.CreateKey(Constants.ClientSideEncryption.EncryptionKeySizeBits);
             EncryptionData encryptionData = default;
             Stream writeStream = default;
 

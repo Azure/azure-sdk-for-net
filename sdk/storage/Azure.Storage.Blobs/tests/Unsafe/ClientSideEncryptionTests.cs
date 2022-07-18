@@ -39,16 +39,16 @@ namespace Azure.Storage.Blobs.Test
         private static readonly CancellationToken s_cancellationToken = new CancellationTokenSource().Token;
 
         public ClientSideEncryptionTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
-            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
+            : base(async, serviceVersion, RecordedTestMode.Playback /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
         [OneTimeSetUp]
         public void InjectKeyGen()
         {
-            if (Recording.Mode != RecordedTestMode.Live)
+            if (Mode != RecordedTestMode.Live)
             {
-                KeyGenInjector.InjectRecordedKeygen(this);
+                InjectGenerators(this);
             }
         }
 

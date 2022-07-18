@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="$(AzureStorageSharedSources)ClientsideEncryption\*.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)ClientsideEncryption\Models\*.cs" LinkBase="Shared" />
+    <Compile Remove="C:\repos\azure-sdk-for-net\sdk\storage\Azure.Storage.Common\src\Shared\ClientsideEncryption\ContentEncryptionKeyGenerator.cs" />
     <Compile Include="$(AzureStorageSharedSources)AggregatingProgressIncrementer.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)Constants.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)ContentHasher.cs" LinkBase="Shared" />

@@ -60,7 +60,7 @@ namespace Azure.Storage.Cryptography
             bool async,
             CancellationToken cancellationToken)
         {
-            var generatedKey = ContentEncryptionKeyGenerator.CreateKey(Constants.ClientSideEncryption.EncryptionKeySizeBits);
+            var generatedKey = ClientSideEncryptionValueGenerator.CreateKey(Constants.ClientSideEncryption.EncryptionKeySizeBits);
 
             // transform is disposable but gets disposed by the stream
             var gcm = new GcmAuthenticatedCryptographicTransform(generatedKey, TransformMode.Encrypt);
@@ -89,7 +89,7 @@ namespace Azure.Storage.Cryptography
             bool async,
             CancellationToken cancellationToken)
         {
-            var generatedKey = ContentEncryptionKeyGenerator.CreateKey(Constants.ClientSideEncryption.EncryptionKeySizeBits);
+            var generatedKey = ClientSideEncryptionValueGenerator.CreateKey(Constants.ClientSideEncryption.EncryptionKeySizeBits);
             using var gcm = new GcmAuthenticatedCryptographicTransform(generatedKey, TransformMode.Encrypt);
             EncryptionData encryptionData = await CreateEncryptionDataInternal(generatedKey, async, cancellationToken)
                 .ConfigureAwait(false);
@@ -137,7 +137,7 @@ namespace Azure.Storage.Cryptography
             bool async,
             CancellationToken cancellationToken)
         {
-            var generatedKey = ContentEncryptionKeyGenerator.CreateKey(Constants.ClientSideEncryption.EncryptionKeySizeBits);
+            var generatedKey = ClientSideEncryptionValueGenerator.CreateKey(Constants.ClientSideEncryption.EncryptionKeySizeBits);
             EncryptionData encryptionData = await CreateEncryptionDataInternal(generatedKey, async, cancellationToken)
                 .ConfigureAwait(false);
 

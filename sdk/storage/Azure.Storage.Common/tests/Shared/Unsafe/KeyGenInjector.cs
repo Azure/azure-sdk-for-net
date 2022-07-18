@@ -4,35 +4,49 @@
 using System;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 using Azure.Core.TestFramework;
+using Azure.Storage.Cryptography;
 
 namespace Azure.Storage.Test.Shared
 {
     public static class KeyGenInjector
     {
-        public static void InjectRecordedKeygen(this RecordedTestBase testBase)
-        {
-#pragma warning disable CS8321 // method isn't called at compile time but will be at runtime
-            byte[] GenerateKeyRecordable(int numBits)
-            {
-                var buff = new byte[numBits / 8];
-                testBase.Recording.Random.NextBytes(buff);
-                return buff;
-            }
-#pragma warning restore CS8321
+        private static RecordedTestBase _testBase = default;
 
-            MethodInfo methodToReplace = typeof(ClientSideEncryptionTestExtensions).GetMethod("CreateKey", BindingFlags.Instance | BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
-            MethodInfo methodToInject = typeof(KeyGenInjector).GetMethod("GenerateKeyRecordable", BindingFlags.Instance | BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
-            RuntimeHelpers.PrepareMethod(methodToReplace.MethodHandle);
-            RuntimeHelpers.PrepareMethod(methodToInject.MethodHandle);
+        public static void InjectGenerators(RecordedTestBase testBase)
+        {
+            _testBase = testBase;
+            InjectRecordedKeygen();
+            InjectIvGen();
+        }
+
+        private static void InjectRecordedKeygen()
+        {
+            MethodInfo oldMethod = typeof(ClientSideEncryptionValueGenerator).GetMethod("CreateKey", BindingFlags.Instance | BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
+            MethodInfo newMethod = typeof(KeyGenInjector).GetMethod("GenerateKeyRecordable", BindingFlags.Instance | BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
+            ReplaceMethods(oldMethod, newMethod);
+        }
+
+        private static void InjectIvGen()
+        {
+            MethodInfo oldMethod = typeof(ClientSideEncryptionValueGenerator).GetMethod("GetAesProvider", BindingFlags.Instance | BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
+            MethodInfo newMethod = typeof(KeyGenInjector).GetMethod("GetAesProviderRecordable", BindingFlags.Instance | BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
+            ReplaceMethods(oldMethod, newMethod);
+        }
+
+        private static void ReplaceMethods(MethodInfo oldMethod, MethodInfo newMethod)
+        {
+            RuntimeHelpers.PrepareMethod(oldMethod.MethodHandle);
+            RuntimeHelpers.PrepareMethod(newMethod.MethodHandle);
 
             unsafe
             {
                 // x86
                 if (IntPtr.Size == 4)
                 {
-                    int* inj = (int*)methodToInject.MethodHandle.Value.ToPointer() + 2;
-                    int* tar = (int*)methodToReplace.MethodHandle.Value.ToPointer() + 2;
+                    int* inj = (int*)newMethod.MethodHandle.Value.ToPointer() + 2;
+                    int* tar = (int*)oldMethod.MethodHandle.Value.ToPointer() + 2;
 #if DEBUG
                     //Console.WriteLine("\nVersion x86 Debug\n");
 
@@ -51,8 +65,8 @@ namespace Azure.Storage.Test.Shared
                 // x64
                 else
                 {
-                    long* inj = (long*)methodToInject.MethodHandle.Value.ToPointer() + 1;
-                    long* tar = (long*)methodToReplace.MethodHandle.Value.ToPointer() + 1;
+                    long* inj = (long*)newMethod.MethodHandle.Value.ToPointer() + 1;
+                    long* tar = (long*)oldMethod.MethodHandle.Value.ToPointer() + 1;
 #if DEBUG
                     //Console.WriteLine("\nVersion x64 Debug\n");
                     byte* injInst = (byte*)*inj;
@@ -69,5 +83,27 @@ namespace Azure.Storage.Test.Shared
                 }
             }
         }
+
+#pragma warning disable CS8321 // method isn't called at compile time but will be at runtime
+        private static byte[] GenerateKeyRecordable(int numBits)
+        {
+            var buff = new byte[numBits / 8];
+            _testBase.Recording.Random.NextBytes(buff);
+            return buff;
+        }
+
+#pragma warning disable SYSLIB0021 // replicating the way code is done in main library
+        private static AesCryptoServiceProvider GetAesProviderRecordable(byte[] contentEncryptionKey)
+        {
+            byte[] iv = new byte[16];
+            _testBase.Recording.Random.NextBytes(iv);
+            return new AesCryptoServiceProvider()
+            {
+                Key = contentEncryptionKey,
+                IV = iv
+            };
+        }
+#pragma warning restore SYSLIB0021
+#pragma warning restore CS8321
     }
 }

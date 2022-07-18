@@ -1,11 +1,11 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Security.Cryptography;
 
 namespace Azure.Storage.Cryptography
 {
-    internal class ContentEncryptionKeyGenerator
+    internal class ClientSideEncryptionValueGenerator
     {
         /// <summary>
         /// Securely generate a key.
@@ -20,6 +20,14 @@ namespace Azure.Storage.Cryptography
                 secureRng.GetBytes(buff);
                 return buff;
             }
+        }
+
+        public static AesCryptoServiceProvider GetAesProvider(byte[] contentEncryptionKey)
+        {
+            return new AesCryptoServiceProvider()
+            {
+                Key = contentEncryptionKey
+            };
         }
     }
 }
