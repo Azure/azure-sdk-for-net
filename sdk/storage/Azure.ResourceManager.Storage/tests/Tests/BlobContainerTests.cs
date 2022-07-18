@@ -118,11 +118,11 @@ namespace Azure.ResourceManager.Storage.Tests
 
             container = await container.GetAsync();
             Assert.IsEmpty(container.Data.Metadata);
-            Assert.AreEqual(StoragePublicAccess.None, container.Data.PublicAccess);
+            Assert.AreEqual(StoragePublicAccessType.None, container.Data.PublicAccess);
             Assert.AreEqual(3, container.Data.ImmutabilityPolicy.UpdateHistory.Count);
-            Assert.AreEqual(ImmutabilityPolicyUpdateType.Put, container.Data.ImmutabilityPolicy.UpdateHistory[0].Update);
-            Assert.AreEqual(ImmutabilityPolicyUpdateType.Lock, container.Data.ImmutabilityPolicy.UpdateHistory[1].Update);
-            Assert.AreEqual(ImmutabilityPolicyUpdateType.Extend, container.Data.ImmutabilityPolicy.UpdateHistory[2].Update);
+            Assert.AreEqual(ImmutabilityPolicyUpdateType.Put, container.Data.ImmutabilityPolicy.UpdateHistory[0].UpdateType);
+            Assert.AreEqual(ImmutabilityPolicyUpdateType.Lock, container.Data.ImmutabilityPolicy.UpdateHistory[1].UpdateType);
+            Assert.AreEqual(ImmutabilityPolicyUpdateType.Extend, container.Data.ImmutabilityPolicy.UpdateHistory[2].UpdateType);
             Assert.IsTrue(container.Data.LegalHold.HasLegalHold);
             Assert.AreEqual(3, container.Data.LegalHold.Tags.Count);
             Assert.AreEqual("tag1", container.Data.LegalHold.Tags[0].Tag);
@@ -174,14 +174,14 @@ namespace Azure.ResourceManager.Storage.Tests
             //update metadata, public access
             BlobContainerData update = container.Data;
             update.Metadata.Add("key1", "value1");
-            update.PublicAccess = StoragePublicAccess.Container;
+            update.PublicAccess = StoragePublicAccessType.Container;
             BlobContainerResource container1 = await container.UpdateAsync(update);
 
             //validate
             Assert.NotNull(container1);
             Assert.NotNull(container1.Data.Metadata);
             Assert.AreEqual(container1.Data.Metadata["key1"], "value1");
-            Assert.AreEqual(StoragePublicAccess.Container, container.Data.PublicAccess);
+            Assert.AreEqual(StoragePublicAccessType.Container, container.Data.PublicAccess);
             Assert.False(container1.Data.HasLegalHold);
             Assert.False(container1.Data.HasImmutabilityPolicy);
         }
@@ -526,17 +526,17 @@ namespace Azure.ResourceManager.Storage.Tests
                     CorsRules =
                     {
                         new StorageCorsRule(new[] { "http://www.contoso.com", "http://www.fabrikam.com" },
-                            new[] { CorsRuleAllowedMethodsItem.GET, CorsRuleAllowedMethodsItem.PUT },
+                            new[] { CorsRuleAllowedMethod.Get, CorsRuleAllowedMethod.Put },
                             100,
                             new[] { "x-ms-meta-*" },
                             new[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" }),
                         new StorageCorsRule(new[] { "*" },
-                            new[] { CorsRuleAllowedMethodsItem.GET },
+                            new[] { CorsRuleAllowedMethod.Get },
                             2,
                             new[] { "*" },
                             new[] { "*" }),
                         new StorageCorsRule(new[] { "http://www.abc23.com", "https://www.fabrikam.com/*" },
-                            new[] { CorsRuleAllowedMethodsItem.GET, CorsRuleAllowedMethodsItem.PUT, CorsRuleAllowedMethodsItem.Post },
+                            new[] { CorsRuleAllowedMethod.Get, CorsRuleAllowedMethod.Put, CorsRuleAllowedMethod.Post },
                             2000,
                             new[] { "x-ms-meta-12345675754564*" },
                             new[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" })
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.Storage.Tests
             await container2.DeleteAsync(WaitUntil.Completed);
 
             //list delete included
-            List<BlobContainerResource> blobContainers = await _blobContainerCollection.GetAllAsync(include: ListContainersInclude.Deleted).ToEnumerableAsync();
+            List<BlobContainerResource> blobContainers = await _blobContainerCollection.GetAllAsync(include: BlobContainerState.Deleted).ToEnumerableAsync();
             Assert.AreEqual(2, blobContainers.Count);
             foreach (BlobContainerResource con in blobContainers)
             {
@@ -658,7 +658,7 @@ namespace Azure.ResourceManager.Storage.Tests
             properties.ChangeFeed = new BlobServiceChangeFeed();
             properties.ChangeFeed.IsEnabled = true;
             properties.IsVersioningEnabled = true;
-            properties.RestorePolicy = new RestorePolicyProperties(true) { Days = 5 };
+            properties.RestorePolicy = new RestorePolicy(true) { Days = 5 };
 
             _blobService = (await _blobService.CreateOrUpdateAsync(WaitUntil.Completed, properties)).Value;
 
@@ -732,7 +732,7 @@ namespace Azure.ResourceManager.Storage.Tests
             string scopeName2 = "testscope2";
             EncryptionScopeData data = new EncryptionScopeData()
             {
-                Source = EncryptionScopeSource.MicrosoftStorage,
+                Source = EncryptionScopeSource.Storage,
                 State = EncryptionScopeState.Enabled
             };
             await _storageAccount.GetEncryptionScopes().CreateOrUpdateAsync(WaitUntil.Completed, scopeName1, data);
@@ -740,14 +740,14 @@ namespace Azure.ResourceManager.Storage.Tests
 
             //create container
             string containerName = Recording.GenerateAssetName("container");
-            BlobContainerResource blobContainer = (await _blobContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, containerName, new BlobContainerData() { DefaultEncryptionScope = scopeName1, DenyEncryptionScopeOverride = false })).Value;
+            BlobContainerResource blobContainer = (await _blobContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, containerName, new BlobContainerData() { DefaultEncryptionScope = scopeName1, PreventEncryptionScopeOverride = false })).Value;
             Assert.AreEqual(scopeName1, blobContainer.Data.DefaultEncryptionScope);
-            Assert.False(blobContainer.Data.DenyEncryptionScopeOverride.Value);
+            Assert.False(blobContainer.Data.PreventEncryptionScopeOverride.Value);
 
             //Update container not support Encryption scope
-            BlobContainerResource blobContainer2 = (await _blobContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, containerName, new BlobContainerData() { DefaultEncryptionScope = scopeName2, DenyEncryptionScopeOverride = true })).Value;
+            BlobContainerResource blobContainer2 = (await _blobContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, containerName, new BlobContainerData() { DefaultEncryptionScope = scopeName2, PreventEncryptionScopeOverride = true })).Value;
             Assert.AreEqual(scopeName2, blobContainer2.Data.DefaultEncryptionScope);
-            Assert.True(blobContainer2.Data.DenyEncryptionScopeOverride.Value);
+            Assert.True(blobContainer2.Data.PreventEncryptionScopeOverride.Value);
         }
     }
 }

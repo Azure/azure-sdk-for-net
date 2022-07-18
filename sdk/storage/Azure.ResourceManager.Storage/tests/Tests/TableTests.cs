@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Storage.Tests
         {
             //create table
             string tableName = Recording.GenerateAssetName("testtable");
-            TableResource table1 = (await _tableCollection.CreateOrUpdateAsync(WaitUntil.Completed, tableName)).Value;
+            TableResource table1 = (await _tableCollection.CreateOrUpdateAsync(WaitUntil.Completed, tableName, new TableData())).Value;
             Assert.IsNotNull(table1);
             Assert.AreEqual(table1.Id.Name, tableName);
 
@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.Storage.Tests
             //create two tables
             string tableName1 = Recording.GenerateAssetName("testtable1");
             string tableName2 = Recording.GenerateAssetName("testtable2");
-            TableResource table1 = (await _tableCollection.CreateOrUpdateAsync(WaitUntil.Completed, tableName1)).Value;
-            TableResource table2 = (await _tableCollection.CreateOrUpdateAsync(WaitUntil.Completed, tableName2)).Value;
+            TableResource table1 = (await _tableCollection.CreateOrUpdateAsync(WaitUntil.Completed, tableName1, new TableData())).Value;
+            TableResource table2 = (await _tableCollection.CreateOrUpdateAsync(WaitUntil.Completed, tableName2, new TableData())).Value;
 
             //validate two tables
             TableResource table3 = null;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Storage.Tests
                     {
                         new StorageCorsRule(
                             allowedHeaders: new string[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" },
-                            allowedMethods: new CorsRuleAllowedMethodsItem[] { "GET", "HEAD", "POST", "OPTIONS", "MERGE", "PUT" },
+                            allowedMethods: new CorsRuleAllowedMethod[] { "GET", "HEAD", "POST", "OPTIONS", "MERGE", "PUT" },
                              allowedOrigins: new string[] { "http://www.contoso.com", "http://www.fabrikam.com" },
                             exposedHeaders: new string[] { "x-ms-meta-*" },
                             maxAgeInSeconds: 100)
