@@ -839,9 +839,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
             else
             {
-                using (var memoryStream = new MemoryStream(512))
+                using var memoryStream = new MemoryStream(StreamBufferSizeInBytes);
+                stream.CopyTo(memoryStream, StreamBufferSizeInBytes);
+                if (!memoryStream.TryGetBuffer(out buffer))
                 {
-                    stream.CopyTo(memoryStream, 512);
                     buffer = new ArraySegment<byte>(memoryStream.ToArray());
                 }
             }
