@@ -575,6 +575,46 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
+        public async Task TestSingle_CustomSessionInitializingHandler()
+        {
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "session1");
+            var host = BuildHost<TestCustomSessionInitializingHandler>(SetCustomSessionInitializingHandler);
+            using (host)
+            {
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+                await host.StopAsync();
+            }
+        }
+
+        protected static Action<IHostBuilder> SetCustomSessionInitializingHandler =>
+            builder => builder.ConfigureWebJobs(b =>
+                b.AddServiceBus(sbOptions =>
+                {
+                    sbOptions.SessionInitializingAsync = TestCustomSessionInitializingHandler.SessionInitializingHandler;
+                }));
+
+        [Test]
+        public async Task TestSingle_CustomSessionClosingHandler()
+        {
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "session1");
+            var host = BuildHost<TestCustomSessionClosingHandler>(SetCustomSessionInitializingHandler);
+            using (host)
+            {
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+                await host.StopAsync();
+            }
+        }
+
+        protected static Action<IHostBuilder> SetCustomSessionClosingHandler =>
+            builder => builder.ConfigureWebJobs(b =>
+                b.AddServiceBus(sbOptions =>
+                {
+                    sbOptions.SessionClosingAsync = TestCustomSessionClosingHandler.SessionClosingHandler;
+                }));
+
+        [Test]
         public async Task TestBatch_ReceiveFromFunction()
         {
             await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "session1");
@@ -1103,6 +1143,43 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.IsNotNull(received);
 
                 _waitHandle1.Set();
+            }
+        }
+
+        public class TestCustomSessionInitializingHandler
+        {
+            public static async Task RunAsync(
+                [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)]
+                ServiceBusReceivedMessage message,
+                ServiceBusMessageActions messageActions,
+                ServiceBusReceiveActions receiveActions)
+            {
+                await messageActions.CompleteMessageAsync(message);
+            }
+
+            public static Task SessionInitializingHandler(ProcessSessionEventArgs arg)
+            {
+                _waitHandle1.Set();
+                return Task.CompletedTask;
+            }
+        }
+
+        public class TestCustomSessionClosingHandler
+        {
+            public static async Task RunAsync(
+                [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)]
+                ServiceBusReceivedMessage message,
+                ServiceBusMessageActions messageActions,
+                ServiceBusSessionMessageActions sessionActions)
+            {
+                await messageActions.CompleteMessageAsync(message);
+                sessionActions.ReleaseSession();
+            }
+
+            public static Task SessionClosingHandler(ProcessSessionEventArgs arg)
+            {
+                _waitHandle1.Set();
+                return Task.CompletedTask;
             }
         }
 

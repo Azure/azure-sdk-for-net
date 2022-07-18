@@ -131,6 +131,24 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         public Func<ProcessErrorEventArgs, Task> ProcessErrorAsync { get; set; }
 
         /// <summary>
+        /// Optional handler that can be set to be notified when a new session is about to be processed.
+        /// </summary>
+        /// <remarks>
+        /// It is not recommended that the state of the processor be managed directly from within this handler; requesting to start or stop the processor may result in
+        /// a deadlock scenario.
+        /// </remarks>
+        public Func<ProcessSessionEventArgs, Task> SessionInitializingAsync { get; set; }
+
+        /// <summary>
+        /// Optional handler that can be set to be notified when a session is about to be closed for processing.
+        /// </summary>
+        /// <remarks>
+        /// It is not recommended that the state of the processor be managed directly from within this handler; requesting to start or stop the processor may result in
+        /// a deadlock scenario.
+        /// </remarks>
+        public Func<ProcessSessionEventArgs, Task> SessionClosingAsync { get; set; }
+
+        /// <summary>
         /// Gets or sets the maximum number of messages that will be passed to each function call. This only applies for functions that receive
         /// a batch of messages. The default value is 1000.
         /// </summary>
@@ -203,6 +221,22 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             if (ProcessErrorAsync != null)
             {
                 await ProcessErrorAsync(args).ConfigureAwait(false);
+            }
+        }
+
+        internal async Task SessionInitializingHandler(ProcessSessionEventArgs args)
+        {
+            if (SessionInitializingAsync != null)
+            {
+                await SessionInitializingAsync(args).ConfigureAwait(false);
+            }
+        }
+
+        internal async Task SessionClosingHandler(ProcessSessionEventArgs args)
+        {
+            if (SessionClosingAsync != null)
+            {
+                await SessionClosingAsync(args).ConfigureAwait(false);
             }
         }
 
