@@ -133,19 +133,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         /// <summary>
         /// Optional handler that can be set to be notified when a new session is about to be processed.
         /// </summary>
-        /// <remarks>
-        /// It is not recommended that the state of the processor be managed directly from within this handler; requesting to start or stop the processor may result in
-        /// a deadlock scenario.
-        /// </remarks>
         public Func<ProcessSessionEventArgs, Task> SessionInitializingAsync { get; set; }
 
         /// <summary>
         /// Optional handler that can be set to be notified when a session is about to be closed for processing.
         /// </summary>
-        /// <remarks>
-        /// It is not recommended that the state of the processor be managed directly from within this handler; requesting to start or stop the processor may result in
-        /// a deadlock scenario.
-        /// </remarks>
         public Func<ProcessSessionEventArgs, Task> SessionClosingAsync { get; set; }
 
         /// <summary>
