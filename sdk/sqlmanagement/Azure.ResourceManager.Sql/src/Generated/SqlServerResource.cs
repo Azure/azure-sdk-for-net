@@ -1308,10 +1308,10 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ServerOperations_ListByServer
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServerOperation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServerOperation> GetServerOperationsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ServerOperationData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ServerOperationData> GetServerOperationsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ServerOperation>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ServerOperationData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _serverOperationsClientDiagnostics.CreateScope("SqlServerResource.GetServerOperations");
                 scope.Start();
@@ -1326,7 +1326,7 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<ServerOperation>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ServerOperationData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _serverOperationsClientDiagnostics.CreateScope("SqlServerResource.GetServerOperations");
                 scope.Start();
@@ -1350,10 +1350,10 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ServerOperations_ListByServer
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServerOperation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServerOperation> GetServerOperations(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ServerOperationData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServerOperationData> GetServerOperations(CancellationToken cancellationToken = default)
         {
-            Page<ServerOperation> FirstPageFunc(int? pageSizeHint)
+            Page<ServerOperationData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _serverOperationsClientDiagnostics.CreateScope("SqlServerResource.GetServerOperations");
                 scope.Start();
@@ -1368,7 +1368,7 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<ServerOperation> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ServerOperationData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _serverOperationsClientDiagnostics.CreateScope("SqlServerResource.GetServerOperations");
                 scope.Start();

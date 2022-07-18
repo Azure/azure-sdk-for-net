@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ServerOperation : IUtf8JsonSerializable
+    public partial class ServerOperationData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteEndObject();
         }
 
-        internal static ServerOperation DeserializeServerOperation(JsonElement element)
+        internal static ServerOperationData DeserializeServerOperationData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new ServerOperation(id, name, type, systemData.Value, operation.Value, operationFriendlyName.Value, Optional.ToNullable(percentComplete), serverName.Value, Optional.ToNullable(startTime), Optional.ToNullable(state), Optional.ToNullable(errorCode), errorDescription.Value, Optional.ToNullable(errorSeverity), Optional.ToNullable(isUserError), Optional.ToNullable(estimatedCompletionTime), description.Value, Optional.ToNullable(isCancellable));
+            return new ServerOperationData(id, name, type, systemData.Value, operation.Value, operationFriendlyName.Value, Optional.ToNullable(percentComplete), serverName.Value, Optional.ToNullable(startTime), Optional.ToNullable(state), Optional.ToNullable(errorCode), errorDescription.Value, Optional.ToNullable(errorSeverity), Optional.ToNullable(isUserError), Optional.ToNullable(estimatedCompletionTime), description.Value, Optional.ToNullable(isCancellable));
         }
     }
 }

@@ -1336,10 +1336,10 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: DatabaseOperations_ListByDatabase
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DatabaseOperation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DatabaseOperation> GetDatabaseOperationsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DatabaseOperationData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DatabaseOperationData> GetDatabaseOperationsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DatabaseOperation>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<DatabaseOperationData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _databaseOperationsClientDiagnostics.CreateScope("SqlDatabaseResource.GetDatabaseOperations");
                 scope.Start();
@@ -1354,7 +1354,7 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<DatabaseOperation>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<DatabaseOperationData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _databaseOperationsClientDiagnostics.CreateScope("SqlDatabaseResource.GetDatabaseOperations");
                 scope.Start();
@@ -1378,10 +1378,10 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: DatabaseOperations_ListByDatabase
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DatabaseOperation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DatabaseOperation> GetDatabaseOperations(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DatabaseOperationData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DatabaseOperationData> GetDatabaseOperations(CancellationToken cancellationToken = default)
         {
-            Page<DatabaseOperation> FirstPageFunc(int? pageSizeHint)
+            Page<DatabaseOperationData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _databaseOperationsClientDiagnostics.CreateScope("SqlDatabaseResource.GetDatabaseOperations");
                 scope.Start();
@@ -1396,7 +1396,7 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<DatabaseOperation> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<DatabaseOperationData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _databaseOperationsClientDiagnostics.CreateScope("SqlDatabaseResource.GetDatabaseOperations");
                 scope.Start();

@@ -11,19 +11,20 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> A server operation. </summary>
-    public partial class ServerOperation : ResourceData
+    /// <summary> A database operation. </summary>
+    public partial class DatabaseOperationData : ResourceData
     {
-        /// <summary> Initializes a new instance of ServerOperation. </summary>
-        public ServerOperation()
+        /// <summary> Initializes a new instance of DatabaseOperationData. </summary>
+        public DatabaseOperationData()
         {
         }
 
-        /// <summary> Initializes a new instance of ServerOperation. </summary>
+        /// <summary> Initializes a new instance of DatabaseOperationData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="databaseName"> The name of the database the operation is being performed on. </param>
         /// <param name="operation"> The name of operation. </param>
         /// <param name="operationFriendlyName"> The friendly name of operation. </param>
         /// <param name="percentComplete"> The percentage of the operation completed. </param>
@@ -37,8 +38,9 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="estimatedCompleteOn"> The estimated completion time of the operation. </param>
         /// <param name="description"> The operation description. </param>
         /// <param name="isCancellable"> Whether the operation can be cancelled. </param>
-        internal ServerOperation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string operation, string operationFriendlyName, int? percentComplete, string serverName, DateTimeOffset? startOn, ManagementOperationState? state, int? errorCode, string errorDescription, int? errorSeverity, bool? isUserError, DateTimeOffset? estimatedCompleteOn, string description, bool? isCancellable) : base(id, name, resourceType, systemData)
+        internal DatabaseOperationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string databaseName, string operation, string operationFriendlyName, int? percentComplete, string serverName, DateTimeOffset? startOn, ManagementOperationState? state, int? errorCode, string errorDescription, int? errorSeverity, bool? isUserError, DateTimeOffset? estimatedCompleteOn, string description, bool? isCancellable) : base(id, name, resourceType, systemData)
         {
+            DatabaseName = databaseName;
             Operation = operation;
             OperationFriendlyName = operationFriendlyName;
             PercentComplete = percentComplete;
@@ -54,6 +56,8 @@ namespace Azure.ResourceManager.Sql.Models
             IsCancellable = isCancellable;
         }
 
+        /// <summary> The name of the database the operation is being performed on. </summary>
+        public string DatabaseName { get; }
         /// <summary> The name of operation. </summary>
         public string Operation { get; }
         /// <summary> The friendly name of operation. </summary>
