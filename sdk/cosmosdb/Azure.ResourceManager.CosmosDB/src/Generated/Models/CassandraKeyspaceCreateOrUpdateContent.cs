@@ -47,9 +47,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> The standard JSON format of a Cassandra keyspace. </summary>
         internal CassandraKeyspaceResourceInfo Resource { get; set; }
         /// <summary> Name of the Cosmos DB Cassandra keyspace. </summary>
-        public string ResourceId
+        public string ResourceKeyspaceName
         {
-            get => Resource is null ? default : Resource.Id;
+            get => Resource is null ? default : Resource.KeyspaceName;
             set => Resource = new CassandraKeyspaceResourceInfo(value);
         }
 

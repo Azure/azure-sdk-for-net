@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Sql.Models
         private const string NumericValue = "numeric";
         private const string SmallmoneyValue = "smallmoney";
         private const string BigintValue = "bigint";
-        private const string HierarchyidValue = "hierarchyid";
+        private const string HierarchyIdValue = "hierarchyid";
         private const string GeometryValue = "geometry";
         private const string GeographyValue = "geography";
         private const string VarbinaryValue = "varbinary";
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> bigint. </summary>
         public static ColumnDataType Bigint { get; } = new ColumnDataType(BigintValue);
         /// <summary> hierarchyid. </summary>
-        public static ColumnDataType Hierarchyid { get; } = new ColumnDataType(HierarchyidValue);
+        public static ColumnDataType HierarchyId { get; } = new ColumnDataType(HierarchyIdValue);
         /// <summary> geometry. </summary>
         public static ColumnDataType Geometry { get; } = new ColumnDataType(GeometryValue);
         /// <summary> geography. </summary>

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="currentAttemptStartOn"> Start time of the current attempt. </param>
         /// <param name="lastMessage"> The last status or error message. </param>
         /// <param name="target"> The target that this execution is executed on. </param>
-        internal JobExecutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? jobVersion, string stepName, int? stepId, Guid? jobExecutionId, JobExecutionLifecycle? lifecycle, ProvisioningState? provisioningState, DateTimeOffset? createOn, DateTimeOffset? startOn, DateTimeOffset? endOn, int? currentAttempts, DateTimeOffset? currentAttemptStartOn, string lastMessage, JobExecutionTarget target) : base(id, name, resourceType, systemData)
+        internal JobExecutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? jobVersion, string stepName, int? stepId, Guid? jobExecutionId, JobExecutionLifecycle? lifecycle, JobExecutionProvisioningState? provisioningState, DateTimeOffset? createOn, DateTimeOffset? startOn, DateTimeOffset? endOn, int? currentAttempts, DateTimeOffset? currentAttemptStartOn, string lastMessage, JobExecutionTarget target) : base(id, name, resourceType, systemData)
         {
             JobVersion = jobVersion;
             StepName = stepName;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> The detailed state of the job execution. </summary>
         public JobExecutionLifecycle? Lifecycle { get; }
         /// <summary> The ARM provisioning state of the job execution. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public JobExecutionProvisioningState? ProvisioningState { get; }
         /// <summary> The time that the job execution was created. </summary>
         public DateTimeOffset? CreateOn { get; }
         /// <summary> The time that the job execution started. </summary>

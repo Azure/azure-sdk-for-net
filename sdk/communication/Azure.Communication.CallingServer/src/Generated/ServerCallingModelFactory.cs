@@ -16,19 +16,19 @@ namespace Azure.Communication.CallingServer
         /// <param name="operationContext"> The operation context provided by client. </param>
         /// <param name="resultDetails"> The result info for the operation. </param>
         /// <returns> A new <see cref="CallingServer.TransferCallResponse"/> instance for mocking. </returns>
-        public static TransferCallResponse TransferCallResponse(string operationId = null, CallingOperationStatusDto status = default, string operationContext = null, CallingOperationResultDetailsDto resultDetails = null)
+        public static TransferCallResponse TransferCallResponse(string operationId = null, CallingOperationStatus status = default, string operationContext = null, CallingOperationResultDetails resultDetails = null)
         {
             return new TransferCallResponse(operationId, status, operationContext, resultDetails);
         }
 
-        /// <summary> Initializes a new instance of CallingOperationResultDetailsDto. </summary>
+        /// <summary> Initializes a new instance of CallingOperationResultDetails. </summary>
         /// <param name="code"> The result code associated with the operation. </param>
         /// <param name="subcode"> The subcode that further classifies the result. </param>
         /// <param name="message"> The message is a detail explanation of subcode. </param>
-        /// <returns> A new <see cref="CallingServer.CallingOperationResultDetailsDto"/> instance for mocking. </returns>
-        public static CallingOperationResultDetailsDto CallingOperationResultDetailsDto(int code = default, int subcode = default, string message = null)
+        /// <returns> A new <see cref="CallingServer.CallingOperationResultDetails"/> instance for mocking. </returns>
+        public static CallingOperationResultDetails CallingOperationResultDetails(int code = default, int subcode = default, string message = null)
         {
-            return new CallingOperationResultDetailsDto(code, subcode, message);
+            return new CallingOperationResultDetails(code, subcode, message);
         }
 
         /// <summary> Initializes a new instance of PlayResponse. </summary>
@@ -37,7 +37,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="operationContext"> The operation context provided by client. </param>
         /// <param name="resultDetails"> The result info for the operation. </param>
         /// <returns> A new <see cref="CallingServer.PlayResponse"/> instance for mocking. </returns>
-        public static PlayResponse PlayResponse(string operationId = null, CallingOperationStatusDto status = default, string operationContext = null, CallingOperationResultDetailsDto resultDetails = null)
+        public static PlayResponse PlayResponse(string operationId = null, CallingOperationStatus status = default, string operationContext = null, CallingOperationResultDetails resultDetails = null)
         {
             return new PlayResponse(operationId, status, operationContext, resultDetails);
         }
@@ -48,7 +48,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="operationContext"> The operation context provided by client. </param>
         /// <param name="resultDetails"> The result info for the operation. </param>
         /// <returns> A new <see cref="CallingServer.AddParticipantsResponse"/> instance for mocking. </returns>
-        public static AddParticipantsResponse AddParticipantsResponse(string operationId = null, CallingOperationStatusDto status = default, string operationContext = null, CallingOperationResultDetailsDto resultDetails = null)
+        public static AddParticipantsResponse AddParticipantsResponse(string operationId = null, CallingOperationStatus status = default, string operationContext = null, CallingOperationResultDetails resultDetails = null)
         {
             return new AddParticipantsResponse(operationId, status, operationContext, resultDetails);
         }
@@ -59,7 +59,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="operationContext"> The operation context provided by client. </param>
         /// <param name="resultDetails"> The result info for the operation. </param>
         /// <returns> A new <see cref="CallingServer.RemoveParticipantsResponse"/> instance for mocking. </returns>
-        public static RemoveParticipantsResponse RemoveParticipantsResponse(string operationId = null, CallingOperationStatusDto status = default, string operationContext = null, CallingOperationResultDetailsDto resultDetails = null)
+        public static RemoveParticipantsResponse RemoveParticipantsResponse(string operationId = null, CallingOperationStatus status = default, string operationContext = null, CallingOperationResultDetails resultDetails = null)
         {
             return new RemoveParticipantsResponse(operationId, status, operationContext, resultDetails);
         }

@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("serverKeyType");
                 writer.WriteStringValue(ServerKeyType.Value.ToString());
             }
-            if (Optional.IsDefined(AutoRotationEnabled))
+            if (Optional.IsDefined(IsAutoRotationEnabled))
             {
                 writer.WritePropertyName("autoRotationEnabled");
-                writer.WriteBooleanValue(AutoRotationEnabled.Value);
+                writer.WriteBooleanValue(IsAutoRotationEnabled.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

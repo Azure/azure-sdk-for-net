@@ -57,6 +57,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public PointF this[int index] => Points[index];
 
         /// <summary>
+        /// Gets the number of points of this <see cref="BoundingPolygon"/>.
+        /// </summary>
+        public int Length => Points.Length;
+
+        /// <summary>
         /// Returns string representation for <see cref="BoundingPolygon"/>.
         /// </summary>
         public override string ToString() => string.Join(",", Points.Select(p => p.ToString()).ToArray());

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 
-namespace Azure.Communication.CallingServer
+namespace Azure.Communication.CallingServer.Models
 {
     /// <summary> The options for creating a call. </summary>
     public class CreateCallOptions
@@ -17,8 +17,9 @@ namespace Azure.Communication.CallingServer
         /// <summary>
         /// Create Call Options.
         /// </summary>
-        public CreateCallOptions()
+        public CreateCallOptions(string subject = default)
         {
+            Subject = subject;
         }
     }
 }

@@ -15,9 +15,9 @@ namespace Azure.Communication.CallingServer
         internal static RemoveParticipantsResponse DeserializeRemoveParticipantsResponse(JsonElement element)
         {
             Optional<string> operationId = default;
-            CallingOperationStatusDto status = default;
+            CallingOperationStatus status = default;
             Optional<string> operationContext = default;
-            Optional<CallingOperationResultDetailsDto> resultDetails = default;
+            Optional<CallingOperationResultDetails> resultDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operationId"))
@@ -27,7 +27,7 @@ namespace Azure.Communication.CallingServer
                 }
                 if (property.NameEquals("status"))
                 {
-                    status = new CallingOperationStatusDto(property.Value.GetString());
+                    status = new CallingOperationStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("operationContext"))
@@ -42,7 +42,7 @@ namespace Azure.Communication.CallingServer
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    resultDetails = CallingOperationResultDetailsDto.DeserializeCallingOperationResultDetailsDto(property.Value);
+                    resultDetails = CallingOperationResultDetails.DeserializeCallingOperationResultDetails(property.Value);
                     continue;
                 }
             }

@@ -17,16 +17,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Initializes a new instance of MongoIndexConfig. </summary>
         /// <param name="expireAfterSeconds"> Expire after seconds. </param>
-        /// <param name="unique"> Is unique or not. </param>
-        internal MongoIndexConfig(int? expireAfterSeconds, bool? unique)
+        /// <param name="isUnique"> Is unique or not. </param>
+        internal MongoIndexConfig(int? expireAfterSeconds, bool? isUnique)
         {
             ExpireAfterSeconds = expireAfterSeconds;
-            Unique = unique;
+            IsUnique = isUnique;
         }
 
         /// <summary> Expire after seconds. </summary>
         public int? ExpireAfterSeconds { get; set; }
         /// <summary> Is unique or not. </summary>
-        public bool? Unique { get; set; }
+        public bool? IsUnique { get; set; }
     }
 }

@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Allow or disallow cross AAD tenant object replication. The default interpretation is true for this property. </summary>
         public bool? AllowCrossTenantReplication { get; set; }
         /// <summary> A boolean flag which indicates whether the default authentication is OAuth or not. The default interpretation is false for this property. </summary>
-        public bool? DefaultToOAuthAuthentication { get; set; }
+        public bool? IsDefaultToOAuthAuthentication { get; set; }
         /// <summary> Allow or disallow public network access to Storage Account. Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
         public StoragePublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> The property is immutable and can only be set to true at the account creation time. When set to true, it enables object level immutability for all the containers in the account by default. </summary>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Storage.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("enabled");
-            writer.WriteBooleanValue(Enabled);
+            writer.WriteBooleanValue(IsEnabled);
             writer.WritePropertyName("type");
             writer.WriteStringValue(InventoryRuleType.ToString());
             writer.WritePropertyName("rules");

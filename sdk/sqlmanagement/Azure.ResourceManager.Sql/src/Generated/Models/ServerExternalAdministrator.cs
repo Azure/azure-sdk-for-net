@@ -23,15 +23,15 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="login"> Login name of the server administrator. </param>
         /// <param name="sid"> SID (object ID) of the server administrator. </param>
         /// <param name="tenantId"> Tenant ID of the administrator. </param>
-        /// <param name="azureADOnlyAuthentication"> Azure Active Directory only Authentication enabled. </param>
-        internal ServerExternalAdministrator(AdministratorType? administratorType, PrincipalType? principalType, string login, Guid? sid, Guid? tenantId, bool? azureADOnlyAuthentication)
+        /// <param name="isAzureADOnlyAuthenticationEnabled"> Azure Active Directory only Authentication enabled. </param>
+        internal ServerExternalAdministrator(AdministratorType? administratorType, PrincipalType? principalType, string login, Guid? sid, Guid? tenantId, bool? isAzureADOnlyAuthenticationEnabled)
         {
             AdministratorType = administratorType;
             PrincipalType = principalType;
             Login = login;
             Sid = sid;
             TenantId = tenantId;
-            AzureADOnlyAuthentication = azureADOnlyAuthentication;
+            IsAzureADOnlyAuthenticationEnabled = isAzureADOnlyAuthenticationEnabled;
         }
 
         /// <summary> Type of the sever administrator. </summary>
@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Tenant ID of the administrator. </summary>
         public Guid? TenantId { get; set; }
         /// <summary> Azure Active Directory only Authentication enabled. </summary>
-        public bool? AzureADOnlyAuthentication { get; set; }
+        public bool? IsAzureADOnlyAuthenticationEnabled { get; set; }
     }
 }
