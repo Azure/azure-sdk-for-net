@@ -392,7 +392,7 @@ function Invoke-GenerateAndBuildSDK () {
     Write-Host "service:$service, serviceType:$serviceType"
     
     if (!$readmeFile.StartsWith("http") -And !(Test-Path -Path $readmeFile)) {
-        Write-Error "readme file does not exist."
+        Write-Error "readme file '$readmeFile' does not exist."
         exit 1
     }
     
