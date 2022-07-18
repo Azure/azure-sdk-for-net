@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.Resources
         [EditorBrowsable(EditorBrowsableState.Never)]
         public SystemAssignedServiceIdentity Identity
         {
-            get => _identity ??= ManagedIdentity == null ? null : new SystemAssignedServiceIdentity(ManagedIdentity.PrincipalId, ManagedIdentity.TenantId, ManagedIdentity.ManagedServiceIdentityType.ToString());
-            set { _identity = value; ManagedIdentity = value == null ? null : new ManagedServiceIdentity(value.SystemAssignedServiceIdentityType.ToString()); }
+            get { if (_identity == null) return ManagedIdentity == null ? null : _identity ??= new SystemAssignedServiceIdentity(ManagedIdentity.PrincipalId, ManagedIdentity.TenantId, ManagedIdentity.ManagedServiceIdentityType.ToString()); else { _identity.SystemAssignedServiceIdentityType = ManagedIdentity.ManagedServiceIdentityType.ToString(); return _identity; } }
+            set { _identity = value; if (value == null) ManagedIdentity = null; else if (ManagedIdentity == null) ManagedIdentity = new ManagedServiceIdentity(value.SystemAssignedServiceIdentityType.ToString()); else ManagedIdentity.ManagedServiceIdentityType = value.SystemAssignedServiceIdentityType.ToString(); }
         }
 
         /// <summary> The managed identity associated with the policy assignment. </summary>
