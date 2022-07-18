@@ -72,8 +72,8 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             {
                 GroupMembers =
                 {
-                    new ServerInfo(primaryManagedInstanceId),
-                    new ServerInfo(backupManagedInstanceId),
+                    new ServerTrustGroupServerInfo(primaryManagedInstanceId),
+                    new ServerTrustGroupServerInfo(backupManagedInstanceId),
                 },
                 TrustScopes = { ServerTrustGroupPropertiesTrustScopesItem.GlobalTransactions},
             };

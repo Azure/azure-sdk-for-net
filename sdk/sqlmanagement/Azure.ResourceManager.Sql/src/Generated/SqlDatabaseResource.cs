@@ -1141,21 +1141,21 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="extensionName"> The String to use. </param>
-        /// <param name="databaseExtensions"> The database import request parameters. </param>
+        /// <param name="sqlDatabaseExtension"> The database import request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> or <paramref name="databaseExtensions"/> is null. </exception>
-        public virtual async Task<ArmOperation<ImportExportExtensionsOperationResult>> CreateOrUpdateDatabaseExtensionAsync(WaitUntil waitUntil, string extensionName, DatabaseExtensions databaseExtensions, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> or <paramref name="sqlDatabaseExtension"/> is null. </exception>
+        public virtual async Task<ArmOperation<ImportExportExtensionsOperationResult>> CreateOrUpdateDatabaseExtensionAsync(WaitUntil waitUntil, string extensionName, SqlDatabaseExtension sqlDatabaseExtension, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
-            Argument.AssertNotNull(databaseExtensions, nameof(databaseExtensions));
+            Argument.AssertNotNull(sqlDatabaseExtension, nameof(sqlDatabaseExtension));
 
             using var scope = _databaseExtensionsClientDiagnostics.CreateScope("SqlDatabaseResource.CreateOrUpdateDatabaseExtension");
             scope.Start();
             try
             {
-                var response = await _databaseExtensionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, databaseExtensions, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<ImportExportExtensionsOperationResult>(new ImportExportExtensionsOperationResultOperationSource(), _databaseExtensionsClientDiagnostics, Pipeline, _databaseExtensionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, databaseExtensions).Request, response, OperationFinalStateVia.Location);
+                var response = await _databaseExtensionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, sqlDatabaseExtension, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation<ImportExportExtensionsOperationResult>(new ImportExportExtensionsOperationResultOperationSource(), _databaseExtensionsClientDiagnostics, Pipeline, _databaseExtensionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, sqlDatabaseExtension).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1174,21 +1174,21 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="extensionName"> The String to use. </param>
-        /// <param name="databaseExtensions"> The database import request parameters. </param>
+        /// <param name="sqlDatabaseExtension"> The database import request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> or <paramref name="databaseExtensions"/> is null. </exception>
-        public virtual ArmOperation<ImportExportExtensionsOperationResult> CreateOrUpdateDatabaseExtension(WaitUntil waitUntil, string extensionName, DatabaseExtensions databaseExtensions, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> or <paramref name="sqlDatabaseExtension"/> is null. </exception>
+        public virtual ArmOperation<ImportExportExtensionsOperationResult> CreateOrUpdateDatabaseExtension(WaitUntil waitUntil, string extensionName, SqlDatabaseExtension sqlDatabaseExtension, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
-            Argument.AssertNotNull(databaseExtensions, nameof(databaseExtensions));
+            Argument.AssertNotNull(sqlDatabaseExtension, nameof(sqlDatabaseExtension));
 
             using var scope = _databaseExtensionsClientDiagnostics.CreateScope("SqlDatabaseResource.CreateOrUpdateDatabaseExtension");
             scope.Start();
             try
             {
-                var response = _databaseExtensionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, databaseExtensions, cancellationToken);
-                var operation = new SqlArmOperation<ImportExportExtensionsOperationResult>(new ImportExportExtensionsOperationResultOperationSource(), _databaseExtensionsClientDiagnostics, Pipeline, _databaseExtensionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, databaseExtensions).Request, response, OperationFinalStateVia.Location);
+                var response = _databaseExtensionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, sqlDatabaseExtension, cancellationToken);
+                var operation = new SqlArmOperation<ImportExportExtensionsOperationResult>(new ImportExportExtensionsOperationResultOperationSource(), _databaseExtensionsClientDiagnostics, Pipeline, _databaseExtensionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, sqlDatabaseExtension).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1504,19 +1504,19 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: Databases_Export
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="exportDatabaseDefinition"> The database export request parameters. </param>
+        /// <param name="databaseExportDefinition"> The database export request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="exportDatabaseDefinition"/> is null. </exception>
-        public virtual async Task<ArmOperation<ImportExportOperationResult>> ExportAsync(WaitUntil waitUntil, ExportDatabaseDefinition exportDatabaseDefinition, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseExportDefinition"/> is null. </exception>
+        public virtual async Task<ArmOperation<ImportExportOperationResult>> ExportAsync(WaitUntil waitUntil, DatabaseExportDefinition databaseExportDefinition, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(exportDatabaseDefinition, nameof(exportDatabaseDefinition));
+            Argument.AssertNotNull(databaseExportDefinition, nameof(databaseExportDefinition));
 
             using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabaseResource.Export");
             scope.Start();
             try
             {
-                var response = await _sqlDatabaseDatabasesRestClient.ExportAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, exportDatabaseDefinition, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<ImportExportOperationResult>(new ImportExportOperationResultOperationSource(), _sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateExportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, exportDatabaseDefinition).Request, response, OperationFinalStateVia.Location);
+                var response = await _sqlDatabaseDatabasesRestClient.ExportAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseExportDefinition, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation<ImportExportOperationResult>(new ImportExportOperationResultOperationSource(), _sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateExportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseExportDefinition).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1534,19 +1534,19 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: Databases_Export
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="exportDatabaseDefinition"> The database export request parameters. </param>
+        /// <param name="databaseExportDefinition"> The database export request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="exportDatabaseDefinition"/> is null. </exception>
-        public virtual ArmOperation<ImportExportOperationResult> Export(WaitUntil waitUntil, ExportDatabaseDefinition exportDatabaseDefinition, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseExportDefinition"/> is null. </exception>
+        public virtual ArmOperation<ImportExportOperationResult> Export(WaitUntil waitUntil, DatabaseExportDefinition databaseExportDefinition, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(exportDatabaseDefinition, nameof(exportDatabaseDefinition));
+            Argument.AssertNotNull(databaseExportDefinition, nameof(databaseExportDefinition));
 
             using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabaseResource.Export");
             scope.Start();
             try
             {
-                var response = _sqlDatabaseDatabasesRestClient.Export(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, exportDatabaseDefinition, cancellationToken);
-                var operation = new SqlArmOperation<ImportExportOperationResult>(new ImportExportOperationResultOperationSource(), _sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateExportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, exportDatabaseDefinition).Request, response, OperationFinalStateVia.Location);
+                var response = _sqlDatabaseDatabasesRestClient.Export(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseExportDefinition, cancellationToken);
+                var operation = new SqlArmOperation<ImportExportOperationResult>(new ImportExportOperationResultOperationSource(), _sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateExportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseExportDefinition).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1677,18 +1677,18 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/move
         /// Operation Id: Databases_Rename
         /// </summary>
-        /// <param name="resourceMoveDefinition"> The resource move definition for renaming this database. </param>
+        /// <param name="sqlResourceMoveDefinition"> The resource move definition for renaming this database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceMoveDefinition"/> is null. </exception>
-        public virtual async Task<Response> RenameAsync(ResourceMoveDefinition resourceMoveDefinition, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlResourceMoveDefinition"/> is null. </exception>
+        public virtual async Task<Response> RenameAsync(SqlResourceMoveDefinition sqlResourceMoveDefinition, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceMoveDefinition, nameof(resourceMoveDefinition));
+            Argument.AssertNotNull(sqlResourceMoveDefinition, nameof(sqlResourceMoveDefinition));
 
             using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabaseResource.Rename");
             scope.Start();
             try
             {
-                var response = await _sqlDatabaseDatabasesRestClient.RenameAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, resourceMoveDefinition, cancellationToken).ConfigureAwait(false);
+                var response = await _sqlDatabaseDatabasesRestClient.RenameAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, sqlResourceMoveDefinition, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1703,18 +1703,18 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/move
         /// Operation Id: Databases_Rename
         /// </summary>
-        /// <param name="resourceMoveDefinition"> The resource move definition for renaming this database. </param>
+        /// <param name="sqlResourceMoveDefinition"> The resource move definition for renaming this database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceMoveDefinition"/> is null. </exception>
-        public virtual Response Rename(ResourceMoveDefinition resourceMoveDefinition, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlResourceMoveDefinition"/> is null. </exception>
+        public virtual Response Rename(SqlResourceMoveDefinition sqlResourceMoveDefinition, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceMoveDefinition, nameof(resourceMoveDefinition));
+            Argument.AssertNotNull(sqlResourceMoveDefinition, nameof(sqlResourceMoveDefinition));
 
             using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabaseResource.Rename");
             scope.Start();
             try
             {
-                var response = _sqlDatabaseDatabasesRestClient.Rename(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, resourceMoveDefinition, cancellationToken);
+                var response = _sqlDatabaseDatabasesRestClient.Rename(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, sqlResourceMoveDefinition, cancellationToken);
                 return response;
             }
             catch (Exception e)

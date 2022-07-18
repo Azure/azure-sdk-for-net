@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The resource identifier of the source database associated with create operation of this database. </summary>
         public ResourceIdentifier SourceDatabaseId { get; set; }
         /// <summary> The status of the database. </summary>
-        public DatabaseStatus? Status { get; }
+        public SqlDatabaseStatus? Status { get; }
         /// <summary> The ID of the database. </summary>
         public Guid? DatabaseId { get; }
         /// <summary> The creation date of the database (ISO8601 format). </summary>
