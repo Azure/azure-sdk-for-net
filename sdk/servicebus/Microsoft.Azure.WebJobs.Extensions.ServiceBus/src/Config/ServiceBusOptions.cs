@@ -210,25 +210,28 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
 
         internal async Task ExceptionReceivedHandler(ProcessErrorEventArgs args)
         {
-            if (ProcessErrorAsync != null)
+            var processErrorAsync = ProcessErrorAsync;
+            if (processErrorAsync != null)
             {
-                await ProcessErrorAsync(args).ConfigureAwait(false);
+                await processErrorAsync(args).ConfigureAwait(false);
             }
         }
 
         internal async Task SessionInitializingHandler(ProcessSessionEventArgs args)
         {
-            if (SessionInitializingAsync != null)
+            var sessionInitializingAsync = SessionInitializingAsync;
+            if (sessionInitializingAsync != null)
             {
-                await SessionInitializingAsync(args).ConfigureAwait(false);
+                await sessionInitializingAsync(args).ConfigureAwait(false);
             }
         }
 
         internal async Task SessionClosingHandler(ProcessSessionEventArgs args)
         {
-            if (SessionClosingAsync != null)
+            var sessionClosingAsync = SessionClosingAsync;
+            if (sessionClosingAsync != null)
             {
-                await SessionClosingAsync(args).ConfigureAwait(false);
+                await sessionClosingAsync(args).ConfigureAwait(false);
             }
         }
 
