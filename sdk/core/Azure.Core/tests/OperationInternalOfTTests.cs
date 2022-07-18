@@ -461,6 +461,69 @@ namespace Azure.Core.Tests
             }
         }
 
+        [Test]
+        public void VerifyInterimValueInitialization()
+        {
+            var operationInternal = new OperationInternal<int>(ClientDiagnostics, TestOperation.Succeeded(42), InitialResponse, interimValue: 24);
+
+            Assert.AreEqual(InitialResponse, operationInternal.RawResponse);
+            Assert.False(operationInternal.HasCompleted);
+            Assert.False(operationInternal.HasValue);
+            Assert.AreEqual(24, operationInternal.Value);
+        }
+
+        [Test]
+        public async Task VerifyInterimAndFinalValueWhenOperationIsPending([Values(true, false)] bool async)
+        {
+            var operationInternal = new OperationInternal<int>(ClientDiagnostics, TestOperation.SucceededAfter(1, 42), InitialResponse, interimValue: 24);
+
+            Assert.AreEqual(24, operationInternal.Value);
+
+            var operationResponse = async
+                ? await operationInternal.UpdateStatusAsync(CancellationToken.None)
+                : operationInternal.UpdateStatus(CancellationToken.None);
+
+            Assert.AreEqual(operationResponse, operationInternal.RawResponse);
+            Assert.False(operationInternal.HasCompleted);
+            Assert.False(operationInternal.HasValue);
+            Assert.AreEqual(24, operationInternal.Value);
+        }
+
+        [Test]
+        public async Task VerifyInterimAndFinalValueWhenOperationSucceeds([Values(true, false)] bool async)
+        {
+            var operationInternal = new OperationInternal<int>(ClientDiagnostics, TestOperation.Succeeded(42), InitialResponse, interimValue: 24);
+
+            Assert.AreEqual(24, operationInternal.Value);
+
+            var operationResponse = async
+                ? await operationInternal.UpdateStatusAsync(CancellationToken.None)
+                : operationInternal.UpdateStatus(CancellationToken.None);
+
+            Assert.AreEqual(operationResponse, operationInternal.RawResponse);
+            Assert.True(operationInternal.HasCompleted);
+            Assert.True(operationInternal.HasValue);
+            Assert.AreEqual(42, operationInternal.Value);
+        }
+
+        [Test]
+        public void VerifyInterimAndFinalValueWhenOperationFails([Values(true, false)] bool async)
+        {
+            var operationInternal = new OperationInternal<int>(ClientDiagnostics, TestOperation.Failed(418), InitialResponse, interimValue: 24);
+
+            Assert.AreEqual(24, operationInternal.Value);
+
+            RequestFailedException thrownException = async
+                ? Assert.ThrowsAsync<RequestFailedException>(async () => await operationInternal.UpdateStatusAsync(CancellationToken.None))
+                : Assert.Throws<RequestFailedException>(() => operationInternal.UpdateStatus(CancellationToken.None));
+
+            Assert.AreEqual(418, operationInternal.RawResponse.Status);
+            Assert.True(operationInternal.HasCompleted);
+            Assert.False(operationInternal.HasValue);
+            RequestFailedException valueException = Assert.Throws<RequestFailedException>(() => _ = operationInternal.Value);
+            Assert.AreEqual(thrownException, valueException);
+        }
+
         private readonly struct TestOperation : IOperation<int>
         {
             private readonly Func<bool, CancellationToken, ValueTask<OperationState<int>>> _updateStateAsyncHandler;
