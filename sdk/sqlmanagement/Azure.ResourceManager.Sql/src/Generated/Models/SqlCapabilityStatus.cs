@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The status of the capability. </summary>
     public enum SqlCapabilityStatus
     {
+        /// <summary> Default. </summary>
+        Default,
         /// <summary> Visible. </summary>
         Visible,
         /// <summary> Available. </summary>
         Available,
-        /// <summary> Default. </summary>
-        Default,
         /// <summary> Disabled. </summary>
         Disabled
     }
