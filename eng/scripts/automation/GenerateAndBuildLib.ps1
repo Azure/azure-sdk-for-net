@@ -104,7 +104,7 @@ function CreateOrUpdateAutorestConfigFile() {
             $yml = ConvertFrom-YAML $autorestConfigYaml
 
             $fileContent = Get-Content -Path $autorestFilePath
-            Foreach ( $key in $yml.keys) {
+            foreach ( $key in $yml.keys) {
                 if ( ($key -eq "output-folder") -or ($key -eq "require")) {
                     continue;
                 }
