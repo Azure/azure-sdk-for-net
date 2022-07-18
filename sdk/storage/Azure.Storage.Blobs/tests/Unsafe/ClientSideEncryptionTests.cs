@@ -796,6 +796,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [LiveOnly] // can't record track 1 encryption
         public async Task Track2DownloadTrack1Blob()
         {
             var data = GetRandomBuffer(Constants.KB);
@@ -843,6 +844,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [LiveOnly] // can't record track 1 encryption
         public async Task Track1DownloadTrack2Blob()
         {
             var data = GetRandomBuffer(Constants.KB); // ensure we have enough room in original data
