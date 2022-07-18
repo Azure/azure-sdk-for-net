@@ -68,13 +68,17 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Helpers
             // Create WebPubSub ConfigData
             IList<LiveTraceCategory> categories = new List<LiveTraceCategory>()
             {
-                new LiveTraceCategory("category-01", "true"),
+                new LiveTraceCategory()
+                {
+                    Name = "category-01",
+                    IsEnabled = true,
+                },
             };
 
             AclAction aclAction = new AclAction("Deny");
             IList<WebPubSubRequestType> allow = new List<WebPubSubRequestType>();
             IList<WebPubSubRequestType> deny = new List<WebPubSubRequestType>() { new WebPubSubRequestType("RESTAPI") };
-            NetworkAcl publicNetwork = new NetworkAcl(allow, deny);
+            PublicNetworkAcls publicNetwork = new PublicNetworkAcls(allow, deny);
             IList<PrivateEndpointAcl> privateEndpoints = new List<PrivateEndpointAcl>();
 
             List<ResourceLogCategory> resourceLogCategory = new List<ResourceLogCategory>()
@@ -84,7 +88,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Helpers
 
             WebPubSubData data = new WebPubSubData(AzureLocation.WestUS2)
             {
-                Sku = new WebPubSubSku("Standard_S1"),
+                Sku = new BillingInfoSku("Standard_S1"),
                 LiveTraceConfiguration = new LiveTraceConfiguration("true", categories),
                 NetworkAcls = new WebPubSubNetworkAcls(aclAction, publicNetwork, privateEndpoints),
                 ResourceLogConfiguration = new ResourceLogConfiguration(resourceLogCategory),

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="version"> The version of the deleted blob container. </param>
-        /// <param name="deleted"> Indicates whether the blob container was deleted. </param>
+        /// <param name="isDeleted"> Indicates whether the blob container was deleted. </param>
         /// <param name="deletedOn"> Blob container deletion time. </param>
         /// <param name="remainingRetentionDays"> Remaining retention days for soft deleted blob container. </param>
         /// <param name="defaultEncryptionScope"> Default the container to use specified encryption scope for all writes. </param>
@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.Storage
         /// <param name="immutableStorageWithVersioning"> The object level immutability property of the container. The property is immutable and can only be set to true at the container creation time. Existing containers must undergo a migration process. </param>
         /// <param name="enableNfsV3RootSquash"> Enable NFSv3 root squash on blob container. </param>
         /// <param name="enableNfsV3AllSquash"> Enable NFSv3 all squash on blob container. </param>
-        /// <param name="eTag"> Resource Etag. </param>
-        internal BlobContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string version, bool? deleted, DateTimeOffset? deletedOn, int? remainingRetentionDays, string defaultEncryptionScope, bool? denyEncryptionScopeOverride, PublicAccess? publicAccess, DateTimeOffset? lastModifiedOn, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDuration? leaseDuration, IDictionary<string, string> metadata, ImmutabilityPolicyProperties immutabilityPolicy, LegalHoldProperties legalHold, bool? hasLegalHold, bool? hasImmutabilityPolicy, ImmutableStorageWithVersioning immutableStorageWithVersioning, bool? enableNfsV3RootSquash, bool? enableNfsV3AllSquash, ETag? eTag) : base(id, name, resourceType, systemData)
+        /// <param name="etag"> Resource Etag. </param>
+        internal BlobContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string version, bool? isDeleted, DateTimeOffset? deletedOn, int? remainingRetentionDays, string defaultEncryptionScope, bool? denyEncryptionScopeOverride, StoragePublicAccess? publicAccess, DateTimeOffset? lastModifiedOn, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDuration? leaseDuration, IDictionary<string, string> metadata, ImmutabilityPolicyProperties immutabilityPolicy, LegalHoldProperties legalHold, bool? hasLegalHold, bool? hasImmutabilityPolicy, ImmutableStorageWithVersioning immutableStorageWithVersioning, bool? enableNfsV3RootSquash, bool? enableNfsV3AllSquash, ETag? etag) : base(id, name, resourceType, systemData)
         {
             Version = version;
-            Deleted = deleted;
+            IsDeleted = isDeleted;
             DeletedOn = deletedOn;
             RemainingRetentionDays = remainingRetentionDays;
             DefaultEncryptionScope = defaultEncryptionScope;
@@ -69,13 +69,13 @@ namespace Azure.ResourceManager.Storage
             ImmutableStorageWithVersioning = immutableStorageWithVersioning;
             EnableNfsV3RootSquash = enableNfsV3RootSquash;
             EnableNfsV3AllSquash = enableNfsV3AllSquash;
-            ETag = eTag;
+            ETag = etag;
         }
 
         /// <summary> The version of the deleted blob container. </summary>
         public string Version { get; }
         /// <summary> Indicates whether the blob container was deleted. </summary>
-        public bool? Deleted { get; }
+        public bool? IsDeleted { get; }
         /// <summary> Blob container deletion time. </summary>
         public DateTimeOffset? DeletedOn { get; }
         /// <summary> Remaining retention days for soft deleted blob container. </summary>
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Block override of encryption scope from the container default. </summary>
         public bool? DenyEncryptionScopeOverride { get; set; }
         /// <summary> Specifies whether data in the container may be accessed publicly and the level of access. </summary>
-        public PublicAccess? PublicAccess { get; set; }
+        public StoragePublicAccess? PublicAccess { get; set; }
         /// <summary> Returns the date and time the container was last modified. </summary>
         public DateTimeOffset? LastModifiedOn { get; }
         /// <summary> The lease status of the container. </summary>

@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of ScopedResourceListResult. </summary>
         internal ScopedResourceListResult()
         {
-            Value = new ChangeTrackingList<ScopedPrivateLinkData>();
+            Value = new ChangeTrackingList<PrivateLinkScopedResourceData>();
         }
 
         /// <summary> Initializes a new instance of ScopedResourceListResult. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal ScopedResourceListResult(IReadOnlyList<ScopedPrivateLinkData> value, string nextLink)
+        internal ScopedResourceListResult(IReadOnlyList<PrivateLinkScopedResourceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Array of results. </summary>
-        public IReadOnlyList<ScopedPrivateLinkData> Value { get; }
+        public IReadOnlyList<PrivateLinkScopedResourceData> Value { get; }
         /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }

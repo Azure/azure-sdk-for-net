@@ -65,11 +65,11 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<string> privateIPAddress = default;
-            Optional<IPAllocationMethod> privateIPAllocationMethod = default;
+            Optional<NetworkIPAllocationMethod> privateIPAllocationMethod = default;
             Optional<SubnetData> subnet = default;
             Optional<bool> primary = default;
             Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<IPVersion> privateIPAddressVersion = default;
+            Optional<NetworkIPVersion> privateIPAddressVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            privateIPAllocationMethod = new IPAllocationMethod(property0.Value.GetString());
+                            privateIPAllocationMethod = new NetworkIPAllocationMethod(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("subnet"))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            privateIPAddressVersion = new IPVersion(property0.Value.GetString());
+                            privateIPAddressVersion = new NetworkIPVersion(property0.Value.GetString());
                             continue;
                         }
                     }

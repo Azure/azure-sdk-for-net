@@ -19,5 +19,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public const string AppGwSslPolicy20150501 = "AppGwSslPolicy20150501";
         public const string AppGwSslPolicy20170401 = "AppGwSslPolicy20170401";
         public const string AppGwSslPolicy20170401S = "AppGwSslPolicy20170401S";
+        public const string AppGwSslPolicy20220101 = "AppGwSslPolicy20220101";
+        public const string AppGwSslPolicy20220101S = "AppGwSslPolicy20220101S";
     }
 }

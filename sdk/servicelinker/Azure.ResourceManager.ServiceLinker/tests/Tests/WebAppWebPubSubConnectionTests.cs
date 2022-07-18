@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.ServiceLinker.Tests.Tests
             WebPubSubCollection webPubSubs = resourceGroup.GetWebPubSubs();
             WebPubSubData webPubSubData = new WebPubSubData(DefaultLocation)
             {
-                Sku = new WebPubSub.Models.WebPubSubSku("Standard_S1"),
+                Sku = new WebPubSub.Models.BillingInfoSku("Standard_S1"),
                 LiveTraceConfiguration = new WebPubSub.Models.LiveTraceConfiguration(),
                 NetworkAcls = new WebPubSub.Models.WebPubSubNetworkAcls
                 {
-                    PublicNetwork = new WebPubSub.Models.NetworkAcl(),
+                    PublicNetwork = new WebPubSub.Models.PublicNetworkAcls(),
                 },
             };
             webPubSubData.LiveTraceConfiguration.Categories.Clear();

@@ -66,11 +66,11 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                 {
                     Tier = ServiceBusSkuTier.Premium
                 },
-                ZoneRedundant = true
+                IsZoneRedundant = true
             };
             ServiceBusNamespaceResource serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, parameters)).Value;
             VerifyNamespaceProperties(serviceBusNamespace, false);
-            Assert.IsTrue(serviceBusNamespace.Data.ZoneRedundant);
+            Assert.IsTrue(serviceBusNamespace.Data.IsZoneRedundant);
         }
 
         [Test]
@@ -358,19 +358,19 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                     {
                         Name = "default1",
                         AddressPrefix = "10.0.0.0/24",
-                        ServiceEndpoints = { new ServiceEndpointPropertiesFormat { Service = "Microsoft.ServiceBus" } }
+                        ServiceEndpoints = { new ServiceEndpointProperties { Service = "Microsoft.ServiceBus" } }
                     },
                     new SubnetData
                     {
                         Name = "default2",
                         AddressPrefix = "10.0.1.0/24",
-                        ServiceEndpoints = { new ServiceEndpointPropertiesFormat { Service = "Microsoft.ServiceBus" } }
+                        ServiceEndpoints = { new ServiceEndpointProperties { Service = "Microsoft.ServiceBus" } }
                     },
                     new SubnetData
                     {
                         Name = "default3",
                         AddressPrefix = "10.0.2.0/24",
-                        ServiceEndpoints = { new ServiceEndpointPropertiesFormat { Service = "Microsoft.ServiceBus" } }
+                        ServiceEndpoints = { new ServiceEndpointProperties { Service = "Microsoft.ServiceBus" } }
                     }
                 },
                 Location = "eastus2"

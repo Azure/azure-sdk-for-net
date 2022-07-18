@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="roleAssignmentExpirationType"> Type of the role assignment schedule expiration. </param>
         /// <param name="endOn"> End DateTime of the role assignment schedule. </param>
         /// <param name="duration"> Duration of the role assignment schedule in TimeSpan. </param>
-        internal RoleAssignmentScheduleInfoExpiration(RoleAssignmentScheduleType? roleAssignmentExpirationType, DateTimeOffset? endOn, TimeSpan? duration)
+        internal RoleAssignmentScheduleInfoExpiration(RoleAssignmentScheduleType? roleAssignmentExpirationType, DateTimeOffset? endOn, string duration)
         {
             RoleAssignmentExpirationType = roleAssignmentExpirationType;
             EndOn = endOn;
@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> End DateTime of the role assignment schedule. </summary>
         public DateTimeOffset? EndOn { get; set; }
         /// <summary> Duration of the role assignment schedule in TimeSpan. </summary>
-        public TimeSpan? Duration { get; set; }
+        public string Duration { get; set; }
     }
 }

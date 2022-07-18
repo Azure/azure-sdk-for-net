@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> This defines the sku conversion status object for asynchronous sku conversions. </summary>
@@ -18,23 +20,23 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of StorageAccountSkuConversionStatus. </summary>
         /// <param name="skuConversionStatus"> This property indicates the current sku conversion status. </param>
         /// <param name="targetSkuName"> This property represents the target sku name to which the account sku is being converted asynchronously. </param>
-        /// <param name="startTime"> This property represents the sku conversion start time. </param>
-        /// <param name="endTime"> This property represents the sku conversion end time. </param>
-        internal StorageAccountSkuConversionStatus(SkuConversionStatus? skuConversionStatus, StorageSkuName? targetSkuName, string startTime, string endTime)
+        /// <param name="startOn"> This property represents the sku conversion start time. </param>
+        /// <param name="endOn"> This property represents the sku conversion end time. </param>
+        internal StorageAccountSkuConversionStatus(StorageAccountSkuConversionState? skuConversionStatus, StorageSkuName? targetSkuName, DateTimeOffset? startOn, DateTimeOffset? endOn)
         {
             SkuConversionStatus = skuConversionStatus;
             TargetSkuName = targetSkuName;
-            StartTime = startTime;
-            EndTime = endTime;
+            StartOn = startOn;
+            EndOn = endOn;
         }
 
         /// <summary> This property indicates the current sku conversion status. </summary>
-        public SkuConversionStatus? SkuConversionStatus { get; }
+        public StorageAccountSkuConversionState? SkuConversionStatus { get; }
         /// <summary> This property represents the target sku name to which the account sku is being converted asynchronously. </summary>
         public StorageSkuName? TargetSkuName { get; set; }
         /// <summary> This property represents the sku conversion start time. </summary>
-        public string StartTime { get; }
+        public DateTimeOffset? StartOn { get; }
         /// <summary> This property represents the sku conversion end time. </summary>
-        public string EndTime { get; }
+        public DateTimeOffset? EndOn { get; }
     }
 }

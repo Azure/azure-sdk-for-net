@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.CosmosDB
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<MongoDBDatabasePropertiesResource> resource = default;
-            Optional<MongoDBDatabasePropertiesOptions> options = default;
+            Optional<ExtendedMongoDBDatabaseResourceInfo> resource = default;
+            Optional<MongoDBDatabasePropertiesConfig> options = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.CosmosDB
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            resource = MongoDBDatabasePropertiesResource.DeserializeMongoDBDatabasePropertiesResource(property0.Value);
+                            resource = ExtendedMongoDBDatabaseResourceInfo.DeserializeExtendedMongoDBDatabaseResourceInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("options"))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.CosmosDB
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            options = MongoDBDatabasePropertiesOptions.DeserializeMongoDBDatabasePropertiesOptions(property0.Value);
+                            options = MongoDBDatabasePropertiesConfig.DeserializeMongoDBDatabasePropertiesConfig(property0.Value);
                             continue;
                         }
                     }

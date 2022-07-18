@@ -17,7 +17,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// properties.
     /// </summary>
     /// <remarks>
-    /// This client only works with <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2022_06_30_preview"/> and up.
+    /// This client only works with <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2022_06_30_Preview"/> and up.
     /// If you want to use a lower version, please use the <see cref="Training.FormTrainingClient"/>.
     /// </remarks>
     public class DocumentModelAdministrationClient
@@ -142,18 +142,18 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// For more information see <see href="https://aka.ms/azsdk/formrecognizer/buildmode">here</see>.
         /// </param>
         /// <param name="modelId">A unique ID for your model. If not specified, a model ID will be created for you.</param>
-        /// <param name="buildModelOptions">A set of options available for configuring the request. For example, set a model description or set a filter to apply
+        /// <param name="options">A set of options available for configuring the request. For example, set a model description or set a filter to apply
         /// to the documents in the source path.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
         /// A <see cref="BuildModelOperation"/> to wait on this long-running operation. Its Value upon successful
         /// completion will contain meta-data about the created custom model.
         /// </returns>
-        public virtual BuildModelOperation StartBuildModel(Uri trainingFilesUri, DocumentBuildMode buildMode, string modelId = default, BuildModelOptions buildModelOptions = default, CancellationToken cancellationToken = default)
+        public virtual BuildModelOperation StartBuildModel(Uri trainingFilesUri, DocumentBuildMode buildMode, string modelId = default, BuildModelOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(trainingFilesUri, nameof(trainingFilesUri));
 
-            buildModelOptions ??= new BuildModelOptions();
+            options ??= new BuildModelOptions();
 
             using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(StartBuildModel)}");
             scope.Start();
@@ -161,19 +161,19 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             try
             {
                 var source = new AzureBlobContentSource(trainingFilesUri.AbsoluteUri);
-                if (!string.IsNullOrEmpty(buildModelOptions.Prefix))
+                if (!string.IsNullOrEmpty(options.Prefix))
                 {
-                    source.Prefix = buildModelOptions.Prefix;
+                    source.Prefix = options.Prefix;
                 }
 
                 modelId ??= Guid.NewGuid().ToString();
                 var request = new BuildDocumentModelRequest(modelId, buildMode)
                 {
                     AzureBlobSource = source,
-                    Description = buildModelOptions.Description
+                    Description = options.Description
                 };
 
-                foreach (var tag in buildModelOptions.Tags)
+                foreach (var tag in options.Tags)
                 {
                     request.Tags.Add(tag);
                 }
@@ -219,17 +219,17 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// For more information see <see href="https://aka.ms/azsdk/formrecognizer/buildmode">here</see>.
         /// </param>
         /// <param name="modelId">A unique ID for your model. If not specified, a model ID will be created for you.</param>
-        /// <param name="buildModelOptions">A set of options available for configuring the request. For example, set a model description or set a filter to apply
+        /// <param name="options">A set of options available for configuring the request. For example, set a model description or set a filter to apply
         /// to the documents in the source path.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
         /// A <see cref="BuildModelOperation"/> to wait on this long-running operation. Its Value upon successful
         /// completion will contain meta-data about the created custom model.
         /// </returns>
-        public virtual async Task<BuildModelOperation> StartBuildModelAsync(Uri trainingFilesUri, DocumentBuildMode buildMode, string modelId = default, BuildModelOptions buildModelOptions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<BuildModelOperation> StartBuildModelAsync(Uri trainingFilesUri, DocumentBuildMode buildMode, string modelId = default, BuildModelOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(trainingFilesUri, nameof(trainingFilesUri));
-            buildModelOptions ??= new BuildModelOptions();
+            options ??= new BuildModelOptions();
 
             using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(StartBuildModel)}");
             scope.Start();
@@ -237,19 +237,19 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             try
             {
                 var source = new AzureBlobContentSource(trainingFilesUri.AbsoluteUri);
-                if (!string.IsNullOrEmpty(buildModelOptions.Prefix))
+                if (!string.IsNullOrEmpty(options.Prefix))
                 {
-                    source.Prefix = buildModelOptions.Prefix;
+                    source.Prefix = options.Prefix;
                 }
 
                 modelId ??= Guid.NewGuid().ToString();
                 var request = new BuildDocumentModelRequest(modelId, buildMode)
                 {
                     AzureBlobSource = source,
-                    Description = buildModelOptions.Description
+                    Description = options.Description
                 };
 
-                foreach (var tag in buildModelOptions.Tags)
+                foreach (var tag in options.Tags)
                 {
                     request.Tags.Add(tag);
                 }

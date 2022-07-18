@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The Client id used for cross tenant CMK scenario. </summary>
         public Guid? FederatedClientId { get; set; }
         /// <summary> A CMK URI of the key to use for encryption. </summary>
-        public string KeyId { get; set; }
+        public Uri KeyId { get; set; }
         /// <summary> The Azure Active Directory identity of the server. </summary>
         public ServerExternalAdministrator Administrators { get; set; }
         /// <summary> Whether or not to restrict outbound network access for this server.  Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>

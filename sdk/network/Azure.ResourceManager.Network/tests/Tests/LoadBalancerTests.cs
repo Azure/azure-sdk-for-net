@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new FrontendIPConfigurationData()
                     {
                         Name = frontendIpConfigName,
-                        PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         Subnet = vnet.Data.Subnets[0]
                     }
                 },
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new FrontendIPConfigurationData()
                     {
                         Name = frontendIpConfigName,
-                        PrivateIPAllocationMethod = IPAllocationMethod.Static,
+                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Static,
                         PrivateIPAddress = "10.0.0.38",
                         Subnet = vnet.Data.Subnets[0]
                     }
@@ -688,7 +688,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new FrontendIPConfigurationData()
                     {
                         Name = frontendIpConfigName,
-                        PrivateIPAllocationMethod = IPAllocationMethod.Static,
+                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Static,
                         PrivateIPAddress = "10.0.0.38",
                         Subnet = vnet.Data.Subnets[0]
                     }
@@ -901,7 +901,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new FrontendIPConfigurationData()
                     {
                         Name = frontendIpConfigName,
-                        PrivateIPAllocationMethod = IPAllocationMethod.Static,
+                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Static,
                         PrivateIPAddress = "10.0.0.38",
                         Subnet = vnet.Data.Subnets[0]
                     }
@@ -1218,7 +1218,7 @@ namespace Azure.ResourceManager.Network.Tests
                     }
                 },
                 InboundNatPools = {
-                    new InboundNatPool()
+                    new LoadBalancerInboundNatPool()
                     {
                         Name = inboundNatPool1Name,
                         BackendPort = 81,
@@ -1256,7 +1256,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(getLoadBalancer.Value.Data.InboundNatPools[0].Id, getLoadBalancer.Value.Data.FrontendIPConfigurations[0].InboundNatPools[0].Id.ToString());
 
             // Add a new nat pool
-            InboundNatPool natpool2 = new InboundNatPool()
+            LoadBalancerInboundNatPool natpool2 = new LoadBalancerInboundNatPool()
             {
                 Name = inboundNatPool2Name,
                 BackendPort = 81,

@@ -30,15 +30,15 @@ namespace Azure.ResourceManager.Sql
         /// <param name="uri"> The URI of the key. If the ServerKeyType is AzureKeyVault, then the URI is required. </param>
         /// <param name="thumbprint"> Thumbprint of the key. </param>
         /// <param name="createdOn"> The key creation date. </param>
-        /// <param name="autoRotationEnabled"> Key auto rotation opt-in flag. Either true or false. </param>
-        internal ManagedInstanceKeyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, ServerKeyType? serverKeyType, Uri uri, string thumbprint, DateTimeOffset? createdOn, bool? autoRotationEnabled) : base(id, name, resourceType, systemData)
+        /// <param name="isAutoRotationEnabled"> Key auto rotation opt-in flag. Either true or false. </param>
+        internal ManagedInstanceKeyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, ServerKeyType? serverKeyType, Uri uri, string thumbprint, DateTimeOffset? createdOn, bool? isAutoRotationEnabled) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             ServerKeyType = serverKeyType;
             Uri = uri;
             Thumbprint = thumbprint;
             CreatedOn = createdOn;
-            AutoRotationEnabled = autoRotationEnabled;
+            IsAutoRotationEnabled = isAutoRotationEnabled;
         }
 
         /// <summary> Kind of encryption protector. This is metadata used for the Azure portal experience. </summary>
@@ -52,6 +52,6 @@ namespace Azure.ResourceManager.Sql
         /// <summary> The key creation date. </summary>
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Key auto rotation opt-in flag. Either true or false. </summary>
-        public bool? AutoRotationEnabled { get; }
+        public bool? IsAutoRotationEnabled { get; }
     }
 }

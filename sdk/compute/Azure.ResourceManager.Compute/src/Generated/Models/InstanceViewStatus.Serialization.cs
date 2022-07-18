@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal static InstanceViewStatus DeserializeInstanceViewStatus(JsonElement element)
         {
             Optional<string> code = default;
-            Optional<StatusLevelType> level = default;
+            Optional<ComputeStatusLevelType> level = default;
             Optional<string> displayStatus = default;
             Optional<string> message = default;
             Optional<DateTimeOffset> time = default;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    level = property.Value.GetString().ToStatusLevelType();
+                    level = property.Value.GetString().ToComputeStatusLevelType();
                     continue;
                 }
                 if (property.NameEquals("displayStatus"))

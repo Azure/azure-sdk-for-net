@@ -280,19 +280,19 @@ namespace Azure.ResourceManager.EventHubs.Tests
                     {
                         Name = "default1",
                         AddressPrefix = "10.0.0.0/24",
-                        ServiceEndpoints = { new ServiceEndpointPropertiesFormat { Service = "Microsoft.EventHub" } }
+                        ServiceEndpoints = { new ServiceEndpointProperties { Service = "Microsoft.EventHub" } }
                     },
                     new SubnetData
                     {
                         Name = "default2",
                         AddressPrefix = "10.0.1.0/24",
-                        ServiceEndpoints = { new ServiceEndpointPropertiesFormat { Service = "Microsoft.EventHub" } }
+                        ServiceEndpoints = { new ServiceEndpointProperties { Service = "Microsoft.EventHub" } }
                     },
                     new SubnetData
                     {
                         Name = "default3",
                         AddressPrefix = "10.0.2.0/24",
-                        ServiceEndpoints = { new ServiceEndpointPropertiesFormat { Service = "Microsoft.EventHub" } }
+                        ServiceEndpoints = { new ServiceEndpointProperties { Service = "Microsoft.EventHub" } }
                     }
                 },
                 Location = "eastus2"

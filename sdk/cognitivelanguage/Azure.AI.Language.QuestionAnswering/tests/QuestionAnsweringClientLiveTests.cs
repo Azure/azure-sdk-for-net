@@ -17,6 +17,38 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/29958")]
+        public async Task SupportsAadAuthentication()
+        {
+            QuestionAnsweringClientOptions clientOptions = new QuestionAnsweringClientOptions()
+            {
+                DefaultLanguage = "en",
+            };
+
+            QuestionAnsweringClient client = CreateClient<QuestionAnsweringClient>(
+                TestEnvironment.Endpoint,
+                TestEnvironment.Credential,
+                InstrumentClientOptions(clientOptions));
+
+            Response<AnswersFromTextResult> response = await client.GetAnswersFromTextAsync(
+                "How long it takes to charge surface?",
+                new[]
+                {
+                    "Power and charging. It takes two to four hours to charge the Surface Pro 4 battery fully from an empty state. " +
+                    "It can take longer if you’re using your Surface for power-intensive activities like gaming or video streaming while you’re charging it.",
+
+                    "You can use the USB port on your Surface Pro 4 power supply to charge other devices, like a phone, while your Surface charges. " +
+                    "The USB port on the power supply is only for charging, not for data transfer. If you want to use a USB device, plug it into the USB port on your Surface.",
+                });
+
+            Assert.That(response.Value.Answers.Count, Is.EqualTo(3));
+
+            IList<TextAnswer> answers = response.Value.Answers.Where(answer => answer.Confidence > 0.9).ToList();
+            Assert.That(answers, Has.Count.AtLeast(2));
+            Assert.That(answers, Has.All.Matches<TextAnswer>(answer => answer.Id == "1" && answer.ShortAnswer.Text?.Trim() == "two to four hours"));
+        }
+
+        [RecordedTest]
         public async Task AnswersKnowledgeBaseQuestion()
         {
             AnswersOptions options = new()
