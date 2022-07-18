@@ -157,7 +157,7 @@ namespace Azure.Messaging.EventHubs.Core
         {
            if (Pool.TryRemove(partitionId, out var poolItem))
            {
-               if ((poolItem.ActiveInstances.IsEmpty) || (forceClose))
+               if (poolItem.ActiveInstances.IsEmpty || forceClose)
                {
                    await poolItem.PartitionProducer.CloseAsync(CancellationToken.None).ConfigureAwait(false);
                }
