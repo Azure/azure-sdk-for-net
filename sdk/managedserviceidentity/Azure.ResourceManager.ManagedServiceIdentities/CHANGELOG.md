@@ -2,7 +2,7 @@
 
 ## 1.0.0 (2022-07-18)
 
-This is the first stable release of the Azure WebPubSub management library.
+This is the first stable release of the Azure Managed Service Identity management library.
 
 ### Features Added
 

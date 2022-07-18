@@ -2,8 +2,6 @@
 
 ## 1.1.0-beta.5 (2022-07-18)
 
-This is the RC release of the Azure Communication management library.
-
 ### Features Added
 
 - Added Update methods in resource classes.
