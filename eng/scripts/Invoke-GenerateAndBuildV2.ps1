@@ -16,10 +16,10 @@ $readmeFiles = $inputJson.relatedReadmeMdFiles
 $commitid = $inputJson.headSha
 $repoHttpsUrl = $inputJson.repoHttpsUrl
 $downloadUrlPrefix = $inputJson.installInstructionInput.downloadUrlPrefix
-[string] $autorestConfig = $inputJson.autorestConfig
+$autorestConfig = $inputJson.autorestConfig
 
 $autorestConfigYaml = ""
-if ( $null -ne $autorestConfig -and $autorestConfig -ne "") {
+if ($autorestConfig) {
     $autorestConfig | Set-Content "config.md"
     $autorestConfigYaml = Get-Content -Path ./config.md
     $range = ($autorestConfigYaml | Select-String -Pattern '```').LineNumber

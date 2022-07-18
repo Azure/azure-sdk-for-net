@@ -59,8 +59,8 @@ function CreateOrUpdateAutorestConfigFile() {
 
     if ((Test-Path -Path $autorestFilePath) -and (![String]::IsNullOrWhiteSpace((Get-Content -Path $autorestFilePath)))) {
         if (($readme -ne "") -or ($inputfile -ne "")) {
-            $requirRex = "require*:*";
-            $inputfileRex = "input-file*:*"
+            $requirRex = "require.*:.*";
+            $inputfileRex = "input-file.*:.*"
             $fileContent = Get-Content -Path $autorestFilePath
             # clear
             $fileContent = $fileContent -notmatch $requirRex
@@ -73,12 +73,11 @@ function CreateOrUpdateAutorestConfigFile() {
             $configline = ""
             if ($readme) {
                 Write-Host "Updating autorest.md file to config required readme file."
-                $requirefile = $readme
-                $configline = "require:" + [Environment]::NewLine + "- " + "$requirefile" + [Environment]::NewLine + "csharp: true"
+                $configline = "require:`n- ${readme}`ncsharp: true"
             } elseif ($inputfile) {
                 Write-Host "Updating autorest.md file to update input-file."
                 if ($inputfile.StartsWith('-')) {
-                    $configline = "input-file:" + [Environment]::NewLine + "$inputfile"
+                    $configline = "input-file:`n$inputfile"
                 } else {
                     $configline = "input-file:"  + "$inputfile"
                 }
@@ -87,8 +86,7 @@ function CreateOrUpdateAutorestConfigFile() {
             $fileContent[$startNum - 1] += ([Environment]::NewLine + $configline)
             $fileContent | Set-Content $autorestFilePath
             if ( !$? ) {
-                Write-Error "Failed to update autorest.md. exit code: $?"
-                exit 1
+                Throw "Failed to update autorest.md. exit code: $?"
             }
         }
         
@@ -125,10 +123,10 @@ function CreateOrUpdateAutorestConfigFile() {
         Write-Host "autorest.md does not exist. start to create one."
         if ( $autorestConfigYaml ) {
             Write-Host "Create autorest.md with configuration."
-            $autorestConfigYaml = "# " + $namespace + [Environment]::NewLine + '``` yaml' +  [Environment]::NewLine + $autorestConfigYaml + '```' + [Environment]::NewLine;
+            $autorestConfigYaml = "# $namespace`n"  + '``` yaml' + "`n$autorestConfigYaml" + '```' + "`n";
             $autorestConfigYaml | Out-File $autorestFilePath
         } else {
-            Write-Error "autorest.md does not exist, and no autorest configuration to create one."
+            Throw "autorest.md does not exist, and no autorest configuration to create one."
         }
     }
 } 
@@ -151,8 +149,7 @@ function Update-CIYmlFile() {
             $fileContent | Set-Content $ciFilePath
         }
     } else {
-        Write-Error "ci.yml doesn't exist."
-        exit 1
+        Throw "ci.yml doesn't exist."
     }
 }
 
@@ -198,8 +195,7 @@ function New-DataPlanePackageFolder() {
   } else {
     Write-Host "Path doesn't exist. create template."
     if ($inputfile -eq "" -And $readme -eq "") {
-        Write-Error "Error: input file should not be empty."
-        exit 1
+        Throw "Error: input file should not be empty."
     }
     dotnet new -i $sdkPath/sdk/template
     Write-Host "Create project folder $projectFolder"
@@ -210,8 +206,7 @@ function New-DataPlanePackageFolder() {
     Push-Location $serviceFolder
     $namespaceArray = $namespace.Split(".")
     if ( $namespaceArray.Count -lt 3) {
-        Write-Error "Error: invalid namespace name."
-        exit 1
+        Throw "Error: invalid namespace name."
     }
 
     $endIndex = $namespaceArray.Count - 2
