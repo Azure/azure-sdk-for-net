@@ -10,21 +10,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> The ManagedCassandraReaperStatus. </summary>
-    public partial class ManagedCassandraReaperStatus
+    /// <summary> The CassandraReaperStatus. </summary>
+    public partial class CassandraReaperStatus
     {
-        /// <summary> Initializes a new instance of ManagedCassandraReaperStatus. </summary>
-        internal ManagedCassandraReaperStatus()
+        /// <summary> Initializes a new instance of CassandraReaperStatus. </summary>
+        internal CassandraReaperStatus()
         {
             RepairRunIds = new ChangeTrackingDictionary<string, string>();
             RepairSchedules = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ManagedCassandraReaperStatus. </summary>
+        /// <summary> Initializes a new instance of CassandraReaperStatus. </summary>
         /// <param name="isHealthy"></param>
         /// <param name="repairRunIds"> Dictionary of &lt;string&gt;. </param>
         /// <param name="repairSchedules"> Dictionary of &lt;string&gt;. </param>
-        internal ManagedCassandraReaperStatus(bool? isHealthy, IReadOnlyDictionary<string, string> repairRunIds, IReadOnlyDictionary<string, string> repairSchedules)
+        internal CassandraReaperStatus(bool? isHealthy, IReadOnlyDictionary<string, string> repairRunIds, IReadOnlyDictionary<string, string> repairSchedules)
         {
             IsHealthy = isHealthy;
             RepairRunIds = repairRunIds;

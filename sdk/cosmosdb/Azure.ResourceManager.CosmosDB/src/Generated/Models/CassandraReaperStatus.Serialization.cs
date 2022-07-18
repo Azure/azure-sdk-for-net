@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class ManagedCassandraReaperStatus
+    public partial class CassandraReaperStatus
     {
-        internal static ManagedCassandraReaperStatus DeserializeManagedCassandraReaperStatus(JsonElement element)
+        internal static CassandraReaperStatus DeserializeCassandraReaperStatus(JsonElement element)
         {
             Optional<bool> healthy = default;
             Optional<IReadOnlyDictionary<string, string>> repairRunIds = default;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new ManagedCassandraReaperStatus(Optional.ToNullable(healthy), Optional.ToDictionary(repairRunIds), Optional.ToDictionary(repairSchedules));
+            return new CassandraReaperStatus(Optional.ToNullable(healthy), Optional.ToDictionary(repairRunIds), Optional.ToDictionary(repairSchedules));
         }
     }
 }

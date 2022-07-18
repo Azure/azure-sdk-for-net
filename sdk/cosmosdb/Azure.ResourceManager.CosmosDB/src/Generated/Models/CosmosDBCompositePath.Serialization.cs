@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CompositePath : IUtf8JsonSerializable
+    public partial class CosmosDBCompositePath : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteEndObject();
         }
 
-        internal static CompositePath DeserializeCompositePath(JsonElement element)
+        internal static CosmosDBCompositePath DeserializeCosmosDBCompositePath(JsonElement element)
         {
             Optional<string> path = default;
             Optional<CompositePathSortOrder> order = default;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new CompositePath(path.Value, Optional.ToNullable(order));
+            return new CosmosDBCompositePath(path.Value, Optional.ToNullable(order));
         }
     }
 }

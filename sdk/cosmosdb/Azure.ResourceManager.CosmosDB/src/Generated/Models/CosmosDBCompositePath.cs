@@ -7,18 +7,18 @@
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> The CompositePath. </summary>
-    public partial class CompositePath
+    /// <summary> The CosmosDBCompositePath. </summary>
+    public partial class CosmosDBCompositePath
     {
-        /// <summary> Initializes a new instance of CompositePath. </summary>
-        public CompositePath()
+        /// <summary> Initializes a new instance of CosmosDBCompositePath. </summary>
+        public CosmosDBCompositePath()
         {
         }
 
-        /// <summary> Initializes a new instance of CompositePath. </summary>
+        /// <summary> Initializes a new instance of CosmosDBCompositePath. </summary>
         /// <param name="path"> The path for which the indexing behavior applies to. Index paths typically start with root and end with wildcard (/path/*). </param>
         /// <param name="order"> Sort order for composite paths. </param>
-        internal CompositePath(string path, CompositePathSortOrder? order)
+        internal CosmosDBCompositePath(string path, CompositePathSortOrder? order)
         {
             Path = path;
             Order = order;

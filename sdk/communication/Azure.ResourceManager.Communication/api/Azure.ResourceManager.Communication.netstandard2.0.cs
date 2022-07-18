@@ -260,14 +260,6 @@ namespace Azure.ResourceManager.Communication.Models
         public static bool operator !=(Azure.ResourceManager.Communication.Models.CommunicationServicesProvisioningState left, Azure.ResourceManager.Communication.Models.CommunicationServicesProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DnsRecord
-    {
-        internal DnsRecord() { }
-        public string DnsRecordType { get { throw null; } }
-        public string Name { get { throw null; } }
-        public int? Ttl { get { throw null; } }
-        public string Value { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DomainManagement : System.IEquatable<Azure.ResourceManager.Communication.Models.DomainManagement>
     {
@@ -290,11 +282,11 @@ namespace Azure.ResourceManager.Communication.Models
     public partial class DomainPropertiesVerificationRecords
     {
         internal DomainPropertiesVerificationRecords() { }
-        public Azure.ResourceManager.Communication.Models.DnsRecord Dkim { get { throw null; } }
-        public Azure.ResourceManager.Communication.Models.DnsRecord Dkim2 { get { throw null; } }
-        public Azure.ResourceManager.Communication.Models.DnsRecord Dmarc { get { throw null; } }
-        public Azure.ResourceManager.Communication.Models.DnsRecord Domain { get { throw null; } }
-        public Azure.ResourceManager.Communication.Models.DnsRecord Spf { get { throw null; } }
+        public Azure.ResourceManager.Communication.Models.VerificationDnsRecord Dkim { get { throw null; } }
+        public Azure.ResourceManager.Communication.Models.VerificationDnsRecord Dkim2 { get { throw null; } }
+        public Azure.ResourceManager.Communication.Models.VerificationDnsRecord Dmarc { get { throw null; } }
+        public Azure.ResourceManager.Communication.Models.VerificationDnsRecord Domain { get { throw null; } }
+        public Azure.ResourceManager.Communication.Models.VerificationDnsRecord Spf { get { throw null; } }
     }
     public partial class DomainPropertiesVerificationStates
     {
@@ -446,5 +438,13 @@ namespace Azure.ResourceManager.Communication.Models
         public static implicit operator Azure.ResourceManager.Communication.Models.UserEngagementTracking (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Communication.Models.UserEngagementTracking left, Azure.ResourceManager.Communication.Models.UserEngagementTracking right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class VerificationDnsRecord
+    {
+        internal VerificationDnsRecord() { }
+        public string DnsRecordType { get { throw null; } }
+        public string Name { get { throw null; } }
+        public int? TimeToLiveInSeconds { get { throw null; } }
+        public string Value { get { throw null; } }
     }
 }

@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Communication.Models
 {
-    public partial class DnsRecord
+    public partial class VerificationDnsRecord
     {
-        internal static DnsRecord DeserializeDnsRecord(JsonElement element)
+        internal static VerificationDnsRecord DeserializeVerificationDnsRecord(JsonElement element)
         {
             Optional<string> type = default;
             Optional<string> name = default;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Communication.Models
                     continue;
                 }
             }
-            return new DnsRecord(type.Value, name.Value, value.Value, Optional.ToNullable(ttl));
+            return new VerificationDnsRecord(type.Value, name.Value, value.Value, Optional.ToNullable(ttl));
         }
     }
 }

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class ContainerPartitionKey : IUtf8JsonSerializable
+    public partial class CosmosDBContainerPartitionKey : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteEndObject();
         }
 
-        internal static ContainerPartitionKey DeserializeContainerPartitionKey(JsonElement element)
+        internal static CosmosDBContainerPartitionKey DeserializeCosmosDBContainerPartitionKey(JsonElement element)
         {
             Optional<IList<string>> paths = default;
-            Optional<PartitionKind> kind = default;
+            Optional<CosmosDBPartitionKind> kind = default;
             Optional<int> version = default;
             Optional<bool> systemKey = default;
             foreach (var property in element.EnumerateObject())
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    kind = new PartitionKind(property.Value.GetString());
+                    kind = new CosmosDBPartitionKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("version"))
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new ContainerPartitionKey(Optional.ToList(paths), Optional.ToNullable(kind), Optional.ToNullable(version), Optional.ToNullable(systemKey));
+            return new CosmosDBContainerPartitionKey(Optional.ToList(paths), Optional.ToNullable(kind), Optional.ToNullable(version), Optional.ToNullable(systemKey));
         }
     }
 }
