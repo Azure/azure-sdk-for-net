@@ -358,6 +358,7 @@ begin {
         "ef-core",
         "ef6",
         "expression-studio",
+        "language-service",
         "m365-ems",
         "m365-ems-cloud-app-security",
         "m365-ems-configuration-manager",
