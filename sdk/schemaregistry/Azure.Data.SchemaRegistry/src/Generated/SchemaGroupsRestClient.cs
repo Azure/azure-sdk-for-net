@@ -54,8 +54,9 @@ namespace Azure.Data.SchemaRegistry
             return message;
         }
 
-        /// <summary> Gets the list of schema groups user is authorized to access. </summary>
+        /// <summary> Get list of schema groups. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Gets the list of schema groups user is authorized to access. </remarks>
         public async Task<Response<SchemaGroups>> ListAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest();
@@ -74,8 +75,9 @@ namespace Azure.Data.SchemaRegistry
             }
         }
 
-        /// <summary> Gets the list of schema groups user is authorized to access. </summary>
+        /// <summary> Get list of schema groups. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Gets the list of schema groups user is authorized to access. </remarks>
         public Response<SchemaGroups> List(CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest();

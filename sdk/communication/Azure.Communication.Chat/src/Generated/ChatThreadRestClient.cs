@@ -71,6 +71,7 @@ namespace Azure.Communication.Chat
         /// <param name="skip"> Skips chat message read receipts up to a specified position in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
+        /// <remarks> Gets chat message read receipts for a thread. </remarks>
         public async Task<Response<ChatMessageReadReceiptsCollection>> ListChatReadReceiptsAsync(string chatThreadId, int? maxPageSize = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
@@ -100,6 +101,7 @@ namespace Azure.Communication.Chat
         /// <param name="skip"> Skips chat message read receipts up to a specified position in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
+        /// <remarks> Gets chat message read receipts for a thread. </remarks>
         public Response<ChatMessageReadReceiptsCollection> ListChatReadReceipts(string chatThreadId, int? maxPageSize = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
@@ -149,6 +151,7 @@ namespace Azure.Communication.Chat
         /// <param name="chatMessageId"> Id of the latest chat message read by the user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> or <paramref name="chatMessageId"/> is null. </exception>
+        /// <remarks> Sends a read receipt event to a thread, on behalf of a user. </remarks>
         public async Task<Response> SendChatReadReceiptAsync(string chatThreadId, string chatMessageId, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
@@ -176,6 +179,7 @@ namespace Azure.Communication.Chat
         /// <param name="chatMessageId"> Id of the latest chat message read by the user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> or <paramref name="chatMessageId"/> is null. </exception>
+        /// <remarks> Sends a read receipt event to a thread, on behalf of a user. </remarks>
         public Response SendChatReadReceipt(string chatThreadId, string chatMessageId, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
@@ -239,6 +243,7 @@ namespace Azure.Communication.Chat
         /// <param name="metadata"> Message metadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> or <paramref name="content"/> is null. </exception>
+        /// <remarks> Sends a message to a thread. </remarks>
         public async Task<Response<SendChatMessageResultInternal>> SendChatMessageAsync(string chatThreadId, string content, string senderDisplayName = null, ChatMessageType? type = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
@@ -274,6 +279,7 @@ namespace Azure.Communication.Chat
         /// <param name="metadata"> Message metadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> or <paramref name="content"/> is null. </exception>
+        /// <remarks> Sends a message to a thread. </remarks>
         public Response<SendChatMessageResultInternal> SendChatMessage(string chatThreadId, string content, string senderDisplayName = null, ChatMessageType? type = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
@@ -331,6 +337,7 @@ namespace Azure.Communication.Chat
         /// <param name="startTime"> The earliest point in time to get messages up to. The timestamp should be in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
+        /// <remarks> Gets a list of messages from a thread. </remarks>
         public async Task<Response<ChatMessagesCollection>> ListChatMessagesAsync(string chatThreadId, int? maxPageSize = null, DateTimeOffset? startTime = null, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
@@ -360,6 +367,7 @@ namespace Azure.Communication.Chat
         /// <param name="startTime"> The earliest point in time to get messages up to. The timestamp should be in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
+        /// <remarks> Gets a list of messages from a thread. </remarks>
         public Response<ChatMessagesCollection> ListChatMessages(string chatThreadId, int? maxPageSize = null, DateTimeOffset? startTime = null, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
@@ -405,6 +413,7 @@ namespace Azure.Communication.Chat
         /// <param name="chatMessageId"> The message id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> or <paramref name="chatMessageId"/> is null. </exception>
+        /// <remarks> Gets a message by id. </remarks>
         public async Task<Response<ChatMessageInternal>> GetChatMessageAsync(string chatThreadId, string chatMessageId, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
@@ -437,6 +446,7 @@ namespace Azure.Communication.Chat
         /// <param name="chatMessageId"> The message id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> or <paramref name="chatMessageId"/> is null. </exception>
+        /// <remarks> Gets a message by id. </remarks>
         public Response<ChatMessageInternal> GetChatMessage(string chatThreadId, string chatMessageId, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
@@ -504,6 +514,7 @@ namespace Azure.Communication.Chat
         /// <param name="metadata"> Message metadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> or <paramref name="chatMessageId"/> is null. </exception>
+        /// <remarks> Updates a message. </remarks>
         public async Task<Response> UpdateChatMessageAsync(string chatThreadId, string chatMessageId, string content = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
@@ -533,6 +544,7 @@ namespace Azure.Communication.Chat
         /// <param name="metadata"> Message metadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> or <paramref name="chatMessageId"/> is null. </exception>
+        /// <remarks> Updates a message. </remarks>
         public Response UpdateChatMessage(string chatThreadId, string chatMessageId, string content = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
@@ -577,6 +589,7 @@ namespace Azure.Communication.Chat
         /// <param name="chatMessageId"> The message id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> or <paramref name="chatMessageId"/> is null. </exception>
+        /// <remarks> Deletes a message. </remarks>
         public async Task<Response> DeleteChatMessageAsync(string chatThreadId, string chatMessageId, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
@@ -604,6 +617,7 @@ namespace Azure.Communication.Chat
         /// <param name="chatMessageId"> The message id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> or <paramref name="chatMessageId"/> is null. </exception>
+        /// <remarks> Deletes a message. </remarks>
         public Response DeleteChatMessage(string chatThreadId, string chatMessageId, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
@@ -656,6 +670,7 @@ namespace Azure.Communication.Chat
         /// <param name="skip"> Skips participants up to a specified position in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
+        /// <remarks> Gets the participants of a thread. </remarks>
         public async Task<Response<ChatParticipantsCollection>> ListChatParticipantsAsync(string chatThreadId, int? maxPageSize = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
@@ -685,6 +700,7 @@ namespace Azure.Communication.Chat
         /// <param name="skip"> Skips participants up to a specified position in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
+        /// <remarks> Gets the participants of a thread. </remarks>
         public Response<ChatParticipantsCollection> ListChatParticipants(string chatThreadId, int? maxPageSize = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
@@ -743,6 +759,7 @@ namespace Azure.Communication.Chat
         /// <param name="microsoftTeamsUser"> The Microsoft Teams user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
+        /// <remarks> Remove a participant from a thread. </remarks>
         public async Task<Response> RemoveChatParticipantAsync(string chatThreadId, string rawId = null, CommunicationUserIdentifierModel communicationUser = null, PhoneNumberIdentifierModel phoneNumber = null, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser = null, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
@@ -769,6 +786,7 @@ namespace Azure.Communication.Chat
         /// <param name="microsoftTeamsUser"> The Microsoft Teams user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
+        /// <remarks> Remove a participant from a thread. </remarks>
         public Response RemoveChatParticipant(string chatThreadId, string rawId = null, CommunicationUserIdentifierModel communicationUser = null, PhoneNumberIdentifierModel phoneNumber = null, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser = null, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
@@ -813,6 +831,7 @@ namespace Azure.Communication.Chat
         /// <param name="participants"> Participants to add to a chat thread. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> or <paramref name="participants"/> is null. </exception>
+        /// <remarks> Adds thread participants to a thread. If participants already exist, no change occurs. </remarks>
         public async Task<Response<AddChatParticipantsResult>> AddChatParticipantsAsync(string chatThreadId, IEnumerable<ChatParticipantInternal> participants, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
@@ -845,6 +864,7 @@ namespace Azure.Communication.Chat
         /// <param name="participants"> Participants to add to a chat thread. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> or <paramref name="participants"/> is null. </exception>
+        /// <remarks> Adds thread participants to a thread. If participants already exist, no change occurs. </remarks>
         public Response<AddChatParticipantsResult> AddChatParticipants(string chatThreadId, IEnumerable<ChatParticipantInternal> participants, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
@@ -900,6 +920,7 @@ namespace Azure.Communication.Chat
         /// <param name="topic"> Chat thread topic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
+        /// <remarks> Updates a thread&apos;s properties. </remarks>
         public async Task<Response> UpdateChatThreadPropertiesAsync(string chatThreadId, string topic = null, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
@@ -923,6 +944,7 @@ namespace Azure.Communication.Chat
         /// <param name="topic"> Chat thread topic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
+        /// <remarks> Updates a thread&apos;s properties. </remarks>
         public Response UpdateChatThreadProperties(string chatThreadId, string topic = null, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
@@ -960,6 +982,7 @@ namespace Azure.Communication.Chat
         /// <param name="chatThreadId"> Id of the thread. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
+        /// <remarks> Gets a chat thread&apos;s properties. </remarks>
         public async Task<Response<ChatThreadPropertiesInternal>> GetChatThreadPropertiesAsync(string chatThreadId, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
@@ -987,6 +1010,7 @@ namespace Azure.Communication.Chat
         /// <param name="chatThreadId"> Id of the thread. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
+        /// <remarks> Gets a chat thread&apos;s properties. </remarks>
         public Response<ChatThreadPropertiesInternal> GetChatThreadProperties(string chatThreadId, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
@@ -1039,6 +1063,7 @@ namespace Azure.Communication.Chat
         /// <param name="senderDisplayName"> The display name of the typing notification sender. This property is used to populate sender name for push notifications. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
+        /// <remarks> Posts a typing event to a thread, on behalf of a user. </remarks>
         public async Task<Response> SendTypingNotificationAsync(string chatThreadId, string senderDisplayName = null, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
@@ -1062,6 +1087,7 @@ namespace Azure.Communication.Chat
         /// <param name="senderDisplayName"> The display name of the typing notification sender. This property is used to populate sender name for push notifications. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
+        /// <remarks> Posts a typing event to a thread, on behalf of a user. </remarks>
         public Response SendTypingNotification(string chatThreadId, string senderDisplayName = null, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
@@ -1100,6 +1126,7 @@ namespace Azure.Communication.Chat
         /// <param name="skip"> Skips chat message read receipts up to a specified position in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="chatThreadId"/> is null. </exception>
+        /// <remarks> Gets chat message read receipts for a thread. </remarks>
         public async Task<Response<ChatMessageReadReceiptsCollection>> ListChatReadReceiptsNextPageAsync(string nextLink, string chatThreadId, int? maxPageSize = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1134,6 +1161,7 @@ namespace Azure.Communication.Chat
         /// <param name="skip"> Skips chat message read receipts up to a specified position in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="chatThreadId"/> is null. </exception>
+        /// <remarks> Gets chat message read receipts for a thread. </remarks>
         public Response<ChatMessageReadReceiptsCollection> ListChatReadReceiptsNextPage(string nextLink, string chatThreadId, int? maxPageSize = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1181,6 +1209,7 @@ namespace Azure.Communication.Chat
         /// <param name="startTime"> The earliest point in time to get messages up to. The timestamp should be in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="chatThreadId"/> is null. </exception>
+        /// <remarks> Gets a list of messages from a thread. </remarks>
         public async Task<Response<ChatMessagesCollection>> ListChatMessagesNextPageAsync(string nextLink, string chatThreadId, int? maxPageSize = null, DateTimeOffset? startTime = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1215,6 +1244,7 @@ namespace Azure.Communication.Chat
         /// <param name="startTime"> The earliest point in time to get messages up to. The timestamp should be in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="chatThreadId"/> is null. </exception>
+        /// <remarks> Gets a list of messages from a thread. </remarks>
         public Response<ChatMessagesCollection> ListChatMessagesNextPage(string nextLink, string chatThreadId, int? maxPageSize = null, DateTimeOffset? startTime = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1262,6 +1292,7 @@ namespace Azure.Communication.Chat
         /// <param name="skip"> Skips participants up to a specified position in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="chatThreadId"/> is null. </exception>
+        /// <remarks> Gets the participants of a thread. </remarks>
         public async Task<Response<ChatParticipantsCollection>> ListChatParticipantsNextPageAsync(string nextLink, string chatThreadId, int? maxPageSize = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1296,6 +1327,7 @@ namespace Azure.Communication.Chat
         /// <param name="skip"> Skips participants up to a specified position in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="chatThreadId"/> is null. </exception>
+        /// <remarks> Gets the participants of a thread. </remarks>
         public Response<ChatParticipantsCollection> ListChatParticipantsNextPage(string nextLink, string chatThreadId, int? maxPageSize = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
