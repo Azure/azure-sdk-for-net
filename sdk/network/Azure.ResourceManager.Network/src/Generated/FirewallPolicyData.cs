@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="sku"> The Firewall Policy SKU. </param>
         internal FirewallPolicyData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, ManagedServiceIdentity identity, IReadOnlyList<WritableSubResource> ruleCollectionGroups, NetworkProvisioningState? provisioningState, WritableSubResource basePolicy, IReadOnlyList<WritableSubResource> firewalls, IReadOnlyList<WritableSubResource> childPolicies, AzureFirewallThreatIntelMode? threatIntelMode, FirewallPolicyThreatIntelWhitelist threatIntelWhitelist, FirewallPolicyInsights insights, FirewallPolicySnat snat, DnsSettings dnsSettings, FirewallPolicyIntrusionDetection intrusionDetection, FirewallPolicyTransportSecurity transportSecurity, FirewallPolicySku sku) : base(id, name, resourceType, location, tags)
         {
-            Etag = etag;
+            ETag = etag;
             Identity = identity;
             RuleCollectionGroups = ruleCollectionGroups;
             ProvisioningState = provisioningState;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> The identity of the firewall policy. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> List of references to FirewallPolicyRuleCollectionGroups. </summary>

@@ -1,10 +1,20 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
-- Added support for constructing a `ManagedIdentityCredential` from config by specifying a `UserAssignedManagedIdentityResourceId`.
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.3.0 (2022-07-12)
+
+### Features Added
+
+- Added support for constructing a `ManagedIdentityCredential` from config by setting the `managedIdentityResourceId` key.
 
 ## 1.2.0 (2022-05-10)
 

@@ -5,13 +5,12 @@ using System;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.DocumentAnalysis.Tests;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 {
     public partial class DocumentAnalysisSamples : SamplesBase<DocumentAnalysisTestEnvironment>
     {
-        [Test]
+        [RecordedTest]
         public async Task GetAndListOperationsAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
@@ -27,8 +26,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 #else
             Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 #endif
-            BuildModelOperation operation = await client.StartBuildModelAsync(trainingFileUri, DocumentBuildMode.Template);
-            await operation.WaitForCompletionAsync();
+            BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, trainingFileUri, DocumentBuildMode.Template);
 
             // List the first ten or fewer operations that have been executed in the last 24h.
             AsyncPageable<ModelOperationInfo> modelOperations = client.GetOperationsAsync();

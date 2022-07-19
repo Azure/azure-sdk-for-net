@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="elasticSanVolumeGroupCount"> Total number of volume groups in this Elastic San appliance. </param>
         /// <param name="totalIops"> Total Provisioned IOPS of the Elastic San appliance. </param>
         /// <param name="totalMbps"> Total Provisioned MBps Elastic San appliance. </param>
-        /// <param name="provisionedMbps"> Provisioned MBps Elastic San appliance. </param>
-        internal ElasticSanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ElasticSanSku sku, IList<string> availabilityZones, ProvisioningStates? provisioningState, long? baseSizeTiB, long? extendedCapacitySizeTiB, long? totalElasticSanVolumeSizeGiB, long? elasticSanVolumeGroupCount, long? totalIops, long? totalMbps, long? provisionedMbps) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="totalSizeTiB"> Total size of the Elastic San appliance in TB. </param>
+        internal ElasticSanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ElasticSanSku sku, IList<string> availabilityZones, ProvisioningState? provisioningState, long? baseSizeTiB, long? extendedCapacitySizeTiB, long? totalElasticSanVolumeSizeGiB, long? elasticSanVolumeGroupCount, long? totalIops, long? totalMbps, long? totalSizeTiB) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             AvailabilityZones = availabilityZones;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ElasticSan
             ElasticSanVolumeGroupCount = elasticSanVolumeGroupCount;
             TotalIops = totalIops;
             TotalMbps = totalMbps;
-            ProvisionedMbps = provisionedMbps;
+            TotalSizeTiB = totalSizeTiB;
         }
 
         /// <summary> resource sku. </summary>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <summary> Logical zone for Elastic San resource; example: [&quot;1&quot;]. </summary>
         public IList<string> AvailabilityZones { get; }
         /// <summary> State of the operation on the resource. </summary>
-        public ProvisioningStates? ProvisioningState { get; }
+        public ProvisioningState? ProvisioningState { get; }
         /// <summary> Base size of the Elastic San appliance in TiB. </summary>
         public long? BaseSizeTiB { get; set; }
         /// <summary> Extended size of the Elastic San appliance in TiB. </summary>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ElasticSan
         public long? TotalIops { get; }
         /// <summary> Total Provisioned MBps Elastic San appliance. </summary>
         public long? TotalMbps { get; }
-        /// <summary> Provisioned MBps Elastic San appliance. </summary>
-        public long? ProvisionedMbps { get; }
+        /// <summary> Total size of the Elastic San appliance in TB. </summary>
+        public long? TotalSizeTiB { get; }
     }
 }

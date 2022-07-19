@@ -10,6 +10,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -21,21 +22,24 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation");
-                writer.WriteObjectValue(ExtendedLocation);
+                JsonSerializer.Serialize(writer, ExtendedLocation);
             }
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind");
                 writer.WriteStringValue(Kind);
             }
-            writer.WritePropertyName("tags");
-            writer.WriteStartObject();
-            foreach (var item in Tags)
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
+                writer.WritePropertyName("tags");
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
@@ -73,20 +77,20 @@ namespace Azure.ResourceManager.AppService
         {
             Optional<ExtendedLocation> extendedLocation = default;
             Optional<string> kind = default;
-            IDictionary<string, string> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<KubeEnvironmentProvisioningState> provisioningState = default;
             Optional<string> deploymentErrors = default;
             Optional<bool> internalLoadBalancerEnabled = default;
             Optional<string> defaultDomain = default;
-            Optional<string> staticIp = default;
+            Optional<string> staticIP = default;
             Optional<ArcConfiguration> arcConfiguration = default;
             Optional<AppLogsConfiguration> appLogsConfiguration = default;
-            Optional<string> aksResourceID = default;
+            Optional<string> aksResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"))
@@ -96,7 +100,7 @@ namespace Azure.ResourceManager.AppService
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("kind"))
@@ -106,6 +110,11 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -136,6 +145,11 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -180,7 +194,7 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("staticIp"))
                         {
-                            staticIp = property0.Value.GetString();
+                            staticIP = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("arcConfiguration"))
@@ -205,14 +219,14 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("aksResourceID"))
                         {
-                            aksResourceID = property0.Value.GetString();
+                            aksResourceId = property0.Value.GetString();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new KubeEnvironmentData(id, name, type, systemData, tags, location, kind.Value, extendedLocation.Value, Optional.ToNullable(provisioningState), deploymentErrors.Value, Optional.ToNullable(internalLoadBalancerEnabled), defaultDomain.Value, staticIp.Value, arcConfiguration.Value, appLogsConfiguration.Value, aksResourceID.Value);
+            return new KubeEnvironmentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, Optional.ToNullable(provisioningState), deploymentErrors.Value, Optional.ToNullable(internalLoadBalancerEnabled), defaultDomain.Value, staticIP.Value, arcConfiguration.Value, appLogsConfiguration.Value, aksResourceId.Value, kind.Value);
         }
     }
 }

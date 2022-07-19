@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("collation");
                 writer.WriteStringValue(Collation);
             }
-            if (Optional.IsDefined(RestorePointInOn))
+            if (Optional.IsDefined(RestorePointInTime))
             {
                 writer.WritePropertyName("restorePointInTime");
-                writer.WriteStringValue(RestorePointInOn.Value, "O");
+                writer.WriteStringValue(RestorePointInTime.Value, "O");
             }
             if (Optional.IsDefined(CatalogCollation))
             {
@@ -78,10 +78,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("longTermRetentionBackupResourceId");
                 writer.WriteStringValue(LongTermRetentionBackupResourceId);
             }
-            if (Optional.IsDefined(AutoCompleteRestore))
+            if (Optional.IsDefined(AllowAutoCompleteRestore))
             {
                 writer.WritePropertyName("autoCompleteRestore");
-                writer.WriteBooleanValue(AutoCompleteRestore.Value);
+                writer.WriteBooleanValue(AllowAutoCompleteRestore.Value);
             }
             if (Optional.IsDefined(LastBackupName))
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Storage.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("enabled");
-            writer.WriteBooleanValue(Enabled);
+            writer.WriteBooleanValue(IsEnabled);
             writer.WritePropertyName("type");
             writer.WriteStringValue(InventoryRuleType.ToString());
             writer.WritePropertyName("rules");
@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.Storage.Models
         internal static BlobInventoryPolicySchema DeserializeBlobInventoryPolicySchema(JsonElement element)
         {
             bool enabled = default;
+            Optional<string> destination = default;
             InventoryRuleType type = default;
             IList<BlobInventoryPolicyRule> rules = default;
             foreach (var property in element.EnumerateObject())
@@ -40,6 +41,11 @@ namespace Azure.ResourceManager.Storage.Models
                 if (property.NameEquals("enabled"))
                 {
                     enabled = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("destination"))
+                {
+                    destination = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -58,7 +64,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new BlobInventoryPolicySchema(enabled, type, rules);
+            return new BlobInventoryPolicySchema(enabled, destination.Value, type, rules);
         }
     }
 }

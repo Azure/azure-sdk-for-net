@@ -22,42 +22,42 @@ namespace Azure.ResourceManager.KeyVault.Tests.Samples
         public async Task CreateOrUpdate()
         {
             #region Snippet:Managing_KeyVaults_CreateAVault
-            VaultCollection vaultCollection = resourceGroup.GetVaults();
+            KeyVaultCollection vaultCollection = resourceGroup.GetKeyVaults();
 
             string vaultName = "myVault";
             Guid tenantIdGuid = new Guid("Your tenantId");
             string objectId = "Your Object Id";
             IdentityAccessPermissions permissions = new IdentityAccessPermissions
             {
-                Keys = { new KeyPermission("all") },
-                Secrets = { new SecretPermission("all") },
-                Certificates = { new CertificatePermission("all") },
-                Storage = { new StoragePermission("all") },
+                Keys = { new IdentityAccessKeyPermission("all") },
+                Secrets = { new IdentityAccessSecretPermission("all") },
+                Certificates = { new IdentityAccessCertificatePermission("all") },
+                Storage = { new IdentityAccessStoragePermission("all") },
             };
-            AccessPolicyEntry AccessPolicy = new AccessPolicyEntry(tenantIdGuid, objectId, permissions);
+            KeyVaultAccessPolicy AccessPolicy = new KeyVaultAccessPolicy(tenantIdGuid, objectId, permissions);
 
-            VaultProperties VaultProperties = new VaultProperties(tenantIdGuid, new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard));
+            KeyVaultProperties VaultProperties = new KeyVaultProperties(tenantIdGuid, new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard));
             VaultProperties.EnabledForDeployment = true;
             VaultProperties.EnabledForDiskEncryption = true;
             VaultProperties.EnabledForTemplateDeployment = true;
             VaultProperties.EnableSoftDelete = true;
             VaultProperties.VaultUri = new Uri("http://vaulturi.com");
-            VaultProperties.NetworkAcls = new NetworkRuleSet()
+            VaultProperties.NetworkRuleSet = new KeyVaultNetworkRuleSet()
             {
                 Bypass = "AzureServices",
                 DefaultAction = "Allow",
                 IPRules =
                 {
-                    new IPRule("1.2.3.4/32"),
-                    new IPRule("1.0.0.0/25")
+                    new KeyVaultIPRule("1.2.3.4/32"),
+                    new KeyVaultIPRule("1.0.0.0/25")
                 }
             };
             VaultProperties.AccessPolicies.Add(AccessPolicy);
 
-            VaultCreateOrUpdateContent parameters = new VaultCreateOrUpdateContent(AzureLocation.WestUS, VaultProperties);
+            KeyVaultCreateOrUpdateContent parameters = new KeyVaultCreateOrUpdateContent(AzureLocation.WestUS, VaultProperties);
 
             var rawVault = await vaultCollection.CreateOrUpdateAsync(WaitUntil.Started, vaultName, parameters).ConfigureAwait(false);
-            VaultResource vault = await rawVault.WaitForCompletionAsync();
+            KeyVaultResource vault = await rawVault.WaitForCompletionAsync();
             #endregion
         }
 
@@ -66,10 +66,10 @@ namespace Azure.ResourceManager.KeyVault.Tests.Samples
         public async Task List()
         {
             #region Snippet:Managing_KeyVaults_ListAllVaults
-            VaultCollection vaultCollection = resourceGroup.GetVaults();
+            KeyVaultCollection vaultCollection = resourceGroup.GetKeyVaults();
 
-            AsyncPageable<VaultResource> response = vaultCollection.GetAllAsync();
-            await foreach (VaultResource vault in response)
+            AsyncPageable<KeyVaultResource> response = vaultCollection.GetAllAsync();
+            await foreach (KeyVaultResource vault in response)
             {
                 Console.WriteLine(vault.Data.Name);
             }
@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.KeyVault.Tests.Samples
         public async Task Get()
         {
             #region Snippet:Managing_KeyVaults_GetAVault
-            VaultCollection vaultCollection = resourceGroup.GetVaults();
+            KeyVaultCollection vaultCollection = resourceGroup.GetKeyVaults();
 
-            VaultResource vault = await vaultCollection.GetAsync("myVault");
+            KeyVaultResource vault = await vaultCollection.GetAsync("myVault");
             Console.WriteLine(vault.Data.Name);
             #endregion
         }
@@ -93,9 +93,9 @@ namespace Azure.ResourceManager.KeyVault.Tests.Samples
         public async Task Delete()
         {
             #region Snippet:Managing_KeyVaults_DeleteAVault
-            VaultCollection vaultCollection = resourceGroup.GetVaults();
+            KeyVaultCollection vaultCollection = resourceGroup.GetKeyVaults();
 
-            VaultResource vault = await vaultCollection.GetAsync("myVault");
+            KeyVaultResource vault = await vaultCollection.GetAsync("myVault");
             await vault.DeleteAsync(WaitUntil.Completed);
             #endregion
         }

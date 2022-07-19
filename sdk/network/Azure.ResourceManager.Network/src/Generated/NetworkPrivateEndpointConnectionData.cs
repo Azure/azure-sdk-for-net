@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="linkIdentifier"> The consumer link id. </param>
         internal NetworkPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, PrivateEndpointData privateEndpoint, NetworkPrivateLinkServiceConnectionState connectionState, NetworkProvisioningState? provisioningState, string linkIdentifier) : base(id, name, resourceType)
         {
-            Etag = etag;
+            ETag = etag;
             PrivateEndpoint = privateEndpoint;
             ConnectionState = connectionState;
             ProvisioningState = provisioningState;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> The resource of private end point. </summary>
         public PrivateEndpointData PrivateEndpoint { get; }
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>

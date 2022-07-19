@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of EventDataCollection. </summary>
         /// <param name="value"> this list that includes the Azure audit logs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal EventDataCollection(IEnumerable<EventData> value)
+        internal EventDataCollection(IEnumerable<EventDataInfo> value)
         {
             if (value == null)
             {
@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of EventDataCollection. </summary>
         /// <param name="value"> this list that includes the Azure audit logs. </param>
         /// <param name="nextLink"> Provides the link to retrieve the next set of events. </param>
-        internal EventDataCollection(IReadOnlyList<EventData> value, string nextLink)
+        internal EventDataCollection(IReadOnlyList<EventDataInfo> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> this list that includes the Azure audit logs. </summary>
-        public IReadOnlyList<EventData> Value { get; }
+        public IReadOnlyList<EventDataInfo> Value { get; }
         /// <summary> Provides the link to retrieve the next set of events. </summary>
         public string NextLink { get; }
     }

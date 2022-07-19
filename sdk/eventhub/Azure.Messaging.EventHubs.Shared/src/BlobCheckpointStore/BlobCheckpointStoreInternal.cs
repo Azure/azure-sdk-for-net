@@ -99,7 +99,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// </remarks>
         ///
         internal BlobCheckpointStoreInternal(BlobContainerClient blobContainerClient,
-                                     bool initializeWithLegacyCheckpoints = false)
+                                             bool initializeWithLegacyCheckpoints = false)
         {
             Argument.AssertNotNull(blobContainerClient, nameof(blobContainerClient));
 
@@ -318,7 +318,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                     var checkpoint = CreateCheckpoint(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, blob.Value.Metadata);
                     return checkpoint;
                 }
-                catch (RequestFailedException e) when (e.Status == 404)
+                catch (RequestFailedException e) when (e.ErrorCode == BlobErrorCode.BlobNotFound)
                 {
                     // ignore
                 }
@@ -331,7 +331,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                         return await CreateLegacyCheckpoint(fullyQualifiedNamespace, eventHubName, consumerGroup, legacyPrefix, partitionId, cancellationToken).ConfigureAwait(false);
                     }
                 }
-                catch (RequestFailedException e) when (e.Status == 404)
+                catch (RequestFailedException e) when (e.ErrorCode == BlobErrorCode.BlobNotFound)
                 {
                     // ignore
                 }
@@ -441,10 +441,10 @@ namespace Azure.Messaging.EventHubs.Primitives
                 offset = result;
                 startingPosition = EventPosition.FromOffset(result, false);
             }
-            else if (metadata.TryGetValue(BlobMetadataKey.SequenceNumber, out str) && long.TryParse(str, NumberStyles.Integer, CultureInfo.InvariantCulture, out result))
+            if (metadata.TryGetValue(BlobMetadataKey.SequenceNumber, out str) && long.TryParse(str, NumberStyles.Integer, CultureInfo.InvariantCulture, out result))
             {
                 sequenceNumber = result;
-                startingPosition = EventPosition.FromSequenceNumber(result, false);
+                startingPosition ??= EventPosition.FromSequenceNumber(result, false);
             }
 
             // If either the offset or the sequence number was not populated,

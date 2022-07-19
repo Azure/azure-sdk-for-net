@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<string> secretVersion = default;
             Optional<bool> useLatestVersion = default;
             Optional<string> subject = default;
-            Optional<string> expirationDate = default;
+            Optional<DateTimeOffset> expirationDate = default;
             Optional<string> certificateAuthority = default;
             Optional<IList<string>> subjectAlternativeNames = default;
             Optional<string> thumbprint = default;
@@ -83,7 +84,12 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (property.NameEquals("expirationDate"))
                 {
-                    expirationDate = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    expirationDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("certificateAuthority"))
@@ -117,7 +123,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new CustomerCertificateProperties(type, secretSource, secretVersion.Value, Optional.ToNullable(useLatestVersion), subject.Value, expirationDate.Value, certificateAuthority.Value, Optional.ToList(subjectAlternativeNames), thumbprint.Value);
+            return new CustomerCertificateProperties(type, secretSource, secretVersion.Value, Optional.ToNullable(useLatestVersion), subject.Value, Optional.ToNullable(expirationDate), certificateAuthority.Value, Optional.ToList(subjectAlternativeNames), thumbprint.Value);
         }
     }
 }

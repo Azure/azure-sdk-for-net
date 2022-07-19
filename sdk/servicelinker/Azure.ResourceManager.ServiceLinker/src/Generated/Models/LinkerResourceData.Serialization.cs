@@ -79,13 +79,13 @@ namespace Azure.ResourceManager.ServiceLinker
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
-            Optional<TargetServiceBase> targetService = default;
-            Optional<AuthInfoBase> authInfo = default;
-            Optional<ClientType> clientType = default;
+            Optional<SystemData> systemData = default;
+            Optional<TargetServiceBaseInfo> targetService = default;
+            Optional<AuthBaseInfo> authInfo = default;
+            Optional<LinkerClientType> clientType = default;
             Optional<string> provisioningState = default;
-            Optional<VnetSolution> vNetSolution = default;
-            Optional<SecretStore> secretStore = default;
+            Optional<VnetSolution> vnetSolution = default;
+            Optional<LinkerSecretStore> secretStore = default;
             Optional<string> scope = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -106,6 +106,11 @@ namespace Azure.ResourceManager.ServiceLinker
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -125,7 +130,7 @@ namespace Azure.ResourceManager.ServiceLinker
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            targetService = TargetServiceBase.DeserializeTargetServiceBase(property0.Value);
+                            targetService = TargetServiceBaseInfo.DeserializeTargetServiceBaseInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("authInfo"))
@@ -135,7 +140,7 @@ namespace Azure.ResourceManager.ServiceLinker
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            authInfo = AuthInfoBase.DeserializeAuthInfoBase(property0.Value);
+                            authInfo = AuthBaseInfo.DeserializeAuthBaseInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("clientType"))
@@ -145,7 +150,7 @@ namespace Azure.ResourceManager.ServiceLinker
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            clientType = new ClientType(property0.Value.GetString());
+                            clientType = new LinkerClientType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -157,10 +162,10 @@ namespace Azure.ResourceManager.ServiceLinker
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                vNetSolution = null;
+                                vnetSolution = null;
                                 continue;
                             }
-                            vNetSolution = VnetSolution.DeserializeVnetSolution(property0.Value);
+                            vnetSolution = VnetSolution.DeserializeVnetSolution(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("secretStore"))
@@ -170,7 +175,7 @@ namespace Azure.ResourceManager.ServiceLinker
                                 secretStore = null;
                                 continue;
                             }
-                            secretStore = SecretStore.DeserializeSecretStore(property0.Value);
+                            secretStore = LinkerSecretStore.DeserializeLinkerSecretStore(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("scope"))
@@ -187,7 +192,7 @@ namespace Azure.ResourceManager.ServiceLinker
                     continue;
                 }
             }
-            return new LinkerResourceData(id, name, type, systemData, targetService.Value, authInfo.Value, Optional.ToNullable(clientType), provisioningState.Value, vNetSolution.Value, secretStore.Value, scope.Value);
+            return new LinkerResourceData(id, name, type, systemData.Value, targetService.Value, authInfo.Value, Optional.ToNullable(clientType), provisioningState.Value, vnetSolution.Value, secretStore.Value, scope.Value);
         }
     }
 }

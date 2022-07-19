@@ -17,6 +17,5 @@ namespace Microsoft.Azure.Management.EventGrid.Models
     public static class ChannelType
     {
         public const string PartnerTopic = "PartnerTopic";
-        public const string PartnerDestination = "PartnerDestination";
     }
 }

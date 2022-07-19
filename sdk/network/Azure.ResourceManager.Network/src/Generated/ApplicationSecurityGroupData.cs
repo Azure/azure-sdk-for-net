@@ -32,13 +32,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="provisioningState"> The provisioning state of the application security group resource. </param>
         internal ApplicationSecurityGroupData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
         {
-            Etag = etag;
+            ETag = etag;
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> The resource GUID property of the application security group resource. It uniquely identifies a resource, even if the user changes its name or migrate the resource across subscriptions or resource groups. </summary>
         public Guid? ResourceGuid { get; }
         /// <summary> The provisioning state of the application security group resource. </summary>

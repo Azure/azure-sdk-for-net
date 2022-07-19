@@ -210,7 +210,7 @@ namespace Azure.Storage.Files.Shares
                 pipeline: options.Build(conn.Credentials),
                 sharedKeyCredential: conn.Credentials as StorageSharedKeyCredential,
                 clientDiagnostics: new StorageClientDiagnostics(options),
-                version: options.Version);
+                clientOptions: options);
             _fileRestClient = BuildFileRestClient(_uri);
         }
 
@@ -228,7 +228,7 @@ namespace Azure.Storage.Files.Shares
         /// applied to every request.
         /// </param>
         public ShareFileClient(Uri fileUri, ShareClientOptions options = default)
-            : this(fileUri, (HttpPipelinePolicy)null, options, null)
+            : this(fileUri, (HttpPipelinePolicy)null, options, storageSharedKeyCredential:null)
         {
         }
 
@@ -274,7 +274,7 @@ namespace Azure.Storage.Files.Shares
         /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
         /// </remarks>
         public ShareFileClient(Uri fileUri, AzureSasCredential credential, ShareClientOptions options = default)
-            : this(fileUri, credential.AsPolicy<ShareUriBuilder>(fileUri), options, null)
+            : this(fileUri, credential.AsPolicy<ShareUriBuilder>(fileUri), options, credential)
         {
         }
 
@@ -311,7 +311,82 @@ namespace Azure.Storage.Files.Shares
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,
                 clientDiagnostics: new StorageClientDiagnostics(options),
-                version: options.Version);
+                clientOptions: options);
+            _fileRestClient = BuildFileRestClient(fileUri);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShareFileClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="fileUri">
+        /// A <see cref="Uri"/> referencing the file that includes the
+        /// name of the account, the name of the share, and the path of the
+        /// file.
+        /// </param>
+        /// <param name="authentication">
+        /// An optional authentication policy used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        /// <param name="sasCredential">
+        /// The shared access signature used to sign requests.
+        /// </param>
+        internal ShareFileClient(
+            Uri fileUri,
+            HttpPipelinePolicy authentication,
+            ShareClientOptions options,
+            AzureSasCredential sasCredential)
+        {
+            Argument.AssertNotNull(fileUri, nameof(fileUri));
+            options ??= new ShareClientOptions();
+            _uri = fileUri;
+            _clientConfiguration = new ShareClientConfiguration(
+                pipeline: options.Build(authentication),
+                sasCredential: sasCredential,
+                clientDiagnostics: new StorageClientDiagnostics(options),
+                clientOptions: options);
+            _fileRestClient = BuildFileRestClient(fileUri);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShareFileClient"/>
+        /// class.
+        ///
+        /// This will create an instance that uses the same diagnostics as another
+        /// client. This client will be used within another API call of the parent
+        /// client (namely Rename). This is in the case that the new child client
+        /// has different credentials than the parent client.
+        /// </summary>
+        /// <param name="fileUri">
+        /// A <see cref="Uri"/> referencing the file that includes the
+        /// name of the account, the name of the share, and the path of the
+        /// file.
+        /// </param>
+        /// <param name="diagnostics">
+        /// The diagnostics from the parent client.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        internal ShareFileClient(
+            Uri fileUri,
+            ClientDiagnostics diagnostics,
+            ShareClientOptions options)
+        {
+            Argument.AssertNotNull(fileUri, nameof(fileUri));
+            options ??= new ShareClientOptions();
+            _uri = fileUri;
+            _clientConfiguration = new ShareClientConfiguration(
+                pipeline: options.Build(),
+                sharedKeyCredential: default,
+                clientDiagnostics: diagnostics,
+                clientOptions: options);
             _fileRestClient = BuildFileRestClient(fileUri);
         }
 
@@ -340,7 +415,7 @@ namespace Azure.Storage.Files.Shares
                 _clientConfiguration.ClientDiagnostics,
                 _clientConfiguration.Pipeline,
                 uri.AbsoluteUri,
-                _clientConfiguration.Version.ToVersionString());
+                _clientConfiguration.ClientOptions.Version.ToVersionString());
         }
         #endregion ctors
 
@@ -1766,72 +1841,73 @@ namespace Azure.Storage.Files.Shares
         #endregion AbortCopy
 
         #region Download
-        // TODO #27253
-        ///// <summary>
-        ///// The <see cref="Download(ShareFileDownloadOptions, CancellationToken)"/>
-        ///// operation reads or downloads a file from the system, including its metadata and properties.
-        /////
-        ///// For more information, see
-        ///// <see href="https://docs.microsoft.com/rest/api/storageservices/get-file">
-        ///// Get File</see>.
-        ///// </summary>
-        ///// <param name="options">
-        ///// Optional parameters.
-        ///// </param>
-        ///// <param name="cancellationToken">
-        ///// Optional <see cref="CancellationToken"/> to propagate
-        ///// notifications that the operation should be cancelled.
-        ///// </param>
-        ///// <returns>
-        ///// A <see cref="Response{StorageFileDownloadInfo}"/> describing the
-        ///// downloaded file.  <see cref="ShareFileDownloadInfo.Content"/> contains
-        ///// the file's data.
-        ///// </returns>
-        ///// <remarks>
-        ///// A <see cref="RequestFailedException"/> will be thrown if
-        ///// a failure occurs.
-        ///// </remarks>
-        //public virtual Response<ShareFileDownloadInfo> Download(
-        //    ShareFileDownloadOptions options = default,
-        //    CancellationToken cancellationToken = default) =>
-        //    DownloadInternal(
-        //        options,
-        //        requestRangeMD5: default,
-        //        async: false,
-        //        cancellationToken).EnsureCompleted();
+        /// <summary>
+        /// The <see cref="Download(ShareFileDownloadOptions, CancellationToken)"/>
+        /// operation reads or downloads a file from the system, including its metadata and properties.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-file">
+        /// Get File</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileDownloadInfo}"/> describing the
+        /// downloaded file.  <see cref="ShareFileDownloadInfo.Content"/> contains
+        /// the file's data.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<ShareFileDownloadInfo> Download(
+            ShareFileDownloadOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            DownloadInternal(
+                options?.Range ?? default,
+                options?.TransferValidationOptions,
+                options?.Conditions,
+                async: false,
+                cancellationToken).EnsureCompleted();
 
-        ///// <summary>
-        ///// The <see cref="DownloadAsync(ShareFileDownloadOptions, CancellationToken)"/>
-        ///// operation reads or downloads a file from the system, including its metadata and properties.
-        /////
-        ///// For more information, see
-        ///// <see href="https://docs.microsoft.com/rest/api/storageservices/get-file">
-        ///// Get File</see>.
-        ///// </summary>
-        ///// <param name="options">
-        ///// Optional parameters.
-        ///// </param>
-        ///// <param name="cancellationToken">
-        ///// Optional <see cref="CancellationToken"/> to propagate
-        ///// notifications that the operation should be cancelled.
-        ///// </param>
-        ///// <returns>
-        ///// A <see cref="Response{StorageFileDownloadInfo}"/> describing the
-        ///// downloaded file.  <see cref="ShareFileDownloadInfo.Content"/> contains
-        ///// the file's data.
-        ///// </returns>
-        ///// <remarks>
-        ///// A <see cref="RequestFailedException"/> will be thrown if
-        ///// a failure occurs.
-        ///// </remarks>
-        //public virtual async Task<Response<ShareFileDownloadInfo>> DownloadAsync(
-        //    ShareFileDownloadOptions options = default,
-        //    CancellationToken cancellationToken = default) =>
-        //    await DownloadInternal(
-        //        options,
-        //        requestRangeMD5: default,
-        //        async: true,
-        //        cancellationToken).ConfigureAwait(false);
+        /// <summary>
+        /// The <see cref="DownloadAsync(ShareFileDownloadOptions, CancellationToken)"/>
+        /// operation reads or downloads a file from the system, including its metadata and properties.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-file">
+        /// Get File</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileDownloadInfo}"/> describing the
+        /// downloaded file.  <see cref="ShareFileDownloadInfo.Content"/> contains
+        /// the file's data.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<ShareFileDownloadInfo>> DownloadAsync(
+            ShareFileDownloadOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            await DownloadInternal(
+                options?.Range ?? default,
+                options?.TransferValidationOptions,
+                options?.Conditions,
+                async: true,
+                cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// The <see cref="Download(HttpRange, bool, ShareFileRequestConditions, CancellationToken)"/>
@@ -1870,32 +1946,20 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        // TODO #27253
-        //[EditorBrowsable(EditorBrowsableState.Never)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response<ShareFileDownloadInfo> Download(
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-            HttpRange range = default,
-            bool rangeGetContentHash = default,
-            ShareFileRequestConditions conditions = default,
-            CancellationToken cancellationToken = default)
+            HttpRange range,
+            bool rangeGetContentHash,
+            ShareFileRequestConditions conditions,
+            CancellationToken cancellationToken)
         {
-            // TODO #27253
-            //ShareFileDownloadOptions options = default;
-            //if (range != default || rangeGetContentHash != default || conditions != default)
-            //{
-            //    options = new ShareFileDownloadOptions
-            //    {
-            //        Range = range,
-            //        //TransactionalHashingOptions = rangeGetContentHash
-            //        //    ? new DownloadTransactionalHashingOptions { Algorithm = TransactionalHashAlgorithm.MD5 }
-            //        //    : default,
-            //        Conditions = conditions
-            //    };
-            //}
             return DownloadInternal(
                 range,
-                rangeGetContentHash,
+                rangeGetContentHash
+                    ? new DownloadTransferValidationOptions { Algorithm = ValidationAlgorithm.MD5 }
+                    : default,
                 conditions,
                 async: false,
                 cancellationToken)
@@ -1943,22 +2007,11 @@ namespace Azure.Storage.Files.Shares
             bool rangeGetContentHash,
             CancellationToken cancellationToken)
         {
-            // TODO #27253
-            //ShareFileDownloadOptions options = default;
-            //if (range != default || rangeGetContentHash != default)
-            //{
-            //    options = new ShareFileDownloadOptions
-            //    {
-            //        Range = range,
-            //        // TODO #27253
-            //        //TransactionalHashingOptions = rangeGetContentHash
-            //        //    ? new DownloadTransactionalHashingOptions { Algorithm = TransactionalHashAlgorithm.MD5 }
-            //        //    : default
-            //    };
-            //}
             return DownloadInternal(
                 range,
-                rangeGetContentHash,
+                rangeGetContentHash
+                    ? new DownloadTransferValidationOptions { Algorithm = ValidationAlgorithm.MD5 }
+                    : default,
                 conditions: default,
                 async: false,
                 cancellationToken)
@@ -2002,33 +2055,20 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        // TODO #27253
-        //[EditorBrowsable(EditorBrowsableState.Never)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response<ShareFileDownloadInfo>> DownloadAsync(
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-            HttpRange range = default,
-            bool rangeGetContentHash = default,
-            ShareFileRequestConditions conditions = default,
-            CancellationToken cancellationToken = default)
+            HttpRange range,
+            bool rangeGetContentHash,
+            ShareFileRequestConditions conditions,
+            CancellationToken cancellationToken)
         {
-            // TODO #27253
-            //ShareFileDownloadOptions options = default;
-            //if (range != default || rangeGetContentHash != default || conditions != default)
-            //{
-            //    options = new ShareFileDownloadOptions
-            //    {
-            //        Range = range,
-            //        // TODO #27253
-            //        //TransactionalHashingOptions = rangeGetContentHash
-            //        //    ? new DownloadTransactionalHashingOptions { Algorithm = TransactionalHashAlgorithm.MD5 }
-            //        //    : default,
-            //        Conditions = conditions
-            //    };
-            //}
             return await DownloadInternal(
                 range,
-                rangeGetContentHash,
+                rangeGetContentHash
+                    ? new DownloadTransferValidationOptions { Algorithm = ValidationAlgorithm.MD5 }
+                    : default,
                 conditions,
                 async: true,
                 cancellationToken)
@@ -2076,21 +2116,11 @@ namespace Azure.Storage.Files.Shares
             bool rangeGetContentHash,
             CancellationToken cancellationToken)
         {
-            // TODO #27253
-            //ShareFileDownloadOptions options = default;
-            //if (range != default || rangeGetContentHash != default)
-            //{
-            //    options = new ShareFileDownloadOptions
-            //    {
-            //        Range = range,
-            //        //TransactionalHashingOptions = rangeGetContentHash
-            //        //    ? new DownloadTransactionalHashingOptions { Algorithm = TransactionalHashAlgorithm.MD5 }
-            //        //    : default
-            //    };
-            //}
             return await DownloadInternal(
                 range,
-                rangeGetContentHash,
+                rangeGetContentHash
+                    ? new DownloadTransferValidationOptions { Algorithm = ValidationAlgorithm.MD5 }
+                    : default,
                 conditions: default,
                 async: true,
                 cancellationToken)
@@ -2107,8 +2137,8 @@ namespace Azure.Storage.Files.Shares
         /// <param name="range">
         /// Range to download.
         /// </param>
-        /// <param name="requestRangeMD5">
-        /// Whether to request a transactional MD5 on download.
+        /// <param name="validationOptionsOverride">
+        /// Override for client-configured transfer validation options.
         /// </param>
         /// <param name="conditions">
         /// Request conditions for download.
@@ -2131,11 +2161,13 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         private async Task<Response<ShareFileDownloadInfo>> DownloadInternal(
             HttpRange range,
-            bool requestRangeMD5,
+            DownloadTransferValidationOptions validationOptionsOverride,
             ShareFileRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
         {
+            DownloadTransferValidationOptions validationOptions = validationOptionsOverride ?? ClientConfiguration.DownloadValidationOptions;
+
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(
@@ -2152,7 +2184,7 @@ namespace Azure.Storage.Files.Shares
                     // Start downloading the file
                     (Response<ShareFileDownloadInfo> initialResponse, Stream stream) = await StartDownloadAsync(
                         range,
-                        requestRangeMD5,
+                        validationOptions,
                         conditions,
                         async: async,
                         cancellationToken: cancellationToken)
@@ -2169,7 +2201,7 @@ namespace Azure.Storage.Files.Shares
                         {
                             (Response<ShareFileDownloadInfo> Response, Stream ContentStream) = StartDownloadAsync(
                                 range,
-                                requestRangeMD5,
+                                validationOptions,
                                 conditions,
                                 startOffset,
                                 async,
@@ -2187,7 +2219,7 @@ namespace Azure.Storage.Files.Shares
                         {
                             (Response<ShareFileDownloadInfo> Response, Stream ContentStream) = await StartDownloadAsync(
                                 range,
-                                requestRangeMD5,
+                                validationOptions,
                                 conditions,
                                 startOffset,
                                 async,
@@ -2204,30 +2236,28 @@ namespace Azure.Storage.Files.Shares
                         ClientConfiguration.Pipeline.ResponseClassifier,
                         Constants.MaxReliabilityRetries);
 
-                    // comparing hash results comes BEFORE decryption
                     // buffer response stream and ensure it matches the transactional hash if any
                     // Storage will not return a hash for payload >4MB, so this buffer is capped similarly
                     // hashing is opt-in, so this buffer is part of that opt-in
-                    // TODO #27253
-                    //if (options?.TransactionalHashingOptions != default && options.TransactionalHashingOptions.Validate)
-                    //{
-                    //    // safe-truncate; transactional hash download limit well below maxInt
-                    //    var readDestStream = new MemoryStream((int)initialResponse.Value.ContentLength);
-                    //    if (async)
-                    //    {
-                    //        await initialResponse.Value.Content.CopyToAsync(readDestStream).ConfigureAwait(false);
-                    //    }
-                    //    else
-                    //    {
-                    //        initialResponse.Value.Content.CopyTo(readDestStream);
-                    //    }
-                    //    readDestStream.Position = 0;
+                    if (validationOptions != default && validationOptions.Algorithm != ValidationAlgorithm.None && validationOptions.Validate)
+                    {
+                        // safe-buffer; transactional hash download limit well below maxInt
+                        var readDestStream = new MemoryStream((int)initialResponse.Value.ContentLength);
+                        if (async)
+                        {
+                            await stream.CopyToAsync(readDestStream).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            stream.CopyTo(readDestStream);
+                        }
+                        readDestStream.Position = 0;
 
-                    //    ContentHasher.AssertResponseHashMatch(readDestStream, options.TransactionalHashingOptions.Algorithm, initialResponse.GetRawResponse());
+                        ContentHasher.AssertResponseHashMatch(readDestStream, validationOptions.Algorithm, initialResponse.GetRawResponse());
 
-                    //    // we've consumed the network stream to hash it; return buffered stream to the user
-                    //    initialResponse.Value.Content = readDestStream;
-                    //}
+                        // we've consumed the network stream to hash it; return buffered stream to the user
+                        stream = readDestStream;
+                    }
 
                     return initialResponse;
                 }
@@ -2255,8 +2285,9 @@ namespace Azure.Storage.Files.Shares
         /// <param name="range">
         /// Range to download.
         /// </param>
-        /// <param name="requestRangeMD5">
-        /// Whether to request a transactional MD5 on download.
+        /// <param name="validationOptions">
+        /// Transfer validation options to use. This method assumes defaults and overrides have already been checked
+        /// and will use exactly what is provided through this argument.
         /// </param>
         /// <param name="conditions">
         /// Request conditions for download.
@@ -2276,20 +2307,16 @@ namespace Azure.Storage.Files.Shares
         /// </returns>
         private async Task<(Response<ShareFileDownloadInfo> Response, Stream ContentStream)> StartDownloadAsync(
             HttpRange range,
-            bool requestRangeMD5,
+            DownloadTransferValidationOptions validationOptions,
             ShareFileRequestConditions conditions,
             long startOffset = 0,
             bool async = true,
             CancellationToken cancellationToken = default)
         {
-            // TODO #27253
-            //if (options?.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.StorageCrc64)
-            //{
-            //    throw new ArgumentException("Azure File Shares do not support transactional CRC 64");
-            //}
+            ShareErrors.AssertAlgorithmSupport(validationOptions?.Algorithm);
 
             // calculation gets illegible with null coalesce; just pre-initialize
-            var pageRange = range; // TODO #27253 //options?.Range ?? default;
+            var pageRange = range;
             pageRange = new HttpRange(
                 pageRange.Offset + startOffset,
                 pageRange.Length.HasValue ?
@@ -2303,8 +2330,7 @@ namespace Azure.Storage.Files.Shares
             {
                 response = await FileRestClient.DownloadAsync(
                     range: pageRange == default ? null : pageRange.ToString(),
-                    // TODO #27253
-                    rangeGetContentMD5: requestRangeMD5 ? true : null, // options?.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.MD5 ? true : null,
+                    rangeGetContentMD5: validationOptions?.Algorithm.ResolveAuto() == ValidationAlgorithm.MD5 ? true : null,
                     leaseAccessConditions: conditions,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
@@ -2313,8 +2339,7 @@ namespace Azure.Storage.Files.Shares
             {
                 response = FileRestClient.Download(
                     range: pageRange == default ? null : pageRange.ToString(),
-                    // TODO #27253
-                    rangeGetContentMD5: requestRangeMD5 ? true : null, // options?.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.MD5 ? true : null,
+                    rangeGetContentMD5: validationOptions?.Algorithm.ResolveAuto() == ValidationAlgorithm.MD5 ? true : null,
                     leaseAccessConditions: conditions,
                     cancellationToken: cancellationToken);
             }
@@ -2359,8 +2384,7 @@ namespace Azure.Storage.Files.Shares
                 options?.BufferSize,
                 options?.Conditions,
                 allowModifications: options?.AllowModifications ?? false,
-                // TODO #27253
-                //hashingOptions: options.TransactionalHashingOptions,
+                options?.TransferValidationOptions,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -2395,8 +2419,7 @@ namespace Azure.Storage.Files.Shares
                 options?.BufferSize,
                 options?.Conditions,
                 allowModifications: options?.AllowModifications ?? false,
-                // TODO #27253
-                //hashingOptions: options.TransactionalHashingOptions,
+                options?.TransferValidationOptions,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -2443,8 +2466,7 @@ namespace Azure.Storage.Files.Shares
                 bufferSize,
                 conditions,
                 allowModifications: false,
-                // TODO #27253
-                //hashingOptions: default,
+                validationOptionsOverride: default,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -2534,8 +2556,7 @@ namespace Azure.Storage.Files.Shares
                 bufferSize,
                 conditions,
                 allowModifications: false,
-                // TODO #27253
-                //hashingOptions: default,
+                validationOptionsOverride: default,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -2604,6 +2625,9 @@ namespace Azure.Storage.Files.Shares
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
+        /// <param name="validationOptionsOverride">
+        /// Optional override for client-configured transfer validation options.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -2625,13 +2649,14 @@ namespace Azure.Storage.Files.Shares
             int? bufferSize,
             ShareFileRequestConditions conditions,
             bool allowModifications,
-            // TODO #27253
-            //DownloadTransactionalHashingOptions hashingOptions,
+            DownloadTransferValidationOptions validationOptionsOverride,
 #pragma warning disable CA1801
             bool async,
             CancellationToken cancellationToken)
 #pragma warning restore CA1801
         {
+            DownloadTransferValidationOptions validaitonOptions = validationOptionsOverride ?? ClientConfiguration.DownloadValidationOptions;
+
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(OpenRead)}");
             try
             {
@@ -2644,22 +2669,13 @@ namespace Azure.Storage.Files.Shares
 
                 return new LazyLoadingReadOnlyStream<ShareFileProperties>(
                     async (HttpRange range,
-                    // TODO #27253
-                    //DownloadTransactionalHashingOptions downloadTransactionalHashingOptions,
+                    DownloadTransferValidationOptions downloadValidationOptions,
                     bool async,
                     CancellationToken cancellationToken) =>
                     {
                         Response<ShareFileDownloadInfo> response = await DownloadInternal(
-                            // TODO #27253
-                            //new ShareFileDownloadOptions
-                            //{
-                            //    Range = range,
-                            //    Conditions = conditions,
-                            //    // TODO #27253
-                            //    //TransactionalHashingOptions = downloadTransactionalHashingOptions
-                            //},
                             range,
-                            requestRangeMD5: default,
+                            validationOptionsOverride: downloadValidationOptions,
                             conditions,
                             async,
                             cancellationToken).ConfigureAwait(false);
@@ -2677,8 +2693,7 @@ namespace Azure.Storage.Files.Shares
                     },
                     async (bool async, CancellationToken cancellationToken)
                         => await GetPropertiesInternal(conditions: default, async, cancellationToken).ConfigureAwait(false),
-                    // TODO #27253
-                    //hashingOptions,
+                    validaitonOptions,
                     allowModifications,
                     properties.Value.ContentLength,
                     position,
@@ -3912,7 +3927,7 @@ namespace Azure.Storage.Files.Shares
             UploadRangeInternal(
                 range: range,
                 content: content,
-                rangeContentMD5: options?.TransactionalContentHash,
+                validationOptionsOverride: options?.TransferValidationOptions,
                 progressHandler: options?.ProgressHandler,
                 conditions: options?.Conditions,
                 fileLastWrittenMode: options?.FileLastWrittenMode,
@@ -3957,7 +3972,7 @@ namespace Azure.Storage.Files.Shares
             await UploadRangeInternal(
                 range: range,
                 content: content,
-                rangeContentMD5: options?.TransactionalContentHash,
+                validationOptionsOverride: options?.TransferValidationOptions,
                 progressHandler: options?.ProgressHandler,
                 conditions: options?.Conditions,
                 fileLastWrittenMode: options?.FileLastWrittenMode,
@@ -4019,27 +4034,16 @@ namespace Azure.Storage.Files.Shares
             ShareFileRequestConditions conditions,
             CancellationToken cancellationToken)
         {
-            // TODO #27253
-            //ShareFileUploadRangeOptions options = default;
-            //if (transactionalContentHash != default || progressHandler != default || conditions != default)
-            //{
-            //    options = new ShareFileUploadRangeOptions
-            //    {
-            //        TransactionalHashingOptions = transactionalContentHash != default
-            //            ? new UploadTransactionalHashingOptions()
-            //            {
-            //                Algorithm = TransactionalHashAlgorithm.MD5,
-            //                PrecalculatedHash = transactionalContentHash
-            //            }
-            //            : default,
-            //        Conditions = conditions,
-            //        ProgressHandler = progressHandler
-            //    };
-            //}
             return UploadRangeInternal(
                 range,
                 content,
-                rangeContentMD5: transactionalContentHash,
+                validationOptionsOverride: transactionalContentHash != default
+                    ? new UploadTransferValidationOptions()
+                    {
+                        Algorithm = ValidationAlgorithm.MD5,
+                        PrecalculatedChecksum = transactionalContentHash
+                    }
+                    : default,
                 progressHandler,
                 conditions,
                 fileLastWrittenMode: default,
@@ -4102,26 +4106,16 @@ namespace Azure.Storage.Files.Shares
             ShareFileRequestConditions conditions,
             CancellationToken cancellationToken)
         {
-            //ShareFileUploadRangeOptions options = default;
-            //if (transactionalContentHash != default || progressHandler != default || conditions != default)
-            //{
-            //    options = new ShareFileUploadRangeOptions
-            //    {
-            //        TransactionalHashingOptions = transactionalContentHash != default
-            //            ? new UploadTransactionalHashingOptions()
-            //            {
-            //                Algorithm = TransactionalHashAlgorithm.MD5,
-            //                PrecalculatedHash = transactionalContentHash
-            //            }
-            //            : default,
-            //        Conditions = conditions,
-            //        ProgressHandler = progressHandler
-            //    };
-            //}
             return await UploadRangeInternal(
                 range,
                 content,
-                rangeContentMD5: transactionalContentHash,
+                validationOptionsOverride: transactionalContentHash != default
+                    ? new UploadTransferValidationOptions()
+                    {
+                        Algorithm = ValidationAlgorithm.MD5,
+                        PrecalculatedChecksum = transactionalContentHash
+                    }
+                    : default,
                 progressHandler,
                 conditions,
                 fileLastWrittenMode: default,
@@ -4180,26 +4174,16 @@ namespace Azure.Storage.Files.Shares
             IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default)
         {
-            // TODO #27253
-            //ShareFileUploadRangeOptions options = default;
-            //if (transactionalContentHash != default || progressHandler != default)
-            //{
-            //    options = new ShareFileUploadRangeOptions
-            //    {
-            //        TransactionalHashingOptions = transactionalContentHash != default
-            //            ? new UploadTransactionalHashingOptions()
-            //            {
-            //                Algorithm = TransactionalHashAlgorithm.MD5,
-            //                PrecalculatedHash = transactionalContentHash
-            //            }
-            //            : default,
-            //        ProgressHandler = progressHandler
-            //    };
-            //}
             return UploadRangeInternal(
                 range,
                 content,
-                rangeContentMD5: transactionalContentHash,
+                validationOptionsOverride: transactionalContentHash != default
+                    ? new UploadTransferValidationOptions()
+                    {
+                        Algorithm = ValidationAlgorithm.MD5,
+                        PrecalculatedChecksum = transactionalContentHash
+                    }
+                    : default,
                 progressHandler,
                 conditions: default,
                 fileLastWrittenMode: default,
@@ -4258,26 +4242,16 @@ namespace Azure.Storage.Files.Shares
             IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default)
         {
-            // TODO #27253
-            //ShareFileUploadRangeOptions options = default;
-            //if (transactionalContentHash != default || progressHandler != default)
-            //{
-            //    options = new ShareFileUploadRangeOptions
-            //    {
-            //        TransactionalHashingOptions = transactionalContentHash != default
-            //            ? new UploadTransactionalHashingOptions()
-            //            {
-            //                Algorithm = TransactionalHashAlgorithm.MD5,
-            //                PrecalculatedHash = transactionalContentHash
-            //            }
-            //            : default,
-            //        ProgressHandler = progressHandler
-            //    };
-            //}
             return await UploadRangeInternal(
                 range,
                 content,
-                rangeContentMD5: transactionalContentHash,
+                validationOptionsOverride: transactionalContentHash != default
+                    ? new UploadTransferValidationOptions()
+                    {
+                        Algorithm = ValidationAlgorithm.MD5,
+                        PrecalculatedChecksum = transactionalContentHash
+                    }
+                    : default,
                 progressHandler,
                 conditions: default,
                 fileLastWrittenMode: default,
@@ -4300,8 +4274,8 @@ namespace Azure.Storage.Files.Shares
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content of the range to upload.
         /// </param>
-        /// <param name="rangeContentMD5">
-        /// Transactional range content MD5 hash.
+        /// <param name="validationOptionsOverride">
+        /// Optional override for transfer validation on upload.
         /// </param>
         /// <param name="progressHandler">
         /// Progress handler for upload operation.
@@ -4331,28 +4305,18 @@ namespace Azure.Storage.Files.Shares
         internal async Task<Response<ShareFileUploadInfo>> UploadRangeInternal(
             HttpRange range,
             Stream content,
-            byte[] rangeContentMD5,
+            UploadTransferValidationOptions validationOptionsOverride,
             IProgress<long> progressHandler,
             ShareFileRequestConditions conditions,
             FileLastWrittenMode? fileLastWrittenMode,
             bool async,
             CancellationToken cancellationToken)
         {
+            UploadTransferValidationOptions validationOptions = validationOptionsOverride ?? ClientConfiguration.UploadValidationOptions;
+            ShareErrors.AssertAlgorithmSupport(validationOptions?.Algorithm);
+
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
-                // File shares only accept MD5 for transactional hashing
-                // TODO #27253
-                //if (options?.TransactionalHashingOptions != default)
-                //{
-                //    switch (options.TransactionalHashingOptions.Algorithm)
-                //    {
-                //        case TransactionalHashAlgorithm.MD5:
-                //            break;
-                //        default:
-                //            throw new ArgumentException("Invalid transactional hash algorithm selected.");
-                //    }
-                //}
-
                 ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareFileClient),
                     message:
@@ -4366,8 +4330,7 @@ namespace Azure.Storage.Files.Shares
                     Errors.VerifyStreamPosition(content, nameof(content));
 
                     // compute hash BEFORE attaching progress handler
-                    // TODO #27253
-                    //ContentHasher.GetHashResult hashResult = ContentHasher.GetHashOrDefault(content, options?.TransactionalHashingOptions);
+                    ContentHasher.GetHashResult hashResult = ContentHasher.GetHashOrDefault(content, validationOptions);
 
                     content = content.WithNoDispose().WithProgress(progressHandler);
 
@@ -4381,8 +4344,7 @@ namespace Azure.Storage.Files.Shares
                             contentLength: (content?.Length - content?.Position) ?? 0,
                             fileLastWrittenMode: fileLastWrittenMode,
                             optionalbody: content,
-                            // TODO #27253
-                            contentMD5: rangeContentMD5, //hashResult?.MD5,
+                            contentMD5: hashResult?.MD5,
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -4395,8 +4357,7 @@ namespace Azure.Storage.Files.Shares
                             contentLength: (content?.Length - content?.Position) ?? 0,
                             fileLastWrittenMode: fileLastWrittenMode,
                             optionalbody: content,
-                            // TODO #27253
-                            contentMD5: rangeContentMD5, //hashResult?.MD5,
+                            contentMD5: hashResult?.MD5,
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
@@ -4823,90 +4784,87 @@ namespace Azure.Storage.Files.Shares
         #endregion UploadRangeFromUrl
 
         #region Upload
-        // TODO #27253
-        ///// <summary>
-        ///// The <see cref="Upload(Stream, ShareFileUploadOptions, CancellationToken)"/>
-        ///// operation writes <paramref name="options.Stream"/> to a file.
-        /////
-        ///// For more information, see
-        ///// <see href="https://docs.microsoft.com/rest/api/storageservices/put-range">
-        ///// Put Range</see>.
-        ///// </summary>
-        ///// <param name="stream">
-        ///// Content stream to upload.
-        ///// </param>
-        ///// <param name="options">
-        ///// Upload options.
-        ///// </param>
-        ///// <param name="cancellationToken">
-        ///// Optional <see cref="CancellationToken"/> to propagate notifications
-        ///// that the operation should be cancelled.
-        ///// </param>
-        ///// <returns>
-        ///// A <see cref="Response{StorageFileUploadInfo}"/> describing the
-        ///// state of the file.
-        ///// </returns>
-        ///// <remarks>
-        ///// A <see cref="RequestFailedException"/> will be thrown if
-        ///// a failure occurs.
-        ///// </remarks>
-        //[ForwardsClientCalls]
-        //public virtual Response<ShareFileUploadInfo> Upload(
-        //    Stream stream,
-        //    ShareFileUploadOptions options,
-        //    CancellationToken cancellationToken = default) =>
-        //    UploadInternal(
-        //        stream,
-        //        options?.ProgressHandler,
-        //        options?.Conditions,
-        //        // TODO #27253
-        //        // options?.TransactionalHashingOptions,
-        //        Constants.File.MaxFileUpdateRange,
-        //        async: false,
-        //        cancellationToken)
-        //        .EnsureCompleted();
+        /// <summary>
+        /// The <see cref="Upload(Stream, ShareFileUploadOptions, CancellationToken)"/>
+        /// operation writes <paramref name="options.Stream"/> to a file.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-range">
+        /// Put Range</see>.
+        /// </summary>
+        /// <param name="stream">
+        /// Content stream to upload.
+        /// </param>
+        /// <param name="options">
+        /// Upload options.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileUploadInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [ForwardsClientCalls]
+        public virtual Response<ShareFileUploadInfo> Upload(
+            Stream stream,
+            ShareFileUploadOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            UploadInternal(
+                stream,
+                options?.ProgressHandler,
+                options?.Conditions,
+                options?.TransferValidationOptions,
+                Constants.File.MaxFileUpdateRange,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
 
-        ///// <summary>
-        ///// The <see cref="UploadAsync(Stream, ShareFileUploadOptions, CancellationToken)"/> operation writes
-        ///// <paramref name="options.Stream"/> to a file.
-        /////
-        ///// For more information, see
-        ///// <see href="https://docs.microsoft.com/rest/api/storageservices/put-range">
-        ///// Put Range</see>.
-        ///// </summary>
-        ///// <param name="stream">
-        ///// Content stream to upload.
-        ///// </param>
-        ///// <param name="options">
-        ///// Upload options.
-        ///// </param>
-        ///// <param name="cancellationToken">
-        ///// Optional <see cref="CancellationToken"/> to propagate notifications
-        ///// that the operation should be cancelled.
-        ///// </param>
-        ///// <returns>
-        ///// A <see cref="Response{StorageFileUploadInfo}"/> describing the
-        ///// state of the file.
-        ///// </returns>
-        ///// <remarks>
-        ///// A <see cref="RequestFailedException"/> will be thrown if
-        ///// a failure occurs.
-        ///// </remarks>
-        //[ForwardsClientCalls]
-        //public virtual async Task<Response<ShareFileUploadInfo>> UploadAsync(
-        //    Stream stream,
-        //    ShareFileUploadOptions options,
-        //    CancellationToken cancellationToken = default) =>
-        //    await UploadInternal(
-        //        stream,
-        //        options?.ProgressHandler,
-        //        options?.Conditions,
-        //        // TODO #27253
-        //        //options?.TransactionalHashingOptions,
-        //        Constants.File.MaxFileUpdateRange,
-        //        async: true,
-        //        cancellationToken)
-        //        .ConfigureAwait(false);
+        /// <summary>
+        /// The <see cref="UploadAsync(Stream, ShareFileUploadOptions, CancellationToken)"/> operation writes
+        /// <paramref name="options.Stream"/> to a file.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-range">
+        /// Put Range</see>.
+        /// </summary>
+        /// <param name="stream">
+        /// Content stream to upload.
+        /// </param>
+        /// <param name="options">
+        /// Upload options.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileUploadInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ShareFileUploadInfo>> UploadAsync(
+            Stream stream,
+            ShareFileUploadOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            await UploadInternal(
+                stream,
+                options?.ProgressHandler,
+                options?.Conditions,
+                options?.TransferValidationOptions,
+                Constants.File.MaxFileUpdateRange,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
 
         /// <summary>
         /// The <see cref="Upload(Stream, IProgress{long}, ShareFileRequestConditions, CancellationToken)"/>
@@ -4940,19 +4898,19 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         [ForwardsClientCalls]
-        // TODO #27253
-        //[EditorBrowsable(EditorBrowsableState.Never)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response<ShareFileUploadInfo> Upload(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             Stream content,
-            IProgress<long> progressHandler = default,
-            ShareFileRequestConditions conditions = default,
-            CancellationToken cancellationToken = default) =>
+            IProgress<long> progressHandler,
+            ShareFileRequestConditions conditions,
+            CancellationToken cancellationToken) =>
             UploadInternal(
                 content,
                 progressHandler,
                 conditions,
-                // TODO #27253
-                //validationOptions: default,
+                transferValidationOverride: default,
                 Constants.File.MaxFileUpdateRange,
                 async: false,
                 cancellationToken)
@@ -4997,8 +4955,7 @@ namespace Azure.Storage.Files.Shares
                 content,
                 progressHandler,
                 conditions: default,
-                // TODO #27253
-                //validationOptions: default,
+                transferValidationOverride: default,
                 Constants.File.MaxFileUpdateRange,
                 async: false,
                 cancellationToken)
@@ -5036,19 +4993,19 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         [ForwardsClientCalls]
-        // TODO #27253
-        //[EditorBrowsable(EditorBrowsableState.Never)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response<ShareFileUploadInfo>> UploadAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             Stream content,
-            IProgress<long> progressHandler = default,
-            ShareFileRequestConditions conditions = default,
-            CancellationToken cancellationToken = default) =>
+            IProgress<long> progressHandler,
+            ShareFileRequestConditions conditions,
+            CancellationToken cancellationToken) =>
             await UploadInternal(
                 content,
                 progressHandler,
                 conditions,
-                // TODO #27253
-                //validationOptions: default,
+                transferValidationOverride: default,
                 Constants.File.MaxFileUpdateRange,
                 async: true,
                 cancellationToken)
@@ -5093,8 +5050,7 @@ namespace Azure.Storage.Files.Shares
                 content,
                 progressHandler,
                 conditions: default,
-                // TODO #27253
-                //validationOptions: default,
+                transferValidationOverride: default,
                 Constants.File.MaxFileUpdateRange,
                 async: true,
                 cancellationToken)
@@ -5119,6 +5075,9 @@ namespace Azure.Storage.Files.Shares
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
+        /// <param name="transferValidationOverride">
+        /// Optional override for client-configured transfer validation options.
+        /// </param>
         /// <param name="singleRangeThreshold">
         /// The maximum size stream that we'll upload as a single range.  The
         /// default value is 4MB.
@@ -5142,12 +5101,13 @@ namespace Azure.Storage.Files.Shares
             Stream content,
             IProgress<long> progressHandler,
             ShareFileRequestConditions conditions,
-            // TODO #27253
-            //UploadTransactionalHashingOptions validationOptions,
+            UploadTransferValidationOptions transferValidationOverride,
             int singleRangeThreshold,
             bool async,
             CancellationToken cancellationToken)
         {
+            UploadTransferValidationOptions validationOptions = transferValidationOverride ?? ClientConfiguration.UploadValidationOptions;
+
             var uploader = GetPartitionedUploader(
                 new StorageTransferOptions
                 {
@@ -5156,8 +5116,7 @@ namespace Azure.Storage.Files.Shares
                     MaximumTransferSize = singleRangeThreshold,
                     InitialTransferSize = singleRangeThreshold
                 },
-                // TODO #27253
-                //validationOptions,
+                validationOptions,
                 operationName: $"{nameof(ShareFileClient)}.{nameof(Upload)}");
 
             return await uploader.UploadInternal(
@@ -5183,15 +5142,13 @@ namespace Azure.Storage.Files.Shares
 
         internal PartitionedUploader<ShareFileUploadData, ShareFileUploadInfo> GetPartitionedUploader(
             StorageTransferOptions transferOptions,
-            // TODO #27253
-            //UploadTransactionalHashingOptions hashingOptions,
+            UploadTransferValidationOptions validationOptions,
             ArrayPool<byte> arrayPool = null,
             string operationName = null)
             => new PartitionedUploader<ShareFileUploadData, ShareFileUploadInfo>(
                 GetPartitionedUploaderBehaviors(this),
                 transferOptions,
-                // TODO #27253
-                //hashingOptions,
+                validationOptions,
                 arrayPool,
                 operationName);
 
@@ -5199,18 +5156,12 @@ namespace Azure.Storage.Files.Shares
         internal static PartitionedUploader<ShareFileUploadData, ShareFileUploadInfo>.Behaviors GetPartitionedUploaderBehaviors(ShareFileClient client)
             => new PartitionedUploader<ShareFileUploadData, ShareFileUploadInfo>.Behaviors
             {
-                SingleUpload = async (stream, data, progressHandler, operationName, async, cancellationToken) =>
+                SingleUpload = async (stream, data, progressHandler, validationOptions, operationName, async, cancellationToken) =>
                 {
                     return await client.UploadRangeInternal(
                         new HttpRange(offset: 0, length: stream.Length),
                         stream,
-                        //new ShareFileUploadRangeOptions
-                        //{
-                        //    Conditions = data.Conditions,
-                        //    ProgressHandler = progressHandler,
-                        //    //TransactionalHashingOptions = validationOptions,
-                        //},
-                        rangeContentMD5: default,
+                        validationOptions,
                         progressHandler,
                         data.Conditions,
                         fileLastWrittenMode: null,
@@ -5218,18 +5169,12 @@ namespace Azure.Storage.Files.Shares
                         cancellationToken)
                         .ConfigureAwait(false);
                 },
-                UploadPartition = async (stream, offset, data, progressHandler, async, cancellationToken) =>
+                UploadPartition = async (stream, offset, data, progressHandler, validationOptions, async, cancellationToken) =>
                 {
                     data.LastUploadRangeResponse = await client.UploadRangeInternal(
                         new HttpRange(offset: offset, length: stream.Length),
                         stream,
-                        //new ShareFileUploadRangeOptions
-                        //{
-                        //    Conditions = data.Conditions,
-                        //    ProgressHandler = progressHandler,
-                        //    //TransactionalHashingOptions = validationOptions,
-                        //},
-                        rangeContentMD5: default,
+                        validationOptions,
                         progressHandler,
                         data.Conditions,
                         fileLastWrittenMode: null,
@@ -6233,6 +6178,16 @@ namespace Azure.Storage.Files.Shares
 
                     ShareExtensions.AssertValidFilePermissionAndKey(options?.FilePermission, options?.SmbProperties?.FilePermissionKey);
 
+                    // TODO: this seems weird to do, probably should build a way to append to the query.. without altering it somehow
+                    // in the case that the customer wants the query to be in a certain order
+                    ShareUriBuilder shareUriBuilder = new ShareUriBuilder(Uri);
+                    UriBuilder sourceUriBuilder = new UriBuilder(Uri);
+                    // There's already a check in at the client constructor to prevent both SAS in Uri and AzureSasCredential
+                    if (shareUriBuilder.Sas == null && ClientConfiguration.SasCredential != null)
+                    {
+                        sourceUriBuilder.Query += ClientConfiguration.SasCredential.Signature;
+                    }
+
                     // Build destination URI
                     ShareUriBuilder destUriBuilder = new ShareUriBuilder(Uri)
                     {
@@ -6240,21 +6195,41 @@ namespace Azure.Storage.Files.Shares
                         Query = null
                     };
 
-                    // ShareUriBuider will encode the DirectoryOrFilePath.  We don't want the query parameters,
-                    // especially SAS, to be encoded.
+                    // ShareUriBuider will encode the DirectoryOrFilePath.
+                    // We don't want the query parameters, especially SAS, to be encoded.
+                    // We also have to build the destination client depending on if a SAS was passed with the destination.
+                    ShareFileClient destFileClient;
                     string[] split = destinationPath.Split('?');
                     if (split.Length == 2)
                     {
                         destUriBuilder.DirectoryOrFilePath = split[0];
                         destUriBuilder.Query = split[1];
+                        // If the destination already has a SAS, then let's not further add to the Uri if it contains
+                        // AzureSasCredential on the source.
+                        var paramsMap = new UriQueryParamsCollection(split[1]);
+                        if (!paramsMap.ContainsKey(Constants.Sas.Parameters.Version))
+                        {
+                            // No SAS in the destination, use the source credentials to build the destination path
+                            destFileClient = new ShareFileClient(destUriBuilder.ToUri(), ClientConfiguration);
+                        }
+                        else
+                        {
+                            // There's a SAS in the destination path
+                            // Create the destination path with the destination SAS
+                            destFileClient = new ShareFileClient(
+                                destUriBuilder.ToUri(),
+                                ClientConfiguration.ClientDiagnostics,
+                                ClientConfiguration.ClientOptions);
+                        }
                     }
                     else
                     {
+                        // No SAS in the destination, use the source credentials to build the destination path
                         destUriBuilder.DirectoryOrFilePath = destinationPath;
+                        destFileClient = new ShareFileClient(
+                            destUriBuilder.ToUri(),
+                            ClientConfiguration);
                     }
-
-                    // Build destFileClient
-                    ShareFileClient destFileClient = new ShareFileClient(destUriBuilder.ToUri(), ClientConfiguration);
 
                     ResponseWithHeaders<FileRenameHeaders> response;
 
@@ -6275,7 +6250,7 @@ namespace Azure.Storage.Files.Shares
                     if (async)
                     {
                         response = await destFileClient.FileRestClient.RenameAsync(
-                            renameSource: Uri.AbsoluteUri,
+                            renameSource: sourceUriBuilder.Uri.AbsoluteUri,
                             replaceIfExists: options?.ReplaceIfExists,
                             ignoreReadOnly: options?.IgnoreReadOnly,
                             sourceLeaseId: options?.SourceConditions?.LeaseId,
@@ -6291,7 +6266,7 @@ namespace Azure.Storage.Files.Shares
                     else
                     {
                         response = destFileClient.FileRestClient.Rename(
-                            renameSource: Uri.AbsoluteUri,
+                            renameSource: sourceUriBuilder.Uri.AbsoluteUri,
                             replaceIfExists: options?.ReplaceIfExists,
                             ignoreReadOnly: options?.IgnoreReadOnly,
                             sourceLeaseId: options?.SourceConditions?.LeaseId,
@@ -6493,9 +6468,8 @@ namespace Azure.Storage.Files.Shares
                     bufferSize: options?.BufferSize ?? Constants.DefaultBufferSize,
                     position: position,
                     conditions: options?.OpenConditions,
-                    progressHandler: options?.ProgressHandler
-                    // TODO #27253
-                    //options?.TransactionalHashingOptions
+                    progressHandler: options?.ProgressHandler,
+                    options?.TransferValidationOptions
                     );
             }
             catch (Exception ex)

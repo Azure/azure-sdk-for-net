@@ -16,7 +16,6 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Tests
 {
-    [RunFrequency(RunTestFrequency.Manually)]
     [ClientTestFixture]
     [NonParallelizable]
     public abstract class SqlManagementClientBase : ManagementRecordedTestBase<SqlManagementTestEnvironment>
@@ -27,7 +26,9 @@ namespace Azure.ResourceManager.Sql.Tests
             : base(isAsync)
         {
         }
-
+        public SqlManagementClientBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
+        {
+        }
         [SetUp]
         public virtual void TestSetup()
         {
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.Sql.Tests
                         AddressPrefix = "10.10.2.0/24",
                         Delegations =
                         {
-                            new Delegation() { ServiceName  = "Microsoft.Sql/managedInstances",Name="Microsoft.Sql/managedInstances" ,ResourceType="Microsoft.Sql"}
+                            new ServiceDelegation() { ServiceName  = "Microsoft.Sql/managedInstances",Name="Microsoft.Sql/managedInstances" ,ResourceType="Microsoft.Sql/managedInstances"}
                         },
                         RouteTable = new RouteTableData(){ Id = routeTable.Value.Data.Id },
                         NetworkSecurityGroup = new NetworkSecurityGroupData(){ Id = networkSecurityGroup.Value.Data.Id },
@@ -90,7 +91,7 @@ namespace Azure.ResourceManager.Sql.Tests
             };
             vnetData.AddressPrefixes.Add("10.10.0.0/16");
             var vnet = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnetData);
-            string subnetId = $"{vnet.Value.Data.Id}/subnets/ManagedInstance";
+            ResourceIdentifier subnetId = new ResourceIdentifier($"{vnet.Value.Data.Id}/subnets/ManagedInstance");
 
             //4. create ManagedInstance
             ManagedInstanceData data = new ManagedInstanceData(location)
@@ -98,11 +99,11 @@ namespace Azure.ResourceManager.Sql.Tests
                 AdministratorLogin = $"admin-{managedInstanceName}",
                 AdministratorLoginPassword = CreateGeneralPassword(),
                 SubnetId = subnetId,
-                PublicDataEndpointEnabled = false,
-                MaintenanceConfigurationId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default",
+                IsPublicDataEndpointEnabled = false,
+                MaintenanceConfigurationId = new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default"),
                 ProxyOverride = new ManagedInstanceProxyOverride("Proxy") { },
                 TimezoneId = "UTC",
-                ZoneRedundant = false,
+                IsZoneRedundant = false,
             };
             var managedInstanceLro = await resourceGroup.GetManagedInstances().CreateOrUpdateAsync(WaitUntil.Completed, managedInstanceName, data);
             var managedInstance = managedInstanceLro.Value;
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.Sql.Tests
             SubnetData subnetData = new SubnetData()
             {
                 AddressPrefix = "10.10.5.0/24",
-                PrivateEndpointNetworkPolicies = "Disabled"
+                PrivateEndpointNetworkPolicy = "Disabled"
             };
             var privateEndpointSubnet = await vnet.GetSubnets().CreateOrUpdateAsync(WaitUntil.Completed, $"private-endpoint-subnet", subnetData);
 
@@ -137,10 +138,10 @@ namespace Azure.ResourceManager.Sql.Tests
                 Location = location,
                 PrivateLinkServiceConnections =
                 {
-                    new PrivateLinkServiceConnection()
+                    new NetworkPrivateLinkServiceConnection()
                     {
                         Name = privateEndpointName,
-                        PrivateLinkServiceId = managedInstance.Data.Id.ToString(),
+                        PrivateLinkServiceId = managedInstance.Data.Id,
                         GroupIds = { "managedInstance" },
                     }
                 },

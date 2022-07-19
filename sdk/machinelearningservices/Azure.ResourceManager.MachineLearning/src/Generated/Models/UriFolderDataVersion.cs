@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> uri-folder data version entity. </summary>
-    public partial class UriFolderDataVersion : DataVersionBaseProperties
+    public partial class UriFolderDataVersion : DataVersionProperties
     {
         /// <summary> Initializes a new instance of UriFolderDataVersion. </summary>
         /// <param name="dataUri"> [Required] Uri of the data. Usage/meaning depends on Microsoft.MachineLearning.ManagementFrontEnd.Contracts.V20220201Preview.Assets.DataVersionBase.DataType. </param>

@@ -22,6 +22,40 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/29958")]
+        public async Task SupportsAadAuthentication()
+        {
+            QuestionAnsweringProjectsClient client = CreateClient<QuestionAnsweringProjectsClient>(
+               TestEnvironment.Endpoint,
+               TestEnvironment.Credential,
+               InstrumentClientOptions(
+                    new QuestionAnsweringClientOptions()));
+
+            string testProjectName = CreateTestProjectName();
+
+            RequestContent creationRequestContent = RequestContent.Create(
+                new
+                {
+                    description = "This is the description for a test project",
+                    language = "en",
+                    multilingualResource = false,
+                    settings = new
+                    {
+                        defaultAnswer = "No answer found for your question."
+                    }
+                }
+                );
+
+            Response createProjectResponse = await client.CreateProjectAsync(testProjectName, creationRequestContent);
+            Response projectDetailsResponse = await client.GetProjectDetailsAsync(testProjectName);
+
+            Assert.AreEqual(201, createProjectResponse.Status);
+            Assert.AreEqual(200, projectDetailsResponse.Status);
+
+            await client.DeleteProjectAsync(WaitUntil.Completed, testProjectName);
+        }
+
+        [RecordedTest]
         public async Task CreateProject()
         {
             string testProjectName = CreateTestProjectName();

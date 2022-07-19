@@ -36,16 +36,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net-pr/issues/1726")]
         public async Task StartBuildModelCanAuthenticateWithTokenCredential()
         {
             var client = CreateDocumentModelAdministrationClient(useTokenCredential: true);
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 
             var modelId = Recording.GenerateId();
-            BuildModelOperation operation = await client.StartBuildModelAsync(trainingFilesUri, DocumentBuildMode.Template, modelId);
-
-            await operation.WaitForCompletionAsync();
+            BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, trainingFilesUri, DocumentBuildMode.Template, modelId);
 
             // Sanity check to make sure we got an actual response back from the service.
             Assert.IsNotNull(operation.Value.ModelId);
@@ -64,8 +61,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var trainingFilesUri = new Uri(singlePage ? TestEnvironment.BlobContainerSasUrl : TestEnvironment.MultipageBlobContainerSasUrl);
             var modelId = Recording.GenerateId();
 
-            BuildModelOperation operation = await client.StartBuildModelAsync(trainingFilesUri, DocumentBuildMode.Template, modelId);
-            await operation.WaitForCompletionAsync();
+            BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, trainingFilesUri, DocumentBuildMode.Template, modelId);
 
             Assert.IsTrue(operation.HasValue);
 
@@ -82,6 +78,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/29966")]
         public async Task StartBuildModelWithNeuralBuildMode()
         {
             // Test takes too long to finish running, and seems to cause multiple failures in our
@@ -97,8 +94,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
             var modelId = Recording.GenerateId();
 
-            BuildModelOperation operation = await client.StartBuildModelAsync(trainingFilesUri, DocumentBuildMode.Neural, modelId);
-            await operation.WaitForCompletionAsync();
+            BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, trainingFilesUri, DocumentBuildMode.Neural, modelId);
 
             Assert.IsTrue(operation.HasValue);
 
@@ -121,9 +117,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
             var modelId = Recording.GenerateId();
 
-            BuildModelOperation operation = await client.StartBuildModelAsync(trainingFilesUri, DocumentBuildMode.Template, modelId, new BuildModelOptions() { Prefix = "subfolder/" });
-
-            await operation.WaitForCompletionAsync();
+            BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, trainingFilesUri, DocumentBuildMode.Template, modelId, new BuildModelOptions() { Prefix = "subfolder/" });
 
             Assert.IsTrue(operation.HasValue);
             Assert.IsNotNull(operation.Value.ModelId);
@@ -137,7 +131,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
             var modelId = Recording.GenerateId();
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartBuildModelAsync(trainingFilesUri, DocumentBuildMode.Template, modelId, new BuildModelOptions() { Prefix = "subfolder" }));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.BuildModelAsync(WaitUntil.Started, trainingFilesUri, DocumentBuildMode.Template, modelId, new BuildModelOptions() { Prefix = "subfolder" }));
             Assert.AreEqual("InvalidRequest", ex.ErrorCode);
         }
 
@@ -155,8 +149,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 options.Tags.Add(tag);
             }
 
-            BuildModelOperation operation = await client.StartBuildModelAsync(trainingFilesUri, DocumentBuildMode.Template, modelId, options);
-            await operation.WaitForCompletionAsync();
+            BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, trainingFilesUri, DocumentBuildMode.Template, modelId, options);
 
             DocumentModel model = operation.Value;
 
@@ -171,7 +164,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             var containerUrl = new Uri("https://someUrl");
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartBuildModelAsync(containerUrl, DocumentBuildMode.Template, modelId));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.BuildModelAsync(WaitUntil.Started, containerUrl, DocumentBuildMode.Template, modelId));
             Assert.AreEqual("InvalidArgument", ex.ErrorCode);
         }
 
@@ -202,7 +195,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        [TestCase(true, Ignore = "https://github.com/Azure/azure-sdk-for-net-pr/issues/1726")]
+        [TestCase(true)]
         [TestCase(false)]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/28705")]
         public async Task AdminOps(bool useTokenCredential)
@@ -214,7 +207,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             var options = new BuildModelOptions()
             {
-                ModelDescription = description
+                Description = description
             };
 
             foreach (var tag in TestingTags)
@@ -222,20 +215,17 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 options.Tags.Add(tag);
             }
 
-            BuildModelOperation operation = await client.StartBuildModelAsync(trainingFilesUri, DocumentBuildMode.Template, modelId, options);
-
-            await operation.WaitForCompletionAsync();
-
+            BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, trainingFilesUri, DocumentBuildMode.Template, modelId, options);
             DocumentModel resultModel = await client.GetModelAsync(modelId);
 
             ValidateDocumentModel(resultModel, description, TestingTags);
 
-            DocumentModelInfo modelInfo = client.GetModelsAsync().ToEnumerableAsync().Result
+            DocumentModelSummary modelSummary = client.GetModelsAsync().ToEnumerableAsync().Result
                 .FirstOrDefault(m => m.ModelId == modelId);
 
-            Assert.NotNull(modelInfo);
+            Assert.NotNull(modelSummary);
 
-            ValidateDocumentModelInfo(modelInfo, description, TestingTags);
+            ValidateDocumentModelSummary(modelSummary, description, TestingTags);
 
             await client.DeleteModelAsync(modelId);
 
@@ -253,7 +243,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        [TestCase(true, Ignore = "https://github.com/Azure/azure-sdk-for-net-pr/issues/1726")]
+        [TestCase(true)]
         [TestCase(false)]
         public async Task GetAndListOperations(bool useTokenCredential)
         {
@@ -296,7 +286,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 options.Tags.Add(tag);
             }
 
-            BuildModelOperation operation = await client.StartBuildModelAsync(trainingFilesUri, DocumentBuildMode.Template, modelId, options);
+            BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Started, trainingFilesUri, DocumentBuildMode.Template, modelId, options);
 
             ModelOperationInfo modelOperationInfo = client.GetOperationsAsync().ToEnumerableAsync().Result
                 .FirstOrDefault(op => op.OperationId == operation.Id);
@@ -325,7 +315,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
         #region copy
         [RecordedTest]
-        [TestCase(true, Ignore = "https://github.com/Azure/azure-sdk-for-net-pr/issues/1726")]
+        [TestCase(true)]
         [TestCase(false)]
         public async Task CopyModel(bool useTokenCredential)
         {
@@ -338,9 +328,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var targetModelId = Recording.GenerateId();
             CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(targetModelId);
 
-            CopyModelOperation operation = await sourceClient.StartCopyModelToAsync(trainedModel.ModelId, targetAuth);
+            CopyModelOperation operation = await sourceClient.CopyModelToAsync(WaitUntil.Completed, trainedModel.ModelId, targetAuth);
 
-            await operation.WaitForCompletionAsync();
             Assert.IsTrue(operation.HasValue);
 
             DocumentModel copiedModel = operation.Value;
@@ -385,9 +374,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             var targetModelId = Recording.GenerateId();
             CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(targetModelId, tags: tags);
-            CopyModelOperation operation = await sourceClient.StartCopyModelToAsync(trainedModel.ModelId, targetAuth);
-
-            await operation.WaitForCompletionAsync();
+            CopyModelOperation operation = await sourceClient.CopyModelToAsync(WaitUntil.Completed, trainedModel.ModelId, targetAuth);
 
             DocumentModel copiedModel = operation.Value;
 
@@ -405,7 +392,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var modelId = Recording.GenerateId();
             CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(modelId);
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await sourceClient.StartCopyModelToAsync(modelId, targetAuth));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await sourceClient.CopyModelToAsync(WaitUntil.Started, modelId, targetAuth));
             Assert.AreEqual("InvalidRequest", ex.ErrorCode);
         }
 
@@ -415,8 +402,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
         [RecordedTest]
         [TestCase(false)]
-        [TestCase(true, Ignore = "https://github.com/Azure/azure-sdk-for-net-pr/issues/1726")]
-        public async Task StartCreateComposedModel(bool useTokenCredential)
+        [TestCase(true)]
+        public async Task StartComposeModel(bool useTokenCredential)
         {
             var client = CreateDocumentModelAdministrationClient(useTokenCredential);
 
@@ -429,8 +416,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var modelIds = new List<string> { trainedModelA.ModelId, trainedModelB.ModelId };
 
             var composedModelId = Recording.GenerateId();
-            BuildModelOperation operation = await client.StartCreateComposedModelAsync(modelIds, composedModelId);
-            await operation.WaitForCompletionAsync();
+            BuildModelOperation operation = await client.ComposeModelAsync(WaitUntil.Completed, modelIds, composedModelId);
 
             Assert.IsTrue(operation.HasValue);
 
@@ -450,7 +436,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        public async Task StartCreateComposedModelWithTags()
+        public async Task StartComposeModelWithTags()
         {
             var client = CreateDocumentModelAdministrationClient();
 
@@ -464,9 +450,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var tags = TestingTags.ToDictionary(t => t.Key, t => t.Value);
 
             var composedModelId = Recording.GenerateId();
-            BuildModelOperation operation = await client.StartCreateComposedModelAsync(modelIds, composedModelId, tags: tags);
-
-            await operation.WaitForCompletionAsync();
+            BuildModelOperation operation = await client.ComposeModelAsync(WaitUntil.Completed, modelIds, composedModelId, tags: tags);
 
             DocumentModel composedModel = operation.Value;
 
@@ -476,7 +460,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        public async Task StartCreateComposedModelFailsWithInvalidId()
+        public async Task StartComposeModelFailsWithInvalidId()
         {
             var client = CreateDocumentModelAdministrationClient();
 
@@ -487,7 +471,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var modelIds = new List<string> { trainedModel.ModelId, "00000000-0000-0000-0000-000000000000" };
 
             var composedModelId = Recording.GenerateId();
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartCreateComposedModelAsync(modelIds, composedModelId));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.ComposeModelAsync(WaitUntil.Started, modelIds, composedModelId));
             Assert.AreEqual("InvalidRequest", ex.ErrorCode);
         }
 
@@ -510,12 +494,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
         private void ValidateDocumentModel(DocumentModel model, string description = null, IReadOnlyDictionary<string, string> tags = null)
         {
-            ValidateDocumentModelInfo(model, description, tags);
+            ValidateDocumentModelSummary(model, description, tags);
 
             // TODO add validation for Doctypes https://github.com/Azure/azure-sdk-for-net-pr/issues/1432
         }
 
-        private void ValidateDocumentModelInfo(DocumentModelInfo model, string description = null, IReadOnlyDictionary<string, string> tags = null)
+        private void ValidateDocumentModelSummary(DocumentModelSummary model, string description = null, IReadOnlyDictionary<string, string> tags = null)
         {
             if (description != null)
             {

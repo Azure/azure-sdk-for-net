@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="macSecConfig"> MacSec configuration. </param>
         internal ExpressRouteLinkData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string routerName, string interfaceName, string patchPanelId, string rackId, ExpressRouteLinkConnectorType? connectorType, ExpressRouteLinkAdminState? adminState, NetworkProvisioningState? provisioningState, ExpressRouteLinkMacSecConfig macSecConfig) : base(id, name, resourceType)
         {
-            Etag = etag;
+            ETag = etag;
             RouterName = routerName;
             InterfaceName = interfaceName;
             PatchPanelId = patchPanelId;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> Name of Azure router associated with physical port. </summary>
         public string RouterName { get; }
         /// <summary> Name of Azure router interface. </summary>

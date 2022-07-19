@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="provisioningState"> The provisioning state of the authorization resource. </param>
         internal ExpressRouteCircuitAuthorizationData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string authorizationKey, AuthorizationUseStatus? authorizationUseStatus, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            Etag = etag;
+            ETag = etag;
             AuthorizationKey = authorizationKey;
             AuthorizationUseStatus = authorizationUseStatus;
             ProvisioningState = provisioningState;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> The authorization key. </summary>
         public string AuthorizationKey { get; set; }
         /// <summary> The authorization use status. </summary>

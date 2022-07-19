@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="natRules"> List of all the nat Rules associated with the gateway. </param>
         internal VpnGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, WritableSubResource virtualHub, IList<VpnConnectionData> connections, BgpSettings bgpSettings, NetworkProvisioningState? provisioningState, int? vpnGatewayScaleUnit, IReadOnlyList<VpnGatewayIPConfiguration> ipConfigurations, bool? isRoutingPreferenceInternet, IList<VpnGatewayNatRuleData> natRules) : base(id, name, resourceType, location, tags)
         {
-            Etag = etag;
+            ETag = etag;
             VirtualHub = virtualHub;
             Connections = connections;
             BgpSettings = bgpSettings;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> The VirtualHub to which the gateway belongs. </summary>
         internal WritableSubResource VirtualHub { get; set; }
         /// <summary> Gets or sets Id. </summary>

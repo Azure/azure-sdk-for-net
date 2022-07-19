@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Network
             Optional<IList<TrafficSelectorPolicy>> trafficSelectorPolicies = default;
             Optional<bool> enableRateLimiting = default;
             Optional<bool> enableInternetSecurity = default;
-            Optional<bool> useLocalAzureIpAddress = default;
+            Optional<bool> useLocalAzureIPAddress = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<IList<VpnSiteLinkConnectionData>> vpnLinkConnections = default;
             Optional<RoutingConfiguration> routingConfiguration = default;
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            useLocalAzureIpAddress = property0.Value.GetBoolean();
+                            useLocalAzureIPAddress = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new VpnConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), remoteVpnSite, Optional.ToNullable(routingWeight), Optional.ToNullable(dpdTimeoutSeconds), Optional.ToNullable(connectionStatus), Optional.ToNullable(vpnConnectionProtocolType), Optional.ToNullable(ingressBytesTransferred), Optional.ToNullable(egressBytesTransferred), Optional.ToNullable(connectionBandwidth), sharedKey.Value, Optional.ToNullable(enableBgp), Optional.ToNullable(usePolicyBasedTrafficSelectors), Optional.ToList(ipsecPolicies), Optional.ToList(trafficSelectorPolicies), Optional.ToNullable(enableRateLimiting), Optional.ToNullable(enableInternetSecurity), Optional.ToNullable(useLocalAzureIpAddress), Optional.ToNullable(provisioningState), Optional.ToList(vpnLinkConnections), routingConfiguration.Value);
+            return new VpnConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), remoteVpnSite, Optional.ToNullable(routingWeight), Optional.ToNullable(dpdTimeoutSeconds), Optional.ToNullable(connectionStatus), Optional.ToNullable(vpnConnectionProtocolType), Optional.ToNullable(ingressBytesTransferred), Optional.ToNullable(egressBytesTransferred), Optional.ToNullable(connectionBandwidth), sharedKey.Value, Optional.ToNullable(enableBgp), Optional.ToNullable(usePolicyBasedTrafficSelectors), Optional.ToList(ipsecPolicies), Optional.ToList(trafficSelectorPolicies), Optional.ToNullable(enableRateLimiting), Optional.ToNullable(enableInternetSecurity), Optional.ToNullable(useLocalAzureIPAddress), Optional.ToNullable(provisioningState), Optional.ToList(vpnLinkConnections), routingConfiguration.Value);
         }
     }
 }

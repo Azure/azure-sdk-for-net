@@ -5,13 +5,12 @@ using System;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.DocumentAnalysis.Tests;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 {
     public partial class DocumentAnalysisSamples : SamplesBase<DocumentAnalysisTestEnvironment>
     {
-        [Test]
+        [RecordedTest]
         public async Task CopyModelAsync()
         {
             #region Snippet:FormRecognizerSampleCreateCopySourceClient
@@ -33,9 +32,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 #else
             Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 #endif
-            BuildModelOperation operation = await sourceClient.StartBuildModelAsync(trainingFileUri, DocumentBuildMode.Template);
-            Response<DocumentModel> operationResponse = await operation.WaitForCompletionAsync();
-            DocumentModel model = operationResponse.Value;
+            BuildModelOperation operation = await sourceClient.BuildModelAsync(WaitUntil.Completed, trainingFileUri, DocumentBuildMode.Template);
+            DocumentModel model = operation.Value;
 
             #region Snippet:FormRecognizerSampleCreateCopyTargetClient
 #if SNIPPET
@@ -59,8 +57,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 #else
             string modelId = model.ModelId;
 #endif
-            CopyModelOperation newModelOperation = await sourceClient.StartCopyModelToAsync(modelId, targetAuth);
-            await newModelOperation.WaitForCompletionAsync();
+            CopyModelOperation newModelOperation = await sourceClient.CopyModelToAsync(WaitUntil.Completed, modelId, targetAuth);
             DocumentModel newModel = newModelOperation.Value;
 
             Console.WriteLine($"Original model ID => {modelId}");

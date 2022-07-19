@@ -35,14 +35,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="provisioningState"> The provisioning state of the firewall policy rule collection group resource. </param>
         internal FirewallPolicyRuleCollectionGroupData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, int? priority, IList<FirewallPolicyRuleCollectionInfo> ruleCollections, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            Etag = etag;
+            ETag = etag;
             Priority = priority;
             RuleCollections = ruleCollections;
             ProvisioningState = provisioningState;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> Priority of the Firewall Policy Rule Collection Group resource. </summary>
         public int? Priority { get; set; }
         /// <summary>

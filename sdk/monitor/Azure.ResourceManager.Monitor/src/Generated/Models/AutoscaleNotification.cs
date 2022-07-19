@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of AutoscaleNotification. </summary>
         public AutoscaleNotification()
         {
-            Operation = "Scale";
+            Operation = MonitorOperationType.Scale;
             Webhooks = new ChangeTrackingList<WebhookNotification>();
         }
 
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="operation"> the operation associated with the notification and its value must be &quot;scale&quot;. </param>
         /// <param name="email"> the email notification. </param>
         /// <param name="webhooks"> the collection of webhook notifications. </param>
-        internal AutoscaleNotification(string operation, EmailNotification email, IList<WebhookNotification> webhooks)
+        internal AutoscaleNotification(MonitorOperationType operation, EmailNotification email, IList<WebhookNotification> webhooks)
         {
             Operation = operation;
             Email = email;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> the operation associated with the notification and its value must be &quot;scale&quot;. </summary>
-        public string Operation { get; set; }
+        public MonitorOperationType Operation { get; set; }
         /// <summary> the email notification. </summary>
         public EmailNotification Email { get; set; }
         /// <summary> the collection of webhook notifications. </summary>

@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EmailAccountAdmins))
+            if (Optional.IsDefined(SendToEmailAccountAdmins))
             {
                 writer.WritePropertyName("emailAccountAdmins");
-                writer.WriteBooleanValue(EmailAccountAdmins.Value);
+                writer.WriteBooleanValue(SendToEmailAccountAdmins.Value);
             }
             if (Optional.IsDefined(StorageEndpoint))
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<SecurityAlertPolicyState> state = default;
             Optional<IList<string>> disabledAlerts = default;
             Optional<IList<string>> emailAddresses = default;
@@ -103,6 +103,11 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -199,7 +204,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new ManagedDatabaseSecurityAlertPolicyData(id, name, type, systemData, Optional.ToNullable(state), Optional.ToList(disabledAlerts), Optional.ToList(emailAddresses), Optional.ToNullable(emailAccountAdmins), storageEndpoint.Value, storageAccountAccessKey.Value, Optional.ToNullable(retentionDays), Optional.ToNullable(creationTime));
+            return new ManagedDatabaseSecurityAlertPolicyData(id, name, type, systemData.Value, Optional.ToNullable(state), Optional.ToList(disabledAlerts), Optional.ToList(emailAddresses), Optional.ToNullable(emailAccountAdmins), storageEndpoint.Value, storageAccountAccessKey.Value, Optional.ToNullable(retentionDays), Optional.ToNullable(creationTime));
         }
     }
 }

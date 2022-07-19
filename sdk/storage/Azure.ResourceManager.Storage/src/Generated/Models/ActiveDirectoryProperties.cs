@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="domainGuid"> Specifies the domain GUID. </param>
         /// <param name="domainSid"> Specifies the security identifier (SID). </param>
         /// <param name="azureStorageSid"> Specifies the security identifier (SID) for Azure Storage. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="domainName"/>, <paramref name="netBiosDomainName"/>, <paramref name="forestName"/>, <paramref name="domainGuid"/>, <paramref name="domainSid"/> or <paramref name="azureStorageSid"/> is null. </exception>
-        public ActiveDirectoryProperties(string domainName, string netBiosDomainName, string forestName, string domainGuid, string domainSid, string azureStorageSid)
+        /// <exception cref="ArgumentNullException"> <paramref name="domainName"/>, <paramref name="netBiosDomainName"/>, <paramref name="forestName"/>, <paramref name="domainSid"/> or <paramref name="azureStorageSid"/> is null. </exception>
+        public ActiveDirectoryProperties(string domainName, string netBiosDomainName, string forestName, Guid domainGuid, string domainSid, string azureStorageSid)
         {
             if (domainName == null)
             {
@@ -33,10 +33,6 @@ namespace Azure.ResourceManager.Storage.Models
             if (forestName == null)
             {
                 throw new ArgumentNullException(nameof(forestName));
-            }
-            if (domainGuid == null)
-            {
-                throw new ArgumentNullException(nameof(domainGuid));
             }
             if (domainSid == null)
             {
@@ -64,7 +60,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="azureStorageSid"> Specifies the security identifier (SID) for Azure Storage. </param>
         /// <param name="samAccountName"> Specifies the Active Directory SAMAccountName for Azure Storage. </param>
         /// <param name="accountType"> Specifies the Active Directory account type for Azure Storage. </param>
-        internal ActiveDirectoryProperties(string domainName, string netBiosDomainName, string forestName, string domainGuid, string domainSid, string azureStorageSid, string samAccountName, ActiveDirectoryPropertiesAccountType? accountType)
+        internal ActiveDirectoryProperties(string domainName, string netBiosDomainName, string forestName, Guid domainGuid, string domainSid, string azureStorageSid, string samAccountName, ActiveDirectoryAccountType? accountType)
         {
             DomainName = domainName;
             NetBiosDomainName = netBiosDomainName;
@@ -83,7 +79,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Specifies the Active Directory forest to get. </summary>
         public string ForestName { get; set; }
         /// <summary> Specifies the domain GUID. </summary>
-        public string DomainGuid { get; set; }
+        public Guid DomainGuid { get; set; }
         /// <summary> Specifies the security identifier (SID). </summary>
         public string DomainSid { get; set; }
         /// <summary> Specifies the security identifier (SID) for Azure Storage. </summary>
@@ -91,6 +87,6 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Specifies the Active Directory SAMAccountName for Azure Storage. </summary>
         public string SamAccountName { get; set; }
         /// <summary> Specifies the Active Directory account type for Azure Storage. </summary>
-        public ActiveDirectoryPropertiesAccountType? AccountType { get; set; }
+        public ActiveDirectoryAccountType? AccountType { get; set; }
     }
 }

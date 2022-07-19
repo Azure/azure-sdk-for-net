@@ -18,13 +18,14 @@ namespace Azure.Communication.CallingServer
     /// </summary>
     public class CallingServerClient
     {
+        internal readonly string _resourceEndpoint;
         internal readonly ClientDiagnostics _clientDiagnostics;
         internal readonly HttpPipeline _pipeline;
-        internal readonly string _resourceEndpoint;
-        internal readonly ContentDownloader _contentDownloader;
 
-        internal CallConnectionsRestClient CallConnectionRestClient { get; }
-        internal ServerCallsRestClient ServerCallRestClient { get; }
+        internal CallConnectionsRestClient CallConnectionsRestClient { get; }
+        internal ServerCallingRestClient ServerCallingRestClient { get; }
+        internal ContentRestClient ContentRestClient { get; }
+        internal ServerCallsRestClient ServerCallsRestClient { get; }
 
         #region public constructors
         /// <summary> Initializes a new instance of <see cref="CallingServerClient"/>.</summary>
@@ -47,27 +48,27 @@ namespace Azure.Communication.CallingServer
         /// <summary> Initializes a new instance of <see cref="CallingServerClient"/>.</summary>
         /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
         /// <param name="credential">The TokenCredential used to authenticate requests, such as DefaultAzureCredential.</param>
-        public CallingServerClient(Uri endpoint, TokenCredential credential)
+        /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
+        public CallingServerClient(Uri endpoint, TokenCredential credential, CallingServerClientOptions options = default)
             : this(
                 Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
                 Argument.CheckNotNull(credential, nameof(credential)),
-                new CallingServerClientOptions())
+                options ?? new CallingServerClientOptions())
         { }
 
-        /// <summary> Initializes a new instance of <see cref="CallingServerClient"/>.</summary>
-        /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
-        /// <param name="credential">The TokenCredential used to authenticate requests, such as DefaultAzureCredential.</param>
+        /// <summary> Initializes a new instance of <see cref="CallingServerClient"/> with custom PMA endpoint.</summary>
+        /// <param name="pmaEndpoint">Endpoint for PMA</param>
+        /// <param name="connectionString">Connection string acquired from the Azure Communication Services resource.</param>
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
-        public CallingServerClient(Uri endpoint, TokenCredential credential, CallingServerClientOptions options)
-            : this(
-                Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
-                Argument.CheckNotNull(credential, nameof(credential)),
-                Argument.CheckNotNull(options, nameof(options)))
+        public CallingServerClient(Uri pmaEndpoint, string connectionString, CallingServerClientOptions options = default)
+        : this(
+        pmaEndpoint,
+        options ?? new CallingServerClientOptions(),
+        ConnectionString.Parse(connectionString))
         { }
         #endregion
 
         #region private constructors
-
         private CallingServerClient(ConnectionString connectionString, CallingServerClientOptions options)
             : this(connectionString.GetRequired("endpoint"), options.BuildHttpPipeline(connectionString), options)
         { }
@@ -81,11 +82,18 @@ namespace Azure.Communication.CallingServer
             _pipeline = httpPipeline;
             _resourceEndpoint = endpoint;
             _clientDiagnostics = new ClientDiagnostics(options);
-            _contentDownloader = new(this);
-            CallConnectionRestClient = new CallConnectionsRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
-            ServerCallRestClient = new ServerCallsRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
+            ServerCallingRestClient = new ServerCallingRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
+            CallConnectionsRestClient = new CallConnectionsRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
+            ContentRestClient = new ContentRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
+            ServerCallsRestClient = new ServerCallsRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
         }
 
+        private CallingServerClient(Uri endpoint, CallingServerClientOptions options, ConnectionString connectionString)
+        : this(
+        endpoint: endpoint.AbsoluteUri,
+        httpPipeline: options.CustomBuildHttpPipeline(connectionString),
+        options: options)
+        { }
         #endregion
 
         /// <summary>Initializes a new instance of <see cref="CallingServerClient"/> for mocking.</summary>
@@ -94,43 +102,199 @@ namespace Azure.Communication.CallingServer
             _pipeline = null;
             _resourceEndpoint = null;
             _clientDiagnostics = null;
-            _contentDownloader = new(this);
-            CallConnectionRestClient = null;
-            ServerCallRestClient = null;
+            CallConnectionsRestClient = null;
+            ServerCallingRestClient = null;
+            ContentRestClient = null;
+        }
+
+        /// Answer an incoming call.
+        /// <param name="incomingCallContext"> The incoming call context </param>
+        /// <param name="callbackUri"> The callback Uri to receive status notifications. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="incomingCallContext"/> is null.</exception>
+        public virtual async Task<Response<AnswerCallResult>> AnswerCallAsync(string incomingCallContext, Uri callbackUri, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(AnswerCall)}");
+            scope.Start();
+            try
+            {
+                AnswerCallRequestInternal request = new AnswerCallRequestInternal(incomingCallContext);
+                request.CallbackUri = callbackUri?.AbsoluteUri;
+
+                var answerResponse = await ServerCallingRestClient.AnswerCallAsync(request, cancellationToken: cancellationToken).ConfigureAwait(false);
+
+                return Response.FromValue(new AnswerCallResult(GetCallConnection(answerResponse.Value.CallConnectionId), new CallConnectionProperties(answerResponse.Value)),
+                    answerResponse.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// Answer an incoming call.
+        /// <param name="incomingCallContext"> The incoming call context </param>
+        /// <param name="callbackUri"> The callback Uri to receive status notifications. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="incomingCallContext"/> is null.</exception>
+        public virtual Response<AnswerCallResult> AnswerCall(string incomingCallContext, Uri callbackUri, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(AnswerCall)}");
+            scope.Start();
+            try
+            {
+                AnswerCallRequestInternal request = new AnswerCallRequestInternal(incomingCallContext);
+                request.CallbackUri = callbackUri?.AbsoluteUri;
+
+                var answerResponse = ServerCallingRestClient.AnswerCall(request,
+                    cancellationToken: cancellationToken);
+
+                return Response.FromValue(new AnswerCallResult(GetCallConnection(answerResponse.Value.CallConnectionId), new CallConnectionProperties(answerResponse.Value)),
+                    answerResponse.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// Redirect an incoming call to the target identities.
+        /// <param name="incomingCallContext"> The incoming call context </param>
+        /// <param name="target"> The target identities. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="incomingCallContext"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="target"/> is null.</exception>
+        public virtual async Task<Response> RedirectCallAsync(string incomingCallContext, CommunicationIdentifier target, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(RedirectCall)}");
+            scope.Start();
+            try
+            {
+                RedirectCallRequestInternal request = new RedirectCallRequestInternal(incomingCallContext, CommunicationIdentifierSerializer.Serialize(target));
+
+                return await ServerCallingRestClient.RedirectCallAsync(
+                    request,
+                    cancellationToken: cancellationToken
+                    ).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// Redirect an incoming call to the target identities.
+        /// <param name="incomingCallContext"> The incoming call context </param>
+        /// <param name="target"> The target identities. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="incomingCallContext"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="target"/> is null.</exception>
+        public virtual Response RedirectCall(string incomingCallContext, CommunicationIdentifier target, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(RedirectCall)}");
+            scope.Start();
+            try
+            {
+                RedirectCallRequestInternal request = new RedirectCallRequestInternal(incomingCallContext, CommunicationIdentifierSerializer.Serialize(target));
+
+                return ServerCallingRestClient.RedirectCall(
+                    request,
+                    cancellationToken: cancellationToken
+                    );
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// Reject an incoming call.
+        /// <param name="incomingCallContext"> The incoming call context </param>
+        /// <param name="callRejectReason"> The reason for rejecting call. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="incomingCallContext"/> is null.</exception>
+        public virtual async Task<Response> RejectCallAsync(string incomingCallContext, CallRejectReason callRejectReason, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(RejectCall)}");
+            scope.Start();
+            try
+            {
+                RejectCallRequestInternal request = new RejectCallRequestInternal(incomingCallContext);
+                request.CallRejectReason = callRejectReason.ToString();
+
+                return await ServerCallingRestClient.RejectCallAsync(request,
+                    cancellationToken: cancellationToken
+                    ).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// Reject an incoming call.
+        /// <param name="incomingCallContext"> The incoming call context </param>
+        /// <param name="callRejectReason"> The reason for rejecting call. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="incomingCallContext"/> is null.</exception>
+        public virtual Response RejectCall(string incomingCallContext, CallRejectReason callRejectReason, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(RejectCall)}");
+            scope.Start();
+            try
+            {
+                RejectCallRequestInternal request = new RejectCallRequestInternal(incomingCallContext);
+                request.CallRejectReason = callRejectReason.ToString();
+
+                return ServerCallingRestClient.RejectCall(request,
+                    cancellationToken: cancellationToken
+                    );
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// Create an outgoing call from source to target identities.
-        /// <param name="source"> The source identity </param>
+        /// <param name="source"> The source identity. </param>
         /// <param name="targets"> The target identities. </param>
-        /// <param name="options"> The call options. </param>
+        /// <param name="callbackUri"> The callback Uri to receive status notifications. </param>
+        /// <param name="subject"> Optional subject of the call. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="source"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="targets"/> is null.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
-        public virtual async Task<Response<CallConnection>> CreateCallConnectionAsync(CommunicationIdentifier source, IEnumerable<CommunicationIdentifier> targets, CreateCallOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CreateCallResult>> CreateCallAsync(CallSource source, IEnumerable<CommunicationIdentifier> targets, Uri callbackUri, string subject = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(CreateCallConnection)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(CreateCall)}");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(source, nameof(source));
-                Argument.AssertNotNullOrEmpty(targets, nameof(targets));
-                Argument.AssertNotNull(options, nameof(options));
+                CallSourceDto sourceDto = new CallSourceDto(CommunicationIdentifierSerializer.Serialize(source.Identifier));
+                 sourceDto.CallerId = source.CallerId == null ? null : new PhoneNumberIdentifierModel(source.CallerId.PhoneNumber);
 
-                var createCallResponse = await CallConnectionRestClient.CreateCallAsync(
-                    source: CommunicationIdentifierSerializer.Serialize(source),
-                    targets: targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)),
-                    callbackUri: options.CallbackUri?.AbsoluteUri,
-                    requestedMediaTypes: options.RequestedMediaTypes,
-                    requestedCallEvents: options.RequestedCallEvents,
-                    alternateCallerId: options.AlternateCallerId == null ? null : new PhoneNumberIdentifierModel(options.AlternateCallerId.PhoneNumber),
-                    subject: options.Subject,
+                CreateCallRequestInternal request = new CreateCallRequestInternal(targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)), sourceDto, callbackUri?.AbsoluteUri);
+                request.Subject = subject;
+
+                var createCallResponse = await ServerCallingRestClient.CreateCallAsync(
+                    body: request,
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
 
-                return Response.FromValue(
-                    new CallConnection(createCallResponse.Value.CallConnectionId, CallConnectionRestClient, _clientDiagnostics),
+                return Response.FromValue(new CreateCallResult(GetCallConnection(createCallResponse.Value.CallConnectionId), new CallConnectionProperties(createCallResponse.Value)),
                     createCallResponse.GetRawResponse());
             }
             catch (Exception ex)
@@ -141,116 +305,33 @@ namespace Azure.Communication.CallingServer
         }
 
         /// Create an outgoing call from source to target identities.
-        /// <param name="source"> The source identity </param>
+        /// <param name="source"> The source identity. </param>
         /// <param name="targets"> The target identities. </param>
-        /// <param name="options"> The call options. </param>
+        /// <param name="callbackUri"> The callback Uri to receive status notifications. </param>
+        /// <param name="subject"> Optional subject of the call. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="source"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="targets"/> is null.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
-        public virtual Response<CallConnection> CreateCallConnection(CommunicationIdentifier source, IEnumerable<CommunicationIdentifier> targets, CreateCallOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<CreateCallResult> CreateCall(CallSource source, IEnumerable<CommunicationIdentifier> targets, Uri callbackUri, string subject = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(CreateCallConnection)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(CreateCall)}");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(source, nameof(source));
-                Argument.AssertNotNullOrEmpty(targets, nameof(targets));
-                Argument.AssertNotNull(options, nameof(options));
+                CallSourceDto sourceDto = new CallSourceDto(CommunicationIdentifierSerializer.Serialize(source.Identifier));
+                sourceDto.CallerId = source.CallerId == null ? null : new PhoneNumberIdentifierModel(source.CallerId.PhoneNumber);
 
-                var createCallResponse = CallConnectionRestClient.CreateCall(
-                    source: CommunicationIdentifierSerializer.Serialize(source),
-                    targets: targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)),
-                    callbackUri: options.CallbackUri?.AbsoluteUri,
-                    requestedMediaTypes: options.RequestedMediaTypes,
-                    requestedCallEvents: options.RequestedCallEvents,
-                    alternateCallerId: options.AlternateCallerId == null ? null : new PhoneNumberIdentifierModel(options.AlternateCallerId.PhoneNumber),
-                    subject: options.Subject,
+                CreateCallRequestInternal request = new CreateCallRequestInternal(targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)), sourceDto, callbackUri?.AbsoluteUri);
+                request.Subject = subject;
+
+                var createCallResponse = ServerCallingRestClient.CreateCall(
+                    body: request,
                     cancellationToken: cancellationToken
                     );
 
-                return Response.FromValue(
-                    new CallConnection(createCallResponse.Value.CallConnectionId, CallConnectionRestClient, _clientDiagnostics),
+                return Response.FromValue(new CreateCallResult(GetCallConnection(createCallResponse.Value.CallConnectionId), new CallConnectionProperties(createCallResponse.Value)),
                     createCallResponse.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// Join the call using server call id.
-        /// <param name="serverCallId"> The server call id. </param>
-        /// <param name="source"> The source identity. </param>
-        /// <param name="callOptions"> The call Options. </param>
-        /// <param name="cancellationToken"> The cancellation token. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="source"/> is null.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="serverCallId"/> is null.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="callOptions"/> is null.</exception>
-        public virtual async Task<Response<CallConnection>> JoinCallAsync(string serverCallId, CommunicationIdentifier source, JoinCallOptions callOptions, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(JoinCall)}");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(source, nameof(source));
-                Argument.AssertNotNull(callOptions, nameof(callOptions));
-
-                var joinCallResponse = await ServerCallRestClient.JoinCallAsync(
-                    serverCallId: serverCallId,
-                    source: CommunicationIdentifierSerializer.Serialize(source),
-                    callbackUri: callOptions.CallbackUri?.AbsoluteUri,
-                    requestedMediaTypes: callOptions.RequestedMediaTypes,
-                    requestedCallEvents: callOptions.RequestedCallEvents,
-                    subject: null,
-                    cancellationToken: cancellationToken
-                    ).ConfigureAwait(false);
-
-                return Response.FromValue(
-                    new CallConnection(joinCallResponse.Value.CallConnectionId, CallConnectionRestClient, _clientDiagnostics),
-                    joinCallResponse.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// Join the call using server call id.
-        /// <param name="serverCallId"> The server call id. </param>
-        /// <param name="source"> The source identity. </param>
-        /// <param name="callOptions"> The call Options. </param>
-        /// <param name="cancellationToken"> The cancellation token. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="source"/> is null.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="serverCallId"/> is null.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="callOptions"/> is null.</exception>
-        public virtual Response<CallConnection> JoinCall(string serverCallId, CommunicationIdentifier source, JoinCallOptions callOptions, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(JoinCall)}");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(source, nameof(source));
-                Argument.AssertNotNull(callOptions, nameof(callOptions));
-
-                var joinCallResponse = ServerCallRestClient.JoinCall(
-                    serverCallId: serverCallId,
-                    source: CommunicationIdentifierSerializer.Serialize(source),
-                    callbackUri: callOptions.CallbackUri?.AbsoluteUri,
-                    requestedMediaTypes: callOptions.RequestedMediaTypes,
-                    requestedCallEvents: callOptions.RequestedCallEvents,
-                    subject: null,
-                    cancellationToken: cancellationToken
-                    );
-
-                return Response.FromValue(
-                    new CallConnection(joinCallResponse.Value.CallConnectionId, CallConnectionRestClient, _clientDiagnostics),
-                    joinCallResponse.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -260,16 +341,14 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Initializes a new instance of CallConnection. <see cref="CallConnection"/>.</summary>
-        /// <param name="callConnectionId"> The thread id for the ChatThreadClient instance. </param>
+        /// <param name="callConnectionId"> The call connection id for the GetCallConnection instance. </param>
         public virtual CallConnection GetCallConnection(string callConnectionId)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(CallingServerClient)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(GetCallConnection)}");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(callConnectionId, nameof(callConnectionId));
-
-                return new CallConnection(callConnectionId, CallConnectionRestClient, _clientDiagnostics);
+                return new CallConnection(callConnectionId, CallConnectionsRestClient, ContentRestClient,_clientDiagnostics);
             }
             catch (Exception ex)
             {
@@ -278,223 +357,20 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        /// <summary>
-        /// Initializes a server call.
-        /// </summary>
-        /// <param name="serverCallId">The server call id. </param>
-        /// <returns></returns>
-        public virtual ServerCall InitializeServerCall(string serverCallId)
+        /// <summary> Initializes a new instance of GetCallRecording. <see cref="CallRecording"/>.</summary>
+        public virtual CallRecording GetCallRecording()
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(InitializeServerCall)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(GetCallRecording)}");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(serverCallId, nameof(serverCallId));
-
-                return new ServerCall(serverCallId, ServerCallRestClient, _clientDiagnostics);
+                return new CallRecording(_resourceEndpoint, ServerCallsRestClient, ContentRestClient, _clientDiagnostics, _pipeline);
             }
             catch (Exception ex)
             {
                 scope.Failed(ex);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// The <see cref="DownloadStreamingAsync(Uri, HttpRange, CancellationToken)"/>
-        /// operation downloads the recording's content.
-        ///
-        /// </summary>
-        /// <param name="sourceEndpoint">
-        /// Recording's content's url location.
-        /// </param>
-        /// <param name="range">
-        /// If provided, only download the bytes of the content in the specified range.
-        /// If not provided, download the entire content.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be canceled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{Stream}"/> containing the
-        /// downloaded content.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public virtual async Task<Response<Stream>> DownloadStreamingAsync(
-            Uri sourceEndpoint,
-            HttpRange range = default,
-            CancellationToken cancellationToken = default) =>
-            await _contentDownloader.DownloadStreamingInternal(
-                sourceEndpoint,
-                range,
-                async: true,
-                cancellationToken)
-            .ConfigureAwait(false);
-
-        /// <summary>
-        /// The <see cref="DownloadStreaming(Uri, HttpRange, CancellationToken)"/>
-        /// operation downloads the recording's content.
-        ///
-        /// </summary>
-        /// <param name="sourceEndpoint">
-        /// Recording's content's url location.
-        /// </param>
-        /// <param name="range">
-        /// If provided, only download the bytes of the content in the specified range.
-        /// If not provided, download the entire content.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be canceled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{Stream}"/> containing the
-        /// downloaded content.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public virtual Response<Stream> DownloadStreaming(
-            Uri sourceEndpoint,
-            HttpRange range = default,
-            CancellationToken cancellationToken = default) =>
-            _contentDownloader.DownloadStreamingInternal(
-                sourceEndpoint,
-                range,
-                async: false,
-                cancellationToken)
-            .EnsureCompleted();
-
-        /// <summary>
-        /// The <see cref="DownloadTo(Uri, Stream, ContentTransferOptions, CancellationToken)"/>
-        /// operation downloads the specified content using parallel requests,
-        /// and writes the content to <paramref name="destinationStream"/>.
-        /// </summary>
-        /// <param name="sourceEndpoint">
-        /// A <see cref="Uri"/> with the Recording's content's url location.
-        /// </param>
-        /// <param name="destinationStream">
-        /// A <see cref="Stream"/> to write the downloaded content to.
-        /// </param>
-        /// <param name="transferOptions">
-        /// Optional <see cref="ContentTransferOptions"/> to configure
-        /// parallel transfer behavior.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be canceled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response"/> describing the operation.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public virtual Response DownloadTo(Uri sourceEndpoint, Stream destinationStream,
-            ContentTransferOptions transferOptions = default, CancellationToken cancellationToken = default) =>
-            _contentDownloader.StagedDownloadAsync(sourceEndpoint, destinationStream, transferOptions, async: false, cancellationToken: cancellationToken).EnsureCompleted();
-
-        /// <summary>
-        /// The <see cref="DownloadToAsync(Uri, Stream, ContentTransferOptions, CancellationToken)"/>
-        /// operation downloads the specified content using parallel requests,
-        /// and writes the content to <paramref name="destinationStream"/>.
-        /// </summary>
-        /// <param name="sourceEndpoint">
-        /// A <see cref="Uri"/> with the Recording's content's url location.
-        /// </param>
-        /// <param name="destinationStream">
-        /// A <see cref="Stream"/> to write the downloaded content to.
-        /// </param>
-        /// <param name="transferOptions">
-        /// Optional <see cref="ContentTransferOptions"/> to configure
-        /// parallel transfer behavior.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be canceled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response"/> describing the operation.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public virtual async Task<Response> DownloadToAsync(Uri sourceEndpoint, Stream destinationStream, ContentTransferOptions transferOptions = default, CancellationToken cancellationToken = default) =>
-            await _contentDownloader.StagedDownloadAsync(sourceEndpoint, destinationStream, transferOptions, async: true, cancellationToken: cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// The <see cref="DownloadTo(Uri, string, ContentTransferOptions, CancellationToken)"/>
-        /// operation downloads the specified content using parallel requests,
-        /// and writes the content to <paramref name="destinationPath"/>.
-        /// </summary>
-        /// <param name="sourceEndpoint">
-        /// A <see cref="Uri"/> with the Recording's content's url location.
-        /// </param>
-        /// <param name="destinationPath">
-        /// A file path to write the downloaded content to.
-        /// </param>
-        /// <param name="transferOptions">
-        /// Optional <see cref="ContentTransferOptions"/> to configure
-        /// parallel transfer behavior.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be canceled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response"/> describing the operation.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public virtual Response DownloadTo(Uri sourceEndpoint, string destinationPath,
-            ContentTransferOptions transferOptions = default, CancellationToken cancellationToken = default)
-        {
-            using Stream destination = File.Create(destinationPath);
-            return _contentDownloader.StagedDownloadAsync(sourceEndpoint, destination, transferOptions,
-                async: false, cancellationToken: cancellationToken).EnsureCompleted();
-        }
-
-        /// <summary>
-        /// The <see cref="DownloadToAsync(Uri, string, ContentTransferOptions, CancellationToken)"/>
-        /// operation downloads the specified content using parallel requests,
-        /// and writes the content to <paramref name="destinationPath"/>.
-        /// </summary>
-        /// <param name="sourceEndpoint">
-        /// A <see cref="Uri"/> with the Recording's content's url location.
-        /// </param>
-        /// <param name="destinationPath">
-        /// A file path to write the downloaded content to.
-        /// </param>
-        /// <param name="transferOptions">
-        /// Optional <see cref="ContentTransferOptions"/> to configure
-        /// parallel transfer behavior.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be canceled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response"/> describing the operation.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public virtual async Task<Response> DownloadToAsync(Uri sourceEndpoint, string destinationPath,
-            ContentTransferOptions transferOptions = default, CancellationToken cancellationToken = default)
-        {
-            using Stream destination = File.Create(destinationPath);
-            return await _contentDownloader.StagedDownloadAsync(sourceEndpoint, destination, transferOptions,
-                async: true, cancellationToken: cancellationToken).ConfigureAwait(false);
         }
     }
 }
