@@ -2956,14 +2956,14 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_ListHybridConnections
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ServerfarmHybridConnectionNamespaceRelayResource>> GetHybridConnectionsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServicePlanHybridConnectionNamespaceRelayResource>> GetHybridConnectionsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.GetHybridConnections");
             scope.Start();
             try
             {
                 var response = await _webSiteWebAppsRestClient.ListHybridConnectionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ServerfarmHybridConnectionNamespaceRelayResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppServicePlanHybridConnectionNamespaceRelayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -2978,14 +2978,14 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_ListHybridConnections
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ServerfarmHybridConnectionNamespaceRelayResource> GetHybridConnections(CancellationToken cancellationToken = default)
+        public virtual Response<AppServicePlanHybridConnectionNamespaceRelayResource> GetHybridConnections(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.GetHybridConnections");
             scope.Start();
             try
             {
                 var response = _webSiteWebAppsRestClient.ListHybridConnections(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new ServerfarmHybridConnectionNamespaceRelayResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppServicePlanHybridConnectionNamespaceRelayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

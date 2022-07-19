@@ -2678,14 +2678,14 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_ListHybridConnectionsSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ServerfarmHybridConnectionNamespaceRelayResource>> GetHybridConnectionsSlotAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServicePlanHybridConnectionNamespaceRelayResource>> GetHybridConnectionsSlotAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlotResource.GetHybridConnectionsSlot");
             scope.Start();
             try
             {
                 var response = await _siteSlotWebAppsRestClient.ListHybridConnectionsSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ServerfarmHybridConnectionNamespaceRelayResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppServicePlanHybridConnectionNamespaceRelayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -2700,14 +2700,14 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_ListHybridConnectionsSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ServerfarmHybridConnectionNamespaceRelayResource> GetHybridConnectionsSlot(CancellationToken cancellationToken = default)
+        public virtual Response<AppServicePlanHybridConnectionNamespaceRelayResource> GetHybridConnectionsSlot(CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlotResource.GetHybridConnectionsSlot");
             scope.Start();
             try
             {
                 var response = _siteSlotWebAppsRestClient.ListHybridConnectionsSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new ServerfarmHybridConnectionNamespaceRelayResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppServicePlanHybridConnectionNamespaceRelayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -18,46 +18,46 @@ using Azure.ResourceManager.AppService.Models;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A Class representing a ServerfarmHybridConnectionNamespaceRelay along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ServerfarmHybridConnectionNamespaceRelayResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetServerfarmHybridConnectionNamespaceRelayResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AppServicePlanResource" /> using the GetServerfarmHybridConnectionNamespaceRelay method.
+    /// A Class representing an AppServicePlanHybridConnectionNamespaceRelay along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppServicePlanHybridConnectionNamespaceRelayResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetAppServicePlanHybridConnectionNamespaceRelayResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppServicePlanResource" /> using the GetAppServicePlanHybridConnectionNamespaceRelay method.
     /// </summary>
-    public partial class ServerfarmHybridConnectionNamespaceRelayResource : ArmResource
+    public partial class AppServicePlanHybridConnectionNamespaceRelayResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ServerfarmHybridConnectionNamespaceRelayResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="AppServicePlanHybridConnectionNamespaceRelayResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string namespaceName, string relayName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _serverfarmHybridConnectionNamespaceRelayAppServicePlansClientDiagnostics;
-        private readonly AppServicePlansRestOperations _serverfarmHybridConnectionNamespaceRelayAppServicePlansRestClient;
+        private readonly ClientDiagnostics _appServicePlanHybridConnectionNamespaceRelayAppServicePlansClientDiagnostics;
+        private readonly AppServicePlansRestOperations _appServicePlanHybridConnectionNamespaceRelayAppServicePlansRestClient;
         private readonly HybridConnectionData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="ServerfarmHybridConnectionNamespaceRelayResource"/> class for mocking. </summary>
-        protected ServerfarmHybridConnectionNamespaceRelayResource()
+        /// <summary> Initializes a new instance of the <see cref="AppServicePlanHybridConnectionNamespaceRelayResource"/> class for mocking. </summary>
+        protected AppServicePlanHybridConnectionNamespaceRelayResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ServerfarmHybridConnectionNamespaceRelayResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "AppServicePlanHybridConnectionNamespaceRelayResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ServerfarmHybridConnectionNamespaceRelayResource(ArmClient client, HybridConnectionData data) : this(client, data.Id)
+        internal AppServicePlanHybridConnectionNamespaceRelayResource(ArmClient client, HybridConnectionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ServerfarmHybridConnectionNamespaceRelayResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppServicePlanHybridConnectionNamespaceRelayResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ServerfarmHybridConnectionNamespaceRelayResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal AppServicePlanHybridConnectionNamespaceRelayResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _serverfarmHybridConnectionNamespaceRelayAppServicePlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string serverfarmHybridConnectionNamespaceRelayAppServicePlansApiVersion);
-            _serverfarmHybridConnectionNamespaceRelayAppServicePlansRestClient = new AppServicePlansRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serverfarmHybridConnectionNamespaceRelayAppServicePlansApiVersion);
+            _appServicePlanHybridConnectionNamespaceRelayAppServicePlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string appServicePlanHybridConnectionNamespaceRelayAppServicePlansApiVersion);
+            _appServicePlanHybridConnectionNamespaceRelayAppServicePlansRestClient = new AppServicePlansRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, appServicePlanHybridConnectionNamespaceRelayAppServicePlansApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -93,16 +93,16 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: AppServicePlans_GetHybridConnection
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ServerfarmHybridConnectionNamespaceRelayResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServicePlanHybridConnectionNamespaceRelayResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _serverfarmHybridConnectionNamespaceRelayAppServicePlansClientDiagnostics.CreateScope("ServerfarmHybridConnectionNamespaceRelayResource.Get");
+            using var scope = _appServicePlanHybridConnectionNamespaceRelayAppServicePlansClientDiagnostics.CreateScope("AppServicePlanHybridConnectionNamespaceRelayResource.Get");
             scope.Start();
             try
             {
-                var response = await _serverfarmHybridConnectionNamespaceRelayAppServicePlansRestClient.GetHybridConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _appServicePlanHybridConnectionNamespaceRelayAppServicePlansRestClient.GetHybridConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServerfarmHybridConnectionNamespaceRelayResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppServicePlanHybridConnectionNamespaceRelayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,16 +117,16 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: AppServicePlans_GetHybridConnection
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ServerfarmHybridConnectionNamespaceRelayResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<AppServicePlanHybridConnectionNamespaceRelayResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _serverfarmHybridConnectionNamespaceRelayAppServicePlansClientDiagnostics.CreateScope("ServerfarmHybridConnectionNamespaceRelayResource.Get");
+            using var scope = _appServicePlanHybridConnectionNamespaceRelayAppServicePlansClientDiagnostics.CreateScope("AppServicePlanHybridConnectionNamespaceRelayResource.Get");
             scope.Start();
             try
             {
-                var response = _serverfarmHybridConnectionNamespaceRelayAppServicePlansRestClient.GetHybridConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _appServicePlanHybridConnectionNamespaceRelayAppServicePlansRestClient.GetHybridConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServerfarmHybridConnectionNamespaceRelayResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppServicePlanHybridConnectionNamespaceRelayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,11 +144,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _serverfarmHybridConnectionNamespaceRelayAppServicePlansClientDiagnostics.CreateScope("ServerfarmHybridConnectionNamespaceRelayResource.Delete");
+            using var scope = _appServicePlanHybridConnectionNamespaceRelayAppServicePlansClientDiagnostics.CreateScope("AppServicePlanHybridConnectionNamespaceRelayResource.Delete");
             scope.Start();
             try
             {
-                var response = await _serverfarmHybridConnectionNamespaceRelayAppServicePlansRestClient.DeleteHybridConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _appServicePlanHybridConnectionNamespaceRelayAppServicePlansRestClient.DeleteHybridConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new AppServiceArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -170,11 +170,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _serverfarmHybridConnectionNamespaceRelayAppServicePlansClientDiagnostics.CreateScope("ServerfarmHybridConnectionNamespaceRelayResource.Delete");
+            using var scope = _appServicePlanHybridConnectionNamespaceRelayAppServicePlansClientDiagnostics.CreateScope("AppServicePlanHybridConnectionNamespaceRelayResource.Delete");
             scope.Start();
             try
             {
-                var response = _serverfarmHybridConnectionNamespaceRelayAppServicePlansRestClient.DeleteHybridConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _appServicePlanHybridConnectionNamespaceRelayAppServicePlansRestClient.DeleteHybridConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new AppServiceArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -195,11 +195,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<HybridConnectionKey>> GetHybridConnectionKeysAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _serverfarmHybridConnectionNamespaceRelayAppServicePlansClientDiagnostics.CreateScope("ServerfarmHybridConnectionNamespaceRelayResource.GetHybridConnectionKeys");
+            using var scope = _appServicePlanHybridConnectionNamespaceRelayAppServicePlansClientDiagnostics.CreateScope("AppServicePlanHybridConnectionNamespaceRelayResource.GetHybridConnectionKeys");
             scope.Start();
             try
             {
-                var response = await _serverfarmHybridConnectionNamespaceRelayAppServicePlansRestClient.ListHybridConnectionKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _appServicePlanHybridConnectionNamespaceRelayAppServicePlansRestClient.ListHybridConnectionKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -217,11 +217,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<HybridConnectionKey> GetHybridConnectionKeys(CancellationToken cancellationToken = default)
         {
-            using var scope = _serverfarmHybridConnectionNamespaceRelayAppServicePlansClientDiagnostics.CreateScope("ServerfarmHybridConnectionNamespaceRelayResource.GetHybridConnectionKeys");
+            using var scope = _appServicePlanHybridConnectionNamespaceRelayAppServicePlansClientDiagnostics.CreateScope("AppServicePlanHybridConnectionNamespaceRelayResource.GetHybridConnectionKeys");
             scope.Start();
             try
             {
-                var response = _serverfarmHybridConnectionNamespaceRelayAppServicePlansRestClient.ListHybridConnectionKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _appServicePlanHybridConnectionNamespaceRelayAppServicePlansRestClient.ListHybridConnectionKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -242,11 +242,11 @@ namespace Azure.ResourceManager.AppService
         {
             async Task<Page<string>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _serverfarmHybridConnectionNamespaceRelayAppServicePlansClientDiagnostics.CreateScope("ServerfarmHybridConnectionNamespaceRelayResource.GetWebAppsByHybridConnection");
+                using var scope = _appServicePlanHybridConnectionNamespaceRelayAppServicePlansClientDiagnostics.CreateScope("AppServicePlanHybridConnectionNamespaceRelayResource.GetWebAppsByHybridConnection");
                 scope.Start();
                 try
                 {
-                    var response = await _serverfarmHybridConnectionNamespaceRelayAppServicePlansRestClient.ListWebAppsByHybridConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _appServicePlanHybridConnectionNamespaceRelayAppServicePlansRestClient.ListWebAppsByHybridConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -257,11 +257,11 @@ namespace Azure.ResourceManager.AppService
             }
             async Task<Page<string>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _serverfarmHybridConnectionNamespaceRelayAppServicePlansClientDiagnostics.CreateScope("ServerfarmHybridConnectionNamespaceRelayResource.GetWebAppsByHybridConnection");
+                using var scope = _appServicePlanHybridConnectionNamespaceRelayAppServicePlansClientDiagnostics.CreateScope("AppServicePlanHybridConnectionNamespaceRelayResource.GetWebAppsByHybridConnection");
                 scope.Start();
                 try
                 {
-                    var response = await _serverfarmHybridConnectionNamespaceRelayAppServicePlansRestClient.ListWebAppsByHybridConnectionNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _appServicePlanHybridConnectionNamespaceRelayAppServicePlansRestClient.ListWebAppsByHybridConnectionNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -284,11 +284,11 @@ namespace Azure.ResourceManager.AppService
         {
             Page<string> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _serverfarmHybridConnectionNamespaceRelayAppServicePlansClientDiagnostics.CreateScope("ServerfarmHybridConnectionNamespaceRelayResource.GetWebAppsByHybridConnection");
+                using var scope = _appServicePlanHybridConnectionNamespaceRelayAppServicePlansClientDiagnostics.CreateScope("AppServicePlanHybridConnectionNamespaceRelayResource.GetWebAppsByHybridConnection");
                 scope.Start();
                 try
                 {
-                    var response = _serverfarmHybridConnectionNamespaceRelayAppServicePlansRestClient.ListWebAppsByHybridConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _appServicePlanHybridConnectionNamespaceRelayAppServicePlansRestClient.ListWebAppsByHybridConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -299,11 +299,11 @@ namespace Azure.ResourceManager.AppService
             }
             Page<string> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _serverfarmHybridConnectionNamespaceRelayAppServicePlansClientDiagnostics.CreateScope("ServerfarmHybridConnectionNamespaceRelayResource.GetWebAppsByHybridConnection");
+                using var scope = _appServicePlanHybridConnectionNamespaceRelayAppServicePlansClientDiagnostics.CreateScope("AppServicePlanHybridConnectionNamespaceRelayResource.GetWebAppsByHybridConnection");
                 scope.Start();
                 try
                 {
-                    var response = _serverfarmHybridConnectionNamespaceRelayAppServicePlansRestClient.ListWebAppsByHybridConnectionNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _appServicePlanHybridConnectionNamespaceRelayAppServicePlansRestClient.ListWebAppsByHybridConnectionNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

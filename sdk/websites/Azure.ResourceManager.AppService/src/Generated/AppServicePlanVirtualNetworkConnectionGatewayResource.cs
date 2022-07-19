@@ -17,46 +17,46 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A Class representing a ServerfarmVirtualNetworkConnectionGateway along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ServerfarmVirtualNetworkConnectionGatewayResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetServerfarmVirtualNetworkConnectionGatewayResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ServerfarmVirtualNetworkConnectionResource" /> using the GetServerfarmVirtualNetworkConnectionGateway method.
+    /// A Class representing an AppServicePlanVirtualNetworkConnectionGateway along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppServicePlanVirtualNetworkConnectionGatewayResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetAppServicePlanVirtualNetworkConnectionGatewayResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppServicePlanVirtualNetworkConnectionResource" /> using the GetAppServicePlanVirtualNetworkConnectionGateway method.
     /// </summary>
-    public partial class ServerfarmVirtualNetworkConnectionGatewayResource : ArmResource
+    public partial class AppServicePlanVirtualNetworkConnectionGatewayResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ServerfarmVirtualNetworkConnectionGatewayResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="AppServicePlanVirtualNetworkConnectionGatewayResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string vnetName, string gatewayName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _serverfarmVirtualNetworkConnectionGatewayAppServicePlansClientDiagnostics;
-        private readonly AppServicePlansRestOperations _serverfarmVirtualNetworkConnectionGatewayAppServicePlansRestClient;
+        private readonly ClientDiagnostics _appServicePlanVirtualNetworkConnectionGatewayAppServicePlansClientDiagnostics;
+        private readonly AppServicePlansRestOperations _appServicePlanVirtualNetworkConnectionGatewayAppServicePlansRestClient;
         private readonly VnetGatewayData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="ServerfarmVirtualNetworkConnectionGatewayResource"/> class for mocking. </summary>
-        protected ServerfarmVirtualNetworkConnectionGatewayResource()
+        /// <summary> Initializes a new instance of the <see cref="AppServicePlanVirtualNetworkConnectionGatewayResource"/> class for mocking. </summary>
+        protected AppServicePlanVirtualNetworkConnectionGatewayResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ServerfarmVirtualNetworkConnectionGatewayResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "AppServicePlanVirtualNetworkConnectionGatewayResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ServerfarmVirtualNetworkConnectionGatewayResource(ArmClient client, VnetGatewayData data) : this(client, data.Id)
+        internal AppServicePlanVirtualNetworkConnectionGatewayResource(ArmClient client, VnetGatewayData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ServerfarmVirtualNetworkConnectionGatewayResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppServicePlanVirtualNetworkConnectionGatewayResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ServerfarmVirtualNetworkConnectionGatewayResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal AppServicePlanVirtualNetworkConnectionGatewayResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _serverfarmVirtualNetworkConnectionGatewayAppServicePlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string serverfarmVirtualNetworkConnectionGatewayAppServicePlansApiVersion);
-            _serverfarmVirtualNetworkConnectionGatewayAppServicePlansRestClient = new AppServicePlansRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serverfarmVirtualNetworkConnectionGatewayAppServicePlansApiVersion);
+            _appServicePlanVirtualNetworkConnectionGatewayAppServicePlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string appServicePlanVirtualNetworkConnectionGatewayAppServicePlansApiVersion);
+            _appServicePlanVirtualNetworkConnectionGatewayAppServicePlansRestClient = new AppServicePlansRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, appServicePlanVirtualNetworkConnectionGatewayAppServicePlansApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -92,16 +92,16 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: AppServicePlans_GetVnetGateway
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ServerfarmVirtualNetworkConnectionGatewayResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServicePlanVirtualNetworkConnectionGatewayResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _serverfarmVirtualNetworkConnectionGatewayAppServicePlansClientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnectionGatewayResource.Get");
+            using var scope = _appServicePlanVirtualNetworkConnectionGatewayAppServicePlansClientDiagnostics.CreateScope("AppServicePlanVirtualNetworkConnectionGatewayResource.Get");
             scope.Start();
             try
             {
-                var response = await _serverfarmVirtualNetworkConnectionGatewayAppServicePlansRestClient.GetVnetGatewayAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _appServicePlanVirtualNetworkConnectionGatewayAppServicePlansRestClient.GetVnetGatewayAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServerfarmVirtualNetworkConnectionGatewayResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppServicePlanVirtualNetworkConnectionGatewayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,16 +116,16 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: AppServicePlans_GetVnetGateway
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ServerfarmVirtualNetworkConnectionGatewayResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<AppServicePlanVirtualNetworkConnectionGatewayResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _serverfarmVirtualNetworkConnectionGatewayAppServicePlansClientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnectionGatewayResource.Get");
+            using var scope = _appServicePlanVirtualNetworkConnectionGatewayAppServicePlansClientDiagnostics.CreateScope("AppServicePlanVirtualNetworkConnectionGatewayResource.Get");
             scope.Start();
             try
             {
-                var response = _serverfarmVirtualNetworkConnectionGatewayAppServicePlansRestClient.GetVnetGateway(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _appServicePlanVirtualNetworkConnectionGatewayAppServicePlansRestClient.GetVnetGateway(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServerfarmVirtualNetworkConnectionGatewayResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppServicePlanVirtualNetworkConnectionGatewayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -143,16 +143,16 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> Definition of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ServerfarmVirtualNetworkConnectionGatewayResource>> UpdateAsync(WaitUntil waitUntil, VnetGatewayData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AppServicePlanVirtualNetworkConnectionGatewayResource>> UpdateAsync(WaitUntil waitUntil, VnetGatewayData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _serverfarmVirtualNetworkConnectionGatewayAppServicePlansClientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnectionGatewayResource.Update");
+            using var scope = _appServicePlanVirtualNetworkConnectionGatewayAppServicePlansClientDiagnostics.CreateScope("AppServicePlanVirtualNetworkConnectionGatewayResource.Update");
             scope.Start();
             try
             {
-                var response = await _serverfarmVirtualNetworkConnectionGatewayAppServicePlansRestClient.UpdateVnetGatewayAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<ServerfarmVirtualNetworkConnectionGatewayResource>(Response.FromValue(new ServerfarmVirtualNetworkConnectionGatewayResource(Client, response), response.GetRawResponse()));
+                var response = await _appServicePlanVirtualNetworkConnectionGatewayAppServicePlansRestClient.UpdateVnetGatewayAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new AppServiceArmOperation<AppServicePlanVirtualNetworkConnectionGatewayResource>(Response.FromValue(new AppServicePlanVirtualNetworkConnectionGatewayResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -173,16 +173,16 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> Definition of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ServerfarmVirtualNetworkConnectionGatewayResource> Update(WaitUntil waitUntil, VnetGatewayData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AppServicePlanVirtualNetworkConnectionGatewayResource> Update(WaitUntil waitUntil, VnetGatewayData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _serverfarmVirtualNetworkConnectionGatewayAppServicePlansClientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnectionGatewayResource.Update");
+            using var scope = _appServicePlanVirtualNetworkConnectionGatewayAppServicePlansClientDiagnostics.CreateScope("AppServicePlanVirtualNetworkConnectionGatewayResource.Update");
             scope.Start();
             try
             {
-                var response = _serverfarmVirtualNetworkConnectionGatewayAppServicePlansRestClient.UpdateVnetGateway(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new AppServiceArmOperation<ServerfarmVirtualNetworkConnectionGatewayResource>(Response.FromValue(new ServerfarmVirtualNetworkConnectionGatewayResource(Client, response), response.GetRawResponse()));
+                var response = _appServicePlanVirtualNetworkConnectionGatewayAppServicePlansRestClient.UpdateVnetGateway(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new AppServiceArmOperation<AppServicePlanVirtualNetworkConnectionGatewayResource>(Response.FromValue(new AppServicePlanVirtualNetworkConnectionGatewayResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

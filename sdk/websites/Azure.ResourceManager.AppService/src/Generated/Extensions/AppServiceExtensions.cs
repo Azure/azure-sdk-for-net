@@ -2032,20 +2032,20 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region ServerfarmHybridConnectionNamespaceRelayResource
+        #region AppServicePlanHybridConnectionNamespaceRelayResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServerfarmHybridConnectionNamespaceRelayResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServerfarmHybridConnectionNamespaceRelayResource.CreateResourceIdentifier" /> to create a <see cref="ServerfarmHybridConnectionNamespaceRelayResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AppServicePlanHybridConnectionNamespaceRelayResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppServicePlanHybridConnectionNamespaceRelayResource.CreateResourceIdentifier" /> to create an <see cref="AppServicePlanHybridConnectionNamespaceRelayResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerfarmHybridConnectionNamespaceRelayResource" /> object. </returns>
-        public static ServerfarmHybridConnectionNamespaceRelayResource GetServerfarmHybridConnectionNamespaceRelayResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AppServicePlanHybridConnectionNamespaceRelayResource" /> object. </returns>
+        public static AppServicePlanHybridConnectionNamespaceRelayResource GetAppServicePlanHybridConnectionNamespaceRelayResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerfarmHybridConnectionNamespaceRelayResource.ValidateResourceId(id);
-                return new ServerfarmHybridConnectionNamespaceRelayResource(client, id);
+                AppServicePlanHybridConnectionNamespaceRelayResource.ValidateResourceId(id);
+                return new AppServicePlanHybridConnectionNamespaceRelayResource(client, id);
             }
             );
         }
@@ -2108,20 +2108,20 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region ServerfarmVirtualNetworkConnectionResource
+        #region AppServicePlanVirtualNetworkConnectionResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServerfarmVirtualNetworkConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServerfarmVirtualNetworkConnectionResource.CreateResourceIdentifier" /> to create a <see cref="ServerfarmVirtualNetworkConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AppServicePlanVirtualNetworkConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppServicePlanVirtualNetworkConnectionResource.CreateResourceIdentifier" /> to create an <see cref="AppServicePlanVirtualNetworkConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerfarmVirtualNetworkConnectionResource" /> object. </returns>
-        public static ServerfarmVirtualNetworkConnectionResource GetServerfarmVirtualNetworkConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AppServicePlanVirtualNetworkConnectionResource" /> object. </returns>
+        public static AppServicePlanVirtualNetworkConnectionResource GetAppServicePlanVirtualNetworkConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerfarmVirtualNetworkConnectionResource.ValidateResourceId(id);
-                return new ServerfarmVirtualNetworkConnectionResource(client, id);
+                AppServicePlanVirtualNetworkConnectionResource.ValidateResourceId(id);
+                return new AppServicePlanVirtualNetworkConnectionResource(client, id);
             }
             );
         }
@@ -2165,20 +2165,20 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region ServerfarmVirtualNetworkConnectionGatewayResource
+        #region AppServicePlanVirtualNetworkConnectionGatewayResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServerfarmVirtualNetworkConnectionGatewayResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServerfarmVirtualNetworkConnectionGatewayResource.CreateResourceIdentifier" /> to create a <see cref="ServerfarmVirtualNetworkConnectionGatewayResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AppServicePlanVirtualNetworkConnectionGatewayResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppServicePlanVirtualNetworkConnectionGatewayResource.CreateResourceIdentifier" /> to create an <see cref="AppServicePlanVirtualNetworkConnectionGatewayResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerfarmVirtualNetworkConnectionGatewayResource" /> object. </returns>
-        public static ServerfarmVirtualNetworkConnectionGatewayResource GetServerfarmVirtualNetworkConnectionGatewayResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AppServicePlanVirtualNetworkConnectionGatewayResource" /> object. </returns>
+        public static AppServicePlanVirtualNetworkConnectionGatewayResource GetAppServicePlanVirtualNetworkConnectionGatewayResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerfarmVirtualNetworkConnectionGatewayResource.ValidateResourceId(id);
-                return new ServerfarmVirtualNetworkConnectionGatewayResource(client, id);
+                AppServicePlanVirtualNetworkConnectionGatewayResource.ValidateResourceId(id);
+                return new AppServicePlanVirtualNetworkConnectionGatewayResource(client, id);
             }
             );
         }
