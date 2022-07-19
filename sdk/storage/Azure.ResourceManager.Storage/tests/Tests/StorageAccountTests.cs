@@ -856,8 +856,8 @@ namespace Azure.ResourceManager.Storage.Tests
                 KeySource = StorageAccountKeySource.MicrosoftStorage,
                 Services = new StorageAccountEncryptionServices()
                 {
-                    Queue = new StorageEncryptionService { KeyType = StorageKeyType.Account },
-                    Table = new StorageEncryptionService { KeyType = StorageKeyType.Account },
+                    Queue = new StorageEncryptionService { KeyType = StorageEncryptionKeyType.Account },
+                    Table = new StorageEncryptionService { KeyType = StorageEncryptionKeyType.Account },
                 }
             };
             StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
@@ -867,21 +867,21 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.NotNull(account.Data.Encryption);
             Assert.NotNull(account.Data.Encryption.Services.Blob);
             Assert.IsTrue(account.Data.Encryption.Services.Blob.IsEnabled);
-            Assert.AreEqual(StorageKeyType.Account, account.Data.Encryption.Services.Blob.KeyType);
+            Assert.AreEqual(StorageEncryptionKeyType.Account, account.Data.Encryption.Services.Blob.KeyType);
             Assert.NotNull(account.Data.Encryption.Services.Blob.LastEnabledOn);
 
             Assert.NotNull(account.Data.Encryption.Services.File);
             Assert.IsTrue(account.Data.Encryption.Services.File.IsEnabled);
-            Assert.AreEqual(StorageKeyType.Account, account.Data.Encryption.Services.Blob.KeyType);
+            Assert.AreEqual(StorageEncryptionKeyType.Account, account.Data.Encryption.Services.Blob.KeyType);
             Assert.NotNull(account.Data.Encryption.Services.File.LastEnabledOn);
 
             Assert.NotNull(account.Data.Encryption.Services.Queue);
-            Assert.AreEqual(StorageKeyType.Account, account.Data.Encryption.Services.Queue.KeyType);
+            Assert.AreEqual(StorageEncryptionKeyType.Account, account.Data.Encryption.Services.Queue.KeyType);
             Assert.IsTrue(account.Data.Encryption.Services.Queue.IsEnabled);
             Assert.NotNull(account.Data.Encryption.Services.Queue.LastEnabledOn);
 
             Assert.NotNull(account.Data.Encryption.Services.Table);
-            Assert.AreEqual(StorageKeyType.Account, account.Data.Encryption.Services.Table.KeyType);
+            Assert.AreEqual(StorageEncryptionKeyType.Account, account.Data.Encryption.Services.Table.KeyType);
             Assert.IsTrue(account.Data.Encryption.Services.Table.IsEnabled);
             Assert.NotNull(account.Data.Encryption.Services.Table.LastEnabledOn);
         }

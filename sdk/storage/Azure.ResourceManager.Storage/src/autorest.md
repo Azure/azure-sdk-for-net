@@ -110,7 +110,7 @@ rename-mapping:
   EncryptionService.enabled: IsEnabled
   Endpoints: StorageAccountEndpoints
   KeySource: StorageAccountKeySource
-  KeyType: StorageKeyType
+  KeyType: StorageEncryptionKeyType
   KeyPolicy: StorageAccountKeyPolicy
   KeyPermission: StorageAccountKeyPermission
   KeyCreationTime: StorageAccountKeyCreationTime
