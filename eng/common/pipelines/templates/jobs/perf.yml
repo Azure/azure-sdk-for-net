@@ -107,9 +107,21 @@ jobs:
     displayName: Run perf tests
 
   - pwsh: |
+      get-content results.txt
+    workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation/results
+    displayName: Print results.txt
+    condition: always()
+
+  - pwsh: |
       get-content results.csv
     workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation/results
     displayName: Print results.csv
+    condition: always()
+
+  - pwsh: |
+      get-content results.md
+    workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation/results
+    displayName: Print results.md
     condition: always()
 
   - pwsh: |
