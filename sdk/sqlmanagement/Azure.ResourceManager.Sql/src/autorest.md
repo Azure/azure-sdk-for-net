@@ -219,7 +219,7 @@ rename-mapping:
   ServerExternalAdministrator.azureADOnlyAuthentication: IsAzureADOnlyAuthenticationEnabled
   SyncGroup.properties.enableConflictLogging: IsConflictLoggingEnabled
   PrincipalType: SqlServerPrincipalType
-  IsRetryable: ActionIsRetryable
+  IsRetryable: ActionRetryableState
   ExportDatabaseDefinition: DatabaseExportDefinition
   ImportNewDatabaseDefinition: DatabaseImportDefinition
   PartnerInfo: PartnerServerInfo

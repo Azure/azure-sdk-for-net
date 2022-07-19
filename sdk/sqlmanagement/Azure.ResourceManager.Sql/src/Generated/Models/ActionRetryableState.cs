@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Gets whether the error could be ignored and recommended action could be retried. Possible values are: Yes/No. </summary>
-    public enum ActionIsRetryable
+    public enum ActionRetryableState
     {
         /// <summary> Yes. </summary>
         Yes,
