@@ -259,7 +259,33 @@ namespace Azure.Messaging.ServiceBus
 
             return new ServiceBusSender(
                 entityPath: queueOrTopicName,
-                connection: Connection);
+                connection: Connection,
+                options: new ServiceBusSenderOptions());
+        }
+
+        /// <summary>
+        /// Creates a <see cref="ServiceBusSender"/> instance that can be used for sending messages to a specific
+        /// queue or topic.
+        /// </summary>
+        ///
+        /// <param name="queueOrTopicName">The queue or topic to create a <see cref="ServiceBusSender"/>
+        /// for.</param>
+        /// <param name="options">The set of <see cref="ServiceBusSenderOptions"/> to use when configuring
+        /// the <see cref="ServiceBusSender"/>.</param>
+        ///
+        /// <returns>A <see cref="ServiceBusSender"/> scoped to the specified queue or topic.</returns>
+        /// <exception cref="ArgumentException">
+        ///   The <see cref="ServiceBusClient"/> was constructed with a connection string containing the "EntityPath" token
+        ///   that has a different value than the <paramref name="queueOrTopicName"/> value specified here.
+        /// </exception>
+        public virtual ServiceBusSender CreateSender(string queueOrTopicName, ServiceBusSenderOptions options)
+        {
+            ValidateEntityName(queueOrTopicName);
+
+            return new ServiceBusSender(
+                entityPath: queueOrTopicName,
+                connection: Connection,
+                options: new ServiceBusSenderOptions());
         }
 
         /// <summary>
