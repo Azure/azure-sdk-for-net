@@ -6,26 +6,21 @@
 #nullable disable
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Template.Models;
 
 namespace Azure.Template
 {
     /// <summary> The ListPetToysResponse service client. </summary>
     public partial class ListPetToysResponseClient
     {
-        private static readonly string[] AuthorizationScopes = new string[] { "https://vault.azure.net/.default" };
-        private readonly TokenCredential _tokenCredential;
+        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
-        private readonly Uri _endpoint;
-
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline => _pipeline;
+        internal ListPetToysResponseRestClient RestClient { get; }
 
         /// <summary> Initializes a new instance of ListPetToysResponseClient for mocking. </summary>
         protected ListPetToysResponseClient()
@@ -34,65 +29,45 @@ namespace Azure.Template
 
         /// <summary> Initializes a new instance of ListPetToysResponseClient. </summary>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="credential"/> is null. </exception>
-        public ListPetToysResponseClient(TokenCredential credential) : this(credential, new Uri(""), new PetStoreServiceClientOptions())
+        /// <param name="endpoint"> server parameter. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        public ListPetToysResponseClient(TokenCredential credential, Uri endpoint = null, PetStoreServiceClientOptions options = null)
         {
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
+            endpoint ??= new Uri("");
+
+            options ??= new PetStoreServiceClientOptions();
+            _clientDiagnostics = new ClientDiagnostics(options);
+            string[] scopes = { "https://vault.azure.net/.default" };
+            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
+            RestClient = new ListPetToysResponseRestClient(_clientDiagnostics, _pipeline, endpoint);
         }
 
         /// <summary> Initializes a new instance of ListPetToysResponseClient. </summary>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="credential"/> or <paramref name="endpoint"/> is null. </exception>
-        public ListPetToysResponseClient(TokenCredential credential, Uri endpoint, PetStoreServiceClientOptions options)
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/> or <paramref name="pipeline"/> is null. </exception>
+        internal ListPetToysResponseClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null)
         {
-            Argument.AssertNotNull(credential, nameof(credential));
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            options ??= new PetStoreServiceClientOptions();
-
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
-            _endpoint = endpoint;
+            RestClient = new ListPetToysResponseRestClient(clientDiagnostics, pipeline, endpoint);
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
         /// <param name="petId"> The String to use. </param>
         /// <param name="nameFilter"> The String to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="petId"/> or <paramref name="nameFilter"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="petId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>ToyListResults</c>:
-        /// <code>{
-        ///   items: [
-        ///     {
-        ///       id: number, # Required.
-        ///       petId: number, # Required.
-        ///       name: string, # Required.
-        ///     }
-        ///   ], # Required.
-        ///   nextLink: string, # Optional.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> GetListPetToysResponsesAsync(string petId, string nameFilter, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ToyListResults>> ListAsync(string petId, string nameFilter, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(petId, nameof(petId));
-            Argument.AssertNotNull(nameFilter, nameof(nameFilter));
-
-            using var scope = ClientDiagnostics.CreateScope("ListPetToysResponseClient.GetListPetToysResponses");
+            using var scope = _clientDiagnostics.CreateScope("ListPetToysResponseClient.List");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetListPetToysResponsesRequest(petId, nameFilter, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await RestClient.ListAsync(petId, nameFilter, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -103,41 +78,14 @@ namespace Azure.Template
 
         /// <param name="petId"> The String to use. </param>
         /// <param name="nameFilter"> The String to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="petId"/> or <paramref name="nameFilter"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="petId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>ToyListResults</c>:
-        /// <code>{
-        ///   items: [
-        ///     {
-        ///       id: number, # Required.
-        ///       petId: number, # Required.
-        ///       name: string, # Required.
-        ///     }
-        ///   ], # Required.
-        ///   nextLink: string, # Optional.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response GetListPetToysResponses(string petId, string nameFilter, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ToyListResults> List(string petId, string nameFilter, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(petId, nameof(petId));
-            Argument.AssertNotNull(nameFilter, nameof(nameFilter));
-
-            using var scope = ClientDiagnostics.CreateScope("ListPetToysResponseClient.GetListPetToysResponses");
+            using var scope = _clientDiagnostics.CreateScope("ListPetToysResponseClient.List");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetListPetToysResponsesRequest(petId, nameFilter, context);
-                return _pipeline.ProcessMessage(message, context);
+                return RestClient.List(petId, nameFilter, cancellationToken);
             }
             catch (Exception e)
             {
@@ -145,24 +93,5 @@ namespace Azure.Template
                 throw;
             }
         }
-
-        internal HttpMessage CreateGetListPetToysResponsesRequest(string petId, string nameFilter, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/pets/", false);
-            uri.AppendPath(petId, true);
-            uri.AppendPath("/toys", false);
-            uri.AppendQuery("nameFilter", nameFilter, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        private static ResponseClassifier _responseClassifier200;
-        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
     }
 }

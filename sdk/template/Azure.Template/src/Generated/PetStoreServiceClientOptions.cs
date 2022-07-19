@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Template
 {
-    /// <summary> Client options for PetStoreService library clients. </summary>
+    /// <summary> Client options for PetStoreServiceClient. </summary>
     public partial class PetStoreServiceClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2021_03_25;
