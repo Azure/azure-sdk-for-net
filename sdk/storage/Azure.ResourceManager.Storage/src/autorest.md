@@ -32,6 +32,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
   '*Guid': 'uuid'
+  'ifMatch': 'etag'
 
 rename-rules:
   CPU: Cpu
