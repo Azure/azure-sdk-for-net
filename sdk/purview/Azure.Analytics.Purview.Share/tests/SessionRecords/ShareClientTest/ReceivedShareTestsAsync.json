@@ -17,7 +17,7 @@
       "RequestBody": {
         "shareKind": "InPlace",
         "properties": {
-          "invitationId": "f891d280-9016-4b0c-8a6d-549caad3be9f",
+          "invitationId": "d3a8440d-6ff1-4816-b1eb-41a31585439b",
           "sentShareLocation": "eastus",
           "collection": {
             "referenceName": "w95gh9ze",
@@ -39,7 +39,7 @@
         "properties": {
           "createdAt": "2022-07-14T22:04:28.5498602Z",
           "sharedAt": "2022-07-14T21:51:28.6336482Z",
-          "invitationId": "f891d280-9016-4b0c-8a6d-549caad3be9f",
+          "invitationId": "d3a8440d-6ff1-4816-b1eb-41a31585439b",
           "provisioningState": "Succeeded",
           "receivedShareStatus": "Active",
           "sentShareDescription": "",
