@@ -108,7 +108,7 @@
     <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="2.19.3" />
 
     <!-- TODO: Make sure this package is arch-board approved -->
-    <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="5.4.0" />
+    <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="6.5.0" />
 
     <!-- OpenTelemetry dependency approved for Azure.Monitor.OpenTelemetry.Exporter package only -->
     <PackageReference Update="OpenTelemetry" Version="1.2.0"  Condition="'$(MSBuildProjectName)' == 'Azure.Monitor.OpenTelemetry.Exporter'" />
