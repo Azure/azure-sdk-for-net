@@ -309,7 +309,6 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(ClientSideEncryptionVersion.V1_0, 14)] // a single unalligned cipher block
         [TestCase(ClientSideEncryptionVersion.V1_0, Constants.KB)] // multiple blocks
         [TestCase(ClientSideEncryptionVersion.V1_0, Constants.KB - 4)] // multiple unalligned blocks
-        [TestCase(ClientSideEncryptionVersion.V1_0, Constants.MB)] // larger test, increasing likelihood to trigger async extension usage bugs
         // TODO don't move to recorded tests without making the encryption region size configurable
         [TestCase(ClientSideEncryptionVersion.V2_0, V2TestingRegionDataLength)] // a single cipher block
         [TestCase(ClientSideEncryptionVersion.V2_0, V2TestingRegionDataLength - 10)] // a single unalligned cipher block
@@ -347,7 +346,6 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(ClientSideEncryptionVersion.V1_0, 16, 16)]
         [TestCase(ClientSideEncryptionVersion.V1_0, Constants.KB, 1000)] // unaligned write buffer
         [TestCase(ClientSideEncryptionVersion.V1_0, Constants.KB - 4, 1000)] // unalligned wite buffer and data
-        [TestCase(ClientSideEncryptionVersion.V1_0, Constants.MB, 256 * Constants.KB)] // larger test, increasing likelihood to trigger async extension usage bugs
         // TODO don't move to recorded tests without making the encryption region size configurable
         [TestCase(ClientSideEncryptionVersion.V2_0, V2TestingRegionDataLength, V2TestingRegionDataLength)]
         [TestCase(ClientSideEncryptionVersion.V2_0, V2TestingRegionDataLength - 10, 128)]
@@ -517,7 +515,7 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(ClientSideEncryptionVersion.V1_0, 14, null)] // a single unalligned cipher block
         [TestCase(ClientSideEncryptionVersion.V1_0, Constants.KB, null)] // multiple blocks
         [TestCase(ClientSideEncryptionVersion.V1_0, Constants.KB - 4, null)] // multiple unalligned blocks
-        [TestCase(ClientSideEncryptionVersion.V1_0, Constants.MB, 64 * Constants.KB)] // make sure we cache unwrapped key for large downloads
+        [TestCase(ClientSideEncryptionVersion.V1_0, Constants.KB, Constants.KB/4)] // make sure we cache unwrapped key for large downloads
         // TODO don't move to recorded tests without making the encryption region size configurable
         [TestCase(ClientSideEncryptionVersion.V2_0, V2TestingRegionDataLength, null)] // a single cipher block
         [TestCase(ClientSideEncryptionVersion.V2_0, V2TestingRegionDataLength - 10, null)] // a single unalligned cipher block
@@ -609,10 +607,10 @@ namespace Azure.Storage.Blobs.Test
 
 #pragma warning disable CS0618 // obsolete
         [RecordedTest]
-        [TestCase(ClientSideEncryptionVersion.V1_0, Constants.MB, 64 * Constants.KB)]
-        [TestCase(ClientSideEncryptionVersion.V1_0, Constants.MB, Constants.MB)]
-        [TestCase(ClientSideEncryptionVersion.V1_0, Constants.MB, 4 * Constants.MB)]
-        [TestCase(ClientSideEncryptionVersion.V2_0, Constants.MB, 128 * Constants.KB)]
+        [TestCase(ClientSideEncryptionVersion.V1_0, Constants.KB, 64)]
+        [TestCase(ClientSideEncryptionVersion.V1_0, Constants.KB, Constants.KB)]
+        [TestCase(ClientSideEncryptionVersion.V1_0, Constants.KB, 4 * Constants.KB)]
+        [TestCase(ClientSideEncryptionVersion.V2_0, Constants.KB, 64)]
         [TestCase(ClientSideEncryptionVersion.V2_0, 2 * V2TestingRegionDataLength, 500)]
         [TestCase(ClientSideEncryptionVersion.V2_0, 2 * V2TestingRegionDataLength + 10, 500)]
 #pragma warning restore CS0618 // obsolete
@@ -630,6 +628,7 @@ namespace Azure.Storage.Blobs.Test
                 }))
             {
                 var blob = InstrumentClient(disposable.Container.GetBlobClient(GetNewBlobName()));
+                blob.ClientSideEncryptionV2EncryptionRegionDataLength = V2TestingRegionDataLength;
 
                 // upload with encryption
                 await blob.UploadAsync(new MemoryStream(data), cancellationToken: s_cancellationToken);
@@ -784,6 +783,7 @@ namespace Azure.Storage.Blobs.Test
                 }))
             {
                 var blob = InstrumentClient(disposable.Container.GetBlobClient(GetNewBlobName()));
+                blob.ClientSideEncryptionV2EncryptionRegionDataLength = V2TestingRegionDataLength;
 
                 // upload with encryption
                 await blob.UploadAsync(new MemoryStream(data), cancellationToken: s_cancellationToken);
