@@ -1804,11 +1804,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkStatusContractByLocation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkStatusContractByLocation> GetNetworkStatusesByServiceAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<NetworkStatusContractByLocation> GetNetworkStatusByServiceAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<NetworkStatusContractByLocation>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _networkStatusClientDiagnostics.CreateScope("ApiManagementServiceResource.GetNetworkStatusesByService");
+                using var scope = _networkStatusClientDiagnostics.CreateScope("ApiManagementServiceResource.GetNetworkStatusByService");
                 scope.Start();
                 try
                 {
@@ -1831,11 +1831,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkStatusContractByLocation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkStatusContractByLocation> GetNetworkStatusesByService(CancellationToken cancellationToken = default)
+        public virtual Pageable<NetworkStatusContractByLocation> GetNetworkStatusByService(CancellationToken cancellationToken = default)
         {
             Page<NetworkStatusContractByLocation> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _networkStatusClientDiagnostics.CreateScope("ApiManagementServiceResource.GetNetworkStatusesByService");
+                using var scope = _networkStatusClientDiagnostics.CreateScope("ApiManagementServiceResource.GetNetworkStatusByService");
                 scope.Start();
                 try
                 {
