@@ -18,8 +18,11 @@ namespace Azure.Storage.Cryptography
     {
         private readonly IKeyEncryptionKey _keyEncryptionKey;
         private readonly string _keyWrapAlgorithm;
+        private readonly int _encryptionRegionDataSize;
 
-        public ClientSideEncryptorV2_0(ClientSideEncryptionOptions options)
+        public ClientSideEncryptorV2_0(
+            ClientSideEncryptionOptions options,
+            int encryptionRegionDataSize = EncryptionRegionDataSize)
         {
             Argument.AssertNotNull(options, nameof(options));
             Argument.AssertNotNull(options.KeyEncryptionKey, nameof(options.KeyEncryptionKey));
@@ -31,15 +34,17 @@ namespace Azure.Storage.Cryptography
 
             _keyEncryptionKey = options.KeyEncryptionKey;
             _keyWrapAlgorithm = options.KeyWrapAlgorithm;
+            _encryptionRegionDataSize = encryptionRegionDataSize;
         }
 
-        public long ExpectedOutputContentLength(long plaintextLength) => CalculateExpectedOutputContentLength(plaintextLength);
+        public long ExpectedOutputContentLength(long plaintextLength)
+            => CalculateExpectedOutputContentLength(plaintextLength, _encryptionRegionDataSize);
 
-        public static long CalculateExpectedOutputContentLength(long plaintextLength)
+        public static long CalculateExpectedOutputContentLength(long plaintextLength, int encryptionRegionDataSize)
         {
-            long numBlocks = plaintextLength / EncryptionRegionDataSize;
+            long numBlocks = plaintextLength / encryptionRegionDataSize;
             // partial block check
-            if (plaintextLength % EncryptionRegionDataSize != 0)
+            if (plaintextLength % encryptionRegionDataSize != 0)
             {
                 numBlocks += 1;
             }
@@ -70,7 +75,7 @@ namespace Azure.Storage.Cryptography
             Stream ciphertext = new AuthenticatedRegionCryptoStream(
                 plaintext,
                 gcm,
-                EncryptionRegionDataSize,
+                _encryptionRegionDataSize,
                 CryptoStreamMode.Read);
 
             return (ciphertext, encryptionData);
@@ -98,7 +103,7 @@ namespace Azure.Storage.Cryptography
             var transformStream = new AuthenticatedRegionCryptoStream(
                     ciphertext,
                     gcm,
-                    EncryptionRegionDataSize,
+                    _encryptionRegionDataSize,
                     CryptoStreamMode.Write);
 
             if (async)
@@ -151,7 +156,7 @@ namespace Azure.Storage.Cryptography
                 await openWriteInternal(encryptionData, async, cancellationToken).ConfigureAwait(false),
 #pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
                 gcm,
-                EncryptionRegionDataSize,
+                _encryptionRegionDataSize,
                 CryptoStreamMode.Write);
 
             return writeStream;

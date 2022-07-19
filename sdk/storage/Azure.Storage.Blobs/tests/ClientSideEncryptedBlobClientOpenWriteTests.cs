@@ -26,6 +26,8 @@ namespace Azure.Storage.Blobs.Tests
     {
         private readonly ClientSideEncryptionVersion _version;
 
+        private readonly int _v2EncryptedRegionDataLength = Constants.ClientSideEncryption.V2.EncryptionRegionDataSize;
+
         public ClientSideEncryptedBlobClientOpenWriteTests(
             bool async,
             BlobClientOptions.ServiceVersion serviceVersion,
@@ -58,7 +60,7 @@ namespace Azure.Storage.Blobs.Tests
 #pragma warning disable CS0618 // obsolete
             ClientSideEncryptionVersion.V1_0 => ClientSideEncryptorV1_0.CalculateExpectedOutputContentLength(dataLength),
 #pragma warning restore CS0618 // obsolete
-            ClientSideEncryptionVersion.V2_0 => ClientSideEncryptorV2_0.CalculateExpectedOutputContentLength(dataLength),
+            ClientSideEncryptionVersion.V2_0 => ClientSideEncryptorV2_0.CalculateExpectedOutputContentLength(dataLength, _v2EncryptedRegionDataLength),
             _ => dataLength
         };
 
