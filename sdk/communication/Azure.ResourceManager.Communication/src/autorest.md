@@ -69,5 +69,6 @@ rename-mapping:
   KeyType: CommunicationServiceKeyType
   DnsRecord.ttl: TimeToLiveInSeconds
   DnsRecord: VerificationDnsRecord
+  DomainsProvisioningState: DomainProvisioningState
 
 ```
