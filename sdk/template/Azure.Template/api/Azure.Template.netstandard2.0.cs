@@ -1,35 +1,35 @@
 namespace Azure.Template
 {
-    public partial class TemplateClient
+    public partial class ListPetToysResponseClient
     {
-        protected TemplateClient() { }
-        public TemplateClient(string vaultBaseUrl, Azure.Core.TokenCredential credential) { }
-        public TemplateClient(string vaultBaseUrl, Azure.Core.TokenCredential credential, Azure.Template.TemplateClientOptions options) { }
+        protected ListPetToysResponseClient() { }
+        public ListPetToysResponseClient(Azure.Core.TokenCredential credential) { }
+        public ListPetToysResponseClient(Azure.Core.TokenCredential credential, System.Uri endpoint, Azure.Template.PetStoreServiceClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response GetSecret(string secretName, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetSecretAsync(string secretName, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.Template.Models.SecretBundle> GetSecretValue(string secretName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Template.Models.SecretBundle>> GetSecretValueAsync(string secretName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response GetListPetToysResponses(string petId, string nameFilter, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetListPetToysResponsesAsync(string petId, string nameFilter, Azure.RequestContext context = null) { throw null; }
     }
-    public partial class TemplateClientOptions : Azure.Core.ClientOptions
+    public partial class PetsClient
     {
-        public TemplateClientOptions(Azure.Template.TemplateClientOptions.ServiceVersion version = Azure.Template.TemplateClientOptions.ServiceVersion.V7_0) { }
+        protected PetsClient() { }
+        public PetsClient(int petId, Azure.Core.TokenCredential credential) { }
+        public PetsClient(int petId, Azure.Core.TokenCredential credential, System.Uri endpoint, Azure.Template.PetStoreServiceClientOptions options) { }
+        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public virtual Azure.Response Create(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response Delete(Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response GetPets(string nextLink = null, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetPetsAsync(string nextLink = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response Read(Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> ReadAsync(Azure.RequestContext context = null) { throw null; }
+    }
+    public partial class PetStoreServiceClientOptions : Azure.Core.ClientOptions
+    {
+        public PetStoreServiceClientOptions(Azure.Template.PetStoreServiceClientOptions.ServiceVersion version = Azure.Template.PetStoreServiceClientOptions.ServiceVersion.V2021_03_25) { }
         public enum ServiceVersion
         {
-            V7_0 = 1,
+            V2021_03_25 = 1,
         }
-    }
-}
-namespace Azure.Template.Models
-{
-    public partial class SecretBundle
-    {
-        internal SecretBundle() { }
-        public string ContentType { get { throw null; } }
-        public string Id { get { throw null; } }
-        public string Kid { get { throw null; } }
-        public bool? Managed { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
-        public string Value { get { throw null; } }
     }
 }
