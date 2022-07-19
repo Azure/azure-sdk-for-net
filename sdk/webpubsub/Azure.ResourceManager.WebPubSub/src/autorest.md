@@ -50,6 +50,10 @@ rename-rules:
 
 override-operation-name:
   WebPubSub_CheckNameAvailability: CheckWebPubSubNameAvailability
+
+rename-mapping:
+  RegenerateKeyParameters: WebPubSubRegenerateKeyContent
+
 directive:
   - rename-model:
       from: PrivateLinkResource
@@ -102,6 +106,9 @@ directive:
   - rename-model:
       from: NetworkACL
       to:  PublicNetworkAcls
+  - rename-model:
+      from: EventHandler
+      to:  WebPubSubEventHandler
   - from: webpubsub.json
     where: $.definitions.ScaleType
     transform: $['x-ms-enum'].name = 'WebPubSubScaleType'
@@ -126,13 +133,19 @@ directive:
     transform: $["x-ms-client-name"] = 'isClientCertEnabled'
   - from: webpubsub.json
     where: $.definitions.WebPubSubProperties.properties.disableAadAuth
-    transform: $["x-ms-client-name"] = 'isDisableAadAuth'
+    transform: $["x-ms-client-name"] = 'isAadAuthDisabled'
   - from: webpubsub.json
     where: $.definitions.WebPubSubProperties.properties.disableLocalAuth
-    transform: $["x-ms-client-name"] = 'isDisableLocalAuth'
+    transform: $["x-ms-client-name"] = 'isLocalAuthDisabled'
 
   # Change ManagedIdentity to common identity type(ManagedServiceIdentity)
   - from: swagger-document
     where: $.definitions.ManagedIdentityType
     transform: $.enum.push("SystemAssigned, UserAssigned")
+    reason: Temporary workaround to match with common type.
+  - from: webpubsub.json
+    where: $.definitions.WebPubSub.properties.identity
+    transform: >
+      $.description = "The managed identity response. Current supported identity types: SystemAssigned, UserAssigned, None.";
+    reason: Temporary workaround to update description.
 ```

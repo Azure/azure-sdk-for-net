@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(KeyId))
             {
                 writer.WritePropertyName("keyId");
-                writer.WriteStringValue(KeyId);
+                writer.WriteStringValue(KeyId.AbsoluteUri);
             }
             if (Optional.IsDefined(Administrators))
             {
@@ -109,13 +109,13 @@ namespace Azure.ResourceManager.Sql
             Optional<string> version = default;
             Optional<string> state = default;
             Optional<string> fullyQualifiedDomainName = default;
-            Optional<IReadOnlyList<ServerPrivateEndpointConnection>> privateEndpointConnections = default;
+            Optional<IReadOnlyList<SqlServerPrivateEndpointConnection>> privateEndpointConnections = default;
             Optional<string> minimalTlsVersion = default;
             Optional<ServerNetworkAccessFlag> publicNetworkAccess = default;
             Optional<ServerWorkspaceFeature> workspaceFeature = default;
             Optional<ResourceIdentifier> primaryUserAssignedIdentityId = default;
             Optional<Guid> federatedClientId = default;
-            Optional<string> keyId = default;
+            Optional<Uri> keyId = default;
             Optional<ServerExternalAdministrator> administrators = default;
             Optional<ServerNetworkAccessFlag> restrictOutboundNetworkAccess = default;
             foreach (var property in element.EnumerateObject())
@@ -222,10 +222,10 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ServerPrivateEndpointConnection> array = new List<ServerPrivateEndpointConnection>();
+                            List<SqlServerPrivateEndpointConnection> array = new List<SqlServerPrivateEndpointConnection>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ServerPrivateEndpointConnection.DeserializeServerPrivateEndpointConnection(item));
+                                array.Add(SqlServerPrivateEndpointConnection.DeserializeSqlServerPrivateEndpointConnection(item));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -277,7 +277,12 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("keyId"))
                         {
-                            keyId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                keyId = null;
+                                continue;
+                            }
+                            keyId = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("administrators"))

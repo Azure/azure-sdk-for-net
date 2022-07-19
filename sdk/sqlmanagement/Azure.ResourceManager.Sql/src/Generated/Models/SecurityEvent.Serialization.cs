@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<string> subscription = default;
             Optional<string> server = default;
             Optional<string> database = default;
-            Optional<string> clientIP = default;
+            Optional<IPAddress> clientIP = default;
             Optional<string> applicationName = default;
             Optional<string> principalName = default;
             Optional<SecurityEventSqlInjectionAdditionalProperties> securityEventSqlInjectionAdditionalProperties = default;
@@ -111,7 +112,12 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("clientIp"))
                         {
-                            clientIP = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            clientIP = IPAddress.Parse(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("applicationName"))

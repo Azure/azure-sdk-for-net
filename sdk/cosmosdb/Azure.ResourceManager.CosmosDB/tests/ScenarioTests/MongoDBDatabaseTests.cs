@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task MongoDBDatabaseCreateAndUpdate()
         {
             var database = await CreateMongoDBDatabase(null);
-            Assert.AreEqual(_databaseName, database.Data.Resource.Id);
+            Assert.AreEqual(_databaseName, database.Data.Resource.DatabaseName);
             // Seems bug in swagger definition
             //Assert.AreEqual(TestThroughput1, database.Data.Options.Throughput);
 
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             // NOT WORKING API
             //ThroughputSettingsData throughtput = await database.GetMongoDBCollectionThroughputAsync();
             MongoDBDatabaseResource database2 = await MongoDBDatabaseCollection.GetAsync(_databaseName);
-            Assert.AreEqual(_databaseName, database2.Data.Resource.Id);
+            Assert.AreEqual(_databaseName, database2.Data.Resource.DatabaseName);
             //Assert.AreEqual(TestThroughput1, database2.Data.Options.Throughput);
 
             VerifyMongoDBDatabases(database, database2);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             };
 
             database = (await MongoDBDatabaseCollection.CreateOrUpdateAsync(WaitUntil.Completed, _databaseName, updateOptions)).Value;
-            Assert.AreEqual(_databaseName, database.Data.Resource.Id);
+            Assert.AreEqual(_databaseName, database.Data.Resource.DatabaseName);
             database2 = await MongoDBDatabaseCollection.GetAsync(_databaseName);
             VerifyMongoDBDatabases(database, database2);
         }
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             Assert.AreEqual(expectedValue.Id, actualValue.Id);
             Assert.AreEqual(expectedValue.Data.Name, actualValue.Data.Name);
-            Assert.AreEqual(expectedValue.Data.Resource.Id, actualValue.Data.Resource.Id);
+            Assert.AreEqual(expectedValue.Data.Resource.DatabaseName, actualValue.Data.Resource.DatabaseName);
             Assert.AreEqual(expectedValue.Data.Resource.Rid, actualValue.Data.Resource.Rid);
             Assert.AreEqual(expectedValue.Data.Resource.Timestamp, actualValue.Data.Resource.Timestamp);
             Assert.AreEqual(expectedValue.Data.Resource.ETag, actualValue.Data.Resource.ETag);

@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.PostgreSql.Models
 {
     /// <summary> The properties used to create a new server. </summary>
-    internal partial class ServerPropertiesForDefaultCreate : ServerPropertiesForCreate
+    public partial class ServerPropertiesForDefaultCreate : ServerPropertiesForCreate
     {
         /// <summary> Initializes a new instance of ServerPropertiesForDefaultCreate. </summary>
         /// <param name="administratorLogin"> The administrator&apos;s login name of a server. Can only be specified when the server is being created (and is required for creation). </param>
