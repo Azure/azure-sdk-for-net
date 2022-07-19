@@ -61,7 +61,7 @@ namespace Azure.Analytics.Share
             _apiVersion = options.Version;
         }
 
-        /// <summary> List received assets for a received share. </summary>
+        /// <summary> List source asset of a received share. </summary>
         /// <param name="receivedShareName"> The name of the received share. </param>
         /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -70,6 +70,8 @@ namespace Azure.Analytics.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <remarks>
+        /// List received assets for a received share
+        /// 
         /// Below is the JSON schema for one item in the pageable response.
         /// 
         /// Response Body:
@@ -108,7 +110,7 @@ namespace Azure.Analytics.Share
             }
         }
 
-        /// <summary> List received assets for a received share. </summary>
+        /// <summary> List source asset of a received share. </summary>
         /// <param name="receivedShareName"> The name of the received share. </param>
         /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -117,6 +119,8 @@ namespace Azure.Analytics.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <remarks>
+        /// List received assets for a received share
+        /// 
         /// Below is the JSON schema for one item in the pageable response.
         /// 
         /// Response Body:

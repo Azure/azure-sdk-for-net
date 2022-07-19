@@ -62,7 +62,7 @@ namespace Azure.Analytics.Share
             _apiVersion = options.Version;
         }
 
-        /// <summary> Get an asset mapping for a received share. </summary>
+        /// <summary> Get AssetMapping in a receivedShare. </summary>
         /// <param name="receivedShareName"> The name of the received share. </param>
         /// <param name="assetMappingName"> The name of the asset mapping. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -71,6 +71,8 @@ namespace Azure.Analytics.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
+        /// Get an asset mapping for a received share
+        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -136,7 +138,7 @@ namespace Azure.Analytics.Share
             }
         }
 
-        /// <summary> Get an asset mapping for a received share. </summary>
+        /// <summary> Get AssetMapping in a receivedShare. </summary>
         /// <param name="receivedShareName"> The name of the received share. </param>
         /// <param name="assetMappingName"> The name of the asset mapping. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -145,6 +147,8 @@ namespace Azure.Analytics.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
+        /// Get an asset mapping for a received share
+        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -210,7 +214,7 @@ namespace Azure.Analytics.Share
             }
         }
 
-        /// <summary> List asset mappings for a received share. </summary>
+        /// <summary> List AssetMappings in a received share. </summary>
         /// <param name="receivedShareName"> The name of the received share. </param>
         /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
@@ -221,6 +225,8 @@ namespace Azure.Analytics.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <remarks>
+        /// List asset mappings for a received share
+        /// 
         /// Below is the JSON schema for one item in the pageable response.
         /// 
         /// Response Body:
@@ -259,7 +265,7 @@ namespace Azure.Analytics.Share
             }
         }
 
-        /// <summary> List asset mappings for a received share. </summary>
+        /// <summary> List AssetMappings in a received share. </summary>
         /// <param name="receivedShareName"> The name of the received share. </param>
         /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
@@ -270,6 +276,8 @@ namespace Azure.Analytics.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <remarks>
+        /// List asset mappings for a received share
+        /// 
         /// Below is the JSON schema for one item in the pageable response.
         /// 
         /// Response Body:
@@ -308,7 +316,7 @@ namespace Azure.Analytics.Share
             }
         }
 
-        /// <summary> Create an asset mapping on a received share. </summary>
+        /// <summary> Maps a source asset in the sent share to a destination asset in the received share. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="receivedShareName"> The name of the received share. </param>
         /// <param name="assetMappingName"> The name of the asset mapping. </param>
@@ -319,6 +327,8 @@ namespace Azure.Analytics.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <remarks>
+        /// Create an asset mapping on a received share
+        /// 
         /// Below is the JSON schema for the request and response payloads.
         /// 
         /// Request Body:
@@ -428,7 +438,7 @@ namespace Azure.Analytics.Share
             }
         }
 
-        /// <summary> Create an asset mapping on a received share. </summary>
+        /// <summary> Maps a source asset in the sent share to a destination asset in the received share. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="receivedShareName"> The name of the received share. </param>
         /// <param name="assetMappingName"> The name of the asset mapping. </param>
@@ -439,6 +449,8 @@ namespace Azure.Analytics.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <remarks>
+        /// Create an asset mapping on a received share
+        /// 
         /// Below is the JSON schema for the request and response payloads.
         /// 
         /// Request Body:
@@ -548,7 +560,7 @@ namespace Azure.Analytics.Share
             }
         }
 
-        /// <summary> Delete an asset mapping for a received share. </summary>
+        /// <summary> Delete AssetMapping in a receivedShare. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="receivedShareName"> The name of the received share. </param>
         /// <param name="assetMappingName"> The name of the asset mapping. </param>
@@ -557,6 +569,7 @@ namespace Azure.Analytics.Share
         /// <exception cref="ArgumentException"> <paramref name="receivedShareName"/> or <paramref name="assetMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <remarks> Delete an asset mapping for a received share. </remarks>
         public virtual async Task<Operation> DeleteAsync(WaitUntil waitUntil, string receivedShareName, string assetMappingName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(receivedShareName, nameof(receivedShareName));
@@ -576,7 +589,7 @@ namespace Azure.Analytics.Share
             }
         }
 
-        /// <summary> Delete an asset mapping for a received share. </summary>
+        /// <summary> Delete AssetMapping in a receivedShare. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="receivedShareName"> The name of the received share. </param>
         /// <param name="assetMappingName"> The name of the asset mapping. </param>
@@ -585,6 +598,7 @@ namespace Azure.Analytics.Share
         /// <exception cref="ArgumentException"> <paramref name="receivedShareName"/> or <paramref name="assetMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <remarks> Delete an asset mapping for a received share. </remarks>
         public virtual Operation Delete(WaitUntil waitUntil, string receivedShareName, string assetMappingName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(receivedShareName, nameof(receivedShareName));

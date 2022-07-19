@@ -62,7 +62,7 @@ namespace Azure.Analytics.Share
             _apiVersion = options.Version;
         }
 
-        /// <summary> Get a received share. </summary>
+        /// <summary> Get a received share by name. </summary>
         /// <param name="receivedShareName"> The name of the received share. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="receivedShareName"/> is null. </exception>
@@ -70,6 +70,8 @@ namespace Azure.Analytics.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
+        /// Get a received share
+        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -124,7 +126,7 @@ namespace Azure.Analytics.Share
             }
         }
 
-        /// <summary> Get a received share. </summary>
+        /// <summary> Get a received share by name. </summary>
         /// <param name="receivedShareName"> The name of the received share. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="receivedShareName"/> is null. </exception>
@@ -132,6 +134,8 @@ namespace Azure.Analytics.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
+        /// Get a received share
+        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -186,7 +190,7 @@ namespace Azure.Analytics.Share
             }
         }
 
-        /// <summary> Create a received share. </summary>
+        /// <summary> Create a received share in the given account. </summary>
         /// <param name="receivedShareName"> The name of the received share. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -195,6 +199,8 @@ namespace Azure.Analytics.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
+        /// Create a received share
+        /// 
         /// Below is the JSON schema for the request and response payloads.
         /// 
         /// Request Body:
@@ -283,7 +289,7 @@ namespace Azure.Analytics.Share
             }
         }
 
-        /// <summary> Create a received share. </summary>
+        /// <summary> Create a received share in the given account. </summary>
         /// <param name="receivedShareName"> The name of the received share. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -292,6 +298,8 @@ namespace Azure.Analytics.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
+        /// Create a received share
+        /// 
         /// Below is the JSON schema for the request and response payloads.
         /// 
         /// Request Body:
@@ -380,7 +388,7 @@ namespace Azure.Analytics.Share
             }
         }
 
-        /// <summary> List received shares. </summary>
+        /// <summary> Get a list of received shares. </summary>
         /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
         /// <param name="orderby"> Sorts the results using OData syntax. </param>
@@ -388,6 +396,8 @@ namespace Azure.Analytics.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <remarks>
+        /// List received shares
+        /// 
         /// Below is the JSON schema for one item in the pageable response.
         /// 
         /// Response Body:
@@ -424,7 +434,7 @@ namespace Azure.Analytics.Share
             }
         }
 
-        /// <summary> List received shares. </summary>
+        /// <summary> Get a list of received shares. </summary>
         /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
         /// <param name="orderby"> Sorts the results using OData syntax. </param>
@@ -432,6 +442,8 @@ namespace Azure.Analytics.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <remarks>
+        /// List received shares
+        /// 
         /// Below is the JSON schema for one item in the pageable response.
         /// 
         /// Response Body:
@@ -468,7 +480,7 @@ namespace Azure.Analytics.Share
             }
         }
 
-        /// <summary> Delete a received share. </summary>
+        /// <summary> Deletes a received share. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="receivedShareName"> The name of the received share. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -476,6 +488,7 @@ namespace Azure.Analytics.Share
         /// <exception cref="ArgumentException"> <paramref name="receivedShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <remarks> Delete a received share. </remarks>
         public virtual async Task<Operation> DeleteAsync(WaitUntil waitUntil, string receivedShareName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(receivedShareName, nameof(receivedShareName));
@@ -494,7 +507,7 @@ namespace Azure.Analytics.Share
             }
         }
 
-        /// <summary> Delete a received share. </summary>
+        /// <summary> Deletes a received share. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="receivedShareName"> The name of the received share. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -502,6 +515,7 @@ namespace Azure.Analytics.Share
         /// <exception cref="ArgumentException"> <paramref name="receivedShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <remarks> Delete a received share. </remarks>
         public virtual Operation Delete(WaitUntil waitUntil, string receivedShareName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(receivedShareName, nameof(receivedShareName));

@@ -62,7 +62,7 @@ namespace Azure.Analytics.Share
             _apiVersion = options.Version;
         }
 
-        /// <summary> Get a received invitation. </summary>
+        /// <summary> Gets the received invitation identified by name. </summary>
         /// <param name="receivedInvitationName"> Name of the received invitation. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="receivedInvitationName"/> is null. </exception>
@@ -70,6 +70,8 @@ namespace Azure.Analytics.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
+        /// Get a received invitation
+        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -149,7 +151,7 @@ namespace Azure.Analytics.Share
             }
         }
 
-        /// <summary> Get a received invitation. </summary>
+        /// <summary> Gets the received invitation identified by name. </summary>
         /// <param name="receivedInvitationName"> Name of the received invitation. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="receivedInvitationName"/> is null. </exception>
@@ -157,6 +159,8 @@ namespace Azure.Analytics.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
+        /// Get a received invitation
+        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -236,7 +240,7 @@ namespace Azure.Analytics.Share
             }
         }
 
-        /// <summary> Reject a received invitation. </summary>
+        /// <summary> Rejects the received invitation identified by name. </summary>
         /// <param name="receivedInvitationName"> Name of the received invitation. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
@@ -246,6 +250,8 @@ namespace Azure.Analytics.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
+        /// Reject a received invitation
+        /// 
         /// Below is the JSON schema for the request and response payloads.
         /// 
         /// Request Body:
@@ -384,7 +390,7 @@ namespace Azure.Analytics.Share
             }
         }
 
-        /// <summary> Reject a received invitation. </summary>
+        /// <summary> Rejects the received invitation identified by name. </summary>
         /// <param name="receivedInvitationName"> Name of the received invitation. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
@@ -394,6 +400,8 @@ namespace Azure.Analytics.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
+        /// Reject a received invitation
+        /// 
         /// Below is the JSON schema for the request and response payloads.
         /// 
         /// Request Body:
@@ -532,7 +540,7 @@ namespace Azure.Analytics.Share
             }
         }
 
-        /// <summary> List received invitations. </summary>
+        /// <summary> Lists the received invitations. </summary>
         /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
         /// <param name="orderby"> Sorts the results using OData syntax. </param>
@@ -540,6 +548,8 @@ namespace Azure.Analytics.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <remarks>
+        /// List received invitations
+        /// 
         /// Below is the JSON schema for one item in the pageable response.
         /// 
         /// Response Body:
@@ -576,7 +586,7 @@ namespace Azure.Analytics.Share
             }
         }
 
-        /// <summary> List received invitations. </summary>
+        /// <summary> Lists the received invitations. </summary>
         /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
         /// <param name="orderby"> Sorts the results using OData syntax. </param>
@@ -584,6 +594,8 @@ namespace Azure.Analytics.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <remarks>
+        /// List received invitations
+        /// 
         /// Below is the JSON schema for one item in the pageable response.
         /// 
         /// Response Body:

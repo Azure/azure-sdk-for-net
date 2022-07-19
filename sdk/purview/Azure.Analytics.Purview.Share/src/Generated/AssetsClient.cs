@@ -62,7 +62,7 @@ namespace Azure.Analytics.Share
             _apiVersion = options.Version;
         }
 
-        /// <summary> Get an asset on a sent share. </summary>
+        /// <summary> Get asset in a sentShare. </summary>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="assetName"> The name of the asset. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -71,6 +71,8 @@ namespace Azure.Analytics.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
+        /// Get an asset on a sent share
+        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -142,7 +144,7 @@ namespace Azure.Analytics.Share
             }
         }
 
-        /// <summary> Get an asset on a sent share. </summary>
+        /// <summary> Get asset in a sentShare. </summary>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="assetName"> The name of the asset. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -151,6 +153,8 @@ namespace Azure.Analytics.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
+        /// Get an asset on a sent share
+        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -222,7 +226,7 @@ namespace Azure.Analytics.Share
             }
         }
 
-        /// <summary> List assets on a sent share. </summary>
+        /// <summary> List Assets in a share. </summary>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
@@ -233,6 +237,8 @@ namespace Azure.Analytics.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <remarks>
+        /// List assets on a sent share
+        /// 
         /// Below is the JSON schema for one item in the pageable response.
         /// 
         /// Response Body:
@@ -271,7 +277,7 @@ namespace Azure.Analytics.Share
             }
         }
 
-        /// <summary> List assets on a sent share. </summary>
+        /// <summary> List Assets in a share. </summary>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
@@ -282,6 +288,8 @@ namespace Azure.Analytics.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <remarks>
+        /// List assets on a sent share
+        /// 
         /// Below is the JSON schema for one item in the pageable response.
         /// 
         /// Response Body:
@@ -320,7 +328,7 @@ namespace Azure.Analytics.Share
             }
         }
 
-        /// <summary> Create an asset on a sent share. </summary>
+        /// <summary> Adds a new asset to an existing share. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="assetName"> The name of the asset. </param>
@@ -331,6 +339,8 @@ namespace Azure.Analytics.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <remarks>
+        /// Create an asset on a sent share
+        /// 
         /// Below is the JSON schema for the request and response payloads.
         /// 
         /// Request Body:
@@ -452,7 +462,7 @@ namespace Azure.Analytics.Share
             }
         }
 
-        /// <summary> Create an asset on a sent share. </summary>
+        /// <summary> Adds a new asset to an existing share. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="assetName"> The name of the asset. </param>
@@ -463,6 +473,8 @@ namespace Azure.Analytics.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <remarks>
+        /// Create an asset on a sent share
+        /// 
         /// Below is the JSON schema for the request and response payloads.
         /// 
         /// Request Body:
@@ -584,7 +596,7 @@ namespace Azure.Analytics.Share
             }
         }
 
-        /// <summary> Delete an asset on a sent share. </summary>
+        /// <summary> Delete asset in a sentShare. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="assetName"> The name of the asset. </param>
@@ -593,6 +605,7 @@ namespace Azure.Analytics.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <remarks> Delete an asset on a sent share. </remarks>
         public virtual async Task<Operation> DeleteAsync(WaitUntil waitUntil, string sentShareName, string assetName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
@@ -612,7 +625,7 @@ namespace Azure.Analytics.Share
             }
         }
 
-        /// <summary> Delete an asset on a sent share. </summary>
+        /// <summary> Delete asset in a sentShare. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="assetName"> The name of the asset. </param>
@@ -621,6 +634,7 @@ namespace Azure.Analytics.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <remarks> Delete an asset on a sent share. </remarks>
         public virtual Operation Delete(WaitUntil waitUntil, string sentShareName, string assetName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));

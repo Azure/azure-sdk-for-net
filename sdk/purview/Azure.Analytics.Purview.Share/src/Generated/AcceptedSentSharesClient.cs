@@ -62,7 +62,7 @@ namespace Azure.Analytics.Share
             _apiVersion = options.Version;
         }
 
-        /// <summary> Get an accepted sent share. </summary>
+        /// <summary> Get an accepted share with acceptedSentShareName to a particular sent share. </summary>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="acceptedSentShareName"> The name of the accepted sent share. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -71,6 +71,8 @@ namespace Azure.Analytics.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
+        /// Get an accepted sent share
+        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -118,7 +120,7 @@ namespace Azure.Analytics.Share
             }
         }
 
-        /// <summary> Get an accepted sent share. </summary>
+        /// <summary> Get an accepted share with acceptedSentShareName to a particular sent share. </summary>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="acceptedSentShareName"> The name of the accepted sent share. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -127,6 +129,8 @@ namespace Azure.Analytics.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
+        /// Get an accepted sent share
+        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -174,7 +178,7 @@ namespace Azure.Analytics.Share
             }
         }
 
-        /// <summary> Get list of accepted sent shares. </summary>
+        /// <summary> List of accepted shares for the current sent share. </summary>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -183,6 +187,8 @@ namespace Azure.Analytics.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <remarks>
+        /// Get list of accepted sent shares
+        /// 
         /// Below is the JSON schema for one item in the pageable response.
         /// 
         /// Response Body:
@@ -221,7 +227,7 @@ namespace Azure.Analytics.Share
             }
         }
 
-        /// <summary> Get list of accepted sent shares. </summary>
+        /// <summary> List of accepted shares for the current sent share. </summary>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -230,6 +236,8 @@ namespace Azure.Analytics.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <remarks>
+        /// Get list of accepted sent shares
+        /// 
         /// Below is the JSON schema for one item in the pageable response.
         /// 
         /// Response Body:
@@ -280,6 +288,8 @@ namespace Azure.Analytics.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <remarks>
+        /// Reinstate a revoked accepted sent share
+        /// 
         /// Below is the JSON schema for the request and response payloads.
         /// 
         /// Request Body:
@@ -365,6 +375,8 @@ namespace Azure.Analytics.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <remarks>
+        /// Reinstate a revoked accepted sent share
+        /// 
         /// Below is the JSON schema for the request and response payloads.
         /// 
         /// Request Body:
@@ -438,7 +450,7 @@ namespace Azure.Analytics.Share
             }
         }
 
-        /// <summary> Revoke an accepted sent share. </summary>
+        /// <summary> Revoke an accepted sent share&apos;s access. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="acceptedSentShareName"> The name of the accepted sent share. </param>
@@ -449,6 +461,8 @@ namespace Azure.Analytics.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <remarks>
+        /// Revoke an accepted sent share
+        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -496,7 +510,7 @@ namespace Azure.Analytics.Share
             }
         }
 
-        /// <summary> Revoke an accepted sent share. </summary>
+        /// <summary> Revoke an accepted sent share&apos;s access. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="acceptedSentShareName"> The name of the accepted sent share. </param>
@@ -507,6 +521,8 @@ namespace Azure.Analytics.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <remarks>
+        /// Revoke an accepted sent share
+        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -554,7 +570,7 @@ namespace Azure.Analytics.Share
             }
         }
 
-        /// <summary> Update the expiration date of an accepted sent share. </summary>
+        /// <summary> Update the expiration date of an active accepted sent share. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="acceptedSentShareName"> The name of the accepted sent share. </param>
@@ -566,6 +582,8 @@ namespace Azure.Analytics.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <remarks>
+        /// Update the expiration date of an accepted sent share
+        /// 
         /// Below is the JSON schema for the request and response payloads.
         /// 
         /// Request Body:
@@ -639,7 +657,7 @@ namespace Azure.Analytics.Share
             }
         }
 
-        /// <summary> Update the expiration date of an accepted sent share. </summary>
+        /// <summary> Update the expiration date of an active accepted sent share. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="acceptedSentShareName"> The name of the accepted sent share. </param>
@@ -651,6 +669,8 @@ namespace Azure.Analytics.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <remarks>
+        /// Update the expiration date of an accepted sent share
+        /// 
         /// Below is the JSON schema for the request and response payloads.
         /// 
         /// Request Body:

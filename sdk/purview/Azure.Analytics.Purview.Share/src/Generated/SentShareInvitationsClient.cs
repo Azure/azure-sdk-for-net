@@ -62,7 +62,7 @@ namespace Azure.Analytics.Share
             _apiVersion = options.Version;
         }
 
-        /// <summary> Get a sent share invitation. </summary>
+        /// <summary> Get Invitation for a given share. </summary>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="sentShareInvitationName"> Name of the sent invitation. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -71,6 +71,8 @@ namespace Azure.Analytics.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
+        /// Get a sent share invitation
+        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -143,7 +145,7 @@ namespace Azure.Analytics.Share
             }
         }
 
-        /// <summary> Get a sent share invitation. </summary>
+        /// <summary> Get Invitation for a given share. </summary>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="sentShareInvitationName"> Name of the sent invitation. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -152,6 +154,8 @@ namespace Azure.Analytics.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
+        /// Get a sent share invitation
+        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -224,7 +228,7 @@ namespace Azure.Analytics.Share
             }
         }
 
-        /// <summary> Create a sent share invitation. </summary>
+        /// <summary> Create/Update a sent share invitation in the given account. </summary>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="sentShareInvitationName"> Name of the sent invitation. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -234,6 +238,8 @@ namespace Azure.Analytics.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
+        /// Create a sent share invitation
+        /// 
         /// Below is the JSON schema for the request and response payloads.
         /// 
         /// Request Body:
@@ -357,7 +363,7 @@ namespace Azure.Analytics.Share
             }
         }
 
-        /// <summary> Create a sent share invitation. </summary>
+        /// <summary> Create/Update a sent share invitation in the given account. </summary>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="sentShareInvitationName"> Name of the sent invitation. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -367,6 +373,8 @@ namespace Azure.Analytics.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
+        /// Create a sent share invitation
+        /// 
         /// Below is the JSON schema for the request and response payloads.
         /// 
         /// Request Body:
@@ -490,7 +498,7 @@ namespace Azure.Analytics.Share
             }
         }
 
-        /// <summary> Delete a sent share invitation. </summary>
+        /// <summary> Delete Invitation in a share. </summary>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="sentShareInvitationName"> Name of the sent invitation. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -498,6 +506,7 @@ namespace Azure.Analytics.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="sentShareInvitationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <remarks> Delete a sent share invitation. </remarks>
         public virtual async Task<Response> DeleteAsync(string sentShareName, string sentShareInvitationName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
@@ -517,7 +526,7 @@ namespace Azure.Analytics.Share
             }
         }
 
-        /// <summary> Delete a sent share invitation. </summary>
+        /// <summary> Delete Invitation in a share. </summary>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="sentShareInvitationName"> Name of the sent invitation. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -525,6 +534,7 @@ namespace Azure.Analytics.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="sentShareInvitationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <remarks> Delete a sent share invitation. </remarks>
         public virtual Response Delete(string sentShareName, string sentShareInvitationName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
@@ -544,7 +554,7 @@ namespace Azure.Analytics.Share
             }
         }
 
-        /// <summary> List sent share invitations. </summary>
+        /// <summary> List all Invitations in a share. </summary>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
@@ -555,6 +565,8 @@ namespace Azure.Analytics.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <remarks>
+        /// List sent share invitations
+        /// 
         /// Below is the JSON schema for one item in the pageable response.
         /// 
         /// Response Body:
@@ -593,7 +605,7 @@ namespace Azure.Analytics.Share
             }
         }
 
-        /// <summary> List sent share invitations. </summary>
+        /// <summary> List all Invitations in a share. </summary>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
@@ -604,6 +616,8 @@ namespace Azure.Analytics.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <remarks>
+        /// List sent share invitations
+        /// 
         /// Below is the JSON schema for one item in the pageable response.
         /// 
         /// Response Body:
