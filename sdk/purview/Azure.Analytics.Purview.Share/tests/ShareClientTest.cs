@@ -263,7 +263,7 @@ namespace Azure.Analytics.Share.Tests
                 shareKind = "InPlace",
                 properties = new
                 {
-                    expirationDate = "7/14/2023 1:57:36 PM"
+                    expirationDate = new DateTime(2023, 7, 14, 13, 57, 36)
                 }
             };
 
@@ -280,7 +280,7 @@ namespace Azure.Analytics.Share.Tests
             JsonElement getResponseJson = JsonDocument.Parse(GetContentFromResponse(getResponse)).RootElement;
 
             //Assert date before == date after
-            Assert.AreEqual(data.properties.expirationDate.ToString(), getResponseJson.GetProperty("properties").GetProperty("expirationDate").GetDateTime().ToString());
+            Assert.AreEqual(data.properties.expirationDate, getResponseJson.GetProperty("properties").GetProperty("expirationDate").GetDateTime());
         }
 
         [RecordedTest]
