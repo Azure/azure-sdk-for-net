@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Storage.Tests
         private StorageAccountResource _storageAccount;
         private TableServiceResource _tableService;
         private TableCollection _tableCollection;
-        public TableTests(bool async) : base(async)
+        public TableTests(bool async) : base(async)//, RecordedTestMode.Record)
         {
         }
 
