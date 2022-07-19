@@ -20,10 +20,6 @@ mgmt-debug:
 modelerfour:
   flatten-payloads: false
   lenient-model-deduplication: true
-  naming:
-    override:
-      Status: OperationStatus
-      DetectorDefinitionResource: DetectorDefinition
 
 list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
@@ -130,9 +126,6 @@ rename-rules:
   Ipsec: IPsec|ipsec
   SSO: Sso
   URI: Uri
-#   Serverfarm: AppServicePlan
-#   serverFarm: AppServicePlan
-#   ServerFarm: AppServicePlan
   Etag: ETag|etag
 
 rename-mapping:
@@ -360,6 +353,7 @@ rename-mapping:
   StaticSiteUserInvitationResponseResource: StaticSiteUserInvitationResponseInfo
   StaticSiteZipDeploymentARMResource: StaticSiteZipDeploymentARM
   StorageMigrationResponse: StorageMigrationResponseInfo
+  Status: StatusInfo
 
 directive:
   - rename-model:
