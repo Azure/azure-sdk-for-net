@@ -81,8 +81,8 @@
     <PackageReference Update="Microsoft.CSharp" Version="4.7.0" />
 
     <!-- Azure SDK packages -->
+	   <PackageReference Update="Azure.Communication.Identity" Version="1.1.0" />
     <PackageReference Update="Azure.Communication.Common" Version="1.1.0" />
-	<PackageReference Update="Azure.Communication.Identity" Version="1.1.0" />
     <PackageReference Update="Azure.Core" Version="1.25.0" />
     <PackageReference Update="Azure.Core.Amqp" Version="1.2.0" />
     <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.21" />
