@@ -818,7 +818,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 {
                     Role = false,
                     InitialDeliveryCount = 0,
-                    Source = new Source { Address = Guid.NewGuid().ToString() },
+                    Source = new Source { Address = identifier },
                     Target = new Target { Address = destinationEndpoint.AbsolutePath },
                     OperationTimeout = _operationTimeout
                 };
