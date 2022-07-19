@@ -4377,7 +4377,7 @@ namespace Azure.ResourceManager.Sql
 }
 namespace Azure.ResourceManager.Sql.Models
 {
-    public enum ActionIsRetryable
+    public enum ActionRetryableState
     {
         Yes = 0,
         No = 1,
@@ -6242,7 +6242,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal RecommendedActionErrorInfo() { }
         public string ErrorCode { get { throw null; } }
-        public Azure.ResourceManager.Sql.Models.ActionIsRetryable? IsRetryable { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.ActionRetryableState? IsRetryable { get { throw null; } }
     }
     public partial class RecommendedActionImpactRecord
     {
