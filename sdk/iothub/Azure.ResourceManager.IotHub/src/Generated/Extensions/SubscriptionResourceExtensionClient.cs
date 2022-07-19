@@ -188,10 +188,10 @@ namespace Azure.ResourceManager.IotHub
         /// Operation Id: ResourceProviderCommon_GetSubscriptionQuota
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="UserSubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<UserSubscriptionQuota> GetSubscriptionQuotaResourceProviderCommonsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="IotHubUserSubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<IotHubUserSubscriptionQuota> GetSubscriptionQuotaResourceProviderCommonsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<UserSubscriptionQuota>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<IotHubUserSubscriptionQuota>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ResourceProviderCommonClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSubscriptionQuotaResourceProviderCommons");
                 scope.Start();
@@ -215,10 +215,10 @@ namespace Azure.ResourceManager.IotHub
         /// Operation Id: ResourceProviderCommon_GetSubscriptionQuota
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="UserSubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<UserSubscriptionQuota> GetSubscriptionQuotaResourceProviderCommons(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="IotHubUserSubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<IotHubUserSubscriptionQuota> GetSubscriptionQuotaResourceProviderCommons(CancellationToken cancellationToken = default)
         {
-            Page<UserSubscriptionQuota> FirstPageFunc(int? pageSizeHint)
+            Page<IotHubUserSubscriptionQuota> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ResourceProviderCommonClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSubscriptionQuotaResourceProviderCommons");
                 scope.Start();

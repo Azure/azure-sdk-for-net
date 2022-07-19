@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// Serialized Name: RouteProperties.isEnabled
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="endpointNames"/> is null. </exception>
-        public RouteProperties(string name, RoutingSource source, IEnumerable<string> endpointNames, bool isEnabled)
+        public RouteProperties(string name, IotHubRoutingSource source, IEnumerable<string> endpointNames, bool isEnabled)
         {
             if (name == null)
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// Used to specify whether a route is enabled.
         /// Serialized Name: RouteProperties.isEnabled
         /// </param>
-        internal RouteProperties(string name, RoutingSource source, string condition, IList<string> endpointNames, bool isEnabled)
+        internal RouteProperties(string name, IotHubRoutingSource source, string condition, IList<string> endpointNames, bool isEnabled)
         {
             Name = name;
             Source = source;
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// The source that the routing rule is to be applied to, such as DeviceMessages.
         /// Serialized Name: RouteProperties.source
         /// </summary>
-        public RoutingSource Source { get; set; }
+        public IotHubRoutingSource Source { get; set; }
         /// <summary>
         /// The condition that is evaluated to apply the routing rule. If no condition is provided, it evaluates to true by default. For grammar, see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-query-language
         /// Serialized Name: RouteProperties.condition

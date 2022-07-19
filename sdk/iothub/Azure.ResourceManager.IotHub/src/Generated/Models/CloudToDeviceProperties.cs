@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// The properties of the feedback queue for cloud-to-device messages.
         /// Serialized Name: CloudToDeviceProperties.feedback
         /// </param>
-        internal CloudToDeviceProperties(int? maxDeliveryCount, TimeSpan? defaultTtlAsIso8601, FeedbackProperties feedback)
+        internal CloudToDeviceProperties(int? maxDeliveryCount, TimeSpan? defaultTtlAsIso8601, CloudToDeviceFeedbackQueueProperties feedback)
         {
             MaxDeliveryCount = maxDeliveryCount;
             DefaultTtlAsIso8601 = defaultTtlAsIso8601;
@@ -54,6 +54,6 @@ namespace Azure.ResourceManager.IotHub.Models
         /// The properties of the feedback queue for cloud-to-device messages.
         /// Serialized Name: CloudToDeviceProperties.feedback
         /// </summary>
-        public FeedbackProperties Feedback { get; set; }
+        public CloudToDeviceFeedbackQueueProperties Feedback { get; set; }
     }
 }

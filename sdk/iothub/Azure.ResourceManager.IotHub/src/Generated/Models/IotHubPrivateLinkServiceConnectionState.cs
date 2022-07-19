@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// Serialized Name: PrivateLinkServiceConnectionState.description
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="description"/> is null. </exception>
-        public IotHubPrivateLinkServiceConnectionState(PrivateLinkServiceConnectionStatus status, string description)
+        public IotHubPrivateLinkServiceConnectionState(IotHubPrivateLinkServiceConnectionStatus status, string description)
         {
             if (description == null)
             {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// Actions required for a private endpoint connection
         /// Serialized Name: PrivateLinkServiceConnectionState.actionsRequired
         /// </param>
-        internal IotHubPrivateLinkServiceConnectionState(PrivateLinkServiceConnectionStatus status, string description, string actionsRequired)
+        internal IotHubPrivateLinkServiceConnectionState(IotHubPrivateLinkServiceConnectionStatus status, string description, string actionsRequired)
         {
             Status = status;
             Description = description;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// The status of a private endpoint connection
         /// Serialized Name: PrivateLinkServiceConnectionState.status
         /// </summary>
-        public PrivateLinkServiceConnectionStatus Status { get; set; }
+        public IotHubPrivateLinkServiceConnectionStatus Status { get; set; }
         /// <summary>
         /// The description for the current state of a private endpoint connection
         /// Serialized Name: PrivateLinkServiceConnectionState.description

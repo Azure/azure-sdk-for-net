@@ -10,16 +10,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class EventHubConsumerGroupInfoCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class IotHubFailoverContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
-            writer.WriteStartObject();
-            writer.WritePropertyName("name");
-            writer.WriteStringValue(Name);
-            writer.WriteEndObject();
+            writer.WritePropertyName("failoverRegion");
+            writer.WriteStringValue(FailoverRegion);
             writer.WriteEndObject();
         }
     }

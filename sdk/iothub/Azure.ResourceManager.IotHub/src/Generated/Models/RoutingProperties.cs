@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// The list of user-provided enrichments that the IoT hub applies to messages to be delivered to built-in and custom endpoints. See: https://aka.ms/telemetryoneventgrid
         /// Serialized Name: RoutingProperties.enrichments
         /// </param>
-        internal RoutingProperties(RoutingEndpoints endpoints, IList<RouteProperties> routes, FallbackRouteProperties fallbackRoute, IList<IotHubEnrichmentProperties> enrichments)
+        internal RoutingProperties(RoutingEndpoints endpoints, IList<RouteProperties> routes, IotHubFallbackRouteProperties fallbackRoute, IList<IotHubEnrichmentProperties> enrichments)
         {
             Endpoints = endpoints;
             Routes = routes;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// The properties of the route that is used as a fall-back route when none of the conditions specified in the &apos;routes&apos; section are met. This is an optional parameter. When this property is not set, the messages which do not meet any of the conditions specified in the &apos;routes&apos; section get routed to the built-in eventhub endpoint.
         /// Serialized Name: RoutingProperties.fallbackRoute
         /// </summary>
-        public FallbackRouteProperties FallbackRoute { get; set; }
+        public IotHubFallbackRouteProperties FallbackRoute { get; set; }
         /// <summary>
         /// The list of user-provided enrichments that the IoT hub applies to messages to be delivered to built-in and custom endpoints. See: https://aka.ms/telemetryoneventgrid
         /// Serialized Name: RoutingProperties.enrichments

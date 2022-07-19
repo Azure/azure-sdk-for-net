@@ -93,8 +93,8 @@ namespace Azure.ResourceManager.IotHub
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="UserSubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<UserSubscriptionQuota> GetSubscriptionQuotaResourceProviderCommonsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="IotHubUserSubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<IotHubUserSubscriptionQuota> GetSubscriptionQuotaResourceProviderCommonsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetSubscriptionQuotaResourceProviderCommonsAsync(cancellationToken);
         }
@@ -106,8 +106,8 @@ namespace Azure.ResourceManager.IotHub
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="UserSubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<UserSubscriptionQuota> GetSubscriptionQuotaResourceProviderCommons(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="IotHubUserSubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<IotHubUserSubscriptionQuota> GetSubscriptionQuotaResourceProviderCommons(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetSubscriptionQuotaResourceProviderCommons(cancellationToken);
         }

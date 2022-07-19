@@ -11,13 +11,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class RouteProperties : IUtf8JsonSerializable
+    public partial class IotHubFallbackRouteProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
-            writer.WriteStringValue(Name);
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name");
+                writer.WriteStringValue(Name);
+            }
             writer.WritePropertyName("source");
             writer.WriteStringValue(Source.ToString());
             if (Optional.IsDefined(Condition))
@@ -37,9 +40,9 @@ namespace Azure.ResourceManager.IotHub.Models
             writer.WriteEndObject();
         }
 
-        internal static RouteProperties DeserializeRouteProperties(JsonElement element)
+        internal static IotHubFallbackRouteProperties DeserializeIotHubFallbackRouteProperties(JsonElement element)
         {
-            string name = default;
+            Optional<string> name = default;
             IotHubRoutingSource source = default;
             Optional<string> condition = default;
             IList<string> endpointNames = default;
@@ -77,7 +80,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     continue;
                 }
             }
-            return new RouteProperties(name, source, condition.Value, endpointNames, isEnabled);
+            return new IotHubFallbackRouteProperties(name.Value, source, condition.Value, endpointNames, isEnabled);
         }
     }
 }

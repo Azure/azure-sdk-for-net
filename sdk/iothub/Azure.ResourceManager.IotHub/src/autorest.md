@@ -24,6 +24,7 @@ override-operation-name:
 
 rename-mapping:
   IotHubNameAvailabilityInfo: IotHubNameAvailabilityResponse
+  IotHubNameAvailabilityInfo.nameAvailable: IsNameAvailable
   OperationInputs: IotHubNameAvailabilityContent
   Capabilities: IotHubCapability
   CertificateProperties.created: CreatedOn
@@ -37,10 +38,13 @@ rename-mapping:
   GroupIdInformationProperties: IotHubPrivateEndpointGroupInformationProperties
   DefaultAction: IotHubNetworkRuleSetDefaultAction
   AccessRights: IotHubSharedAccessRight
+  FeedbackProperties: CloudToDeviceFeedbackQueueProperties
+  Name: IotHubTypeName
 
 prepend-rp-prefix:
   - AuthenticationType
   - TestAllRoutesResult
+  - TestAllRoutesInput
   - TestRouteInput
   - TestRouteResult
   - TestRouteResultDetails
@@ -54,6 +58,23 @@ prepend-rp-prefix:
   - EndpointHealthDataListResult
   - EndpointHealthStatus
   - EnrichmentProperties
+  - FailoverInput
+  - FallbackRouteProperties
+  - ImportDevicesRequest
+  - PublicNetworkAccess
+  - UserSubscriptionQuota
+  - UserSubscriptionQuotaListResult
+  - IPFilterRule
+  - IPFilterActionType
+  - RoutingSource
+  - JobResponse
+  - JobResponseListResult
+  - JobStatus
+  - JobType
+  - PrivateLinkResources
+  - PrivateLinkServiceConnectionStatus
+  - PrivateEndpointConnectionProperties
+  - RegistryStatistics
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -86,5 +107,13 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  SAS: Sas
+
+directive:
+  - from: iothub.json
+    where: $.definitions
+    transform: >
+      $.EventHubConsumerGroupBodyDescription.properties.properties['x-ms-client-flatten'] = true;
+      $.EventHubConsumerGroupBodyDescription['x-ms-client-name'] = 'EventHubConsumerGroupContent';
 
 ```

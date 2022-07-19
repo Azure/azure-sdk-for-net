@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary> Initializes a new instance of IotHubNameAvailabilityResponse. </summary>
-        /// <param name="nameAvailable">
+        /// <param name="isNameAvailable">
         /// The value which indicates whether the provided name is available.
         /// Serialized Name: IotHubNameAvailabilityInfo.nameAvailable
         /// </param>
@@ -31,9 +31,9 @@ namespace Azure.ResourceManager.IotHub.Models
         /// The detailed reason message.
         /// Serialized Name: IotHubNameAvailabilityInfo.message
         /// </param>
-        internal IotHubNameAvailabilityResponse(bool? nameAvailable, IotHubNameUnavailabilityReason? reason, string message)
+        internal IotHubNameAvailabilityResponse(bool? isNameAvailable, IotHubNameUnavailabilityReason? reason, string message)
         {
-            NameAvailable = nameAvailable;
+            IsNameAvailable = isNameAvailable;
             Reason = reason;
             Message = message;
         }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// The value which indicates whether the provided name is available.
         /// Serialized Name: IotHubNameAvailabilityInfo.nameAvailable
         /// </summary>
-        public bool? NameAvailable { get; }
+        public bool? IsNameAvailable { get; }
         /// <summary>
         /// The reason for unavailability.
         /// Serialized Name: IotHubNameAvailabilityInfo.reason

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.IotHub
         /// Serialized Name: PrivateEndpointConnection.properties
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public IotHubPrivateEndpointConnectionData(PrivateEndpointConnectionProperties properties)
+        public IotHubPrivateEndpointConnectionData(IotHubPrivateEndpointConnectionProperties properties)
         {
             if (properties == null)
             {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.IotHub
         /// The properties of a private endpoint connection
         /// Serialized Name: PrivateEndpointConnection.properties
         /// </param>
-        internal IotHubPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PrivateEndpointConnectionProperties properties) : base(id, name, resourceType, systemData)
+        internal IotHubPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IotHubPrivateEndpointConnectionProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
@@ -49,6 +49,6 @@ namespace Azure.ResourceManager.IotHub
         /// The properties of a private endpoint connection
         /// Serialized Name: PrivateEndpointConnection.properties
         /// </summary>
-        public PrivateEndpointConnectionProperties Properties { get; set; }
+        public IotHubPrivateEndpointConnectionProperties Properties { get; set; }
     }
 }

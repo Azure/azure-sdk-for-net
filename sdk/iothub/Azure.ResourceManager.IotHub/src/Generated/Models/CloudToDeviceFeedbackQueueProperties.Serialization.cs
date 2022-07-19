@@ -11,36 +11,56 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class CloudToDeviceProperties : IUtf8JsonSerializable
+    public partial class CloudToDeviceFeedbackQueueProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(LockDurationAsIso8601))
+            {
+                writer.WritePropertyName("lockDurationAsIso8601");
+                writer.WriteStringValue(LockDurationAsIso8601.Value, "P");
+            }
+            if (Optional.IsDefined(TtlAsIso8601))
+            {
+                writer.WritePropertyName("ttlAsIso8601");
+                writer.WriteStringValue(TtlAsIso8601.Value, "P");
+            }
             if (Optional.IsDefined(MaxDeliveryCount))
             {
                 writer.WritePropertyName("maxDeliveryCount");
                 writer.WriteNumberValue(MaxDeliveryCount.Value);
             }
-            if (Optional.IsDefined(DefaultTtlAsIso8601))
-            {
-                writer.WritePropertyName("defaultTtlAsIso8601");
-                writer.WriteStringValue(DefaultTtlAsIso8601.Value, "P");
-            }
-            if (Optional.IsDefined(Feedback))
-            {
-                writer.WritePropertyName("feedback");
-                writer.WriteObjectValue(Feedback);
-            }
             writer.WriteEndObject();
         }
 
-        internal static CloudToDeviceProperties DeserializeCloudToDeviceProperties(JsonElement element)
+        internal static CloudToDeviceFeedbackQueueProperties DeserializeCloudToDeviceFeedbackQueueProperties(JsonElement element)
         {
+            Optional<TimeSpan> lockDurationAsIso8601 = default;
+            Optional<TimeSpan> ttlAsIso8601 = default;
             Optional<int> maxDeliveryCount = default;
-            Optional<TimeSpan> defaultTtlAsIso8601 = default;
-            Optional<CloudToDeviceFeedbackQueueProperties> feedback = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("lockDurationAsIso8601"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    lockDurationAsIso8601 = property.Value.GetTimeSpan("P");
+                    continue;
+                }
+                if (property.NameEquals("ttlAsIso8601"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    ttlAsIso8601 = property.Value.GetTimeSpan("P");
+                    continue;
+                }
                 if (property.NameEquals("maxDeliveryCount"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -51,28 +71,8 @@ namespace Azure.ResourceManager.IotHub.Models
                     maxDeliveryCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("defaultTtlAsIso8601"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    defaultTtlAsIso8601 = property.Value.GetTimeSpan("P");
-                    continue;
-                }
-                if (property.NameEquals("feedback"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    feedback = CloudToDeviceFeedbackQueueProperties.DeserializeCloudToDeviceFeedbackQueueProperties(property.Value);
-                    continue;
-                }
             }
-            return new CloudToDeviceProperties(Optional.ToNullable(maxDeliveryCount), Optional.ToNullable(defaultTtlAsIso8601), feedback.Value);
+            return new CloudToDeviceFeedbackQueueProperties(Optional.ToNullable(lockDurationAsIso8601), Optional.ToNullable(ttlAsIso8601), Optional.ToNullable(maxDeliveryCount));
         }
     }
 }

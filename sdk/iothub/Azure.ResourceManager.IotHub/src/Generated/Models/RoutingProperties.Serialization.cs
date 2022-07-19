@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.IotHub.Models
         {
             Optional<RoutingEndpoints> endpoints = default;
             Optional<IList<RouteProperties>> routes = default;
-            Optional<FallbackRouteProperties> fallbackRoute = default;
+            Optional<IotHubFallbackRouteProperties> fallbackRoute = default;
             Optional<IList<IotHubEnrichmentProperties>> enrichments = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.IotHub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    fallbackRoute = FallbackRouteProperties.DeserializeFallbackRouteProperties(property.Value);
+                    fallbackRoute = IotHubFallbackRouteProperties.DeserializeIotHubFallbackRouteProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("enrichments"))

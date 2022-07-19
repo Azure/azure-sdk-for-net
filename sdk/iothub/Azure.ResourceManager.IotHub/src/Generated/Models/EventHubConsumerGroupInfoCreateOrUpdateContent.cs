@@ -11,38 +11,30 @@ namespace Azure.ResourceManager.IotHub.Models
 {
     /// <summary>
     /// The EventHub consumer group.
-    /// Serialized Name: EventHubConsumerGroupBodyDescription
+    /// Serialized Name: EventHubConsumerGroupContent
     /// </summary>
     public partial class EventHubConsumerGroupInfoCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of EventHubConsumerGroupInfoCreateOrUpdateContent. </summary>
-        /// <param name="properties">
-        /// The EventHub consumer group name.
-        /// Serialized Name: EventHubConsumerGroupBodyDescription.properties
+        /// <param name="name">
+        /// EventHub consumer group name
+        /// Serialized Name: EventHubConsumerGroupContent.properties.name
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public EventHubConsumerGroupInfoCreateOrUpdateContent(EventHubConsumerGroupName properties)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public EventHubConsumerGroupInfoCreateOrUpdateContent(string name)
         {
-            if (properties == null)
+            if (name == null)
             {
-                throw new ArgumentNullException(nameof(properties));
+                throw new ArgumentNullException(nameof(name));
             }
 
-            Properties = properties;
+            Name = name;
         }
 
         /// <summary>
-        /// The EventHub consumer group name.
-        /// Serialized Name: EventHubConsumerGroupBodyDescription.properties
-        /// </summary>
-        internal EventHubConsumerGroupName Properties { get; }
-        /// <summary>
         /// EventHub consumer group name
-        /// Serialized Name: EventHubConsumerGroupName.name
+        /// Serialized Name: EventHubConsumerGroupContent.properties.name
         /// </summary>
-        public string EventHubConsumerGroupName
-        {
-            get => Properties?.Name;
-        }
+        public string Name { get; }
     }
 }
