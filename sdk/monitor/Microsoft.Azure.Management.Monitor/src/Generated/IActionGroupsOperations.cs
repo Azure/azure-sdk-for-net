@@ -142,10 +142,13 @@ namespace Microsoft.Azure.Management.Monitor
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationHeaderResponse<ActionGroupsPostTestNotificationsHeaders>> PostTestNotificationsWithHttpMessagesAsync(NotificationRequestBody notificationRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<TestNotificationDetailsResponse,ActionGroupsPostTestNotificationsHeaders>> PostTestNotificationsWithHttpMessagesAsync(NotificationRequestBody notificationRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Send test notifications to a set of provided receivers
         /// </summary>
@@ -164,10 +167,13 @@ namespace Microsoft.Azure.Management.Monitor
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationHeaderResponse<ActionGroupsCreateNotificationsAtResourceGroupLevelHeaders>> CreateNotificationsAtResourceGroupLevelWithHttpMessagesAsync(string resourceGroupName, NotificationRequestBody notificationRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<TestNotificationDetailsResponse,ActionGroupsCreateNotificationsAtResourceGroupLevelHeaders>> CreateNotificationsAtResourceGroupLevelWithHttpMessagesAsync(string resourceGroupName, NotificationRequestBody notificationRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Send test notifications to a set of provided receivers
         /// </summary>
@@ -189,10 +195,13 @@ namespace Microsoft.Azure.Management.Monitor
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationHeaderResponse<ActionGroupsCreateNotificationsAtActionGroupResourceLevelHeaders>> CreateNotificationsAtActionGroupResourceLevelWithHttpMessagesAsync(string resourceGroupName, string actionGroupName, NotificationRequestBody notificationRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<TestNotificationDetailsResponse,ActionGroupsCreateNotificationsAtActionGroupResourceLevelHeaders>> CreateNotificationsAtActionGroupResourceLevelWithHttpMessagesAsync(string resourceGroupName, string actionGroupName, NotificationRequestBody notificationRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get the test notifications by the notification id
         /// </summary>
@@ -351,10 +360,13 @@ namespace Microsoft.Azure.Management.Monitor
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationHeaderResponse<ActionGroupsPostTestNotificationsHeaders>> BeginPostTestNotificationsWithHttpMessagesAsync(NotificationRequestBody notificationRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<TestNotificationDetailsResponse,ActionGroupsPostTestNotificationsHeaders>> BeginPostTestNotificationsWithHttpMessagesAsync(NotificationRequestBody notificationRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Send test notifications to a set of provided receivers
         /// </summary>
@@ -373,10 +385,13 @@ namespace Microsoft.Azure.Management.Monitor
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationHeaderResponse<ActionGroupsCreateNotificationsAtResourceGroupLevelHeaders>> BeginCreateNotificationsAtResourceGroupLevelWithHttpMessagesAsync(string resourceGroupName, NotificationRequestBody notificationRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<TestNotificationDetailsResponse,ActionGroupsCreateNotificationsAtResourceGroupLevelHeaders>> BeginCreateNotificationsAtResourceGroupLevelWithHttpMessagesAsync(string resourceGroupName, NotificationRequestBody notificationRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Send test notifications to a set of provided receivers
         /// </summary>
@@ -398,9 +413,12 @@ namespace Microsoft.Azure.Management.Monitor
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationHeaderResponse<ActionGroupsCreateNotificationsAtActionGroupResourceLevelHeaders>> BeginCreateNotificationsAtActionGroupResourceLevelWithHttpMessagesAsync(string resourceGroupName, string actionGroupName, NotificationRequestBody notificationRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<TestNotificationDetailsResponse,ActionGroupsCreateNotificationsAtActionGroupResourceLevelHeaders>> BeginCreateNotificationsAtActionGroupResourceLevelWithHttpMessagesAsync(string resourceGroupName, string actionGroupName, NotificationRequestBody notificationRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -920,10 +920,10 @@ namespace Microsoft.Azure.Management.Monitor
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationHeaderResponse<ActionGroupsPostTestNotificationsHeaders>> PostTestNotificationsWithHttpMessagesAsync(NotificationRequestBody notificationRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<TestNotificationDetailsResponse,ActionGroupsPostTestNotificationsHeaders>> PostTestNotificationsWithHttpMessagesAsync(NotificationRequestBody notificationRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationHeaderResponse<ActionGroupsPostTestNotificationsHeaders> _response = await BeginPostTestNotificationsWithHttpMessagesAsync(notificationRequest, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<TestNotificationDetailsResponse,ActionGroupsPostTestNotificationsHeaders> _response = await BeginPostTestNotificationsWithHttpMessagesAsync(notificationRequest, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -942,10 +942,10 @@ namespace Microsoft.Azure.Management.Monitor
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationHeaderResponse<ActionGroupsCreateNotificationsAtResourceGroupLevelHeaders>> CreateNotificationsAtResourceGroupLevelWithHttpMessagesAsync(string resourceGroupName, NotificationRequestBody notificationRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<TestNotificationDetailsResponse,ActionGroupsCreateNotificationsAtResourceGroupLevelHeaders>> CreateNotificationsAtResourceGroupLevelWithHttpMessagesAsync(string resourceGroupName, NotificationRequestBody notificationRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationHeaderResponse<ActionGroupsCreateNotificationsAtResourceGroupLevelHeaders> _response = await BeginCreateNotificationsAtResourceGroupLevelWithHttpMessagesAsync(resourceGroupName, notificationRequest, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<TestNotificationDetailsResponse,ActionGroupsCreateNotificationsAtResourceGroupLevelHeaders> _response = await BeginCreateNotificationsAtResourceGroupLevelWithHttpMessagesAsync(resourceGroupName, notificationRequest, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -967,10 +967,10 @@ namespace Microsoft.Azure.Management.Monitor
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationHeaderResponse<ActionGroupsCreateNotificationsAtActionGroupResourceLevelHeaders>> CreateNotificationsAtActionGroupResourceLevelWithHttpMessagesAsync(string resourceGroupName, string actionGroupName, NotificationRequestBody notificationRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<TestNotificationDetailsResponse,ActionGroupsCreateNotificationsAtActionGroupResourceLevelHeaders>> CreateNotificationsAtActionGroupResourceLevelWithHttpMessagesAsync(string resourceGroupName, string actionGroupName, NotificationRequestBody notificationRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationHeaderResponse<ActionGroupsCreateNotificationsAtActionGroupResourceLevelHeaders> _response = await BeginCreateNotificationsAtActionGroupResourceLevelWithHttpMessagesAsync(resourceGroupName, actionGroupName, notificationRequest, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<TestNotificationDetailsResponse,ActionGroupsCreateNotificationsAtActionGroupResourceLevelHeaders> _response = await BeginCreateNotificationsAtActionGroupResourceLevelWithHttpMessagesAsync(resourceGroupName, actionGroupName, notificationRequest, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -2182,6 +2182,9 @@ namespace Microsoft.Azure.Management.Monitor
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
@@ -2191,7 +2194,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationHeaderResponse<ActionGroupsPostTestNotificationsHeaders>> BeginPostTestNotificationsWithHttpMessagesAsync(NotificationRequestBody notificationRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<TestNotificationDetailsResponse,ActionGroupsPostTestNotificationsHeaders>> BeginPostTestNotificationsWithHttpMessagesAsync(NotificationRequestBody notificationRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -2298,7 +2301,7 @@ namespace Microsoft.Azure.Management.Monitor
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 202)
+            if ((int)_statusCode != 200 && (int)_statusCode != 202)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -2328,12 +2331,30 @@ namespace Microsoft.Azure.Management.Monitor
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationHeaderResponse<ActionGroupsPostTestNotificationsHeaders>();
+            var _result = new AzureOperationResponse<TestNotificationDetailsResponse,ActionGroupsPostTestNotificationsHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<TestNotificationDetailsResponse>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
             }
             try
             {
@@ -2373,6 +2394,9 @@ namespace Microsoft.Azure.Management.Monitor
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
@@ -2382,7 +2406,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationHeaderResponse<ActionGroupsCreateNotificationsAtResourceGroupLevelHeaders>> BeginCreateNotificationsAtResourceGroupLevelWithHttpMessagesAsync(string resourceGroupName, NotificationRequestBody notificationRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<TestNotificationDetailsResponse,ActionGroupsCreateNotificationsAtResourceGroupLevelHeaders>> BeginCreateNotificationsAtResourceGroupLevelWithHttpMessagesAsync(string resourceGroupName, NotificationRequestBody notificationRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -2506,7 +2530,7 @@ namespace Microsoft.Azure.Management.Monitor
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 202)
+            if ((int)_statusCode != 200 && (int)_statusCode != 202)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -2536,12 +2560,30 @@ namespace Microsoft.Azure.Management.Monitor
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationHeaderResponse<ActionGroupsCreateNotificationsAtResourceGroupLevelHeaders>();
+            var _result = new AzureOperationResponse<TestNotificationDetailsResponse,ActionGroupsCreateNotificationsAtResourceGroupLevelHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<TestNotificationDetailsResponse>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
             }
             try
             {
@@ -2584,6 +2626,9 @@ namespace Microsoft.Azure.Management.Monitor
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
@@ -2593,7 +2638,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationHeaderResponse<ActionGroupsCreateNotificationsAtActionGroupResourceLevelHeaders>> BeginCreateNotificationsAtActionGroupResourceLevelWithHttpMessagesAsync(string resourceGroupName, string actionGroupName, NotificationRequestBody notificationRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<TestNotificationDetailsResponse,ActionGroupsCreateNotificationsAtActionGroupResourceLevelHeaders>> BeginCreateNotificationsAtActionGroupResourceLevelWithHttpMessagesAsync(string resourceGroupName, string actionGroupName, NotificationRequestBody notificationRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -2723,7 +2768,7 @@ namespace Microsoft.Azure.Management.Monitor
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 202)
+            if ((int)_statusCode != 200 && (int)_statusCode != 202)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -2753,12 +2798,30 @@ namespace Microsoft.Azure.Management.Monitor
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationHeaderResponse<ActionGroupsCreateNotificationsAtActionGroupResourceLevelHeaders>();
+            var _result = new AzureOperationResponse<TestNotificationDetailsResponse,ActionGroupsCreateNotificationsAtActionGroupResourceLevelHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<TestNotificationDetailsResponse>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
             }
             try
             {
