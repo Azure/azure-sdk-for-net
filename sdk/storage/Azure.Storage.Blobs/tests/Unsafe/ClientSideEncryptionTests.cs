@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Cryptography;
+using Azure.Core.Diagnostics;
 using Azure.Core.TestFramework;
 using Azure.Security.KeyVault.Keys.Cryptography;
 using Azure.Storage.Blobs.Models;
@@ -461,8 +462,9 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [RecordedTest]
+        [Test]
         [Combinatorial]
+        [LiveOnly] // TODO #30007
         public async Task UploadAsyncSplit(
             [Values(1, 2, 4, 8)] int concurrency,
             [ValueSource("GetEncryptionVersions")] ClientSideEncryptionVersion version)
@@ -550,8 +552,9 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [RecordedTest]
+        [Test]
         [Combinatorial]
+        [LiveOnly] // TODO #30007
         public async Task RoundtripSplitAsync(
             [Values(1, 2, 4, 8)] int concurrency,
             [ValueSource("GetEncryptionVersions")] ClientSideEncryptionVersion version)
