@@ -57,6 +57,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="recordingId"> The recording id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> is null. </exception>
+        /// <remarks> Get call recording properties. </remarks>
         public async Task<Response<RecordingStatusResult>> GetRecordingPropertiesAsync(string recordingId, CancellationToken cancellationToken = default)
         {
             if (recordingId == null)
@@ -84,6 +85,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="recordingId"> The recording id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> is null. </exception>
+        /// <remarks> Get call recording properties. </remarks>
         public Response<RecordingStatusResult> GetRecordingProperties(string recordingId, CancellationToken cancellationToken = default)
         {
             if (recordingId == null)
