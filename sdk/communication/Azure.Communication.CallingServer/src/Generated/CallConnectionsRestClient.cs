@@ -57,6 +57,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
+        /// <remarks> Get call connection. </remarks>
         public async Task<Response<CallConnectionPropertiesDtoInternal>> GetCallAsync(string callConnectionId, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
@@ -84,6 +85,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
+        /// <remarks> Get call connection. </remarks>
         public Response<CallConnectionPropertiesDtoInternal> GetCall(string callConnectionId, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
@@ -125,6 +127,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
+        /// <remarks> Hangup the call. </remarks>
         public async Task<Response> HangupCallAsync(string callConnectionId, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
@@ -147,6 +150,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
+        /// <remarks> Hangup the call. </remarks>
         public Response HangupCall(string callConnectionId, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
@@ -184,6 +188,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="callConnectionId"> The terminate call request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
+        /// <remarks> Terminate a call using CallConnectionId. </remarks>
         public async Task<Response> TerminateCallAsync(string callConnectionId, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
@@ -206,6 +211,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="callConnectionId"> The terminate call request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
+        /// <remarks> Terminate a call using CallConnectionId. </remarks>
         public Response TerminateCall(string callConnectionId, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)

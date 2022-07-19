@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql
             Optional<string> replicationMode = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<int> percentComplete = default;
-            Optional<ReplicationState> replicationState = default;
+            Optional<ReplicationLinkState> replicationState = default;
             Optional<bool> isTerminationAllowed = default;
             Optional<ReplicationLinkType> linkType = default;
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            replicationState = new ReplicationState(property0.Value.GetString());
+                            replicationState = new ReplicationLinkState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("isTerminationAllowed"))

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="defaultTtl"> Default time to live. </param>
         /// <param name="uniqueKeyPolicy"> The unique key policy configuration for specifying uniqueness constraints on documents in the collection in the Azure Cosmos DB service. </param>
         /// <param name="conflictResolutionPolicy"> The conflict resolution policy for the graph. </param>
-        internal GremlinGraphResourceInfo(string graphName, CosmosDBIndexingPolicy indexingPolicy, ContainerPartitionKey partitionKey, int? defaultTtl, CosmosDBUniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy)
+        internal GremlinGraphResourceInfo(string graphName, CosmosDBIndexingPolicy indexingPolicy, CosmosDBContainerPartitionKey partitionKey, int? defaultTtl, CosmosDBUniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy)
         {
             GraphName = graphName;
             IndexingPolicy = indexingPolicy;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> The configuration of the indexing policy. By default, the indexing is automatic for all document paths within the graph. </summary>
         public CosmosDBIndexingPolicy IndexingPolicy { get; set; }
         /// <summary> The configuration of the partition key to be used for partitioning data into multiple partitions. </summary>
-        public ContainerPartitionKey PartitionKey { get; set; }
+        public CosmosDBContainerPartitionKey PartitionKey { get; set; }
         /// <summary> Default time to live. </summary>
         public int? DefaultTtl { get; set; }
         /// <summary> The unique key policy configuration for specifying uniqueness constraints on documents in the collection in the Azure Cosmos DB service. </summary>

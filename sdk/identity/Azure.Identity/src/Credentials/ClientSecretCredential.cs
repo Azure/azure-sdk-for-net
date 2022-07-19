@@ -94,8 +94,7 @@ namespace Azure.Identity
                          clientId,
                          clientSecret,
                          null,
-                         options,
-                         (options as ClientSecretCredentialOptions)?.RegionalAuthority);
+                         options);
         }
 
         /// <summary>

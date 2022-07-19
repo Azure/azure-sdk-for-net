@@ -125,6 +125,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="recordingId"> The recording id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> is null. </exception>
+        /// <remarks> Stop recording the call. </remarks>
         public async Task<Response> StopRecordingAsync(string recordingId, CancellationToken cancellationToken = default)
         {
             if (recordingId == null)
@@ -147,6 +148,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="recordingId"> The recording id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> is null. </exception>
+        /// <remarks> Stop recording the call. </remarks>
         public Response StopRecording(string recordingId, CancellationToken cancellationToken = default)
         {
             if (recordingId == null)
@@ -184,6 +186,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="recordingId"> The recording id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> is null. </exception>
+        /// <remarks> Pause recording the call. </remarks>
         public async Task<Response> PauseRecordingAsync(string recordingId, CancellationToken cancellationToken = default)
         {
             if (recordingId == null)
@@ -206,6 +209,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="recordingId"> The recording id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> is null. </exception>
+        /// <remarks> Pause recording the call. </remarks>
         public Response PauseRecording(string recordingId, CancellationToken cancellationToken = default)
         {
             if (recordingId == null)
@@ -243,6 +247,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="recordingId"> The recording id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> is null. </exception>
+        /// <remarks> Resume recording the call. </remarks>
         public async Task<Response> ResumeRecordingAsync(string recordingId, CancellationToken cancellationToken = default)
         {
             if (recordingId == null)
@@ -265,6 +270,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="recordingId"> The recording id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> is null. </exception>
+        /// <remarks> Resume recording the call. </remarks>
         public Response ResumeRecording(string recordingId, CancellationToken cancellationToken = default)
         {
             if (recordingId == null)
