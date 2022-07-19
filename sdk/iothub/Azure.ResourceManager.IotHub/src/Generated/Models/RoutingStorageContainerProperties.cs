@@ -9,12 +9,21 @@ using System;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary> The properties related to a storage container endpoint. </summary>
+    /// <summary>
+    /// The properties related to a storage container endpoint.
+    /// Serialized Name: RoutingStorageContainerProperties
+    /// </summary>
     public partial class RoutingStorageContainerProperties
     {
         /// <summary> Initializes a new instance of RoutingStorageContainerProperties. </summary>
-        /// <param name="name"> The name that identifies this endpoint. The name can only include alphanumeric characters, periods, underscores, hyphens and has a maximum length of 64 characters. The following names are reserved:  events, fileNotifications, $default. Endpoint names must be unique across endpoint types. </param>
-        /// <param name="containerName"> The name of storage container in the storage account. </param>
+        /// <param name="name">
+        /// The name that identifies this endpoint. The name can only include alphanumeric characters, periods, underscores, hyphens and has a maximum length of 64 characters. The following names are reserved:  events, fileNotifications, $default. Endpoint names must be unique across endpoint types.
+        /// Serialized Name: RoutingStorageContainerProperties.name
+        /// </param>
+        /// <param name="containerName">
+        /// The name of storage container in the storage account.
+        /// Serialized Name: RoutingStorageContainerProperties.containerName
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="containerName"/> is null. </exception>
         public RoutingStorageContainerProperties(string name, string containerName)
         {
@@ -32,20 +41,59 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary> Initializes a new instance of RoutingStorageContainerProperties. </summary>
-        /// <param name="id"> Id of the storage container endpoint. </param>
-        /// <param name="connectionString"> The connection string of the storage account. </param>
-        /// <param name="endpointUri"> The url of the storage endpoint. It must include the protocol https://. </param>
-        /// <param name="authenticationType"> Method used to authenticate against the storage endpoint. </param>
-        /// <param name="identity"> Managed identity properties of routing storage endpoint. </param>
-        /// <param name="name"> The name that identifies this endpoint. The name can only include alphanumeric characters, periods, underscores, hyphens and has a maximum length of 64 characters. The following names are reserved:  events, fileNotifications, $default. Endpoint names must be unique across endpoint types. </param>
-        /// <param name="subscriptionId"> The subscription identifier of the storage account. </param>
-        /// <param name="resourceGroup"> The name of the resource group of the storage account. </param>
-        /// <param name="containerName"> The name of storage container in the storage account. </param>
-        /// <param name="fileNameFormat"> File name format for the blob. Default format is {iothub}/{partition}/{YYYY}/{MM}/{DD}/{HH}/{mm}. All parameters are mandatory but can be reordered. </param>
-        /// <param name="batchFrequencyInSeconds"> Time interval at which blobs are written to storage. Value should be between 60 and 720 seconds. Default value is 300 seconds. </param>
-        /// <param name="maxChunkSizeInBytes"> Maximum number of bytes for each blob written to storage. Value should be between 10485760(10MB) and 524288000(500MB). Default value is 314572800(300MB). </param>
-        /// <param name="encoding"> Encoding that is used to serialize messages to blobs. Supported values are &apos;avro&apos;, &apos;avrodeflate&apos;, and &apos;JSON&apos;. Default value is &apos;avro&apos;. </param>
-        internal RoutingStorageContainerProperties(string id, string connectionString, Uri endpointUri, AuthenticationType? authenticationType, ManagedIdentity identity, string name, string subscriptionId, string resourceGroup, string containerName, string fileNameFormat, int? batchFrequencyInSeconds, int? maxChunkSizeInBytes, RoutingStorageContainerPropertiesEncoding? encoding)
+        /// <param name="id">
+        /// Id of the storage container endpoint
+        /// Serialized Name: RoutingStorageContainerProperties.id
+        /// </param>
+        /// <param name="connectionString">
+        /// The connection string of the storage account.
+        /// Serialized Name: RoutingStorageContainerProperties.connectionString
+        /// </param>
+        /// <param name="endpointUri">
+        /// The url of the storage endpoint. It must include the protocol https://
+        /// Serialized Name: RoutingStorageContainerProperties.endpointUri
+        /// </param>
+        /// <param name="authenticationType">
+        /// Method used to authenticate against the storage endpoint
+        /// Serialized Name: RoutingStorageContainerProperties.authenticationType
+        /// </param>
+        /// <param name="identity">
+        /// Managed identity properties of routing storage endpoint.
+        /// Serialized Name: RoutingStorageContainerProperties.identity
+        /// </param>
+        /// <param name="name">
+        /// The name that identifies this endpoint. The name can only include alphanumeric characters, periods, underscores, hyphens and has a maximum length of 64 characters. The following names are reserved:  events, fileNotifications, $default. Endpoint names must be unique across endpoint types.
+        /// Serialized Name: RoutingStorageContainerProperties.name
+        /// </param>
+        /// <param name="subscriptionId">
+        /// The subscription identifier of the storage account.
+        /// Serialized Name: RoutingStorageContainerProperties.subscriptionId
+        /// </param>
+        /// <param name="resourceGroup">
+        /// The name of the resource group of the storage account.
+        /// Serialized Name: RoutingStorageContainerProperties.resourceGroup
+        /// </param>
+        /// <param name="containerName">
+        /// The name of storage container in the storage account.
+        /// Serialized Name: RoutingStorageContainerProperties.containerName
+        /// </param>
+        /// <param name="fileNameFormat">
+        /// File name format for the blob. Default format is {iothub}/{partition}/{YYYY}/{MM}/{DD}/{HH}/{mm}. All parameters are mandatory but can be reordered.
+        /// Serialized Name: RoutingStorageContainerProperties.fileNameFormat
+        /// </param>
+        /// <param name="batchFrequencyInSeconds">
+        /// Time interval at which blobs are written to storage. Value should be between 60 and 720 seconds. Default value is 300 seconds.
+        /// Serialized Name: RoutingStorageContainerProperties.batchFrequencyInSeconds
+        /// </param>
+        /// <param name="maxChunkSizeInBytes">
+        /// Maximum number of bytes for each blob written to storage. Value should be between 10485760(10MB) and 524288000(500MB). Default value is 314572800(300MB).
+        /// Serialized Name: RoutingStorageContainerProperties.maxChunkSizeInBytes
+        /// </param>
+        /// <param name="encoding">
+        /// Encoding that is used to serialize messages to blobs. Supported values are &apos;avro&apos;, &apos;avrodeflate&apos;, and &apos;JSON&apos;. Default value is &apos;avro&apos;.
+        /// Serialized Name: RoutingStorageContainerProperties.encoding
+        /// </param>
+        internal RoutingStorageContainerProperties(string id, string connectionString, Uri endpointUri, IotHubAuthenticationType? authenticationType, ManagedIdentity identity, string name, string subscriptionId, string resourceGroup, string containerName, string fileNameFormat, int? batchFrequencyInSeconds, int? maxChunkSizeInBytes, RoutingStorageContainerPropertiesEncoding? encoding)
         {
             Id = id;
             ConnectionString = connectionString;
@@ -62,17 +110,35 @@ namespace Azure.ResourceManager.IotHub.Models
             Encoding = encoding;
         }
 
-        /// <summary> Id of the storage container endpoint. </summary>
+        /// <summary>
+        /// Id of the storage container endpoint
+        /// Serialized Name: RoutingStorageContainerProperties.id
+        /// </summary>
         public string Id { get; set; }
-        /// <summary> The connection string of the storage account. </summary>
+        /// <summary>
+        /// The connection string of the storage account.
+        /// Serialized Name: RoutingStorageContainerProperties.connectionString
+        /// </summary>
         public string ConnectionString { get; set; }
-        /// <summary> The url of the storage endpoint. It must include the protocol https://. </summary>
+        /// <summary>
+        /// The url of the storage endpoint. It must include the protocol https://
+        /// Serialized Name: RoutingStorageContainerProperties.endpointUri
+        /// </summary>
         public Uri EndpointUri { get; set; }
-        /// <summary> Method used to authenticate against the storage endpoint. </summary>
-        public AuthenticationType? AuthenticationType { get; set; }
-        /// <summary> Managed identity properties of routing storage endpoint. </summary>
+        /// <summary>
+        /// Method used to authenticate against the storage endpoint
+        /// Serialized Name: RoutingStorageContainerProperties.authenticationType
+        /// </summary>
+        public IotHubAuthenticationType? AuthenticationType { get; set; }
+        /// <summary>
+        /// Managed identity properties of routing storage endpoint.
+        /// Serialized Name: RoutingStorageContainerProperties.identity
+        /// </summary>
         internal ManagedIdentity Identity { get; set; }
-        /// <summary> The user assigned identity. </summary>
+        /// <summary>
+        /// The user assigned identity.
+        /// Serialized Name: ManagedIdentity.userAssignedIdentity
+        /// </summary>
         public string UserAssignedIdentity
         {
             get => Identity is null ? default : Identity.UserAssignedIdentity;
@@ -84,21 +150,45 @@ namespace Azure.ResourceManager.IotHub.Models
             }
         }
 
-        /// <summary> The name that identifies this endpoint. The name can only include alphanumeric characters, periods, underscores, hyphens and has a maximum length of 64 characters. The following names are reserved:  events, fileNotifications, $default. Endpoint names must be unique across endpoint types. </summary>
+        /// <summary>
+        /// The name that identifies this endpoint. The name can only include alphanumeric characters, periods, underscores, hyphens and has a maximum length of 64 characters. The following names are reserved:  events, fileNotifications, $default. Endpoint names must be unique across endpoint types.
+        /// Serialized Name: RoutingStorageContainerProperties.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> The subscription identifier of the storage account. </summary>
+        /// <summary>
+        /// The subscription identifier of the storage account.
+        /// Serialized Name: RoutingStorageContainerProperties.subscriptionId
+        /// </summary>
         public string SubscriptionId { get; set; }
-        /// <summary> The name of the resource group of the storage account. </summary>
+        /// <summary>
+        /// The name of the resource group of the storage account.
+        /// Serialized Name: RoutingStorageContainerProperties.resourceGroup
+        /// </summary>
         public string ResourceGroup { get; set; }
-        /// <summary> The name of storage container in the storage account. </summary>
+        /// <summary>
+        /// The name of storage container in the storage account.
+        /// Serialized Name: RoutingStorageContainerProperties.containerName
+        /// </summary>
         public string ContainerName { get; set; }
-        /// <summary> File name format for the blob. Default format is {iothub}/{partition}/{YYYY}/{MM}/{DD}/{HH}/{mm}. All parameters are mandatory but can be reordered. </summary>
+        /// <summary>
+        /// File name format for the blob. Default format is {iothub}/{partition}/{YYYY}/{MM}/{DD}/{HH}/{mm}. All parameters are mandatory but can be reordered.
+        /// Serialized Name: RoutingStorageContainerProperties.fileNameFormat
+        /// </summary>
         public string FileNameFormat { get; set; }
-        /// <summary> Time interval at which blobs are written to storage. Value should be between 60 and 720 seconds. Default value is 300 seconds. </summary>
+        /// <summary>
+        /// Time interval at which blobs are written to storage. Value should be between 60 and 720 seconds. Default value is 300 seconds.
+        /// Serialized Name: RoutingStorageContainerProperties.batchFrequencyInSeconds
+        /// </summary>
         public int? BatchFrequencyInSeconds { get; set; }
-        /// <summary> Maximum number of bytes for each blob written to storage. Value should be between 10485760(10MB) and 524288000(500MB). Default value is 314572800(300MB). </summary>
+        /// <summary>
+        /// Maximum number of bytes for each blob written to storage. Value should be between 10485760(10MB) and 524288000(500MB). Default value is 314572800(300MB).
+        /// Serialized Name: RoutingStorageContainerProperties.maxChunkSizeInBytes
+        /// </summary>
         public int? MaxChunkSizeInBytes { get; set; }
-        /// <summary> Encoding that is used to serialize messages to blobs. Supported values are &apos;avro&apos;, &apos;avrodeflate&apos;, and &apos;JSON&apos;. Default value is &apos;avro&apos;. </summary>
+        /// <summary>
+        /// Encoding that is used to serialize messages to blobs. Supported values are &apos;avro&apos;, &apos;avrodeflate&apos;, and &apos;JSON&apos;. Default value is &apos;avro&apos;.
+        /// Serialized Name: RoutingStorageContainerProperties.encoding
+        /// </summary>
         public RoutingStorageContainerPropertiesEncoding? Encoding { get; set; }
     }
 }

@@ -11,13 +11,25 @@ using System.Linq;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary> The properties of the fallback route. IoT Hub uses these properties when it routes messages to the fallback endpoint. </summary>
+    /// <summary>
+    /// The properties of the fallback route. IoT Hub uses these properties when it routes messages to the fallback endpoint.
+    /// Serialized Name: FallbackRouteProperties
+    /// </summary>
     public partial class FallbackRouteProperties
     {
         /// <summary> Initializes a new instance of FallbackRouteProperties. </summary>
-        /// <param name="source"> The source to which the routing rule is to be applied to. For example, DeviceMessages. </param>
-        /// <param name="endpointNames"> The list of endpoints to which the messages that satisfy the condition are routed to. Currently only 1 endpoint is allowed. </param>
-        /// <param name="isEnabled"> Used to specify whether the fallback route is enabled. </param>
+        /// <param name="source">
+        /// The source to which the routing rule is to be applied to. For example, DeviceMessages
+        /// Serialized Name: FallbackRouteProperties.source
+        /// </param>
+        /// <param name="endpointNames">
+        /// The list of endpoints to which the messages that satisfy the condition are routed to. Currently only 1 endpoint is allowed.
+        /// Serialized Name: FallbackRouteProperties.endpointNames
+        /// </param>
+        /// <param name="isEnabled">
+        /// Used to specify whether the fallback route is enabled.
+        /// Serialized Name: FallbackRouteProperties.isEnabled
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointNames"/> is null. </exception>
         public FallbackRouteProperties(RoutingSource source, IEnumerable<string> endpointNames, bool isEnabled)
         {
@@ -32,11 +44,26 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary> Initializes a new instance of FallbackRouteProperties. </summary>
-        /// <param name="name"> The name of the route. The name can only include alphanumeric characters, periods, underscores, hyphens, has a maximum length of 64 characters, and must be unique. </param>
-        /// <param name="source"> The source to which the routing rule is to be applied to. For example, DeviceMessages. </param>
-        /// <param name="condition"> The condition which is evaluated in order to apply the fallback route. If the condition is not provided it will evaluate to true by default. For grammar, See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-query-language. </param>
-        /// <param name="endpointNames"> The list of endpoints to which the messages that satisfy the condition are routed to. Currently only 1 endpoint is allowed. </param>
-        /// <param name="isEnabled"> Used to specify whether the fallback route is enabled. </param>
+        /// <param name="name">
+        /// The name of the route. The name can only include alphanumeric characters, periods, underscores, hyphens, has a maximum length of 64 characters, and must be unique.
+        /// Serialized Name: FallbackRouteProperties.name
+        /// </param>
+        /// <param name="source">
+        /// The source to which the routing rule is to be applied to. For example, DeviceMessages
+        /// Serialized Name: FallbackRouteProperties.source
+        /// </param>
+        /// <param name="condition">
+        /// The condition which is evaluated in order to apply the fallback route. If the condition is not provided it will evaluate to true by default. For grammar, See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-query-language
+        /// Serialized Name: FallbackRouteProperties.condition
+        /// </param>
+        /// <param name="endpointNames">
+        /// The list of endpoints to which the messages that satisfy the condition are routed to. Currently only 1 endpoint is allowed.
+        /// Serialized Name: FallbackRouteProperties.endpointNames
+        /// </param>
+        /// <param name="isEnabled">
+        /// Used to specify whether the fallback route is enabled.
+        /// Serialized Name: FallbackRouteProperties.isEnabled
+        /// </param>
         internal FallbackRouteProperties(string name, RoutingSource source, string condition, IList<string> endpointNames, bool isEnabled)
         {
             Name = name;
@@ -46,15 +73,30 @@ namespace Azure.ResourceManager.IotHub.Models
             IsEnabled = isEnabled;
         }
 
-        /// <summary> The name of the route. The name can only include alphanumeric characters, periods, underscores, hyphens, has a maximum length of 64 characters, and must be unique. </summary>
+        /// <summary>
+        /// The name of the route. The name can only include alphanumeric characters, periods, underscores, hyphens, has a maximum length of 64 characters, and must be unique.
+        /// Serialized Name: FallbackRouteProperties.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> The source to which the routing rule is to be applied to. For example, DeviceMessages. </summary>
+        /// <summary>
+        /// The source to which the routing rule is to be applied to. For example, DeviceMessages
+        /// Serialized Name: FallbackRouteProperties.source
+        /// </summary>
         public RoutingSource Source { get; set; }
-        /// <summary> The condition which is evaluated in order to apply the fallback route. If the condition is not provided it will evaluate to true by default. For grammar, See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-query-language. </summary>
+        /// <summary>
+        /// The condition which is evaluated in order to apply the fallback route. If the condition is not provided it will evaluate to true by default. For grammar, See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-query-language
+        /// Serialized Name: FallbackRouteProperties.condition
+        /// </summary>
         public string Condition { get; set; }
-        /// <summary> The list of endpoints to which the messages that satisfy the condition are routed to. Currently only 1 endpoint is allowed. </summary>
+        /// <summary>
+        /// The list of endpoints to which the messages that satisfy the condition are routed to. Currently only 1 endpoint is allowed.
+        /// Serialized Name: FallbackRouteProperties.endpointNames
+        /// </summary>
         public IList<string> EndpointNames { get; }
-        /// <summary> Used to specify whether the fallback route is enabled. </summary>
+        /// <summary>
+        /// Used to specify whether the fallback route is enabled.
+        /// Serialized Name: FallbackRouteProperties.isEnabled
+        /// </summary>
         public bool IsEnabled { get; set; }
     }
 }

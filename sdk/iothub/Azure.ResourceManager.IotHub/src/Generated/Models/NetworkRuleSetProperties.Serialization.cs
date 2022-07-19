@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.IotHub.Models
 
         internal static NetworkRuleSetProperties DeserializeNetworkRuleSetProperties(JsonElement element)
         {
-            Optional<DefaultAction> defaultAction = default;
+            Optional<IotHubNetworkRuleSetDefaultAction> defaultAction = default;
             bool applyToBuiltInEventHubEndpoint = default;
             IList<NetworkRuleSetIPRule> ipRules = default;
             foreach (var property in element.EnumerateObject())
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.IotHub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    defaultAction = new DefaultAction(property.Value.GetString());
+                    defaultAction = new IotHubNetworkRuleSetDefaultAction(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("applyToBuiltInEventHubEndpoint"))

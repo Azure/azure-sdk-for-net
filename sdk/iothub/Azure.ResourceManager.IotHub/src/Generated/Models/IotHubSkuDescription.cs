@@ -9,12 +9,21 @@ using System;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary> SKU properties. </summary>
+    /// <summary>
+    /// SKU properties.
+    /// Serialized Name: IotHubSkuDescription
+    /// </summary>
     public partial class IotHubSkuDescription
     {
         /// <summary> Initializes a new instance of IotHubSkuDescription. </summary>
-        /// <param name="sku"> The type of the resource. </param>
-        /// <param name="capacity"> IotHub capacity. </param>
+        /// <param name="sku">
+        /// The type of the resource.
+        /// Serialized Name: IotHubSkuDescription.sku
+        /// </param>
+        /// <param name="capacity">
+        /// IotHub capacity
+        /// Serialized Name: IotHubSkuDescription.capacity
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> or <paramref name="capacity"/> is null. </exception>
         internal IotHubSkuDescription(IotHubSkuInfo sku, IotHubCapacity capacity)
         {
@@ -32,9 +41,18 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary> Initializes a new instance of IotHubSkuDescription. </summary>
-        /// <param name="resourceType"> The type of the resource. </param>
-        /// <param name="sku"> The type of the resource. </param>
-        /// <param name="capacity"> IotHub capacity. </param>
+        /// <param name="resourceType">
+        /// The type of the resource.
+        /// Serialized Name: IotHubSkuDescription.resourceType
+        /// </param>
+        /// <param name="sku">
+        /// The type of the resource.
+        /// Serialized Name: IotHubSkuDescription.sku
+        /// </param>
+        /// <param name="capacity">
+        /// IotHub capacity
+        /// Serialized Name: IotHubSkuDescription.capacity
+        /// </param>
         internal IotHubSkuDescription(string resourceType, IotHubSkuInfo sku, IotHubCapacity capacity)
         {
             ResourceType = resourceType;
@@ -42,11 +60,20 @@ namespace Azure.ResourceManager.IotHub.Models
             Capacity = capacity;
         }
 
-        /// <summary> The type of the resource. </summary>
+        /// <summary>
+        /// The type of the resource.
+        /// Serialized Name: IotHubSkuDescription.resourceType
+        /// </summary>
         public string ResourceType { get; }
-        /// <summary> The type of the resource. </summary>
+        /// <summary>
+        /// The type of the resource.
+        /// Serialized Name: IotHubSkuDescription.sku
+        /// </summary>
         public IotHubSkuInfo Sku { get; }
-        /// <summary> IotHub capacity. </summary>
+        /// <summary>
+        /// IotHub capacity
+        /// Serialized Name: IotHubSkuDescription.capacity
+        /// </summary>
         public IotHubCapacity Capacity { get; }
     }
 }

@@ -11,23 +11,32 @@ using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary> The available private link resources for an IotHub. </summary>
+    /// <summary>
+    /// The available private link resources for an IotHub
+    /// Serialized Name: PrivateLinkResources
+    /// </summary>
     internal partial class PrivateLinkResources
     {
         /// <summary> Initializes a new instance of PrivateLinkResources. </summary>
         internal PrivateLinkResources()
         {
-            Value = new ChangeTrackingList<GroupIdInformationData>();
+            Value = new ChangeTrackingList<IotHubPrivateEndpointGroupInformationData>();
         }
 
         /// <summary> Initializes a new instance of PrivateLinkResources. </summary>
-        /// <param name="value"> The list of available private link resources for an IotHub. </param>
-        internal PrivateLinkResources(IReadOnlyList<GroupIdInformationData> value)
+        /// <param name="value">
+        /// The list of available private link resources for an IotHub
+        /// Serialized Name: PrivateLinkResources.value
+        /// </param>
+        internal PrivateLinkResources(IReadOnlyList<IotHubPrivateEndpointGroupInformationData> value)
         {
             Value = value;
         }
 
-        /// <summary> The list of available private link resources for an IotHub. </summary>
-        public IReadOnlyList<GroupIdInformationData> Value { get; }
+        /// <summary>
+        /// The list of available private link resources for an IotHub
+        /// Serialized Name: PrivateLinkResources.value
+        /// </summary>
+        public IReadOnlyList<IotHubPrivateEndpointGroupInformationData> Value { get; }
     }
 }

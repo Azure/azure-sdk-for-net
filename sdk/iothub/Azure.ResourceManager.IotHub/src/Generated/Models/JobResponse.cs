@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary> The properties of the Job Response object. </summary>
+    /// <summary>
+    /// The properties of the Job Response object.
+    /// Serialized Name: JobResponse
+    /// </summary>
     public partial class JobResponse
     {
         /// <summary> Initializes a new instance of JobResponse. </summary>
@@ -18,14 +21,38 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary> Initializes a new instance of JobResponse. </summary>
-        /// <param name="jobId"> The job identifier. </param>
-        /// <param name="startTimeUtc"> The start time of the job. </param>
-        /// <param name="endTimeUtc"> The time the job stopped processing. </param>
-        /// <param name="jobType"> The type of the job. </param>
-        /// <param name="status"> The status of the job. </param>
-        /// <param name="failureReason"> If status == failed, this string containing the reason for the failure. </param>
-        /// <param name="statusMessage"> The status message for the job. </param>
-        /// <param name="parentJobId"> The job identifier of the parent job, if any. </param>
+        /// <param name="jobId">
+        /// The job identifier.
+        /// Serialized Name: JobResponse.jobId
+        /// </param>
+        /// <param name="startTimeUtc">
+        /// The start time of the job.
+        /// Serialized Name: JobResponse.startTimeUtc
+        /// </param>
+        /// <param name="endTimeUtc">
+        /// The time the job stopped processing.
+        /// Serialized Name: JobResponse.endTimeUtc
+        /// </param>
+        /// <param name="jobType">
+        /// The type of the job.
+        /// Serialized Name: JobResponse.type
+        /// </param>
+        /// <param name="status">
+        /// The status of the job.
+        /// Serialized Name: JobResponse.status
+        /// </param>
+        /// <param name="failureReason">
+        /// If status == failed, this string containing the reason for the failure.
+        /// Serialized Name: JobResponse.failureReason
+        /// </param>
+        /// <param name="statusMessage">
+        /// The status message for the job.
+        /// Serialized Name: JobResponse.statusMessage
+        /// </param>
+        /// <param name="parentJobId">
+        /// The job identifier of the parent job, if any.
+        /// Serialized Name: JobResponse.parentJobId
+        /// </param>
         internal JobResponse(string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, JobType? jobType, JobStatus? status, string failureReason, string statusMessage, string parentJobId)
         {
             JobId = jobId;
@@ -38,21 +65,45 @@ namespace Azure.ResourceManager.IotHub.Models
             ParentJobId = parentJobId;
         }
 
-        /// <summary> The job identifier. </summary>
+        /// <summary>
+        /// The job identifier.
+        /// Serialized Name: JobResponse.jobId
+        /// </summary>
         public string JobId { get; }
-        /// <summary> The start time of the job. </summary>
+        /// <summary>
+        /// The start time of the job.
+        /// Serialized Name: JobResponse.startTimeUtc
+        /// </summary>
         public DateTimeOffset? StartTimeUtc { get; }
-        /// <summary> The time the job stopped processing. </summary>
+        /// <summary>
+        /// The time the job stopped processing.
+        /// Serialized Name: JobResponse.endTimeUtc
+        /// </summary>
         public DateTimeOffset? EndTimeUtc { get; }
-        /// <summary> The type of the job. </summary>
+        /// <summary>
+        /// The type of the job.
+        /// Serialized Name: JobResponse.type
+        /// </summary>
         public JobType? JobType { get; }
-        /// <summary> The status of the job. </summary>
+        /// <summary>
+        /// The status of the job.
+        /// Serialized Name: JobResponse.status
+        /// </summary>
         public JobStatus? Status { get; }
-        /// <summary> If status == failed, this string containing the reason for the failure. </summary>
+        /// <summary>
+        /// If status == failed, this string containing the reason for the failure.
+        /// Serialized Name: JobResponse.failureReason
+        /// </summary>
         public string FailureReason { get; }
-        /// <summary> The status message for the job. </summary>
+        /// <summary>
+        /// The status message for the job.
+        /// Serialized Name: JobResponse.statusMessage
+        /// </summary>
         public string StatusMessage { get; }
-        /// <summary> The job identifier of the parent job, if any. </summary>
+        /// <summary>
+        /// The job identifier of the parent job, if any.
+        /// Serialized Name: JobResponse.parentJobId
+        /// </summary>
         public string ParentJobId { get; }
     }
 }

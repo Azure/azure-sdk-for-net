@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary> The properties related to the custom endpoints to which your IoT hub routes messages based on the routing rules. A maximum of 10 custom endpoints are allowed across all endpoint types for paid hubs and only 1 custom endpoint is allowed across all endpoint types for free hubs. </summary>
+    /// <summary>
+    /// The properties related to the custom endpoints to which your IoT hub routes messages based on the routing rules. A maximum of 10 custom endpoints are allowed across all endpoint types for paid hubs and only 1 custom endpoint is allowed across all endpoint types for free hubs.
+    /// Serialized Name: RoutingEndpoints
+    /// </summary>
     public partial class RoutingEndpoints
     {
         /// <summary> Initializes a new instance of RoutingEndpoints. </summary>
@@ -23,10 +26,22 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary> Initializes a new instance of RoutingEndpoints. </summary>
-        /// <param name="serviceBusQueues"> The list of Service Bus queue endpoints that IoT hub routes the messages to, based on the routing rules. </param>
-        /// <param name="serviceBusTopics"> The list of Service Bus topic endpoints that the IoT hub routes the messages to, based on the routing rules. </param>
-        /// <param name="eventHubs"> The list of Event Hubs endpoints that IoT hub routes messages to, based on the routing rules. This list does not include the built-in Event Hubs endpoint. </param>
-        /// <param name="storageContainers"> The list of storage container endpoints that IoT hub routes messages to, based on the routing rules. </param>
+        /// <param name="serviceBusQueues">
+        /// The list of Service Bus queue endpoints that IoT hub routes the messages to, based on the routing rules.
+        /// Serialized Name: RoutingEndpoints.serviceBusQueues
+        /// </param>
+        /// <param name="serviceBusTopics">
+        /// The list of Service Bus topic endpoints that the IoT hub routes the messages to, based on the routing rules.
+        /// Serialized Name: RoutingEndpoints.serviceBusTopics
+        /// </param>
+        /// <param name="eventHubs">
+        /// The list of Event Hubs endpoints that IoT hub routes messages to, based on the routing rules. This list does not include the built-in Event Hubs endpoint.
+        /// Serialized Name: RoutingEndpoints.eventHubs
+        /// </param>
+        /// <param name="storageContainers">
+        /// The list of storage container endpoints that IoT hub routes messages to, based on the routing rules.
+        /// Serialized Name: RoutingEndpoints.storageContainers
+        /// </param>
         internal RoutingEndpoints(IList<RoutingServiceBusQueueEndpointProperties> serviceBusQueues, IList<RoutingServiceBusTopicEndpointProperties> serviceBusTopics, IList<RoutingEventHubProperties> eventHubs, IList<RoutingStorageContainerProperties> storageContainers)
         {
             ServiceBusQueues = serviceBusQueues;
@@ -35,13 +50,25 @@ namespace Azure.ResourceManager.IotHub.Models
             StorageContainers = storageContainers;
         }
 
-        /// <summary> The list of Service Bus queue endpoints that IoT hub routes the messages to, based on the routing rules. </summary>
+        /// <summary>
+        /// The list of Service Bus queue endpoints that IoT hub routes the messages to, based on the routing rules.
+        /// Serialized Name: RoutingEndpoints.serviceBusQueues
+        /// </summary>
         public IList<RoutingServiceBusQueueEndpointProperties> ServiceBusQueues { get; }
-        /// <summary> The list of Service Bus topic endpoints that the IoT hub routes the messages to, based on the routing rules. </summary>
+        /// <summary>
+        /// The list of Service Bus topic endpoints that the IoT hub routes the messages to, based on the routing rules.
+        /// Serialized Name: RoutingEndpoints.serviceBusTopics
+        /// </summary>
         public IList<RoutingServiceBusTopicEndpointProperties> ServiceBusTopics { get; }
-        /// <summary> The list of Event Hubs endpoints that IoT hub routes messages to, based on the routing rules. This list does not include the built-in Event Hubs endpoint. </summary>
+        /// <summary>
+        /// The list of Event Hubs endpoints that IoT hub routes messages to, based on the routing rules. This list does not include the built-in Event Hubs endpoint.
+        /// Serialized Name: RoutingEndpoints.eventHubs
+        /// </summary>
         public IList<RoutingEventHubProperties> EventHubs { get; }
-        /// <summary> The list of storage container endpoints that IoT hub routes messages to, based on the routing rules. </summary>
+        /// <summary>
+        /// The list of storage container endpoints that IoT hub routes messages to, based on the routing rules.
+        /// Serialized Name: RoutingEndpoints.storageContainers
+        /// </summary>
         public IList<RoutingStorageContainerProperties> StorageContainers { get; }
     }
 }

@@ -185,8 +185,8 @@ namespace Azure.ResourceManager.IotHub
     }
     public static partial class IotHubExtensions
     {
-        public static Azure.Response<Azure.ResourceManager.IotHub.Models.IotHubNameAvailabilityInfo> CheckNameAvailabilityIotHubResource(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.IotHub.Models.OperationInputs operationInputs, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.IotHub.Models.IotHubNameAvailabilityInfo>> CheckNameAvailabilityIotHubResourceAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.IotHub.Models.OperationInputs operationInputs, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.IotHub.Models.IotHubNameAvailabilityResponse> CheckIotHubNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.IotHub.Models.IotHubNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.IotHub.Models.IotHubNameAvailabilityResponse>> CheckIotHubNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.IotHub.Models.IotHubNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.IotHub.CertificateDescriptionResource GetCertificateDescriptionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.IotHub.EventHubConsumerGroupInfoResource GetEventHubConsumerGroupInfoResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.IotHub.GroupIdInformationResource GetGroupIdInformationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -254,24 +254,6 @@ namespace Azure.ResourceManager.IotHub.Models
         RegistryReadServiceConnectDeviceConnect = 12,
         RegistryWriteServiceConnectDeviceConnect = 13,
         RegistryReadRegistryWriteServiceConnectDeviceConnect = 14,
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AuthenticationType : System.IEquatable<Azure.ResourceManager.IotHub.Models.AuthenticationType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AuthenticationType(string value) { throw null; }
-        public static Azure.ResourceManager.IotHub.Models.AuthenticationType IdentityBased { get { throw null; } }
-        public static Azure.ResourceManager.IotHub.Models.AuthenticationType KeyBased { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.IotHub.Models.AuthenticationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.IotHub.Models.AuthenticationType left, Azure.ResourceManager.IotHub.Models.AuthenticationType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.IotHub.Models.AuthenticationType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.IotHub.Models.AuthenticationType left, Azure.ResourceManager.IotHub.Models.AuthenticationType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct Capability : System.IEquatable<Azure.ResourceManager.IotHub.Models.Capability>
@@ -410,7 +392,7 @@ namespace Azure.ResourceManager.IotHub.Models
     public partial class ExportDevicesContent
     {
         public ExportDevicesContent(System.Uri exportBlobContainerUri, bool excludeKeys) { }
-        public Azure.ResourceManager.IotHub.Models.AuthenticationType? AuthenticationType { get { throw null; } set { } }
+        public Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType? AuthenticationType { get { throw null; } set { } }
         public string ConfigurationsBlobName { get { throw null; } set { } }
         public bool ExcludeKeys { get { throw null; } }
         public System.Uri ExportBlobContainerUri { get { throw null; } }
@@ -449,7 +431,7 @@ namespace Azure.ResourceManager.IotHub.Models
     public partial class ImportDevicesContent
     {
         public ImportDevicesContent(System.Uri inputBlobContainerUri, System.Uri outputBlobContainerUri) { }
-        public Azure.ResourceManager.IotHub.Models.AuthenticationType? AuthenticationType { get { throw null; } set { } }
+        public Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType? AuthenticationType { get { throw null; } set { } }
         public string ConfigurationsBlobName { get { throw null; } set { } }
         public bool? IncludeConfigurations { get { throw null; } set { } }
         public System.Uri InputBlobContainerUri { get { throw null; } }
@@ -457,6 +439,24 @@ namespace Azure.ResourceManager.IotHub.Models
         public System.Uri OutputBlobContainerUri { get { throw null; } }
         public string OutputBlobName { get { throw null; } set { } }
         public string UserAssignedIdentity { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct IotHubAuthenticationType : System.IEquatable<Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public IotHubAuthenticationType(string value) { throw null; }
+        public static Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType IdentityBased { get { throw null; } }
+        public static Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType KeyBased { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType left, Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType left, Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class IotHubCapacity
     {
@@ -477,9 +477,14 @@ namespace Azure.ResourceManager.IotHub.Models
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.ResourceManager.IotHub.Models.IotHubReplicaRoleType? Role { get { throw null; } }
     }
-    public partial class IotHubNameAvailabilityInfo
+    public partial class IotHubNameAvailabilityContent
     {
-        internal IotHubNameAvailabilityInfo() { }
+        public IotHubNameAvailabilityContent(string name) { }
+        public string Name { get { throw null; } }
+    }
+    public partial class IotHubNameAvailabilityResponse
+    {
+        internal IotHubNameAvailabilityResponse() { }
         public string Message { get { throw null; } }
         public bool? NameAvailable { get { throw null; } }
         public Azure.ResourceManager.IotHub.Models.IotHubNameUnavailabilityReason? Reason { get { throw null; } }
@@ -743,11 +748,6 @@ namespace Azure.ResourceManager.IotHub.Models
         public Azure.ResourceManager.IotHub.Models.DefaultAction? DefaultAction { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.IotHub.Models.NetworkRuleSetIPRule> IPRules { get { throw null; } }
     }
-    public partial class OperationInputs
-    {
-        public OperationInputs(string name) { }
-        public string Name { get { throw null; } }
-    }
     public partial class PrivateEndpointConnectionProperties
     {
         public PrivateEndpointConnectionProperties(Azure.ResourceManager.IotHub.Models.IotHubPrivateLinkServiceConnectionState connectionState) { }
@@ -856,7 +856,7 @@ namespace Azure.ResourceManager.IotHub.Models
     public partial class RoutingEventHubProperties
     {
         public RoutingEventHubProperties(string name) { }
-        public Azure.ResourceManager.IotHub.Models.AuthenticationType? AuthenticationType { get { throw null; } set { } }
+        public Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType? AuthenticationType { get { throw null; } set { } }
         public string ConnectionString { get { throw null; } set { } }
         public System.Uri EndpointUri { get { throw null; } set { } }
         public string EntityPath { get { throw null; } set { } }
@@ -884,7 +884,7 @@ namespace Azure.ResourceManager.IotHub.Models
     public partial class RoutingServiceBusQueueEndpointProperties
     {
         public RoutingServiceBusQueueEndpointProperties(string name) { }
-        public Azure.ResourceManager.IotHub.Models.AuthenticationType? AuthenticationType { get { throw null; } set { } }
+        public Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType? AuthenticationType { get { throw null; } set { } }
         public string ConnectionString { get { throw null; } set { } }
         public System.Uri EndpointUri { get { throw null; } set { } }
         public string EntityPath { get { throw null; } set { } }
@@ -897,7 +897,7 @@ namespace Azure.ResourceManager.IotHub.Models
     public partial class RoutingServiceBusTopicEndpointProperties
     {
         public RoutingServiceBusTopicEndpointProperties(string name) { }
-        public Azure.ResourceManager.IotHub.Models.AuthenticationType? AuthenticationType { get { throw null; } set { } }
+        public Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType? AuthenticationType { get { throw null; } set { } }
         public string ConnectionString { get { throw null; } set { } }
         public System.Uri EndpointUri { get { throw null; } set { } }
         public string EntityPath { get { throw null; } set { } }
@@ -932,7 +932,7 @@ namespace Azure.ResourceManager.IotHub.Models
     public partial class RoutingStorageContainerProperties
     {
         public RoutingStorageContainerProperties(string name, string containerName) { }
-        public Azure.ResourceManager.IotHub.Models.AuthenticationType? AuthenticationType { get { throw null; } set { } }
+        public Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType? AuthenticationType { get { throw null; } set { } }
         public int? BatchFrequencyInSeconds { get { throw null; } set { } }
         public string ConnectionString { get { throw null; } set { } }
         public string ContainerName { get { throw null; } set { } }
@@ -988,7 +988,7 @@ namespace Azure.ResourceManager.IotHub.Models
     public partial class StorageEndpointProperties
     {
         public StorageEndpointProperties(string connectionString, string containerName) { }
-        public Azure.ResourceManager.IotHub.Models.AuthenticationType? AuthenticationType { get { throw null; } set { } }
+        public Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType? AuthenticationType { get { throw null; } set { } }
         public string ConnectionString { get { throw null; } set { } }
         public string ContainerName { get { throw null; } set { } }
         public System.TimeSpan? SasTtlAsIso8601 { get { throw null; } set { } }

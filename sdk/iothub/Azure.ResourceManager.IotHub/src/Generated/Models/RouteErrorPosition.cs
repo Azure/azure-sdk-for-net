@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary> Position where the route error happened. </summary>
+    /// <summary>
+    /// Position where the route error happened
+    /// Serialized Name: RouteErrorPosition
+    /// </summary>
     public partial class RouteErrorPosition
     {
         /// <summary> Initializes a new instance of RouteErrorPosition. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary> Initializes a new instance of RouteErrorPosition. </summary>
-        /// <param name="line"> Line where the route error happened. </param>
-        /// <param name="column"> Column where the route error happened. </param>
+        /// <param name="line">
+        /// Line where the route error happened
+        /// Serialized Name: RouteErrorPosition.line
+        /// </param>
+        /// <param name="column">
+        /// Column where the route error happened
+        /// Serialized Name: RouteErrorPosition.column
+        /// </param>
         internal RouteErrorPosition(int? line, int? column)
         {
             Line = line;
             Column = column;
         }
 
-        /// <summary> Line where the route error happened. </summary>
+        /// <summary>
+        /// Line where the route error happened
+        /// Serialized Name: RouteErrorPosition.line
+        /// </summary>
         public int? Line { get; }
-        /// <summary> Column where the route error happened. </summary>
+        /// <summary>
+        /// Column where the route error happened
+        /// Serialized Name: RouteErrorPosition.column
+        /// </summary>
         public int? Column { get; }
     }
 }

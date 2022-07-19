@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary> The source that the routing rule is to be applied to, such as DeviceMessages. </summary>
+    /// <summary>
+    /// The source that the routing rule is to be applied to, such as DeviceMessages.
+    /// Serialized Name: RoutingSource
+    /// </summary>
     public readonly partial struct RoutingSource : IEquatable<RoutingSource>
     {
         private readonly string _value;
@@ -29,17 +32,35 @@ namespace Azure.ResourceManager.IotHub.Models
         private const string DeviceJobLifecycleEventsValue = "DeviceJobLifecycleEvents";
         private const string DeviceConnectionStateEventsValue = "DeviceConnectionStateEvents";
 
-        /// <summary> Invalid. </summary>
+        /// <summary>
+        /// Invalid
+        /// Serialized Name: RoutingSource.Invalid
+        /// </summary>
         public static RoutingSource Invalid { get; } = new RoutingSource(InvalidValue);
-        /// <summary> DeviceMessages. </summary>
+        /// <summary>
+        /// DeviceMessages
+        /// Serialized Name: RoutingSource.DeviceMessages
+        /// </summary>
         public static RoutingSource DeviceMessages { get; } = new RoutingSource(DeviceMessagesValue);
-        /// <summary> TwinChangeEvents. </summary>
+        /// <summary>
+        /// TwinChangeEvents
+        /// Serialized Name: RoutingSource.TwinChangeEvents
+        /// </summary>
         public static RoutingSource TwinChangeEvents { get; } = new RoutingSource(TwinChangeEventsValue);
-        /// <summary> DeviceLifecycleEvents. </summary>
+        /// <summary>
+        /// DeviceLifecycleEvents
+        /// Serialized Name: RoutingSource.DeviceLifecycleEvents
+        /// </summary>
         public static RoutingSource DeviceLifecycleEvents { get; } = new RoutingSource(DeviceLifecycleEventsValue);
-        /// <summary> DeviceJobLifecycleEvents. </summary>
+        /// <summary>
+        /// DeviceJobLifecycleEvents
+        /// Serialized Name: RoutingSource.DeviceJobLifecycleEvents
+        /// </summary>
         public static RoutingSource DeviceJobLifecycleEvents { get; } = new RoutingSource(DeviceJobLifecycleEventsValue);
-        /// <summary> DeviceConnectionStateEvents. </summary>
+        /// <summary>
+        /// DeviceConnectionStateEvents
+        /// Serialized Name: RoutingSource.DeviceConnectionStateEvents
+        /// </summary>
         public static RoutingSource DeviceConnectionStateEvents { get; } = new RoutingSource(DeviceConnectionStateEventsValue);
         /// <summary> Determines if two <see cref="RoutingSource"/> values are the same. </summary>
         public static bool operator ==(RoutingSource left, RoutingSource right) => left.Equals(right);

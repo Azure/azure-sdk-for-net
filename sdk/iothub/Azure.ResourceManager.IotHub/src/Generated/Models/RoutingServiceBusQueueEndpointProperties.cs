@@ -9,11 +9,17 @@ using System;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary> The properties related to service bus queue endpoint types. </summary>
+    /// <summary>
+    /// The properties related to service bus queue endpoint types.
+    /// Serialized Name: RoutingServiceBusQueueEndpointProperties
+    /// </summary>
     public partial class RoutingServiceBusQueueEndpointProperties
     {
         /// <summary> Initializes a new instance of RoutingServiceBusQueueEndpointProperties. </summary>
-        /// <param name="name"> The name that identifies this endpoint. The name can only include alphanumeric characters, periods, underscores, hyphens and has a maximum length of 64 characters. The following names are reserved:  events, fileNotifications, $default. Endpoint names must be unique across endpoint types. The name need not be the same as the actual queue name. </param>
+        /// <param name="name">
+        /// The name that identifies this endpoint. The name can only include alphanumeric characters, periods, underscores, hyphens and has a maximum length of 64 characters. The following names are reserved:  events, fileNotifications, $default. Endpoint names must be unique across endpoint types. The name need not be the same as the actual queue name.
+        /// Serialized Name: RoutingServiceBusQueueEndpointProperties.name
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public RoutingServiceBusQueueEndpointProperties(string name)
         {
@@ -26,16 +32,43 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary> Initializes a new instance of RoutingServiceBusQueueEndpointProperties. </summary>
-        /// <param name="id"> Id of the service bus queue endpoint. </param>
-        /// <param name="connectionString"> The connection string of the service bus queue endpoint. </param>
-        /// <param name="endpointUri"> The url of the service bus queue endpoint. It must include the protocol sb://. </param>
-        /// <param name="entityPath"> Queue name on the service bus namespace. </param>
-        /// <param name="authenticationType"> Method used to authenticate against the service bus queue endpoint. </param>
-        /// <param name="identity"> Managed identity properties of routing service bus queue endpoint. </param>
-        /// <param name="name"> The name that identifies this endpoint. The name can only include alphanumeric characters, periods, underscores, hyphens and has a maximum length of 64 characters. The following names are reserved:  events, fileNotifications, $default. Endpoint names must be unique across endpoint types. The name need not be the same as the actual queue name. </param>
-        /// <param name="subscriptionId"> The subscription identifier of the service bus queue endpoint. </param>
-        /// <param name="resourceGroup"> The name of the resource group of the service bus queue endpoint. </param>
-        internal RoutingServiceBusQueueEndpointProperties(string id, string connectionString, Uri endpointUri, string entityPath, AuthenticationType? authenticationType, ManagedIdentity identity, string name, string subscriptionId, string resourceGroup)
+        /// <param name="id">
+        /// Id of the service bus queue endpoint
+        /// Serialized Name: RoutingServiceBusQueueEndpointProperties.id
+        /// </param>
+        /// <param name="connectionString">
+        /// The connection string of the service bus queue endpoint.
+        /// Serialized Name: RoutingServiceBusQueueEndpointProperties.connectionString
+        /// </param>
+        /// <param name="endpointUri">
+        /// The url of the service bus queue endpoint. It must include the protocol sb://
+        /// Serialized Name: RoutingServiceBusQueueEndpointProperties.endpointUri
+        /// </param>
+        /// <param name="entityPath">
+        /// Queue name on the service bus namespace
+        /// Serialized Name: RoutingServiceBusQueueEndpointProperties.entityPath
+        /// </param>
+        /// <param name="authenticationType">
+        /// Method used to authenticate against the service bus queue endpoint
+        /// Serialized Name: RoutingServiceBusQueueEndpointProperties.authenticationType
+        /// </param>
+        /// <param name="identity">
+        /// Managed identity properties of routing service bus queue endpoint.
+        /// Serialized Name: RoutingServiceBusQueueEndpointProperties.identity
+        /// </param>
+        /// <param name="name">
+        /// The name that identifies this endpoint. The name can only include alphanumeric characters, periods, underscores, hyphens and has a maximum length of 64 characters. The following names are reserved:  events, fileNotifications, $default. Endpoint names must be unique across endpoint types. The name need not be the same as the actual queue name.
+        /// Serialized Name: RoutingServiceBusQueueEndpointProperties.name
+        /// </param>
+        /// <param name="subscriptionId">
+        /// The subscription identifier of the service bus queue endpoint.
+        /// Serialized Name: RoutingServiceBusQueueEndpointProperties.subscriptionId
+        /// </param>
+        /// <param name="resourceGroup">
+        /// The name of the resource group of the service bus queue endpoint.
+        /// Serialized Name: RoutingServiceBusQueueEndpointProperties.resourceGroup
+        /// </param>
+        internal RoutingServiceBusQueueEndpointProperties(string id, string connectionString, Uri endpointUri, string entityPath, IotHubAuthenticationType? authenticationType, ManagedIdentity identity, string name, string subscriptionId, string resourceGroup)
         {
             Id = id;
             ConnectionString = connectionString;
@@ -48,19 +81,40 @@ namespace Azure.ResourceManager.IotHub.Models
             ResourceGroup = resourceGroup;
         }
 
-        /// <summary> Id of the service bus queue endpoint. </summary>
+        /// <summary>
+        /// Id of the service bus queue endpoint
+        /// Serialized Name: RoutingServiceBusQueueEndpointProperties.id
+        /// </summary>
         public string Id { get; set; }
-        /// <summary> The connection string of the service bus queue endpoint. </summary>
+        /// <summary>
+        /// The connection string of the service bus queue endpoint.
+        /// Serialized Name: RoutingServiceBusQueueEndpointProperties.connectionString
+        /// </summary>
         public string ConnectionString { get; set; }
-        /// <summary> The url of the service bus queue endpoint. It must include the protocol sb://. </summary>
+        /// <summary>
+        /// The url of the service bus queue endpoint. It must include the protocol sb://
+        /// Serialized Name: RoutingServiceBusQueueEndpointProperties.endpointUri
+        /// </summary>
         public Uri EndpointUri { get; set; }
-        /// <summary> Queue name on the service bus namespace. </summary>
+        /// <summary>
+        /// Queue name on the service bus namespace
+        /// Serialized Name: RoutingServiceBusQueueEndpointProperties.entityPath
+        /// </summary>
         public string EntityPath { get; set; }
-        /// <summary> Method used to authenticate against the service bus queue endpoint. </summary>
-        public AuthenticationType? AuthenticationType { get; set; }
-        /// <summary> Managed identity properties of routing service bus queue endpoint. </summary>
+        /// <summary>
+        /// Method used to authenticate against the service bus queue endpoint
+        /// Serialized Name: RoutingServiceBusQueueEndpointProperties.authenticationType
+        /// </summary>
+        public IotHubAuthenticationType? AuthenticationType { get; set; }
+        /// <summary>
+        /// Managed identity properties of routing service bus queue endpoint.
+        /// Serialized Name: RoutingServiceBusQueueEndpointProperties.identity
+        /// </summary>
         internal ManagedIdentity Identity { get; set; }
-        /// <summary> The user assigned identity. </summary>
+        /// <summary>
+        /// The user assigned identity.
+        /// Serialized Name: ManagedIdentity.userAssignedIdentity
+        /// </summary>
         public string UserAssignedIdentity
         {
             get => Identity is null ? default : Identity.UserAssignedIdentity;
@@ -72,11 +126,20 @@ namespace Azure.ResourceManager.IotHub.Models
             }
         }
 
-        /// <summary> The name that identifies this endpoint. The name can only include alphanumeric characters, periods, underscores, hyphens and has a maximum length of 64 characters. The following names are reserved:  events, fileNotifications, $default. Endpoint names must be unique across endpoint types. The name need not be the same as the actual queue name. </summary>
+        /// <summary>
+        /// The name that identifies this endpoint. The name can only include alphanumeric characters, periods, underscores, hyphens and has a maximum length of 64 characters. The following names are reserved:  events, fileNotifications, $default. Endpoint names must be unique across endpoint types. The name need not be the same as the actual queue name.
+        /// Serialized Name: RoutingServiceBusQueueEndpointProperties.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> The subscription identifier of the service bus queue endpoint. </summary>
+        /// <summary>
+        /// The subscription identifier of the service bus queue endpoint.
+        /// Serialized Name: RoutingServiceBusQueueEndpointProperties.subscriptionId
+        /// </summary>
         public string SubscriptionId { get; set; }
-        /// <summary> The name of the resource group of the service bus queue endpoint. </summary>
+        /// <summary>
+        /// The name of the resource group of the service bus queue endpoint.
+        /// Serialized Name: RoutingServiceBusQueueEndpointProperties.resourceGroup
+        /// </summary>
         public string ResourceGroup { get; set; }
     }
 }

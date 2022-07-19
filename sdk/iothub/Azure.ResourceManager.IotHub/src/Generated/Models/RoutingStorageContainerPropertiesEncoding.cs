@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary> Encoding that is used to serialize messages to blobs. Supported values are &apos;avro&apos;, &apos;avrodeflate&apos;, and &apos;JSON&apos;. Default value is &apos;avro&apos;. </summary>
+    /// <summary>
+    /// Encoding that is used to serialize messages to blobs. Supported values are &apos;avro&apos;, &apos;avrodeflate&apos;, and &apos;JSON&apos;. Default value is &apos;avro&apos;.
+    /// Serialized Name: RoutingStorageContainerPropertiesEncoding
+    /// </summary>
     public readonly partial struct RoutingStorageContainerPropertiesEncoding : IEquatable<RoutingStorageContainerPropertiesEncoding>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.IotHub.Models
         private const string AvroDeflateValue = "AvroDeflate";
         private const string JsonValue = "JSON";
 
-        /// <summary> Avro. </summary>
+        /// <summary>
+        /// Avro
+        /// Serialized Name: RoutingStorageContainerPropertiesEncoding.Avro
+        /// </summary>
         public static RoutingStorageContainerPropertiesEncoding Avro { get; } = new RoutingStorageContainerPropertiesEncoding(AvroValue);
-        /// <summary> AvroDeflate. </summary>
+        /// <summary>
+        /// AvroDeflate
+        /// Serialized Name: RoutingStorageContainerPropertiesEncoding.AvroDeflate
+        /// </summary>
         public static RoutingStorageContainerPropertiesEncoding AvroDeflate { get; } = new RoutingStorageContainerPropertiesEncoding(AvroDeflateValue);
-        /// <summary> JSON. </summary>
+        /// <summary>
+        /// JSON
+        /// Serialized Name: RoutingStorageContainerPropertiesEncoding.JSON
+        /// </summary>
         public static RoutingStorageContainerPropertiesEncoding Json { get; } = new RoutingStorageContainerPropertiesEncoding(JsonValue);
         /// <summary> Determines if two <see cref="RoutingStorageContainerPropertiesEncoding"/> values are the same. </summary>
         public static bool operator ==(RoutingStorageContainerPropertiesEncoding left, RoutingStorageContainerPropertiesEncoding right) => left.Equals(right);

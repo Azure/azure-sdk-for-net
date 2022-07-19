@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.IotHub.Models
             Optional<bool> enableFileUploadNotifications = default;
             Optional<CloudToDeviceProperties> cloudToDevice = default;
             Optional<string> comments = default;
-            Optional<Capability> features = default;
+            Optional<IotHubCapability> features = default;
             Optional<IReadOnlyList<IotHubLocationDescription>> locations = default;
             Optional<bool> enableDataResidency = default;
             foreach (var property in element.EnumerateObject())
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.IotHub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    features = new Capability(property.Value.GetString());
+                    features = new IotHubCapability(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("locations"))

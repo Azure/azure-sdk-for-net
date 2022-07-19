@@ -137,11 +137,11 @@ namespace Azure.ResourceManager.IotHub
             return GetEventHubConsumerGroupInfos(eventHubEndpointName).Get(name, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CertificateDescriptionResources in the IotHubDescription. </summary>
-        /// <returns> An object representing collection of CertificateDescriptionResources and their operations over a CertificateDescriptionResource. </returns>
-        public virtual CertificateDescriptionCollection GetCertificateDescriptions()
+        /// <summary> Gets a collection of IotHubCertificateDescriptionResources in the IotHubDescription. </summary>
+        /// <returns> An object representing collection of IotHubCertificateDescriptionResources and their operations over a IotHubCertificateDescriptionResource. </returns>
+        public virtual IotHubCertificateDescriptionCollection GetIotHubCertificateDescriptions()
         {
-            return GetCachedClient(Client => new CertificateDescriptionCollection(Client, Id));
+            return GetCachedClient(Client => new IotHubCertificateDescriptionCollection(Client, Id));
         }
 
         /// <summary>
@@ -154,9 +154,9 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CertificateDescriptionResource>> GetCertificateDescriptionAsync(string certificateName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IotHubCertificateDescriptionResource>> GetIotHubCertificateDescriptionAsync(string certificateName, CancellationToken cancellationToken = default)
         {
-            return await GetCertificateDescriptions().GetAsync(certificateName, cancellationToken).ConfigureAwait(false);
+            return await GetIotHubCertificateDescriptions().GetAsync(certificateName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -169,31 +169,16 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CertificateDescriptionResource> GetCertificateDescription(string certificateName, CancellationToken cancellationToken = default)
+        public virtual Response<IotHubCertificateDescriptionResource> GetIotHubCertificateDescription(string certificateName, CancellationToken cancellationToken = default)
         {
-            return GetCertificateDescriptions().Get(certificateName, cancellationToken);
+            return GetIotHubCertificateDescriptions().Get(certificateName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of GroupIdInformationResources in the IotHubDescription. </summary>
-        /// <returns> An object representing collection of GroupIdInformationResources and their operations over a GroupIdInformationResource. </returns>
-        public virtual GroupIdInformationCollection GetAllGroupIdInformation()
+        /// <summary> Gets a collection of IotHubPrivateEndpointGroupInformationResources in the IotHubDescription. </summary>
+        /// <returns> An object representing collection of IotHubPrivateEndpointGroupInformationResources and their operations over a IotHubPrivateEndpointGroupInformationResource. </returns>
+        public virtual IotHubPrivateEndpointGroupInformationCollection GetAllIotHubPrivateEndpointGroupInformation()
         {
-            return GetCachedClient(Client => new GroupIdInformationCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Get the specified private link resource for the given IotHub
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/iotHubs/{resourceName}/privateLinkResources/{groupId}
-        /// Operation Id: PrivateLinkResources_Get
-        /// </summary>
-        /// <param name="groupId"> The name of the private link resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<GroupIdInformationResource>> GetGroupIdInformationAsync(string groupId, CancellationToken cancellationToken = default)
-        {
-            return await GetAllGroupIdInformation().GetAsync(groupId, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new IotHubPrivateEndpointGroupInformationCollection(Client, Id));
         }
 
         /// <summary>
@@ -206,9 +191,24 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<GroupIdInformationResource> GetGroupIdInformation(string groupId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IotHubPrivateEndpointGroupInformationResource>> GetIotHubPrivateEndpointGroupInformationAsync(string groupId, CancellationToken cancellationToken = default)
         {
-            return GetAllGroupIdInformation().Get(groupId, cancellationToken);
+            return await GetAllIotHubPrivateEndpointGroupInformation().GetAsync(groupId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the specified private link resource for the given IotHub
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/iotHubs/{resourceName}/privateLinkResources/{groupId}
+        /// Operation Id: PrivateLinkResources_Get
+        /// </summary>
+        /// <param name="groupId"> The name of the private link resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<IotHubPrivateEndpointGroupInformationResource> GetIotHubPrivateEndpointGroupInformation(string groupId, CancellationToken cancellationToken = default)
+        {
+            return GetAllIotHubPrivateEndpointGroupInformation().Get(groupId, cancellationToken);
         }
 
         /// <summary> Gets a collection of IotHubPrivateEndpointConnectionResources in the IotHubDescription. </summary>
@@ -764,10 +764,10 @@ namespace Azure.ResourceManager.IotHub
         /// Operation Id: IotHubResource_GetEndpointHealth
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EndpointHealthData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EndpointHealthData> GetEndpointHealthAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="IotHubEndpointHealthData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<IotHubEndpointHealthData> GetEndpointHealthAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<EndpointHealthData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<IotHubEndpointHealthData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _iotHubDescriptionIotHubResourceClientDiagnostics.CreateScope("IotHubDescriptionResource.GetEndpointHealth");
                 scope.Start();
@@ -782,7 +782,7 @@ namespace Azure.ResourceManager.IotHub
                     throw;
                 }
             }
-            async Task<Page<EndpointHealthData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<IotHubEndpointHealthData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _iotHubDescriptionIotHubResourceClientDiagnostics.CreateScope("IotHubDescriptionResource.GetEndpointHealth");
                 scope.Start();
@@ -806,10 +806,10 @@ namespace Azure.ResourceManager.IotHub
         /// Operation Id: IotHubResource_GetEndpointHealth
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EndpointHealthData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EndpointHealthData> GetEndpointHealth(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="IotHubEndpointHealthData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<IotHubEndpointHealthData> GetEndpointHealth(CancellationToken cancellationToken = default)
         {
-            Page<EndpointHealthData> FirstPageFunc(int? pageSizeHint)
+            Page<IotHubEndpointHealthData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _iotHubDescriptionIotHubResourceClientDiagnostics.CreateScope("IotHubDescriptionResource.GetEndpointHealth");
                 scope.Start();
@@ -824,7 +824,7 @@ namespace Azure.ResourceManager.IotHub
                     throw;
                 }
             }
-            Page<EndpointHealthData> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<IotHubEndpointHealthData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _iotHubDescriptionIotHubResourceClientDiagnostics.CreateScope("IotHubDescriptionResource.GetEndpointHealth");
                 scope.Start();

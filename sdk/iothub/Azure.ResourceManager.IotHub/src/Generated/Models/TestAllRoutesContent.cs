@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary> Input for testing all routes. </summary>
+    /// <summary>
+    /// Input for testing all routes
+    /// Serialized Name: TestAllRoutesInput
+    /// </summary>
     public partial class TestAllRoutesContent
     {
         /// <summary> Initializes a new instance of TestAllRoutesContent. </summary>
@@ -15,11 +18,20 @@ namespace Azure.ResourceManager.IotHub.Models
         {
         }
 
-        /// <summary> Routing source. </summary>
+        /// <summary>
+        /// Routing source
+        /// Serialized Name: TestAllRoutesInput.routingSource
+        /// </summary>
         public RoutingSource? RoutingSource { get; set; }
-        /// <summary> Routing message. </summary>
+        /// <summary>
+        /// Routing message
+        /// Serialized Name: TestAllRoutesInput.message
+        /// </summary>
         public RoutingMessage Message { get; set; }
-        /// <summary> Routing Twin Reference. </summary>
+        /// <summary>
+        /// Routing Twin Reference
+        /// Serialized Name: TestAllRoutesInput.twin
+        /// </summary>
         public RoutingTwin Twin { get; set; }
     }
 }

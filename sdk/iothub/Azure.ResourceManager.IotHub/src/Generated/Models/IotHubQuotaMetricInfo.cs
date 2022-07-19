@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary> Quota metrics properties. </summary>
+    /// <summary>
+    /// Quota metrics properties.
+    /// Serialized Name: IotHubQuotaMetricInfo
+    /// </summary>
     public partial class IotHubQuotaMetricInfo
     {
         /// <summary> Initializes a new instance of IotHubQuotaMetricInfo. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary> Initializes a new instance of IotHubQuotaMetricInfo. </summary>
-        /// <param name="name"> The name of the quota metric. </param>
-        /// <param name="currentValue"> The current value for the quota metric. </param>
-        /// <param name="maxValue"> The maximum value of the quota metric. </param>
+        /// <param name="name">
+        /// The name of the quota metric.
+        /// Serialized Name: IotHubQuotaMetricInfo.name
+        /// </param>
+        /// <param name="currentValue">
+        /// The current value for the quota metric.
+        /// Serialized Name: IotHubQuotaMetricInfo.currentValue
+        /// </param>
+        /// <param name="maxValue">
+        /// The maximum value of the quota metric.
+        /// Serialized Name: IotHubQuotaMetricInfo.maxValue
+        /// </param>
         internal IotHubQuotaMetricInfo(string name, long? currentValue, long? maxValue)
         {
             Name = name;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.IotHub.Models
             MaxValue = maxValue;
         }
 
-        /// <summary> The name of the quota metric. </summary>
+        /// <summary>
+        /// The name of the quota metric.
+        /// Serialized Name: IotHubQuotaMetricInfo.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> The current value for the quota metric. </summary>
+        /// <summary>
+        /// The current value for the quota metric.
+        /// Serialized Name: IotHubQuotaMetricInfo.currentValue
+        /// </summary>
         public long? CurrentValue { get; }
-        /// <summary> The maximum value of the quota metric. </summary>
+        /// <summary>
+        /// The maximum value of the quota metric.
+        /// Serialized Name: IotHubQuotaMetricInfo.maxValue
+        /// </summary>
         public long? MaxValue { get; }
     }
 }

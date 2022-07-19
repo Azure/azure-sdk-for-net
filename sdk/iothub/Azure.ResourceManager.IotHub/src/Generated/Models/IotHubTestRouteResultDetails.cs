@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary> Detailed result of testing a route. </summary>
+    /// <summary>
+    /// Detailed result of testing a route
+    /// Serialized Name: TestRouteResultDetails
+    /// </summary>
     internal partial class IotHubTestRouteResultDetails
     {
         /// <summary> Initializes a new instance of IotHubTestRouteResultDetails. </summary>
@@ -20,13 +23,19 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary> Initializes a new instance of IotHubTestRouteResultDetails. </summary>
-        /// <param name="compilationErrors"> JSON-serialized list of route compilation errors. </param>
+        /// <param name="compilationErrors">
+        /// JSON-serialized list of route compilation errors
+        /// Serialized Name: TestRouteResultDetails.compilationErrors
+        /// </param>
         internal IotHubTestRouteResultDetails(IReadOnlyList<RouteCompilationError> compilationErrors)
         {
             CompilationErrors = compilationErrors;
         }
 
-        /// <summary> JSON-serialized list of route compilation errors. </summary>
+        /// <summary>
+        /// JSON-serialized list of route compilation errors
+        /// Serialized Name: TestRouteResultDetails.compilationErrors
+        /// </summary>
         public IReadOnlyList<RouteCompilationError> CompilationErrors { get; }
     }
 }

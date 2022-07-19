@@ -27,17 +27,29 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The tags. </param>
-        /// <param name="etag"> The etag. </param>
+        /// <param name="properties">
+        /// The tags.
+        /// Serialized Name: EventHubConsumerGroupInfo.properties
+        /// </param>
+        /// <param name="etag">
+        /// The etag.
+        /// Serialized Name: EventHubConsumerGroupInfo.etag
+        /// </param>
         internal EventHubConsumerGroupInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyDictionary<string, BinaryData> properties, ETag? etag) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ETag = etag;
         }
 
-        /// <summary> The tags. </summary>
+        /// <summary>
+        /// The tags.
+        /// Serialized Name: EventHubConsumerGroupInfo.properties
+        /// </summary>
         public IReadOnlyDictionary<string, BinaryData> Properties { get; }
-        /// <summary> The etag. </summary>
+        /// <summary>
+        /// The etag.
+        /// Serialized Name: EventHubConsumerGroupInfo.etag
+        /// </summary>
         public ETag? ETag { get; }
     }
 }

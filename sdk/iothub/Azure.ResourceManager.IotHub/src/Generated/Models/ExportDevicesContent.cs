@@ -9,12 +9,21 @@ using System;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary> Use to provide parameters when requesting an export of all devices in the IoT hub. </summary>
+    /// <summary>
+    /// Use to provide parameters when requesting an export of all devices in the IoT hub.
+    /// Serialized Name: ExportDevicesRequest
+    /// </summary>
     public partial class ExportDevicesContent
     {
         /// <summary> Initializes a new instance of ExportDevicesContent. </summary>
-        /// <param name="exportBlobContainerUri"> The export blob container URI. </param>
-        /// <param name="excludeKeys"> The value indicating whether keys should be excluded during export. </param>
+        /// <param name="exportBlobContainerUri">
+        /// The export blob container URI.
+        /// Serialized Name: ExportDevicesRequest.exportBlobContainerUri
+        /// </param>
+        /// <param name="excludeKeys">
+        /// The value indicating whether keys should be excluded during export.
+        /// Serialized Name: ExportDevicesRequest.excludeKeys
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="exportBlobContainerUri"/> is null. </exception>
         public ExportDevicesContent(Uri exportBlobContainerUri, bool excludeKeys)
         {
@@ -27,17 +36,35 @@ namespace Azure.ResourceManager.IotHub.Models
             ExcludeKeys = excludeKeys;
         }
 
-        /// <summary> The export blob container URI. </summary>
+        /// <summary>
+        /// The export blob container URI.
+        /// Serialized Name: ExportDevicesRequest.exportBlobContainerUri
+        /// </summary>
         public Uri ExportBlobContainerUri { get; }
-        /// <summary> The value indicating whether keys should be excluded during export. </summary>
+        /// <summary>
+        /// The value indicating whether keys should be excluded during export.
+        /// Serialized Name: ExportDevicesRequest.excludeKeys
+        /// </summary>
         public bool ExcludeKeys { get; }
-        /// <summary> The name of the blob that will be created in the provided output blob container. This blob will contain the exported device registry information for the IoT Hub. </summary>
+        /// <summary>
+        /// The name of the blob that will be created in the provided output blob container. This blob will contain the exported device registry information for the IoT Hub.
+        /// Serialized Name: ExportDevicesRequest.exportBlobName
+        /// </summary>
         public string ExportBlobName { get; set; }
-        /// <summary> Specifies authentication type being used for connecting to the storage account. </summary>
-        public AuthenticationType? AuthenticationType { get; set; }
-        /// <summary> Managed identity properties of storage endpoint for export devices. </summary>
+        /// <summary>
+        /// Specifies authentication type being used for connecting to the storage account.
+        /// Serialized Name: ExportDevicesRequest.authenticationType
+        /// </summary>
+        public IotHubAuthenticationType? AuthenticationType { get; set; }
+        /// <summary>
+        /// Managed identity properties of storage endpoint for export devices.
+        /// Serialized Name: ExportDevicesRequest.identity
+        /// </summary>
         internal ManagedIdentity Identity { get; set; }
-        /// <summary> The user assigned identity. </summary>
+        /// <summary>
+        /// The user assigned identity.
+        /// Serialized Name: ManagedIdentity.userAssignedIdentity
+        /// </summary>
         public string UserAssignedIdentity
         {
             get => Identity is null ? default : Identity.UserAssignedIdentity;
@@ -49,9 +76,15 @@ namespace Azure.ResourceManager.IotHub.Models
             }
         }
 
-        /// <summary> The value indicating whether configurations should be exported. </summary>
+        /// <summary>
+        /// The value indicating whether configurations should be exported.
+        /// Serialized Name: ExportDevicesRequest.includeConfigurations
+        /// </summary>
         public bool? IncludeConfigurations { get; set; }
-        /// <summary> The name of the blob that will be created in the provided output blob container. This blob will contain the exported configurations for the Iot Hub. </summary>
+        /// <summary>
+        /// The name of the blob that will be created in the provided output blob container. This blob will contain the exported configurations for the Iot Hub.
+        /// Serialized Name: ExportDevicesRequest.configurationsBlobName
+        /// </summary>
         public string ConfigurationsBlobName { get; set; }
     }
 }

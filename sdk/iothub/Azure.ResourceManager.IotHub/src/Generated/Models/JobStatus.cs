@@ -7,20 +7,41 @@
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary> The status of the job. </summary>
+    /// <summary>
+    /// The status of the job.
+    /// Serialized Name: JobStatus
+    /// </summary>
     public enum JobStatus
     {
-        /// <summary> unknown. </summary>
+        /// <summary>
+        /// unknown
+        /// Serialized Name: JobStatus.unknown
+        /// </summary>
         Unknown,
-        /// <summary> enqueued. </summary>
+        /// <summary>
+        /// enqueued
+        /// Serialized Name: JobStatus.enqueued
+        /// </summary>
         Enqueued,
-        /// <summary> running. </summary>
+        /// <summary>
+        /// running
+        /// Serialized Name: JobStatus.running
+        /// </summary>
         Running,
-        /// <summary> completed. </summary>
+        /// <summary>
+        /// completed
+        /// Serialized Name: JobStatus.completed
+        /// </summary>
         Completed,
-        /// <summary> failed. </summary>
+        /// <summary>
+        /// failed
+        /// Serialized Name: JobStatus.failed
+        /// </summary>
         Failed,
-        /// <summary> cancelled. </summary>
+        /// <summary>
+        /// cancelled
+        /// Serialized Name: JobStatus.cancelled
+        /// </summary>
         Cancelled
     }
 }

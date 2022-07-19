@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary> The type of the job. </summary>
+    /// <summary>
+    /// The type of the job.
+    /// Serialized Name: JobType
+    /// </summary>
     public readonly partial struct JobType : IEquatable<JobType>
     {
         private readonly string _value;
@@ -33,25 +36,55 @@ namespace Azure.ResourceManager.IotHub.Models
         private const string FactoryResetDeviceValue = "factoryResetDevice";
         private const string FirmwareUpdateValue = "firmwareUpdate";
 
-        /// <summary> unknown. </summary>
+        /// <summary>
+        /// unknown
+        /// Serialized Name: JobType.unknown
+        /// </summary>
         public static JobType Unknown { get; } = new JobType(UnknownValue);
-        /// <summary> export. </summary>
+        /// <summary>
+        /// export
+        /// Serialized Name: JobType.export
+        /// </summary>
         public static JobType Export { get; } = new JobType(ExportValue);
-        /// <summary> import. </summary>
+        /// <summary>
+        /// import
+        /// Serialized Name: JobType.import
+        /// </summary>
         public static JobType Import { get; } = new JobType(ImportValue);
-        /// <summary> backup. </summary>
+        /// <summary>
+        /// backup
+        /// Serialized Name: JobType.backup
+        /// </summary>
         public static JobType Backup { get; } = new JobType(BackupValue);
-        /// <summary> readDeviceProperties. </summary>
+        /// <summary>
+        /// readDeviceProperties
+        /// Serialized Name: JobType.readDeviceProperties
+        /// </summary>
         public static JobType ReadDeviceProperties { get; } = new JobType(ReadDevicePropertiesValue);
-        /// <summary> writeDeviceProperties. </summary>
+        /// <summary>
+        /// writeDeviceProperties
+        /// Serialized Name: JobType.writeDeviceProperties
+        /// </summary>
         public static JobType WriteDeviceProperties { get; } = new JobType(WriteDevicePropertiesValue);
-        /// <summary> updateDeviceConfiguration. </summary>
+        /// <summary>
+        /// updateDeviceConfiguration
+        /// Serialized Name: JobType.updateDeviceConfiguration
+        /// </summary>
         public static JobType UpdateDeviceConfiguration { get; } = new JobType(UpdateDeviceConfigurationValue);
-        /// <summary> rebootDevice. </summary>
+        /// <summary>
+        /// rebootDevice
+        /// Serialized Name: JobType.rebootDevice
+        /// </summary>
         public static JobType RebootDevice { get; } = new JobType(RebootDeviceValue);
-        /// <summary> factoryResetDevice. </summary>
+        /// <summary>
+        /// factoryResetDevice
+        /// Serialized Name: JobType.factoryResetDevice
+        /// </summary>
         public static JobType FactoryResetDevice { get; } = new JobType(FactoryResetDeviceValue);
-        /// <summary> firmwareUpdate. </summary>
+        /// <summary>
+        /// firmwareUpdate
+        /// Serialized Name: JobType.firmwareUpdate
+        /// </summary>
         public static JobType FirmwareUpdate { get; } = new JobType(FirmwareUpdateValue);
         /// <summary> Determines if two <see cref="JobType"/> values are the same. </summary>
         public static bool operator ==(JobType left, JobType right) => left.Equals(right);

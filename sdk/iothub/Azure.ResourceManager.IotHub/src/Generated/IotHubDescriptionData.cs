@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.IotHub
     {
         /// <summary> Initializes a new instance of IotHubDescriptionData. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="sku"> IotHub SKU info. </param>
+        /// <param name="sku">
+        /// IotHub SKU info
+        /// Serialized Name: IotHubDescription.sku
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public IotHubDescriptionData(AzureLocation location, IotHubSkuInfo sku) : base(location)
         {
@@ -38,10 +41,22 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag"> The Etag field is *not* required. If it is provided in the response body, it must also be provided as a header per the normal ETag convention. </param>
-        /// <param name="properties"> IotHub properties. </param>
-        /// <param name="sku"> IotHub SKU info. </param>
-        /// <param name="identity"> The managed identities for the IotHub. </param>
+        /// <param name="etag">
+        /// The Etag field is *not* required. If it is provided in the response body, it must also be provided as a header per the normal ETag convention.
+        /// Serialized Name: IotHubDescription.etag
+        /// </param>
+        /// <param name="properties">
+        /// IotHub properties
+        /// Serialized Name: IotHubDescription.properties
+        /// </param>
+        /// <param name="sku">
+        /// IotHub SKU info
+        /// Serialized Name: IotHubDescription.sku
+        /// </param>
+        /// <param name="identity">
+        /// The managed identities for the IotHub.
+        /// Serialized Name: IotHubDescription.identity
+        /// </param>
         internal IotHubDescriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IotHubProperties properties, IotHubSkuInfo sku, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
@@ -50,13 +65,25 @@ namespace Azure.ResourceManager.IotHub
             Identity = identity;
         }
 
-        /// <summary> The Etag field is *not* required. If it is provided in the response body, it must also be provided as a header per the normal ETag convention. </summary>
+        /// <summary>
+        /// The Etag field is *not* required. If it is provided in the response body, it must also be provided as a header per the normal ETag convention.
+        /// Serialized Name: IotHubDescription.etag
+        /// </summary>
         public ETag? ETag { get; set; }
-        /// <summary> IotHub properties. </summary>
+        /// <summary>
+        /// IotHub properties
+        /// Serialized Name: IotHubDescription.properties
+        /// </summary>
         public IotHubProperties Properties { get; set; }
-        /// <summary> IotHub SKU info. </summary>
+        /// <summary>
+        /// IotHub SKU info
+        /// Serialized Name: IotHubDescription.sku
+        /// </summary>
         public IotHubSkuInfo Sku { get; set; }
-        /// <summary> The managed identities for the IotHub. </summary>
+        /// <summary>
+        /// The managed identities for the IotHub.
+        /// Serialized Name: IotHubDescription.identity
+        /// </summary>
         public ManagedServiceIdentity Identity { get; set; }
     }
 }

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary> The properties of the Managed identity. </summary>
+    /// <summary>
+    /// The properties of the Managed identity.
+    /// Serialized Name: ManagedIdentity
+    /// </summary>
     internal partial class ManagedIdentity
     {
         /// <summary> Initializes a new instance of ManagedIdentity. </summary>
@@ -16,13 +19,19 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary> Initializes a new instance of ManagedIdentity. </summary>
-        /// <param name="userAssignedIdentity"> The user assigned identity. </param>
+        /// <param name="userAssignedIdentity">
+        /// The user assigned identity.
+        /// Serialized Name: ManagedIdentity.userAssignedIdentity
+        /// </param>
         internal ManagedIdentity(string userAssignedIdentity)
         {
             UserAssignedIdentity = userAssignedIdentity;
         }
 
-        /// <summary> The user assigned identity. </summary>
+        /// <summary>
+        /// The user assigned identity.
+        /// Serialized Name: ManagedIdentity.userAssignedIdentity
+        /// </summary>
         public string UserAssignedIdentity { get; set; }
     }
 }

@@ -9,7 +9,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary> Public representation of one of the locations where a resource is provisioned. </summary>
+    /// <summary>
+    /// Public representation of one of the locations where a resource is provisioned.
+    /// Serialized Name: IotHubLocationDescription
+    /// </summary>
     public partial class IotHubLocationDescription
     {
         /// <summary> Initializes a new instance of IotHubLocationDescription. </summary>
@@ -18,17 +21,29 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary> Initializes a new instance of IotHubLocationDescription. </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="role"> The role of the region, can be either primary or secondary. The primary region is where the IoT hub is currently provisioned. The secondary region is the Azure disaster recovery (DR) paired region and also the region where the IoT hub can failover to. </param>
+        /// <param name="location">
+        /// The name of the Azure region
+        /// Serialized Name: IotHubLocationDescription.location
+        /// </param>
+        /// <param name="role">
+        /// The role of the region, can be either primary or secondary. The primary region is where the IoT hub is currently provisioned. The secondary region is the Azure disaster recovery (DR) paired region and also the region where the IoT hub can failover to.
+        /// Serialized Name: IotHubLocationDescription.role
+        /// </param>
         internal IotHubLocationDescription(AzureLocation? location, IotHubReplicaRoleType? role)
         {
             Location = location;
             Role = role;
         }
 
-        /// <summary> The name of the Azure region. </summary>
+        /// <summary>
+        /// The name of the Azure region
+        /// Serialized Name: IotHubLocationDescription.location
+        /// </summary>
         public AzureLocation? Location { get; }
-        /// <summary> The role of the region, can be either primary or secondary. The primary region is where the IoT hub is currently provisioned. The secondary region is the Azure disaster recovery (DR) paired region and also the region where the IoT hub can failover to. </summary>
+        /// <summary>
+        /// The role of the region, can be either primary or secondary. The primary region is where the IoT hub is currently provisioned. The secondary region is the Azure disaster recovery (DR) paired region and also the region where the IoT hub can failover to.
+        /// Serialized Name: IotHubLocationDescription.role
+        /// </summary>
         public IotHubReplicaRoleType? Role { get; }
     }
 }

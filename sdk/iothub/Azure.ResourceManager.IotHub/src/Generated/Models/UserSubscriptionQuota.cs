@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary> User subscription quota response. </summary>
+    /// <summary>
+    /// User subscription quota response
+    /// Serialized Name: UserSubscriptionQuota
+    /// </summary>
     public partial class UserSubscriptionQuota
     {
         /// <summary> Initializes a new instance of UserSubscriptionQuota. </summary>
@@ -16,12 +19,30 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary> Initializes a new instance of UserSubscriptionQuota. </summary>
-        /// <param name="id"> IotHub type id. </param>
-        /// <param name="userSubscriptionQuotaType"> Response type. </param>
-        /// <param name="unit"> Unit of IotHub type. </param>
-        /// <param name="currentValue"> Current number of IotHub type. </param>
-        /// <param name="limit"> Numerical limit on IotHub type. </param>
-        /// <param name="name"> IotHub type. </param>
+        /// <param name="id">
+        /// IotHub type id
+        /// Serialized Name: UserSubscriptionQuota.id
+        /// </param>
+        /// <param name="userSubscriptionQuotaType">
+        /// Response type
+        /// Serialized Name: UserSubscriptionQuota.type
+        /// </param>
+        /// <param name="unit">
+        /// Unit of IotHub type
+        /// Serialized Name: UserSubscriptionQuota.unit
+        /// </param>
+        /// <param name="currentValue">
+        /// Current number of IotHub type
+        /// Serialized Name: UserSubscriptionQuota.currentValue
+        /// </param>
+        /// <param name="limit">
+        /// Numerical limit on IotHub type
+        /// Serialized Name: UserSubscriptionQuota.limit
+        /// </param>
+        /// <param name="name">
+        /// IotHub type
+        /// Serialized Name: UserSubscriptionQuota.name
+        /// </param>
         internal UserSubscriptionQuota(string id, string userSubscriptionQuotaType, string unit, int? currentValue, int? limit, Name name)
         {
             Id = id;
@@ -32,17 +53,35 @@ namespace Azure.ResourceManager.IotHub.Models
             Name = name;
         }
 
-        /// <summary> IotHub type id. </summary>
+        /// <summary>
+        /// IotHub type id
+        /// Serialized Name: UserSubscriptionQuota.id
+        /// </summary>
         public string Id { get; }
-        /// <summary> Response type. </summary>
+        /// <summary>
+        /// Response type
+        /// Serialized Name: UserSubscriptionQuota.type
+        /// </summary>
         public string UserSubscriptionQuotaType { get; }
-        /// <summary> Unit of IotHub type. </summary>
+        /// <summary>
+        /// Unit of IotHub type
+        /// Serialized Name: UserSubscriptionQuota.unit
+        /// </summary>
         public string Unit { get; }
-        /// <summary> Current number of IotHub type. </summary>
+        /// <summary>
+        /// Current number of IotHub type
+        /// Serialized Name: UserSubscriptionQuota.currentValue
+        /// </summary>
         public int? CurrentValue { get; }
-        /// <summary> Numerical limit on IotHub type. </summary>
+        /// <summary>
+        /// Numerical limit on IotHub type
+        /// Serialized Name: UserSubscriptionQuota.limit
+        /// </summary>
         public int? Limit { get; }
-        /// <summary> IotHub type. </summary>
+        /// <summary>
+        /// IotHub type
+        /// Serialized Name: UserSubscriptionQuota.name
+        /// </summary>
         public Name Name { get; }
     }
 }

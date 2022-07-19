@@ -9,11 +9,17 @@ using System;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary> The EventHub consumer group name. </summary>
+    /// <summary>
+    /// The EventHub consumer group name.
+    /// Serialized Name: EventHubConsumerGroupName
+    /// </summary>
     public partial class EventHubConsumerGroupName
     {
         /// <summary> Initializes a new instance of EventHubConsumerGroupName. </summary>
-        /// <param name="name"> EventHub consumer group name. </param>
+        /// <param name="name">
+        /// EventHub consumer group name
+        /// Serialized Name: EventHubConsumerGroupName.name
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public EventHubConsumerGroupName(string name)
         {
@@ -25,7 +31,10 @@ namespace Azure.ResourceManager.IotHub.Models
             Name = name;
         }
 
-        /// <summary> EventHub consumer group name. </summary>
+        /// <summary>
+        /// EventHub consumer group name
+        /// Serialized Name: EventHubConsumerGroupName.name
+        /// </summary>
         public string Name { get; }
     }
 }

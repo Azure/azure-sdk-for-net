@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary> Whether requests from Public Network are allowed. </summary>
+    /// <summary>
+    /// Whether requests from Public Network are allowed
+    /// Serialized Name: PublicNetworkAccess
+    /// </summary>
     public readonly partial struct PublicNetworkAccess : IEquatable<PublicNetworkAccess>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.IotHub.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: PublicNetworkAccess.Enabled
+        /// </summary>
         public static PublicNetworkAccess Enabled { get; } = new PublicNetworkAccess(EnabledValue);
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: PublicNetworkAccess.Disabled
+        /// </summary>
         public static PublicNetworkAccess Disabled { get; } = new PublicNetworkAccess(DisabledValue);
         /// <summary> Determines if two <see cref="PublicNetworkAccess"/> values are the same. </summary>
         public static bool operator ==(PublicNetworkAccess left, PublicNetworkAccess right) => left.Equals(right);

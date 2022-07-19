@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.IotHub.Models
     {
         internal static PrivateLinkResources DeserializePrivateLinkResources(JsonElement element)
         {
-            Optional<IReadOnlyList<GroupIdInformationData>> value = default;
+            Optional<IReadOnlyList<IotHubPrivateEndpointGroupInformationData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.IotHub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<GroupIdInformationData> array = new List<GroupIdInformationData>();
+                    List<IotHubPrivateEndpointGroupInformationData> array = new List<IotHubPrivateEndpointGroupInformationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GroupIdInformationData.DeserializeGroupIdInformationData(item));
+                        array.Add(IotHubPrivateEndpointGroupInformationData.DeserializeIotHubPrivateEndpointGroupInformationData(item));
                     }
                     value = array;
                     continue;

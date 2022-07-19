@@ -9,14 +9,23 @@ using System;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary> The properties of an IoT hub shared access policy. </summary>
+    /// <summary>
+    /// The properties of an IoT hub shared access policy.
+    /// Serialized Name: SharedAccessSignatureAuthorizationRule
+    /// </summary>
     public partial class SharedAccessSignatureAuthorizationRule
     {
         /// <summary> Initializes a new instance of SharedAccessSignatureAuthorizationRule. </summary>
-        /// <param name="keyName"> The name of the shared access policy. </param>
-        /// <param name="rights"> The permissions assigned to the shared access policy. </param>
+        /// <param name="keyName">
+        /// The name of the shared access policy.
+        /// Serialized Name: SharedAccessSignatureAuthorizationRule.keyName
+        /// </param>
+        /// <param name="rights">
+        /// The permissions assigned to the shared access policy.
+        /// Serialized Name: SharedAccessSignatureAuthorizationRule.rights
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
-        public SharedAccessSignatureAuthorizationRule(string keyName, AccessRight rights)
+        public SharedAccessSignatureAuthorizationRule(string keyName, IotHubSharedAccessRight rights)
         {
             if (keyName == null)
             {
@@ -28,11 +37,23 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary> Initializes a new instance of SharedAccessSignatureAuthorizationRule. </summary>
-        /// <param name="keyName"> The name of the shared access policy. </param>
-        /// <param name="primaryKey"> The primary key. </param>
-        /// <param name="secondaryKey"> The secondary key. </param>
-        /// <param name="rights"> The permissions assigned to the shared access policy. </param>
-        internal SharedAccessSignatureAuthorizationRule(string keyName, string primaryKey, string secondaryKey, AccessRight rights)
+        /// <param name="keyName">
+        /// The name of the shared access policy.
+        /// Serialized Name: SharedAccessSignatureAuthorizationRule.keyName
+        /// </param>
+        /// <param name="primaryKey">
+        /// The primary key.
+        /// Serialized Name: SharedAccessSignatureAuthorizationRule.primaryKey
+        /// </param>
+        /// <param name="secondaryKey">
+        /// The secondary key.
+        /// Serialized Name: SharedAccessSignatureAuthorizationRule.secondaryKey
+        /// </param>
+        /// <param name="rights">
+        /// The permissions assigned to the shared access policy.
+        /// Serialized Name: SharedAccessSignatureAuthorizationRule.rights
+        /// </param>
+        internal SharedAccessSignatureAuthorizationRule(string keyName, string primaryKey, string secondaryKey, IotHubSharedAccessRight rights)
         {
             KeyName = keyName;
             PrimaryKey = primaryKey;
@@ -40,13 +61,25 @@ namespace Azure.ResourceManager.IotHub.Models
             Rights = rights;
         }
 
-        /// <summary> The name of the shared access policy. </summary>
+        /// <summary>
+        /// The name of the shared access policy.
+        /// Serialized Name: SharedAccessSignatureAuthorizationRule.keyName
+        /// </summary>
         public string KeyName { get; set; }
-        /// <summary> The primary key. </summary>
+        /// <summary>
+        /// The primary key.
+        /// Serialized Name: SharedAccessSignatureAuthorizationRule.primaryKey
+        /// </summary>
         public string PrimaryKey { get; set; }
-        /// <summary> The secondary key. </summary>
+        /// <summary>
+        /// The secondary key.
+        /// Serialized Name: SharedAccessSignatureAuthorizationRule.secondaryKey
+        /// </summary>
         public string SecondaryKey { get; set; }
-        /// <summary> The permissions assigned to the shared access policy. </summary>
-        public AccessRight Rights { get; set; }
+        /// <summary>
+        /// The permissions assigned to the shared access policy.
+        /// Serialized Name: SharedAccessSignatureAuthorizationRule.rights
+        /// </summary>
+        public IotHubSharedAccessRight Rights { get; set; }
     }
 }

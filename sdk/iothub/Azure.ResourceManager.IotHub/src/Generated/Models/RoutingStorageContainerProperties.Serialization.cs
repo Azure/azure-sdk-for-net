@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.IotHub.Models
             Optional<string> id = default;
             Optional<string> connectionString = default;
             Optional<Uri> endpointUri = default;
-            Optional<AuthenticationType> authenticationType = default;
+            Optional<IotHubAuthenticationType> authenticationType = default;
             Optional<ManagedIdentity> identity = default;
             string name = default;
             Optional<string> subscriptionId = default;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.IotHub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    authenticationType = new AuthenticationType(property.Value.GetString());
+                    authenticationType = new IotHubAuthenticationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("identity"))

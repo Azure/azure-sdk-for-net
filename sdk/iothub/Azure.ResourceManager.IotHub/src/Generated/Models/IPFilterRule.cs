@@ -9,13 +9,25 @@ using System;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary> The IP filter rules for the IoT hub. </summary>
+    /// <summary>
+    /// The IP filter rules for the IoT hub.
+    /// Serialized Name: IpFilterRule
+    /// </summary>
     public partial class IPFilterRule
     {
         /// <summary> Initializes a new instance of IPFilterRule. </summary>
-        /// <param name="filterName"> The name of the IP filter rule. </param>
-        /// <param name="action"> The desired action for requests captured by this rule. </param>
-        /// <param name="ipMask"> A string that contains the IP address range in CIDR notation for the rule. </param>
+        /// <param name="filterName">
+        /// The name of the IP filter rule.
+        /// Serialized Name: IpFilterRule.filterName
+        /// </param>
+        /// <param name="action">
+        /// The desired action for requests captured by this rule.
+        /// Serialized Name: IpFilterRule.action
+        /// </param>
+        /// <param name="ipMask">
+        /// A string that contains the IP address range in CIDR notation for the rule.
+        /// Serialized Name: IpFilterRule.ipMask
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> or <paramref name="ipMask"/> is null. </exception>
         public IPFilterRule(string filterName, IPFilterActionType action, string ipMask)
         {
@@ -33,11 +45,20 @@ namespace Azure.ResourceManager.IotHub.Models
             IPMask = ipMask;
         }
 
-        /// <summary> The name of the IP filter rule. </summary>
+        /// <summary>
+        /// The name of the IP filter rule.
+        /// Serialized Name: IpFilterRule.filterName
+        /// </summary>
         public string FilterName { get; set; }
-        /// <summary> The desired action for requests captured by this rule. </summary>
+        /// <summary>
+        /// The desired action for requests captured by this rule.
+        /// Serialized Name: IpFilterRule.action
+        /// </summary>
         public IPFilterActionType Action { get; set; }
-        /// <summary> A string that contains the IP address range in CIDR notation for the rule. </summary>
+        /// <summary>
+        /// A string that contains the IP address range in CIDR notation for the rule.
+        /// Serialized Name: IpFilterRule.ipMask
+        /// </summary>
         public string IPMask { get; set; }
     }
 }

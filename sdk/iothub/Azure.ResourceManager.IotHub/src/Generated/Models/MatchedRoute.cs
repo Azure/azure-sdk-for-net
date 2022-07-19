@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary> Routes that matched. </summary>
+    /// <summary>
+    /// Routes that matched
+    /// Serialized Name: MatchedRoute
+    /// </summary>
     public partial class MatchedRoute
     {
         /// <summary> Initializes a new instance of MatchedRoute. </summary>
@@ -16,13 +19,19 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary> Initializes a new instance of MatchedRoute. </summary>
-        /// <param name="properties"> Properties of routes that matched. </param>
+        /// <param name="properties">
+        /// Properties of routes that matched
+        /// Serialized Name: MatchedRoute.properties
+        /// </param>
         internal MatchedRoute(RouteProperties properties)
         {
             Properties = properties;
         }
 
-        /// <summary> Properties of routes that matched. </summary>
+        /// <summary>
+        /// Properties of routes that matched
+        /// Serialized Name: MatchedRoute.properties
+        /// </summary>
         public RouteProperties Properties { get; }
     }
 }

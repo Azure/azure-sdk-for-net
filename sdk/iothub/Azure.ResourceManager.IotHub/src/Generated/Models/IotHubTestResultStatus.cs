@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary> Result of testing route. </summary>
+    /// <summary>
+    /// Result of testing route
+    /// Serialized Name: TestResultStatus
+    /// </summary>
     public readonly partial struct IotHubTestResultStatus : IEquatable<IotHubTestResultStatus>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.IotHub.Models
         private const string FalseValue = "false";
         private const string TrueValue = "true";
 
-        /// <summary> undefined. </summary>
+        /// <summary>
+        /// undefined
+        /// Serialized Name: TestResultStatus.undefined
+        /// </summary>
         public static IotHubTestResultStatus Undefined { get; } = new IotHubTestResultStatus(UndefinedValue);
-        /// <summary> false. </summary>
+        /// <summary>
+        /// false
+        /// Serialized Name: TestResultStatus.false
+        /// </summary>
         public static IotHubTestResultStatus False { get; } = new IotHubTestResultStatus(FalseValue);
-        /// <summary> true. </summary>
+        /// <summary>
+        /// true
+        /// Serialized Name: TestResultStatus.true
+        /// </summary>
         public static IotHubTestResultStatus True { get; } = new IotHubTestResultStatus(TrueValue);
         /// <summary> Determines if two <see cref="IotHubTestResultStatus"/> values are the same. </summary>
         public static bool operator ==(IotHubTestResultStatus left, IotHubTestResultStatus right) => left.Equals(right);

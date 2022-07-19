@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.IotHub.Models
             Optional<TimeSpan> sasTtlAsIso8601 = default;
             string connectionString = default;
             string containerName = default;
-            Optional<AuthenticationType> authenticationType = default;
+            Optional<IotHubAuthenticationType> authenticationType = default;
             Optional<ManagedIdentity> identity = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.IotHub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    authenticationType = new AuthenticationType(property.Value.GetString());
+                    authenticationType = new IotHubAuthenticationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("identity"))

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary> IP Filter Action. </summary>
+    /// <summary>
+    /// IP Filter Action
+    /// Serialized Name: NetworkRuleIPAction
+    /// </summary>
     public readonly partial struct NetworkRuleIPAction : IEquatable<NetworkRuleIPAction>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.IotHub.Models
 
         private const string AllowValue = "Allow";
 
-        /// <summary> Allow. </summary>
+        /// <summary>
+        /// Allow
+        /// Serialized Name: NetworkRuleIPAction.Allow
+        /// </summary>
         public static NetworkRuleIPAction Allow { get; } = new NetworkRuleIPAction(AllowValue);
         /// <summary> Determines if two <see cref="NetworkRuleIPAction"/> values are the same. </summary>
         public static bool operator ==(NetworkRuleIPAction left, NetworkRuleIPAction right) => left.Equals(right);

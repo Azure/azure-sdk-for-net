@@ -9,11 +9,17 @@ using System;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary> The properties related to an event hub endpoint. </summary>
+    /// <summary>
+    /// The properties related to an event hub endpoint.
+    /// Serialized Name: RoutingEventHubProperties
+    /// </summary>
     public partial class RoutingEventHubProperties
     {
         /// <summary> Initializes a new instance of RoutingEventHubProperties. </summary>
-        /// <param name="name"> The name that identifies this endpoint. The name can only include alphanumeric characters, periods, underscores, hyphens and has a maximum length of 64 characters. The following names are reserved:  events, fileNotifications, $default. Endpoint names must be unique across endpoint types. </param>
+        /// <param name="name">
+        /// The name that identifies this endpoint. The name can only include alphanumeric characters, periods, underscores, hyphens and has a maximum length of 64 characters. The following names are reserved:  events, fileNotifications, $default. Endpoint names must be unique across endpoint types.
+        /// Serialized Name: RoutingEventHubProperties.name
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public RoutingEventHubProperties(string name)
         {
@@ -26,16 +32,43 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary> Initializes a new instance of RoutingEventHubProperties. </summary>
-        /// <param name="id"> Id of the event hub endpoint. </param>
-        /// <param name="connectionString"> The connection string of the event hub endpoint. </param>
-        /// <param name="endpointUri"> The url of the event hub endpoint. It must include the protocol sb://. </param>
-        /// <param name="entityPath"> Event hub name on the event hub namespace. </param>
-        /// <param name="authenticationType"> Method used to authenticate against the event hub endpoint. </param>
-        /// <param name="identity"> Managed identity properties of routing event hub endpoint. </param>
-        /// <param name="name"> The name that identifies this endpoint. The name can only include alphanumeric characters, periods, underscores, hyphens and has a maximum length of 64 characters. The following names are reserved:  events, fileNotifications, $default. Endpoint names must be unique across endpoint types. </param>
-        /// <param name="subscriptionId"> The subscription identifier of the event hub endpoint. </param>
-        /// <param name="resourceGroup"> The name of the resource group of the event hub endpoint. </param>
-        internal RoutingEventHubProperties(string id, string connectionString, Uri endpointUri, string entityPath, AuthenticationType? authenticationType, ManagedIdentity identity, string name, string subscriptionId, string resourceGroup)
+        /// <param name="id">
+        /// Id of the event hub endpoint
+        /// Serialized Name: RoutingEventHubProperties.id
+        /// </param>
+        /// <param name="connectionString">
+        /// The connection string of the event hub endpoint. 
+        /// Serialized Name: RoutingEventHubProperties.connectionString
+        /// </param>
+        /// <param name="endpointUri">
+        /// The url of the event hub endpoint. It must include the protocol sb://
+        /// Serialized Name: RoutingEventHubProperties.endpointUri
+        /// </param>
+        /// <param name="entityPath">
+        /// Event hub name on the event hub namespace
+        /// Serialized Name: RoutingEventHubProperties.entityPath
+        /// </param>
+        /// <param name="authenticationType">
+        /// Method used to authenticate against the event hub endpoint
+        /// Serialized Name: RoutingEventHubProperties.authenticationType
+        /// </param>
+        /// <param name="identity">
+        /// Managed identity properties of routing event hub endpoint.
+        /// Serialized Name: RoutingEventHubProperties.identity
+        /// </param>
+        /// <param name="name">
+        /// The name that identifies this endpoint. The name can only include alphanumeric characters, periods, underscores, hyphens and has a maximum length of 64 characters. The following names are reserved:  events, fileNotifications, $default. Endpoint names must be unique across endpoint types.
+        /// Serialized Name: RoutingEventHubProperties.name
+        /// </param>
+        /// <param name="subscriptionId">
+        /// The subscription identifier of the event hub endpoint.
+        /// Serialized Name: RoutingEventHubProperties.subscriptionId
+        /// </param>
+        /// <param name="resourceGroup">
+        /// The name of the resource group of the event hub endpoint.
+        /// Serialized Name: RoutingEventHubProperties.resourceGroup
+        /// </param>
+        internal RoutingEventHubProperties(string id, string connectionString, Uri endpointUri, string entityPath, IotHubAuthenticationType? authenticationType, ManagedIdentity identity, string name, string subscriptionId, string resourceGroup)
         {
             Id = id;
             ConnectionString = connectionString;
@@ -48,19 +81,40 @@ namespace Azure.ResourceManager.IotHub.Models
             ResourceGroup = resourceGroup;
         }
 
-        /// <summary> Id of the event hub endpoint. </summary>
+        /// <summary>
+        /// Id of the event hub endpoint
+        /// Serialized Name: RoutingEventHubProperties.id
+        /// </summary>
         public string Id { get; set; }
-        /// <summary> The connection string of the event hub endpoint. </summary>
+        /// <summary>
+        /// The connection string of the event hub endpoint. 
+        /// Serialized Name: RoutingEventHubProperties.connectionString
+        /// </summary>
         public string ConnectionString { get; set; }
-        /// <summary> The url of the event hub endpoint. It must include the protocol sb://. </summary>
+        /// <summary>
+        /// The url of the event hub endpoint. It must include the protocol sb://
+        /// Serialized Name: RoutingEventHubProperties.endpointUri
+        /// </summary>
         public Uri EndpointUri { get; set; }
-        /// <summary> Event hub name on the event hub namespace. </summary>
+        /// <summary>
+        /// Event hub name on the event hub namespace
+        /// Serialized Name: RoutingEventHubProperties.entityPath
+        /// </summary>
         public string EntityPath { get; set; }
-        /// <summary> Method used to authenticate against the event hub endpoint. </summary>
-        public AuthenticationType? AuthenticationType { get; set; }
-        /// <summary> Managed identity properties of routing event hub endpoint. </summary>
+        /// <summary>
+        /// Method used to authenticate against the event hub endpoint
+        /// Serialized Name: RoutingEventHubProperties.authenticationType
+        /// </summary>
+        public IotHubAuthenticationType? AuthenticationType { get; set; }
+        /// <summary>
+        /// Managed identity properties of routing event hub endpoint.
+        /// Serialized Name: RoutingEventHubProperties.identity
+        /// </summary>
         internal ManagedIdentity Identity { get; set; }
-        /// <summary> The user assigned identity. </summary>
+        /// <summary>
+        /// The user assigned identity.
+        /// Serialized Name: ManagedIdentity.userAssignedIdentity
+        /// </summary>
         public string UserAssignedIdentity
         {
             get => Identity is null ? default : Identity.UserAssignedIdentity;
@@ -72,11 +126,20 @@ namespace Azure.ResourceManager.IotHub.Models
             }
         }
 
-        /// <summary> The name that identifies this endpoint. The name can only include alphanumeric characters, periods, underscores, hyphens and has a maximum length of 64 characters. The following names are reserved:  events, fileNotifications, $default. Endpoint names must be unique across endpoint types. </summary>
+        /// <summary>
+        /// The name that identifies this endpoint. The name can only include alphanumeric characters, periods, underscores, hyphens and has a maximum length of 64 characters. The following names are reserved:  events, fileNotifications, $default. Endpoint names must be unique across endpoint types.
+        /// Serialized Name: RoutingEventHubProperties.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> The subscription identifier of the event hub endpoint. </summary>
+        /// <summary>
+        /// The subscription identifier of the event hub endpoint.
+        /// Serialized Name: RoutingEventHubProperties.subscriptionId
+        /// </summary>
         public string SubscriptionId { get; set; }
-        /// <summary> The name of the resource group of the event hub endpoint. </summary>
+        /// <summary>
+        /// The name of the resource group of the event hub endpoint.
+        /// Serialized Name: RoutingEventHubProperties.resourceGroup
+        /// </summary>
         public string ResourceGroup { get; set; }
     }
 }

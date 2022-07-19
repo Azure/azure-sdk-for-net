@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary> The RoutingTwinProperties. </summary>
+    /// <summary>
+    /// The RoutingTwinProperties.
+    /// Serialized Name: RoutingTwinProperties
+    /// </summary>
     public partial class RoutingTwinProperties
     {
         /// <summary> Initializes a new instance of RoutingTwinProperties. </summary>
@@ -17,9 +20,15 @@ namespace Azure.ResourceManager.IotHub.Models
         {
         }
 
-        /// <summary> Twin desired properties. </summary>
+        /// <summary>
+        /// Twin desired properties
+        /// Serialized Name: RoutingTwinProperties.desired
+        /// </summary>
         public BinaryData Desired { get; set; }
-        /// <summary> Twin desired properties. </summary>
+        /// <summary>
+        /// Twin desired properties
+        /// Serialized Name: RoutingTwinProperties.reported
+        /// </summary>
         public BinaryData Reported { get; set; }
     }
 }

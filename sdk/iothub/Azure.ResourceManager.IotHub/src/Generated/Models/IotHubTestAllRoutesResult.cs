@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary> Result of testing all routes. </summary>
+    /// <summary>
+    /// Result of testing all routes
+    /// Serialized Name: TestAllRoutesResult
+    /// </summary>
     public partial class IotHubTestAllRoutesResult
     {
         /// <summary> Initializes a new instance of IotHubTestAllRoutesResult. </summary>
@@ -20,13 +23,19 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary> Initializes a new instance of IotHubTestAllRoutesResult. </summary>
-        /// <param name="routes"> JSON-serialized array of matched routes. </param>
+        /// <param name="routes">
+        /// JSON-serialized array of matched routes
+        /// Serialized Name: TestAllRoutesResult.routes
+        /// </param>
         internal IotHubTestAllRoutesResult(IReadOnlyList<MatchedRoute> routes)
         {
             Routes = routes;
         }
 
-        /// <summary> JSON-serialized array of matched routes. </summary>
+        /// <summary>
+        /// JSON-serialized array of matched routes
+        /// Serialized Name: TestAllRoutesResult.routes
+        /// </summary>
         public IReadOnlyList<MatchedRoute> Routes { get; }
     }
 }

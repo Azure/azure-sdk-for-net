@@ -11,11 +11,17 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary> The properties of a private endpoint connection. </summary>
+    /// <summary>
+    /// The properties of a private endpoint connection
+    /// Serialized Name: PrivateEndpointConnectionProperties
+    /// </summary>
     public partial class PrivateEndpointConnectionProperties
     {
         /// <summary> Initializes a new instance of PrivateEndpointConnectionProperties. </summary>
-        /// <param name="connectionState"> The current state of a private endpoint connection. </param>
+        /// <param name="connectionState">
+        /// The current state of a private endpoint connection
+        /// Serialized Name: PrivateEndpointConnectionProperties.privateLinkServiceConnectionState
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionState"/> is null. </exception>
         public PrivateEndpointConnectionProperties(IotHubPrivateLinkServiceConnectionState connectionState)
         {
@@ -28,15 +34,24 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary> Initializes a new instance of PrivateEndpointConnectionProperties. </summary>
-        /// <param name="privateEndpoint"> The private endpoint property of a private endpoint connection. </param>
-        /// <param name="connectionState"> The current state of a private endpoint connection. </param>
+        /// <param name="privateEndpoint">
+        /// The private endpoint property of a private endpoint connection
+        /// Serialized Name: PrivateEndpointConnectionProperties.privateEndpoint
+        /// </param>
+        /// <param name="connectionState">
+        /// The current state of a private endpoint connection
+        /// Serialized Name: PrivateEndpointConnectionProperties.privateLinkServiceConnectionState
+        /// </param>
         internal PrivateEndpointConnectionProperties(SubResource privateEndpoint, IotHubPrivateLinkServiceConnectionState connectionState)
         {
             PrivateEndpoint = privateEndpoint;
             ConnectionState = connectionState;
         }
 
-        /// <summary> The private endpoint property of a private endpoint connection. </summary>
+        /// <summary>
+        /// The private endpoint property of a private endpoint connection
+        /// Serialized Name: PrivateEndpointConnectionProperties.privateEndpoint
+        /// </summary>
         internal SubResource PrivateEndpoint { get; set; }
         /// <summary> Gets Id. </summary>
         public ResourceIdentifier PrivateEndpointId
@@ -44,7 +59,10 @@ namespace Azure.ResourceManager.IotHub.Models
             get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
         }
 
-        /// <summary> The current state of a private endpoint connection. </summary>
+        /// <summary>
+        /// The current state of a private endpoint connection
+        /// Serialized Name: PrivateEndpointConnectionProperties.privateLinkServiceConnectionState
+        /// </summary>
         public IotHubPrivateLinkServiceConnectionState ConnectionState { get; set; }
     }
 }

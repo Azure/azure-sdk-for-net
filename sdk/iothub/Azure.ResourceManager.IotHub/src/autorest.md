@@ -16,7 +16,44 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
- 
+mgmt-debug: 
+  show-serialized-names: true
+
+override-operation-name:
+  IotHubResource_CheckNameAvailability: CheckIotHubNameAvailability
+
+rename-mapping:
+  IotHubNameAvailabilityInfo: IotHubNameAvailabilityResponse
+  OperationInputs: IotHubNameAvailabilityContent
+  Capabilities: IotHubCapability
+  CertificateProperties.created: CreatedOn
+  CertificateProperties.updated: UpdatedOn
+  CertificateProperties.expiry: ExpiryOn
+  CertificatePropertiesWithNonce.created: CreatedOn
+  CertificatePropertiesWithNonce.updated: UpdatedOn
+  CertificatePropertiesWithNonce.expiry: ExpiryOn
+  CertificateVerificationDescription: IotHubCertificateVerificationContent
+  GroupIdInformation: IotHubPrivateEndpointGroupInformation
+  GroupIdInformationProperties: IotHubPrivateEndpointGroupInformationProperties
+  DefaultAction: IotHubNetworkRuleSetDefaultAction
+  AccessRights: IotHubSharedAccessRight
+
+prepend-rp-prefix:
+  - AuthenticationType
+  - TestAllRoutesResult
+  - TestRouteInput
+  - TestRouteResult
+  - TestRouteResultDetails
+  - TestResultStatus
+  - CertificateProperties
+  - CertificatePropertiesWithNonce
+  - CertificateDescription
+  - CertificateListDescription
+  - CertificateWithNonceDescription
+  - EndpointHealthData
+  - EndpointHealthDataListResult
+  - EndpointHealthStatus
+  - EnrichmentProperties
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -24,6 +61,8 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  'thumbprint': 'any'
+  'certificate': 'any'
 
 rename-rules:
   CPU: Cpu
@@ -48,13 +87,4 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
-directive:
-  - from: iothub.json
-    where: $.definitions
-    transform: >
-      $.TestAllRoutesResult['x-ms-client-name'] = 'IotHubTestAllRoutesResult';
-      $.TestRouteInput['x-ms-client-name'] = 'IotHubTestRouteInput';
-      $.TestRouteResult.properties.result['x-ms-enum']['name'] = 'IotHubTestResultStatus';
-      $.TestRouteResult['x-ms-client-name'] = 'IotHubTestRouteResult';
-      $.TestRouteResultDetails['x-ms-client-name'] = 'IotHubTestRouteResultDetails';
 ```

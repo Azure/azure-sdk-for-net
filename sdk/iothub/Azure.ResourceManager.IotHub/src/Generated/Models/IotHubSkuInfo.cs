@@ -7,20 +7,35 @@
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary> Information about the SKU of the IoT hub. </summary>
+    /// <summary>
+    /// Information about the SKU of the IoT hub.
+    /// Serialized Name: IotHubSkuInfo
+    /// </summary>
     public partial class IotHubSkuInfo
     {
         /// <summary> Initializes a new instance of IotHubSkuInfo. </summary>
-        /// <param name="name"> The name of the SKU. </param>
+        /// <param name="name">
+        /// The name of the SKU.
+        /// Serialized Name: IotHubSkuInfo.name
+        /// </param>
         public IotHubSkuInfo(IotHubSku name)
         {
             Name = name;
         }
 
         /// <summary> Initializes a new instance of IotHubSkuInfo. </summary>
-        /// <param name="name"> The name of the SKU. </param>
-        /// <param name="tier"> The billing tier for the IoT hub. </param>
-        /// <param name="capacity"> The number of provisioned IoT Hub units. See: https://docs.microsoft.com/azure/azure-subscription-service-limits#iot-hub-limits. </param>
+        /// <param name="name">
+        /// The name of the SKU.
+        /// Serialized Name: IotHubSkuInfo.name
+        /// </param>
+        /// <param name="tier">
+        /// The billing tier for the IoT hub.
+        /// Serialized Name: IotHubSkuInfo.tier
+        /// </param>
+        /// <param name="capacity">
+        /// The number of provisioned IoT Hub units. See: https://docs.microsoft.com/azure/azure-subscription-service-limits#iot-hub-limits.
+        /// Serialized Name: IotHubSkuInfo.capacity
+        /// </param>
         internal IotHubSkuInfo(IotHubSku name, IotHubSkuTier? tier, long? capacity)
         {
             Name = name;
@@ -28,11 +43,20 @@ namespace Azure.ResourceManager.IotHub.Models
             Capacity = capacity;
         }
 
-        /// <summary> The name of the SKU. </summary>
+        /// <summary>
+        /// The name of the SKU.
+        /// Serialized Name: IotHubSkuInfo.name
+        /// </summary>
         public IotHubSku Name { get; set; }
-        /// <summary> The billing tier for the IoT hub. </summary>
+        /// <summary>
+        /// The billing tier for the IoT hub.
+        /// Serialized Name: IotHubSkuInfo.tier
+        /// </summary>
         public IotHubSkuTier? Tier { get; }
-        /// <summary> The number of provisioned IoT Hub units. See: https://docs.microsoft.com/azure/azure-subscription-service-limits#iot-hub-limits. </summary>
+        /// <summary>
+        /// The number of provisioned IoT Hub units. See: https://docs.microsoft.com/azure/azure-subscription-service-limits#iot-hub-limits.
+        /// Serialized Name: IotHubSkuInfo.capacity
+        /// </summary>
         public long? Capacity { get; set; }
     }
 }

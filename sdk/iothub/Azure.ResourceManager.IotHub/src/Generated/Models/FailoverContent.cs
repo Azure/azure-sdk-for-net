@@ -9,11 +9,17 @@ using System;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary> Use to provide failover region when requesting manual Failover for a hub. </summary>
+    /// <summary>
+    /// Use to provide failover region when requesting manual Failover for a hub.
+    /// Serialized Name: FailoverInput
+    /// </summary>
     public partial class FailoverContent
     {
         /// <summary> Initializes a new instance of FailoverContent. </summary>
-        /// <param name="failoverRegion"> Region the hub will be failed over to. </param>
+        /// <param name="failoverRegion">
+        /// Region the hub will be failed over to
+        /// Serialized Name: FailoverInput.failoverRegion
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="failoverRegion"/> is null. </exception>
         public FailoverContent(string failoverRegion)
         {
@@ -25,7 +31,10 @@ namespace Azure.ResourceManager.IotHub.Models
             FailoverRegion = failoverRegion;
         }
 
-        /// <summary> Region the hub will be failed over to. </summary>
+        /// <summary>
+        /// Region the hub will be failed over to
+        /// Serialized Name: FailoverInput.failoverRegion
+        /// </summary>
         public string FailoverRegion { get; }
     }
 }

@@ -7,14 +7,26 @@
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary> The billing tier for the IoT hub. </summary>
+    /// <summary>
+    /// The billing tier for the IoT hub.
+    /// Serialized Name: IotHubSkuTier
+    /// </summary>
     public enum IotHubSkuTier
     {
-        /// <summary> Free. </summary>
+        /// <summary>
+        /// Free
+        /// Serialized Name: IotHubSkuTier.Free
+        /// </summary>
         Free,
-        /// <summary> Standard. </summary>
+        /// <summary>
+        /// Standard
+        /// Serialized Name: IotHubSkuTier.Standard
+        /// </summary>
         Standard,
-        /// <summary> Basic. </summary>
+        /// <summary>
+        /// Basic
+        /// Serialized Name: IotHubSkuTier.Basic
+        /// </summary>
         Basic
     }
 }

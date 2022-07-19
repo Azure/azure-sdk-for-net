@@ -11,7 +11,10 @@ using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary> The properties of an IoT hub. </summary>
+    /// <summary>
+    /// The properties of an IoT hub.
+    /// Serialized Name: IotHubProperties
+    /// </summary>
     public partial class IotHubProperties
     {
         /// <summary> Initializes a new instance of IotHubProperties. </summary>
@@ -28,31 +31,103 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary> Initializes a new instance of IotHubProperties. </summary>
-        /// <param name="authorizationPolicies"> The shared access policies you can use to secure a connection to the IoT hub. </param>
-        /// <param name="disableLocalAuth"> If true, SAS tokens with Iot hub scoped SAS keys cannot be used for authentication. </param>
-        /// <param name="disableDeviceSAS"> If true, all device(including Edge devices but excluding modules) scoped SAS keys cannot be used for authentication. </param>
-        /// <param name="disableModuleSAS"> If true, all module scoped SAS keys cannot be used for authentication. </param>
-        /// <param name="restrictOutboundNetworkAccess"> If true, egress from IotHub will be restricted to only the allowed FQDNs that are configured via allowedFqdnList. </param>
-        /// <param name="allowedFqdnList"> List of allowed FQDNs(Fully Qualified Domain Name) for egress from Iot Hub. </param>
-        /// <param name="publicNetworkAccess"> Whether requests from Public Network are allowed. </param>
-        /// <param name="ipFilterRules"> The IP filter rules. </param>
-        /// <param name="networkRuleSets"> Network Rule Set Properties of IotHub. </param>
-        /// <param name="minTlsVersion"> Specifies the minimum TLS version to support for this hub. Can be set to &quot;1.2&quot; to have clients that use a TLS version below 1.2 to be rejected. </param>
-        /// <param name="privateEndpointConnections"> Private endpoint connections created on this IotHub. </param>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        /// <param name="state"> The hub state. </param>
-        /// <param name="hostName"> The name of the host. </param>
-        /// <param name="eventHubEndpoints"> The Event Hub-compatible endpoint properties. The only possible keys to this dictionary is events. This key has to be present in the dictionary while making create or update calls for the IoT hub. </param>
-        /// <param name="routing"> The routing related properties of the IoT hub. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging. </param>
-        /// <param name="storageEndpoints"> The list of Azure Storage endpoints where you can upload files. Currently you can configure only one Azure Storage account and that MUST have its key as $default. Specifying more than one storage account causes an error to be thrown. Not specifying a value for this property when the enableFileUploadNotifications property is set to True, causes an error to be thrown. </param>
-        /// <param name="messagingEndpoints"> The messaging endpoint properties for the file upload notification queue. </param>
-        /// <param name="enableFileUploadNotifications"> If True, file upload notifications are enabled. </param>
-        /// <param name="cloudToDevice"> The IoT hub cloud-to-device messaging properties. </param>
-        /// <param name="comments"> IoT hub comments. </param>
-        /// <param name="features"> The capabilities and features enabled for the IoT hub. </param>
-        /// <param name="locations"> Primary and secondary location for iot hub. </param>
-        /// <param name="enableDataResidency"> This property when set to true, will enable data residency, thus, disabling disaster recovery. </param>
-        internal IotHubProperties(IList<SharedAccessSignatureAuthorizationRule> authorizationPolicies, bool? disableLocalAuth, bool? disableDeviceSAS, bool? disableModuleSAS, bool? restrictOutboundNetworkAccess, IList<string> allowedFqdnList, PublicNetworkAccess? publicNetworkAccess, IList<IPFilterRule> ipFilterRules, NetworkRuleSetProperties networkRuleSets, string minTlsVersion, IList<IotHubPrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, string state, string hostName, IDictionary<string, EventHubProperties> eventHubEndpoints, RoutingProperties routing, IDictionary<string, StorageEndpointProperties> storageEndpoints, IDictionary<string, MessagingEndpointProperties> messagingEndpoints, bool? enableFileUploadNotifications, CloudToDeviceProperties cloudToDevice, string comments, Capability? features, IReadOnlyList<IotHubLocationDescription> locations, bool? enableDataResidency)
+        /// <param name="authorizationPolicies">
+        /// The shared access policies you can use to secure a connection to the IoT hub.
+        /// Serialized Name: IotHubProperties.authorizationPolicies
+        /// </param>
+        /// <param name="disableLocalAuth">
+        /// If true, SAS tokens with Iot hub scoped SAS keys cannot be used for authentication.
+        /// Serialized Name: IotHubProperties.disableLocalAuth
+        /// </param>
+        /// <param name="disableDeviceSAS">
+        /// If true, all device(including Edge devices but excluding modules) scoped SAS keys cannot be used for authentication.
+        /// Serialized Name: IotHubProperties.disableDeviceSAS
+        /// </param>
+        /// <param name="disableModuleSAS">
+        /// If true, all module scoped SAS keys cannot be used for authentication.
+        /// Serialized Name: IotHubProperties.disableModuleSAS
+        /// </param>
+        /// <param name="restrictOutboundNetworkAccess">
+        /// If true, egress from IotHub will be restricted to only the allowed FQDNs that are configured via allowedFqdnList.
+        /// Serialized Name: IotHubProperties.restrictOutboundNetworkAccess
+        /// </param>
+        /// <param name="allowedFqdnList">
+        /// List of allowed FQDNs(Fully Qualified Domain Name) for egress from Iot Hub.
+        /// Serialized Name: IotHubProperties.allowedFqdnList
+        /// </param>
+        /// <param name="publicNetworkAccess">
+        /// Whether requests from Public Network are allowed
+        /// Serialized Name: IotHubProperties.publicNetworkAccess
+        /// </param>
+        /// <param name="ipFilterRules">
+        /// The IP filter rules.
+        /// Serialized Name: IotHubProperties.ipFilterRules
+        /// </param>
+        /// <param name="networkRuleSets">
+        /// Network Rule Set Properties of IotHub
+        /// Serialized Name: IotHubProperties.networkRuleSets
+        /// </param>
+        /// <param name="minTlsVersion">
+        /// Specifies the minimum TLS version to support for this hub. Can be set to &quot;1.2&quot; to have clients that use a TLS version below 1.2 to be rejected.
+        /// Serialized Name: IotHubProperties.minTlsVersion
+        /// </param>
+        /// <param name="privateEndpointConnections">
+        /// Private endpoint connections created on this IotHub
+        /// Serialized Name: IotHubProperties.privateEndpointConnections
+        /// </param>
+        /// <param name="provisioningState">
+        /// The provisioning state.
+        /// Serialized Name: IotHubProperties.provisioningState
+        /// </param>
+        /// <param name="state">
+        /// The hub state.
+        /// Serialized Name: IotHubProperties.state
+        /// </param>
+        /// <param name="hostName">
+        /// The name of the host.
+        /// Serialized Name: IotHubProperties.hostName
+        /// </param>
+        /// <param name="eventHubEndpoints">
+        /// The Event Hub-compatible endpoint properties. The only possible keys to this dictionary is events. This key has to be present in the dictionary while making create or update calls for the IoT hub.
+        /// Serialized Name: IotHubProperties.eventHubEndpoints
+        /// </param>
+        /// <param name="routing">
+        /// The routing related properties of the IoT hub. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging
+        /// Serialized Name: IotHubProperties.routing
+        /// </param>
+        /// <param name="storageEndpoints">
+        /// The list of Azure Storage endpoints where you can upload files. Currently you can configure only one Azure Storage account and that MUST have its key as $default. Specifying more than one storage account causes an error to be thrown. Not specifying a value for this property when the enableFileUploadNotifications property is set to True, causes an error to be thrown.
+        /// Serialized Name: IotHubProperties.storageEndpoints
+        /// </param>
+        /// <param name="messagingEndpoints">
+        /// The messaging endpoint properties for the file upload notification queue.
+        /// Serialized Name: IotHubProperties.messagingEndpoints
+        /// </param>
+        /// <param name="enableFileUploadNotifications">
+        /// If True, file upload notifications are enabled.
+        /// Serialized Name: IotHubProperties.enableFileUploadNotifications
+        /// </param>
+        /// <param name="cloudToDevice">
+        /// The IoT hub cloud-to-device messaging properties.
+        /// Serialized Name: IotHubProperties.cloudToDevice
+        /// </param>
+        /// <param name="comments">
+        /// IoT hub comments.
+        /// Serialized Name: IotHubProperties.comments
+        /// </param>
+        /// <param name="features">
+        /// The capabilities and features enabled for the IoT hub.
+        /// Serialized Name: IotHubProperties.features
+        /// </param>
+        /// <param name="locations">
+        /// Primary and secondary location for iot hub
+        /// Serialized Name: IotHubProperties.locations
+        /// </param>
+        /// <param name="enableDataResidency">
+        /// This property when set to true, will enable data residency, thus, disabling disaster recovery.
+        /// Serialized Name: IotHubProperties.enableDataResidency
+        /// </param>
+        internal IotHubProperties(IList<SharedAccessSignatureAuthorizationRule> authorizationPolicies, bool? disableLocalAuth, bool? disableDeviceSAS, bool? disableModuleSAS, bool? restrictOutboundNetworkAccess, IList<string> allowedFqdnList, PublicNetworkAccess? publicNetworkAccess, IList<IPFilterRule> ipFilterRules, NetworkRuleSetProperties networkRuleSets, string minTlsVersion, IList<IotHubPrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, string state, string hostName, IDictionary<string, EventHubProperties> eventHubEndpoints, RoutingProperties routing, IDictionary<string, StorageEndpointProperties> storageEndpoints, IDictionary<string, MessagingEndpointProperties> messagingEndpoints, bool? enableFileUploadNotifications, CloudToDeviceProperties cloudToDevice, string comments, IotHubCapability? features, IReadOnlyList<IotHubLocationDescription> locations, bool? enableDataResidency)
         {
             AuthorizationPolicies = authorizationPolicies;
             DisableLocalAuth = disableLocalAuth;
@@ -80,53 +155,125 @@ namespace Azure.ResourceManager.IotHub.Models
             EnableDataResidency = enableDataResidency;
         }
 
-        /// <summary> The shared access policies you can use to secure a connection to the IoT hub. </summary>
+        /// <summary>
+        /// The shared access policies you can use to secure a connection to the IoT hub.
+        /// Serialized Name: IotHubProperties.authorizationPolicies
+        /// </summary>
         public IList<SharedAccessSignatureAuthorizationRule> AuthorizationPolicies { get; }
-        /// <summary> If true, SAS tokens with Iot hub scoped SAS keys cannot be used for authentication. </summary>
+        /// <summary>
+        /// If true, SAS tokens with Iot hub scoped SAS keys cannot be used for authentication.
+        /// Serialized Name: IotHubProperties.disableLocalAuth
+        /// </summary>
         public bool? DisableLocalAuth { get; set; }
-        /// <summary> If true, all device(including Edge devices but excluding modules) scoped SAS keys cannot be used for authentication. </summary>
+        /// <summary>
+        /// If true, all device(including Edge devices but excluding modules) scoped SAS keys cannot be used for authentication.
+        /// Serialized Name: IotHubProperties.disableDeviceSAS
+        /// </summary>
         public bool? DisableDeviceSAS { get; set; }
-        /// <summary> If true, all module scoped SAS keys cannot be used for authentication. </summary>
+        /// <summary>
+        /// If true, all module scoped SAS keys cannot be used for authentication.
+        /// Serialized Name: IotHubProperties.disableModuleSAS
+        /// </summary>
         public bool? DisableModuleSAS { get; set; }
-        /// <summary> If true, egress from IotHub will be restricted to only the allowed FQDNs that are configured via allowedFqdnList. </summary>
+        /// <summary>
+        /// If true, egress from IotHub will be restricted to only the allowed FQDNs that are configured via allowedFqdnList.
+        /// Serialized Name: IotHubProperties.restrictOutboundNetworkAccess
+        /// </summary>
         public bool? RestrictOutboundNetworkAccess { get; set; }
-        /// <summary> List of allowed FQDNs(Fully Qualified Domain Name) for egress from Iot Hub. </summary>
+        /// <summary>
+        /// List of allowed FQDNs(Fully Qualified Domain Name) for egress from Iot Hub.
+        /// Serialized Name: IotHubProperties.allowedFqdnList
+        /// </summary>
         public IList<string> AllowedFqdnList { get; }
-        /// <summary> Whether requests from Public Network are allowed. </summary>
+        /// <summary>
+        /// Whether requests from Public Network are allowed
+        /// Serialized Name: IotHubProperties.publicNetworkAccess
+        /// </summary>
         public PublicNetworkAccess? PublicNetworkAccess { get; set; }
-        /// <summary> The IP filter rules. </summary>
+        /// <summary>
+        /// The IP filter rules.
+        /// Serialized Name: IotHubProperties.ipFilterRules
+        /// </summary>
         public IList<IPFilterRule> IPFilterRules { get; }
-        /// <summary> Network Rule Set Properties of IotHub. </summary>
+        /// <summary>
+        /// Network Rule Set Properties of IotHub
+        /// Serialized Name: IotHubProperties.networkRuleSets
+        /// </summary>
         public NetworkRuleSetProperties NetworkRuleSets { get; set; }
-        /// <summary> Specifies the minimum TLS version to support for this hub. Can be set to &quot;1.2&quot; to have clients that use a TLS version below 1.2 to be rejected. </summary>
+        /// <summary>
+        /// Specifies the minimum TLS version to support for this hub. Can be set to &quot;1.2&quot; to have clients that use a TLS version below 1.2 to be rejected.
+        /// Serialized Name: IotHubProperties.minTlsVersion
+        /// </summary>
         public string MinTlsVersion { get; set; }
-        /// <summary> Private endpoint connections created on this IotHub. </summary>
+        /// <summary>
+        /// Private endpoint connections created on this IotHub
+        /// Serialized Name: IotHubProperties.privateEndpointConnections
+        /// </summary>
         public IList<IotHubPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
-        /// <summary> The provisioning state. </summary>
+        /// <summary>
+        /// The provisioning state.
+        /// Serialized Name: IotHubProperties.provisioningState
+        /// </summary>
         public string ProvisioningState { get; }
-        /// <summary> The hub state. </summary>
+        /// <summary>
+        /// The hub state.
+        /// Serialized Name: IotHubProperties.state
+        /// </summary>
         public string State { get; }
-        /// <summary> The name of the host. </summary>
+        /// <summary>
+        /// The name of the host.
+        /// Serialized Name: IotHubProperties.hostName
+        /// </summary>
         public string HostName { get; }
-        /// <summary> The Event Hub-compatible endpoint properties. The only possible keys to this dictionary is events. This key has to be present in the dictionary while making create or update calls for the IoT hub. </summary>
+        /// <summary>
+        /// The Event Hub-compatible endpoint properties. The only possible keys to this dictionary is events. This key has to be present in the dictionary while making create or update calls for the IoT hub.
+        /// Serialized Name: IotHubProperties.eventHubEndpoints
+        /// </summary>
         public IDictionary<string, EventHubProperties> EventHubEndpoints { get; }
-        /// <summary> The routing related properties of the IoT hub. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging. </summary>
+        /// <summary>
+        /// The routing related properties of the IoT hub. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging
+        /// Serialized Name: IotHubProperties.routing
+        /// </summary>
         public RoutingProperties Routing { get; set; }
-        /// <summary> The list of Azure Storage endpoints where you can upload files. Currently you can configure only one Azure Storage account and that MUST have its key as $default. Specifying more than one storage account causes an error to be thrown. Not specifying a value for this property when the enableFileUploadNotifications property is set to True, causes an error to be thrown. </summary>
+        /// <summary>
+        /// The list of Azure Storage endpoints where you can upload files. Currently you can configure only one Azure Storage account and that MUST have its key as $default. Specifying more than one storage account causes an error to be thrown. Not specifying a value for this property when the enableFileUploadNotifications property is set to True, causes an error to be thrown.
+        /// Serialized Name: IotHubProperties.storageEndpoints
+        /// </summary>
         public IDictionary<string, StorageEndpointProperties> StorageEndpoints { get; }
-        /// <summary> The messaging endpoint properties for the file upload notification queue. </summary>
+        /// <summary>
+        /// The messaging endpoint properties for the file upload notification queue.
+        /// Serialized Name: IotHubProperties.messagingEndpoints
+        /// </summary>
         public IDictionary<string, MessagingEndpointProperties> MessagingEndpoints { get; }
-        /// <summary> If True, file upload notifications are enabled. </summary>
+        /// <summary>
+        /// If True, file upload notifications are enabled.
+        /// Serialized Name: IotHubProperties.enableFileUploadNotifications
+        /// </summary>
         public bool? EnableFileUploadNotifications { get; set; }
-        /// <summary> The IoT hub cloud-to-device messaging properties. </summary>
+        /// <summary>
+        /// The IoT hub cloud-to-device messaging properties.
+        /// Serialized Name: IotHubProperties.cloudToDevice
+        /// </summary>
         public CloudToDeviceProperties CloudToDevice { get; set; }
-        /// <summary> IoT hub comments. </summary>
+        /// <summary>
+        /// IoT hub comments.
+        /// Serialized Name: IotHubProperties.comments
+        /// </summary>
         public string Comments { get; set; }
-        /// <summary> The capabilities and features enabled for the IoT hub. </summary>
-        public Capability? Features { get; set; }
-        /// <summary> Primary and secondary location for iot hub. </summary>
+        /// <summary>
+        /// The capabilities and features enabled for the IoT hub.
+        /// Serialized Name: IotHubProperties.features
+        /// </summary>
+        public IotHubCapability? Features { get; set; }
+        /// <summary>
+        /// Primary and secondary location for iot hub
+        /// Serialized Name: IotHubProperties.locations
+        /// </summary>
         public IReadOnlyList<IotHubLocationDescription> Locations { get; }
-        /// <summary> This property when set to true, will enable data residency, thus, disabling disaster recovery. </summary>
+        /// <summary>
+        /// This property when set to true, will enable data residency, thus, disabling disaster recovery.
+        /// Serialized Name: IotHubProperties.enableDataResidency
+        /// </summary>
         public bool? EnableDataResidency { get; set; }
     }
 }

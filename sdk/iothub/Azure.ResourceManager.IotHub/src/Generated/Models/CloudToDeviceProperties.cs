@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary> The IoT hub cloud-to-device messaging properties. </summary>
+    /// <summary>
+    /// The IoT hub cloud-to-device messaging properties.
+    /// Serialized Name: CloudToDeviceProperties
+    /// </summary>
     public partial class CloudToDeviceProperties
     {
         /// <summary> Initializes a new instance of CloudToDeviceProperties. </summary>
@@ -18,9 +21,18 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary> Initializes a new instance of CloudToDeviceProperties. </summary>
-        /// <param name="maxDeliveryCount"> The max delivery count for cloud-to-device messages in the device queue. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging#cloud-to-device-messages. </param>
-        /// <param name="defaultTtlAsIso8601"> The default time to live for cloud-to-device messages in the device queue. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging#cloud-to-device-messages. </param>
-        /// <param name="feedback"> The properties of the feedback queue for cloud-to-device messages. </param>
+        /// <param name="maxDeliveryCount">
+        /// The max delivery count for cloud-to-device messages in the device queue. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging#cloud-to-device-messages.
+        /// Serialized Name: CloudToDeviceProperties.maxDeliveryCount
+        /// </param>
+        /// <param name="defaultTtlAsIso8601">
+        /// The default time to live for cloud-to-device messages in the device queue. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging#cloud-to-device-messages.
+        /// Serialized Name: CloudToDeviceProperties.defaultTtlAsIso8601
+        /// </param>
+        /// <param name="feedback">
+        /// The properties of the feedback queue for cloud-to-device messages.
+        /// Serialized Name: CloudToDeviceProperties.feedback
+        /// </param>
         internal CloudToDeviceProperties(int? maxDeliveryCount, TimeSpan? defaultTtlAsIso8601, FeedbackProperties feedback)
         {
             MaxDeliveryCount = maxDeliveryCount;
@@ -28,11 +40,20 @@ namespace Azure.ResourceManager.IotHub.Models
             Feedback = feedback;
         }
 
-        /// <summary> The max delivery count for cloud-to-device messages in the device queue. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging#cloud-to-device-messages. </summary>
+        /// <summary>
+        /// The max delivery count for cloud-to-device messages in the device queue. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging#cloud-to-device-messages.
+        /// Serialized Name: CloudToDeviceProperties.maxDeliveryCount
+        /// </summary>
         public int? MaxDeliveryCount { get; set; }
-        /// <summary> The default time to live for cloud-to-device messages in the device queue. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging#cloud-to-device-messages. </summary>
+        /// <summary>
+        /// The default time to live for cloud-to-device messages in the device queue. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging#cloud-to-device-messages.
+        /// Serialized Name: CloudToDeviceProperties.defaultTtlAsIso8601
+        /// </summary>
         public TimeSpan? DefaultTtlAsIso8601 { get; set; }
-        /// <summary> The properties of the feedback queue for cloud-to-device messages. </summary>
+        /// <summary>
+        /// The properties of the feedback queue for cloud-to-device messages.
+        /// Serialized Name: CloudToDeviceProperties.feedback
+        /// </summary>
         public FeedbackProperties Feedback { get; set; }
     }
 }

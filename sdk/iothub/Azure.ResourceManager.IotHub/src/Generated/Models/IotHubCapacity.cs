@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary> IoT Hub capacity information. </summary>
+    /// <summary>
+    /// IoT Hub capacity information.
+    /// Serialized Name: IotHubCapacity
+    /// </summary>
     public partial class IotHubCapacity
     {
         /// <summary> Initializes a new instance of IotHubCapacity. </summary>
@@ -16,10 +19,22 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary> Initializes a new instance of IotHubCapacity. </summary>
-        /// <param name="minimum"> The minimum number of units. </param>
-        /// <param name="maximum"> The maximum number of units. </param>
-        /// <param name="default"> The default number of units. </param>
-        /// <param name="scaleType"> The type of the scaling enabled. </param>
+        /// <param name="minimum">
+        /// The minimum number of units.
+        /// Serialized Name: IotHubCapacity.minimum
+        /// </param>
+        /// <param name="maximum">
+        /// The maximum number of units.
+        /// Serialized Name: IotHubCapacity.maximum
+        /// </param>
+        /// <param name="default">
+        /// The default number of units.
+        /// Serialized Name: IotHubCapacity.default
+        /// </param>
+        /// <param name="scaleType">
+        /// The type of the scaling enabled.
+        /// Serialized Name: IotHubCapacity.scaleType
+        /// </param>
         internal IotHubCapacity(long? minimum, long? maximum, long? @default, IotHubScaleType? scaleType)
         {
             Minimum = minimum;
@@ -28,13 +43,25 @@ namespace Azure.ResourceManager.IotHub.Models
             ScaleType = scaleType;
         }
 
-        /// <summary> The minimum number of units. </summary>
+        /// <summary>
+        /// The minimum number of units.
+        /// Serialized Name: IotHubCapacity.minimum
+        /// </summary>
         public long? Minimum { get; }
-        /// <summary> The maximum number of units. </summary>
+        /// <summary>
+        /// The maximum number of units.
+        /// Serialized Name: IotHubCapacity.maximum
+        /// </summary>
         public long? Maximum { get; }
-        /// <summary> The default number of units. </summary>
+        /// <summary>
+        /// The default number of units.
+        /// Serialized Name: IotHubCapacity.default
+        /// </summary>
         public long? Default { get; }
-        /// <summary> The type of the scaling enabled. </summary>
+        /// <summary>
+        /// The type of the scaling enabled.
+        /// Serialized Name: IotHubCapacity.scaleType
+        /// </summary>
         public IotHubScaleType? ScaleType { get; }
     }
 }
