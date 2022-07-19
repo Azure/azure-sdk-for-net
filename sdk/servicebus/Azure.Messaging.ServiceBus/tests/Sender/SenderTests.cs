@@ -311,22 +311,5 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             var identifier = sender.Identifier;
             Assert.Equals(setIdentifier, identifier);
         }
-
-        [Test]
-        public async Task SenderPropagatesIdentifierToAMQPLink()
-        {
-            await using var client = new ServiceBusClient("not.real.com", Mock.Of<TokenCredential>());
-
-            var setIdentifier = "UniqueIdentifier-abcedefg";
-
-            var options = new ServiceBusSenderOptions
-            {
-                Identifier = setIdentifier
-            };
-
-            await using var sender = client.CreateSender("fake", options);
-
-
-        }
     }
 }

@@ -680,7 +680,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     AutoSendFlow = prefetchCount > 0,
                     SettleType = (receiveMode == ServiceBusReceiveMode.PeekLock) ? SettleMode.SettleOnDispose : SettleMode.SettleOnSend,
                     Source = new Source { Address = endpoint.AbsolutePath, FilterSet = filters },
-                    Target = new Target { Address = Guid.NewGuid().ToString() },
+                    Target = new Target { Address = identifier },
                     OperationTimeout = _operationTimeout
                 };
 

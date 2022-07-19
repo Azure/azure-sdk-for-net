@@ -41,6 +41,13 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusReceiveMode ReceiveMode { get; set; } = ServiceBusReceiveMode.PeekLock;
 
         /// <summary>
+        /// Gets the ID to identify this client. This can be used to correlate logs and exceptions.
+        /// </summary>
+        /// <remarks>Every new client has a unique ID.</remarks>
+        ///
+        public string Identifier { get; set; }
+
+        /// <summary>
         /// Gets or sets the subqueue to connect the receiver to. By default, the receiver will not connect to a subqueue.
         /// </summary>
         public SubQueue SubQueue { get; set; } = SubQueue.None;

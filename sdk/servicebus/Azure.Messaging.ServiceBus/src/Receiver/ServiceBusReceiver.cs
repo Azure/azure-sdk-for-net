@@ -156,7 +156,7 @@ namespace Azure.Messaging.ServiceBus
                 connection.ThrowIfClosed();
 
                 options = options?.Clone() ?? new ServiceBusReceiverOptions();
-                Identifier = DiagnosticUtilities.GenerateIdentifier(entityPath);
+                Identifier = options.Identifier ?? DiagnosticUtilities.GenerateIdentifier(entityPath);
                 _connection = connection;
                 _retryPolicy = connection.RetryOptions.ToRetryPolicy();
                 ReceiveMode = options.ReceiveMode;

@@ -66,6 +66,7 @@ namespace Azure.Messaging.ServiceBus
         /// Gets the ID to identify this client. This can be used to correlate logs and exceptions.
         /// </summary>
         /// <remarks>Every new client has a unique ID.</remarks>
+        ///
         internal string Identifier { get; private set; }
 
         /// <summary>
