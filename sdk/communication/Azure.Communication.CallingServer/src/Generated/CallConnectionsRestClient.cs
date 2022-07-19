@@ -6,13 +6,10 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Communication;
-using Azure.Communication.CallingServer.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -203,7 +200,7 @@ namespace Azure.Communication.CallingServer
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 202:
+                case 204:
                     return message.Response;
                 default:
                     throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -226,7 +223,7 @@ namespace Azure.Communication.CallingServer
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 202:
+                case 204:
                     return message.Response;
                 default:
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);
@@ -259,7 +256,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="transferToParticipantRequest"/> is null. </exception>
         /// <remarks> Transfer the call to a participant. </remarks>
-        public async Task<Response<TransferCallResponse>> TransferToParticipantAsync(string callConnectionId, TransferToParticipantRequestInternal transferToParticipantRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<TransferCallToParticipantResult>> TransferToParticipantAsync(string callConnectionId, TransferToParticipantRequestInternal transferToParticipantRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -276,9 +273,9 @@ namespace Azure.Communication.CallingServer
             {
                 case 202:
                     {
-                        TransferCallResponse value = default;
+                        TransferCallToParticipantResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TransferCallResponse.DeserializeTransferCallResponse(document.RootElement);
+                        value = TransferCallToParticipantResult.DeserializeTransferCallToParticipantResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -292,7 +289,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="transferToParticipantRequest"/> is null. </exception>
         /// <remarks> Transfer the call to a participant. </remarks>
-        public Response<TransferCallResponse> TransferToParticipant(string callConnectionId, TransferToParticipantRequestInternal transferToParticipantRequest, CancellationToken cancellationToken = default)
+        public Response<TransferCallToParticipantResult> TransferToParticipant(string callConnectionId, TransferToParticipantRequestInternal transferToParticipantRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -309,9 +306,9 @@ namespace Azure.Communication.CallingServer
             {
                 case 202:
                     {
-                        TransferCallResponse value = default;
+                        TransferCallToParticipantResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TransferCallResponse.DeserializeTransferCallResponse(document.RootElement);
+                        value = TransferCallToParticipantResult.DeserializeTransferCallToParticipantResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -340,7 +337,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
         /// <remarks> Get participants from a call. </remarks>
-        public async Task<Response<IReadOnlyList<AcsCallParticipantDtoInternal>>> GetParticipantsAsync(string callConnectionId, CancellationToken cancellationToken = default)
+        public async Task<Response<GetParticipantsResponseInternal>> GetParticipantsAsync(string callConnectionId, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -353,14 +350,9 @@ namespace Azure.Communication.CallingServer
             {
                 case 200:
                     {
-                        IReadOnlyList<AcsCallParticipantDtoInternal> value = default;
+                        GetParticipantsResponseInternal value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<AcsCallParticipantDtoInternal> array = new List<AcsCallParticipantDtoInternal>();
-                        foreach (var item in document.RootElement.EnumerateArray())
-                        {
-                            array.Add(AcsCallParticipantDtoInternal.DeserializeAcsCallParticipantDtoInternal(item));
-                        }
-                        value = array;
+                        value = GetParticipantsResponseInternal.DeserializeGetParticipantsResponseInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -373,7 +365,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
         /// <remarks> Get participants from a call. </remarks>
-        public Response<IReadOnlyList<AcsCallParticipantDtoInternal>> GetParticipants(string callConnectionId, CancellationToken cancellationToken = default)
+        public Response<GetParticipantsResponseInternal> GetParticipants(string callConnectionId, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -386,14 +378,9 @@ namespace Azure.Communication.CallingServer
             {
                 case 200:
                     {
-                        IReadOnlyList<AcsCallParticipantDtoInternal> value = default;
+                        GetParticipantsResponseInternal value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<AcsCallParticipantDtoInternal> array = new List<AcsCallParticipantDtoInternal>();
-                        foreach (var item in document.RootElement.EnumerateArray())
-                        {
-                            array.Add(AcsCallParticipantDtoInternal.DeserializeAcsCallParticipantDtoInternal(item));
-                        }
-                        value = array;
+                        value = GetParticipantsResponseInternal.DeserializeGetParticipantsResponseInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -427,7 +414,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="addParticipantsRequest"/> is null. </exception>
         /// <remarks> Add participants to the call. </remarks>
-        public async Task<Response<AddParticipantsResponse>> AddParticipantAsync(string callConnectionId, AddParticipantsRequestInternal addParticipantsRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<AddParticipantsResponseInternal>> AddParticipantAsync(string callConnectionId, AddParticipantsRequestInternal addParticipantsRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -444,9 +431,9 @@ namespace Azure.Communication.CallingServer
             {
                 case 202:
                     {
-                        AddParticipantsResponse value = default;
+                        AddParticipantsResponseInternal value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AddParticipantsResponse.DeserializeAddParticipantsResponse(document.RootElement);
+                        value = AddParticipantsResponseInternal.DeserializeAddParticipantsResponseInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -460,7 +447,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="addParticipantsRequest"/> is null. </exception>
         /// <remarks> Add participants to the call. </remarks>
-        public Response<AddParticipantsResponse> AddParticipant(string callConnectionId, AddParticipantsRequestInternal addParticipantsRequest, CancellationToken cancellationToken = default)
+        public Response<AddParticipantsResponseInternal> AddParticipant(string callConnectionId, AddParticipantsRequestInternal addParticipantsRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -477,9 +464,9 @@ namespace Azure.Communication.CallingServer
             {
                 case 202:
                     {
-                        AddParticipantsResponse value = default;
+                        AddParticipantsResponseInternal value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AddParticipantsResponse.DeserializeAddParticipantsResponse(document.RootElement);
+                        value = AddParticipantsResponseInternal.DeserializeAddParticipantsResponseInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -513,7 +500,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="removeParticipantsRequest"/> is null. </exception>
         /// <remarks> Remove participant from the call using identifier. </remarks>
-        public async Task<Response<RemoveParticipantsResponse>> RemoveParticipantsAsync(string callConnectionId, RemoveParticipantsRequestInternal removeParticipantsRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<RemoveParticipantsResult>> RemoveParticipantsAsync(string callConnectionId, RemoveParticipantsRequestInternal removeParticipantsRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -530,9 +517,9 @@ namespace Azure.Communication.CallingServer
             {
                 case 202:
                     {
-                        RemoveParticipantsResponse value = default;
+                        RemoveParticipantsResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RemoveParticipantsResponse.DeserializeRemoveParticipantsResponse(document.RootElement);
+                        value = RemoveParticipantsResult.DeserializeRemoveParticipantsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -546,7 +533,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="removeParticipantsRequest"/> is null. </exception>
         /// <remarks> Remove participant from the call using identifier. </remarks>
-        public Response<RemoveParticipantsResponse> RemoveParticipants(string callConnectionId, RemoveParticipantsRequestInternal removeParticipantsRequest, CancellationToken cancellationToken = default)
+        public Response<RemoveParticipantsResult> RemoveParticipants(string callConnectionId, RemoveParticipantsRequestInternal removeParticipantsRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -563,9 +550,9 @@ namespace Azure.Communication.CallingServer
             {
                 case 202:
                     {
-                        RemoveParticipantsResponse value = default;
+                        RemoveParticipantsResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RemoveParticipantsResponse.DeserializeRemoveParticipantsResponse(document.RootElement);
+                        value = RemoveParticipantsResult.DeserializeRemoveParticipantsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -573,44 +560,41 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        internal HttpMessage CreateGetParticipantRequest(string callConnectionId, CommunicationIdentifierModel participant)
+        internal HttpMessage CreateGetParticipantRequest(string callConnectionId, string participantMri)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
-            request.Method = RequestMethod.Post;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/calling/callConnections/", false);
             uri.AppendPath(callConnectionId, true);
-            uri.AppendPath("/participants:get", false);
+            uri.AppendPath("/participants/", false);
+            uri.AppendPath(participantMri, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var model = new GetParticipantRequest()
-            {
-                Participant = participant
-            };
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
-            request.Content = content;
             return message;
         }
 
-        /// <summary> Get a participant from a call. </summary>
+        /// <summary> Get participant from a call. </summary>
         /// <param name="callConnectionId"> The call connection Id. </param>
-        /// <param name="participant"> The CommunicationIdentifierModel to use. </param>
+        /// <param name="participantMri"> MRI of the participants to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
-        /// <remarks> Get a participant from a call. </remarks>
-        public async Task<Response<AcsCallParticipantDtoInternal>> GetParticipantAsync(string callConnectionId, CommunicationIdentifierModel participant = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="participantMri"/> is null. </exception>
+        /// <remarks> Get participant from a call. </remarks>
+        public async Task<Response<AcsCallParticipantDtoInternal>> GetParticipantAsync(string callConnectionId, string participantMri, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
+            if (participantMri == null)
+            {
+                throw new ArgumentNullException(nameof(participantMri));
+            }
 
-            using var message = CreateGetParticipantRequest(callConnectionId, participant);
+            using var message = CreateGetParticipantRequest(callConnectionId, participantMri);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -626,20 +610,24 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        /// <summary> Get a participant from a call. </summary>
+        /// <summary> Get participant from a call. </summary>
         /// <param name="callConnectionId"> The call connection Id. </param>
-        /// <param name="participant"> The CommunicationIdentifierModel to use. </param>
+        /// <param name="participantMri"> MRI of the participants to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
-        /// <remarks> Get a participant from a call. </remarks>
-        public Response<AcsCallParticipantDtoInternal> GetParticipant(string callConnectionId, CommunicationIdentifierModel participant = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="participantMri"/> is null. </exception>
+        /// <remarks> Get participant from a call. </remarks>
+        public Response<AcsCallParticipantDtoInternal> GetParticipant(string callConnectionId, string participantMri, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
+            if (participantMri == null)
+            {
+                throw new ArgumentNullException(nameof(participantMri));
+            }
 
-            using var message = CreateGetParticipantRequest(callConnectionId, participant);
+            using var message = CreateGetParticipantRequest(callConnectionId, participantMri);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
