@@ -19,7 +19,7 @@ list-exception:
 
 override-operation-name:
   StorageAccounts_CheckNameAvailability: CheckStorageAccountNameAvailability
-  StorageAccounts_HierarchicalNamespaceMigration: ExecuteHierarchicalNamespaceMigration
+  StorageAccounts_HierarchicalNamespaceMigration: MigrateToEnableHierarchicalNamespace
 
 request-path-to-singleton-resource:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/managementPolicies/{managementPolicyName}: managementPolicies/default
@@ -213,6 +213,8 @@ rename-mapping:
   UpdateHistoryProperty: UpdateHistoryEntry
   UpdateHistoryProperty.update: UpdateType
   PublicAccess: StoragePublicAccessType
+  DirectoryServiceOptions.AADDS: AzureActiveDirectoryDomainServices
+  DirectoryServiceOptions.AD: ActiveDirectoryDomainServices
 
 directive:
   - from: swagger-document
