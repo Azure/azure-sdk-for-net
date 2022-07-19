@@ -282,10 +282,9 @@ namespace Azure.Storage.Blobs.Test
                 KeyWrapAlgorithm = "bar"
             };
 
-            var client = new BlobClient(new Uri("http://someuri.com"), new SpecializedBlobClientOptions()
-            {
-                ClientSideEncryption = options1,
-            });
+            BlobClientOptions options = GetOptions();
+            options._clientSideEncryptionOptions = options1;
+            var client = new BlobClient(new Uri("http://someuri.com"), options);
 
             Assert.AreEqual(options1.KeyEncryptionKey, client.ClientSideEncryption.KeyEncryptionKey);
             Assert.AreEqual(options1.KeyResolver, client.ClientSideEncryption.KeyResolver);
@@ -1011,13 +1010,12 @@ namespace Azure.Storage.Blobs.Test
                 await blob.UploadAsync(new MemoryStream(data));
 
                 // download plaintext range with encrypted client
-                var cryptoClient = InstrumentClient(new BlobClient(blob.Uri, Tenants.GetNewSharedKeyCredentials(), new SpecializedBlobClientOptions()
+                var options = GetOptions();
+                options._clientSideEncryptionOptions = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V2_0)
                 {
-                    ClientSideEncryption = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V2_0)
-                    {
-                        KeyResolver = mockKeyResolver
-                    }
-                }));
+                    KeyResolver = mockKeyResolver
+                };
+                var cryptoClient = InstrumentClient(new BlobClient(blob.Uri, Tenants.GetNewSharedKeyCredentials(), options));
                 var desiredRange = new HttpRange(rangeOffset, rangeLength);
                 var response = await cryptoClient.DownloadAsync(desiredRange);
 
