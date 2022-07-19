@@ -264,6 +264,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
 #pragma warning disable CS0618 // obsolete
+        [RecordedTest]
         [TestCase(ClientSideEncryptionVersion.V1_0)]
         [TestCase(ClientSideEncryptionVersion.V2_0)]
 #pragma warning restore CS0618 // obsolete
@@ -298,6 +299,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
 #pragma warning disable CS0618 // obsolete
+        [RecordedTest]
         [TestCase(ClientSideEncryptionVersion.V1_0, 16)] // a single cipher block
         [TestCase(ClientSideEncryptionVersion.V1_0, 14)] // a single unalligned cipher block
         [TestCase(ClientSideEncryptionVersion.V1_0, Constants.KB)] // multiple blocks
@@ -335,6 +337,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
 #pragma warning disable CS0618 // obsolete
+        [RecordedTest]
         [TestCase(ClientSideEncryptionVersion.V1_0, 16, 16)]
         [TestCase(ClientSideEncryptionVersion.V1_0, Constants.KB, 1000)] // unaligned write buffer
         [TestCase(ClientSideEncryptionVersion.V1_0, Constants.KB - 4, 1000)] // unalligned wite buffer and data
@@ -384,6 +387,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
 #pragma warning disable CS0618 // obsolete
+        [RecordedTest]
         [TestCase(ClientSideEncryptionVersion.V1_0)]
         [TestCase(ClientSideEncryptionVersion.V2_0)]
 #pragma warning restore CS0618 // obsolete
@@ -424,6 +428,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
 #pragma warning disable CS0618 // obsolete
+        [RecordedTest]
         [TestCase(ClientSideEncryptionVersion.V1_0)]
         [TestCase(ClientSideEncryptionVersion.V2_0)]
 #pragma warning restore CS0618 // obsolete
@@ -456,7 +461,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Test]
+        [RecordedTest]
         [Combinatorial]
         public async Task UploadAsyncSplit(
             [Values(1, 2, 4, 8)] int concurrency,
@@ -499,6 +504,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
 #pragma warning disable CS0618 // obsolete
+        [RecordedTest]
         [TestCase(ClientSideEncryptionVersion.V1_0, 16, null)] // a single cipher block
         [TestCase(ClientSideEncryptionVersion.V1_0, 14, null)] // a single unalligned cipher block
         [TestCase(ClientSideEncryptionVersion.V1_0, Constants.KB, null)] // multiple blocks
@@ -544,7 +550,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Test]
+        [RecordedTest]
         [Combinatorial]
         public async Task RoundtripSplitAsync(
             [Values(1, 2, 4, 8)] int concurrency,
@@ -592,6 +598,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
 #pragma warning disable CS0618 // obsolete
+        [RecordedTest]
         [TestCase(ClientSideEncryptionVersion.V1_0, Constants.MB, 64 * Constants.KB)]
         [TestCase(ClientSideEncryptionVersion.V1_0, Constants.MB, Constants.MB)]
         [TestCase(ClientSideEncryptionVersion.V1_0, Constants.MB, 4 * Constants.MB)]
@@ -638,7 +645,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RoundtripWithMetadata([ValueSource("GetEncryptionVersions")] ClientSideEncryptionVersion version)
         {
             // Arrange
@@ -687,7 +694,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Test] // multiple unalligned blocks
+        [RecordedTest]
         public async Task KeyResolverKicksIn([ValueSource("GetEncryptionVersions")] ClientSideEncryptionVersion version)
         {
             var data = GetRandomBuffer(Constants.KB);
@@ -723,6 +730,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
 #pragma warning disable CS0618 // obsolete
+        [RecordedTest]
         [TestCase(ClientSideEncryptionVersion.V1_0, 0, 16)]  // first block
         [TestCase(ClientSideEncryptionVersion.V1_0, 16, 16)] // not first block
         [TestCase(ClientSideEncryptionVersion.V1_0, 32, 32)] // multiple blocks; IV not at blob start
@@ -943,7 +951,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Test]
+        [RecordedTest]
         [Combinatorial]
         public async Task CannotFindKeyAsync(
             [Values(true, false)] bool resolverThrows,
@@ -993,6 +1001,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         // using 5 to setup offsets to avoid any off-by-one confusion in debugging
+        [RecordedTest]
         [TestCase(0, null)]
         [TestCase(0, 2 * EncryptionBlockSize)]
         [TestCase(0, 2 * EncryptionBlockSize + 5)]
@@ -1119,7 +1128,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task EncryptedReuploadSuccess([ValueSource("GetEncryptionVersions")] ClientSideEncryptionVersion version)
         {
             var originalData = GetRandomBuffer(Constants.KB);
@@ -1170,7 +1179,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Test]
+        [RecordedTest]
         [Combinatorial]
         /// <summary>
         /// Crypto transform streams are unseekable and have no <see cref="Stream.Length"/>.
@@ -1331,7 +1340,7 @@ namespace Azure.Storage.Blobs.Test
             await AssertKeyAsync(blob, mockKey2.Object, cek);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DoesETagLockOnKeyUpdate()
         {
             /* Test does not actually upload encrypted data, only simulates it by setting specific
@@ -1399,7 +1408,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(BlobErrorCode.ConditionNotMet.ToString(), ex.ErrorCode);
         }
 
-        [Test]
+        [RecordedTest]
         [Combinatorial]
         public async Task CanRoundtripWithKeyUpdate(
             bool useOverrides,
@@ -1444,7 +1453,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(data, downloadData);
         }
 
-        [Test]
+        [RecordedTest]
         [Combinatorial]
         public void AesGcmStreaming(
             [Values(true, false)] bool alligned,
