@@ -17,7 +17,7 @@
       "RequestBody": {
         "shareKind": "InPlace",
         "properties": {
-          "expirationDate": "7/14/2023 1:57:19 PM"
+          "expirationDate": "7/14/2023 1:57:36 PM"
         }
       },
       "StatusCode": 202,
@@ -34,7 +34,7 @@
           "receivedShareStatus": "Active",
           "createdAt": "2022-07-14T20:27:55.0085452Z",
           "sharedAt": "2022-07-14T20:25:14.2441609Z",
-          "expirationDate": "2023-07-14T13:57:19Z",
+          "expirationDate": "2023-07-14T13:57:36Z",
           "receiverName": "Faisal Al Tell",
           "receiverEmail": "faisalaltell@microsoft.com",
           "receiverTenantName": "Microsoft",
