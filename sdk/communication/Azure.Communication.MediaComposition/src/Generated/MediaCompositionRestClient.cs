@@ -59,6 +59,7 @@ namespace Azure.Communication.MediaComposition
         /// <param name="mediaCompositionId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mediaCompositionId"/> is null. </exception>
+        /// <remarks> Gets a media composition. </remarks>
         public async Task<Response<MediaCompositionBody>> GetAsync(string mediaCompositionId, CancellationToken cancellationToken = default)
         {
             if (mediaCompositionId == null)
@@ -86,6 +87,7 @@ namespace Azure.Communication.MediaComposition
         /// <param name="mediaCompositionId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mediaCompositionId"/> is null. </exception>
+        /// <remarks> Gets a media composition. </remarks>
         public Response<MediaCompositionBody> Get(string mediaCompositionId, CancellationToken cancellationToken = default)
         {
             if (mediaCompositionId == null)
@@ -158,6 +160,7 @@ namespace Azure.Communication.MediaComposition
         /// <param name="streamState"> State of the composition stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mediaCompositionId"/> is null. </exception>
+        /// <remarks> Creates a new media composition. </remarks>
         public async Task<Response<MediaCompositionBody>> CreateAsync(string mediaCompositionId, string id = null, MediaCompositionLayout layout = null, IDictionary<string, MediaInput> inputs = null, IDictionary<string, MediaOutput> outputs = null, CompositionStreamState? streamState = null, CancellationToken cancellationToken = default)
         {
             if (mediaCompositionId == null)
@@ -190,6 +193,7 @@ namespace Azure.Communication.MediaComposition
         /// <param name="streamState"> State of the composition stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mediaCompositionId"/> is null. </exception>
+        /// <remarks> Creates a new media composition. </remarks>
         public Response<MediaCompositionBody> Create(string mediaCompositionId, string id = null, MediaCompositionLayout layout = null, IDictionary<string, MediaInput> inputs = null, IDictionary<string, MediaOutput> outputs = null, CompositionStreamState? streamState = null, CancellationToken cancellationToken = default)
         {
             if (mediaCompositionId == null)
@@ -262,6 +266,7 @@ namespace Azure.Communication.MediaComposition
         /// <param name="streamState"> State of the composition stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mediaCompositionId"/> is null. </exception>
+        /// <remarks> Updates an existing media composition. </remarks>
         public async Task<Response<MediaCompositionBody>> UpdateAsync(string mediaCompositionId, string id = null, MediaCompositionLayout layout = null, IDictionary<string, MediaInput> inputs = null, IDictionary<string, MediaOutput> outputs = null, CompositionStreamState? streamState = null, CancellationToken cancellationToken = default)
         {
             if (mediaCompositionId == null)
@@ -294,6 +299,7 @@ namespace Azure.Communication.MediaComposition
         /// <param name="streamState"> State of the composition stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mediaCompositionId"/> is null. </exception>
+        /// <remarks> Updates an existing media composition. </remarks>
         public Response<MediaCompositionBody> Update(string mediaCompositionId, string id = null, MediaCompositionLayout layout = null, IDictionary<string, MediaInput> inputs = null, IDictionary<string, MediaOutput> outputs = null, CompositionStreamState? streamState = null, CancellationToken cancellationToken = default)
         {
             if (mediaCompositionId == null)
@@ -336,6 +342,7 @@ namespace Azure.Communication.MediaComposition
         /// <param name="mediaCompositionId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mediaCompositionId"/> is null. </exception>
+        /// <remarks> Deletes a media composition. </remarks>
         public async Task<Response> DeleteAsync(string mediaCompositionId, CancellationToken cancellationToken = default)
         {
             if (mediaCompositionId == null)
@@ -358,6 +365,7 @@ namespace Azure.Communication.MediaComposition
         /// <param name="mediaCompositionId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mediaCompositionId"/> is null. </exception>
+        /// <remarks> Deletes a media composition. </remarks>
         public Response Delete(string mediaCompositionId, CancellationToken cancellationToken = default)
         {
             if (mediaCompositionId == null)
@@ -396,6 +404,7 @@ namespace Azure.Communication.MediaComposition
         /// <param name="mediaCompositionId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mediaCompositionId"/> is null. </exception>
+        /// <remarks> Starts the composition. </remarks>
         public async Task<Response<CompositionStreamState>> StartAsync(string mediaCompositionId, CancellationToken cancellationToken = default)
         {
             if (mediaCompositionId == null)
@@ -423,6 +432,7 @@ namespace Azure.Communication.MediaComposition
         /// <param name="mediaCompositionId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mediaCompositionId"/> is null. </exception>
+        /// <remarks> Starts the composition. </remarks>
         public Response<CompositionStreamState> Start(string mediaCompositionId, CancellationToken cancellationToken = default)
         {
             if (mediaCompositionId == null)
@@ -466,6 +476,7 @@ namespace Azure.Communication.MediaComposition
         /// <param name="mediaCompositionId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mediaCompositionId"/> is null. </exception>
+        /// <remarks> Stops the composition. </remarks>
         public async Task<Response<CompositionStreamState>> StopAsync(string mediaCompositionId, CancellationToken cancellationToken = default)
         {
             if (mediaCompositionId == null)
@@ -493,6 +504,7 @@ namespace Azure.Communication.MediaComposition
         /// <param name="mediaCompositionId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mediaCompositionId"/> is null. </exception>
+        /// <remarks> Stops the composition. </remarks>
         public Response<CompositionStreamState> Stop(string mediaCompositionId, CancellationToken cancellationToken = default)
         {
             if (mediaCompositionId == null)

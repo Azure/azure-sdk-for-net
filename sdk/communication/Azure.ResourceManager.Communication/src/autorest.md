@@ -67,6 +67,8 @@ rename-mapping:
   VerificationStatus: DomainRecordVerificationStatus
   VerificationStatusRecord: DomainVerificationStatusRecord
   KeyType: CommunicationServiceKeyType
-
+  DnsRecord.ttl: TimeToLiveInSeconds
+  DnsRecord: VerificationDnsRecord
+  DomainsProvisioningState: DomainProvisioningState
 
 ```

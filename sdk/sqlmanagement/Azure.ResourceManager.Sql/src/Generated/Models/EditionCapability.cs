@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="supportedStorageCapabilities"> The list of supported storage capabilities for this edition. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
-        internal EditionCapability(string name, IReadOnlyList<ServiceObjectiveCapability> supportedServiceLevelObjectives, bool? isZoneRedundant, ReadScaleCapability readScale, IReadOnlyList<StorageCapability> supportedStorageCapabilities, CapabilityStatus? status, string reason)
+        internal EditionCapability(string name, IReadOnlyList<ServiceObjectiveCapability> supportedServiceLevelObjectives, bool? isZoneRedundant, ReadScaleCapability readScale, IReadOnlyList<StorageCapability> supportedStorageCapabilities, SqlCapabilityStatus? status, string reason)
         {
             Name = name;
             SupportedServiceLevelObjectives = supportedServiceLevelObjectives;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The list of supported storage capabilities for this edition. </summary>
         public IReadOnlyList<StorageCapability> SupportedStorageCapabilities { get; }
         /// <summary> The status of the capability. </summary>
-        public CapabilityStatus? Status { get; }
+        public SqlCapabilityStatus? Status { get; }
         /// <summary> The reason for the capability not being available. </summary>
         public string Reason { get; }
     }

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="supportedMaintenanceConfigurations"> List of supported maintenance configurations. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
-        internal ManagedInstanceVcoresCapability(string name, int? value, MaxSizeCapability includedMaxSize, IReadOnlyList<MaxSizeRangeCapability> supportedStorageSizes, bool? isInstancePoolSupported, bool? isStandaloneSupported, IReadOnlyList<ManagedInstanceMaintenanceConfigurationCapability> supportedMaintenanceConfigurations, CapabilityStatus? status, string reason)
+        internal ManagedInstanceVcoresCapability(string name, int? value, MaxSizeCapability includedMaxSize, IReadOnlyList<MaxSizeRangeCapability> supportedStorageSizes, bool? isInstancePoolSupported, bool? isStandaloneSupported, IReadOnlyList<ManagedInstanceMaintenanceConfigurationCapability> supportedMaintenanceConfigurations, SqlCapabilityStatus? status, string reason)
         {
             Name = name;
             Value = value;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> List of supported maintenance configurations. </summary>
         public IReadOnlyList<ManagedInstanceMaintenanceConfigurationCapability> SupportedMaintenanceConfigurations { get; }
         /// <summary> The status of the capability. </summary>
-        public CapabilityStatus? Status { get; }
+        public SqlCapabilityStatus? Status { get; }
         /// <summary> The reason for the capability not being available. </summary>
         public string Reason { get; }
     }
