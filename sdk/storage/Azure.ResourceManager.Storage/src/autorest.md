@@ -20,6 +20,7 @@ list-exception:
 override-operation-name:
   StorageAccounts_CheckNameAvailability: CheckStorageAccountNameAvailability
   StorageAccounts_HierarchicalNamespaceMigration: MigrateToEnableHierarchicalNamespace
+  BlobContainers_ObjectLevelWorm: EnableObjectLevelWorm
 
 request-path-to-singleton-resource:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/managementPolicies/{managementPolicyName}: managementPolicies/default
