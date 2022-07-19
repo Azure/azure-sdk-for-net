@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of SqlLocationCapabilities. </summary>
         internal SqlLocationCapabilities()
         {
-            SupportedServerVersions = new ChangeTrackingList<ServerVersionCapability>();
+            SupportedServerVersions = new ChangeTrackingList<SqlServerVersionCapability>();
             SupportedManagedInstanceVersions = new ChangeTrackingList<ManagedInstanceVersionCapability>();
         }
 
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="supportedManagedInstanceVersions"> The list of supported managed instance versions. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
-        internal SqlLocationCapabilities(string name, IReadOnlyList<ServerVersionCapability> supportedServerVersions, IReadOnlyList<ManagedInstanceVersionCapability> supportedManagedInstanceVersions, SqlCapabilityStatus? status, string reason)
+        internal SqlLocationCapabilities(string name, IReadOnlyList<SqlServerVersionCapability> supportedServerVersions, IReadOnlyList<ManagedInstanceVersionCapability> supportedManagedInstanceVersions, SqlCapabilityStatus? status, string reason)
         {
             Name = name;
             SupportedServerVersions = supportedServerVersions;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The location name. </summary>
         public string Name { get; }
         /// <summary> The list of supported server versions. </summary>
-        public IReadOnlyList<ServerVersionCapability> SupportedServerVersions { get; }
+        public IReadOnlyList<SqlServerVersionCapability> SupportedServerVersions { get; }
         /// <summary> The list of supported managed instance versions. </summary>
         public IReadOnlyList<ManagedInstanceVersionCapability> SupportedManagedInstanceVersions { get; }
         /// <summary> The status of the capability. </summary>
