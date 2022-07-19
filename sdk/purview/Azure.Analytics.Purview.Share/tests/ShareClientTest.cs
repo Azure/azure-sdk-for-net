@@ -262,7 +262,7 @@ namespace Azure.Analytics.Share.Tests
                 shareKind = "InPlace",
                 properties = new
                 {
-                    expirationDate = new DateTime(2023, 7, 14, 13, 57, 36).ToString("MM/dd/yyyy HH:mm:ss")
+                    expirationDate = new DateTime(2023, 11, 14, 10, 57, 36).ToString("MM/dd/yyyy HH:mm:ss")
                 }
             };
 
