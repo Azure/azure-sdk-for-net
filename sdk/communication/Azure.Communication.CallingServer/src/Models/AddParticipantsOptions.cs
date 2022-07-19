@@ -6,13 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 
-namespace Azure.Communication.CallingServer.Models
+namespace Azure.Communication.CallingServer
 {
     /// <summary> The options for adding participant to a call. </summary>
     public class AddParticipantsOptions
     {
-        /// <summary> The alternate caller id of the source. </summary>
-        public PhoneNumberIdentifier AlternateCallerId { get; set; }
+        /// <summary> The caller id of the source. </summary>
+        public PhoneNumberIdentifier SourceCallerId { get; set; }
 
         /// <summary> The Operation Context. </summary>
         public string OperationContext { get; set; }
@@ -26,12 +26,8 @@ namespace Azure.Communication.CallingServer.Models
         /// <summary>
         /// Add Participants Options.
         /// </summary>
-        public AddParticipantsOptions(PhoneNumberIdentifier alternateCallerId = default, string operationContext = default, int? invitationTimeoutInSeconds = default, string replacementCallConnectionId = default)
+        public AddParticipantsOptions()
         {
-            AlternateCallerId = alternateCallerId;
-            OperationContext = operationContext;
-            InvitationTimeoutInSeconds = invitationTimeoutInSeconds;
-            ReplacementCallConnectionId = replacementCallConnectionId;
         }
     }
 }

@@ -10,7 +10,6 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Communication.CallingServer.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -61,6 +60,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="body"> The create call request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Create an outbound call. </remarks>
         public async Task<Response<CallConnectionPropertiesDtoInternal>> CreateCallAsync(CreateCallRequestInternal body, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -88,6 +88,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="body"> The create call request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Create an outbound call. </remarks>
         public Response<CallConnectionPropertiesDtoInternal> CreateCall(CreateCallRequestInternal body, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -129,10 +130,11 @@ namespace Azure.Communication.CallingServer
             return message;
         }
 
-        /// <summary> Answer a call using the IncomingCallContext from Event Grid. </summary>
+        /// <summary> Answer a Call. </summary>
         /// <param name="answerCallRequest"> The answer call request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="answerCallRequest"/> is null. </exception>
+        /// <remarks> Answer a call using the IncomingCallContext from Event Grid. </remarks>
         public async Task<Response<CallConnectionPropertiesDtoInternal>> AnswerCallAsync(AnswerCallRequestInternal answerCallRequest, CancellationToken cancellationToken = default)
         {
             if (answerCallRequest == null)
@@ -156,10 +158,11 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        /// <summary> Answer a call using the IncomingCallContext from Event Grid. </summary>
+        /// <summary> Answer a Call. </summary>
         /// <param name="answerCallRequest"> The answer call request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="answerCallRequest"/> is null. </exception>
+        /// <remarks> Answer a call using the IncomingCallContext from Event Grid. </remarks>
         public Response<CallConnectionPropertiesDtoInternal> AnswerCall(AnswerCallRequestInternal answerCallRequest, CancellationToken cancellationToken = default)
         {
             if (answerCallRequest == null)
@@ -204,6 +207,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="redirectCallRequest"> The RedirectCallRequest to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="redirectCallRequest"/> is null. </exception>
+        /// <remarks> Redirect a call. </remarks>
         public async Task<Response> RedirectCallAsync(RedirectCallRequestInternal redirectCallRequest, CancellationToken cancellationToken = default)
         {
             if (redirectCallRequest == null)
@@ -215,7 +219,7 @@ namespace Azure.Communication.CallingServer
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 202:
+                case 204:
                     return message.Response;
                 default:
                     throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -226,6 +230,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="redirectCallRequest"> The RedirectCallRequest to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="redirectCallRequest"/> is null. </exception>
+        /// <remarks> Redirect a call. </remarks>
         public Response RedirectCall(RedirectCallRequestInternal redirectCallRequest, CancellationToken cancellationToken = default)
         {
             if (redirectCallRequest == null)
@@ -237,7 +242,7 @@ namespace Azure.Communication.CallingServer
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 202:
+                case 204:
                     return message.Response;
                 default:
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);
@@ -265,6 +270,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="rejectCallRequest"> The reject call request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="rejectCallRequest"/> is null. </exception>
+        /// <remarks> Reject the call. </remarks>
         public async Task<Response> RejectCallAsync(RejectCallRequestInternal rejectCallRequest, CancellationToken cancellationToken = default)
         {
             if (rejectCallRequest == null)
@@ -276,7 +282,7 @@ namespace Azure.Communication.CallingServer
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 202:
+                case 204:
                     return message.Response;
                 default:
                     throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -287,6 +293,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="rejectCallRequest"> The reject call request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="rejectCallRequest"/> is null. </exception>
+        /// <remarks> Reject the call. </remarks>
         public Response RejectCall(RejectCallRequestInternal rejectCallRequest, CancellationToken cancellationToken = default)
         {
             if (rejectCallRequest == null)
@@ -298,7 +305,7 @@ namespace Azure.Communication.CallingServer
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 202:
+                case 204:
                     return message.Response;
                 default:
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);
