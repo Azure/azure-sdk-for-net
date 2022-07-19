@@ -73,7 +73,7 @@ process {
 
                 Write-Error "File '$($file.FullName)' contains invalid product slug: $product" -TargetObject $file `
                     -Category InvalidData -CategoryTargetName $product -CategoryTargetType string `
-                    -RecommendedAction 'Use only product slugs listed at https://review.docs.microsoft.com/help/contribute/metadata-taxonomies?branch=master#product'
+                    -RecommendedAction 'Use only product slugs listed at https://review.docs.microsoft.com/help/contribute/metadata-taxonomies?branch=main#product'
             }
         }
 
@@ -95,7 +95,7 @@ end {
 }
 
 begin {
-    # https://review.docs.microsoft.com/help/contribute/metadata-taxonomies?branch=master#product
+    # https://review.docs.microsoft.com/help/contribute/metadata-taxonomies?branch=main#product
     $productSlugs = @(
         "ai-builder",
         "aspnet",
@@ -499,7 +499,7 @@ Checks sample markdown files' frontmatter for invalid information.
 .DESCRIPTION
 Given a collection of markdown files, their frontmatter - if present - is checked for invalid information, including:
 
-Invalid product slugs, i.e. those not listed in https://review.docs.microsoft.com/help/contribute/metadata-taxonomies?branch=master#product.
+Invalid product slugs, i.e. those not listed in https://review.docs.microsoft.com/help/contribute/metadata-taxonomies?branch=main#product.
 
 .PARAMETER Path
 Specifies the path to an item to search. Wildcards are permitted.
