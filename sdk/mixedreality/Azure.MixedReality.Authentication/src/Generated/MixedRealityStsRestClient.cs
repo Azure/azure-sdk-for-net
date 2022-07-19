@@ -61,7 +61,6 @@ namespace Azure.MixedReality.Authentication
         /// <param name="accountId"> The Mixed Reality account identifier. </param>
         /// <param name="tokenRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Gets an access token to be used with Mixed Reality services. </remarks>
         public async Task<ResponseWithHeaders<StsTokenResponseMessage, MixedRealityStsGetTokenHeaders>> GetTokenAsync(Guid accountId, MixedRealityTokenRequestOptions tokenRequestOptions = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetTokenRequest(accountId, tokenRequestOptions);
@@ -85,7 +84,6 @@ namespace Azure.MixedReality.Authentication
         /// <param name="accountId"> The Mixed Reality account identifier. </param>
         /// <param name="tokenRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Gets an access token to be used with Mixed Reality services. </remarks>
         public ResponseWithHeaders<StsTokenResponseMessage, MixedRealityStsGetTokenHeaders> GetToken(Guid accountId, MixedRealityTokenRequestOptions tokenRequestOptions = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetTokenRequest(accountId, tokenRequestOptions);
