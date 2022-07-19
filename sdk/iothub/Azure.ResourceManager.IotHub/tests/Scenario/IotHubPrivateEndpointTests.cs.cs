@@ -63,23 +63,20 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
         public async Task Get()
         {
             string iotHubName = Recording.GenerateAssetName("IotHub-");
+            string connectionName = "IotHub-6981.c3c46102-efff-4ced-b7c1-52dbfb1e5111";
             var iothub = await CreateIotHub(_resourceGroup, iotHubName);
-
-            var connect  = await iothub.GetIotHubPrivateEndpointConnections().GetAsync("IotHub-6981.c3c46102-efff-4ced-b7c1-52dbfb1e5111");
+            var connect  = await iothub.GetIotHubPrivateEndpointConnections().GetAsync(connectionName);
             Assert.IsNotNull(connect);
         }
 
         [Test]
         [RecordedTest]
-        [Ignore("System.InvalidOperationException : The requested operation requires an element of type 'Array', but the target element has type 'Object'.")]
         public async Task GetAll()
         {
             string iotHubName = Recording.GenerateAssetName("IotHub-");
             var iothub = await CreateIotHub(_resourceGroup, iotHubName);
-
-            // System.InvalidOperationException : The requested operation requires an element of type 'Array', but the target element has type 'Object'.
             var list =  await iothub.GetIotHubPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
-            Console.WriteLine(list.Count);
+            Assert.IsEmpty(list);
         }
     }
 }
