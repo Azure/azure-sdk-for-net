@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.IotHub
             return message;
         }
 
-        /// <summary> Foo. </summary>
+        /// <summary> Delete an IoT hub. </summary>
         /// <param name="subscriptionId"> The subscription identifier. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the IoT hub. </param>
         /// <param name="resourceName"> The name of the IoT hub. </param>
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.IotHub
             }
         }
 
-        /// <summary> Foo. </summary>
+        /// <summary> Delete an IoT hub. </summary>
         /// <param name="subscriptionId"> The subscription identifier. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the IoT hub. </param>
         /// <param name="resourceName"> The name of the IoT hub. </param>
