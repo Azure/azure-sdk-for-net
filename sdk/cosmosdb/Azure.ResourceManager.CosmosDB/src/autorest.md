@@ -242,6 +242,8 @@ rename-mapping:
   ManagedCassandraReaperStatus: CassandraReaperStatus
   MongoIndex: MongoDBIndex
   MongoIndexOptions: MongoDBIndexConfig
+  BackupStorageRedundancy: CosmosDBBackupStorageRedundancy
+  PrimaryAggregationType: CosmosDBMetricPrimaryAggregationType
 
 prepend-rp-prefix:
 - UniqueKey

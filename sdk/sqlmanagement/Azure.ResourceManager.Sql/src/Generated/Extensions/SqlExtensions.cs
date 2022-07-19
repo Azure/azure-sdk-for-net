@@ -2310,20 +2310,20 @@ namespace Azure.ResourceManager.Sql
         }
         #endregion
 
-        #region RestorePointResource
+        #region SqlServerDatabaseRestorePointResource
         /// <summary>
-        /// Gets an object representing a <see cref="RestorePointResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RestorePointResource.CreateResourceIdentifier" /> to create a <see cref="RestorePointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SqlServerDatabaseRestorePointResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlServerDatabaseRestorePointResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerDatabaseRestorePointResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RestorePointResource" /> object. </returns>
-        public static RestorePointResource GetRestorePointResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlServerDatabaseRestorePointResource" /> object. </returns>
+        public static SqlServerDatabaseRestorePointResource GetSqlServerDatabaseRestorePointResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                RestorePointResource.ValidateResourceId(id);
-                return new RestorePointResource(client, id);
+                SqlServerDatabaseRestorePointResource.ValidateResourceId(id);
+                return new SqlServerDatabaseRestorePointResource(client, id);
             }
             );
         }
@@ -2633,20 +2633,20 @@ namespace Azure.ResourceManager.Sql
         }
         #endregion
 
-        #region VirtualNetworkRuleResource
+        #region SqlServerVirtualNetworkRuleResource
         /// <summary>
-        /// Gets an object representing a <see cref="VirtualNetworkRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VirtualNetworkRuleResource.CreateResourceIdentifier" /> to create a <see cref="VirtualNetworkRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SqlServerVirtualNetworkRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlServerVirtualNetworkRuleResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerVirtualNetworkRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualNetworkRuleResource" /> object. </returns>
-        public static VirtualNetworkRuleResource GetVirtualNetworkRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlServerVirtualNetworkRuleResource" /> object. </returns>
+        public static SqlServerVirtualNetworkRuleResource GetSqlServerVirtualNetworkRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                VirtualNetworkRuleResource.ValidateResourceId(id);
-                return new VirtualNetworkRuleResource(client, id);
+                SqlServerVirtualNetworkRuleResource.ValidateResourceId(id);
+                return new SqlServerVirtualNetworkRuleResource(client, id);
             }
             );
         }
@@ -3051,20 +3051,20 @@ namespace Azure.ResourceManager.Sql
         }
         #endregion
 
-        #region ReplicationLinkResource
+        #region SqlServerDatabaseReplicationLinkResource
         /// <summary>
-        /// Gets an object representing a <see cref="ReplicationLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ReplicationLinkResource.CreateResourceIdentifier" /> to create a <see cref="ReplicationLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SqlServerDatabaseReplicationLinkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlServerDatabaseReplicationLinkResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerDatabaseReplicationLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ReplicationLinkResource" /> object. </returns>
-        public static ReplicationLinkResource GetReplicationLinkResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlServerDatabaseReplicationLinkResource" /> object. </returns>
+        public static SqlServerDatabaseReplicationLinkResource GetSqlServerDatabaseReplicationLinkResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ReplicationLinkResource.ValidateResourceId(id);
-                return new ReplicationLinkResource(client, id);
+                SqlServerDatabaseReplicationLinkResource.ValidateResourceId(id);
+                return new SqlServerDatabaseReplicationLinkResource(client, id);
             }
             );
         }

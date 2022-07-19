@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.Sql.Models
         internal static SqlMetricDefinition DeserializeSqlMetricDefinition(JsonElement element)
         {
             Optional<SqlMetricName> name = default;
-            Optional<PrimaryAggregationType> primaryAggregationType = default;
+            Optional<SqlMetricPrimaryAggregationType> primaryAggregationType = default;
             Optional<Uri> resourceUri = default;
             Optional<SqlMetricDefinitionUnitType> unit = default;
-            Optional<IReadOnlyList<MetricAvailability>> metricAvailabilities = default;
+            Optional<IReadOnlyList<SqlMetricAvailability>> metricAvailabilities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    primaryAggregationType = new PrimaryAggregationType(property.Value.GetString());
+                    primaryAggregationType = new SqlMetricPrimaryAggregationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resourceUri"))
@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MetricAvailability> array = new List<MetricAvailability>();
+                    List<SqlMetricAvailability> array = new List<SqlMetricAvailability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricAvailability.DeserializeMetricAvailability(item));
+                        array.Add(SqlMetricAvailability.DeserializeSqlMetricAvailability(item));
                     }
                     metricAvailabilities = array;
                     continue;
