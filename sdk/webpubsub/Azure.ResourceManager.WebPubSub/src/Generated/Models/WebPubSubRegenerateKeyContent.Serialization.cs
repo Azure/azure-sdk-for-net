@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    public partial class RegenerateKeyContent : IUtf8JsonSerializable
+    public partial class WebPubSubRegenerateKeyContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

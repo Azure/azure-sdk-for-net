@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> Parameters describes the request to regenerate access keys. </summary>
-    public partial class RegenerateKeyContent
+    public partial class WebPubSubRegenerateKeyContent
     {
-        /// <summary> Initializes a new instance of RegenerateKeyContent. </summary>
-        public RegenerateKeyContent()
+        /// <summary> Initializes a new instance of WebPubSubRegenerateKeyContent. </summary>
+        public WebPubSubRegenerateKeyContent()
         {
         }
 
