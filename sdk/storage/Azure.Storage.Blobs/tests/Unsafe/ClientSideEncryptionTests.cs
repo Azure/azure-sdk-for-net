@@ -36,6 +36,8 @@ namespace Azure.Storage.Blobs.Test
     [BlobsClientTestFixture]
     public class ClientSideEncryptionTests : BlobTestBase
     {
+        private const int V2TestingRegionDataLength = Constants.KB;
+
         private static string s_algorithmName => ClientSideEncryptionTestExtensions.s_algorithmName;
         private static readonly CancellationToken s_cancellationToken = new CancellationTokenSource().Token;
 
@@ -76,11 +78,12 @@ namespace Azure.Storage.Blobs.Test
         /// Provides encryption v2 functionality clone of client logic, letting us validate the client got it right end-to-end
         /// and was not altered.
         /// </summary>
-        private static ReadOnlySpan<byte> EncryptDataV2_0(ReadOnlySpan<byte> data, ReadOnlySpan<byte> key)
+        private static ReadOnlySpan<byte> EncryptDataV2_0(ReadOnlySpan<byte> data, ReadOnlySpan<byte> key, int encryptionRegionDataLength)
         {
-            int numEncryptionRegions = data.Length % V2.EncryptionRegionDataSize == 0
-                ? data.Length / V2.EncryptionRegionDataSize
-                : (data.Length + (V2.EncryptionRegionDataSize - (data.Length % V2.EncryptionRegionDataSize))) / V2.EncryptionRegionDataSize;
+            int encryptionRegionTotalLength = encryptionRegionDataLength + V2.NonceSize + V2.TagSize;
+            int numEncryptionRegions = data.Length % encryptionRegionDataLength == 0
+                ? data.Length / encryptionRegionDataLength
+                : (data.Length + (encryptionRegionDataLength - (data.Length % encryptionRegionDataLength))) / encryptionRegionDataLength;
             int encryptedDataLength = data.Length + (numEncryptionRegions * (V2.NonceSize + V2.TagSize));
             var result = new Span<byte>(new byte[encryptedDataLength]);
 
@@ -92,9 +95,9 @@ namespace Azure.Storage.Blobs.Test
 #endif
             for (int i = 0; i < numEncryptionRegions; i++)
             {
-                int dataRegionLength = Math.Min(V2.EncryptionRegionDataSize, data.Length - (i * V2.EncryptionRegionDataSize));
-                var dataRegionSlice = data.Slice(i * V2.EncryptionRegionDataSize, dataRegionLength);
-                var resultRegionSlice = result.Slice(i * V2.EncryptionRegionTotalSize, dataRegionLength + V2.NonceSize + V2.TagSize);
+                int dataRegionLength = Math.Min(encryptionRegionDataLength, data.Length - (i * encryptionRegionDataLength));
+                var dataRegionSlice = data.Slice(i * encryptionRegionDataLength, dataRegionLength);
+                var resultRegionSlice = result.Slice(i * encryptionRegionTotalLength, dataRegionLength + V2.NonceSize + V2.TagSize);
 
                 // get nonce for this block
                 var nonce = resultRegionSlice.Slice(0, V2.NonceSize);
@@ -105,8 +108,8 @@ namespace Azure.Storage.Blobs.Test
 
                 gcm.Encrypt(
                     nonce,
-                    dataRegionSlice, //data.Slice(i * V2.EncryptionRegionDataSize, Math.Min(V2.EncryptionRegionDataSize, data.Length - (i * V2.EncryptionRegionDataSize))),
-                    resultRegionSlice.Slice(V2.NonceSize, dataRegionLength), //result.Slice(i * V2.EncryptionRegionTotalSize, Math.Min(V2.EncryptionRegionTotalSize, result.Length - (i * V2.EncryptionRegionTotalSize))),
+                    dataRegionSlice, //data.Slice(i * encryptionRegionDataLength, Math.Min(encryptionRegionDataLength, data.Length - (i * encryptionRegionDataLength))),
+                    resultRegionSlice.Slice(V2.NonceSize, dataRegionLength), //result.Slice(i * encryptionRegionTotalLength, Math.Min(V2.EncryptionRegionTotalSize, result.Length - (i * V2.EncryptionRegionTotalSize))),
                     resultRegionSlice.Slice(V2.NonceSize + dataRegionLength, V2.TagSize));
             }
 
@@ -220,7 +223,8 @@ namespace Azure.Storage.Blobs.Test
 
             return EncryptDataV2_0(
                 plaintext,
-                explicitlyUnwrappedKey).ToArray();
+                explicitlyUnwrappedKey,
+                encryptionMetadata.EncryptedRegionInfo.DataLength).ToArray();
         }
 
         /// <summary>
@@ -307,10 +311,10 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(ClientSideEncryptionVersion.V1_0, Constants.KB - 4)] // multiple unalligned blocks
         [TestCase(ClientSideEncryptionVersion.V1_0, Constants.MB)] // larger test, increasing likelihood to trigger async extension usage bugs
         // TODO don't move to recorded tests without making the encryption region size configurable
-        [TestCase(ClientSideEncryptionVersion.V2_0, V2.EncryptionRegionDataSize)] // a single cipher block
-        [TestCase(ClientSideEncryptionVersion.V2_0, V2.EncryptionRegionDataSize - 1000000)] // a single unalligned cipher block
-        [TestCase(ClientSideEncryptionVersion.V2_0, 2 * V2.EncryptionRegionDataSize)] // multiple blocks
-        [TestCase(ClientSideEncryptionVersion.V2_0, 2 * V2.EncryptionRegionDataSize - 1000000)] // multiple unalligned blocks
+        [TestCase(ClientSideEncryptionVersion.V2_0, V2TestingRegionDataLength)] // a single cipher block
+        [TestCase(ClientSideEncryptionVersion.V2_0, V2TestingRegionDataLength - 10)] // a single unalligned cipher block
+        [TestCase(ClientSideEncryptionVersion.V2_0, 2 * V2TestingRegionDataLength)] // multiple blocks
+        [TestCase(ClientSideEncryptionVersion.V2_0, 2 * V2TestingRegionDataLength - 10)] // multiple unalligned blocks
 #pragma warning restore CS0618 // obsolete
         public async Task UploadAsync(ClientSideEncryptionVersion version, long dataSize)
         {
@@ -325,6 +329,7 @@ namespace Azure.Storage.Blobs.Test
             {
                 var blobName = GetNewBlobName();
                 var blob = InstrumentClient(disposable.Container.GetBlobClient(blobName));
+                blob.ClientSideEncryptionV2EncryptionRegionDataLength = V2TestingRegionDataLength;
 
                 // upload with encryption
                 await blob.UploadAsync(new MemoryStream(plaintext), cancellationToken: s_cancellationToken);
@@ -344,9 +349,9 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(ClientSideEncryptionVersion.V1_0, Constants.KB - 4, 1000)] // unalligned wite buffer and data
         [TestCase(ClientSideEncryptionVersion.V1_0, Constants.MB, 256 * Constants.KB)] // larger test, increasing likelihood to trigger async extension usage bugs
         // TODO don't move to recorded tests without making the encryption region size configurable
-        [TestCase(ClientSideEncryptionVersion.V2_0, V2.EncryptionRegionDataSize, V2.EncryptionRegionDataSize)]
-        [TestCase(ClientSideEncryptionVersion.V2_0, V2.EncryptionRegionDataSize - 1000000, Constants.MB)]
-        [TestCase(ClientSideEncryptionVersion.V2_0, 2 * V2.EncryptionRegionDataSize, 1000000)] // multiple blocks w/ unallignment
+        [TestCase(ClientSideEncryptionVersion.V2_0, V2TestingRegionDataLength, V2TestingRegionDataLength)]
+        [TestCase(ClientSideEncryptionVersion.V2_0, V2TestingRegionDataLength - 10, 128)]
+        [TestCase(ClientSideEncryptionVersion.V2_0, 2 * V2TestingRegionDataLength, 500)] // multiple blocks w/ unallignment
 #pragma warning restore CS0618 // obsolete
         public async Task OpenWriteAsync(ClientSideEncryptionVersion version, long dataSize, int bufferSize)
         {
@@ -361,6 +366,7 @@ namespace Azure.Storage.Blobs.Test
             {
                 var blobName = GetNewBlobName();
                 var blob = InstrumentClient(disposable.Container.GetBlobClient(blobName));
+                blob.ClientSideEncryptionV2EncryptionRegionDataLength = V2TestingRegionDataLength;
 
                 // upload with encryption
                 using (Stream writeStream = await blob.OpenWriteAsync(true, new BlobOpenWriteOptions
@@ -513,10 +519,10 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(ClientSideEncryptionVersion.V1_0, Constants.KB - 4, null)] // multiple unalligned blocks
         [TestCase(ClientSideEncryptionVersion.V1_0, Constants.MB, 64 * Constants.KB)] // make sure we cache unwrapped key for large downloads
         // TODO don't move to recorded tests without making the encryption region size configurable
-        [TestCase(ClientSideEncryptionVersion.V2_0, V2.EncryptionRegionDataSize, null)] // a single cipher block
-        [TestCase(ClientSideEncryptionVersion.V2_0, V2.EncryptionRegionDataSize - 1000000, null)] // a single unalligned cipher block
-        [TestCase(ClientSideEncryptionVersion.V2_0, 2 * V2.EncryptionRegionDataSize, null)] // multiple blocks
-        [TestCase(ClientSideEncryptionVersion.V2_0, 2 * V2.EncryptionRegionDataSize - 1000000, null)] // multiple unalligned blocks
+        [TestCase(ClientSideEncryptionVersion.V2_0, V2TestingRegionDataLength, null)] // a single cipher block
+        [TestCase(ClientSideEncryptionVersion.V2_0, V2TestingRegionDataLength - 10, null)] // a single unalligned cipher block
+        [TestCase(ClientSideEncryptionVersion.V2_0, 2 * V2TestingRegionDataLength, null)] // multiple blocks
+        [TestCase(ClientSideEncryptionVersion.V2_0, 2 * V2TestingRegionDataLength - 10, null)] // multiple unalligned blocks
 #pragma warning restore CS0618 // obsolete
         public async Task RoundtripAsync(ClientSideEncryptionVersion version, long dataSize, long? initialDownloadRequestSize)
         {
@@ -532,6 +538,7 @@ namespace Azure.Storage.Blobs.Test
                 }))
             {
                 var blob = InstrumentClient(disposable.Container.GetBlobClient(GetNewBlobName()));
+                blob.ClientSideEncryptionV2EncryptionRegionDataLength = V2TestingRegionDataLength;
 
                 // upload with encryption
                 await blob.UploadAsync(new MemoryStream(data), cancellationToken: s_cancellationToken);
@@ -606,8 +613,8 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(ClientSideEncryptionVersion.V1_0, Constants.MB, Constants.MB)]
         [TestCase(ClientSideEncryptionVersion.V1_0, Constants.MB, 4 * Constants.MB)]
         [TestCase(ClientSideEncryptionVersion.V2_0, Constants.MB, 128 * Constants.KB)]
-        [TestCase(ClientSideEncryptionVersion.V2_0, 2 * V2.EncryptionRegionDataSize, Constants.MB)]
-        [TestCase(ClientSideEncryptionVersion.V2_0, 2 * V2.EncryptionRegionDataSize + 1000, Constants.MB + 15)]
+        [TestCase(ClientSideEncryptionVersion.V2_0, 2 * V2TestingRegionDataLength, 500)]
+        [TestCase(ClientSideEncryptionVersion.V2_0, 2 * V2TestingRegionDataLength + 10, 500)]
 #pragma warning restore CS0618 // obsolete
         public async Task RoundtripAsyncWithOpenRead(ClientSideEncryptionVersion version, long dataSize, int bufferSize)
         {
@@ -745,15 +752,15 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(ClientSideEncryptionVersion.V1_0, 31, 18)] // overlap both sides; IV not at blob start
         [TestCase(ClientSideEncryptionVersion.V1_0, 16, null)]
         // TODO don't move to recorded tests until we can get off 4MB blocks for tests
-        [TestCase(ClientSideEncryptionVersion.V2_0, 0, V2.EncryptionRegionDataSize)]  // first region
-        [TestCase(ClientSideEncryptionVersion.V2_0, V2.EncryptionRegionDataSize, V2.EncryptionRegionDataSize)] // not first region
-        [TestCase(ClientSideEncryptionVersion.V2_0, 0, 2 * V2.EncryptionRegionDataSize)] // multiple regions
-        [TestCase(ClientSideEncryptionVersion.V2_0, V2.EncryptionRegionDataSize, V2.EncryptionRegionDataSize + 1)] // overlap end of region
-        [TestCase(ClientSideEncryptionVersion.V2_0, V2.EncryptionRegionDataSize - 1, V2.EncryptionRegionDataSize + 1)] // overlap beginning of region
-        [TestCase(ClientSideEncryptionVersion.V2_0, V2.EncryptionRegionDataSize - 1, V2.EncryptionRegionDataSize + 2)] // overlap both sides
+        [TestCase(ClientSideEncryptionVersion.V2_0, 0, V2TestingRegionDataLength)]  // first region
+        [TestCase(ClientSideEncryptionVersion.V2_0, V2TestingRegionDataLength, V2TestingRegionDataLength)] // not first region
+        [TestCase(ClientSideEncryptionVersion.V2_0, 0, 2 * V2TestingRegionDataLength)] // multiple regions
+        [TestCase(ClientSideEncryptionVersion.V2_0, V2TestingRegionDataLength, V2TestingRegionDataLength + 1)] // overlap end of region
+        [TestCase(ClientSideEncryptionVersion.V2_0, V2TestingRegionDataLength - 1, V2TestingRegionDataLength + 1)] // overlap beginning of region
+        [TestCase(ClientSideEncryptionVersion.V2_0, V2TestingRegionDataLength - 1, V2TestingRegionDataLength + 2)] // overlap both sides
         [TestCase(ClientSideEncryptionVersion.V2_0, 1024, 30)] // small range inside region
-        [TestCase(ClientSideEncryptionVersion.V2_0, V2.EncryptionRegionDataSize + 1024, 30)] // small range inside non-first region
-        [TestCase(ClientSideEncryptionVersion.V2_0, V2.EncryptionRegionDataSize, null)] // second region to end
+        [TestCase(ClientSideEncryptionVersion.V2_0, V2TestingRegionDataLength + 10, 30)] // small range inside non-first region
+        [TestCase(ClientSideEncryptionVersion.V2_0, V2TestingRegionDataLength, null)] // second region to end
 #pragma warning restore CS0618 // obsolete
         public async Task PartialDownloadAsync(ClientSideEncryptionVersion version, int offset, int? count)
         {
@@ -762,7 +769,7 @@ namespace Azure.Storage.Blobs.Test
 #pragma warning disable CS0618 // obsolete
                 ClientSideEncryptionVersion.V1_0 => 16,
 #pragma warning restore CS0618 // obsolete
-                ClientSideEncryptionVersion.V2_0 => V2.EncryptionRegionDataSize,
+                ClientSideEncryptionVersion.V2_0 => V2TestingRegionDataLength,
                 _ => throw new ArgumentException("Unrecognized version.", nameof(version))
             };
             var data = GetRandomBuffer(offset + (count ?? countDefault) + 32); // ensure we have enough room in original data
