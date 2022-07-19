@@ -866,7 +866,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets a collection of NetworkFeaturesResources in the SiteSlot. </summary>
         /// <returns> An object representing collection of NetworkFeaturesResources and their operations over a NetworkFeaturesResource. </returns>
-        public virtual NetworkFeaturesCollection GetNetworkFeatures()
+        public virtual NetworkFeaturesCollection GetAllNetworkFeatures()
         {
             return GetCachedClient(Client => new NetworkFeaturesCollection(Client, Id));
         }
@@ -883,7 +883,7 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkFeaturesResource>> GetNetworkFeaturesAsync(string view, CancellationToken cancellationToken = default)
         {
-            return await GetNetworkFeatures().GetAsync(view, cancellationToken).ConfigureAwait(false);
+            return await GetAllNetworkFeatures().GetAsync(view, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -898,7 +898,7 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public virtual Response<NetworkFeaturesResource> GetNetworkFeatures(string view, CancellationToken cancellationToken = default)
         {
-            return GetNetworkFeatures().Get(view, cancellationToken);
+            return GetAllNetworkFeatures().Get(view, cancellationToken);
         }
 
         /// <summary> Gets an object representing a SiteSlotSourcecontrolResource along with the instance operations that can be performed on it in the SiteSlot. </summary>

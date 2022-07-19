@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of DataWarehouseUserActivitiesResources in the SqlDatabase. </summary>
         /// <returns> An object representing collection of DataWarehouseUserActivitiesResources and their operations over a DataWarehouseUserActivitiesResource. </returns>
-        public virtual DataWarehouseUserActivitiesCollection GetDataWarehouseUserActivities()
+        public virtual DataWarehouseUserActivitiesCollection GetAllDataWarehouseUserActivities()
         {
             return GetCachedClient(Client => new DataWarehouseUserActivitiesCollection(Client, Id));
         }
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         public virtual async Task<Response<DataWarehouseUserActivitiesResource>> GetDataWarehouseUserActivitiesAsync(DataWarehouseUserActivityName dataWarehouseUserActivityName, CancellationToken cancellationToken = default)
         {
-            return await GetDataWarehouseUserActivities().GetAsync(dataWarehouseUserActivityName, cancellationToken).ConfigureAwait(false);
+            return await GetAllDataWarehouseUserActivities().GetAsync(dataWarehouseUserActivityName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         public virtual Response<DataWarehouseUserActivitiesResource> GetDataWarehouseUserActivities(DataWarehouseUserActivityName dataWarehouseUserActivityName, CancellationToken cancellationToken = default)
         {
-            return GetDataWarehouseUserActivities().Get(dataWarehouseUserActivityName, cancellationToken);
+            return GetAllDataWarehouseUserActivities().Get(dataWarehouseUserActivityName, cancellationToken);
         }
 
         /// <summary> Gets a collection of LongTermRetentionPolicyResources in the SqlDatabase. </summary>
