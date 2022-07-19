@@ -2011,30 +2011,30 @@ namespace Azure.ResourceManager.Storage.Models
         public static bool operator !=(Azure.ResourceManager.Storage.Models.StorageDnsEndpointType left, Azure.ResourceManager.Storage.Models.StorageDnsEndpointType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class StorageEncryptionService
-    {
-        public StorageEncryptionService() { }
-        public bool? IsEnabled { get { throw null; } set { } }
-        public Azure.ResourceManager.Storage.Models.StorageKeyType? KeyType { get { throw null; } set { } }
-        public System.DateTimeOffset? LastEnabledOn { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct StorageKeyType : System.IEquatable<Azure.ResourceManager.Storage.Models.StorageKeyType>
+    public readonly partial struct StorageEncryptionKeyType : System.IEquatable<Azure.ResourceManager.Storage.Models.StorageEncryptionKeyType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public StorageKeyType(string value) { throw null; }
-        public static Azure.ResourceManager.Storage.Models.StorageKeyType Account { get { throw null; } }
-        public static Azure.ResourceManager.Storage.Models.StorageKeyType Service { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Storage.Models.StorageKeyType other) { throw null; }
+        public StorageEncryptionKeyType(string value) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.StorageEncryptionKeyType Account { get { throw null; } }
+        public static Azure.ResourceManager.Storage.Models.StorageEncryptionKeyType Service { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Storage.Models.StorageEncryptionKeyType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Storage.Models.StorageKeyType left, Azure.ResourceManager.Storage.Models.StorageKeyType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Storage.Models.StorageKeyType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Storage.Models.StorageKeyType left, Azure.ResourceManager.Storage.Models.StorageKeyType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Storage.Models.StorageEncryptionKeyType left, Azure.ResourceManager.Storage.Models.StorageEncryptionKeyType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.StorageEncryptionKeyType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Storage.Models.StorageEncryptionKeyType left, Azure.ResourceManager.Storage.Models.StorageEncryptionKeyType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class StorageEncryptionService
+    {
+        public StorageEncryptionService() { }
+        public bool? IsEnabled { get { throw null; } set { } }
+        public Azure.ResourceManager.Storage.Models.StorageEncryptionKeyType? KeyType { get { throw null; } set { } }
+        public System.DateTimeOffset? LastEnabledOn { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct StorageKind : System.IEquatable<Azure.ResourceManager.Storage.Models.StorageKind>
