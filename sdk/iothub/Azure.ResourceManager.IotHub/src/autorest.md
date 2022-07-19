@@ -61,16 +61,4 @@ directive:
   - from: iothub.json
     where: $.definitions.EventHubConsumerGroupInfo.properties.etag
     transform: $["x-nullable"] = true
-
-  - from: iothub.json
-    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}"].delete
-    transform: $.description = "Foo"
-  - from: iothub.json
-    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}"].delete
-    transform: $.responses.202.schema = {}
-  - from: iothub.json
-    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}"].delete
-    transform: $.responses.200.schema = {}
-
-
 ```

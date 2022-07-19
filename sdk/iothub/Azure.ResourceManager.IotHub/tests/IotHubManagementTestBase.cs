@@ -7,7 +7,6 @@ using Azure.ResourceManager.IotHub.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
-using System.Security;
 using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.IotHub.Tests
