@@ -263,7 +263,7 @@ namespace Azure.Analytics.Share.Tests
                 shareKind = "InPlace",
                 properties = new
                 {
-                    expirationDate = DateTime.ParseExact("2023-07-14T13:57:36Z", "yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture)
+                    expirationDate = "7/14/2023 1:57:36 PM"
                 }
             };
 
