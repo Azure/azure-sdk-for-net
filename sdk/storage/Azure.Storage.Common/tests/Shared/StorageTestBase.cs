@@ -60,6 +60,11 @@ namespace Azure.Storage.Test.Shared
 
             HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("x-ms-encryption-key", SanitizeValue));
             HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(CopySourceAuthorization, SanitizeValue));
+            HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("x-ms-meta-encryptiondata", ".NET Recorded Test Encryption Metadata Agent String")
+            {
+                // matches start of generated user agent string until the quotation mark ending the json string value
+                Regex = "(azsdk-net-Azure.Storage.)[^\"]*"
+            });
 
             SanitizedQueryParametersInHeaders.Add((CopySourceName, SignatureQueryName));
             SanitizedQueryParametersInHeaders.Add((RenameSource, SignatureQueryName));
