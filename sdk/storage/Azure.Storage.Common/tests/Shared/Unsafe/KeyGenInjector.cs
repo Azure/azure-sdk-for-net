@@ -10,6 +10,13 @@ using Azure.Storage.Cryptography;
 
 namespace Azure.Storage.Test.Shared
 {
+    /// <summary>
+    /// Recording client-side encryption tests requires replayable generation of content encryption keys and
+    /// IVs for encrypting upload contents. This is largely insecure to allow in production. Instead of
+    /// plumbing in replacements for secure key and IV generation, this class dynamically overwrites the
+    /// generation implementation at runtime with recordable rng. No code for changing the secure keygen ends
+    /// up in the released library.
+    /// </summary>
     public static class KeyGenInjector
     {
         private static RecordedTestBase _testBase = default;
@@ -35,6 +42,9 @@ namespace Azure.Storage.Test.Shared
             ReplaceMethods(oldMethod, newMethod);
         }
 
+        /// <summary>
+        /// https://stackoverflow.com/questions/7299097/dynamically-replace-the-contents-of-a-c-sharp-method/36415711#36415711
+        /// </summary>
         private static void ReplaceMethods(MethodInfo oldMethod, MethodInfo newMethod)
         {
             RuntimeHelpers.PrepareMethod(oldMethod.MethodHandle);
@@ -92,7 +102,7 @@ namespace Azure.Storage.Test.Shared
             return buff;
         }
 
-#pragma warning disable SYSLIB0021 // replicating the way code is done in main library
+#pragma warning disable SYSLIB0021 // doesn't like direct Aes class access; replicating the way code is done in main library
         private static AesCryptoServiceProvider GetAesProviderRecordable(byte[] contentEncryptionKey)
         {
             byte[] iv = new byte[16];
