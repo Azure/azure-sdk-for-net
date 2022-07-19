@@ -135,6 +135,28 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
+        ///   Initializes a new instance of the <see cref="ServiceBusSender"/> class.
+        /// </summary>
+        /// <param name="entityPath">The entity path to send the message to.</param>
+        /// <param name="connection">The connection for the sender.</param>
+        internal ServiceBusSender(
+            string entityPath,
+            ServiceBusConnection connection) :
+            this(entityPath, connection, new ServiceBusSenderOptions())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServiceBusSender"/> class for use with derived types.
+        /// </summary>
+        /// <param name="client">The client instance to use for the sender.</param>
+        /// <param name="queueOrTopicName">The name of the queue or topic to send to.</param>
+        protected ServiceBusSender(ServiceBusClient client, string queueOrTopicName) :
+            this(queueOrTopicName, client.Connection, new ServiceBusSenderOptions())
+        {
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ServiceBusSender"/> class for use with derived types.
         /// </summary>
         /// <param name="client">The client instance to use for the sender.</param>
