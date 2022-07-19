@@ -11,10 +11,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Process Thread Information.
-    /// Serialized Name: ProcessThreadInfo
-    /// </summary>
+    /// <summary> Process Thread Information. </summary>
     public partial class ProcessThreadInfo : ResourceData
     {
         /// <summary> Initializes a new instance of ProcessThreadInfo. </summary>
@@ -27,58 +24,19 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="identifier">
-        /// Site extension ID.
-        /// Serialized Name: ProcessThreadInfo.properties.identifier
-        /// </param>
-        /// <param name="href">
-        /// HRef URI.
-        /// Serialized Name: ProcessThreadInfo.properties.href
-        /// </param>
-        /// <param name="process">
-        /// Process URI.
-        /// Serialized Name: ProcessThreadInfo.properties.process
-        /// </param>
-        /// <param name="startAddress">
-        /// Start address.
-        /// Serialized Name: ProcessThreadInfo.properties.start_address
-        /// </param>
-        /// <param name="currentPriority">
-        /// Current thread priority.
-        /// Serialized Name: ProcessThreadInfo.properties.current_priority
-        /// </param>
-        /// <param name="priorityLevel">
-        /// Thread priority level.
-        /// Serialized Name: ProcessThreadInfo.properties.priority_level
-        /// </param>
-        /// <param name="basePriority">
-        /// Base priority.
-        /// Serialized Name: ProcessThreadInfo.properties.base_priority
-        /// </param>
-        /// <param name="startOn">
-        /// Start time.
-        /// Serialized Name: ProcessThreadInfo.properties.start_time
-        /// </param>
-        /// <param name="totalProcessorTime">
-        /// Total processor time.
-        /// Serialized Name: ProcessThreadInfo.properties.total_processor_time
-        /// </param>
-        /// <param name="userProcessorTime">
-        /// User processor time.
-        /// Serialized Name: ProcessThreadInfo.properties.user_processor_time
-        /// </param>
-        /// <param name="state">
-        /// Thread state.
-        /// Serialized Name: ProcessThreadInfo.properties.state
-        /// </param>
-        /// <param name="waitReason">
-        /// Wait reason.
-        /// Serialized Name: ProcessThreadInfo.properties.wait_reason
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="identifier"> Site extension ID. </param>
+        /// <param name="href"> HRef URI. </param>
+        /// <param name="process"> Process URI. </param>
+        /// <param name="startAddress"> Start address. </param>
+        /// <param name="currentPriority"> Current thread priority. </param>
+        /// <param name="priorityLevel"> Thread priority level. </param>
+        /// <param name="basePriority"> Base priority. </param>
+        /// <param name="startOn"> Start time. </param>
+        /// <param name="totalProcessorTime"> Total processor time. </param>
+        /// <param name="userProcessorTime"> User processor time. </param>
+        /// <param name="state"> Thread state. </param>
+        /// <param name="waitReason"> Wait reason. </param>
+        /// <param name="kind"> Kind of resource. </param>
         internal ProcessThreadInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? identifier, string href, string process, string startAddress, int? currentPriority, string priorityLevel, int? basePriority, DateTimeOffset? startOn, string totalProcessorTime, string userProcessorTime, string state, string waitReason, string kind) : base(id, name, resourceType, systemData)
         {
             Identifier = identifier;
@@ -96,70 +54,31 @@ namespace Azure.ResourceManager.AppService.Models
             Kind = kind;
         }
 
-        /// <summary>
-        /// Site extension ID.
-        /// Serialized Name: ProcessThreadInfo.properties.identifier
-        /// </summary>
+        /// <summary> Site extension ID. </summary>
         public int? Identifier { get; }
-        /// <summary>
-        /// HRef URI.
-        /// Serialized Name: ProcessThreadInfo.properties.href
-        /// </summary>
+        /// <summary> HRef URI. </summary>
         public string Href { get; set; }
-        /// <summary>
-        /// Process URI.
-        /// Serialized Name: ProcessThreadInfo.properties.process
-        /// </summary>
+        /// <summary> Process URI. </summary>
         public string Process { get; set; }
-        /// <summary>
-        /// Start address.
-        /// Serialized Name: ProcessThreadInfo.properties.start_address
-        /// </summary>
+        /// <summary> Start address. </summary>
         public string StartAddress { get; set; }
-        /// <summary>
-        /// Current thread priority.
-        /// Serialized Name: ProcessThreadInfo.properties.current_priority
-        /// </summary>
+        /// <summary> Current thread priority. </summary>
         public int? CurrentPriority { get; set; }
-        /// <summary>
-        /// Thread priority level.
-        /// Serialized Name: ProcessThreadInfo.properties.priority_level
-        /// </summary>
+        /// <summary> Thread priority level. </summary>
         public string PriorityLevel { get; set; }
-        /// <summary>
-        /// Base priority.
-        /// Serialized Name: ProcessThreadInfo.properties.base_priority
-        /// </summary>
+        /// <summary> Base priority. </summary>
         public int? BasePriority { get; set; }
-        /// <summary>
-        /// Start time.
-        /// Serialized Name: ProcessThreadInfo.properties.start_time
-        /// </summary>
+        /// <summary> Start time. </summary>
         public DateTimeOffset? StartOn { get; set; }
-        /// <summary>
-        /// Total processor time.
-        /// Serialized Name: ProcessThreadInfo.properties.total_processor_time
-        /// </summary>
+        /// <summary> Total processor time. </summary>
         public string TotalProcessorTime { get; set; }
-        /// <summary>
-        /// User processor time.
-        /// Serialized Name: ProcessThreadInfo.properties.user_processor_time
-        /// </summary>
+        /// <summary> User processor time. </summary>
         public string UserProcessorTime { get; set; }
-        /// <summary>
-        /// Thread state.
-        /// Serialized Name: ProcessThreadInfo.properties.state
-        /// </summary>
+        /// <summary> Thread state. </summary>
         public string State { get; set; }
-        /// <summary>
-        /// Wait reason.
-        /// Serialized Name: ProcessThreadInfo.properties.wait_reason
-        /// </summary>
+        /// <summary> Wait reason. </summary>
         public string WaitReason { get; set; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }
 }

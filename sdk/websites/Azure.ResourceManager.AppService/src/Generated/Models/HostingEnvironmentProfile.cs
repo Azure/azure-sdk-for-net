@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Specification for an App Service Environment to use for this resource.
-    /// Serialized Name: HostingEnvironmentProfile
-    /// </summary>
+    /// <summary> Specification for an App Service Environment to use for this resource. </summary>
     public partial class HostingEnvironmentProfile
     {
         /// <summary> Initializes a new instance of HostingEnvironmentProfile. </summary>
@@ -19,18 +16,9 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of HostingEnvironmentProfile. </summary>
-        /// <param name="id">
-        /// Resource ID of the App Service Environment.
-        /// Serialized Name: HostingEnvironmentProfile.id
-        /// </param>
-        /// <param name="name">
-        /// Name of the App Service Environment.
-        /// Serialized Name: HostingEnvironmentProfile.name
-        /// </param>
-        /// <param name="resourceType">
-        /// Resource type of the App Service Environment.
-        /// Serialized Name: HostingEnvironmentProfile.type
-        /// </param>
+        /// <param name="id"> Resource ID of the App Service Environment. </param>
+        /// <param name="name"> Name of the App Service Environment. </param>
+        /// <param name="resourceType"> Resource type of the App Service Environment. </param>
         internal HostingEnvironmentProfile(string id, string name, string resourceType)
         {
             Id = id;
@@ -38,20 +26,11 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceType = resourceType;
         }
 
-        /// <summary>
-        /// Resource ID of the App Service Environment.
-        /// Serialized Name: HostingEnvironmentProfile.id
-        /// </summary>
+        /// <summary> Resource ID of the App Service Environment. </summary>
         public string Id { get; set; }
-        /// <summary>
-        /// Name of the App Service Environment.
-        /// Serialized Name: HostingEnvironmentProfile.name
-        /// </summary>
+        /// <summary> Name of the App Service Environment. </summary>
         public string Name { get; }
-        /// <summary>
-        /// Resource type of the App Service Environment.
-        /// Serialized Name: HostingEnvironmentProfile.type
-        /// </summary>
+        /// <summary> Resource type of the App Service Environment. </summary>
         public string ResourceType { get; }
     }
 }

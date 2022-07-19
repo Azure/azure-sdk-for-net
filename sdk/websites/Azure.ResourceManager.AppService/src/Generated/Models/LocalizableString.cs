@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Localizable string object containing the name and a localized value.
-    /// Serialized Name: LocalizableString
-    /// </summary>
+    /// <summary> Localizable string object containing the name and a localized value. </summary>
     public partial class LocalizableString
     {
         /// <summary> Initializes a new instance of LocalizableString. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of LocalizableString. </summary>
-        /// <param name="value">
-        /// Non-localized name.
-        /// Serialized Name: LocalizableString.value
-        /// </param>
-        /// <param name="localizedValue">
-        /// Localized name.
-        /// Serialized Name: LocalizableString.localizedValue
-        /// </param>
+        /// <param name="value"> Non-localized name. </param>
+        /// <param name="localizedValue"> Localized name. </param>
         internal LocalizableString(string value, string localizedValue)
         {
             Value = value;
             LocalizedValue = localizedValue;
         }
 
-        /// <summary>
-        /// Non-localized name.
-        /// Serialized Name: LocalizableString.value
-        /// </summary>
+        /// <summary> Non-localized name. </summary>
         public string Value { get; }
-        /// <summary>
-        /// Localized name.
-        /// Serialized Name: LocalizableString.localizedValue
-        /// </summary>
+        /// <summary> Localized name. </summary>
         public string LocalizedValue { get; }
     }
 }

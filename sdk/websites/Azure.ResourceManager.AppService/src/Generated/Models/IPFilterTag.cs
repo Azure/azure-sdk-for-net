@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Defines what this IP filter will be used for. This is to support IP filtering on proxies.
-    /// Serialized Name: IpFilterTag
-    /// </summary>
+    /// <summary> Defines what this IP filter will be used for. This is to support IP filtering on proxies. </summary>
     public readonly partial struct IPFilterTag : IEquatable<IPFilterTag>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.AppService.Models
         private const string XffProxyValue = "XffProxy";
         private const string ServiceTagValue = "ServiceTag";
 
-        /// <summary>
-        /// Default
-        /// Serialized Name: IpFilterTag.Default
-        /// </summary>
+        /// <summary> Default. </summary>
         public static IPFilterTag Default { get; } = new IPFilterTag(DefaultValue);
-        /// <summary>
-        /// XffProxy
-        /// Serialized Name: IpFilterTag.XffProxy
-        /// </summary>
+        /// <summary> XffProxy. </summary>
         public static IPFilterTag XffProxy { get; } = new IPFilterTag(XffProxyValue);
-        /// <summary>
-        /// ServiceTag
-        /// Serialized Name: IpFilterTag.ServiceTag
-        /// </summary>
+        /// <summary> ServiceTag. </summary>
         public static IPFilterTag ServiceTag { get; } = new IPFilterTag(ServiceTagValue);
         /// <summary> Determines if two <see cref="IPFilterTag"/> values are the same. </summary>
         public static bool operator ==(IPFilterTag left, IPFilterTag right) => left.Equals(right);

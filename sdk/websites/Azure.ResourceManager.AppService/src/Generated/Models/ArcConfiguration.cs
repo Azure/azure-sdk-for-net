@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The ArcConfiguration.
-    /// Serialized Name: ArcConfiguration
-    /// </summary>
+    /// <summary> The ArcConfiguration. </summary>
     public partial class ArcConfiguration
     {
         /// <summary> Initializes a new instance of ArcConfiguration. </summary>
@@ -19,13 +16,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of ArcConfiguration. </summary>
-        /// <param name="artifactsStorageType"> Serialized Name: ArcConfiguration.artifactsStorageType. </param>
-        /// <param name="artifactStorageClassName"> Serialized Name: ArcConfiguration.artifactStorageClassName. </param>
-        /// <param name="artifactStorageMountPath"> Serialized Name: ArcConfiguration.artifactStorageMountPath. </param>
-        /// <param name="artifactStorageNodeName"> Serialized Name: ArcConfiguration.artifactStorageNodeName. </param>
-        /// <param name="artifactStorageAccessMode"> Serialized Name: ArcConfiguration.artifactStorageAccessMode. </param>
-        /// <param name="frontEndServiceConfiguration"> Serialized Name: ArcConfiguration.frontEndServiceConfiguration. </param>
-        /// <param name="kubeConfig"> Serialized Name: ArcConfiguration.kubeConfig. </param>
+        /// <param name="artifactsStorageType"></param>
+        /// <param name="artifactStorageClassName"></param>
+        /// <param name="artifactStorageMountPath"></param>
+        /// <param name="artifactStorageNodeName"></param>
+        /// <param name="artifactStorageAccessMode"></param>
+        /// <param name="frontEndServiceConfiguration"></param>
+        /// <param name="kubeConfig"></param>
         internal ArcConfiguration(StorageType? artifactsStorageType, string artifactStorageClassName, string artifactStorageMountPath, string artifactStorageNodeName, string artifactStorageAccessMode, FrontEndConfiguration frontEndServiceConfiguration, string kubeConfig)
         {
             ArtifactsStorageType = artifactsStorageType;
@@ -37,19 +34,19 @@ namespace Azure.ResourceManager.AppService.Models
             KubeConfig = kubeConfig;
         }
 
-        /// <summary> Serialized Name: ArcConfiguration.artifactsStorageType. </summary>
+        /// <summary> Gets or sets the artifacts storage type. </summary>
         public StorageType? ArtifactsStorageType { get; set; }
-        /// <summary> Serialized Name: ArcConfiguration.artifactStorageClassName. </summary>
+        /// <summary> Gets or sets the artifact storage class name. </summary>
         public string ArtifactStorageClassName { get; set; }
-        /// <summary> Serialized Name: ArcConfiguration.artifactStorageMountPath. </summary>
+        /// <summary> Gets or sets the artifact storage mount path. </summary>
         public string ArtifactStorageMountPath { get; set; }
-        /// <summary> Serialized Name: ArcConfiguration.artifactStorageNodeName. </summary>
+        /// <summary> Gets or sets the artifact storage node name. </summary>
         public string ArtifactStorageNodeName { get; set; }
-        /// <summary> Serialized Name: ArcConfiguration.artifactStorageAccessMode. </summary>
+        /// <summary> Gets or sets the artifact storage access mode. </summary>
         public string ArtifactStorageAccessMode { get; set; }
-        /// <summary> Serialized Name: ArcConfiguration.frontEndServiceConfiguration. </summary>
+        /// <summary> Gets or sets the front end service configuration. </summary>
         internal FrontEndConfiguration FrontEndServiceConfiguration { get; set; }
-        /// <summary> Serialized Name: FrontEndConfiguration.kind. </summary>
+        /// <summary> Gets or sets the front end service kind. </summary>
         public FrontEndServiceType? FrontEndServiceKind
         {
             get => FrontEndServiceConfiguration is null ? default : FrontEndServiceConfiguration.Kind;
@@ -61,7 +58,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
         }
 
-        /// <summary> Serialized Name: ArcConfiguration.kubeConfig. </summary>
+        /// <summary> Gets or sets the kube config. </summary>
         public string KubeConfig { get; set; }
     }
 }

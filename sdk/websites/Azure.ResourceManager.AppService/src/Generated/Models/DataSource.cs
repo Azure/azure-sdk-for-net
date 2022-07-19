@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Class representing data source used by the detectors
-    /// Serialized Name: DataSource
-    /// </summary>
+    /// <summary> Class representing data source used by the detectors. </summary>
     public partial class DataSource
     {
         /// <summary> Initializes a new instance of DataSource. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of DataSource. </summary>
-        /// <param name="instructions">
-        /// Instructions if any for the data source
-        /// Serialized Name: DataSource.instructions
-        /// </param>
-        /// <param name="dataSourceUri">
-        /// Datasource Uri Links
-        /// Serialized Name: DataSource.dataSourceUri
-        /// </param>
+        /// <param name="instructions"> Instructions if any for the data source. </param>
+        /// <param name="dataSourceUri"> Datasource Uri Links. </param>
         internal DataSource(IList<string> instructions, IList<NameValuePair> dataSourceUri)
         {
             Instructions = instructions;
             DataSourceUri = dataSourceUri;
         }
 
-        /// <summary>
-        /// Instructions if any for the data source
-        /// Serialized Name: DataSource.instructions
-        /// </summary>
+        /// <summary> Instructions if any for the data source. </summary>
         public IList<string> Instructions { get; }
-        /// <summary>
-        /// Datasource Uri Links
-        /// Serialized Name: DataSource.dataSourceUri
-        /// </summary>
+        /// <summary> Datasource Uri Links. </summary>
         public IList<NameValuePair> DataSourceUri { get; }
     }
 }

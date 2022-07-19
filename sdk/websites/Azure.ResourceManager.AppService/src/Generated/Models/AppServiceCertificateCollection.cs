@@ -12,17 +12,11 @@ using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Collection of certificate order certificates.
-    /// Serialized Name: AppServiceCertificateCollection
-    /// </summary>
+    /// <summary> Collection of certificate order certificates. </summary>
     internal partial class AppServiceCertificateCollection
     {
         /// <summary> Initializes a new instance of AppServiceCertificateCollection. </summary>
-        /// <param name="value">
-        /// Collection of resources.
-        /// Serialized Name: AppServiceCertificateCollection.value
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AppServiceCertificateCollection(IEnumerable<AppServicCertificateData> value)
         {
@@ -35,29 +29,17 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of AppServiceCertificateCollection. </summary>
-        /// <param name="value">
-        /// Collection of resources.
-        /// Serialized Name: AppServiceCertificateCollection.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Link to next page of resources.
-        /// Serialized Name: AppServiceCertificateCollection.nextLink
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
+        /// <param name="nextLink"> Link to next page of resources. </param>
         internal AppServiceCertificateCollection(IReadOnlyList<AppServicCertificateData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Collection of resources.
-        /// Serialized Name: AppServiceCertificateCollection.value
-        /// </summary>
+        /// <summary> Collection of resources. </summary>
         public IReadOnlyList<AppServicCertificateData> Value { get; }
-        /// <summary>
-        /// Link to next page of resources.
-        /// Serialized Name: AppServiceCertificateCollection.nextLink
-        /// </summary>
+        /// <summary> Link to next page of resources. </summary>
         public string NextLink { get; }
     }
 }

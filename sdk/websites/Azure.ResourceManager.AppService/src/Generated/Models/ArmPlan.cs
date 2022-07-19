@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The plan object in Azure Resource Manager, represents a marketplace plan.
-    /// Serialized Name: ArmPlan
-    /// </summary>
+    /// <summary> The plan object in Azure Resource Manager, represents a marketplace plan. </summary>
     public partial class ArmPlan
     {
         /// <summary> Initializes a new instance of ArmPlan. </summary>
@@ -19,26 +16,11 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of ArmPlan. </summary>
-        /// <param name="name">
-        /// The name.
-        /// Serialized Name: ArmPlan.name
-        /// </param>
-        /// <param name="publisher">
-        /// The publisher.
-        /// Serialized Name: ArmPlan.publisher
-        /// </param>
-        /// <param name="product">
-        /// The product.
-        /// Serialized Name: ArmPlan.product
-        /// </param>
-        /// <param name="promotionCode">
-        /// The promotion code.
-        /// Serialized Name: ArmPlan.promotionCode
-        /// </param>
-        /// <param name="version">
-        /// Version of product.
-        /// Serialized Name: ArmPlan.version
-        /// </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="publisher"> The publisher. </param>
+        /// <param name="product"> The product. </param>
+        /// <param name="promotionCode"> The promotion code. </param>
+        /// <param name="version"> Version of product. </param>
         internal ArmPlan(string name, string publisher, string product, string promotionCode, string version)
         {
             Name = name;
@@ -48,30 +30,15 @@ namespace Azure.ResourceManager.AppService.Models
             Version = version;
         }
 
-        /// <summary>
-        /// The name.
-        /// Serialized Name: ArmPlan.name
-        /// </summary>
+        /// <summary> The name. </summary>
         public string Name { get; }
-        /// <summary>
-        /// The publisher.
-        /// Serialized Name: ArmPlan.publisher
-        /// </summary>
+        /// <summary> The publisher. </summary>
         public string Publisher { get; }
-        /// <summary>
-        /// The product.
-        /// Serialized Name: ArmPlan.product
-        /// </summary>
+        /// <summary> The product. </summary>
         public string Product { get; }
-        /// <summary>
-        /// The promotion code.
-        /// Serialized Name: ArmPlan.promotionCode
-        /// </summary>
+        /// <summary> The promotion code. </summary>
         public string PromotionCode { get; }
-        /// <summary>
-        /// Version of product.
-        /// Serialized Name: ArmPlan.version
-        /// </summary>
+        /// <summary> Version of product. </summary>
         public string Version { get; }
     }
 }

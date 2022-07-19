@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Function secrets.
-    /// Serialized Name: FunctionSecrets
-    /// </summary>
+    /// <summary> Function secrets. </summary>
     public partial class FunctionSecrets
     {
         /// <summary> Initializes a new instance of FunctionSecrets. </summary>
@@ -21,29 +18,17 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of FunctionSecrets. </summary>
-        /// <param name="key">
-        /// Secret key.
-        /// Serialized Name: FunctionSecrets.key
-        /// </param>
-        /// <param name="triggerUri">
-        /// Trigger URL.
-        /// Serialized Name: FunctionSecrets.trigger_url
-        /// </param>
+        /// <param name="key"> Secret key. </param>
+        /// <param name="triggerUri"> Trigger URL. </param>
         internal FunctionSecrets(string key, Uri triggerUri)
         {
             Key = key;
             TriggerUri = triggerUri;
         }
 
-        /// <summary>
-        /// Secret key.
-        /// Serialized Name: FunctionSecrets.key
-        /// </summary>
+        /// <summary> Secret key. </summary>
         public string Key { get; }
-        /// <summary>
-        /// Trigger URL.
-        /// Serialized Name: FunctionSecrets.trigger_url
-        /// </summary>
+        /// <summary> Trigger URL. </summary>
         public Uri TriggerUri { get; }
     }
 }

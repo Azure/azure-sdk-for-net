@@ -26,18 +26,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="isEnabled">
-        /// Whether private access is enabled or not.
-        /// Serialized Name: PrivateAccess.properties.enabled
-        /// </param>
-        /// <param name="virtualNetworks">
-        /// The Virtual Networks (and subnets) allowed to access the site privately.
-        /// Serialized Name: PrivateAccess.properties.virtualNetworks
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="isEnabled"> Whether private access is enabled or not. </param>
+        /// <param name="virtualNetworks"> The Virtual Networks (and subnets) allowed to access the site privately. </param>
+        /// <param name="kind"> Kind of resource. </param>
         internal PrivateAccessData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isEnabled, IList<PrivateAccessVirtualNetwork> virtualNetworks, string kind) : base(id, name, resourceType, systemData)
         {
             IsEnabled = isEnabled;
@@ -45,20 +36,11 @@ namespace Azure.ResourceManager.AppService
             Kind = kind;
         }
 
-        /// <summary>
-        /// Whether private access is enabled or not.
-        /// Serialized Name: PrivateAccess.properties.enabled
-        /// </summary>
+        /// <summary> Whether private access is enabled or not. </summary>
         public bool? IsEnabled { get; set; }
-        /// <summary>
-        /// The Virtual Networks (and subnets) allowed to access the site privately.
-        /// Serialized Name: PrivateAccess.properties.virtualNetworks
-        /// </summary>
+        /// <summary> The Virtual Networks (and subnets) allowed to access the site privately. </summary>
         public IList<PrivateAccessVirtualNetwork> VirtualNetworks { get; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }
 }

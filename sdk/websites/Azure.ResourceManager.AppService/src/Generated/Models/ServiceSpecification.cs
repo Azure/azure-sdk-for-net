@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Resource metrics service provided by Microsoft.Insights resource provider.
-    /// Serialized Name: ServiceSpecification
-    /// </summary>
+    /// <summary> Resource metrics service provided by Microsoft.Insights resource provider. </summary>
     public partial class ServiceSpecification
     {
         /// <summary> Initializes a new instance of ServiceSpecification. </summary>
@@ -24,17 +21,17 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of ServiceSpecification. </summary>
-        /// <param name="metricSpecifications"> Serialized Name: ServiceSpecification.metricSpecifications. </param>
-        /// <param name="logSpecifications"> Serialized Name: ServiceSpecification.logSpecifications. </param>
+        /// <param name="metricSpecifications"></param>
+        /// <param name="logSpecifications"></param>
         internal ServiceSpecification(IReadOnlyList<MetricSpecification> metricSpecifications, IReadOnlyList<LogSpecification> logSpecifications)
         {
             MetricSpecifications = metricSpecifications;
             LogSpecifications = logSpecifications;
         }
 
-        /// <summary> Serialized Name: ServiceSpecification.metricSpecifications. </summary>
+        /// <summary> Gets the metric specifications. </summary>
         public IReadOnlyList<MetricSpecification> MetricSpecifications { get; }
-        /// <summary> Serialized Name: ServiceSpecification.logSpecifications. </summary>
+        /// <summary> Gets the log specifications. </summary>
         public IReadOnlyList<LogSpecification> LogSpecifications { get; }
     }
 }

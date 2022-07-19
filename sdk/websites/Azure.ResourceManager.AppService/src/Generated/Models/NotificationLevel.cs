@@ -7,31 +7,16 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Level indicating how critical this recommendation can impact.
-    /// Serialized Name: NotificationLevel
-    /// </summary>
+    /// <summary> Level indicating how critical this recommendation can impact. </summary>
     public enum NotificationLevel
     {
-        /// <summary>
-        /// Critical
-        /// Serialized Name: NotificationLevel.Critical
-        /// </summary>
+        /// <summary> Critical. </summary>
         Critical,
-        /// <summary>
-        /// Warning
-        /// Serialized Name: NotificationLevel.Warning
-        /// </summary>
+        /// <summary> Warning. </summary>
         Warning,
-        /// <summary>
-        /// Information
-        /// Serialized Name: NotificationLevel.Information
-        /// </summary>
+        /// <summary> Information. </summary>
         Information,
-        /// <summary>
-        /// NonUrgentSuggestion
-        /// Serialized Name: NotificationLevel.NonUrgentSuggestion
-        /// </summary>
+        /// <summary> NonUrgentSuggestion. </summary>
         NonUrgentSuggestion
     }
 }

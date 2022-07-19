@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Log Definition of a single resource metric.
-    /// Serialized Name: LogSpecification
-    /// </summary>
+    /// <summary> Log Definition of a single resource metric. </summary>
     public partial class LogSpecification
     {
         /// <summary> Initializes a new instance of LogSpecification. </summary>
@@ -21,10 +18,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of LogSpecification. </summary>
-        /// <param name="name"> Serialized Name: LogSpecification.name. </param>
-        /// <param name="displayName"> Serialized Name: LogSpecification.displayName. </param>
-        /// <param name="blobDuration"> Serialized Name: LogSpecification.blobDuration. </param>
-        /// <param name="logFilterPattern"> Serialized Name: LogSpecification.logFilterPattern. </param>
+        /// <param name="name"></param>
+        /// <param name="displayName"></param>
+        /// <param name="blobDuration"></param>
+        /// <param name="logFilterPattern"></param>
         internal LogSpecification(string name, string displayName, TimeSpan? blobDuration, string logFilterPattern)
         {
             Name = name;
@@ -33,13 +30,13 @@ namespace Azure.ResourceManager.AppService.Models
             LogFilterPattern = logFilterPattern;
         }
 
-        /// <summary> Serialized Name: LogSpecification.name. </summary>
+        /// <summary> Gets the name. </summary>
         public string Name { get; }
-        /// <summary> Serialized Name: LogSpecification.displayName. </summary>
+        /// <summary> Gets the display name. </summary>
         public string DisplayName { get; }
-        /// <summary> Serialized Name: LogSpecification.blobDuration. </summary>
+        /// <summary> Gets the blob duration. </summary>
         public TimeSpan? BlobDuration { get; }
-        /// <summary> Serialized Name: LogSpecification.logFilterPattern. </summary>
+        /// <summary> Gets the log filter pattern. </summary>
         public string LogFilterPattern { get; }
     }
 }

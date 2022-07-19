@@ -7,66 +7,30 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The ResolveStatus.
-    /// Serialized Name: ResolveStatus
-    /// </summary>
+    /// <summary> The ResolveStatus. </summary>
     public enum ResolveStatus
     {
-        /// <summary>
-        /// Initialized
-        /// Serialized Name: ResolveStatus.Initialized
-        /// </summary>
+        /// <summary> Initialized. </summary>
         Initialized,
-        /// <summary>
-        /// Resolved
-        /// Serialized Name: ResolveStatus.Resolved
-        /// </summary>
+        /// <summary> Resolved. </summary>
         Resolved,
-        /// <summary>
-        /// InvalidSyntax
-        /// Serialized Name: ResolveStatus.InvalidSyntax
-        /// </summary>
+        /// <summary> InvalidSyntax. </summary>
         InvalidSyntax,
-        /// <summary>
-        /// MSINotEnabled
-        /// Serialized Name: ResolveStatus.MSINotEnabled
-        /// </summary>
+        /// <summary> MSINotEnabled. </summary>
         MSINotEnabled,
-        /// <summary>
-        /// VaultNotFound
-        /// Serialized Name: ResolveStatus.VaultNotFound
-        /// </summary>
+        /// <summary> VaultNotFound. </summary>
         VaultNotFound,
-        /// <summary>
-        /// SecretNotFound
-        /// Serialized Name: ResolveStatus.SecretNotFound
-        /// </summary>
+        /// <summary> SecretNotFound. </summary>
         SecretNotFound,
-        /// <summary>
-        /// SecretVersionNotFound
-        /// Serialized Name: ResolveStatus.SecretVersionNotFound
-        /// </summary>
+        /// <summary> SecretVersionNotFound. </summary>
         SecretVersionNotFound,
-        /// <summary>
-        /// AccessToKeyVaultDenied
-        /// Serialized Name: ResolveStatus.AccessToKeyVaultDenied
-        /// </summary>
+        /// <summary> AccessToKeyVaultDenied. </summary>
         AccessToKeyVaultDenied,
-        /// <summary>
-        /// OtherReasons
-        /// Serialized Name: ResolveStatus.OtherReasons
-        /// </summary>
+        /// <summary> OtherReasons. </summary>
         OtherReasons,
-        /// <summary>
-        /// FetchTimedOut
-        /// Serialized Name: ResolveStatus.FetchTimedOut
-        /// </summary>
+        /// <summary> FetchTimedOut. </summary>
         FetchTimedOut,
-        /// <summary>
-        /// UnauthorizedClient
-        /// Serialized Name: ResolveStatus.UnauthorizedClient
-        /// </summary>
+        /// <summary> UnauthorizedClient. </summary>
         UnauthorizedClient
     }
 }

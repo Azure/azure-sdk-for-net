@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Meta data about operation used for display in portal.
-    /// Serialized Name: CsmOperationDisplay
-    /// </summary>
+    /// <summary> Meta data about operation used for display in portal. </summary>
     public partial class CsmOperationDisplay
     {
         /// <summary> Initializes a new instance of CsmOperationDisplay. </summary>
@@ -19,10 +16,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of CsmOperationDisplay. </summary>
-        /// <param name="provider"> Serialized Name: CsmOperationDisplay.provider. </param>
-        /// <param name="resource"> Serialized Name: CsmOperationDisplay.resource. </param>
-        /// <param name="operation"> Serialized Name: CsmOperationDisplay.operation. </param>
-        /// <param name="description"> Serialized Name: CsmOperationDisplay.description. </param>
+        /// <param name="provider"></param>
+        /// <param name="resource"></param>
+        /// <param name="operation"></param>
+        /// <param name="description"></param>
         internal CsmOperationDisplay(string provider, string resource, string operation, string description)
         {
             Provider = provider;
@@ -31,13 +28,13 @@ namespace Azure.ResourceManager.AppService.Models
             Description = description;
         }
 
-        /// <summary> Serialized Name: CsmOperationDisplay.provider. </summary>
+        /// <summary> Gets the provider. </summary>
         public string Provider { get; }
-        /// <summary> Serialized Name: CsmOperationDisplay.resource. </summary>
+        /// <summary> Gets the resource. </summary>
         public string Resource { get; }
-        /// <summary> Serialized Name: CsmOperationDisplay.operation. </summary>
+        /// <summary> Gets the operation. </summary>
         public string Operation { get; }
-        /// <summary> Serialized Name: CsmOperationDisplay.description. </summary>
+        /// <summary> Gets the description. </summary>
         public string Description { get; }
     }
 }

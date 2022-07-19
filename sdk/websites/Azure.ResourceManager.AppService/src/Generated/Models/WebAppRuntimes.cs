@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Web App stack runtimes.
-    /// Serialized Name: WebAppRuntimes
-    /// </summary>
+    /// <summary> Web App stack runtimes. </summary>
     public partial class WebAppRuntimes
     {
         /// <summary> Initializes a new instance of WebAppRuntimes. </summary>
@@ -19,22 +16,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of WebAppRuntimes. </summary>
-        /// <param name="linuxRuntimeSettings">
-        /// Linux-specific settings associated with the minor version.
-        /// Serialized Name: WebAppRuntimes.linuxRuntimeSettings
-        /// </param>
-        /// <param name="windowsRuntimeSettings">
-        /// Windows-specific settings associated with the minor version.
-        /// Serialized Name: WebAppRuntimes.windowsRuntimeSettings
-        /// </param>
-        /// <param name="linuxContainerSettings">
-        /// Linux-specific settings associated with the Java container minor version.
-        /// Serialized Name: WebAppRuntimes.linuxContainerSettings
-        /// </param>
-        /// <param name="windowsContainerSettings">
-        /// Windows-specific settings associated with the Java container minor version.
-        /// Serialized Name: WebAppRuntimes.windowsContainerSettings
-        /// </param>
+        /// <param name="linuxRuntimeSettings"> Linux-specific settings associated with the minor version. </param>
+        /// <param name="windowsRuntimeSettings"> Windows-specific settings associated with the minor version. </param>
+        /// <param name="linuxContainerSettings"> Linux-specific settings associated with the Java container minor version. </param>
+        /// <param name="windowsContainerSettings"> Windows-specific settings associated with the Java container minor version. </param>
         internal WebAppRuntimes(WebAppRuntimeSettings linuxRuntimeSettings, WebAppRuntimeSettings windowsRuntimeSettings, LinuxJavaContainerSettings linuxContainerSettings, WindowsJavaContainerSettings windowsContainerSettings)
         {
             LinuxRuntimeSettings = linuxRuntimeSettings;
@@ -43,25 +28,13 @@ namespace Azure.ResourceManager.AppService.Models
             WindowsContainerSettings = windowsContainerSettings;
         }
 
-        /// <summary>
-        /// Linux-specific settings associated with the minor version.
-        /// Serialized Name: WebAppRuntimes.linuxRuntimeSettings
-        /// </summary>
+        /// <summary> Linux-specific settings associated with the minor version. </summary>
         public WebAppRuntimeSettings LinuxRuntimeSettings { get; }
-        /// <summary>
-        /// Windows-specific settings associated with the minor version.
-        /// Serialized Name: WebAppRuntimes.windowsRuntimeSettings
-        /// </summary>
+        /// <summary> Windows-specific settings associated with the minor version. </summary>
         public WebAppRuntimeSettings WindowsRuntimeSettings { get; }
-        /// <summary>
-        /// Linux-specific settings associated with the Java container minor version.
-        /// Serialized Name: WebAppRuntimes.linuxContainerSettings
-        /// </summary>
+        /// <summary> Linux-specific settings associated with the Java container minor version. </summary>
         public LinuxJavaContainerSettings LinuxContainerSettings { get; }
-        /// <summary>
-        /// Windows-specific settings associated with the Java container minor version.
-        /// Serialized Name: WebAppRuntimes.windowsContainerSettings
-        /// </summary>
+        /// <summary> Windows-specific settings associated with the Java container minor version. </summary>
         public WindowsJavaContainerSettings WindowsContainerSettings { get; }
     }
 }

@@ -11,10 +11,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// SSL certificate email.
-    /// Serialized Name: CertificateEmail
-    /// </summary>
+    /// <summary> SSL certificate email. </summary>
     public partial class CertificateEmail : ResourceData
     {
         /// <summary> Initializes a new instance of CertificateEmail. </summary>
@@ -27,18 +24,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="emailId">
-        /// Email id.
-        /// Serialized Name: CertificateEmail.properties.emailId
-        /// </param>
-        /// <param name="timeStampOn">
-        /// Time stamp.
-        /// Serialized Name: CertificateEmail.properties.timeStamp
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="emailId"> Email id. </param>
+        /// <param name="timeStampOn"> Time stamp. </param>
+        /// <param name="kind"> Kind of resource. </param>
         internal CertificateEmail(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string emailId, DateTimeOffset? timeStampOn, string kind) : base(id, name, resourceType, systemData)
         {
             EmailId = emailId;
@@ -46,20 +34,11 @@ namespace Azure.ResourceManager.AppService.Models
             Kind = kind;
         }
 
-        /// <summary>
-        /// Email id.
-        /// Serialized Name: CertificateEmail.properties.emailId
-        /// </summary>
+        /// <summary> Email id. </summary>
         public string EmailId { get; set; }
-        /// <summary>
-        /// Time stamp.
-        /// Serialized Name: CertificateEmail.properties.timeStamp
-        /// </summary>
+        /// <summary> Time stamp. </summary>
         public DateTimeOffset? TimeStampOn { get; set; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }
 }

@@ -11,10 +11,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Describes main public IP address and any extra virtual IPs.
-    /// Serialized Name: AddressResponse
-    /// </summary>
+    /// <summary> Describes main public IP address and any extra virtual IPs. </summary>
     public partial class AddressResponse : ResourceData
     {
         /// <summary> Initializes a new instance of AddressResponse. </summary>
@@ -29,26 +26,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="serviceIPAddress">
-        /// Main public virtual IP.
-        /// Serialized Name: AddressResponse.properties.serviceIpAddress
-        /// </param>
-        /// <param name="internalIPAddress">
-        /// Virtual Network internal IP address of the App Service Environment if it is in internal load-balancing mode.
-        /// Serialized Name: AddressResponse.properties.internalIpAddress
-        /// </param>
-        /// <param name="outboundIPAddresses">
-        /// IP addresses appearing on outbound connections.
-        /// Serialized Name: AddressResponse.properties.outboundIpAddresses
-        /// </param>
-        /// <param name="vipMappings">
-        /// Additional virtual IPs.
-        /// Serialized Name: AddressResponse.properties.vipMappings
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="serviceIPAddress"> Main public virtual IP. </param>
+        /// <param name="internalIPAddress"> Virtual Network internal IP address of the App Service Environment if it is in internal load-balancing mode. </param>
+        /// <param name="outboundIPAddresses"> IP addresses appearing on outbound connections. </param>
+        /// <param name="vipMappings"> Additional virtual IPs. </param>
+        /// <param name="kind"> Kind of resource. </param>
         internal AddressResponse(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serviceIPAddress, string internalIPAddress, IList<string> outboundIPAddresses, IList<VirtualIPMapping> vipMappings, string kind) : base(id, name, resourceType, systemData)
         {
             ServiceIPAddress = serviceIPAddress;
@@ -58,30 +40,15 @@ namespace Azure.ResourceManager.AppService.Models
             Kind = kind;
         }
 
-        /// <summary>
-        /// Main public virtual IP.
-        /// Serialized Name: AddressResponse.properties.serviceIpAddress
-        /// </summary>
+        /// <summary> Main public virtual IP. </summary>
         public string ServiceIPAddress { get; set; }
-        /// <summary>
-        /// Virtual Network internal IP address of the App Service Environment if it is in internal load-balancing mode.
-        /// Serialized Name: AddressResponse.properties.internalIpAddress
-        /// </summary>
+        /// <summary> Virtual Network internal IP address of the App Service Environment if it is in internal load-balancing mode. </summary>
         public string InternalIPAddress { get; set; }
-        /// <summary>
-        /// IP addresses appearing on outbound connections.
-        /// Serialized Name: AddressResponse.properties.outboundIpAddresses
-        /// </summary>
+        /// <summary> IP addresses appearing on outbound connections. </summary>
         public IList<string> OutboundIPAddresses { get; }
-        /// <summary>
-        /// Additional virtual IPs.
-        /// Serialized Name: AddressResponse.properties.vipMappings
-        /// </summary>
+        /// <summary> Additional virtual IPs. </summary>
         public IList<VirtualIPMapping> VipMappings { get; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }
 }

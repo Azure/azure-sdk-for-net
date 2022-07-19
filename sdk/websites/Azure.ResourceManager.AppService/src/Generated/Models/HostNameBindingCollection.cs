@@ -12,17 +12,11 @@ using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Collection of hostname bindings.
-    /// Serialized Name: HostNameBindingCollection
-    /// </summary>
+    /// <summary> Collection of hostname bindings. </summary>
     internal partial class HostNameBindingCollection
     {
         /// <summary> Initializes a new instance of HostNameBindingCollection. </summary>
-        /// <param name="value">
-        /// Collection of resources.
-        /// Serialized Name: HostNameBindingCollection.value
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal HostNameBindingCollection(IEnumerable<HostNameBindingData> value)
         {
@@ -35,29 +29,17 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of HostNameBindingCollection. </summary>
-        /// <param name="value">
-        /// Collection of resources.
-        /// Serialized Name: HostNameBindingCollection.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Link to next page of resources.
-        /// Serialized Name: HostNameBindingCollection.nextLink
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
+        /// <param name="nextLink"> Link to next page of resources. </param>
         internal HostNameBindingCollection(IReadOnlyList<HostNameBindingData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Collection of resources.
-        /// Serialized Name: HostNameBindingCollection.value
-        /// </summary>
+        /// <summary> Collection of resources. </summary>
         public IReadOnlyList<HostNameBindingData> Value { get; }
-        /// <summary>
-        /// Link to next page of resources.
-        /// Serialized Name: HostNameBindingCollection.nextLink
-        /// </summary>
+        /// <summary> Link to next page of resources. </summary>
         public string NextLink { get; }
     }
 }

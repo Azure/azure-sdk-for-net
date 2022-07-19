@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Domain recommendation search parameters.
-    /// Serialized Name: DomainRecommendationSearchParameters
-    /// </summary>
+    /// <summary> Domain recommendation search parameters. </summary>
     public partial class DomainRecommendationSearchContent
     {
         /// <summary> Initializes a new instance of DomainRecommendationSearchContent. </summary>
@@ -18,15 +15,9 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary>
-        /// Keywords to be used for generating domain recommendations.
-        /// Serialized Name: DomainRecommendationSearchParameters.keywords
-        /// </summary>
+        /// <summary> Keywords to be used for generating domain recommendations. </summary>
         public string Keywords { get; set; }
-        /// <summary>
-        /// Maximum number of recommendations.
-        /// Serialized Name: DomainRecommendationSearchParameters.maxDomainRecommendations
-        /// </summary>
+        /// <summary> Maximum number of recommendations. </summary>
         public int? MaxDomainRecommendations { get; set; }
     }
 }

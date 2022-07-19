@@ -12,17 +12,11 @@ using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Collection of domain ownership identifiers.
-    /// Serialized Name: DomainOwnershipIdentifierCollection
-    /// </summary>
+    /// <summary> Collection of domain ownership identifiers. </summary>
     internal partial class DomainOwnershipIdentifierCollection
     {
         /// <summary> Initializes a new instance of DomainOwnershipIdentifierCollection. </summary>
-        /// <param name="value">
-        /// Collection of resources.
-        /// Serialized Name: DomainOwnershipIdentifierCollection.value
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DomainOwnershipIdentifierCollection(IEnumerable<DomainOwnershipIdentifierData> value)
         {
@@ -35,29 +29,17 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of DomainOwnershipIdentifierCollection. </summary>
-        /// <param name="value">
-        /// Collection of resources.
-        /// Serialized Name: DomainOwnershipIdentifierCollection.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Link to next page of resources.
-        /// Serialized Name: DomainOwnershipIdentifierCollection.nextLink
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
+        /// <param name="nextLink"> Link to next page of resources. </param>
         internal DomainOwnershipIdentifierCollection(IReadOnlyList<DomainOwnershipIdentifierData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Collection of resources.
-        /// Serialized Name: DomainOwnershipIdentifierCollection.value
-        /// </summary>
+        /// <summary> Collection of resources. </summary>
         public IReadOnlyList<DomainOwnershipIdentifierData> Value { get; }
-        /// <summary>
-        /// Link to next page of resources.
-        /// Serialized Name: DomainOwnershipIdentifierCollection.nextLink
-        /// </summary>
+        /// <summary> Link to next page of resources. </summary>
         public string NextLink { get; }
     }
 }

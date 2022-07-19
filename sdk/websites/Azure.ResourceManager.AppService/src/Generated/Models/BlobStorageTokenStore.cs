@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The configuration settings of the storage of the tokens if blob storage is used.
-    /// Serialized Name: BlobStorageTokenStore
-    /// </summary>
+    /// <summary> The configuration settings of the storage of the tokens if blob storage is used. </summary>
     internal partial class BlobStorageTokenStore
     {
         /// <summary> Initializes a new instance of BlobStorageTokenStore. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of BlobStorageTokenStore. </summary>
-        /// <param name="sasUrlSettingName">
-        /// The name of the app setting containing the SAS URL of the blob storage containing the tokens.
-        /// Serialized Name: BlobStorageTokenStore.sasUrlSettingName
-        /// </param>
+        /// <param name="sasUrlSettingName"> The name of the app setting containing the SAS URL of the blob storage containing the tokens. </param>
         internal BlobStorageTokenStore(string sasUrlSettingName)
         {
             SasUrlSettingName = sasUrlSettingName;
         }
 
-        /// <summary>
-        /// The name of the app setting containing the SAS URL of the blob storage containing the tokens.
-        /// Serialized Name: BlobStorageTokenStore.sasUrlSettingName
-        /// </summary>
+        /// <summary> The name of the app setting containing the SAS URL of the blob storage containing the tokens. </summary>
         public string SasUrlSettingName { get; set; }
     }
 }

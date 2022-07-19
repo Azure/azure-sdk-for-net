@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Usage of the quota resource.
-    /// Serialized Name: CsmUsageQuota
-    /// </summary>
+    /// <summary> Usage of the quota resource. </summary>
     public partial class CsmUsageQuota
     {
         /// <summary> Initializes a new instance of CsmUsageQuota. </summary>
@@ -21,26 +18,11 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of CsmUsageQuota. </summary>
-        /// <param name="unit">
-        /// Units of measurement for the quota resource.
-        /// Serialized Name: CsmUsageQuota.unit
-        /// </param>
-        /// <param name="nextResetOn">
-        /// Next reset time for the resource counter.
-        /// Serialized Name: CsmUsageQuota.nextResetTime
-        /// </param>
-        /// <param name="currentValue">
-        /// The current value of the resource counter.
-        /// Serialized Name: CsmUsageQuota.currentValue
-        /// </param>
-        /// <param name="limit">
-        /// The resource limit.
-        /// Serialized Name: CsmUsageQuota.limit
-        /// </param>
-        /// <param name="name">
-        /// Quota name.
-        /// Serialized Name: CsmUsageQuota.name
-        /// </param>
+        /// <param name="unit"> Units of measurement for the quota resource. </param>
+        /// <param name="nextResetOn"> Next reset time for the resource counter. </param>
+        /// <param name="currentValue"> The current value of the resource counter. </param>
+        /// <param name="limit"> The resource limit. </param>
+        /// <param name="name"> Quota name. </param>
         internal CsmUsageQuota(string unit, DateTimeOffset? nextResetOn, long? currentValue, long? limit, LocalizableString name)
         {
             Unit = unit;
@@ -50,30 +32,15 @@ namespace Azure.ResourceManager.AppService.Models
             Name = name;
         }
 
-        /// <summary>
-        /// Units of measurement for the quota resource.
-        /// Serialized Name: CsmUsageQuota.unit
-        /// </summary>
+        /// <summary> Units of measurement for the quota resource. </summary>
         public string Unit { get; }
-        /// <summary>
-        /// Next reset time for the resource counter.
-        /// Serialized Name: CsmUsageQuota.nextResetTime
-        /// </summary>
+        /// <summary> Next reset time for the resource counter. </summary>
         public DateTimeOffset? NextResetOn { get; }
-        /// <summary>
-        /// The current value of the resource counter.
-        /// Serialized Name: CsmUsageQuota.currentValue
-        /// </summary>
+        /// <summary> The current value of the resource counter. </summary>
         public long? CurrentValue { get; }
-        /// <summary>
-        /// The resource limit.
-        /// Serialized Name: CsmUsageQuota.limit
-        /// </summary>
+        /// <summary> The resource limit. </summary>
         public long? Limit { get; }
-        /// <summary>
-        /// Quota name.
-        /// Serialized Name: CsmUsageQuota.name
-        /// </summary>
+        /// <summary> Quota name. </summary>
         public LocalizableString Name { get; }
     }
 }

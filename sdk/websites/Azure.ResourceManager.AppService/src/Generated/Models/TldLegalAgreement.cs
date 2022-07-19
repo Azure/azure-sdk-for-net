@@ -9,25 +9,13 @@ using System;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Legal agreement for a top level domain.
-    /// Serialized Name: TldLegalAgreement
-    /// </summary>
+    /// <summary> Legal agreement for a top level domain. </summary>
     public partial class TldLegalAgreement
     {
         /// <summary> Initializes a new instance of TldLegalAgreement. </summary>
-        /// <param name="agreementKey">
-        /// Unique identifier for the agreement.
-        /// Serialized Name: TldLegalAgreement.agreementKey
-        /// </param>
-        /// <param name="title">
-        /// Agreement title.
-        /// Serialized Name: TldLegalAgreement.title
-        /// </param>
-        /// <param name="content">
-        /// Agreement details.
-        /// Serialized Name: TldLegalAgreement.content
-        /// </param>
+        /// <param name="agreementKey"> Unique identifier for the agreement. </param>
+        /// <param name="title"> Agreement title. </param>
+        /// <param name="content"> Agreement details. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="agreementKey"/>, <paramref name="title"/> or <paramref name="content"/> is null. </exception>
         internal TldLegalAgreement(string agreementKey, string title, string content)
         {
@@ -50,22 +38,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of TldLegalAgreement. </summary>
-        /// <param name="agreementKey">
-        /// Unique identifier for the agreement.
-        /// Serialized Name: TldLegalAgreement.agreementKey
-        /// </param>
-        /// <param name="title">
-        /// Agreement title.
-        /// Serialized Name: TldLegalAgreement.title
-        /// </param>
-        /// <param name="content">
-        /// Agreement details.
-        /// Serialized Name: TldLegalAgreement.content
-        /// </param>
-        /// <param name="uri">
-        /// URL where a copy of the agreement details is hosted.
-        /// Serialized Name: TldLegalAgreement.url
-        /// </param>
+        /// <param name="agreementKey"> Unique identifier for the agreement. </param>
+        /// <param name="title"> Agreement title. </param>
+        /// <param name="content"> Agreement details. </param>
+        /// <param name="uri"> URL where a copy of the agreement details is hosted. </param>
         internal TldLegalAgreement(string agreementKey, string title, string content, Uri uri)
         {
             AgreementKey = agreementKey;
@@ -74,25 +50,13 @@ namespace Azure.ResourceManager.AppService.Models
             Uri = uri;
         }
 
-        /// <summary>
-        /// Unique identifier for the agreement.
-        /// Serialized Name: TldLegalAgreement.agreementKey
-        /// </summary>
+        /// <summary> Unique identifier for the agreement. </summary>
         public string AgreementKey { get; }
-        /// <summary>
-        /// Agreement title.
-        /// Serialized Name: TldLegalAgreement.title
-        /// </summary>
+        /// <summary> Agreement title. </summary>
         public string Title { get; }
-        /// <summary>
-        /// Agreement details.
-        /// Serialized Name: TldLegalAgreement.content
-        /// </summary>
+        /// <summary> Agreement details. </summary>
         public string Content { get; }
-        /// <summary>
-        /// URL where a copy of the agreement details is hosted.
-        /// Serialized Name: TldLegalAgreement.url
-        /// </summary>
+        /// <summary> URL where a copy of the agreement details is hosted. </summary>
         public Uri Uri { get; }
     }
 }

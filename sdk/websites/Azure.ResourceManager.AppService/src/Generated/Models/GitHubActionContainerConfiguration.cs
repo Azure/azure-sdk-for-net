@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The GitHub action container configuration.
-    /// Serialized Name: GitHubActionContainerConfiguration
-    /// </summary>
+    /// <summary> The GitHub action container configuration. </summary>
     public partial class GitHubActionContainerConfiguration
     {
         /// <summary> Initializes a new instance of GitHubActionContainerConfiguration. </summary>
@@ -21,22 +18,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of GitHubActionContainerConfiguration. </summary>
-        /// <param name="serverUri">
-        /// The server URL for the container registry where the build will be hosted.
-        /// Serialized Name: GitHubActionContainerConfiguration.serverUrl
-        /// </param>
-        /// <param name="imageName">
-        /// The image name for the build.
-        /// Serialized Name: GitHubActionContainerConfiguration.imageName
-        /// </param>
-        /// <param name="username">
-        /// The username used to upload the image to the container registry.
-        /// Serialized Name: GitHubActionContainerConfiguration.username
-        /// </param>
-        /// <param name="password">
-        /// The password used to upload the image to the container registry.
-        /// Serialized Name: GitHubActionContainerConfiguration.password
-        /// </param>
+        /// <param name="serverUri"> The server URL for the container registry where the build will be hosted. </param>
+        /// <param name="imageName"> The image name for the build. </param>
+        /// <param name="username"> The username used to upload the image to the container registry. </param>
+        /// <param name="password"> The password used to upload the image to the container registry. </param>
         internal GitHubActionContainerConfiguration(Uri serverUri, string imageName, string username, string password)
         {
             ServerUri = serverUri;
@@ -45,25 +30,13 @@ namespace Azure.ResourceManager.AppService.Models
             Password = password;
         }
 
-        /// <summary>
-        /// The server URL for the container registry where the build will be hosted.
-        /// Serialized Name: GitHubActionContainerConfiguration.serverUrl
-        /// </summary>
+        /// <summary> The server URL for the container registry where the build will be hosted. </summary>
         public Uri ServerUri { get; set; }
-        /// <summary>
-        /// The image name for the build.
-        /// Serialized Name: GitHubActionContainerConfiguration.imageName
-        /// </summary>
+        /// <summary> The image name for the build. </summary>
         public string ImageName { get; set; }
-        /// <summary>
-        /// The username used to upload the image to the container registry.
-        /// Serialized Name: GitHubActionContainerConfiguration.username
-        /// </summary>
+        /// <summary> The username used to upload the image to the container registry. </summary>
         public string Username { get; set; }
-        /// <summary>
-        /// The password used to upload the image to the container registry.
-        /// Serialized Name: GitHubActionContainerConfiguration.password
-        /// </summary>
+        /// <summary> The password used to upload the image to the container registry. </summary>
         public string Password { get; set; }
     }
 }

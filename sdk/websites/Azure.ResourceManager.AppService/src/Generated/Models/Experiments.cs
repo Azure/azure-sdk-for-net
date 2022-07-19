@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Routing rules in production experiments.
-    /// Serialized Name: Experiments
-    /// </summary>
+    /// <summary> Routing rules in production experiments. </summary>
     internal partial class Experiments
     {
         /// <summary> Initializes a new instance of Experiments. </summary>
@@ -23,19 +20,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of Experiments. </summary>
-        /// <param name="rampUpRules">
-        /// List of ramp-up rules.
-        /// Serialized Name: Experiments.rampUpRules
-        /// </param>
+        /// <param name="rampUpRules"> List of ramp-up rules. </param>
         internal Experiments(IList<RampUpRule> rampUpRules)
         {
             RampUpRules = rampUpRules;
         }
 
-        /// <summary>
-        /// List of ramp-up rules.
-        /// Serialized Name: Experiments.rampUpRules
-        /// </summary>
+        /// <summary> List of ramp-up rules. </summary>
         public IList<RampUpRule> RampUpRules { get; }
     }
 }

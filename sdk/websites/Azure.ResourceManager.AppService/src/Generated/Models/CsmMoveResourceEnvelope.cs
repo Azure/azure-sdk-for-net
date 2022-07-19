@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Object with a list of the resources that need to be moved and the resource group they should be moved to.
-    /// Serialized Name: CsmMoveResourceEnvelope
-    /// </summary>
+    /// <summary> Object with a list of the resources that need to be moved and the resource group they should be moved to. </summary>
     public partial class CsmMoveResourceEnvelope
     {
         /// <summary> Initializes a new instance of CsmMoveResourceEnvelope. </summary>
@@ -22,9 +19,9 @@ namespace Azure.ResourceManager.AppService.Models
             Resources = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Serialized Name: CsmMoveResourceEnvelope.targetResourceGroup. </summary>
+        /// <summary> Gets or sets the target resource group. </summary>
         public string TargetResourceGroup { get; set; }
-        /// <summary> Serialized Name: CsmMoveResourceEnvelope.resources. </summary>
+        /// <summary> Gets the resources. </summary>
         public IList<string> Resources { get; }
     }
 }

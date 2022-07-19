@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// IP security restriction on an app.
-    /// Serialized Name: IpSecurityRestriction
-    /// </summary>
+    /// <summary> IP security restriction on an app. </summary>
     public partial class IPSecurityRestriction
     {
         /// <summary> Initializes a new instance of IPSecurityRestriction. </summary>
@@ -28,44 +25,16 @@ namespace Azure.ResourceManager.AppService.Models
         /// It can be in form of pure ipv4 address (required SubnetMask property) or
         /// CIDR notation such as ipv4/mask (leading bit match). For CIDR,
         /// SubnetMask property must not be specified.
-        /// Serialized Name: IpSecurityRestriction.ipAddress
         /// </param>
-        /// <param name="subnetMask">
-        /// Subnet mask for the range of IP addresses the restriction is valid for.
-        /// Serialized Name: IpSecurityRestriction.subnetMask
-        /// </param>
-        /// <param name="vnetSubnetResourceId">
-        /// Virtual network resource id
-        /// Serialized Name: IpSecurityRestriction.vnetSubnetResourceId
-        /// </param>
-        /// <param name="vnetTrafficTag">
-        /// (internal) Vnet traffic tag
-        /// Serialized Name: IpSecurityRestriction.vnetTrafficTag
-        /// </param>
-        /// <param name="subnetTrafficTag">
-        /// (internal) Subnet traffic tag
-        /// Serialized Name: IpSecurityRestriction.subnetTrafficTag
-        /// </param>
-        /// <param name="action">
-        /// Allow or Deny access for this IP range.
-        /// Serialized Name: IpSecurityRestriction.action
-        /// </param>
-        /// <param name="tag">
-        /// Defines what this IP filter will be used for. This is to support IP filtering on proxies.
-        /// Serialized Name: IpSecurityRestriction.tag
-        /// </param>
-        /// <param name="priority">
-        /// Priority of IP restriction rule.
-        /// Serialized Name: IpSecurityRestriction.priority
-        /// </param>
-        /// <param name="name">
-        /// IP restriction rule name.
-        /// Serialized Name: IpSecurityRestriction.name
-        /// </param>
-        /// <param name="description">
-        /// IP restriction rule description.
-        /// Serialized Name: IpSecurityRestriction.description
-        /// </param>
+        /// <param name="subnetMask"> Subnet mask for the range of IP addresses the restriction is valid for. </param>
+        /// <param name="vnetSubnetResourceId"> Virtual network resource id. </param>
+        /// <param name="vnetTrafficTag"> (internal) Vnet traffic tag. </param>
+        /// <param name="subnetTrafficTag"> (internal) Subnet traffic tag. </param>
+        /// <param name="action"> Allow or Deny access for this IP range. </param>
+        /// <param name="tag"> Defines what this IP filter will be used for. This is to support IP filtering on proxies. </param>
+        /// <param name="priority"> Priority of IP restriction rule. </param>
+        /// <param name="name"> IP restriction rule name. </param>
+        /// <param name="description"> IP restriction rule description. </param>
         /// <param name="headers">
         /// IP restriction rule headers.
         /// X-Forwarded-Host (https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-Host#Examples). 
@@ -83,7 +52,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// 
         /// X-Azure-FDID and X-FD-HealthProbe.
         /// The matching logic is exact match.
-        /// Serialized Name: IpSecurityRestriction.headers
         /// </param>
         internal IPSecurityRestriction(string ipAddress, string subnetMask, string vnetSubnetResourceId, int? vnetTrafficTag, int? subnetTrafficTag, string action, IPFilterTag? tag, int? priority, string name, string description, IDictionary<string, IList<string>> headers)
         {
@@ -105,53 +73,25 @@ namespace Azure.ResourceManager.AppService.Models
         /// It can be in form of pure ipv4 address (required SubnetMask property) or
         /// CIDR notation such as ipv4/mask (leading bit match). For CIDR,
         /// SubnetMask property must not be specified.
-        /// Serialized Name: IpSecurityRestriction.ipAddress
         /// </summary>
         public string IPAddress { get; set; }
-        /// <summary>
-        /// Subnet mask for the range of IP addresses the restriction is valid for.
-        /// Serialized Name: IpSecurityRestriction.subnetMask
-        /// </summary>
+        /// <summary> Subnet mask for the range of IP addresses the restriction is valid for. </summary>
         public string SubnetMask { get; set; }
-        /// <summary>
-        /// Virtual network resource id
-        /// Serialized Name: IpSecurityRestriction.vnetSubnetResourceId
-        /// </summary>
+        /// <summary> Virtual network resource id. </summary>
         public string VnetSubnetResourceId { get; set; }
-        /// <summary>
-        /// (internal) Vnet traffic tag
-        /// Serialized Name: IpSecurityRestriction.vnetTrafficTag
-        /// </summary>
+        /// <summary> (internal) Vnet traffic tag. </summary>
         public int? VnetTrafficTag { get; set; }
-        /// <summary>
-        /// (internal) Subnet traffic tag
-        /// Serialized Name: IpSecurityRestriction.subnetTrafficTag
-        /// </summary>
+        /// <summary> (internal) Subnet traffic tag. </summary>
         public int? SubnetTrafficTag { get; set; }
-        /// <summary>
-        /// Allow or Deny access for this IP range.
-        /// Serialized Name: IpSecurityRestriction.action
-        /// </summary>
+        /// <summary> Allow or Deny access for this IP range. </summary>
         public string Action { get; set; }
-        /// <summary>
-        /// Defines what this IP filter will be used for. This is to support IP filtering on proxies.
-        /// Serialized Name: IpSecurityRestriction.tag
-        /// </summary>
+        /// <summary> Defines what this IP filter will be used for. This is to support IP filtering on proxies. </summary>
         public IPFilterTag? Tag { get; set; }
-        /// <summary>
-        /// Priority of IP restriction rule.
-        /// Serialized Name: IpSecurityRestriction.priority
-        /// </summary>
+        /// <summary> Priority of IP restriction rule. </summary>
         public int? Priority { get; set; }
-        /// <summary>
-        /// IP restriction rule name.
-        /// Serialized Name: IpSecurityRestriction.name
-        /// </summary>
+        /// <summary> IP restriction rule name. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// IP restriction rule description.
-        /// Serialized Name: IpSecurityRestriction.description
-        /// </summary>
+        /// <summary> IP restriction rule description. </summary>
         public string Description { get; set; }
         /// <summary>
         /// IP restriction rule headers.
@@ -170,7 +110,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// 
         /// X-Azure-FDID and X-FD-HealthProbe.
         /// The matching logic is exact match.
-        /// Serialized Name: IpSecurityRestriction.headers
         /// </summary>
         public IDictionary<string, IList<string>> Headers { get; }
     }

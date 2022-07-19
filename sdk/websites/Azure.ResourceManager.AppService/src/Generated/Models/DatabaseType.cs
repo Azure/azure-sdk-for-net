@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Database type (e.g. SqlAzure / MySql).
-    /// Serialized Name: DatabaseType
-    /// </summary>
+    /// <summary> Database type (e.g. SqlAzure / MySql). </summary>
     public readonly partial struct DatabaseType : IEquatable<DatabaseType>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.AppService.Models
         private const string LocalMySqlValue = "LocalMySql";
         private const string PostgreSqlValue = "PostgreSql";
 
-        /// <summary>
-        /// SqlAzure
-        /// Serialized Name: DatabaseType.SqlAzure
-        /// </summary>
+        /// <summary> SqlAzure. </summary>
         public static DatabaseType SqlAzure { get; } = new DatabaseType(SqlAzureValue);
-        /// <summary>
-        /// MySql
-        /// Serialized Name: DatabaseType.MySql
-        /// </summary>
+        /// <summary> MySql. </summary>
         public static DatabaseType MySql { get; } = new DatabaseType(MySqlValue);
-        /// <summary>
-        /// LocalMySql
-        /// Serialized Name: DatabaseType.LocalMySql
-        /// </summary>
+        /// <summary> LocalMySql. </summary>
         public static DatabaseType LocalMySql { get; } = new DatabaseType(LocalMySqlValue);
-        /// <summary>
-        /// PostgreSql
-        /// Serialized Name: DatabaseType.PostgreSql
-        /// </summary>
+        /// <summary> PostgreSql. </summary>
         public static DatabaseType PostgreSql { get; } = new DatabaseType(PostgreSqlValue);
         /// <summary> Determines if two <see cref="DatabaseType"/> values are the same. </summary>
         public static bool operator ==(DatabaseType left, DatabaseType right) => left.Equals(right);

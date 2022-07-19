@@ -27,31 +27,13 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="state"> Serialized Name: WebSiteInstanceStatus.properties.state. </param>
-        /// <param name="statusUri">
-        /// Link to the GetStatusApi in Kudu
-        /// Serialized Name: WebSiteInstanceStatus.properties.statusUrl
-        /// </param>
-        /// <param name="detectorUri">
-        /// Link to the Diagnose and Solve Portal
-        /// Serialized Name: WebSiteInstanceStatus.properties.detectorUrl
-        /// </param>
-        /// <param name="consoleUri">
-        /// Link to the console to web app instance
-        /// Serialized Name: WebSiteInstanceStatus.properties.consoleUrl
-        /// </param>
-        /// <param name="healthCheckUri">
-        /// Link to the console to web app instance
-        /// Serialized Name: WebSiteInstanceStatus.properties.healthCheckUrl
-        /// </param>
-        /// <param name="containers">
-        /// Dictionary of &lt;ContainerInfo&gt;
-        /// Serialized Name: WebSiteInstanceStatus.properties.containers
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="state"></param>
+        /// <param name="statusUri"> Link to the GetStatusApi in Kudu. </param>
+        /// <param name="detectorUri"> Link to the Diagnose and Solve Portal. </param>
+        /// <param name="consoleUri"> Link to the console to web app instance. </param>
+        /// <param name="healthCheckUri"> Link to the console to web app instance. </param>
+        /// <param name="containers"> Dictionary of &lt;ContainerInfo&gt;. </param>
+        /// <param name="kind"> Kind of resource. </param>
         internal WebSiteInstanceStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SiteRuntimeState? state, Uri statusUri, Uri detectorUri, Uri consoleUri, Uri healthCheckUri, IDictionary<string, ContainerInfo> containers, string kind) : base(id, name, resourceType, systemData)
         {
             State = state;
@@ -63,37 +45,19 @@ namespace Azure.ResourceManager.AppService
             Kind = kind;
         }
 
-        /// <summary> Serialized Name: WebSiteInstanceStatus.properties.state. </summary>
+        /// <summary> Gets or sets the state. </summary>
         public SiteRuntimeState? State { get; set; }
-        /// <summary>
-        /// Link to the GetStatusApi in Kudu
-        /// Serialized Name: WebSiteInstanceStatus.properties.statusUrl
-        /// </summary>
+        /// <summary> Link to the GetStatusApi in Kudu. </summary>
         public Uri StatusUri { get; set; }
-        /// <summary>
-        /// Link to the Diagnose and Solve Portal
-        /// Serialized Name: WebSiteInstanceStatus.properties.detectorUrl
-        /// </summary>
+        /// <summary> Link to the Diagnose and Solve Portal. </summary>
         public Uri DetectorUri { get; set; }
-        /// <summary>
-        /// Link to the console to web app instance
-        /// Serialized Name: WebSiteInstanceStatus.properties.consoleUrl
-        /// </summary>
+        /// <summary> Link to the console to web app instance. </summary>
         public Uri ConsoleUri { get; set; }
-        /// <summary>
-        /// Link to the console to web app instance
-        /// Serialized Name: WebSiteInstanceStatus.properties.healthCheckUrl
-        /// </summary>
+        /// <summary> Link to the console to web app instance. </summary>
         public Uri HealthCheckUri { get; set; }
-        /// <summary>
-        /// Dictionary of &lt;ContainerInfo&gt;
-        /// Serialized Name: WebSiteInstanceStatus.properties.containers
-        /// </summary>
+        /// <summary> Dictionary of &lt;ContainerInfo&gt;. </summary>
         public IDictionary<string, ContainerInfo> Containers { get; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }
 }

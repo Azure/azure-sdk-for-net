@@ -11,10 +11,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Usage of the quota resource.
-    /// Serialized Name: Usage
-    /// </summary>
+    /// <summary> Usage of the quota resource. </summary>
     public partial class AppServiceUsage : ResourceData
     {
         /// <summary> Initializes a new instance of AppServiceUsage. </summary>
@@ -27,42 +24,15 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName">
-        /// Friendly name shown in the UI.
-        /// Serialized Name: Usage.properties.displayName
-        /// </param>
-        /// <param name="resourceName">
-        /// Name of the quota resource.
-        /// Serialized Name: Usage.properties.resourceName
-        /// </param>
-        /// <param name="unit">
-        /// Units of measurement for the quota resource.
-        /// Serialized Name: Usage.properties.unit
-        /// </param>
-        /// <param name="currentValue">
-        /// The current value of the resource counter.
-        /// Serialized Name: Usage.properties.currentValue
-        /// </param>
-        /// <param name="limit">
-        /// The resource limit.
-        /// Serialized Name: Usage.properties.limit
-        /// </param>
-        /// <param name="nextResetOn">
-        /// Next reset time for the resource counter.
-        /// Serialized Name: Usage.properties.nextResetTime
-        /// </param>
-        /// <param name="computeMode">
-        /// Compute mode used for this usage.
-        /// Serialized Name: Usage.properties.computeMode
-        /// </param>
-        /// <param name="siteMode">
-        /// Site mode used for this usage.
-        /// Serialized Name: Usage.properties.siteMode
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="displayName"> Friendly name shown in the UI. </param>
+        /// <param name="resourceName"> Name of the quota resource. </param>
+        /// <param name="unit"> Units of measurement for the quota resource. </param>
+        /// <param name="currentValue"> The current value of the resource counter. </param>
+        /// <param name="limit"> The resource limit. </param>
+        /// <param name="nextResetOn"> Next reset time for the resource counter. </param>
+        /// <param name="computeMode"> Compute mode used for this usage. </param>
+        /// <param name="siteMode"> Site mode used for this usage. </param>
+        /// <param name="kind"> Kind of resource. </param>
         internal AppServiceUsage(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string resourceName, string unit, long? currentValue, long? limit, DateTimeOffset? nextResetOn, ComputeModeOption? computeMode, string siteMode, string kind) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
@@ -76,50 +46,23 @@ namespace Azure.ResourceManager.AppService.Models
             Kind = kind;
         }
 
-        /// <summary>
-        /// Friendly name shown in the UI.
-        /// Serialized Name: Usage.properties.displayName
-        /// </summary>
+        /// <summary> Friendly name shown in the UI. </summary>
         public string DisplayName { get; }
-        /// <summary>
-        /// Name of the quota resource.
-        /// Serialized Name: Usage.properties.resourceName
-        /// </summary>
+        /// <summary> Name of the quota resource. </summary>
         public string ResourceName { get; }
-        /// <summary>
-        /// Units of measurement for the quota resource.
-        /// Serialized Name: Usage.properties.unit
-        /// </summary>
+        /// <summary> Units of measurement for the quota resource. </summary>
         public string Unit { get; }
-        /// <summary>
-        /// The current value of the resource counter.
-        /// Serialized Name: Usage.properties.currentValue
-        /// </summary>
+        /// <summary> The current value of the resource counter. </summary>
         public long? CurrentValue { get; }
-        /// <summary>
-        /// The resource limit.
-        /// Serialized Name: Usage.properties.limit
-        /// </summary>
+        /// <summary> The resource limit. </summary>
         public long? Limit { get; }
-        /// <summary>
-        /// Next reset time for the resource counter.
-        /// Serialized Name: Usage.properties.nextResetTime
-        /// </summary>
+        /// <summary> Next reset time for the resource counter. </summary>
         public DateTimeOffset? NextResetOn { get; }
-        /// <summary>
-        /// Compute mode used for this usage.
-        /// Serialized Name: Usage.properties.computeMode
-        /// </summary>
+        /// <summary> Compute mode used for this usage. </summary>
         public ComputeModeOption? ComputeMode { get; }
-        /// <summary>
-        /// Site mode used for this usage.
-        /// Serialized Name: Usage.properties.siteMode
-        /// </summary>
+        /// <summary> Site mode used for this usage. </summary>
         public string SiteMode { get; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }
 }

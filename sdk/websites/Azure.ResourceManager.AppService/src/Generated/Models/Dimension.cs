@@ -10,7 +10,6 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary>
     /// Dimension of a resource metric. For e.g. instance specific HTTP requests for a web app, 
     /// where instance name is dimension of the metric HTTP request
-    /// Serialized Name: Dimension
     /// </summary>
     public partial class Dimension
     {
@@ -20,10 +19,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of Dimension. </summary>
-        /// <param name="name"> Serialized Name: Dimension.name. </param>
-        /// <param name="displayName"> Serialized Name: Dimension.displayName. </param>
-        /// <param name="internalName"> Serialized Name: Dimension.internalName. </param>
-        /// <param name="isToBeExportedForShoebox"> Serialized Name: Dimension.toBeExportedForShoebox. </param>
+        /// <param name="name"></param>
+        /// <param name="displayName"></param>
+        /// <param name="internalName"></param>
+        /// <param name="isToBeExportedForShoebox"></param>
         internal Dimension(string name, string displayName, string internalName, bool? isToBeExportedForShoebox)
         {
             Name = name;
@@ -32,13 +31,13 @@ namespace Azure.ResourceManager.AppService.Models
             IsToBeExportedForShoebox = isToBeExportedForShoebox;
         }
 
-        /// <summary> Serialized Name: Dimension.name. </summary>
+        /// <summary> Gets the name. </summary>
         public string Name { get; }
-        /// <summary> Serialized Name: Dimension.displayName. </summary>
+        /// <summary> Gets the display name. </summary>
         public string DisplayName { get; }
-        /// <summary> Serialized Name: Dimension.internalName. </summary>
+        /// <summary> Gets the internal name. </summary>
         public string InternalName { get; }
-        /// <summary> Serialized Name: Dimension.toBeExportedForShoebox. </summary>
+        /// <summary> Gets the is to be exported for shoebox. </summary>
         public bool? IsToBeExportedForShoebox { get; }
     }
 }

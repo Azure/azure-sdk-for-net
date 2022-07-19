@@ -25,27 +25,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="domainName">
-        /// The domain name for the static site custom domain.
-        /// Serialized Name: StaticSiteCustomDomainOverviewARMResource.properties.domainName
-        /// </param>
-        /// <param name="createdOn">
-        /// The date and time on which the custom domain was created for the static site.
-        /// Serialized Name: StaticSiteCustomDomainOverviewARMResource.properties.createdOn
-        /// </param>
-        /// <param name="status">
-        /// The status of the custom domain
-        /// Serialized Name: StaticSiteCustomDomainOverviewARMResource.properties.status
-        /// </param>
-        /// <param name="validationToken">
-        /// The TXT record validation token
-        /// Serialized Name: StaticSiteCustomDomainOverviewARMResource.properties.validationToken
-        /// </param>
-        /// <param name="errorMessage"> Serialized Name: StaticSiteCustomDomainOverviewARMResource.properties.errorMessage. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="domainName"> The domain name for the static site custom domain. </param>
+        /// <param name="createdOn"> The date and time on which the custom domain was created for the static site. </param>
+        /// <param name="status"> The status of the custom domain. </param>
+        /// <param name="validationToken"> The TXT record validation token. </param>
+        /// <param name="errorMessage"></param>
+        /// <param name="kind"> Kind of resource. </param>
         internal StaticSiteCustomDomainOverviewARMData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string domainName, DateTimeOffset? createdOn, CustomDomainStatus? status, string validationToken, string errorMessage, string kind) : base(id, name, resourceType, systemData)
         {
             DomainName = domainName;
@@ -56,32 +41,17 @@ namespace Azure.ResourceManager.AppService
             Kind = kind;
         }
 
-        /// <summary>
-        /// The domain name for the static site custom domain.
-        /// Serialized Name: StaticSiteCustomDomainOverviewARMResource.properties.domainName
-        /// </summary>
+        /// <summary> The domain name for the static site custom domain. </summary>
         public string DomainName { get; }
-        /// <summary>
-        /// The date and time on which the custom domain was created for the static site.
-        /// Serialized Name: StaticSiteCustomDomainOverviewARMResource.properties.createdOn
-        /// </summary>
+        /// <summary> The date and time on which the custom domain was created for the static site. </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// The status of the custom domain
-        /// Serialized Name: StaticSiteCustomDomainOverviewARMResource.properties.status
-        /// </summary>
+        /// <summary> The status of the custom domain. </summary>
         public CustomDomainStatus? Status { get; }
-        /// <summary>
-        /// The TXT record validation token
-        /// Serialized Name: StaticSiteCustomDomainOverviewARMResource.properties.validationToken
-        /// </summary>
+        /// <summary> The TXT record validation token. </summary>
         public string ValidationToken { get; }
-        /// <summary> Serialized Name: StaticSiteCustomDomainOverviewARMResource.properties.errorMessage. </summary>
+        /// <summary> Gets the error message. </summary>
         public string ErrorMessage { get; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }
 }

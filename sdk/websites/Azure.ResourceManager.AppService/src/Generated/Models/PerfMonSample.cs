@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Performance monitor sample in a set.
-    /// Serialized Name: PerfMonSample
-    /// </summary>
+    /// <summary> Performance monitor sample in a set. </summary>
     public partial class PerfMonSample
     {
         /// <summary> Initializes a new instance of PerfMonSample. </summary>
@@ -21,18 +18,9 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of PerfMonSample. </summary>
-        /// <param name="measuredCounterOn">
-        /// Point in time for which counter was measured.
-        /// Serialized Name: PerfMonSample.time
-        /// </param>
-        /// <param name="instanceName">
-        /// Name of the server on which the measurement is made.
-        /// Serialized Name: PerfMonSample.instanceName
-        /// </param>
-        /// <param name="value">
-        /// Value of counter at a certain time.
-        /// Serialized Name: PerfMonSample.value
-        /// </param>
+        /// <param name="measuredCounterOn"> Point in time for which counter was measured. </param>
+        /// <param name="instanceName"> Name of the server on which the measurement is made. </param>
+        /// <param name="value"> Value of counter at a certain time. </param>
         internal PerfMonSample(DateTimeOffset? measuredCounterOn, string instanceName, double? value)
         {
             MeasuredCounterOn = measuredCounterOn;
@@ -40,20 +28,11 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value;
         }
 
-        /// <summary>
-        /// Point in time for which counter was measured.
-        /// Serialized Name: PerfMonSample.time
-        /// </summary>
+        /// <summary> Point in time for which counter was measured. </summary>
         public DateTimeOffset? MeasuredCounterOn { get; }
-        /// <summary>
-        /// Name of the server on which the measurement is made.
-        /// Serialized Name: PerfMonSample.instanceName
-        /// </summary>
+        /// <summary> Name of the server on which the measurement is made. </summary>
         public string InstanceName { get; }
-        /// <summary>
-        /// Value of counter at a certain time.
-        /// Serialized Name: PerfMonSample.value
-        /// </summary>
+        /// <summary> Value of counter at a certain time. </summary>
         public double? Value { get; }
     }
 }

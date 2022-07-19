@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Data Table which defines columns and raw row values
-    /// Serialized Name: DataTableResponseObject
-    /// </summary>
+    /// <summary> Data Table which defines columns and raw row values. </summary>
     public partial class DataTableResponseObject
     {
         /// <summary> Initializes a new instance of DataTableResponseObject. </summary>
@@ -24,18 +21,9 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of DataTableResponseObject. </summary>
-        /// <param name="tableName">
-        /// Name of the table
-        /// Serialized Name: DataTableResponseObject.tableName
-        /// </param>
-        /// <param name="columns">
-        /// List of columns with data types
-        /// Serialized Name: DataTableResponseObject.columns
-        /// </param>
-        /// <param name="rows">
-        /// Raw row values
-        /// Serialized Name: DataTableResponseObject.rows
-        /// </param>
+        /// <param name="tableName"> Name of the table. </param>
+        /// <param name="columns"> List of columns with data types. </param>
+        /// <param name="rows"> Raw row values. </param>
         internal DataTableResponseObject(string tableName, IList<DataTableResponseColumn> columns, IList<IList<string>> rows)
         {
             TableName = tableName;
@@ -43,20 +31,11 @@ namespace Azure.ResourceManager.AppService.Models
             Rows = rows;
         }
 
-        /// <summary>
-        /// Name of the table
-        /// Serialized Name: DataTableResponseObject.tableName
-        /// </summary>
+        /// <summary> Name of the table. </summary>
         public string TableName { get; set; }
-        /// <summary>
-        /// List of columns with data types
-        /// Serialized Name: DataTableResponseObject.columns
-        /// </summary>
+        /// <summary> List of columns with data types. </summary>
         public IList<DataTableResponseColumn> Columns { get; }
-        /// <summary>
-        /// Raw row values
-        /// Serialized Name: DataTableResponseObject.rows
-        /// </summary>
+        /// <summary> Raw row values. </summary>
         public IList<IList<string>> Rows { get; }
     }
 }

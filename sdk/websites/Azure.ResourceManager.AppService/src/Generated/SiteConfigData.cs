@@ -34,283 +34,87 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="numberOfWorkers">
-        /// Number of workers.
-        /// Serialized Name: SiteConfig.properties.numberOfWorkers
-        /// </param>
-        /// <param name="defaultDocuments">
-        /// Default documents.
-        /// Serialized Name: SiteConfig.properties.defaultDocuments
-        /// </param>
-        /// <param name="netFrameworkVersion">
-        /// .NET Framework version.
-        /// Serialized Name: SiteConfig.properties.netFrameworkVersion
-        /// </param>
-        /// <param name="phpVersion">
-        /// Version of PHP.
-        /// Serialized Name: SiteConfig.properties.phpVersion
-        /// </param>
-        /// <param name="pythonVersion">
-        /// Version of Python.
-        /// Serialized Name: SiteConfig.properties.pythonVersion
-        /// </param>
-        /// <param name="nodeVersion">
-        /// Version of Node.js.
-        /// Serialized Name: SiteConfig.properties.nodeVersion
-        /// </param>
-        /// <param name="powerShellVersion">
-        /// Version of PowerShell.
-        /// Serialized Name: SiteConfig.properties.powerShellVersion
-        /// </param>
-        /// <param name="linuxFxVersion">
-        /// Linux App Framework and version
-        /// Serialized Name: SiteConfig.properties.linuxFxVersion
-        /// </param>
-        /// <param name="windowsFxVersion">
-        /// Xenon App Framework and version
-        /// Serialized Name: SiteConfig.properties.windowsFxVersion
-        /// </param>
-        /// <param name="isRequestTracingEnabled">
-        /// &lt;code&gt;true&lt;/code&gt; if request tracing is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: SiteConfig.properties.requestTracingEnabled
-        /// </param>
-        /// <param name="requestTracingExpirationOn">
-        /// Request tracing expiration time.
-        /// Serialized Name: SiteConfig.properties.requestTracingExpirationTime
-        /// </param>
-        /// <param name="isRemoteDebuggingEnabled">
-        /// &lt;code&gt;true&lt;/code&gt; if remote debugging is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: SiteConfig.properties.remoteDebuggingEnabled
-        /// </param>
-        /// <param name="remoteDebuggingVersion">
-        /// Remote debugging version.
-        /// Serialized Name: SiteConfig.properties.remoteDebuggingVersion
-        /// </param>
-        /// <param name="httpLoggingEnabled">
-        /// &lt;code&gt;true&lt;/code&gt; if HTTP logging is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: SiteConfig.properties.httpLoggingEnabled
-        /// </param>
-        /// <param name="hasAcrUseManagedIdentityCreds">
-        /// Flag to use Managed Identity Creds for ACR pull
-        /// Serialized Name: SiteConfig.properties.acrUseManagedIdentityCreds
-        /// </param>
-        /// <param name="acrUserManagedIdentityId">
-        /// If using user managed identity, the user managed identity ClientId
-        /// Serialized Name: SiteConfig.properties.acrUserManagedIdentityID
-        /// </param>
-        /// <param name="logsDirectorySizeLimit">
-        /// HTTP logs directory size limit.
-        /// Serialized Name: SiteConfig.properties.logsDirectorySizeLimit
-        /// </param>
-        /// <param name="isDetailedErrorLogginEnabled">
-        /// &lt;code&gt;true&lt;/code&gt; if detailed error logging is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: SiteConfig.properties.detailedErrorLoggingEnabled
-        /// </param>
-        /// <param name="publishingUsername">
-        /// Publishing user name.
-        /// Serialized Name: SiteConfig.properties.publishingUsername
-        /// </param>
-        /// <param name="appSettings">
-        /// Application settings.
-        /// Serialized Name: SiteConfig.properties.appSettings
-        /// </param>
-        /// <param name="connectionStrings">
-        /// Connection strings.
-        /// Serialized Name: SiteConfig.properties.connectionStrings
-        /// </param>
-        /// <param name="machineKey">
-        /// Site MachineKey.
-        /// Serialized Name: SiteConfig.properties.machineKey
-        /// </param>
-        /// <param name="handlerMappings">
-        /// Handler mappings.
-        /// Serialized Name: SiteConfig.properties.handlerMappings
-        /// </param>
-        /// <param name="documentRoot">
-        /// Document root.
-        /// Serialized Name: SiteConfig.properties.documentRoot
-        /// </param>
-        /// <param name="scmType">
-        /// SCM type.
-        /// Serialized Name: SiteConfig.properties.scmType
-        /// </param>
-        /// <param name="use32BitWorkerProcess">
-        /// &lt;code&gt;true&lt;/code&gt; to use 32-bit worker process; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: SiteConfig.properties.use32BitWorkerProcess
-        /// </param>
-        /// <param name="isWebSocketsEnabled">
-        /// &lt;code&gt;true&lt;/code&gt; if WebSocket is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: SiteConfig.properties.webSocketsEnabled
-        /// </param>
-        /// <param name="isAlwaysOn">
-        /// &lt;code&gt;true&lt;/code&gt; if Always On is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: SiteConfig.properties.alwaysOn
-        /// </param>
-        /// <param name="javaVersion">
-        /// Java version.
-        /// Serialized Name: SiteConfig.properties.javaVersion
-        /// </param>
-        /// <param name="javaContainer">
-        /// Java container.
-        /// Serialized Name: SiteConfig.properties.javaContainer
-        /// </param>
-        /// <param name="javaContainerVersion">
-        /// Java container version.
-        /// Serialized Name: SiteConfig.properties.javaContainerVersion
-        /// </param>
-        /// <param name="appCommandLine">
-        /// App command line to launch.
-        /// Serialized Name: SiteConfig.properties.appCommandLine
-        /// </param>
-        /// <param name="managedPipelineMode">
-        /// Managed pipeline mode.
-        /// Serialized Name: SiteConfig.properties.managedPipelineMode
-        /// </param>
-        /// <param name="virtualApplications">
-        /// Virtual applications.
-        /// Serialized Name: SiteConfig.properties.virtualApplications
-        /// </param>
-        /// <param name="loadBalancing">
-        /// Site load balancing.
-        /// Serialized Name: SiteConfig.properties.loadBalancing
-        /// </param>
-        /// <param name="experiments">
-        /// This is work around for polymorphic types.
-        /// Serialized Name: SiteConfig.properties.experiments
-        /// </param>
-        /// <param name="limits">
-        /// Site limits.
-        /// Serialized Name: SiteConfig.properties.limits
-        /// </param>
-        /// <param name="isAutoHealEnabled">
-        /// &lt;code&gt;true&lt;/code&gt; if Auto Heal is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: SiteConfig.properties.autoHealEnabled
-        /// </param>
-        /// <param name="autoHealRules">
-        /// Auto Heal rules.
-        /// Serialized Name: SiteConfig.properties.autoHealRules
-        /// </param>
-        /// <param name="tracingOptions">
-        /// Tracing options.
-        /// Serialized Name: SiteConfig.properties.tracingOptions
-        /// </param>
-        /// <param name="vnetName">
-        /// Virtual Network name.
-        /// Serialized Name: SiteConfig.properties.vnetName
-        /// </param>
-        /// <param name="isVnetRouteAllEnabled">
-        /// Virtual Network Route All enabled. This causes all outbound traffic to have Virtual Network Security Groups and User Defined Routes applied.
-        /// Serialized Name: SiteConfig.properties.vnetRouteAllEnabled
-        /// </param>
-        /// <param name="vnetPrivatePortsCount">
-        /// The number of private ports assigned to this app. These will be assigned dynamically on runtime.
-        /// Serialized Name: SiteConfig.properties.vnetPrivatePortsCount
-        /// </param>
-        /// <param name="cors">
-        /// Cross-Origin Resource Sharing (CORS) settings.
-        /// Serialized Name: SiteConfig.properties.cors
-        /// </param>
-        /// <param name="push">
-        /// Push endpoint settings.
-        /// Serialized Name: SiteConfig.properties.push
-        /// </param>
-        /// <param name="apiDefinition">
-        /// Information about the formal API definition for the app.
-        /// Serialized Name: SiteConfig.properties.apiDefinition
-        /// </param>
-        /// <param name="apiManagementConfig">
-        /// Azure API management settings linked to the app.
-        /// Serialized Name: SiteConfig.properties.apiManagementConfig
-        /// </param>
-        /// <param name="autoSwapSlotName">
-        /// Auto-swap slot name.
-        /// Serialized Name: SiteConfig.properties.autoSwapSlotName
-        /// </param>
-        /// <param name="isLocalMySqlEnabled">
-        /// &lt;code&gt;true&lt;/code&gt; to enable local MySQL; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: SiteConfig.properties.localMySqlEnabled
-        /// </param>
-        /// <param name="managedServiceIdentityId">
-        /// Managed Service Identity Id
-        /// Serialized Name: SiteConfig.properties.managedServiceIdentityId
-        /// </param>
-        /// <param name="xManagedServiceIdentityId">
-        /// Explicit Managed Service Identity Id
-        /// Serialized Name: SiteConfig.properties.xManagedServiceIdentityId
-        /// </param>
-        /// <param name="keyVaultReferenceIdentity">
-        /// Identity to use for Key Vault Reference authentication.
-        /// Serialized Name: SiteConfig.properties.keyVaultReferenceIdentity
-        /// </param>
-        /// <param name="ipSecurityRestrictions">
-        /// IP security restrictions for main.
-        /// Serialized Name: SiteConfig.properties.ipSecurityRestrictions
-        /// </param>
-        /// <param name="scmIPSecurityRestrictions">
-        /// IP security restrictions for scm.
-        /// Serialized Name: SiteConfig.properties.scmIpSecurityRestrictions
-        /// </param>
-        /// <param name="scmIPSecurityRestrictionsUseMain">
-        /// IP security restrictions for scm to use main.
-        /// Serialized Name: SiteConfig.properties.scmIpSecurityRestrictionsUseMain
-        /// </param>
-        /// <param name="isHttpLoggingEnabled">
-        /// Http20Enabled: configures a web site to allow clients to connect over http2.0
-        /// Serialized Name: SiteConfig.properties.http20Enabled
-        /// </param>
-        /// <param name="minTlsVersion">
-        /// MinTlsVersion: configures the minimum version of TLS required for SSL requests
-        /// Serialized Name: SiteConfig.properties.minTlsVersion
-        /// </param>
-        /// <param name="scmMinTlsVersion">
-        /// ScmMinTlsVersion: configures the minimum version of TLS required for SSL requests for SCM site
-        /// Serialized Name: SiteConfig.properties.scmMinTlsVersion
-        /// </param>
-        /// <param name="ftpsState">
-        /// State of FTP / FTPS service
-        /// Serialized Name: SiteConfig.properties.ftpsState
-        /// </param>
+        /// <param name="numberOfWorkers"> Number of workers. </param>
+        /// <param name="defaultDocuments"> Default documents. </param>
+        /// <param name="netFrameworkVersion"> .NET Framework version. </param>
+        /// <param name="phpVersion"> Version of PHP. </param>
+        /// <param name="pythonVersion"> Version of Python. </param>
+        /// <param name="nodeVersion"> Version of Node.js. </param>
+        /// <param name="powerShellVersion"> Version of PowerShell. </param>
+        /// <param name="linuxFxVersion"> Linux App Framework and version. </param>
+        /// <param name="windowsFxVersion"> Xenon App Framework and version. </param>
+        /// <param name="isRequestTracingEnabled"> &lt;code&gt;true&lt;/code&gt; if request tracing is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="requestTracingExpirationOn"> Request tracing expiration time. </param>
+        /// <param name="isRemoteDebuggingEnabled"> &lt;code&gt;true&lt;/code&gt; if remote debugging is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="remoteDebuggingVersion"> Remote debugging version. </param>
+        /// <param name="httpLoggingEnabled"> &lt;code&gt;true&lt;/code&gt; if HTTP logging is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="hasAcrUseManagedIdentityCreds"> Flag to use Managed Identity Creds for ACR pull. </param>
+        /// <param name="acrUserManagedIdentityId"> If using user managed identity, the user managed identity ClientId. </param>
+        /// <param name="logsDirectorySizeLimit"> HTTP logs directory size limit. </param>
+        /// <param name="isDetailedErrorLogginEnabled"> &lt;code&gt;true&lt;/code&gt; if detailed error logging is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="publishingUsername"> Publishing user name. </param>
+        /// <param name="appSettings"> Application settings. </param>
+        /// <param name="connectionStrings"> Connection strings. </param>
+        /// <param name="machineKey"> Site MachineKey. </param>
+        /// <param name="handlerMappings"> Handler mappings. </param>
+        /// <param name="documentRoot"> Document root. </param>
+        /// <param name="scmType"> SCM type. </param>
+        /// <param name="use32BitWorkerProcess"> &lt;code&gt;true&lt;/code&gt; to use 32-bit worker process; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isWebSocketsEnabled"> &lt;code&gt;true&lt;/code&gt; if WebSocket is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isAlwaysOn"> &lt;code&gt;true&lt;/code&gt; if Always On is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="javaVersion"> Java version. </param>
+        /// <param name="javaContainer"> Java container. </param>
+        /// <param name="javaContainerVersion"> Java container version. </param>
+        /// <param name="appCommandLine"> App command line to launch. </param>
+        /// <param name="managedPipelineMode"> Managed pipeline mode. </param>
+        /// <param name="virtualApplications"> Virtual applications. </param>
+        /// <param name="loadBalancing"> Site load balancing. </param>
+        /// <param name="experiments"> This is work around for polymorphic types. </param>
+        /// <param name="limits"> Site limits. </param>
+        /// <param name="isAutoHealEnabled"> &lt;code&gt;true&lt;/code&gt; if Auto Heal is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="autoHealRules"> Auto Heal rules. </param>
+        /// <param name="tracingOptions"> Tracing options. </param>
+        /// <param name="vnetName"> Virtual Network name. </param>
+        /// <param name="isVnetRouteAllEnabled"> Virtual Network Route All enabled. This causes all outbound traffic to have Virtual Network Security Groups and User Defined Routes applied. </param>
+        /// <param name="vnetPrivatePortsCount"> The number of private ports assigned to this app. These will be assigned dynamically on runtime. </param>
+        /// <param name="cors"> Cross-Origin Resource Sharing (CORS) settings. </param>
+        /// <param name="push"> Push endpoint settings. </param>
+        /// <param name="apiDefinition"> Information about the formal API definition for the app. </param>
+        /// <param name="apiManagementConfig"> Azure API management settings linked to the app. </param>
+        /// <param name="autoSwapSlotName"> Auto-swap slot name. </param>
+        /// <param name="isLocalMySqlEnabled"> &lt;code&gt;true&lt;/code&gt; to enable local MySQL; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="managedServiceIdentityId"> Managed Service Identity Id. </param>
+        /// <param name="xManagedServiceIdentityId"> Explicit Managed Service Identity Id. </param>
+        /// <param name="keyVaultReferenceIdentity"> Identity to use for Key Vault Reference authentication. </param>
+        /// <param name="ipSecurityRestrictions"> IP security restrictions for main. </param>
+        /// <param name="scmIPSecurityRestrictions"> IP security restrictions for scm. </param>
+        /// <param name="scmIPSecurityRestrictionsUseMain"> IP security restrictions for scm to use main. </param>
+        /// <param name="isHttpLoggingEnabled"> Http20Enabled: configures a web site to allow clients to connect over http2.0. </param>
+        /// <param name="minTlsVersion"> MinTlsVersion: configures the minimum version of TLS required for SSL requests. </param>
+        /// <param name="scmMinTlsVersion"> ScmMinTlsVersion: configures the minimum version of TLS required for SSL requests for SCM site. </param>
+        /// <param name="ftpsState"> State of FTP / FTPS service. </param>
         /// <param name="preWarmedInstanceCount">
         /// Number of preWarmed instances.
         /// This setting only applies to the Consumption and Elastic Plans
-        /// Serialized Name: SiteConfig.properties.preWarmedInstanceCount
         /// </param>
         /// <param name="functionAppScaleLimit">
         /// Maximum number of workers that a site can scale out to.
         /// This setting only applies to the Consumption and Elastic Premium Plans
-        /// Serialized Name: SiteConfig.properties.functionAppScaleLimit
         /// </param>
-        /// <param name="healthCheckPath">
-        /// Health check path
-        /// Serialized Name: SiteConfig.properties.healthCheckPath
-        /// </param>
+        /// <param name="healthCheckPath"> Health check path. </param>
         /// <param name="isFunctionsRuntimeScaleMonitorEnabled">
         /// Gets or sets a value indicating whether functions runtime scale monitoring is enabled. When enabled,
         /// the ScaleController will not monitor event sources directly, but will instead call to the
         /// runtime to get scale status.
-        /// Serialized Name: SiteConfig.properties.functionsRuntimeScaleMonitoringEnabled
         /// </param>
-        /// <param name="websiteTimeZone">
-        /// Sets the time zone a site uses for generating timestamps. Compatible with Linux and Windows App Service. Setting the WEBSITE_TIME_ZONE app setting takes precedence over this config. For Linux, expects tz database values https://www.iana.org/time-zones (for a quick reference see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). For Windows, expects one of the time zones listed under HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Time Zones
-        /// Serialized Name: SiteConfig.properties.websiteTimeZone
-        /// </param>
+        /// <param name="websiteTimeZone"> Sets the time zone a site uses for generating timestamps. Compatible with Linux and Windows App Service. Setting the WEBSITE_TIME_ZONE app setting takes precedence over this config. For Linux, expects tz database values https://www.iana.org/time-zones (for a quick reference see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). For Windows, expects one of the time zones listed under HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Time Zones. </param>
         /// <param name="minimumElasticInstanceCount">
         /// Number of minimum instance count for a site
         /// This setting only applies to the Elastic Plans
-        /// Serialized Name: SiteConfig.properties.minimumElasticInstanceCount
         /// </param>
-        /// <param name="azureStorageAccounts">
-        /// List of Azure Storage Accounts.
-        /// Serialized Name: SiteConfig.properties.azureStorageAccounts
-        /// </param>
-        /// <param name="publicNetworkAccess">
-        /// Property to allow or block all public traffic.
-        /// Serialized Name: SiteConfig.properties.publicNetworkAccess
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="azureStorageAccounts"> List of Azure Storage Accounts. </param>
+        /// <param name="publicNetworkAccess"> Property to allow or block all public traffic. </param>
+        /// <param name="kind"> Kind of resource. </param>
         internal SiteConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? numberOfWorkers, IList<string> defaultDocuments, string netFrameworkVersion, string phpVersion, string pythonVersion, string nodeVersion, string powerShellVersion, string linuxFxVersion, string windowsFxVersion, bool? isRequestTracingEnabled, DateTimeOffset? requestTracingExpirationOn, bool? isRemoteDebuggingEnabled, string remoteDebuggingVersion, bool? httpLoggingEnabled, bool? hasAcrUseManagedIdentityCreds, string acrUserManagedIdentityId, int? logsDirectorySizeLimit, bool? isDetailedErrorLogginEnabled, string publishingUsername, IList<NameValuePair> appSettings, IList<ConnStringInfo> connectionStrings, SiteMachineKey machineKey, IList<HandlerMapping> handlerMappings, string documentRoot, ScmType? scmType, bool? use32BitWorkerProcess, bool? isWebSocketsEnabled, bool? isAlwaysOn, string javaVersion, string javaContainer, string javaContainerVersion, string appCommandLine, ManagedPipelineMode? managedPipelineMode, IList<VirtualApplication> virtualApplications, SiteLoadBalancing? loadBalancing, Experiments experiments, SiteLimits limits, bool? isAutoHealEnabled, AutoHealRules autoHealRules, string tracingOptions, string vnetName, bool? isVnetRouteAllEnabled, int? vnetPrivatePortsCount, CorsSettings cors, PushSettings push, ApiDefinitionInfo apiDefinition, ApiManagementConfig apiManagementConfig, string autoSwapSlotName, bool? isLocalMySqlEnabled, int? managedServiceIdentityId, int? xManagedServiceIdentityId, string keyVaultReferenceIdentity, IList<IPSecurityRestriction> ipSecurityRestrictions, IList<IPSecurityRestriction> scmIPSecurityRestrictions, bool? scmIPSecurityRestrictionsUseMain, bool? isHttpLoggingEnabled, SupportedTlsVersion? minTlsVersion, SupportedTlsVersion? scmMinTlsVersion, FtpsState? ftpsState, int? preWarmedInstanceCount, int? functionAppScaleLimit, string healthCheckPath, bool? isFunctionsRuntimeScaleMonitorEnabled, string websiteTimeZone, int? minimumElasticInstanceCount, IDictionary<string, AzureStorageInfoValue> azureStorageAccounts, string publicNetworkAccess, string kind) : base(id, name, resourceType, systemData)
         {
             NumberOfWorkers = numberOfWorkers;
@@ -383,190 +187,79 @@ namespace Azure.ResourceManager.AppService
             Kind = kind;
         }
 
-        /// <summary>
-        /// Number of workers.
-        /// Serialized Name: SiteConfig.properties.numberOfWorkers
-        /// </summary>
+        /// <summary> Number of workers. </summary>
         public int? NumberOfWorkers { get; set; }
-        /// <summary>
-        /// Default documents.
-        /// Serialized Name: SiteConfig.properties.defaultDocuments
-        /// </summary>
+        /// <summary> Default documents. </summary>
         public IList<string> DefaultDocuments { get; set; }
-        /// <summary>
-        /// .NET Framework version.
-        /// Serialized Name: SiteConfig.properties.netFrameworkVersion
-        /// </summary>
+        /// <summary> .NET Framework version. </summary>
         public string NetFrameworkVersion { get; set; }
-        /// <summary>
-        /// Version of PHP.
-        /// Serialized Name: SiteConfig.properties.phpVersion
-        /// </summary>
+        /// <summary> Version of PHP. </summary>
         public string PhpVersion { get; set; }
-        /// <summary>
-        /// Version of Python.
-        /// Serialized Name: SiteConfig.properties.pythonVersion
-        /// </summary>
+        /// <summary> Version of Python. </summary>
         public string PythonVersion { get; set; }
-        /// <summary>
-        /// Version of Node.js.
-        /// Serialized Name: SiteConfig.properties.nodeVersion
-        /// </summary>
+        /// <summary> Version of Node.js. </summary>
         public string NodeVersion { get; set; }
-        /// <summary>
-        /// Version of PowerShell.
-        /// Serialized Name: SiteConfig.properties.powerShellVersion
-        /// </summary>
+        /// <summary> Version of PowerShell. </summary>
         public string PowerShellVersion { get; set; }
-        /// <summary>
-        /// Linux App Framework and version
-        /// Serialized Name: SiteConfig.properties.linuxFxVersion
-        /// </summary>
+        /// <summary> Linux App Framework and version. </summary>
         public string LinuxFxVersion { get; set; }
-        /// <summary>
-        /// Xenon App Framework and version
-        /// Serialized Name: SiteConfig.properties.windowsFxVersion
-        /// </summary>
+        /// <summary> Xenon App Framework and version. </summary>
         public string WindowsFxVersion { get; set; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if request tracing is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: SiteConfig.properties.requestTracingEnabled
-        /// </summary>
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if request tracing is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? IsRequestTracingEnabled { get; set; }
-        /// <summary>
-        /// Request tracing expiration time.
-        /// Serialized Name: SiteConfig.properties.requestTracingExpirationTime
-        /// </summary>
+        /// <summary> Request tracing expiration time. </summary>
         public DateTimeOffset? RequestTracingExpirationOn { get; set; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if remote debugging is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: SiteConfig.properties.remoteDebuggingEnabled
-        /// </summary>
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if remote debugging is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? IsRemoteDebuggingEnabled { get; set; }
-        /// <summary>
-        /// Remote debugging version.
-        /// Serialized Name: SiteConfig.properties.remoteDebuggingVersion
-        /// </summary>
+        /// <summary> Remote debugging version. </summary>
         public string RemoteDebuggingVersion { get; set; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if HTTP logging is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: SiteConfig.properties.httpLoggingEnabled
-        /// </summary>
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if HTTP logging is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? HttpLoggingEnabled { get; set; }
-        /// <summary>
-        /// Flag to use Managed Identity Creds for ACR pull
-        /// Serialized Name: SiteConfig.properties.acrUseManagedIdentityCreds
-        /// </summary>
+        /// <summary> Flag to use Managed Identity Creds for ACR pull. </summary>
         public bool? HasAcrUseManagedIdentityCreds { get; set; }
-        /// <summary>
-        /// If using user managed identity, the user managed identity ClientId
-        /// Serialized Name: SiteConfig.properties.acrUserManagedIdentityID
-        /// </summary>
+        /// <summary> If using user managed identity, the user managed identity ClientId. </summary>
         public string AcrUserManagedIdentityId { get; set; }
-        /// <summary>
-        /// HTTP logs directory size limit.
-        /// Serialized Name: SiteConfig.properties.logsDirectorySizeLimit
-        /// </summary>
+        /// <summary> HTTP logs directory size limit. </summary>
         public int? LogsDirectorySizeLimit { get; set; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if detailed error logging is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: SiteConfig.properties.detailedErrorLoggingEnabled
-        /// </summary>
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if detailed error logging is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? IsDetailedErrorLogginEnabled { get; set; }
-        /// <summary>
-        /// Publishing user name.
-        /// Serialized Name: SiteConfig.properties.publishingUsername
-        /// </summary>
+        /// <summary> Publishing user name. </summary>
         public string PublishingUsername { get; set; }
-        /// <summary>
-        /// Application settings.
-        /// Serialized Name: SiteConfig.properties.appSettings
-        /// </summary>
+        /// <summary> Application settings. </summary>
         public IList<NameValuePair> AppSettings { get; set; }
-        /// <summary>
-        /// Connection strings.
-        /// Serialized Name: SiteConfig.properties.connectionStrings
-        /// </summary>
+        /// <summary> Connection strings. </summary>
         public IList<ConnStringInfo> ConnectionStrings { get; set; }
-        /// <summary>
-        /// Site MachineKey.
-        /// Serialized Name: SiteConfig.properties.machineKey
-        /// </summary>
+        /// <summary> Site MachineKey. </summary>
         public SiteMachineKey MachineKey { get; }
-        /// <summary>
-        /// Handler mappings.
-        /// Serialized Name: SiteConfig.properties.handlerMappings
-        /// </summary>
+        /// <summary> Handler mappings. </summary>
         public IList<HandlerMapping> HandlerMappings { get; set; }
-        /// <summary>
-        /// Document root.
-        /// Serialized Name: SiteConfig.properties.documentRoot
-        /// </summary>
+        /// <summary> Document root. </summary>
         public string DocumentRoot { get; set; }
-        /// <summary>
-        /// SCM type.
-        /// Serialized Name: SiteConfig.properties.scmType
-        /// </summary>
+        /// <summary> SCM type. </summary>
         public ScmType? ScmType { get; set; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; to use 32-bit worker process; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: SiteConfig.properties.use32BitWorkerProcess
-        /// </summary>
+        /// <summary> &lt;code&gt;true&lt;/code&gt; to use 32-bit worker process; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? Use32BitWorkerProcess { get; set; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if WebSocket is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: SiteConfig.properties.webSocketsEnabled
-        /// </summary>
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if WebSocket is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? IsWebSocketsEnabled { get; set; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if Always On is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: SiteConfig.properties.alwaysOn
-        /// </summary>
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if Always On is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? IsAlwaysOn { get; set; }
-        /// <summary>
-        /// Java version.
-        /// Serialized Name: SiteConfig.properties.javaVersion
-        /// </summary>
+        /// <summary> Java version. </summary>
         public string JavaVersion { get; set; }
-        /// <summary>
-        /// Java container.
-        /// Serialized Name: SiteConfig.properties.javaContainer
-        /// </summary>
+        /// <summary> Java container. </summary>
         public string JavaContainer { get; set; }
-        /// <summary>
-        /// Java container version.
-        /// Serialized Name: SiteConfig.properties.javaContainerVersion
-        /// </summary>
+        /// <summary> Java container version. </summary>
         public string JavaContainerVersion { get; set; }
-        /// <summary>
-        /// App command line to launch.
-        /// Serialized Name: SiteConfig.properties.appCommandLine
-        /// </summary>
+        /// <summary> App command line to launch. </summary>
         public string AppCommandLine { get; set; }
-        /// <summary>
-        /// Managed pipeline mode.
-        /// Serialized Name: SiteConfig.properties.managedPipelineMode
-        /// </summary>
+        /// <summary> Managed pipeline mode. </summary>
         public ManagedPipelineMode? ManagedPipelineMode { get; set; }
-        /// <summary>
-        /// Virtual applications.
-        /// Serialized Name: SiteConfig.properties.virtualApplications
-        /// </summary>
+        /// <summary> Virtual applications. </summary>
         public IList<VirtualApplication> VirtualApplications { get; set; }
-        /// <summary>
-        /// Site load balancing.
-        /// Serialized Name: SiteConfig.properties.loadBalancing
-        /// </summary>
+        /// <summary> Site load balancing. </summary>
         public SiteLoadBalancing? LoadBalancing { get; set; }
-        /// <summary>
-        /// This is work around for polymorphic types.
-        /// Serialized Name: SiteConfig.properties.experiments
-        /// </summary>
+        /// <summary> This is work around for polymorphic types. </summary>
         internal Experiments Experiments { get; set; }
-        /// <summary>
-        /// List of ramp-up rules.
-        /// Serialized Name: Experiments.rampUpRules
-        /// </summary>
+        /// <summary> List of ramp-up rules. </summary>
         public IList<RampUpRule> ExperimentsRampUpRules
         {
             get
@@ -577,60 +270,27 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary>
-        /// Site limits.
-        /// Serialized Name: SiteConfig.properties.limits
-        /// </summary>
+        /// <summary> Site limits. </summary>
         public SiteLimits Limits { get; set; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if Auto Heal is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: SiteConfig.properties.autoHealEnabled
-        /// </summary>
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if Auto Heal is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? IsAutoHealEnabled { get; set; }
-        /// <summary>
-        /// Auto Heal rules.
-        /// Serialized Name: SiteConfig.properties.autoHealRules
-        /// </summary>
+        /// <summary> Auto Heal rules. </summary>
         public AutoHealRules AutoHealRules { get; set; }
-        /// <summary>
-        /// Tracing options.
-        /// Serialized Name: SiteConfig.properties.tracingOptions
-        /// </summary>
+        /// <summary> Tracing options. </summary>
         public string TracingOptions { get; set; }
-        /// <summary>
-        /// Virtual Network name.
-        /// Serialized Name: SiteConfig.properties.vnetName
-        /// </summary>
+        /// <summary> Virtual Network name. </summary>
         public string VnetName { get; set; }
-        /// <summary>
-        /// Virtual Network Route All enabled. This causes all outbound traffic to have Virtual Network Security Groups and User Defined Routes applied.
-        /// Serialized Name: SiteConfig.properties.vnetRouteAllEnabled
-        /// </summary>
+        /// <summary> Virtual Network Route All enabled. This causes all outbound traffic to have Virtual Network Security Groups and User Defined Routes applied. </summary>
         public bool? IsVnetRouteAllEnabled { get; set; }
-        /// <summary>
-        /// The number of private ports assigned to this app. These will be assigned dynamically on runtime.
-        /// Serialized Name: SiteConfig.properties.vnetPrivatePortsCount
-        /// </summary>
+        /// <summary> The number of private ports assigned to this app. These will be assigned dynamically on runtime. </summary>
         public int? VnetPrivatePortsCount { get; set; }
-        /// <summary>
-        /// Cross-Origin Resource Sharing (CORS) settings.
-        /// Serialized Name: SiteConfig.properties.cors
-        /// </summary>
+        /// <summary> Cross-Origin Resource Sharing (CORS) settings. </summary>
         public CorsSettings Cors { get; set; }
-        /// <summary>
-        /// Push endpoint settings.
-        /// Serialized Name: SiteConfig.properties.push
-        /// </summary>
+        /// <summary> Push endpoint settings. </summary>
         public PushSettings Push { get; set; }
-        /// <summary>
-        /// Information about the formal API definition for the app.
-        /// Serialized Name: SiteConfig.properties.apiDefinition
-        /// </summary>
+        /// <summary> Information about the formal API definition for the app. </summary>
         internal ApiDefinitionInfo ApiDefinition { get; set; }
-        /// <summary>
-        /// The URL of the API definition.
-        /// Serialized Name: ApiDefinitionInfo.url
-        /// </summary>
+        /// <summary> The URL of the API definition. </summary>
         public Uri ApiDefinitionUri
         {
             get => ApiDefinition is null ? default : ApiDefinition.Uri;
@@ -642,15 +302,9 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary>
-        /// Azure API management settings linked to the app.
-        /// Serialized Name: SiteConfig.properties.apiManagementConfig
-        /// </summary>
+        /// <summary> Azure API management settings linked to the app. </summary>
         internal ApiManagementConfig ApiManagementConfig { get; set; }
-        /// <summary>
-        /// APIM-Api Identifier.
-        /// Serialized Name: ApiManagementConfig.id
-        /// </summary>
+        /// <summary> APIM-Api Identifier. </summary>
         public string ApiManagementConfigId
         {
             get => ApiManagementConfig is null ? default : ApiManagementConfig.Id;
@@ -662,115 +316,60 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary>
-        /// Auto-swap slot name.
-        /// Serialized Name: SiteConfig.properties.autoSwapSlotName
-        /// </summary>
+        /// <summary> Auto-swap slot name. </summary>
         public string AutoSwapSlotName { get; set; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; to enable local MySQL; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: SiteConfig.properties.localMySqlEnabled
-        /// </summary>
+        /// <summary> &lt;code&gt;true&lt;/code&gt; to enable local MySQL; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? IsLocalMySqlEnabled { get; set; }
-        /// <summary>
-        /// Managed Service Identity Id
-        /// Serialized Name: SiteConfig.properties.managedServiceIdentityId
-        /// </summary>
+        /// <summary> Managed Service Identity Id. </summary>
         public int? ManagedServiceIdentityId { get; set; }
-        /// <summary>
-        /// Explicit Managed Service Identity Id
-        /// Serialized Name: SiteConfig.properties.xManagedServiceIdentityId
-        /// </summary>
+        /// <summary> Explicit Managed Service Identity Id. </summary>
         public int? XManagedServiceIdentityId { get; set; }
-        /// <summary>
-        /// Identity to use for Key Vault Reference authentication.
-        /// Serialized Name: SiteConfig.properties.keyVaultReferenceIdentity
-        /// </summary>
+        /// <summary> Identity to use for Key Vault Reference authentication. </summary>
         public string KeyVaultReferenceIdentity { get; set; }
-        /// <summary>
-        /// IP security restrictions for main.
-        /// Serialized Name: SiteConfig.properties.ipSecurityRestrictions
-        /// </summary>
+        /// <summary> IP security restrictions for main. </summary>
         public IList<IPSecurityRestriction> IPSecurityRestrictions { get; set; }
-        /// <summary>
-        /// IP security restrictions for scm.
-        /// Serialized Name: SiteConfig.properties.scmIpSecurityRestrictions
-        /// </summary>
+        /// <summary> IP security restrictions for scm. </summary>
         public IList<IPSecurityRestriction> ScmIPSecurityRestrictions { get; set; }
-        /// <summary>
-        /// IP security restrictions for scm to use main.
-        /// Serialized Name: SiteConfig.properties.scmIpSecurityRestrictionsUseMain
-        /// </summary>
+        /// <summary> IP security restrictions for scm to use main. </summary>
         public bool? ScmIPSecurityRestrictionsUseMain { get; set; }
-        /// <summary>
-        /// Http20Enabled: configures a web site to allow clients to connect over http2.0
-        /// Serialized Name: SiteConfig.properties.http20Enabled
-        /// </summary>
+        /// <summary> Http20Enabled: configures a web site to allow clients to connect over http2.0. </summary>
         public bool? IsHttpLoggingEnabled { get; set; }
-        /// <summary>
-        /// MinTlsVersion: configures the minimum version of TLS required for SSL requests
-        /// Serialized Name: SiteConfig.properties.minTlsVersion
-        /// </summary>
+        /// <summary> MinTlsVersion: configures the minimum version of TLS required for SSL requests. </summary>
         public SupportedTlsVersion? MinTlsVersion { get; set; }
-        /// <summary>
-        /// ScmMinTlsVersion: configures the minimum version of TLS required for SSL requests for SCM site
-        /// Serialized Name: SiteConfig.properties.scmMinTlsVersion
-        /// </summary>
+        /// <summary> ScmMinTlsVersion: configures the minimum version of TLS required for SSL requests for SCM site. </summary>
         public SupportedTlsVersion? ScmMinTlsVersion { get; set; }
-        /// <summary>
-        /// State of FTP / FTPS service
-        /// Serialized Name: SiteConfig.properties.ftpsState
-        /// </summary>
+        /// <summary> State of FTP / FTPS service. </summary>
         public FtpsState? FtpsState { get; set; }
         /// <summary>
         /// Number of preWarmed instances.
         /// This setting only applies to the Consumption and Elastic Plans
-        /// Serialized Name: SiteConfig.properties.preWarmedInstanceCount
         /// </summary>
         public int? PreWarmedInstanceCount { get; set; }
         /// <summary>
         /// Maximum number of workers that a site can scale out to.
         /// This setting only applies to the Consumption and Elastic Premium Plans
-        /// Serialized Name: SiteConfig.properties.functionAppScaleLimit
         /// </summary>
         public int? FunctionAppScaleLimit { get; set; }
-        /// <summary>
-        /// Health check path
-        /// Serialized Name: SiteConfig.properties.healthCheckPath
-        /// </summary>
+        /// <summary> Health check path. </summary>
         public string HealthCheckPath { get; set; }
         /// <summary>
         /// Gets or sets a value indicating whether functions runtime scale monitoring is enabled. When enabled,
         /// the ScaleController will not monitor event sources directly, but will instead call to the
         /// runtime to get scale status.
-        /// Serialized Name: SiteConfig.properties.functionsRuntimeScaleMonitoringEnabled
         /// </summary>
         public bool? IsFunctionsRuntimeScaleMonitorEnabled { get; set; }
-        /// <summary>
-        /// Sets the time zone a site uses for generating timestamps. Compatible with Linux and Windows App Service. Setting the WEBSITE_TIME_ZONE app setting takes precedence over this config. For Linux, expects tz database values https://www.iana.org/time-zones (for a quick reference see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). For Windows, expects one of the time zones listed under HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Time Zones
-        /// Serialized Name: SiteConfig.properties.websiteTimeZone
-        /// </summary>
+        /// <summary> Sets the time zone a site uses for generating timestamps. Compatible with Linux and Windows App Service. Setting the WEBSITE_TIME_ZONE app setting takes precedence over this config. For Linux, expects tz database values https://www.iana.org/time-zones (for a quick reference see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). For Windows, expects one of the time zones listed under HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Time Zones. </summary>
         public string WebsiteTimeZone { get; set; }
         /// <summary>
         /// Number of minimum instance count for a site
         /// This setting only applies to the Elastic Plans
-        /// Serialized Name: SiteConfig.properties.minimumElasticInstanceCount
         /// </summary>
         public int? MinimumElasticInstanceCount { get; set; }
-        /// <summary>
-        /// List of Azure Storage Accounts.
-        /// Serialized Name: SiteConfig.properties.azureStorageAccounts
-        /// </summary>
+        /// <summary> List of Azure Storage Accounts. </summary>
         public IDictionary<string, AzureStorageInfoValue> AzureStorageAccounts { get; set; }
-        /// <summary>
-        /// Property to allow or block all public traffic.
-        /// Serialized Name: SiteConfig.properties.publicNetworkAccess
-        /// </summary>
+        /// <summary> Property to allow or block all public traffic. </summary>
         public string PublicNetworkAccess { get; set; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }
 }

@@ -7,26 +7,14 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// App Service plan status.
-    /// Serialized Name: StatusOptions
-    /// </summary>
+    /// <summary> App Service plan status. </summary>
     public enum StatusOption
     {
-        /// <summary>
-        /// Ready
-        /// Serialized Name: StatusOptions.Ready
-        /// </summary>
+        /// <summary> Ready. </summary>
         Ready,
-        /// <summary>
-        /// Pending
-        /// Serialized Name: StatusOptions.Pending
-        /// </summary>
+        /// <summary> Pending. </summary>
         Pending,
-        /// <summary>
-        /// Creating
-        /// Serialized Name: StatusOptions.Creating
-        /// </summary>
+        /// <summary> Creating. </summary>
         Creating
     }
 }

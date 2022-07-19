@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The ResponseMetaData.
-    /// Serialized Name: ResponseMetaData
-    /// </summary>
+    /// <summary> The ResponseMetaData. </summary>
     internal partial class ResponseMetaData
     {
         /// <summary> Initializes a new instance of ResponseMetaData. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of ResponseMetaData. </summary>
-        /// <param name="dataSource">
-        /// Source of the Data
-        /// Serialized Name: ResponseMetaData.dataSource
-        /// </param>
+        /// <param name="dataSource"> Source of the Data. </param>
         internal ResponseMetaData(DataSource dataSource)
         {
             DataSource = dataSource;
         }
 
-        /// <summary>
-        /// Source of the Data
-        /// Serialized Name: ResponseMetaData.dataSource
-        /// </summary>
+        /// <summary> Source of the Data. </summary>
         public DataSource DataSource { get; set; }
     }
 }

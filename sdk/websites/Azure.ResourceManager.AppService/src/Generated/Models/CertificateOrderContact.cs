@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The CertificateOrderContact.
-    /// Serialized Name: CertificateOrderContact
-    /// </summary>
+    /// <summary> The CertificateOrderContact. </summary>
     public partial class CertificateOrderContact
     {
         /// <summary> Initializes a new instance of CertificateOrderContact. </summary>
@@ -19,10 +16,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of CertificateOrderContact. </summary>
-        /// <param name="email"> Serialized Name: CertificateOrderContact.email. </param>
-        /// <param name="nameFirst"> Serialized Name: CertificateOrderContact.nameFirst. </param>
-        /// <param name="nameLast"> Serialized Name: CertificateOrderContact.nameLast. </param>
-        /// <param name="phone"> Serialized Name: CertificateOrderContact.phone. </param>
+        /// <param name="email"></param>
+        /// <param name="nameFirst"></param>
+        /// <param name="nameLast"></param>
+        /// <param name="phone"></param>
         internal CertificateOrderContact(string email, string nameFirst, string nameLast, string phone)
         {
             Email = email;
@@ -31,13 +28,13 @@ namespace Azure.ResourceManager.AppService.Models
             Phone = phone;
         }
 
-        /// <summary> Serialized Name: CertificateOrderContact.email. </summary>
+        /// <summary> Gets the email. </summary>
         public string Email { get; }
-        /// <summary> Serialized Name: CertificateOrderContact.nameFirst. </summary>
+        /// <summary> Gets the name first. </summary>
         public string NameFirst { get; }
-        /// <summary> Serialized Name: CertificateOrderContact.nameLast. </summary>
+        /// <summary> Gets the name last. </summary>
         public string NameLast { get; }
-        /// <summary> Serialized Name: CertificateOrderContact.phone. </summary>
+        /// <summary> Gets the phone. </summary>
         public string Phone { get; }
     }
 }

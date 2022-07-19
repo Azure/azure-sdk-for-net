@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Sample utterance.
-    /// Serialized Name: SampleUtterance
-    /// </summary>
+    /// <summary> Sample utterance. </summary>
     public partial class SampleUtterance
     {
         /// <summary> Initializes a new instance of SampleUtterance. </summary>
@@ -23,18 +20,9 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of SampleUtterance. </summary>
-        /// <param name="text">
-        /// Text attribute of sample utterance.
-        /// Serialized Name: SampleUtterance.text
-        /// </param>
-        /// <param name="links">
-        /// Links attribute of sample utterance.
-        /// Serialized Name: SampleUtterance.links
-        /// </param>
-        /// <param name="qid">
-        /// Question id of sample utterance (for stackoverflow questions titles).
-        /// Serialized Name: SampleUtterance.qid
-        /// </param>
+        /// <param name="text"> Text attribute of sample utterance. </param>
+        /// <param name="links"> Links attribute of sample utterance. </param>
+        /// <param name="qid"> Question id of sample utterance (for stackoverflow questions titles). </param>
         internal SampleUtterance(string text, IList<string> links, string qid)
         {
             Text = text;
@@ -42,20 +30,11 @@ namespace Azure.ResourceManager.AppService.Models
             Qid = qid;
         }
 
-        /// <summary>
-        /// Text attribute of sample utterance.
-        /// Serialized Name: SampleUtterance.text
-        /// </summary>
+        /// <summary> Text attribute of sample utterance. </summary>
         public string Text { get; set; }
-        /// <summary>
-        /// Links attribute of sample utterance.
-        /// Serialized Name: SampleUtterance.links
-        /// </summary>
+        /// <summary> Links attribute of sample utterance. </summary>
         public IList<string> Links { get; }
-        /// <summary>
-        /// Question id of sample utterance (for stackoverflow questions titles).
-        /// Serialized Name: SampleUtterance.qid
-        /// </summary>
+        /// <summary> Question id of sample utterance (for stackoverflow questions titles). </summary>
         public string Qid { get; set; }
     }
 }

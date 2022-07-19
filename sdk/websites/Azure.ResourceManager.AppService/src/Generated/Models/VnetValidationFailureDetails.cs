@@ -11,10 +11,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// A class that describes the reason for a validation failure.
-    /// Serialized Name: VnetValidationFailureDetails
-    /// </summary>
+    /// <summary> A class that describes the reason for a validation failure. </summary>
     public partial class VnetValidationFailureDetails : ResourceData
     {
         /// <summary> Initializes a new instance of VnetValidationFailureDetails. </summary>
@@ -29,26 +26,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="message">
-        /// Text describing the validation outcome.
-        /// Serialized Name: VnetValidationFailureDetails.properties.message
-        /// </param>
-        /// <param name="isFailed">
-        /// A flag describing whether or not validation failed.
-        /// Serialized Name: VnetValidationFailureDetails.properties.failed
-        /// </param>
-        /// <param name="failedTests">
-        /// A list of tests that failed in the validation.
-        /// Serialized Name: VnetValidationFailureDetails.properties.failedTests
-        /// </param>
-        /// <param name="warnings">
-        /// A list of warnings generated during validation.
-        /// Serialized Name: VnetValidationFailureDetails.properties.warnings
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="message"> Text describing the validation outcome. </param>
+        /// <param name="isFailed"> A flag describing whether or not validation failed. </param>
+        /// <param name="failedTests"> A list of tests that failed in the validation. </param>
+        /// <param name="warnings"> A list of warnings generated during validation. </param>
+        /// <param name="kind"> Kind of resource. </param>
         internal VnetValidationFailureDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string message, bool? isFailed, IList<VnetValidationTestFailure> failedTests, IList<VnetValidationTestFailure> warnings, string kind) : base(id, name, resourceType, systemData)
         {
             Message = message;
@@ -58,30 +40,15 @@ namespace Azure.ResourceManager.AppService.Models
             Kind = kind;
         }
 
-        /// <summary>
-        /// Text describing the validation outcome.
-        /// Serialized Name: VnetValidationFailureDetails.properties.message
-        /// </summary>
+        /// <summary> Text describing the validation outcome. </summary>
         public string Message { get; set; }
-        /// <summary>
-        /// A flag describing whether or not validation failed.
-        /// Serialized Name: VnetValidationFailureDetails.properties.failed
-        /// </summary>
+        /// <summary> A flag describing whether or not validation failed. </summary>
         public bool? IsFailed { get; set; }
-        /// <summary>
-        /// A list of tests that failed in the validation.
-        /// Serialized Name: VnetValidationFailureDetails.properties.failedTests
-        /// </summary>
+        /// <summary> A list of tests that failed in the validation. </summary>
         public IList<VnetValidationTestFailure> FailedTests { get; }
-        /// <summary>
-        /// A list of warnings generated during validation.
-        /// Serialized Name: VnetValidationFailureDetails.properties.warnings
-        /// </summary>
+        /// <summary> A list of warnings generated during validation. </summary>
         public IList<VnetValidationTestFailure> Warnings { get; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }
 }

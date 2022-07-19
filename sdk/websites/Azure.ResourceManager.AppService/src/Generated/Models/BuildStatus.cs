@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The status of the static site build.
-    /// Serialized Name: BuildStatus
-    /// </summary>
+    /// <summary> The status of the static site build. </summary>
     public readonly partial struct BuildStatus : IEquatable<BuildStatus>
     {
         private readonly string _value;
@@ -33,40 +30,19 @@ namespace Azure.ResourceManager.AppService.Models
         private const string DeletingValue = "Deleting";
         private const string DetachedValue = "Detached";
 
-        /// <summary>
-        /// WaitingForDeployment
-        /// Serialized Name: BuildStatus.WaitingForDeployment
-        /// </summary>
+        /// <summary> WaitingForDeployment. </summary>
         public static BuildStatus WaitingForDeployment { get; } = new BuildStatus(WaitingForDeploymentValue);
-        /// <summary>
-        /// Uploading
-        /// Serialized Name: BuildStatus.Uploading
-        /// </summary>
+        /// <summary> Uploading. </summary>
         public static BuildStatus Uploading { get; } = new BuildStatus(UploadingValue);
-        /// <summary>
-        /// Deploying
-        /// Serialized Name: BuildStatus.Deploying
-        /// </summary>
+        /// <summary> Deploying. </summary>
         public static BuildStatus Deploying { get; } = new BuildStatus(DeployingValue);
-        /// <summary>
-        /// Ready
-        /// Serialized Name: BuildStatus.Ready
-        /// </summary>
+        /// <summary> Ready. </summary>
         public static BuildStatus Ready { get; } = new BuildStatus(ReadyValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: BuildStatus.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static BuildStatus Failed { get; } = new BuildStatus(FailedValue);
-        /// <summary>
-        /// Deleting
-        /// Serialized Name: BuildStatus.Deleting
-        /// </summary>
+        /// <summary> Deleting. </summary>
         public static BuildStatus Deleting { get; } = new BuildStatus(DeletingValue);
-        /// <summary>
-        /// Detached
-        /// Serialized Name: BuildStatus.Detached
-        /// </summary>
+        /// <summary> Detached. </summary>
         public static BuildStatus Detached { get; } = new BuildStatus(DetachedValue);
         /// <summary> Determines if two <see cref="BuildStatus"/> values are the same. </summary>
         public static bool operator ==(BuildStatus left, BuildStatus right) => left.Equals(right);

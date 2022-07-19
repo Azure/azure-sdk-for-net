@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// An app cloneability criterion.
-    /// Serialized Name: SiteCloneabilityCriterion
-    /// </summary>
+    /// <summary> An app cloneability criterion. </summary>
     public partial class SiteCloneabilityCriterion
     {
         /// <summary> Initializes a new instance of SiteCloneabilityCriterion. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of SiteCloneabilityCriterion. </summary>
-        /// <param name="name">
-        /// Name of criterion.
-        /// Serialized Name: SiteCloneabilityCriterion.name
-        /// </param>
-        /// <param name="description">
-        /// Description of criterion.
-        /// Serialized Name: SiteCloneabilityCriterion.description
-        /// </param>
+        /// <param name="name"> Name of criterion. </param>
+        /// <param name="description"> Description of criterion. </param>
         internal SiteCloneabilityCriterion(string name, string description)
         {
             Name = name;
             Description = description;
         }
 
-        /// <summary>
-        /// Name of criterion.
-        /// Serialized Name: SiteCloneabilityCriterion.name
-        /// </summary>
+        /// <summary> Name of criterion. </summary>
         public string Name { get; }
-        /// <summary>
-        /// Description of criterion.
-        /// Serialized Name: SiteCloneabilityCriterion.description
-        /// </summary>
+        /// <summary> Description of criterion. </summary>
         public string Description { get; }
     }
 }

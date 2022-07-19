@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Publishing options for requested profile.
-    /// Serialized Name: CsmPublishingProfileOptions
-    /// </summary>
+    /// <summary> Publishing options for requested profile. </summary>
     public partial class CsmPublishingProfile
     {
         /// <summary> Initializes a new instance of CsmPublishingProfile. </summary>
@@ -23,13 +20,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// FileZilla3
         /// WebDeploy -- default
         /// Ftp
-        /// Serialized Name: CsmPublishingProfileOptions.format
         /// </summary>
         public PublishingProfileFormat? Format { get; set; }
-        /// <summary>
-        /// Include the DisasterRecover endpoint if true
-        /// Serialized Name: CsmPublishingProfileOptions.includeDisasterRecoveryEndpoints
-        /// </summary>
+        /// <summary> Include the DisasterRecover endpoint if true. </summary>
         public bool? IsIncludeDisasterRecoveryEndpoints { get; set; }
     }
 }

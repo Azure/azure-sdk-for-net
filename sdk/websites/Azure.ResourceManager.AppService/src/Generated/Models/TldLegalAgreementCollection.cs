@@ -11,17 +11,11 @@ using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Collection of top-level domain legal agreements.
-    /// Serialized Name: TldLegalAgreementCollection
-    /// </summary>
+    /// <summary> Collection of top-level domain legal agreements. </summary>
     internal partial class TldLegalAgreementCollection
     {
         /// <summary> Initializes a new instance of TldLegalAgreementCollection. </summary>
-        /// <param name="value">
-        /// Collection of resources.
-        /// Serialized Name: TldLegalAgreementCollection.value
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal TldLegalAgreementCollection(IEnumerable<TldLegalAgreement> value)
         {
@@ -34,29 +28,17 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of TldLegalAgreementCollection. </summary>
-        /// <param name="value">
-        /// Collection of resources.
-        /// Serialized Name: TldLegalAgreementCollection.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Link to next page of resources.
-        /// Serialized Name: TldLegalAgreementCollection.nextLink
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
+        /// <param name="nextLink"> Link to next page of resources. </param>
         internal TldLegalAgreementCollection(IReadOnlyList<TldLegalAgreement> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Collection of resources.
-        /// Serialized Name: TldLegalAgreementCollection.value
-        /// </summary>
+        /// <summary> Collection of resources. </summary>
         public IReadOnlyList<TldLegalAgreement> Value { get; }
-        /// <summary>
-        /// Link to next page of resources.
-        /// Serialized Name: TldLegalAgreementCollection.nextLink
-        /// </summary>
+        /// <summary> Link to next page of resources. </summary>
         public string NextLink { get; }
     }
 }

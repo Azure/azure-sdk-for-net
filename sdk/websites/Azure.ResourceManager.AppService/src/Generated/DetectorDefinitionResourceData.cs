@@ -23,26 +23,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName">
-        /// Display name of the detector
-        /// Serialized Name: DetectorDefinitionResource.properties.displayName
-        /// </param>
-        /// <param name="description">
-        /// Description of the detector
-        /// Serialized Name: DetectorDefinitionResource.properties.description
-        /// </param>
-        /// <param name="rank">
-        /// Detector Rank
-        /// Serialized Name: DetectorDefinitionResource.properties.rank
-        /// </param>
-        /// <param name="isEnabled">
-        /// Flag representing whether detector is enabled or not.
-        /// Serialized Name: DetectorDefinitionResource.properties.isEnabled
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="displayName"> Display name of the detector. </param>
+        /// <param name="description"> Description of the detector. </param>
+        /// <param name="rank"> Detector Rank. </param>
+        /// <param name="isEnabled"> Flag representing whether detector is enabled or not. </param>
+        /// <param name="kind"> Kind of resource. </param>
         internal DetectorDefinitionResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string description, double? rank, bool? isEnabled, string kind) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
@@ -52,30 +37,15 @@ namespace Azure.ResourceManager.AppService
             Kind = kind;
         }
 
-        /// <summary>
-        /// Display name of the detector
-        /// Serialized Name: DetectorDefinitionResource.properties.displayName
-        /// </summary>
+        /// <summary> Display name of the detector. </summary>
         public string DisplayName { get; }
-        /// <summary>
-        /// Description of the detector
-        /// Serialized Name: DetectorDefinitionResource.properties.description
-        /// </summary>
+        /// <summary> Description of the detector. </summary>
         public string Description { get; }
-        /// <summary>
-        /// Detector Rank
-        /// Serialized Name: DetectorDefinitionResource.properties.rank
-        /// </summary>
+        /// <summary> Detector Rank. </summary>
         public double? Rank { get; }
-        /// <summary>
-        /// Flag representing whether detector is enabled or not.
-        /// Serialized Name: DetectorDefinitionResource.properties.isEnabled
-        /// </summary>
+        /// <summary> Flag representing whether detector is enabled or not. </summary>
         public bool? IsEnabled { get; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }
 }

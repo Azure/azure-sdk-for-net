@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The ConfigReferenceSource.
-    /// Serialized Name: ConfigReferenceSource
-    /// </summary>
+    /// <summary> The ConfigReferenceSource. </summary>
     public readonly partial struct ConfigReferenceSource : IEquatable<ConfigReferenceSource>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         private const string KeyVaultValue = "KeyVault";
 
-        /// <summary>
-        /// KeyVault
-        /// Serialized Name: ConfigReferenceSource.KeyVault
-        /// </summary>
+        /// <summary> KeyVault. </summary>
         public static ConfigReferenceSource KeyVault { get; } = new ConfigReferenceSource(KeyVaultValue);
         /// <summary> Determines if two <see cref="ConfigReferenceSource"/> values are the same. </summary>
         public static bool operator ==(ConfigReferenceSource left, ConfigReferenceSource right) => left.Equals(right);

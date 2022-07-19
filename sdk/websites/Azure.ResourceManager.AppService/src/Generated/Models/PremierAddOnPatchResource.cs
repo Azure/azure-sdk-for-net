@@ -10,10 +10,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// ARM resource for a PremierAddOn.
-    /// Serialized Name: PremierAddOnPatchResource
-    /// </summary>
+    /// <summary> ARM resource for a PremierAddOn. </summary>
     public partial class PremierAddOnPatchResource : ResourceData
     {
         /// <summary> Initializes a new instance of PremierAddOnPatchResource. </summary>
@@ -26,30 +23,12 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="sku">
-        /// Premier add on SKU.
-        /// Serialized Name: PremierAddOnPatchResource.properties.sku
-        /// </param>
-        /// <param name="product">
-        /// Premier add on Product.
-        /// Serialized Name: PremierAddOnPatchResource.properties.product
-        /// </param>
-        /// <param name="vendor">
-        /// Premier add on Vendor.
-        /// Serialized Name: PremierAddOnPatchResource.properties.vendor
-        /// </param>
-        /// <param name="marketplacePublisher">
-        /// Premier add on Marketplace publisher.
-        /// Serialized Name: PremierAddOnPatchResource.properties.marketplacePublisher
-        /// </param>
-        /// <param name="marketplaceOffer">
-        /// Premier add on Marketplace offer.
-        /// Serialized Name: PremierAddOnPatchResource.properties.marketplaceOffer
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="sku"> Premier add on SKU. </param>
+        /// <param name="product"> Premier add on Product. </param>
+        /// <param name="vendor"> Premier add on Vendor. </param>
+        /// <param name="marketplacePublisher"> Premier add on Marketplace publisher. </param>
+        /// <param name="marketplaceOffer"> Premier add on Marketplace offer. </param>
+        /// <param name="kind"> Kind of resource. </param>
         internal PremierAddOnPatchResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string sku, string product, string vendor, string marketplacePublisher, string marketplaceOffer, string kind) : base(id, name, resourceType, systemData)
         {
             Sku = sku;
@@ -60,35 +39,17 @@ namespace Azure.ResourceManager.AppService.Models
             Kind = kind;
         }
 
-        /// <summary>
-        /// Premier add on SKU.
-        /// Serialized Name: PremierAddOnPatchResource.properties.sku
-        /// </summary>
+        /// <summary> Premier add on SKU. </summary>
         public string Sku { get; set; }
-        /// <summary>
-        /// Premier add on Product.
-        /// Serialized Name: PremierAddOnPatchResource.properties.product
-        /// </summary>
+        /// <summary> Premier add on Product. </summary>
         public string Product { get; set; }
-        /// <summary>
-        /// Premier add on Vendor.
-        /// Serialized Name: PremierAddOnPatchResource.properties.vendor
-        /// </summary>
+        /// <summary> Premier add on Vendor. </summary>
         public string Vendor { get; set; }
-        /// <summary>
-        /// Premier add on Marketplace publisher.
-        /// Serialized Name: PremierAddOnPatchResource.properties.marketplacePublisher
-        /// </summary>
+        /// <summary> Premier add on Marketplace publisher. </summary>
         public string MarketplacePublisher { get; set; }
-        /// <summary>
-        /// Premier add on Marketplace offer.
-        /// Serialized Name: PremierAddOnPatchResource.properties.marketplaceOffer
-        /// </summary>
+        /// <summary> Premier add on Marketplace offer. </summary>
         public string MarketplaceOffer { get; set; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }
 }

@@ -7,26 +7,14 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// DNS verification test result.
-    /// Serialized Name: DnsVerificationTestResult
-    /// </summary>
+    /// <summary> DNS verification test result. </summary>
     public enum DnsVerificationTestResult
     {
-        /// <summary>
-        /// Passed
-        /// Serialized Name: DnsVerificationTestResult.Passed
-        /// </summary>
+        /// <summary> Passed. </summary>
         Passed,
-        /// <summary>
-        /// Failed
-        /// Serialized Name: DnsVerificationTestResult.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         Failed,
-        /// <summary>
-        /// Skipped
-        /// Serialized Name: DnsVerificationTestResult.Skipped
-        /// </summary>
+        /// <summary> Skipped. </summary>
         Skipped
     }
 }

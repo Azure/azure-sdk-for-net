@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Metric information.
-    /// Serialized Name: PerfMonSet
-    /// </summary>
+    /// <summary> Metric information. </summary>
     public partial class PerfMonSet
     {
         /// <summary> Initializes a new instance of PerfMonSet. </summary>
@@ -24,26 +21,11 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of PerfMonSet. </summary>
-        /// <param name="name">
-        /// Unique key name of the counter.
-        /// Serialized Name: PerfMonSet.name
-        /// </param>
-        /// <param name="startOn">
-        /// Start time of the period.
-        /// Serialized Name: PerfMonSet.startTime
-        /// </param>
-        /// <param name="endOn">
-        /// End time of the period.
-        /// Serialized Name: PerfMonSet.endTime
-        /// </param>
-        /// <param name="timeGrain">
-        /// Presented time grain.
-        /// Serialized Name: PerfMonSet.timeGrain
-        /// </param>
-        /// <param name="values">
-        /// Collection of workers that are active during this time.
-        /// Serialized Name: PerfMonSet.values
-        /// </param>
+        /// <param name="name"> Unique key name of the counter. </param>
+        /// <param name="startOn"> Start time of the period. </param>
+        /// <param name="endOn"> End time of the period. </param>
+        /// <param name="timeGrain"> Presented time grain. </param>
+        /// <param name="values"> Collection of workers that are active during this time. </param>
         internal PerfMonSet(string name, DateTimeOffset? startOn, DateTimeOffset? endOn, string timeGrain, IReadOnlyList<PerfMonSample> values)
         {
             Name = name;
@@ -53,30 +35,15 @@ namespace Azure.ResourceManager.AppService.Models
             Values = values;
         }
 
-        /// <summary>
-        /// Unique key name of the counter.
-        /// Serialized Name: PerfMonSet.name
-        /// </summary>
+        /// <summary> Unique key name of the counter. </summary>
         public string Name { get; }
-        /// <summary>
-        /// Start time of the period.
-        /// Serialized Name: PerfMonSet.startTime
-        /// </summary>
+        /// <summary> Start time of the period. </summary>
         public DateTimeOffset? StartOn { get; }
-        /// <summary>
-        /// End time of the period.
-        /// Serialized Name: PerfMonSet.endTime
-        /// </summary>
+        /// <summary> End time of the period. </summary>
         public DateTimeOffset? EndOn { get; }
-        /// <summary>
-        /// Presented time grain.
-        /// Serialized Name: PerfMonSet.timeGrain
-        /// </summary>
+        /// <summary> Presented time grain. </summary>
         public string TimeGrain { get; }
-        /// <summary>
-        /// Collection of workers that are active during this time.
-        /// Serialized Name: PerfMonSet.values
-        /// </summary>
+        /// <summary> Collection of workers that are active during this time. </summary>
         public IReadOnlyList<PerfMonSample> Values { get; }
     }
 }

@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The configuration settings of the app registration for providers that have app ids and app secrets
-    /// Serialized Name: AppRegistration
-    /// </summary>
+    /// <summary> The configuration settings of the app registration for providers that have app ids and app secrets. </summary>
     public partial class AppRegistration
     {
         /// <summary> Initializes a new instance of AppRegistration. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of AppRegistration. </summary>
-        /// <param name="appId">
-        /// The App ID of the app used for login.
-        /// Serialized Name: AppRegistration.appId
-        /// </param>
-        /// <param name="appSecretSettingName">
-        /// The app setting name that contains the app secret.
-        /// Serialized Name: AppRegistration.appSecretSettingName
-        /// </param>
+        /// <param name="appId"> The App ID of the app used for login. </param>
+        /// <param name="appSecretSettingName"> The app setting name that contains the app secret. </param>
         internal AppRegistration(string appId, string appSecretSettingName)
         {
             AppId = appId;
             AppSecretSettingName = appSecretSettingName;
         }
 
-        /// <summary>
-        /// The App ID of the app used for login.
-        /// Serialized Name: AppRegistration.appId
-        /// </summary>
+        /// <summary> The App ID of the app used for login. </summary>
         public string AppId { get; set; }
-        /// <summary>
-        /// The app setting name that contains the app secret.
-        /// Serialized Name: AppRegistration.appSecretSettingName
-        /// </summary>
+        /// <summary> The app setting name that contains the app secret. </summary>
         public string AppSecretSettingName { get; set; }
     }
 }

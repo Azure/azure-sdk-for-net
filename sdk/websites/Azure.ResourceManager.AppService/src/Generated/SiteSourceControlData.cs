@@ -25,38 +25,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="repoUri">
-        /// Repository or source control URL.
-        /// Serialized Name: SiteSourceControl.properties.repoUrl
-        /// </param>
-        /// <param name="branch">
-        /// Name of branch to use for deployment.
-        /// Serialized Name: SiteSourceControl.properties.branch
-        /// </param>
-        /// <param name="isManualIntegration">
-        /// &lt;code&gt;true&lt;/code&gt; to limit to manual integration; &lt;code&gt;false&lt;/code&gt; to enable continuous integration (which configures webhooks into online repos like GitHub).
-        /// Serialized Name: SiteSourceControl.properties.isManualIntegration
-        /// </param>
-        /// <param name="isGitHubAction">
-        /// &lt;code&gt;true&lt;/code&gt; if this is deployed via GitHub action.
-        /// Serialized Name: SiteSourceControl.properties.isGitHubAction
-        /// </param>
-        /// <param name="isDeploymentRollbackEnabled">
-        /// &lt;code&gt;true&lt;/code&gt; to enable deployment rollback; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: SiteSourceControl.properties.deploymentRollbackEnabled
-        /// </param>
-        /// <param name="isMercurial">
-        /// &lt;code&gt;true&lt;/code&gt; for a Mercurial repository; &lt;code&gt;false&lt;/code&gt; for a Git repository.
-        /// Serialized Name: SiteSourceControl.properties.isMercurial
-        /// </param>
-        /// <param name="gitHubActionConfiguration">
-        /// If GitHub Action is selected, than the associated configuration.
-        /// Serialized Name: SiteSourceControl.properties.gitHubActionConfiguration
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="repoUri"> Repository or source control URL. </param>
+        /// <param name="branch"> Name of branch to use for deployment. </param>
+        /// <param name="isManualIntegration"> &lt;code&gt;true&lt;/code&gt; to limit to manual integration; &lt;code&gt;false&lt;/code&gt; to enable continuous integration (which configures webhooks into online repos like GitHub). </param>
+        /// <param name="isGitHubAction"> &lt;code&gt;true&lt;/code&gt; if this is deployed via GitHub action. </param>
+        /// <param name="isDeploymentRollbackEnabled"> &lt;code&gt;true&lt;/code&gt; to enable deployment rollback; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isMercurial"> &lt;code&gt;true&lt;/code&gt; for a Mercurial repository; &lt;code&gt;false&lt;/code&gt; for a Git repository. </param>
+        /// <param name="gitHubActionConfiguration"> If GitHub Action is selected, than the associated configuration. </param>
+        /// <param name="kind"> Kind of resource. </param>
         internal SiteSourceControlData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri repoUri, string branch, bool? isManualIntegration, bool? isGitHubAction, bool? isDeploymentRollbackEnabled, bool? isMercurial, GitHubActionConfiguration gitHubActionConfiguration, string kind) : base(id, name, resourceType, systemData)
         {
             RepoUri = repoUri;
@@ -69,45 +45,21 @@ namespace Azure.ResourceManager.AppService
             Kind = kind;
         }
 
-        /// <summary>
-        /// Repository or source control URL.
-        /// Serialized Name: SiteSourceControl.properties.repoUrl
-        /// </summary>
+        /// <summary> Repository or source control URL. </summary>
         public Uri RepoUri { get; set; }
-        /// <summary>
-        /// Name of branch to use for deployment.
-        /// Serialized Name: SiteSourceControl.properties.branch
-        /// </summary>
+        /// <summary> Name of branch to use for deployment. </summary>
         public string Branch { get; set; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; to limit to manual integration; &lt;code&gt;false&lt;/code&gt; to enable continuous integration (which configures webhooks into online repos like GitHub).
-        /// Serialized Name: SiteSourceControl.properties.isManualIntegration
-        /// </summary>
+        /// <summary> &lt;code&gt;true&lt;/code&gt; to limit to manual integration; &lt;code&gt;false&lt;/code&gt; to enable continuous integration (which configures webhooks into online repos like GitHub). </summary>
         public bool? IsManualIntegration { get; set; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if this is deployed via GitHub action.
-        /// Serialized Name: SiteSourceControl.properties.isGitHubAction
-        /// </summary>
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if this is deployed via GitHub action. </summary>
         public bool? IsGitHubAction { get; set; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; to enable deployment rollback; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: SiteSourceControl.properties.deploymentRollbackEnabled
-        /// </summary>
+        /// <summary> &lt;code&gt;true&lt;/code&gt; to enable deployment rollback; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? IsDeploymentRollbackEnabled { get; set; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; for a Mercurial repository; &lt;code&gt;false&lt;/code&gt; for a Git repository.
-        /// Serialized Name: SiteSourceControl.properties.isMercurial
-        /// </summary>
+        /// <summary> &lt;code&gt;true&lt;/code&gt; for a Mercurial repository; &lt;code&gt;false&lt;/code&gt; for a Git repository. </summary>
         public bool? IsMercurial { get; set; }
-        /// <summary>
-        /// If GitHub Action is selected, than the associated configuration.
-        /// Serialized Name: SiteSourceControl.properties.gitHubActionConfiguration
-        /// </summary>
+        /// <summary> If GitHub Action is selected, than the associated configuration. </summary>
         public GitHubActionConfiguration GitHubActionConfiguration { get; set; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }
 }

@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The ContainerCpuStatistics.
-    /// Serialized Name: ContainerCpuStatistics
-    /// </summary>
+    /// <summary> The ContainerCpuStatistics. </summary>
     public partial class ContainerCpuStatistics
     {
         /// <summary> Initializes a new instance of ContainerCpuStatistics. </summary>
@@ -19,10 +16,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of ContainerCpuStatistics. </summary>
-        /// <param name="cpuUsage"> Serialized Name: ContainerCpuStatistics.cpuUsage. </param>
-        /// <param name="systemCpuUsage"> Serialized Name: ContainerCpuStatistics.systemCpuUsage. </param>
-        /// <param name="onlineCpuCount"> Serialized Name: ContainerCpuStatistics.onlineCpuCount. </param>
-        /// <param name="throttlingData"> Serialized Name: ContainerCpuStatistics.throttlingData. </param>
+        /// <param name="cpuUsage"></param>
+        /// <param name="systemCpuUsage"></param>
+        /// <param name="onlineCpuCount"></param>
+        /// <param name="throttlingData"></param>
         internal ContainerCpuStatistics(ContainerCpuUsage cpuUsage, long? systemCpuUsage, int? onlineCpuCount, ContainerThrottlingInfo throttlingData)
         {
             CpuUsage = cpuUsage;
@@ -31,13 +28,13 @@ namespace Azure.ResourceManager.AppService.Models
             ThrottlingData = throttlingData;
         }
 
-        /// <summary> Serialized Name: ContainerCpuStatistics.cpuUsage. </summary>
+        /// <summary> Gets or sets the cpu usage. </summary>
         public ContainerCpuUsage CpuUsage { get; set; }
-        /// <summary> Serialized Name: ContainerCpuStatistics.systemCpuUsage. </summary>
+        /// <summary> Gets or sets the system cpu usage. </summary>
         public long? SystemCpuUsage { get; set; }
-        /// <summary> Serialized Name: ContainerCpuStatistics.onlineCpuCount. </summary>
+        /// <summary> Gets or sets the online cpu count. </summary>
         public int? OnlineCpuCount { get; set; }
-        /// <summary> Serialized Name: ContainerCpuStatistics.throttlingData. </summary>
+        /// <summary> Gets or sets the throttling data. </summary>
         public ContainerThrottlingInfo ThrottlingData { get; set; }
     }
 }

@@ -7,26 +7,14 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Job status.
-    /// Serialized Name: TriggeredWebJobStatus
-    /// </summary>
+    /// <summary> Job status. </summary>
     public enum TriggeredWebJobStatus
     {
-        /// <summary>
-        /// Success
-        /// Serialized Name: TriggeredWebJobStatus.Success
-        /// </summary>
+        /// <summary> Success. </summary>
         Success,
-        /// <summary>
-        /// Failed
-        /// Serialized Name: TriggeredWebJobStatus.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         Failed,
-        /// <summary>
-        /// Error
-        /// Serialized Name: TriggeredWebJobStatus.Error
-        /// </summary>
+        /// <summary> Error. </summary>
         Error
     }
 }

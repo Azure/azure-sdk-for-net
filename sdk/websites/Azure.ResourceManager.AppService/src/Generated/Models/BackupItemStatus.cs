@@ -7,61 +7,28 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Backup status.
-    /// Serialized Name: BackupItemStatus
-    /// </summary>
+    /// <summary> Backup status. </summary>
     public enum BackupItemStatus
     {
-        /// <summary>
-        /// InProgress
-        /// Serialized Name: BackupItemStatus.InProgress
-        /// </summary>
+        /// <summary> InProgress. </summary>
         InProgress,
-        /// <summary>
-        /// Failed
-        /// Serialized Name: BackupItemStatus.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         Failed,
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: BackupItemStatus.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         Succeeded,
-        /// <summary>
-        /// TimedOut
-        /// Serialized Name: BackupItemStatus.TimedOut
-        /// </summary>
+        /// <summary> TimedOut. </summary>
         TimedOut,
-        /// <summary>
-        /// Created
-        /// Serialized Name: BackupItemStatus.Created
-        /// </summary>
+        /// <summary> Created. </summary>
         Created,
-        /// <summary>
-        /// Skipped
-        /// Serialized Name: BackupItemStatus.Skipped
-        /// </summary>
+        /// <summary> Skipped. </summary>
         Skipped,
-        /// <summary>
-        /// PartiallySucceeded
-        /// Serialized Name: BackupItemStatus.PartiallySucceeded
-        /// </summary>
+        /// <summary> PartiallySucceeded. </summary>
         PartiallySucceeded,
-        /// <summary>
-        /// DeleteInProgress
-        /// Serialized Name: BackupItemStatus.DeleteInProgress
-        /// </summary>
+        /// <summary> DeleteInProgress. </summary>
         DeleteInProgress,
-        /// <summary>
-        /// DeleteFailed
-        /// Serialized Name: BackupItemStatus.DeleteFailed
-        /// </summary>
+        /// <summary> DeleteFailed. </summary>
         DeleteFailed,
-        /// <summary>
-        /// Deleted
-        /// Serialized Name: BackupItemStatus.Deleted
-        /// </summary>
+        /// <summary> Deleted. </summary>
         Deleted
     }
 }

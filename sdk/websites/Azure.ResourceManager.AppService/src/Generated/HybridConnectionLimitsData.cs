@@ -23,18 +23,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="current">
-        /// The current number of Hybrid Connections.
-        /// Serialized Name: HybridConnectionLimits.properties.current
-        /// </param>
-        /// <param name="maximum">
-        /// The maximum number of Hybrid Connections allowed.
-        /// Serialized Name: HybridConnectionLimits.properties.maximum
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="current"> The current number of Hybrid Connections. </param>
+        /// <param name="maximum"> The maximum number of Hybrid Connections allowed. </param>
+        /// <param name="kind"> Kind of resource. </param>
         internal HybridConnectionLimitsData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? current, int? maximum, string kind) : base(id, name, resourceType, systemData)
         {
             Current = current;
@@ -42,20 +33,11 @@ namespace Azure.ResourceManager.AppService
             Kind = kind;
         }
 
-        /// <summary>
-        /// The current number of Hybrid Connections.
-        /// Serialized Name: HybridConnectionLimits.properties.current
-        /// </summary>
+        /// <summary> The current number of Hybrid Connections. </summary>
         public int? Current { get; }
-        /// <summary>
-        /// The maximum number of Hybrid Connections allowed.
-        /// Serialized Name: HybridConnectionLimits.properties.maximum
-        /// </summary>
+        /// <summary> The maximum number of Hybrid Connections allowed. </summary>
         public int? Maximum { get; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }
 }

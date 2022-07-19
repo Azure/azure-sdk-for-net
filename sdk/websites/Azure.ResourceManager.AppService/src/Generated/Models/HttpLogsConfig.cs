@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Http logs configuration.
-    /// Serialized Name: HttpLogsConfig
-    /// </summary>
+    /// <summary> Http logs configuration. </summary>
     public partial class HttpLogsConfig
     {
         /// <summary> Initializes a new instance of HttpLogsConfig. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of HttpLogsConfig. </summary>
-        /// <param name="fileSystem">
-        /// Http logs to file system configuration.
-        /// Serialized Name: HttpLogsConfig.fileSystem
-        /// </param>
-        /// <param name="azureBlobStorage">
-        /// Http logs to azure blob storage configuration.
-        /// Serialized Name: HttpLogsConfig.azureBlobStorage
-        /// </param>
+        /// <param name="fileSystem"> Http logs to file system configuration. </param>
+        /// <param name="azureBlobStorage"> Http logs to azure blob storage configuration. </param>
         internal HttpLogsConfig(FileSystemHttpLogsConfig fileSystem, AzureBlobStorageHttpLogsConfig azureBlobStorage)
         {
             FileSystem = fileSystem;
             AzureBlobStorage = azureBlobStorage;
         }
 
-        /// <summary>
-        /// Http logs to file system configuration.
-        /// Serialized Name: HttpLogsConfig.fileSystem
-        /// </summary>
+        /// <summary> Http logs to file system configuration. </summary>
         public FileSystemHttpLogsConfig FileSystem { get; set; }
-        /// <summary>
-        /// Http logs to azure blob storage configuration.
-        /// Serialized Name: HttpLogsConfig.azureBlobStorage
-        /// </summary>
+        /// <summary> Http logs to azure blob storage configuration. </summary>
         public AzureBlobStorageHttpLogsConfig AzureBlobStorage { get; set; }
     }
 }

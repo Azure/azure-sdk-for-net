@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The configuration settings of the app registration for the custom Open ID Connect provider.
-    /// Serialized Name: OpenIdConnectRegistration
-    /// </summary>
+    /// <summary> The configuration settings of the app registration for the custom Open ID Connect provider. </summary>
     public partial class OpenIdConnectRegistration
     {
         /// <summary> Initializes a new instance of OpenIdConnectRegistration. </summary>
@@ -19,18 +16,9 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of OpenIdConnectRegistration. </summary>
-        /// <param name="clientId">
-        /// The client id of the custom Open ID Connect provider.
-        /// Serialized Name: OpenIdConnectRegistration.clientId
-        /// </param>
-        /// <param name="clientCredential">
-        /// The authentication credentials of the custom Open ID Connect provider.
-        /// Serialized Name: OpenIdConnectRegistration.clientCredential
-        /// </param>
-        /// <param name="openIdConnectConfiguration">
-        /// The configuration settings of the endpoints used for the custom Open ID Connect provider.
-        /// Serialized Name: OpenIdConnectRegistration.openIdConnectConfiguration
-        /// </param>
+        /// <param name="clientId"> The client id of the custom Open ID Connect provider. </param>
+        /// <param name="clientCredential"> The authentication credentials of the custom Open ID Connect provider. </param>
+        /// <param name="openIdConnectConfiguration"> The configuration settings of the endpoints used for the custom Open ID Connect provider. </param>
         internal OpenIdConnectRegistration(string clientId, OpenIdConnectClientCredential clientCredential, OpenIdConnectConfig openIdConnectConfiguration)
         {
             ClientId = clientId;
@@ -38,20 +26,11 @@ namespace Azure.ResourceManager.AppService.Models
             OpenIdConnectConfiguration = openIdConnectConfiguration;
         }
 
-        /// <summary>
-        /// The client id of the custom Open ID Connect provider.
-        /// Serialized Name: OpenIdConnectRegistration.clientId
-        /// </summary>
+        /// <summary> The client id of the custom Open ID Connect provider. </summary>
         public string ClientId { get; set; }
-        /// <summary>
-        /// The authentication credentials of the custom Open ID Connect provider.
-        /// Serialized Name: OpenIdConnectRegistration.clientCredential
-        /// </summary>
+        /// <summary> The authentication credentials of the custom Open ID Connect provider. </summary>
         public OpenIdConnectClientCredential ClientCredential { get; set; }
-        /// <summary>
-        /// The configuration settings of the endpoints used for the custom Open ID Connect provider.
-        /// Serialized Name: OpenIdConnectRegistration.openIdConnectConfiguration
-        /// </summary>
+        /// <summary> The configuration settings of the endpoints used for the custom Open ID Connect provider. </summary>
         public OpenIdConnectConfig OpenIdConnectConfiguration { get; set; }
     }
 }

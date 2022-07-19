@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The ContainerInfo.
-    /// Serialized Name: ContainerInfo
-    /// </summary>
+    /// <summary> The ContainerInfo. </summary>
     public partial class ContainerInfo
     {
         /// <summary> Initializes a new instance of ContainerInfo. </summary>
@@ -21,14 +18,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of ContainerInfo. </summary>
-        /// <param name="currentTimeStampOn"> Serialized Name: ContainerInfo.currentTimeStamp. </param>
-        /// <param name="previousTimeStampOn"> Serialized Name: ContainerInfo.previousTimeStamp. </param>
-        /// <param name="currentCpuStats"> Serialized Name: ContainerInfo.currentCpuStats. </param>
-        /// <param name="previousCpuStats"> Serialized Name: ContainerInfo.previousCpuStats. </param>
-        /// <param name="memoryStats"> Serialized Name: ContainerInfo.memoryStats. </param>
-        /// <param name="name"> Serialized Name: ContainerInfo.name. </param>
-        /// <param name="id"> Serialized Name: ContainerInfo.id. </param>
-        /// <param name="eth0"> Serialized Name: ContainerInfo.eth0. </param>
+        /// <param name="currentTimeStampOn"></param>
+        /// <param name="previousTimeStampOn"></param>
+        /// <param name="currentCpuStats"></param>
+        /// <param name="previousCpuStats"></param>
+        /// <param name="memoryStats"></param>
+        /// <param name="name"></param>
+        /// <param name="id"></param>
+        /// <param name="eth0"></param>
         internal ContainerInfo(DateTimeOffset? currentTimeStampOn, DateTimeOffset? previousTimeStampOn, ContainerCpuStatistics currentCpuStats, ContainerCpuStatistics previousCpuStats, ContainerMemoryStatistics memoryStats, string name, string id, ContainerNetworkInterfaceStatistics eth0)
         {
             CurrentTimeStampOn = currentTimeStampOn;
@@ -41,21 +38,21 @@ namespace Azure.ResourceManager.AppService.Models
             Eth0 = eth0;
         }
 
-        /// <summary> Serialized Name: ContainerInfo.currentTimeStamp. </summary>
+        /// <summary> Gets or sets the current time stamp on. </summary>
         public DateTimeOffset? CurrentTimeStampOn { get; set; }
-        /// <summary> Serialized Name: ContainerInfo.previousTimeStamp. </summary>
+        /// <summary> Gets or sets the previous time stamp on. </summary>
         public DateTimeOffset? PreviousTimeStampOn { get; set; }
-        /// <summary> Serialized Name: ContainerInfo.currentCpuStats. </summary>
+        /// <summary> Gets or sets the current cpu stats. </summary>
         public ContainerCpuStatistics CurrentCpuStats { get; set; }
-        /// <summary> Serialized Name: ContainerInfo.previousCpuStats. </summary>
+        /// <summary> Gets or sets the previous cpu stats. </summary>
         public ContainerCpuStatistics PreviousCpuStats { get; set; }
-        /// <summary> Serialized Name: ContainerInfo.memoryStats. </summary>
+        /// <summary> Gets or sets the memory stats. </summary>
         public ContainerMemoryStatistics MemoryStats { get; set; }
-        /// <summary> Serialized Name: ContainerInfo.name. </summary>
+        /// <summary> Gets or sets the name. </summary>
         public string Name { get; set; }
-        /// <summary> Serialized Name: ContainerInfo.id. </summary>
+        /// <summary> Gets or sets the id. </summary>
         public string Id { get; set; }
-        /// <summary> Serialized Name: ContainerInfo.eth0. </summary>
+        /// <summary> Gets or sets the eth 0. </summary>
         public ContainerNetworkInterfaceStatistics Eth0 { get; set; }
     }
 }

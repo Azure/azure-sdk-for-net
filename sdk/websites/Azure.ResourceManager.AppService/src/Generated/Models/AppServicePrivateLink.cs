@@ -11,17 +11,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// A private link resource
-    /// Serialized Name: PrivateLinkResource
-    /// </summary>
+    /// <summary> A private link resource. </summary>
     public partial class AppServicePrivateLink : ResourceData
     {
         /// <summary> Initializes a new instance of AppServicePrivateLink. </summary>
-        /// <param name="properties">
-        /// Properties of a private link resource
-        /// Serialized Name: PrivateLinkResource.properties
-        /// </param>
+        /// <param name="properties"> Properties of a private link resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         internal AppServicePrivateLink(AppServicePrivateLinkResourceProperties properties)
         {
@@ -38,19 +32,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// Properties of a private link resource
-        /// Serialized Name: PrivateLinkResource.properties
-        /// </param>
+        /// <param name="properties"> Properties of a private link resource. </param>
         internal AppServicePrivateLink(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppServicePrivateLinkResourceProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
-        /// <summary>
-        /// Properties of a private link resource
-        /// Serialized Name: PrivateLinkResource.properties
-        /// </summary>
+        /// <summary> Properties of a private link resource. </summary>
         public AppServicePrivateLinkResourceProperties Properties { get; }
     }
 }

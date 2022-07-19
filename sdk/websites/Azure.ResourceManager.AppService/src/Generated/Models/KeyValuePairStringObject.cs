@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The KeyValuePairStringObject.
-    /// Serialized Name: KeyValuePairStringObject
-    /// </summary>
+    /// <summary> The KeyValuePairStringObject. </summary>
     public partial class KeyValuePairStringObject
     {
         /// <summary> Initializes a new instance of KeyValuePairStringObject. </summary>
@@ -21,23 +18,17 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of KeyValuePairStringObject. </summary>
-        /// <param name="key"> Serialized Name: KeyValuePairStringObject.key. </param>
-        /// <param name="value">
-        /// Any object
-        /// Serialized Name: KeyValuePairStringObject.value
-        /// </param>
+        /// <param name="key"></param>
+        /// <param name="value"> Any object. </param>
         internal KeyValuePairStringObject(string key, BinaryData value)
         {
             Key = key;
             Value = value;
         }
 
-        /// <summary> Serialized Name: KeyValuePairStringObject.key. </summary>
+        /// <summary> Gets the key. </summary>
         public string Key { get; }
-        /// <summary>
-        /// Any object
-        /// Serialized Name: KeyValuePairStringObject.value
-        /// </summary>
+        /// <summary> Any object. </summary>
         public BinaryData Value { get; }
     }
 }

@@ -9,10 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The configuration settings of the Google provider.
-    /// Serialized Name: Google
-    /// </summary>
+    /// <summary> The configuration settings of the Google provider. </summary>
     public partial class Google
     {
         /// <summary> Initializes a new instance of Google. </summary>
@@ -21,22 +18,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of Google. </summary>
-        /// <param name="isEnabled">
-        /// &lt;code&gt;false&lt;/code&gt; if the Google provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;.
-        /// Serialized Name: Google.enabled
-        /// </param>
-        /// <param name="registration">
-        /// The configuration settings of the app registration for the Google provider.
-        /// Serialized Name: Google.registration
-        /// </param>
-        /// <param name="login">
-        /// The configuration settings of the login flow.
-        /// Serialized Name: Google.login
-        /// </param>
-        /// <param name="validation">
-        /// The configuration settings of the Azure Active Directory token validation flow.
-        /// Serialized Name: Google.validation
-        /// </param>
+        /// <param name="isEnabled"> &lt;code&gt;false&lt;/code&gt; if the Google provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
+        /// <param name="registration"> The configuration settings of the app registration for the Google provider. </param>
+        /// <param name="login"> The configuration settings of the login flow. </param>
+        /// <param name="validation"> The configuration settings of the Azure Active Directory token validation flow. </param>
         internal Google(bool? isEnabled, ClientRegistration registration, LoginScopes login, AllowedAudiencesValidation validation)
         {
             IsEnabled = isEnabled;
@@ -45,25 +30,13 @@ namespace Azure.ResourceManager.AppService.Models
             Validation = validation;
         }
 
-        /// <summary>
-        /// &lt;code&gt;false&lt;/code&gt; if the Google provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;.
-        /// Serialized Name: Google.enabled
-        /// </summary>
+        /// <summary> &lt;code&gt;false&lt;/code&gt; if the Google provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </summary>
         public bool? IsEnabled { get; set; }
-        /// <summary>
-        /// The configuration settings of the app registration for the Google provider.
-        /// Serialized Name: Google.registration
-        /// </summary>
+        /// <summary> The configuration settings of the app registration for the Google provider. </summary>
         public ClientRegistration Registration { get; set; }
-        /// <summary>
-        /// The configuration settings of the login flow.
-        /// Serialized Name: Google.login
-        /// </summary>
+        /// <summary> The configuration settings of the login flow. </summary>
         internal LoginScopes Login { get; set; }
-        /// <summary>
-        /// A list of the scopes that should be requested while authenticating.
-        /// Serialized Name: LoginScopes.scopes
-        /// </summary>
+        /// <summary> A list of the scopes that should be requested while authenticating. </summary>
         public IList<string> LoginScopes
         {
             get
@@ -74,15 +47,9 @@ namespace Azure.ResourceManager.AppService.Models
             }
         }
 
-        /// <summary>
-        /// The configuration settings of the Azure Active Directory token validation flow.
-        /// Serialized Name: Google.validation
-        /// </summary>
+        /// <summary> The configuration settings of the Azure Active Directory token validation flow. </summary>
         internal AllowedAudiencesValidation Validation { get; set; }
-        /// <summary>
-        /// The configuration settings of the allowed list of audiences from which to validate the JWT token.
-        /// Serialized Name: AllowedAudiencesValidation.allowedAudiences
-        /// </summary>
+        /// <summary> The configuration settings of the allowed list of audiences from which to validate the JWT token. </summary>
         public IList<string> ValidationAllowedAudiences
         {
             get

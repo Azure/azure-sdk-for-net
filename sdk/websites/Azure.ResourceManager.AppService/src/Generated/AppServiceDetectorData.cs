@@ -27,30 +27,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="metadata">
-        /// metadata for the detector
-        /// Serialized Name: DetectorResponse.properties.metadata
-        /// </param>
-        /// <param name="dataset">
-        /// Data Set
-        /// Serialized Name: DetectorResponse.properties.dataset
-        /// </param>
-        /// <param name="status">
-        /// Indicates status of the most severe insight.
-        /// Serialized Name: DetectorResponse.properties.status
-        /// </param>
-        /// <param name="dataProvidersMetadata">
-        /// Additional configuration for different data providers to be used by the UI
-        /// Serialized Name: DetectorResponse.properties.dataProvidersMetadata
-        /// </param>
-        /// <param name="suggestedUtterances">
-        /// Suggested utterances where the detector can be applicable.
-        /// Serialized Name: DetectorResponse.properties.suggestedUtterances
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="metadata"> metadata for the detector. </param>
+        /// <param name="dataset"> Data Set. </param>
+        /// <param name="status"> Indicates status of the most severe insight. </param>
+        /// <param name="dataProvidersMetadata"> Additional configuration for different data providers to be used by the UI. </param>
+        /// <param name="suggestedUtterances"> Suggested utterances where the detector can be applicable. </param>
+        /// <param name="kind"> Kind of resource. </param>
         internal AppServiceDetectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DetectorInfo metadata, IList<DiagnosticInfo> dataset, StatusInfo status, IList<DataProviderMetadata> dataProvidersMetadata, QueryUtterancesResults suggestedUtterances, string kind) : base(id, name, resourceType, systemData)
         {
             Metadata = metadata;
@@ -61,35 +43,17 @@ namespace Azure.ResourceManager.AppService
             Kind = kind;
         }
 
-        /// <summary>
-        /// metadata for the detector
-        /// Serialized Name: DetectorResponse.properties.metadata
-        /// </summary>
+        /// <summary> metadata for the detector. </summary>
         public DetectorInfo Metadata { get; set; }
-        /// <summary>
-        /// Data Set
-        /// Serialized Name: DetectorResponse.properties.dataset
-        /// </summary>
+        /// <summary> Data Set. </summary>
         public IList<DiagnosticInfo> Dataset { get; }
-        /// <summary>
-        /// Indicates status of the most severe insight.
-        /// Serialized Name: DetectorResponse.properties.status
-        /// </summary>
+        /// <summary> Indicates status of the most severe insight. </summary>
         public StatusInfo Status { get; set; }
-        /// <summary>
-        /// Additional configuration for different data providers to be used by the UI
-        /// Serialized Name: DetectorResponse.properties.dataProvidersMetadata
-        /// </summary>
+        /// <summary> Additional configuration for different data providers to be used by the UI. </summary>
         public IList<DataProviderMetadata> DataProvidersMetadata { get; }
-        /// <summary>
-        /// Suggested utterances where the detector can be applicable.
-        /// Serialized Name: DetectorResponse.properties.suggestedUtterances
-        /// </summary>
+        /// <summary> Suggested utterances where the detector can be applicable. </summary>
         public QueryUtterancesResults SuggestedUtterances { get; set; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }
 }

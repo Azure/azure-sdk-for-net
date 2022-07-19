@@ -12,17 +12,11 @@ using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Collection of backup items.
-    /// Serialized Name: BackupItemCollection
-    /// </summary>
+    /// <summary> Collection of backup items. </summary>
     internal partial class BackupItemCollection
     {
         /// <summary> Initializes a new instance of BackupItemCollection. </summary>
-        /// <param name="value">
-        /// Collection of resources.
-        /// Serialized Name: BackupItemCollection.value
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal BackupItemCollection(IEnumerable<BackupItemData> value)
         {
@@ -35,29 +29,17 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of BackupItemCollection. </summary>
-        /// <param name="value">
-        /// Collection of resources.
-        /// Serialized Name: BackupItemCollection.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Link to next page of resources.
-        /// Serialized Name: BackupItemCollection.nextLink
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
+        /// <param name="nextLink"> Link to next page of resources. </param>
         internal BackupItemCollection(IReadOnlyList<BackupItemData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Collection of resources.
-        /// Serialized Name: BackupItemCollection.value
-        /// </summary>
+        /// <summary> Collection of resources. </summary>
         public IReadOnlyList<BackupItemData> Value { get; }
-        /// <summary>
-        /// Link to next page of resources.
-        /// Serialized Name: BackupItemCollection.nextLink
-        /// </summary>
+        /// <summary> Link to next page of resources. </summary>
         public string NextLink { get; }
     }
 }

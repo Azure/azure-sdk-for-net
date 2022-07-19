@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The GitHub action configuration.
-    /// Serialized Name: GitHubActionConfiguration
-    /// </summary>
+    /// <summary> The GitHub action configuration. </summary>
     public partial class GitHubActionConfiguration
     {
         /// <summary> Initializes a new instance of GitHubActionConfiguration. </summary>
@@ -19,22 +16,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of GitHubActionConfiguration. </summary>
-        /// <param name="codeConfiguration">
-        /// GitHub Action code configuration.
-        /// Serialized Name: GitHubActionConfiguration.codeConfiguration
-        /// </param>
-        /// <param name="containerConfiguration">
-        /// GitHub Action container configuration.
-        /// Serialized Name: GitHubActionConfiguration.containerConfiguration
-        /// </param>
-        /// <param name="isLinux">
-        /// This will help determine the workflow configuration to select.
-        /// Serialized Name: GitHubActionConfiguration.isLinux
-        /// </param>
-        /// <param name="isGenerateWorkflowFile">
-        /// Workflow option to determine whether the workflow file should be generated and written to the repository.
-        /// Serialized Name: GitHubActionConfiguration.generateWorkflowFile
-        /// </param>
+        /// <param name="codeConfiguration"> GitHub Action code configuration. </param>
+        /// <param name="containerConfiguration"> GitHub Action container configuration. </param>
+        /// <param name="isLinux"> This will help determine the workflow configuration to select. </param>
+        /// <param name="isGenerateWorkflowFile"> Workflow option to determine whether the workflow file should be generated and written to the repository. </param>
         internal GitHubActionConfiguration(GitHubActionCodeConfiguration codeConfiguration, GitHubActionContainerConfiguration containerConfiguration, bool? isLinux, bool? isGenerateWorkflowFile)
         {
             CodeConfiguration = codeConfiguration;
@@ -43,25 +28,13 @@ namespace Azure.ResourceManager.AppService.Models
             IsGenerateWorkflowFile = isGenerateWorkflowFile;
         }
 
-        /// <summary>
-        /// GitHub Action code configuration.
-        /// Serialized Name: GitHubActionConfiguration.codeConfiguration
-        /// </summary>
+        /// <summary> GitHub Action code configuration. </summary>
         public GitHubActionCodeConfiguration CodeConfiguration { get; set; }
-        /// <summary>
-        /// GitHub Action container configuration.
-        /// Serialized Name: GitHubActionConfiguration.containerConfiguration
-        /// </summary>
+        /// <summary> GitHub Action container configuration. </summary>
         public GitHubActionContainerConfiguration ContainerConfiguration { get; set; }
-        /// <summary>
-        /// This will help determine the workflow configuration to select.
-        /// Serialized Name: GitHubActionConfiguration.isLinux
-        /// </summary>
+        /// <summary> This will help determine the workflow configuration to select. </summary>
         public bool? IsLinux { get; set; }
-        /// <summary>
-        /// Workflow option to determine whether the workflow file should be generated and written to the repository.
-        /// Serialized Name: GitHubActionConfiguration.generateWorkflowFile
-        /// </summary>
+        /// <summary> Workflow option to determine whether the workflow file should be generated and written to the repository. </summary>
         public bool? IsGenerateWorkflowFile { get; set; }
     }
 }

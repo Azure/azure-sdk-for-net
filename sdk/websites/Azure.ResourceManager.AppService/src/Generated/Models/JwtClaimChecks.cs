@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The configuration settings of the checks that should be made while validating the JWT Claims.
-    /// Serialized Name: JwtClaimChecks
-    /// </summary>
+    /// <summary> The configuration settings of the checks that should be made while validating the JWT Claims. </summary>
     public partial class JwtClaimChecks
     {
         /// <summary> Initializes a new instance of JwtClaimChecks. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of JwtClaimChecks. </summary>
-        /// <param name="allowedGroups">
-        /// The list of the allowed groups.
-        /// Serialized Name: JwtClaimChecks.allowedGroups
-        /// </param>
-        /// <param name="allowedClientApplications">
-        /// The list of the allowed client applications.
-        /// Serialized Name: JwtClaimChecks.allowedClientApplications
-        /// </param>
+        /// <param name="allowedGroups"> The list of the allowed groups. </param>
+        /// <param name="allowedClientApplications"> The list of the allowed client applications. </param>
         internal JwtClaimChecks(IList<string> allowedGroups, IList<string> allowedClientApplications)
         {
             AllowedGroups = allowedGroups;
             AllowedClientApplications = allowedClientApplications;
         }
 
-        /// <summary>
-        /// The list of the allowed groups.
-        /// Serialized Name: JwtClaimChecks.allowedGroups
-        /// </summary>
+        /// <summary> The list of the allowed groups. </summary>
         public IList<string> AllowedGroups { get; }
-        /// <summary>
-        /// The list of the allowed client applications.
-        /// Serialized Name: JwtClaimChecks.allowedClientApplications
-        /// </summary>
+        /// <summary> The list of the allowed client applications. </summary>
         public IList<string> AllowedClientApplications { get; }
     }
 }

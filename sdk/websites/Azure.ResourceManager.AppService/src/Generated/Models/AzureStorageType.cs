@@ -7,21 +7,12 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Type of storage.
-    /// Serialized Name: AzureStorageType
-    /// </summary>
+    /// <summary> Type of storage. </summary>
     public enum AzureStorageType
     {
-        /// <summary>
-        /// AzureFiles
-        /// Serialized Name: AzureStorageType.AzureFiles
-        /// </summary>
+        /// <summary> AzureFiles. </summary>
         AzureFiles,
-        /// <summary>
-        /// AzureBlob
-        /// Serialized Name: AzureStorageType.AzureBlob
-        /// </summary>
+        /// <summary> AzureBlob. </summary>
         AzureBlob
     }
 }

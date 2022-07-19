@@ -10,10 +10,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// A setting difference between two deployment slots of an app.
-    /// Serialized Name: SlotDifference
-    /// </summary>
+    /// <summary> A setting difference between two deployment slots of an app. </summary>
     public partial class SlotDifference : ResourceData
     {
         /// <summary> Initializes a new instance of SlotDifference. </summary>
@@ -26,38 +23,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="level">
-        /// Level of the difference: Information, Warning or Error.
-        /// Serialized Name: SlotDifference.properties.level
-        /// </param>
-        /// <param name="settingType">
-        /// The type of the setting: General, AppSetting or ConnectionString.
-        /// Serialized Name: SlotDifference.properties.settingType
-        /// </param>
-        /// <param name="diffRule">
-        /// Rule that describes how to process the setting difference during a slot swap.
-        /// Serialized Name: SlotDifference.properties.diffRule
-        /// </param>
-        /// <param name="settingName">
-        /// Name of the setting.
-        /// Serialized Name: SlotDifference.properties.settingName
-        /// </param>
-        /// <param name="valueInCurrentSlot">
-        /// Value of the setting in the current slot.
-        /// Serialized Name: SlotDifference.properties.valueInCurrentSlot
-        /// </param>
-        /// <param name="valueInTargetSlot">
-        /// Value of the setting in the target slot.
-        /// Serialized Name: SlotDifference.properties.valueInTargetSlot
-        /// </param>
-        /// <param name="description">
-        /// Description of the setting difference.
-        /// Serialized Name: SlotDifference.properties.description
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="level"> Level of the difference: Information, Warning or Error. </param>
+        /// <param name="settingType"> The type of the setting: General, AppSetting or ConnectionString. </param>
+        /// <param name="diffRule"> Rule that describes how to process the setting difference during a slot swap. </param>
+        /// <param name="settingName"> Name of the setting. </param>
+        /// <param name="valueInCurrentSlot"> Value of the setting in the current slot. </param>
+        /// <param name="valueInTargetSlot"> Value of the setting in the target slot. </param>
+        /// <param name="description"> Description of the setting difference. </param>
+        /// <param name="kind"> Kind of resource. </param>
         internal SlotDifference(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string level, string settingType, string diffRule, string settingName, string valueInCurrentSlot, string valueInTargetSlot, string description, string kind) : base(id, name, resourceType, systemData)
         {
             Level = level;
@@ -70,45 +43,21 @@ namespace Azure.ResourceManager.AppService.Models
             Kind = kind;
         }
 
-        /// <summary>
-        /// Level of the difference: Information, Warning or Error.
-        /// Serialized Name: SlotDifference.properties.level
-        /// </summary>
+        /// <summary> Level of the difference: Information, Warning or Error. </summary>
         public string Level { get; }
-        /// <summary>
-        /// The type of the setting: General, AppSetting or ConnectionString.
-        /// Serialized Name: SlotDifference.properties.settingType
-        /// </summary>
+        /// <summary> The type of the setting: General, AppSetting or ConnectionString. </summary>
         public string SettingType { get; }
-        /// <summary>
-        /// Rule that describes how to process the setting difference during a slot swap.
-        /// Serialized Name: SlotDifference.properties.diffRule
-        /// </summary>
+        /// <summary> Rule that describes how to process the setting difference during a slot swap. </summary>
         public string DiffRule { get; }
-        /// <summary>
-        /// Name of the setting.
-        /// Serialized Name: SlotDifference.properties.settingName
-        /// </summary>
+        /// <summary> Name of the setting. </summary>
         public string SettingName { get; }
-        /// <summary>
-        /// Value of the setting in the current slot.
-        /// Serialized Name: SlotDifference.properties.valueInCurrentSlot
-        /// </summary>
+        /// <summary> Value of the setting in the current slot. </summary>
         public string ValueInCurrentSlot { get; }
-        /// <summary>
-        /// Value of the setting in the target slot.
-        /// Serialized Name: SlotDifference.properties.valueInTargetSlot
-        /// </summary>
+        /// <summary> Value of the setting in the target slot. </summary>
         public string ValueInTargetSlot { get; }
-        /// <summary>
-        /// Description of the setting difference.
-        /// Serialized Name: SlotDifference.properties.description
-        /// </summary>
+        /// <summary> Description of the setting difference. </summary>
         public string Description { get; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }
 }

@@ -7,21 +7,12 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The FrontEndServiceType.
-    /// Serialized Name: FrontEndServiceType
-    /// </summary>
+    /// <summary> The FrontEndServiceType. </summary>
     public enum FrontEndServiceType
     {
-        /// <summary>
-        /// NodePort
-        /// Serialized Name: FrontEndServiceType.NodePort
-        /// </summary>
+        /// <summary> NodePort. </summary>
         NodePort,
-        /// <summary>
-        /// LoadBalancer
-        /// Serialized Name: FrontEndServiceType.LoadBalancer
-        /// </summary>
+        /// <summary> LoadBalancer. </summary>
         LoadBalancer
     }
 }

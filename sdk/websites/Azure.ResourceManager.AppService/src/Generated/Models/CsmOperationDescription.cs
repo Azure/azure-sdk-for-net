@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Description of an operation available for Microsoft.Web resource provider.
-    /// Serialized Name: CsmOperationDescription
-    /// </summary>
+    /// <summary> Description of an operation available for Microsoft.Web resource provider. </summary>
     public partial class CsmOperationDescription
     {
         /// <summary> Initializes a new instance of CsmOperationDescription. </summary>
@@ -19,17 +16,11 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of CsmOperationDescription. </summary>
-        /// <param name="name"> Serialized Name: CsmOperationDescription.name. </param>
-        /// <param name="isDataAction"> Serialized Name: CsmOperationDescription.isDataAction. </param>
-        /// <param name="display">
-        /// Meta data about operation used for display in portal.
-        /// Serialized Name: CsmOperationDescription.display
-        /// </param>
-        /// <param name="origin"> Serialized Name: CsmOperationDescription.origin. </param>
-        /// <param name="properties">
-        /// Properties available for a Microsoft.Web resource provider operation.
-        /// Serialized Name: CsmOperationDescription.properties
-        /// </param>
+        /// <param name="name"></param>
+        /// <param name="isDataAction"></param>
+        /// <param name="display"> Meta data about operation used for display in portal. </param>
+        /// <param name="origin"></param>
+        /// <param name="properties"> Properties available for a Microsoft.Web resource provider operation. </param>
         internal CsmOperationDescription(string name, bool? isDataAction, CsmOperationDisplay display, string origin, CsmOperationDescriptionProperties properties)
         {
             Name = name;
@@ -39,26 +30,17 @@ namespace Azure.ResourceManager.AppService.Models
             Properties = properties;
         }
 
-        /// <summary> Serialized Name: CsmOperationDescription.name. </summary>
+        /// <summary> Gets the name. </summary>
         public string Name { get; }
-        /// <summary> Serialized Name: CsmOperationDescription.isDataAction. </summary>
+        /// <summary> Gets the is data action. </summary>
         public bool? IsDataAction { get; }
-        /// <summary>
-        /// Meta data about operation used for display in portal.
-        /// Serialized Name: CsmOperationDescription.display
-        /// </summary>
+        /// <summary> Meta data about operation used for display in portal. </summary>
         public CsmOperationDisplay Display { get; }
-        /// <summary> Serialized Name: CsmOperationDescription.origin. </summary>
+        /// <summary> Gets the origin. </summary>
         public string Origin { get; }
-        /// <summary>
-        /// Properties available for a Microsoft.Web resource provider operation.
-        /// Serialized Name: CsmOperationDescription.properties
-        /// </summary>
+        /// <summary> Properties available for a Microsoft.Web resource provider operation. </summary>
         internal CsmOperationDescriptionProperties Properties { get; }
-        /// <summary>
-        /// Resource metrics service provided by Microsoft.Insights resource provider.
-        /// Serialized Name: CsmOperationDescriptionProperties.serviceSpecification
-        /// </summary>
+        /// <summary> Resource metrics service provided by Microsoft.Insights resource provider. </summary>
         public ServiceSpecification CsmOperationDescriptionServiceSpecification
         {
             get => Properties?.ServiceSpecification;

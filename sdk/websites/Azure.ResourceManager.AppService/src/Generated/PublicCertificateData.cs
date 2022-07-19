@@ -25,22 +25,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="blob">
-        /// Public Certificate byte array
-        /// Serialized Name: PublicCertificate.properties.blob
-        /// </param>
-        /// <param name="publicCertificateLocation">
-        /// Public Certificate Location
-        /// Serialized Name: PublicCertificate.properties.publicCertificateLocation
-        /// </param>
-        /// <param name="thumbprint">
-        /// Certificate Thumbprint
-        /// Serialized Name: PublicCertificate.properties.thumbprint
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="blob"> Public Certificate byte array. </param>
+        /// <param name="publicCertificateLocation"> Public Certificate Location. </param>
+        /// <param name="thumbprint"> Certificate Thumbprint. </param>
+        /// <param name="kind"> Kind of resource. </param>
         internal PublicCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, byte[] blob, PublicCertificateLocation? publicCertificateLocation, string thumbprint, string kind) : base(id, name, resourceType, systemData)
         {
             Blob = blob;
@@ -49,25 +37,13 @@ namespace Azure.ResourceManager.AppService
             Kind = kind;
         }
 
-        /// <summary>
-        /// Public Certificate byte array
-        /// Serialized Name: PublicCertificate.properties.blob
-        /// </summary>
+        /// <summary> Public Certificate byte array. </summary>
         public byte[] Blob { get; set; }
-        /// <summary>
-        /// Public Certificate Location
-        /// Serialized Name: PublicCertificate.properties.publicCertificateLocation
-        /// </summary>
+        /// <summary> Public Certificate Location. </summary>
         public PublicCertificateLocation? PublicCertificateLocation { get; set; }
-        /// <summary>
-        /// Certificate Thumbprint
-        /// Serialized Name: PublicCertificate.properties.thumbprint
-        /// </summary>
+        /// <summary> Certificate Thumbprint. </summary>
         public string Thumbprint { get; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }
 }

@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Template Options for the static site.
-    /// Serialized Name: StaticSiteTemplateOptions
-    /// </summary>
+    /// <summary> Template Options for the static site. </summary>
     public partial class StaticSiteTemplate
     {
         /// <summary> Initializes a new instance of StaticSiteTemplate. </summary>
@@ -21,26 +18,11 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of StaticSiteTemplate. </summary>
-        /// <param name="templateRepositoryUri">
-        /// URL of the template repository. The newly generated repository will be based on this one.
-        /// Serialized Name: StaticSiteTemplateOptions.templateRepositoryUrl
-        /// </param>
-        /// <param name="owner">
-        /// Owner of the newly generated repository.
-        /// Serialized Name: StaticSiteTemplateOptions.owner
-        /// </param>
-        /// <param name="repositoryName">
-        /// Name of the newly generated repository.
-        /// Serialized Name: StaticSiteTemplateOptions.repositoryName
-        /// </param>
-        /// <param name="description">
-        /// Description of the newly generated repository.
-        /// Serialized Name: StaticSiteTemplateOptions.description
-        /// </param>
-        /// <param name="isPrivate">
-        /// Whether or not the newly generated repository is a private repository. Defaults to false (i.e. public).
-        /// Serialized Name: StaticSiteTemplateOptions.isPrivate
-        /// </param>
+        /// <param name="templateRepositoryUri"> URL of the template repository. The newly generated repository will be based on this one. </param>
+        /// <param name="owner"> Owner of the newly generated repository. </param>
+        /// <param name="repositoryName"> Name of the newly generated repository. </param>
+        /// <param name="description"> Description of the newly generated repository. </param>
+        /// <param name="isPrivate"> Whether or not the newly generated repository is a private repository. Defaults to false (i.e. public). </param>
         internal StaticSiteTemplate(Uri templateRepositoryUri, string owner, string repositoryName, string description, bool? isPrivate)
         {
             TemplateRepositoryUri = templateRepositoryUri;
@@ -50,30 +32,15 @@ namespace Azure.ResourceManager.AppService.Models
             IsPrivate = isPrivate;
         }
 
-        /// <summary>
-        /// URL of the template repository. The newly generated repository will be based on this one.
-        /// Serialized Name: StaticSiteTemplateOptions.templateRepositoryUrl
-        /// </summary>
+        /// <summary> URL of the template repository. The newly generated repository will be based on this one. </summary>
         public Uri TemplateRepositoryUri { get; set; }
-        /// <summary>
-        /// Owner of the newly generated repository.
-        /// Serialized Name: StaticSiteTemplateOptions.owner
-        /// </summary>
+        /// <summary> Owner of the newly generated repository. </summary>
         public string Owner { get; set; }
-        /// <summary>
-        /// Name of the newly generated repository.
-        /// Serialized Name: StaticSiteTemplateOptions.repositoryName
-        /// </summary>
+        /// <summary> Name of the newly generated repository. </summary>
         public string RepositoryName { get; set; }
-        /// <summary>
-        /// Description of the newly generated repository.
-        /// Serialized Name: StaticSiteTemplateOptions.description
-        /// </summary>
+        /// <summary> Description of the newly generated repository. </summary>
         public string Description { get; set; }
-        /// <summary>
-        /// Whether or not the newly generated repository is a private repository. Defaults to false (i.e. public).
-        /// Serialized Name: StaticSiteTemplateOptions.isPrivate
-        /// </summary>
+        /// <summary> Whether or not the newly generated repository is a private repository. Defaults to false (i.e. public). </summary>
         public bool? IsPrivate { get; set; }
     }
 }

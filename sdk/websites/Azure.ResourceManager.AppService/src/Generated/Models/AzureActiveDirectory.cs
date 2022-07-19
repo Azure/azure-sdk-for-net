@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The configuration settings of the Azure Active directory provider.
-    /// Serialized Name: AzureActiveDirectory
-    /// </summary>
+    /// <summary> The configuration settings of the Azure Active directory provider. </summary>
     public partial class AzureActiveDirectory
     {
         /// <summary> Initializes a new instance of AzureActiveDirectory. </summary>
@@ -19,27 +16,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of AzureActiveDirectory. </summary>
-        /// <param name="isEnabled">
-        /// &lt;code&gt;false&lt;/code&gt; if the Azure Active Directory provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;.
-        /// Serialized Name: AzureActiveDirectory.enabled
-        /// </param>
-        /// <param name="registration">
-        /// The configuration settings of the Azure Active Directory app registration.
-        /// Serialized Name: AzureActiveDirectory.registration
-        /// </param>
-        /// <param name="login">
-        /// The configuration settings of the Azure Active Directory login flow.
-        /// Serialized Name: AzureActiveDirectory.login
-        /// </param>
-        /// <param name="validation">
-        /// The configuration settings of the Azure Active Directory token validation flow.
-        /// Serialized Name: AzureActiveDirectory.validation
-        /// </param>
+        /// <param name="isEnabled"> &lt;code&gt;false&lt;/code&gt; if the Azure Active Directory provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
+        /// <param name="registration"> The configuration settings of the Azure Active Directory app registration. </param>
+        /// <param name="login"> The configuration settings of the Azure Active Directory login flow. </param>
+        /// <param name="validation"> The configuration settings of the Azure Active Directory token validation flow. </param>
         /// <param name="isAutoProvisioned">
         /// Gets a value indicating whether the Azure AD configuration was auto-provisioned using 1st party tooling.
         /// This is an internal flag primarily intended to support the Azure Management Portal. Users should not
         /// read or write to this property.
-        /// Serialized Name: AzureActiveDirectory.isAutoProvisioned
         /// </param>
         internal AzureActiveDirectory(bool? isEnabled, AzureActiveDirectoryRegistration registration, AzureActiveDirectoryLogin login, AzureActiveDirectoryValidation validation, bool? isAutoProvisioned)
         {
@@ -50,31 +34,18 @@ namespace Azure.ResourceManager.AppService.Models
             IsAutoProvisioned = isAutoProvisioned;
         }
 
-        /// <summary>
-        /// &lt;code&gt;false&lt;/code&gt; if the Azure Active Directory provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;.
-        /// Serialized Name: AzureActiveDirectory.enabled
-        /// </summary>
+        /// <summary> &lt;code&gt;false&lt;/code&gt; if the Azure Active Directory provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </summary>
         public bool? IsEnabled { get; set; }
-        /// <summary>
-        /// The configuration settings of the Azure Active Directory app registration.
-        /// Serialized Name: AzureActiveDirectory.registration
-        /// </summary>
+        /// <summary> The configuration settings of the Azure Active Directory app registration. </summary>
         public AzureActiveDirectoryRegistration Registration { get; set; }
-        /// <summary>
-        /// The configuration settings of the Azure Active Directory login flow.
-        /// Serialized Name: AzureActiveDirectory.login
-        /// </summary>
+        /// <summary> The configuration settings of the Azure Active Directory login flow. </summary>
         public AzureActiveDirectoryLogin Login { get; set; }
-        /// <summary>
-        /// The configuration settings of the Azure Active Directory token validation flow.
-        /// Serialized Name: AzureActiveDirectory.validation
-        /// </summary>
+        /// <summary> The configuration settings of the Azure Active Directory token validation flow. </summary>
         public AzureActiveDirectoryValidation Validation { get; set; }
         /// <summary>
         /// Gets a value indicating whether the Azure AD configuration was auto-provisioned using 1st party tooling.
         /// This is an internal flag primarily intended to support the Azure Management Portal. Users should not
         /// read or write to this property.
-        /// Serialized Name: AzureActiveDirectory.isAutoProvisioned
         /// </summary>
         public bool? IsAutoProvisioned { get; set; }
     }

@@ -12,17 +12,11 @@ using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Collection of Kudu continuous web job information elements.
-    /// Serialized Name: TriggeredJobHistoryCollection
-    /// </summary>
+    /// <summary> Collection of Kudu continuous web job information elements. </summary>
     internal partial class TriggeredJobHistoryCollection
     {
         /// <summary> Initializes a new instance of TriggeredJobHistoryCollection. </summary>
-        /// <param name="value">
-        /// Collection of resources.
-        /// Serialized Name: TriggeredJobHistoryCollection.value
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal TriggeredJobHistoryCollection(IEnumerable<TriggeredJobHistoryData> value)
         {
@@ -35,29 +29,17 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of TriggeredJobHistoryCollection. </summary>
-        /// <param name="value">
-        /// Collection of resources.
-        /// Serialized Name: TriggeredJobHistoryCollection.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Link to next page of resources.
-        /// Serialized Name: TriggeredJobHistoryCollection.nextLink
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
+        /// <param name="nextLink"> Link to next page of resources. </param>
         internal TriggeredJobHistoryCollection(IReadOnlyList<TriggeredJobHistoryData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Collection of resources.
-        /// Serialized Name: TriggeredJobHistoryCollection.value
-        /// </summary>
+        /// <summary> Collection of resources. </summary>
         public IReadOnlyList<TriggeredJobHistoryData> Value { get; }
-        /// <summary>
-        /// Link to next page of resources.
-        /// Serialized Name: TriggeredJobHistoryCollection.nextLink
-        /// </summary>
+        /// <summary> Link to next page of resources. </summary>
         public string NextLink { get; }
     }
 }

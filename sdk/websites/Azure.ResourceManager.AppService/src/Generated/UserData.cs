@@ -24,30 +24,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="publishingUserName">
-        /// Username used for publishing.
-        /// Serialized Name: User.properties.publishingUserName
-        /// </param>
-        /// <param name="publishingPassword">
-        /// Password used for publishing.
-        /// Serialized Name: User.properties.publishingPassword
-        /// </param>
-        /// <param name="publishingPasswordHash">
-        /// Password hash used for publishing.
-        /// Serialized Name: User.properties.publishingPasswordHash
-        /// </param>
-        /// <param name="publishingPasswordHashSalt">
-        /// Password hash salt used for publishing.
-        /// Serialized Name: User.properties.publishingPasswordHashSalt
-        /// </param>
-        /// <param name="scmUri">
-        /// Url of SCM site.
-        /// Serialized Name: User.properties.scmUri
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="publishingUserName"> Username used for publishing. </param>
+        /// <param name="publishingPassword"> Password used for publishing. </param>
+        /// <param name="publishingPasswordHash"> Password hash used for publishing. </param>
+        /// <param name="publishingPasswordHashSalt"> Password hash salt used for publishing. </param>
+        /// <param name="scmUri"> Url of SCM site. </param>
+        /// <param name="kind"> Kind of resource. </param>
         internal UserData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string publishingUserName, string publishingPassword, string publishingPasswordHash, string publishingPasswordHashSalt, Uri scmUri, string kind) : base(id, name, resourceType, systemData)
         {
             PublishingUserName = publishingUserName;
@@ -58,35 +40,17 @@ namespace Azure.ResourceManager.AppService
             Kind = kind;
         }
 
-        /// <summary>
-        /// Username used for publishing.
-        /// Serialized Name: User.properties.publishingUserName
-        /// </summary>
+        /// <summary> Username used for publishing. </summary>
         public string PublishingUserName { get; set; }
-        /// <summary>
-        /// Password used for publishing.
-        /// Serialized Name: User.properties.publishingPassword
-        /// </summary>
+        /// <summary> Password used for publishing. </summary>
         public string PublishingPassword { get; set; }
-        /// <summary>
-        /// Password hash used for publishing.
-        /// Serialized Name: User.properties.publishingPasswordHash
-        /// </summary>
+        /// <summary> Password hash used for publishing. </summary>
         public string PublishingPasswordHash { get; set; }
-        /// <summary>
-        /// Password hash salt used for publishing.
-        /// Serialized Name: User.properties.publishingPasswordHashSalt
-        /// </summary>
+        /// <summary> Password hash salt used for publishing. </summary>
         public string PublishingPasswordHashSalt { get; set; }
-        /// <summary>
-        /// Url of SCM site.
-        /// Serialized Name: User.properties.scmUri
-        /// </summary>
+        /// <summary> Url of SCM site. </summary>
         public Uri ScmUri { get; set; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }
 }

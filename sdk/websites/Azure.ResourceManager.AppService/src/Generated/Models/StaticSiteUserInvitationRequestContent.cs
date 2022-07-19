@@ -10,10 +10,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Static sites user roles invitation resource.
-    /// Serialized Name: StaticSiteUserInvitationRequestResource
-    /// </summary>
+    /// <summary> Static sites user roles invitation resource. </summary>
     public partial class StaticSiteUserInvitationRequestContent : ResourceData
     {
         /// <summary> Initializes a new instance of StaticSiteUserInvitationRequestContent. </summary>
@@ -26,30 +23,12 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="domain">
-        /// The domain name for the static site custom domain.
-        /// Serialized Name: StaticSiteUserInvitationRequestResource.properties.domain
-        /// </param>
-        /// <param name="provider">
-        /// The identity provider for the static site user.
-        /// Serialized Name: StaticSiteUserInvitationRequestResource.properties.provider
-        /// </param>
-        /// <param name="userDetails">
-        /// The user id for the static site user.
-        /// Serialized Name: StaticSiteUserInvitationRequestResource.properties.userDetails
-        /// </param>
-        /// <param name="roles">
-        /// The roles for the static site user, in free-form string format
-        /// Serialized Name: StaticSiteUserInvitationRequestResource.properties.roles
-        /// </param>
-        /// <param name="numHoursToExpiration">
-        /// The number of hours the sas token stays valid
-        /// Serialized Name: StaticSiteUserInvitationRequestResource.properties.numHoursToExpiration
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="domain"> The domain name for the static site custom domain. </param>
+        /// <param name="provider"> The identity provider for the static site user. </param>
+        /// <param name="userDetails"> The user id for the static site user. </param>
+        /// <param name="roles"> The roles for the static site user, in free-form string format. </param>
+        /// <param name="numHoursToExpiration"> The number of hours the sas token stays valid. </param>
+        /// <param name="kind"> Kind of resource. </param>
         internal StaticSiteUserInvitationRequestContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string domain, string provider, string userDetails, string roles, int? numHoursToExpiration, string kind) : base(id, name, resourceType, systemData)
         {
             Domain = domain;
@@ -60,35 +39,17 @@ namespace Azure.ResourceManager.AppService.Models
             Kind = kind;
         }
 
-        /// <summary>
-        /// The domain name for the static site custom domain.
-        /// Serialized Name: StaticSiteUserInvitationRequestResource.properties.domain
-        /// </summary>
+        /// <summary> The domain name for the static site custom domain. </summary>
         public string Domain { get; set; }
-        /// <summary>
-        /// The identity provider for the static site user.
-        /// Serialized Name: StaticSiteUserInvitationRequestResource.properties.provider
-        /// </summary>
+        /// <summary> The identity provider for the static site user. </summary>
         public string Provider { get; set; }
-        /// <summary>
-        /// The user id for the static site user.
-        /// Serialized Name: StaticSiteUserInvitationRequestResource.properties.userDetails
-        /// </summary>
+        /// <summary> The user id for the static site user. </summary>
         public string UserDetails { get; set; }
-        /// <summary>
-        /// The roles for the static site user, in free-form string format
-        /// Serialized Name: StaticSiteUserInvitationRequestResource.properties.roles
-        /// </summary>
+        /// <summary> The roles for the static site user, in free-form string format. </summary>
         public string Roles { get; set; }
-        /// <summary>
-        /// The number of hours the sas token stays valid
-        /// Serialized Name: StaticSiteUserInvitationRequestResource.properties.numHoursToExpiration
-        /// </summary>
+        /// <summary> The number of hours the sas token stays valid. </summary>
         public int? NumHoursToExpiration { get; set; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }
 }

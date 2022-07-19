@@ -15,8 +15,6 @@ tag: package-2021-02
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
-mgmt-debug:
-  show-serialized-names: true
 modelerfour:
   flatten-payloads: false
   lenient-model-deduplication: true

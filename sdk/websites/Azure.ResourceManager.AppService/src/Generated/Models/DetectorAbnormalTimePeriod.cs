@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Class representing Abnormal Time Period detected.
-    /// Serialized Name: DetectorAbnormalTimePeriod
-    /// </summary>
+    /// <summary> Class representing Abnormal Time Period detected. </summary>
     public partial class DetectorAbnormalTimePeriod
     {
         /// <summary> Initializes a new instance of DetectorAbnormalTimePeriod. </summary>
@@ -25,38 +22,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of DetectorAbnormalTimePeriod. </summary>
-        /// <param name="startOn">
-        /// Start time of the correlated event
-        /// Serialized Name: DetectorAbnormalTimePeriod.startTime
-        /// </param>
-        /// <param name="endOn">
-        /// End time of the correlated event
-        /// Serialized Name: DetectorAbnormalTimePeriod.endTime
-        /// </param>
-        /// <param name="message">
-        /// Message describing the event
-        /// Serialized Name: DetectorAbnormalTimePeriod.message
-        /// </param>
-        /// <param name="source">
-        /// Represents the name of the Detector
-        /// Serialized Name: DetectorAbnormalTimePeriod.source
-        /// </param>
-        /// <param name="priority">
-        /// Represents the rank of the Detector
-        /// Serialized Name: DetectorAbnormalTimePeriod.priority
-        /// </param>
-        /// <param name="metaData">
-        /// Downtime metadata
-        /// Serialized Name: DetectorAbnormalTimePeriod.metaData
-        /// </param>
-        /// <param name="issueType">
-        /// Represents the type of the Detector
-        /// Serialized Name: DetectorAbnormalTimePeriod.type
-        /// </param>
-        /// <param name="solutions">
-        /// List of proposed solutions
-        /// Serialized Name: DetectorAbnormalTimePeriod.solutions
-        /// </param>
+        /// <param name="startOn"> Start time of the correlated event. </param>
+        /// <param name="endOn"> End time of the correlated event. </param>
+        /// <param name="message"> Message describing the event. </param>
+        /// <param name="source"> Represents the name of the Detector. </param>
+        /// <param name="priority"> Represents the rank of the Detector. </param>
+        /// <param name="metaData"> Downtime metadata. </param>
+        /// <param name="issueType"> Represents the type of the Detector. </param>
+        /// <param name="solutions"> List of proposed solutions. </param>
         internal DetectorAbnormalTimePeriod(DateTimeOffset? startOn, DateTimeOffset? endOn, string message, string source, double? priority, IList<IList<NameValuePair>> metaData, IssueType? issueType, IList<Solution> solutions)
         {
             StartOn = startOn;
@@ -69,45 +42,21 @@ namespace Azure.ResourceManager.AppService.Models
             Solutions = solutions;
         }
 
-        /// <summary>
-        /// Start time of the correlated event
-        /// Serialized Name: DetectorAbnormalTimePeriod.startTime
-        /// </summary>
+        /// <summary> Start time of the correlated event. </summary>
         public DateTimeOffset? StartOn { get; set; }
-        /// <summary>
-        /// End time of the correlated event
-        /// Serialized Name: DetectorAbnormalTimePeriod.endTime
-        /// </summary>
+        /// <summary> End time of the correlated event. </summary>
         public DateTimeOffset? EndOn { get; set; }
-        /// <summary>
-        /// Message describing the event
-        /// Serialized Name: DetectorAbnormalTimePeriod.message
-        /// </summary>
+        /// <summary> Message describing the event. </summary>
         public string Message { get; set; }
-        /// <summary>
-        /// Represents the name of the Detector
-        /// Serialized Name: DetectorAbnormalTimePeriod.source
-        /// </summary>
+        /// <summary> Represents the name of the Detector. </summary>
         public string Source { get; set; }
-        /// <summary>
-        /// Represents the rank of the Detector
-        /// Serialized Name: DetectorAbnormalTimePeriod.priority
-        /// </summary>
+        /// <summary> Represents the rank of the Detector. </summary>
         public double? Priority { get; set; }
-        /// <summary>
-        /// Downtime metadata
-        /// Serialized Name: DetectorAbnormalTimePeriod.metaData
-        /// </summary>
+        /// <summary> Downtime metadata. </summary>
         public IList<IList<NameValuePair>> MetaData { get; }
-        /// <summary>
-        /// Represents the type of the Detector
-        /// Serialized Name: DetectorAbnormalTimePeriod.type
-        /// </summary>
+        /// <summary> Represents the type of the Detector. </summary>
         public IssueType? IssueType { get; set; }
-        /// <summary>
-        /// List of proposed solutions
-        /// Serialized Name: DetectorAbnormalTimePeriod.solutions
-        /// </summary>
+        /// <summary> List of proposed solutions. </summary>
         public IList<Solution> Solutions { get; }
     }
 }

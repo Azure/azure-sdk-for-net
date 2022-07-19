@@ -7,21 +7,12 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Job type.
-    /// Serialized Name: WebJobType
-    /// </summary>
+    /// <summary> Job type. </summary>
     public enum WebJobType
     {
-        /// <summary>
-        /// Continuous
-        /// Serialized Name: WebJobType.Continuous
-        /// </summary>
+        /// <summary> Continuous. </summary>
         Continuous,
-        /// <summary>
-        /// Triggered
-        /// Serialized Name: WebJobType.Triggered
-        /// </summary>
+        /// <summary> Triggered. </summary>
         Triggered
     }
 }

@@ -23,42 +23,15 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="deletedSiteId">
-        /// Numeric id for the deleted site
-        /// Serialized Name: DeletedSite.properties.deletedSiteId
-        /// </param>
-        /// <param name="deletedTimestamp">
-        /// Time in UTC when the app was deleted.
-        /// Serialized Name: DeletedSite.properties.deletedTimestamp
-        /// </param>
-        /// <param name="subscription">
-        /// Subscription containing the deleted site
-        /// Serialized Name: DeletedSite.properties.subscription
-        /// </param>
-        /// <param name="resourceGroup">
-        /// ResourceGroup that contained the deleted site
-        /// Serialized Name: DeletedSite.properties.resourceGroup
-        /// </param>
-        /// <param name="deletedSiteName">
-        /// Name of the deleted site
-        /// Serialized Name: DeletedSite.properties.deletedSiteName
-        /// </param>
-        /// <param name="slot">
-        /// Slot of the deleted site
-        /// Serialized Name: DeletedSite.properties.slot
-        /// </param>
-        /// <param name="kindPropertiesKind">
-        /// Kind of site that was deleted
-        /// Serialized Name: DeletedSite.properties.kind
-        /// </param>
-        /// <param name="geoRegionName">
-        /// Geo Region of the deleted site
-        /// Serialized Name: DeletedSite.properties.geoRegionName
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="deletedSiteId"> Numeric id for the deleted site. </param>
+        /// <param name="deletedTimestamp"> Time in UTC when the app was deleted. </param>
+        /// <param name="subscription"> Subscription containing the deleted site. </param>
+        /// <param name="resourceGroup"> ResourceGroup that contained the deleted site. </param>
+        /// <param name="deletedSiteName"> Name of the deleted site. </param>
+        /// <param name="slot"> Slot of the deleted site. </param>
+        /// <param name="kindPropertiesKind"> Kind of site that was deleted. </param>
+        /// <param name="geoRegionName"> Geo Region of the deleted site. </param>
+        /// <param name="kind"> Kind of resource. </param>
         internal DeletedSiteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? deletedSiteId, string deletedTimestamp, string subscription, string resourceGroup, string deletedSiteName, string slot, string kindPropertiesKind, string geoRegionName, string kind) : base(id, name, resourceType, systemData)
         {
             DeletedSiteId = deletedSiteId;
@@ -72,50 +45,23 @@ namespace Azure.ResourceManager.AppService
             Kind = kind;
         }
 
-        /// <summary>
-        /// Numeric id for the deleted site
-        /// Serialized Name: DeletedSite.properties.deletedSiteId
-        /// </summary>
+        /// <summary> Numeric id for the deleted site. </summary>
         public int? DeletedSiteId { get; }
-        /// <summary>
-        /// Time in UTC when the app was deleted.
-        /// Serialized Name: DeletedSite.properties.deletedTimestamp
-        /// </summary>
+        /// <summary> Time in UTC when the app was deleted. </summary>
         public string DeletedTimestamp { get; }
-        /// <summary>
-        /// Subscription containing the deleted site
-        /// Serialized Name: DeletedSite.properties.subscription
-        /// </summary>
+        /// <summary> Subscription containing the deleted site. </summary>
         public string Subscription { get; }
-        /// <summary>
-        /// ResourceGroup that contained the deleted site
-        /// Serialized Name: DeletedSite.properties.resourceGroup
-        /// </summary>
+        /// <summary> ResourceGroup that contained the deleted site. </summary>
         public string ResourceGroup { get; }
-        /// <summary>
-        /// Name of the deleted site
-        /// Serialized Name: DeletedSite.properties.deletedSiteName
-        /// </summary>
+        /// <summary> Name of the deleted site. </summary>
         public string DeletedSiteName { get; }
-        /// <summary>
-        /// Slot of the deleted site
-        /// Serialized Name: DeletedSite.properties.slot
-        /// </summary>
+        /// <summary> Slot of the deleted site. </summary>
         public string Slot { get; }
-        /// <summary>
-        /// Kind of site that was deleted
-        /// Serialized Name: DeletedSite.properties.kind
-        /// </summary>
+        /// <summary> Kind of site that was deleted. </summary>
         public string KindPropertiesKind { get; }
-        /// <summary>
-        /// Geo Region of the deleted site
-        /// Serialized Name: DeletedSite.properties.geoRegionName
-        /// </summary>
+        /// <summary> Geo Region of the deleted site. </summary>
         public string GeoRegionName { get; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }
 }

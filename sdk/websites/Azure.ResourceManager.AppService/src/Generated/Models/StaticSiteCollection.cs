@@ -12,17 +12,11 @@ using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Collection of static sites.
-    /// Serialized Name: StaticSiteCollection
-    /// </summary>
+    /// <summary> Collection of static sites. </summary>
     internal partial class StaticSiteCollection
     {
         /// <summary> Initializes a new instance of StaticSiteCollection. </summary>
-        /// <param name="value">
-        /// Collection of resources.
-        /// Serialized Name: StaticSiteCollection.value
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal StaticSiteCollection(IEnumerable<StaticSiteARMData> value)
         {
@@ -35,29 +29,17 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of StaticSiteCollection. </summary>
-        /// <param name="value">
-        /// Collection of resources.
-        /// Serialized Name: StaticSiteCollection.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Link to next page of resources.
-        /// Serialized Name: StaticSiteCollection.nextLink
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
+        /// <param name="nextLink"> Link to next page of resources. </param>
         internal StaticSiteCollection(IReadOnlyList<StaticSiteARMData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Collection of resources.
-        /// Serialized Name: StaticSiteCollection.value
-        /// </summary>
+        /// <summary> Collection of resources. </summary>
         public IReadOnlyList<StaticSiteARMData> Value { get; }
-        /// <summary>
-        /// Link to next page of resources.
-        /// Serialized Name: StaticSiteCollection.nextLink
-        /// </summary>
+        /// <summary> Link to next page of resources. </summary>
         public string NextLink { get; }
     }
 }

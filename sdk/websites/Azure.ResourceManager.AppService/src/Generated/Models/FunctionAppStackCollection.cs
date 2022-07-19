@@ -11,17 +11,11 @@ using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Collection of Function app Stacks
-    /// Serialized Name: FunctionAppStackCollection
-    /// </summary>
+    /// <summary> Collection of Function app Stacks. </summary>
     internal partial class FunctionAppStackCollection
     {
         /// <summary> Initializes a new instance of FunctionAppStackCollection. </summary>
-        /// <param name="value">
-        /// Collection of resources.
-        /// Serialized Name: FunctionAppStackCollection.value
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal FunctionAppStackCollection(IEnumerable<FunctionAppStack> value)
         {
@@ -34,29 +28,17 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of FunctionAppStackCollection. </summary>
-        /// <param name="value">
-        /// Collection of resources.
-        /// Serialized Name: FunctionAppStackCollection.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Link to next page of resources.
-        /// Serialized Name: FunctionAppStackCollection.nextLink
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
+        /// <param name="nextLink"> Link to next page of resources. </param>
         internal FunctionAppStackCollection(IReadOnlyList<FunctionAppStack> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Collection of resources.
-        /// Serialized Name: FunctionAppStackCollection.value
-        /// </summary>
+        /// <summary> Collection of resources. </summary>
         public IReadOnlyList<FunctionAppStack> Value { get; }
-        /// <summary>
-        /// Link to next page of resources.
-        /// Serialized Name: FunctionAppStackCollection.nextLink
-        /// </summary>
+        /// <summary> Link to next page of resources. </summary>
         public string NextLink { get; }
     }
 }

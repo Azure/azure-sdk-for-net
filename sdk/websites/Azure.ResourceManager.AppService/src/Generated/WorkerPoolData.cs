@@ -26,34 +26,13 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="sku">
-        /// Description of a SKU for a scalable resource.
-        /// Serialized Name: WorkerPoolResource.sku
-        /// </param>
-        /// <param name="workerSizeId">
-        /// Worker size ID for referencing this worker pool.
-        /// Serialized Name: WorkerPoolResource.properties.workerSizeId
-        /// </param>
-        /// <param name="computeMode">
-        /// Shared or dedicated app hosting.
-        /// Serialized Name: WorkerPoolResource.properties.computeMode
-        /// </param>
-        /// <param name="workerSize">
-        /// VM size of the worker pool instances.
-        /// Serialized Name: WorkerPoolResource.properties.workerSize
-        /// </param>
-        /// <param name="workerCount">
-        /// Number of instances in the worker pool.
-        /// Serialized Name: WorkerPoolResource.properties.workerCount
-        /// </param>
-        /// <param name="instanceNames">
-        /// Names of all instances in the worker pool (read only).
-        /// Serialized Name: WorkerPoolResource.properties.instanceNames
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="sku"> Description of a SKU for a scalable resource. </param>
+        /// <param name="workerSizeId"> Worker size ID for referencing this worker pool. </param>
+        /// <param name="computeMode"> Shared or dedicated app hosting. </param>
+        /// <param name="workerSize"> VM size of the worker pool instances. </param>
+        /// <param name="workerCount"> Number of instances in the worker pool. </param>
+        /// <param name="instanceNames"> Names of all instances in the worker pool (read only). </param>
+        /// <param name="kind"> Kind of resource. </param>
         internal WorkerPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SkuDescription sku, int? workerSizeId, ComputeModeOption? computeMode, string workerSize, int? workerCount, IReadOnlyList<string> instanceNames, string kind) : base(id, name, resourceType, systemData)
         {
             Sku = sku;
@@ -65,40 +44,19 @@ namespace Azure.ResourceManager.AppService
             Kind = kind;
         }
 
-        /// <summary>
-        /// Description of a SKU for a scalable resource.
-        /// Serialized Name: WorkerPoolResource.sku
-        /// </summary>
+        /// <summary> Description of a SKU for a scalable resource. </summary>
         public SkuDescription Sku { get; set; }
-        /// <summary>
-        /// Worker size ID for referencing this worker pool.
-        /// Serialized Name: WorkerPoolResource.properties.workerSizeId
-        /// </summary>
+        /// <summary> Worker size ID for referencing this worker pool. </summary>
         public int? WorkerSizeId { get; set; }
-        /// <summary>
-        /// Shared or dedicated app hosting.
-        /// Serialized Name: WorkerPoolResource.properties.computeMode
-        /// </summary>
+        /// <summary> Shared or dedicated app hosting. </summary>
         public ComputeModeOption? ComputeMode { get; set; }
-        /// <summary>
-        /// VM size of the worker pool instances.
-        /// Serialized Name: WorkerPoolResource.properties.workerSize
-        /// </summary>
+        /// <summary> VM size of the worker pool instances. </summary>
         public string WorkerSize { get; set; }
-        /// <summary>
-        /// Number of instances in the worker pool.
-        /// Serialized Name: WorkerPoolResource.properties.workerCount
-        /// </summary>
+        /// <summary> Number of instances in the worker pool. </summary>
         public int? WorkerCount { get; set; }
-        /// <summary>
-        /// Names of all instances in the worker pool (read only).
-        /// Serialized Name: WorkerPoolResource.properties.instanceNames
-        /// </summary>
+        /// <summary> Names of all instances in the worker pool (read only). </summary>
         public IReadOnlyList<string> InstanceNames { get; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }
 }

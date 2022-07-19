@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The configuration settings of the app registration for providers that have client ids and client secrets
-    /// Serialized Name: ClientRegistration
-    /// </summary>
+    /// <summary> The configuration settings of the app registration for providers that have client ids and client secrets. </summary>
     public partial class ClientRegistration
     {
         /// <summary> Initializes a new instance of ClientRegistration. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of ClientRegistration. </summary>
-        /// <param name="clientId">
-        /// The Client ID of the app used for login.
-        /// Serialized Name: ClientRegistration.clientId
-        /// </param>
-        /// <param name="clientSecretSettingName">
-        /// The app setting name that contains the client secret.
-        /// Serialized Name: ClientRegistration.clientSecretSettingName
-        /// </param>
+        /// <param name="clientId"> The Client ID of the app used for login. </param>
+        /// <param name="clientSecretSettingName"> The app setting name that contains the client secret. </param>
         internal ClientRegistration(string clientId, string clientSecretSettingName)
         {
             ClientId = clientId;
             ClientSecretSettingName = clientSecretSettingName;
         }
 
-        /// <summary>
-        /// The Client ID of the app used for login.
-        /// Serialized Name: ClientRegistration.clientId
-        /// </summary>
+        /// <summary> The Client ID of the app used for login. </summary>
         public string ClientId { get; set; }
-        /// <summary>
-        /// The app setting name that contains the client secret.
-        /// Serialized Name: ClientRegistration.clientSecretSettingName
-        /// </summary>
+        /// <summary> The app setting name that contains the client secret. </summary>
         public string ClientSecretSettingName { get; set; }
     }
 }

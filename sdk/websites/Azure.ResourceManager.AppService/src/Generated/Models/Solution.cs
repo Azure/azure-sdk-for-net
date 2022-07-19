@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Class Representing Solution for problems detected.
-    /// Serialized Name: Solution
-    /// </summary>
+    /// <summary> Class Representing Solution for problems detected. </summary>
     public partial class Solution
     {
         /// <summary> Initializes a new instance of Solution. </summary>
@@ -24,34 +21,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of Solution. </summary>
-        /// <param name="id">
-        /// Solution Id.
-        /// Serialized Name: Solution.id
-        /// </param>
-        /// <param name="displayName">
-        /// Display Name of the solution
-        /// Serialized Name: Solution.displayName
-        /// </param>
-        /// <param name="order">
-        /// Order of the solution.
-        /// Serialized Name: Solution.order
-        /// </param>
-        /// <param name="description">
-        /// Description of the solution
-        /// Serialized Name: Solution.description
-        /// </param>
-        /// <param name="solutionType">
-        /// Type of Solution
-        /// Serialized Name: Solution.type
-        /// </param>
-        /// <param name="data">
-        /// Solution Data.
-        /// Serialized Name: Solution.data
-        /// </param>
-        /// <param name="metadata">
-        /// Solution Metadata.
-        /// Serialized Name: Solution.metadata
-        /// </param>
+        /// <param name="id"> Solution Id. </param>
+        /// <param name="displayName"> Display Name of the solution. </param>
+        /// <param name="order"> Order of the solution. </param>
+        /// <param name="description"> Description of the solution. </param>
+        /// <param name="solutionType"> Type of Solution. </param>
+        /// <param name="data"> Solution Data. </param>
+        /// <param name="metadata"> Solution Metadata. </param>
         internal Solution(double? id, string displayName, double? order, string description, SolutionType? solutionType, IList<IList<NameValuePair>> data, IList<IList<NameValuePair>> metadata)
         {
             Id = id;
@@ -63,40 +39,19 @@ namespace Azure.ResourceManager.AppService.Models
             Metadata = metadata;
         }
 
-        /// <summary>
-        /// Solution Id.
-        /// Serialized Name: Solution.id
-        /// </summary>
+        /// <summary> Solution Id. </summary>
         public double? Id { get; set; }
-        /// <summary>
-        /// Display Name of the solution
-        /// Serialized Name: Solution.displayName
-        /// </summary>
+        /// <summary> Display Name of the solution. </summary>
         public string DisplayName { get; set; }
-        /// <summary>
-        /// Order of the solution.
-        /// Serialized Name: Solution.order
-        /// </summary>
+        /// <summary> Order of the solution. </summary>
         public double? Order { get; set; }
-        /// <summary>
-        /// Description of the solution
-        /// Serialized Name: Solution.description
-        /// </summary>
+        /// <summary> Description of the solution. </summary>
         public string Description { get; set; }
-        /// <summary>
-        /// Type of Solution
-        /// Serialized Name: Solution.type
-        /// </summary>
+        /// <summary> Type of Solution. </summary>
         public SolutionType? SolutionType { get; set; }
-        /// <summary>
-        /// Solution Data.
-        /// Serialized Name: Solution.data
-        /// </summary>
+        /// <summary> Solution Data. </summary>
         public IList<IList<NameValuePair>> Data { get; }
-        /// <summary>
-        /// Solution Metadata.
-        /// Serialized Name: Solution.metadata
-        /// </summary>
+        /// <summary> Solution Metadata. </summary>
         public IList<IList<NameValuePair>> Metadata { get; }
     }
 }

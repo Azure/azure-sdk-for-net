@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The configuration settings of the paths HTTP requests.
-    /// Serialized Name: HttpSettingsRoutes
-    /// </summary>
+    /// <summary> The configuration settings of the paths HTTP requests. </summary>
     internal partial class HttpSettingsRoutes
     {
         /// <summary> Initializes a new instance of HttpSettingsRoutes. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of HttpSettingsRoutes. </summary>
-        /// <param name="apiPrefix">
-        /// The prefix that should precede all the authentication/authorization paths.
-        /// Serialized Name: HttpSettingsRoutes.apiPrefix
-        /// </param>
+        /// <param name="apiPrefix"> The prefix that should precede all the authentication/authorization paths. </param>
         internal HttpSettingsRoutes(string apiPrefix)
         {
             ApiPrefix = apiPrefix;
         }
 
-        /// <summary>
-        /// The prefix that should precede all the authentication/authorization paths.
-        /// Serialized Name: HttpSettingsRoutes.apiPrefix
-        /// </summary>
+        /// <summary> The prefix that should precede all the authentication/authorization paths. </summary>
         public string ApiPrefix { get; set; }
     }
 }

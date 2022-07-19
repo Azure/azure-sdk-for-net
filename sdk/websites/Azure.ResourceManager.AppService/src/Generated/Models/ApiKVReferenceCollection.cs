@@ -12,17 +12,11 @@ using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The ApiKVReferenceCollection.
-    /// Serialized Name: ApiKVReferenceCollection
-    /// </summary>
+    /// <summary> The ApiKVReferenceCollection. </summary>
     internal partial class ApiKVReferenceCollection
     {
         /// <summary> Initializes a new instance of ApiKVReferenceCollection. </summary>
-        /// <param name="value">
-        /// Collection of resources.
-        /// Serialized Name: ApiKVReferenceCollection.value
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ApiKVReferenceCollection(IEnumerable<ApiKeyVaultReferenceData> value)
         {
@@ -35,29 +29,17 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of ApiKVReferenceCollection. </summary>
-        /// <param name="value">
-        /// Collection of resources.
-        /// Serialized Name: ApiKVReferenceCollection.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Link to next page of resources.
-        /// Serialized Name: ApiKVReferenceCollection.nextLink
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
+        /// <param name="nextLink"> Link to next page of resources. </param>
         internal ApiKVReferenceCollection(IReadOnlyList<ApiKeyVaultReferenceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Collection of resources.
-        /// Serialized Name: ApiKVReferenceCollection.value
-        /// </summary>
+        /// <summary> Collection of resources. </summary>
         public IReadOnlyList<ApiKeyVaultReferenceData> Value { get; }
-        /// <summary>
-        /// Link to next page of resources.
-        /// Serialized Name: ApiKVReferenceCollection.nextLink
-        /// </summary>
+        /// <summary> Link to next page of resources. </summary>
         public string NextLink { get; }
     }
 }

@@ -12,17 +12,11 @@ using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Collection of static site custom domains.
-    /// Serialized Name: StaticSiteCustomDomainOverviewCollection
-    /// </summary>
+    /// <summary> Collection of static site custom domains. </summary>
     internal partial class StaticSiteCustomDomainOverviewCollection
     {
         /// <summary> Initializes a new instance of StaticSiteCustomDomainOverviewCollection. </summary>
-        /// <param name="value">
-        /// Collection of resources.
-        /// Serialized Name: StaticSiteCustomDomainOverviewCollection.value
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal StaticSiteCustomDomainOverviewCollection(IEnumerable<StaticSiteCustomDomainOverviewARMData> value)
         {
@@ -35,29 +29,17 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of StaticSiteCustomDomainOverviewCollection. </summary>
-        /// <param name="value">
-        /// Collection of resources.
-        /// Serialized Name: StaticSiteCustomDomainOverviewCollection.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Link to next page of resources.
-        /// Serialized Name: StaticSiteCustomDomainOverviewCollection.nextLink
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
+        /// <param name="nextLink"> Link to next page of resources. </param>
         internal StaticSiteCustomDomainOverviewCollection(IReadOnlyList<StaticSiteCustomDomainOverviewARMData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Collection of resources.
-        /// Serialized Name: StaticSiteCustomDomainOverviewCollection.value
-        /// </summary>
+        /// <summary> Collection of resources. </summary>
         public IReadOnlyList<StaticSiteCustomDomainOverviewARMData> Value { get; }
-        /// <summary>
-        /// Link to next page of resources.
-        /// Serialized Name: StaticSiteCustomDomainOverviewCollection.nextLink
-        /// </summary>
+        /// <summary> Link to next page of resources. </summary>
         public string NextLink { get; }
     }
 }

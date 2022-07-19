@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// SSL-enabled hostname.
-    /// Serialized Name: HostNameSslState
-    /// </summary>
+    /// <summary> SSL-enabled hostname. </summary>
     public partial class HostNameSslState
     {
         /// <summary> Initializes a new instance of HostNameSslState. </summary>
@@ -19,30 +16,12 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of HostNameSslState. </summary>
-        /// <param name="name">
-        /// Hostname.
-        /// Serialized Name: HostNameSslState.name
-        /// </param>
-        /// <param name="sslState">
-        /// SSL type.
-        /// Serialized Name: HostNameSslState.sslState
-        /// </param>
-        /// <param name="virtualIP">
-        /// Virtual IP address assigned to the hostname if IP based SSL is enabled.
-        /// Serialized Name: HostNameSslState.virtualIP
-        /// </param>
-        /// <param name="thumbprint">
-        /// SSL certificate thumbprint.
-        /// Serialized Name: HostNameSslState.thumbprint
-        /// </param>
-        /// <param name="isToUpdate">
-        /// Set to &lt;code&gt;true&lt;/code&gt; to update existing hostname.
-        /// Serialized Name: HostNameSslState.toUpdate
-        /// </param>
-        /// <param name="hostType">
-        /// Indicates whether the hostname is a standard or repository hostname.
-        /// Serialized Name: HostNameSslState.hostType
-        /// </param>
+        /// <param name="name"> Hostname. </param>
+        /// <param name="sslState"> SSL type. </param>
+        /// <param name="virtualIP"> Virtual IP address assigned to the hostname if IP based SSL is enabled. </param>
+        /// <param name="thumbprint"> SSL certificate thumbprint. </param>
+        /// <param name="isToUpdate"> Set to &lt;code&gt;true&lt;/code&gt; to update existing hostname. </param>
+        /// <param name="hostType"> Indicates whether the hostname is a standard or repository hostname. </param>
         internal HostNameSslState(string name, SslState? sslState, string virtualIP, string thumbprint, bool? isToUpdate, HostType? hostType)
         {
             Name = name;
@@ -53,35 +32,17 @@ namespace Azure.ResourceManager.AppService.Models
             HostType = hostType;
         }
 
-        /// <summary>
-        /// Hostname.
-        /// Serialized Name: HostNameSslState.name
-        /// </summary>
+        /// <summary> Hostname. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// SSL type.
-        /// Serialized Name: HostNameSslState.sslState
-        /// </summary>
+        /// <summary> SSL type. </summary>
         public SslState? SslState { get; set; }
-        /// <summary>
-        /// Virtual IP address assigned to the hostname if IP based SSL is enabled.
-        /// Serialized Name: HostNameSslState.virtualIP
-        /// </summary>
+        /// <summary> Virtual IP address assigned to the hostname if IP based SSL is enabled. </summary>
         public string VirtualIP { get; set; }
-        /// <summary>
-        /// SSL certificate thumbprint.
-        /// Serialized Name: HostNameSslState.thumbprint
-        /// </summary>
+        /// <summary> SSL certificate thumbprint. </summary>
         public string Thumbprint { get; set; }
-        /// <summary>
-        /// Set to &lt;code&gt;true&lt;/code&gt; to update existing hostname.
-        /// Serialized Name: HostNameSslState.toUpdate
-        /// </summary>
+        /// <summary> Set to &lt;code&gt;true&lt;/code&gt; to update existing hostname. </summary>
         public bool? IsToUpdate { get; set; }
-        /// <summary>
-        /// Indicates whether the hostname is a standard or repository hostname.
-        /// Serialized Name: HostNameSslState.hostType
-        /// </summary>
+        /// <summary> Indicates whether the hostname is a standard or repository hostname. </summary>
         public HostType? HostType { get; set; }
     }
 }

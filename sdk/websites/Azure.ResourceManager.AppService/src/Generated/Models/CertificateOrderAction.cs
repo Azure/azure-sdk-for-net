@@ -11,10 +11,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Certificate order action.
-    /// Serialized Name: CertificateOrderAction
-    /// </summary>
+    /// <summary> Certificate order action. </summary>
     public partial class CertificateOrderAction : ResourceData
     {
         /// <summary> Initializes a new instance of CertificateOrderAction. </summary>
@@ -27,18 +24,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="actionType">
-        /// Action type.
-        /// Serialized Name: CertificateOrderAction.properties.actionType
-        /// </param>
-        /// <param name="createdOn">
-        /// Time at which the certificate action was performed.
-        /// Serialized Name: CertificateOrderAction.properties.createdAt
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="actionType"> Action type. </param>
+        /// <param name="createdOn"> Time at which the certificate action was performed. </param>
+        /// <param name="kind"> Kind of resource. </param>
         internal CertificateOrderAction(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CertificateOrderActionType? actionType, DateTimeOffset? createdOn, string kind) : base(id, name, resourceType, systemData)
         {
             ActionType = actionType;
@@ -46,20 +34,11 @@ namespace Azure.ResourceManager.AppService.Models
             Kind = kind;
         }
 
-        /// <summary>
-        /// Action type.
-        /// Serialized Name: CertificateOrderAction.properties.actionType
-        /// </summary>
+        /// <summary> Action type. </summary>
         public CertificateOrderActionType? ActionType { get; }
-        /// <summary>
-        /// Time at which the certificate action was performed.
-        /// Serialized Name: CertificateOrderAction.properties.createdAt
-        /// </summary>
+        /// <summary> Time at which the certificate action was performed. </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }
 }

@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The configuration settings of the registration for the Azure Static Web Apps provider
-    /// Serialized Name: AzureStaticWebAppsRegistration
-    /// </summary>
+    /// <summary> The configuration settings of the registration for the Azure Static Web Apps provider. </summary>
     internal partial class AzureStaticWebAppsRegistration
     {
         /// <summary> Initializes a new instance of AzureStaticWebAppsRegistration. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of AzureStaticWebAppsRegistration. </summary>
-        /// <param name="clientId">
-        /// The Client ID of the app used for login.
-        /// Serialized Name: AzureStaticWebAppsRegistration.clientId
-        /// </param>
+        /// <param name="clientId"> The Client ID of the app used for login. </param>
         internal AzureStaticWebAppsRegistration(string clientId)
         {
             ClientId = clientId;
         }
 
-        /// <summary>
-        /// The Client ID of the app used for login.
-        /// Serialized Name: AzureStaticWebAppsRegistration.clientId
-        /// </summary>
+        /// <summary> The Client ID of the app used for login. </summary>
         public string ClientId { get; set; }
     }
 }

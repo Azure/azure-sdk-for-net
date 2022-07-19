@@ -7,26 +7,14 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Log entry type
-    /// Serialized Name: MSDeployLogEntryType
-    /// </summary>
+    /// <summary> Log entry type. </summary>
     public enum MSDeployLogEntryType
     {
-        /// <summary>
-        /// Message
-        /// Serialized Name: MSDeployLogEntryType.Message
-        /// </summary>
+        /// <summary> Message. </summary>
         Message,
-        /// <summary>
-        /// Warning
-        /// Serialized Name: MSDeployLogEntryType.Warning
-        /// </summary>
+        /// <summary> Warning. </summary>
         Warning,
-        /// <summary>
-        /// Error
-        /// Serialized Name: MSDeployLogEntryType.Error
-        /// </summary>
+        /// <summary> Error. </summary>
         Error
     }
 }

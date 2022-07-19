@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Name value pair.
-    /// Serialized Name: NameValuePair
-    /// </summary>
+    /// <summary> Name value pair. </summary>
     public partial class NameValuePair
     {
         /// <summary> Initializes a new instance of NameValuePair. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of NameValuePair. </summary>
-        /// <param name="name">
-        /// Pair name.
-        /// Serialized Name: NameValuePair.name
-        /// </param>
-        /// <param name="value">
-        /// Pair value.
-        /// Serialized Name: NameValuePair.value
-        /// </param>
+        /// <param name="name"> Pair name. </param>
+        /// <param name="value"> Pair value. </param>
         internal NameValuePair(string name, string value)
         {
             Name = name;
             Value = value;
         }
 
-        /// <summary>
-        /// Pair name.
-        /// Serialized Name: NameValuePair.name
-        /// </summary>
+        /// <summary> Pair name. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// Pair value.
-        /// Serialized Name: NameValuePair.value
-        /// </summary>
+        /// <summary> Pair value. </summary>
         public string Value { get; set; }
     }
 }

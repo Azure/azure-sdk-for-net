@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Triggered Web Job Run Information.
-    /// Serialized Name: TriggeredJobRun
-    /// </summary>
+    /// <summary> Triggered Web Job Run Information. </summary>
     public partial class TriggeredJobRun
     {
         /// <summary> Initializes a new instance of TriggeredJobRun. </summary>
@@ -21,50 +18,17 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of TriggeredJobRun. </summary>
-        /// <param name="webJobId">
-        /// Job ID.
-        /// Serialized Name: TriggeredJobRun.web_job_id
-        /// </param>
-        /// <param name="webJobName">
-        /// Job name.
-        /// Serialized Name: TriggeredJobRun.web_job_name
-        /// </param>
-        /// <param name="status">
-        /// Job status.
-        /// Serialized Name: TriggeredJobRun.status
-        /// </param>
-        /// <param name="startOn">
-        /// Start time.
-        /// Serialized Name: TriggeredJobRun.start_time
-        /// </param>
-        /// <param name="endOn">
-        /// End time.
-        /// Serialized Name: TriggeredJobRun.end_time
-        /// </param>
-        /// <param name="duration">
-        /// Job duration.
-        /// Serialized Name: TriggeredJobRun.duration
-        /// </param>
-        /// <param name="outputUri">
-        /// Output URL.
-        /// Serialized Name: TriggeredJobRun.output_url
-        /// </param>
-        /// <param name="errorUri">
-        /// Error URL.
-        /// Serialized Name: TriggeredJobRun.error_url
-        /// </param>
-        /// <param name="uri">
-        /// Job URL.
-        /// Serialized Name: TriggeredJobRun.url
-        /// </param>
-        /// <param name="jobName">
-        /// Job name.
-        /// Serialized Name: TriggeredJobRun.job_name
-        /// </param>
-        /// <param name="trigger">
-        /// Job trigger.
-        /// Serialized Name: TriggeredJobRun.trigger
-        /// </param>
+        /// <param name="webJobId"> Job ID. </param>
+        /// <param name="webJobName"> Job name. </param>
+        /// <param name="status"> Job status. </param>
+        /// <param name="startOn"> Start time. </param>
+        /// <param name="endOn"> End time. </param>
+        /// <param name="duration"> Job duration. </param>
+        /// <param name="outputUri"> Output URL. </param>
+        /// <param name="errorUri"> Error URL. </param>
+        /// <param name="uri"> Job URL. </param>
+        /// <param name="jobName"> Job name. </param>
+        /// <param name="trigger"> Job trigger. </param>
         internal TriggeredJobRun(string webJobId, string webJobName, TriggeredWebJobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? duration, Uri outputUri, Uri errorUri, Uri uri, string jobName, string trigger)
         {
             WebJobId = webJobId;
@@ -80,60 +44,27 @@ namespace Azure.ResourceManager.AppService.Models
             Trigger = trigger;
         }
 
-        /// <summary>
-        /// Job ID.
-        /// Serialized Name: TriggeredJobRun.web_job_id
-        /// </summary>
+        /// <summary> Job ID. </summary>
         public string WebJobId { get; set; }
-        /// <summary>
-        /// Job name.
-        /// Serialized Name: TriggeredJobRun.web_job_name
-        /// </summary>
+        /// <summary> Job name. </summary>
         public string WebJobName { get; set; }
-        /// <summary>
-        /// Job status.
-        /// Serialized Name: TriggeredJobRun.status
-        /// </summary>
+        /// <summary> Job status. </summary>
         public TriggeredWebJobStatus? Status { get; set; }
-        /// <summary>
-        /// Start time.
-        /// Serialized Name: TriggeredJobRun.start_time
-        /// </summary>
+        /// <summary> Start time. </summary>
         public DateTimeOffset? StartOn { get; set; }
-        /// <summary>
-        /// End time.
-        /// Serialized Name: TriggeredJobRun.end_time
-        /// </summary>
+        /// <summary> End time. </summary>
         public DateTimeOffset? EndOn { get; set; }
-        /// <summary>
-        /// Job duration.
-        /// Serialized Name: TriggeredJobRun.duration
-        /// </summary>
+        /// <summary> Job duration. </summary>
         public TimeSpan? Duration { get; set; }
-        /// <summary>
-        /// Output URL.
-        /// Serialized Name: TriggeredJobRun.output_url
-        /// </summary>
+        /// <summary> Output URL. </summary>
         public Uri OutputUri { get; set; }
-        /// <summary>
-        /// Error URL.
-        /// Serialized Name: TriggeredJobRun.error_url
-        /// </summary>
+        /// <summary> Error URL. </summary>
         public Uri ErrorUri { get; set; }
-        /// <summary>
-        /// Job URL.
-        /// Serialized Name: TriggeredJobRun.url
-        /// </summary>
+        /// <summary> Job URL. </summary>
         public Uri Uri { get; set; }
-        /// <summary>
-        /// Job name.
-        /// Serialized Name: TriggeredJobRun.job_name
-        /// </summary>
+        /// <summary> Job name. </summary>
         public string JobName { get; set; }
-        /// <summary>
-        /// Job trigger.
-        /// Serialized Name: TriggeredJobRun.trigger
-        /// </summary>
+        /// <summary> Job trigger. </summary>
         public string Trigger { get; set; }
     }
 }

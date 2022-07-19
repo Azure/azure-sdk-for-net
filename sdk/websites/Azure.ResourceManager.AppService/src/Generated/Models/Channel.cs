@@ -7,36 +7,18 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// List of channels that this recommendation can apply.
-    /// Serialized Name: Channels
-    /// </summary>
+    /// <summary> List of channels that this recommendation can apply. </summary>
     public enum Channel
     {
-        /// <summary>
-        /// Notification
-        /// Serialized Name: Channels.Notification
-        /// </summary>
+        /// <summary> Notification. </summary>
         Notification,
-        /// <summary>
-        /// Api
-        /// Serialized Name: Channels.Api
-        /// </summary>
+        /// <summary> Api. </summary>
         Api,
-        /// <summary>
-        /// Email
-        /// Serialized Name: Channels.Email
-        /// </summary>
+        /// <summary> Email. </summary>
         Email,
-        /// <summary>
-        /// Webhook
-        /// Serialized Name: Channels.Webhook
-        /// </summary>
+        /// <summary> Webhook. </summary>
         Webhook,
-        /// <summary>
-        /// All
-        /// Serialized Name: Channels.All
-        /// </summary>
+        /// <summary> All. </summary>
         All
     }
 }

@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The configuration settings of the storage of the tokens if a file system is used.
-    /// Serialized Name: FileSystemTokenStore
-    /// </summary>
+    /// <summary> The configuration settings of the storage of the tokens if a file system is used. </summary>
     internal partial class FileSystemTokenStore
     {
         /// <summary> Initializes a new instance of FileSystemTokenStore. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of FileSystemTokenStore. </summary>
-        /// <param name="directory">
-        /// The directory in which the tokens will be stored.
-        /// Serialized Name: FileSystemTokenStore.directory
-        /// </param>
+        /// <param name="directory"> The directory in which the tokens will be stored. </param>
         internal FileSystemTokenStore(string directory)
         {
             Directory = directory;
         }
 
-        /// <summary>
-        /// The directory in which the tokens will be stored.
-        /// Serialized Name: FileSystemTokenStore.directory
-        /// </summary>
+        /// <summary> The directory in which the tokens will be stored. </summary>
         public string Directory { get; set; }
     }
 }

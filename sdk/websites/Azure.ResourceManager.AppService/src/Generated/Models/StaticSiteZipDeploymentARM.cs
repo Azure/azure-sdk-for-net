@@ -11,10 +11,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Static site zip deployment ARM resource.
-    /// Serialized Name: StaticSiteZipDeploymentARMResource
-    /// </summary>
+    /// <summary> Static site zip deployment ARM resource. </summary>
     public partial class StaticSiteZipDeploymentARM : ResourceData
     {
         /// <summary> Initializes a new instance of StaticSiteZipDeploymentARM. </summary>
@@ -27,30 +24,12 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="appZipUri">
-        /// URL for the zipped app content
-        /// Serialized Name: StaticSiteZipDeploymentARMResource.properties.appZipUrl
-        /// </param>
-        /// <param name="apiZipUri">
-        /// URL for the zipped api content
-        /// Serialized Name: StaticSiteZipDeploymentARMResource.properties.apiZipUrl
-        /// </param>
-        /// <param name="deploymentTitle">
-        /// A title to label the deployment
-        /// Serialized Name: StaticSiteZipDeploymentARMResource.properties.deploymentTitle
-        /// </param>
-        /// <param name="provider">
-        /// The provider submitting this deployment
-        /// Serialized Name: StaticSiteZipDeploymentARMResource.properties.provider
-        /// </param>
-        /// <param name="functionLanguage">
-        /// The language of the api content, if it exists
-        /// Serialized Name: StaticSiteZipDeploymentARMResource.properties.functionLanguage
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="appZipUri"> URL for the zipped app content. </param>
+        /// <param name="apiZipUri"> URL for the zipped api content. </param>
+        /// <param name="deploymentTitle"> A title to label the deployment. </param>
+        /// <param name="provider"> The provider submitting this deployment. </param>
+        /// <param name="functionLanguage"> The language of the api content, if it exists. </param>
+        /// <param name="kind"> Kind of resource. </param>
         internal StaticSiteZipDeploymentARM(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri appZipUri, Uri apiZipUri, string deploymentTitle, string provider, string functionLanguage, string kind) : base(id, name, resourceType, systemData)
         {
             AppZipUri = appZipUri;
@@ -61,35 +40,17 @@ namespace Azure.ResourceManager.AppService.Models
             Kind = kind;
         }
 
-        /// <summary>
-        /// URL for the zipped app content
-        /// Serialized Name: StaticSiteZipDeploymentARMResource.properties.appZipUrl
-        /// </summary>
+        /// <summary> URL for the zipped app content. </summary>
         public Uri AppZipUri { get; set; }
-        /// <summary>
-        /// URL for the zipped api content
-        /// Serialized Name: StaticSiteZipDeploymentARMResource.properties.apiZipUrl
-        /// </summary>
+        /// <summary> URL for the zipped api content. </summary>
         public Uri ApiZipUri { get; set; }
-        /// <summary>
-        /// A title to label the deployment
-        /// Serialized Name: StaticSiteZipDeploymentARMResource.properties.deploymentTitle
-        /// </summary>
+        /// <summary> A title to label the deployment. </summary>
         public string DeploymentTitle { get; set; }
-        /// <summary>
-        /// The provider submitting this deployment
-        /// Serialized Name: StaticSiteZipDeploymentARMResource.properties.provider
-        /// </summary>
+        /// <summary> The provider submitting this deployment. </summary>
         public string Provider { get; set; }
-        /// <summary>
-        /// The language of the api content, if it exists
-        /// Serialized Name: StaticSiteZipDeploymentARMResource.properties.functionLanguage
-        /// </summary>
+        /// <summary> The language of the api content, if it exists. </summary>
         public string FunctionLanguage { get; set; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }
 }

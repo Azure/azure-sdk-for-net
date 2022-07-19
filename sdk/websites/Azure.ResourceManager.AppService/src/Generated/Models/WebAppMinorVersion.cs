@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Web App stack minor version.
-    /// Serialized Name: WebAppMinorVersion
-    /// </summary>
+    /// <summary> Web App stack minor version. </summary>
     public partial class WebAppMinorVersion
     {
         /// <summary> Initializes a new instance of WebAppMinorVersion. </summary>
@@ -19,18 +16,9 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of WebAppMinorVersion. </summary>
-        /// <param name="displayText">
-        /// Web App stack minor version (display only).
-        /// Serialized Name: WebAppMinorVersion.displayText
-        /// </param>
-        /// <param name="value">
-        /// Web App stack major version name.
-        /// Serialized Name: WebAppMinorVersion.value
-        /// </param>
-        /// <param name="stackSettings">
-        /// Settings associated with the minor version.
-        /// Serialized Name: WebAppMinorVersion.stackSettings
-        /// </param>
+        /// <param name="displayText"> Web App stack minor version (display only). </param>
+        /// <param name="value"> Web App stack major version name. </param>
+        /// <param name="stackSettings"> Settings associated with the minor version. </param>
         internal WebAppMinorVersion(string displayText, string value, WebAppRuntimes stackSettings)
         {
             DisplayText = displayText;
@@ -38,20 +26,11 @@ namespace Azure.ResourceManager.AppService.Models
             StackSettings = stackSettings;
         }
 
-        /// <summary>
-        /// Web App stack minor version (display only).
-        /// Serialized Name: WebAppMinorVersion.displayText
-        /// </summary>
+        /// <summary> Web App stack minor version (display only). </summary>
         public string DisplayText { get; }
-        /// <summary>
-        /// Web App stack major version name.
-        /// Serialized Name: WebAppMinorVersion.value
-        /// </summary>
+        /// <summary> Web App stack major version name. </summary>
         public string Value { get; }
-        /// <summary>
-        /// Settings associated with the minor version.
-        /// Serialized Name: WebAppMinorVersion.stackSettings
-        /// </summary>
+        /// <summary> Settings associated with the minor version. </summary>
         public WebAppRuntimes StackSettings { get; }
     }
 }

@@ -9,10 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The configuration settings of the Facebook provider.
-    /// Serialized Name: Facebook
-    /// </summary>
+    /// <summary> The configuration settings of the Facebook provider. </summary>
     public partial class Facebook
     {
         /// <summary> Initializes a new instance of Facebook. </summary>
@@ -21,22 +18,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of Facebook. </summary>
-        /// <param name="isEnabled">
-        /// &lt;code&gt;false&lt;/code&gt; if the Facebook provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;.
-        /// Serialized Name: Facebook.enabled
-        /// </param>
-        /// <param name="registration">
-        /// The configuration settings of the app registration for the Facebook provider.
-        /// Serialized Name: Facebook.registration
-        /// </param>
-        /// <param name="graphApiVersion">
-        /// The version of the Facebook api to be used while logging in.
-        /// Serialized Name: Facebook.graphApiVersion
-        /// </param>
-        /// <param name="login">
-        /// The configuration settings of the login flow.
-        /// Serialized Name: Facebook.login
-        /// </param>
+        /// <param name="isEnabled"> &lt;code&gt;false&lt;/code&gt; if the Facebook provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
+        /// <param name="registration"> The configuration settings of the app registration for the Facebook provider. </param>
+        /// <param name="graphApiVersion"> The version of the Facebook api to be used while logging in. </param>
+        /// <param name="login"> The configuration settings of the login flow. </param>
         internal Facebook(bool? isEnabled, AppRegistration registration, string graphApiVersion, LoginScopes login)
         {
             IsEnabled = isEnabled;
@@ -45,30 +30,15 @@ namespace Azure.ResourceManager.AppService.Models
             Login = login;
         }
 
-        /// <summary>
-        /// &lt;code&gt;false&lt;/code&gt; if the Facebook provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;.
-        /// Serialized Name: Facebook.enabled
-        /// </summary>
+        /// <summary> &lt;code&gt;false&lt;/code&gt; if the Facebook provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </summary>
         public bool? IsEnabled { get; set; }
-        /// <summary>
-        /// The configuration settings of the app registration for the Facebook provider.
-        /// Serialized Name: Facebook.registration
-        /// </summary>
+        /// <summary> The configuration settings of the app registration for the Facebook provider. </summary>
         public AppRegistration Registration { get; set; }
-        /// <summary>
-        /// The version of the Facebook api to be used while logging in.
-        /// Serialized Name: Facebook.graphApiVersion
-        /// </summary>
+        /// <summary> The version of the Facebook api to be used while logging in. </summary>
         public string GraphApiVersion { get; set; }
-        /// <summary>
-        /// The configuration settings of the login flow.
-        /// Serialized Name: Facebook.login
-        /// </summary>
+        /// <summary> The configuration settings of the login flow. </summary>
         internal LoginScopes Login { get; set; }
-        /// <summary>
-        /// A list of the scopes that should be requested while authenticating.
-        /// Serialized Name: LoginScopes.scopes
-        /// </summary>
+        /// <summary> A list of the scopes that should be requested while authenticating. </summary>
         public IList<string> LoginScopes
         {
             get

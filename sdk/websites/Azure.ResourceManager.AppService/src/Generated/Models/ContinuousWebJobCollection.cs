@@ -12,17 +12,11 @@ using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Collection of Kudu continuous web job information elements.
-    /// Serialized Name: ContinuousWebJobCollection
-    /// </summary>
+    /// <summary> Collection of Kudu continuous web job information elements. </summary>
     internal partial class ContinuousWebJobCollection
     {
         /// <summary> Initializes a new instance of ContinuousWebJobCollection. </summary>
-        /// <param name="value">
-        /// Collection of resources.
-        /// Serialized Name: ContinuousWebJobCollection.value
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ContinuousWebJobCollection(IEnumerable<ContinuousWebJobData> value)
         {
@@ -35,29 +29,17 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of ContinuousWebJobCollection. </summary>
-        /// <param name="value">
-        /// Collection of resources.
-        /// Serialized Name: ContinuousWebJobCollection.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Link to next page of resources.
-        /// Serialized Name: ContinuousWebJobCollection.nextLink
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
+        /// <param name="nextLink"> Link to next page of resources. </param>
         internal ContinuousWebJobCollection(IReadOnlyList<ContinuousWebJobData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Collection of resources.
-        /// Serialized Name: ContinuousWebJobCollection.value
-        /// </summary>
+        /// <summary> Collection of resources. </summary>
         public IReadOnlyList<ContinuousWebJobData> Value { get; }
-        /// <summary>
-        /// Link to next page of resources.
-        /// Serialized Name: ContinuousWebJobCollection.nextLink
-        /// </summary>
+        /// <summary> Link to next page of resources. </summary>
         public string NextLink { get; }
     }
 }

@@ -11,10 +11,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Request entity for previewing the Static Site workflow
-    /// Serialized Name: StaticSitesWorkflowPreviewRequest
-    /// </summary>
+    /// <summary> Request entity for previewing the Static Site workflow. </summary>
     public partial class StaticSitesWorkflowPreviewContent : ResourceData
     {
         /// <summary> Initializes a new instance of StaticSitesWorkflowPreviewContent. </summary>
@@ -27,22 +24,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="repositoryUri">
-        /// URL for the repository of the static site.
-        /// Serialized Name: StaticSitesWorkflowPreviewRequest.properties.repositoryUrl
-        /// </param>
-        /// <param name="branch">
-        /// The target branch in the repository.
-        /// Serialized Name: StaticSitesWorkflowPreviewRequest.properties.branch
-        /// </param>
-        /// <param name="buildProperties">
-        /// Build properties to configure on the repository.
-        /// Serialized Name: StaticSitesWorkflowPreviewRequest.properties.buildProperties
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="repositoryUri"> URL for the repository of the static site. </param>
+        /// <param name="branch"> The target branch in the repository. </param>
+        /// <param name="buildProperties"> Build properties to configure on the repository. </param>
+        /// <param name="kind"> Kind of resource. </param>
         internal StaticSitesWorkflowPreviewContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri repositoryUri, string branch, StaticSiteBuildProperties buildProperties, string kind) : base(id, name, resourceType, systemData)
         {
             RepositoryUri = repositoryUri;
@@ -51,25 +36,13 @@ namespace Azure.ResourceManager.AppService.Models
             Kind = kind;
         }
 
-        /// <summary>
-        /// URL for the repository of the static site.
-        /// Serialized Name: StaticSitesWorkflowPreviewRequest.properties.repositoryUrl
-        /// </summary>
+        /// <summary> URL for the repository of the static site. </summary>
         public Uri RepositoryUri { get; set; }
-        /// <summary>
-        /// The target branch in the repository.
-        /// Serialized Name: StaticSitesWorkflowPreviewRequest.properties.branch
-        /// </summary>
+        /// <summary> The target branch in the repository. </summary>
         public string Branch { get; set; }
-        /// <summary>
-        /// Build properties to configure on the repository.
-        /// Serialized Name: StaticSitesWorkflowPreviewRequest.properties.buildProperties
-        /// </summary>
+        /// <summary> Build properties to configure on the repository. </summary>
         public StaticSiteBuildProperties BuildProperties { get; set; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }
 }

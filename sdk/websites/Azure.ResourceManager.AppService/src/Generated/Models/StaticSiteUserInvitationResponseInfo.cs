@@ -11,10 +11,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Static sites user roles invitation link resource.
-    /// Serialized Name: StaticSiteUserInvitationResponseResource
-    /// </summary>
+    /// <summary> Static sites user roles invitation link resource. </summary>
     public partial class StaticSiteUserInvitationResponseInfo : ResourceData
     {
         /// <summary> Initializes a new instance of StaticSiteUserInvitationResponseInfo. </summary>
@@ -27,18 +24,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="expiresOn">
-        /// The expiration time of the invitation
-        /// Serialized Name: StaticSiteUserInvitationResponseResource.properties.expiresOn
-        /// </param>
-        /// <param name="invitationUri">
-        /// The url for the invitation link
-        /// Serialized Name: StaticSiteUserInvitationResponseResource.properties.invitationUrl
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="expiresOn"> The expiration time of the invitation. </param>
+        /// <param name="invitationUri"> The url for the invitation link. </param>
+        /// <param name="kind"> Kind of resource. </param>
         internal StaticSiteUserInvitationResponseInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? expiresOn, Uri invitationUri, string kind) : base(id, name, resourceType, systemData)
         {
             ExpiresOn = expiresOn;
@@ -46,20 +34,11 @@ namespace Azure.ResourceManager.AppService.Models
             Kind = kind;
         }
 
-        /// <summary>
-        /// The expiration time of the invitation
-        /// Serialized Name: StaticSiteUserInvitationResponseResource.properties.expiresOn
-        /// </summary>
+        /// <summary> The expiration time of the invitation. </summary>
         public DateTimeOffset? ExpiresOn { get; }
-        /// <summary>
-        /// The url for the invitation link
-        /// Serialized Name: StaticSiteUserInvitationResponseResource.properties.invitationUrl
-        /// </summary>
+        /// <summary> The url for the invitation link. </summary>
         public Uri InvitationUri { get; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }
 }

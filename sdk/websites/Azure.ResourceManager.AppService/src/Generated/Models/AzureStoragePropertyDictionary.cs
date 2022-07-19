@@ -11,10 +11,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// AzureStorageInfo dictionary resource.
-    /// Serialized Name: AzureStoragePropertyDictionaryResource
-    /// </summary>
+    /// <summary> AzureStorageInfo dictionary resource. </summary>
     public partial class AzureStoragePropertyDictionary : ResourceData
     {
         /// <summary> Initializes a new instance of AzureStoragePropertyDictionary. </summary>
@@ -28,29 +25,17 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// Azure storage accounts.
-        /// Serialized Name: AzureStoragePropertyDictionaryResource.properties
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="properties"> Azure storage accounts. </param>
+        /// <param name="kind"> Kind of resource. </param>
         internal AzureStoragePropertyDictionary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, AzureStorageInfoValue> properties, string kind) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Kind = kind;
         }
 
-        /// <summary>
-        /// Azure storage accounts.
-        /// Serialized Name: AzureStoragePropertyDictionaryResource.properties
-        /// </summary>
+        /// <summary> Azure storage accounts. </summary>
         public IDictionary<string, AzureStorageInfoValue> Properties { get; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }
 }

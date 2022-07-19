@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Domain availability check result.
-    /// Serialized Name: DomainAvailabilityCheckResult
-    /// </summary>
+    /// <summary> Domain availability check result. </summary>
     public partial class DomainAvailabilityCheckResult
     {
         /// <summary> Initializes a new instance of DomainAvailabilityCheckResult. </summary>
@@ -19,18 +16,9 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of DomainAvailabilityCheckResult. </summary>
-        /// <param name="name">
-        /// Name of the domain.
-        /// Serialized Name: DomainAvailabilityCheckResult.name
-        /// </param>
-        /// <param name="isAvailable">
-        /// &lt;code&gt;true&lt;/code&gt; if domain can be purchased using CreateDomain API; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: DomainAvailabilityCheckResult.available
-        /// </param>
-        /// <param name="domainType">
-        /// Valid values are Regular domain: Azure will charge the full price of domain registration, SoftDeleted: Purchasing this domain will simply restore it and this operation will not cost anything.
-        /// Serialized Name: DomainAvailabilityCheckResult.domainType
-        /// </param>
+        /// <param name="name"> Name of the domain. </param>
+        /// <param name="isAvailable"> &lt;code&gt;true&lt;/code&gt; if domain can be purchased using CreateDomain API; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="domainType"> Valid values are Regular domain: Azure will charge the full price of domain registration, SoftDeleted: Purchasing this domain will simply restore it and this operation will not cost anything. </param>
         internal DomainAvailabilityCheckResult(string name, bool? isAvailable, DomainType? domainType)
         {
             Name = name;
@@ -38,20 +26,11 @@ namespace Azure.ResourceManager.AppService.Models
             DomainType = domainType;
         }
 
-        /// <summary>
-        /// Name of the domain.
-        /// Serialized Name: DomainAvailabilityCheckResult.name
-        /// </summary>
+        /// <summary> Name of the domain. </summary>
         public string Name { get; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if domain can be purchased using CreateDomain API; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: DomainAvailabilityCheckResult.available
-        /// </summary>
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if domain can be purchased using CreateDomain API; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? IsAvailable { get; }
-        /// <summary>
-        /// Valid values are Regular domain: Azure will charge the full price of domain registration, SoftDeleted: Purchasing this domain will simply restore it and this operation will not cost anything.
-        /// Serialized Name: DomainAvailabilityCheckResult.domainType
-        /// </summary>
+        /// <summary> Valid values are Regular domain: Azure will charge the full price of domain registration, SoftDeleted: Purchasing this domain will simply restore it and this operation will not cost anything. </summary>
         public DomainType? DomainType { get; }
     }
 }

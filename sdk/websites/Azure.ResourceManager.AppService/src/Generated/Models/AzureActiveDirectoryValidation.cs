@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The configuration settings of the Azure Active Directory token validation flow.
-    /// Serialized Name: AzureActiveDirectoryValidation
-    /// </summary>
+    /// <summary> The configuration settings of the Azure Active Directory token validation flow. </summary>
     public partial class AzureActiveDirectoryValidation
     {
         /// <summary> Initializes a new instance of AzureActiveDirectoryValidation. </summary>
@@ -23,18 +20,9 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of AzureActiveDirectoryValidation. </summary>
-        /// <param name="jwtClaimChecks">
-        /// The configuration settings of the checks that should be made while validating the JWT Claims.
-        /// Serialized Name: AzureActiveDirectoryValidation.jwtClaimChecks
-        /// </param>
-        /// <param name="allowedAudiences">
-        /// The list of audiences that can make successful authentication/authorization requests.
-        /// Serialized Name: AzureActiveDirectoryValidation.allowedAudiences
-        /// </param>
-        /// <param name="defaultAuthorizationPolicy">
-        /// The configuration settings of the default authorization policy.
-        /// Serialized Name: AzureActiveDirectoryValidation.defaultAuthorizationPolicy
-        /// </param>
+        /// <param name="jwtClaimChecks"> The configuration settings of the checks that should be made while validating the JWT Claims. </param>
+        /// <param name="allowedAudiences"> The list of audiences that can make successful authentication/authorization requests. </param>
+        /// <param name="defaultAuthorizationPolicy"> The configuration settings of the default authorization policy. </param>
         internal AzureActiveDirectoryValidation(JwtClaimChecks jwtClaimChecks, IList<string> allowedAudiences, DefaultAuthorizationPolicy defaultAuthorizationPolicy)
         {
             JwtClaimChecks = jwtClaimChecks;
@@ -42,20 +30,11 @@ namespace Azure.ResourceManager.AppService.Models
             DefaultAuthorizationPolicy = defaultAuthorizationPolicy;
         }
 
-        /// <summary>
-        /// The configuration settings of the checks that should be made while validating the JWT Claims.
-        /// Serialized Name: AzureActiveDirectoryValidation.jwtClaimChecks
-        /// </summary>
+        /// <summary> The configuration settings of the checks that should be made while validating the JWT Claims. </summary>
         public JwtClaimChecks JwtClaimChecks { get; set; }
-        /// <summary>
-        /// The list of audiences that can make successful authentication/authorization requests.
-        /// Serialized Name: AzureActiveDirectoryValidation.allowedAudiences
-        /// </summary>
+        /// <summary> The list of audiences that can make successful authentication/authorization requests. </summary>
         public IList<string> AllowedAudiences { get; }
-        /// <summary>
-        /// The configuration settings of the default authorization policy.
-        /// Serialized Name: AzureActiveDirectoryValidation.defaultAuthorizationPolicy
-        /// </summary>
+        /// <summary> The configuration settings of the default authorization policy. </summary>
         public DefaultAuthorizationPolicy DefaultAuthorizationPolicy { get; set; }
     }
 }

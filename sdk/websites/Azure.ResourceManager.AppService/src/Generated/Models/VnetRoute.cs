@@ -10,10 +10,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Virtual Network route contract used to pass routing information for a Virtual Network.
-    /// Serialized Name: VnetRoute
-    /// </summary>
+    /// <summary> Virtual Network route contract used to pass routing information for a Virtual Network. </summary>
     public partial class VnetRoute : ResourceData
     {
         /// <summary> Initializes a new instance of VnetRoute. </summary>
@@ -26,14 +23,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="startAddress">
-        /// The starting address for this route. This may also include a CIDR notation, in which case the end address must not be specified.
-        /// Serialized Name: VnetRoute.properties.startAddress
-        /// </param>
-        /// <param name="endAddress">
-        /// The ending address for this route. If the start address is specified in CIDR notation, this must be omitted.
-        /// Serialized Name: VnetRoute.properties.endAddress
-        /// </param>
+        /// <param name="startAddress"> The starting address for this route. This may also include a CIDR notation, in which case the end address must not be specified. </param>
+        /// <param name="endAddress"> The ending address for this route. If the start address is specified in CIDR notation, this must be omitted. </param>
         /// <param name="routeType">
         /// The type of route this is:
         /// DEFAULT - By default, every app has routes to the local address ranges specified by RFC1918
@@ -41,12 +32,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// STATIC - Static route set on the app only
         /// 
         /// These values will be used for syncing an app&apos;s routes with those from a Virtual Network.
-        /// Serialized Name: VnetRoute.properties.routeType
         /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="kind"> Kind of resource. </param>
         internal VnetRoute(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string startAddress, string endAddress, RouteType? routeType, string kind) : base(id, name, resourceType, systemData)
         {
             StartAddress = startAddress;
@@ -55,15 +42,9 @@ namespace Azure.ResourceManager.AppService.Models
             Kind = kind;
         }
 
-        /// <summary>
-        /// The starting address for this route. This may also include a CIDR notation, in which case the end address must not be specified.
-        /// Serialized Name: VnetRoute.properties.startAddress
-        /// </summary>
+        /// <summary> The starting address for this route. This may also include a CIDR notation, in which case the end address must not be specified. </summary>
         public string StartAddress { get; set; }
-        /// <summary>
-        /// The ending address for this route. If the start address is specified in CIDR notation, this must be omitted.
-        /// Serialized Name: VnetRoute.properties.endAddress
-        /// </summary>
+        /// <summary> The ending address for this route. If the start address is specified in CIDR notation, this must be omitted. </summary>
         public string EndAddress { get; set; }
         /// <summary>
         /// The type of route this is:
@@ -72,13 +53,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// STATIC - Static route set on the app only
         /// 
         /// These values will be used for syncing an app&apos;s routes with those from a Virtual Network.
-        /// Serialized Name: VnetRoute.properties.routeType
         /// </summary>
         public RouteType? RouteType { get; set; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }
 }

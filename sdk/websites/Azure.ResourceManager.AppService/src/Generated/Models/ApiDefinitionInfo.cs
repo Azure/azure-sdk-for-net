@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Information about the formal API definition for the app.
-    /// Serialized Name: ApiDefinitionInfo
-    /// </summary>
+    /// <summary> Information about the formal API definition for the app. </summary>
     internal partial class ApiDefinitionInfo
     {
         /// <summary> Initializes a new instance of ApiDefinitionInfo. </summary>
@@ -21,19 +18,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of ApiDefinitionInfo. </summary>
-        /// <param name="uri">
-        /// The URL of the API definition.
-        /// Serialized Name: ApiDefinitionInfo.url
-        /// </param>
+        /// <param name="uri"> The URL of the API definition. </param>
         internal ApiDefinitionInfo(Uri uri)
         {
             Uri = uri;
         }
 
-        /// <summary>
-        /// The URL of the API definition.
-        /// Serialized Name: ApiDefinitionInfo.url
-        /// </summary>
+        /// <summary> The URL of the API definition. </summary>
         public Uri Uri { get; set; }
     }
 }

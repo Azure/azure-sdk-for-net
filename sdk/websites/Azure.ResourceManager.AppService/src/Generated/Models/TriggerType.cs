@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The trigger type of the function
-    /// Serialized Name: TriggerTypes
-    /// </summary>
+    /// <summary> The trigger type of the function. </summary>
     public readonly partial struct TriggerType : IEquatable<TriggerType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.AppService.Models
         private const string HttpTriggerValue = "HttpTrigger";
         private const string UnknownValue = "Unknown";
 
-        /// <summary>
-        /// HttpTrigger
-        /// Serialized Name: TriggerTypes.HttpTrigger
-        /// </summary>
+        /// <summary> HttpTrigger. </summary>
         public static TriggerType HttpTrigger { get; } = new TriggerType(HttpTriggerValue);
-        /// <summary>
-        /// Unknown
-        /// Serialized Name: TriggerTypes.Unknown
-        /// </summary>
+        /// <summary> Unknown. </summary>
         public static TriggerType Unknown { get; } = new TriggerType(UnknownValue);
         /// <summary> Determines if two <see cref="TriggerType"/> values are the same. </summary>
         public static bool operator ==(TriggerType left, TriggerType right) => left.Equals(right);

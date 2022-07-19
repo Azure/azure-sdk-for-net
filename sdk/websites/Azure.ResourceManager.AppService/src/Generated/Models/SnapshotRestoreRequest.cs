@@ -10,10 +10,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Details about app recovery operation.
-    /// Serialized Name: SnapshotRestoreRequest
-    /// </summary>
+    /// <summary> Details about app recovery operation. </summary>
     public partial class SnapshotRestoreRequest : ResourceData
     {
         /// <summary> Initializes a new instance of SnapshotRestoreRequest. </summary>
@@ -26,36 +23,19 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="snapshotTime">
-        /// Point in time in which the app restore should be done, formatted as a DateTime string.
-        /// Serialized Name: SnapshotRestoreRequest.properties.snapshotTime
-        /// </param>
+        /// <param name="snapshotTime"> Point in time in which the app restore should be done, formatted as a DateTime string. </param>
         /// <param name="recoverySource">
         /// Optional. Specifies the web app that snapshot contents will be retrieved from.
         /// If empty, the targeted web app will be used as the source.
-        /// Serialized Name: SnapshotRestoreRequest.properties.recoverySource
         /// </param>
-        /// <param name="isOverwrite">
-        /// If &lt;code&gt;true&lt;/code&gt; the restore operation can overwrite source app; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: SnapshotRestoreRequest.properties.overwrite
-        /// </param>
-        /// <param name="isRecoverConfiguration">
-        /// If true, site configuration, in addition to content, will be reverted.
-        /// Serialized Name: SnapshotRestoreRequest.properties.recoverConfiguration
-        /// </param>
+        /// <param name="isOverwrite"> If &lt;code&gt;true&lt;/code&gt; the restore operation can overwrite source app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isRecoverConfiguration"> If true, site configuration, in addition to content, will be reverted. </param>
         /// <param name="isIgnoreConflictingHostNames">
         /// If true, custom hostname conflicts will be ignored when recovering to a target web app.
         /// This setting is only necessary when RecoverConfiguration is enabled.
-        /// Serialized Name: SnapshotRestoreRequest.properties.ignoreConflictingHostNames
         /// </param>
-        /// <param name="useDRSecondary">
-        /// If true, the snapshot is retrieved from DRSecondary endpoint.
-        /// Serialized Name: SnapshotRestoreRequest.properties.useDRSecondary
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="useDRSecondary"> If true, the snapshot is retrieved from DRSecondary endpoint. </param>
+        /// <param name="kind"> Kind of resource. </param>
         internal SnapshotRestoreRequest(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string snapshotTime, SnapshotRecoverySource recoverySource, bool? isOverwrite, bool? isRecoverConfiguration, bool? isIgnoreConflictingHostNames, bool? useDRSecondary, string kind) : base(id, name, resourceType, systemData)
         {
             SnapshotTime = snapshotTime;
@@ -67,42 +47,25 @@ namespace Azure.ResourceManager.AppService.Models
             Kind = kind;
         }
 
-        /// <summary>
-        /// Point in time in which the app restore should be done, formatted as a DateTime string.
-        /// Serialized Name: SnapshotRestoreRequest.properties.snapshotTime
-        /// </summary>
+        /// <summary> Point in time in which the app restore should be done, formatted as a DateTime string. </summary>
         public string SnapshotTime { get; set; }
         /// <summary>
         /// Optional. Specifies the web app that snapshot contents will be retrieved from.
         /// If empty, the targeted web app will be used as the source.
-        /// Serialized Name: SnapshotRestoreRequest.properties.recoverySource
         /// </summary>
         public SnapshotRecoverySource RecoverySource { get; set; }
-        /// <summary>
-        /// If &lt;code&gt;true&lt;/code&gt; the restore operation can overwrite source app; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: SnapshotRestoreRequest.properties.overwrite
-        /// </summary>
+        /// <summary> If &lt;code&gt;true&lt;/code&gt; the restore operation can overwrite source app; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? IsOverwrite { get; set; }
-        /// <summary>
-        /// If true, site configuration, in addition to content, will be reverted.
-        /// Serialized Name: SnapshotRestoreRequest.properties.recoverConfiguration
-        /// </summary>
+        /// <summary> If true, site configuration, in addition to content, will be reverted. </summary>
         public bool? IsRecoverConfiguration { get; set; }
         /// <summary>
         /// If true, custom hostname conflicts will be ignored when recovering to a target web app.
         /// This setting is only necessary when RecoverConfiguration is enabled.
-        /// Serialized Name: SnapshotRestoreRequest.properties.ignoreConflictingHostNames
         /// </summary>
         public bool? IsIgnoreConflictingHostNames { get; set; }
-        /// <summary>
-        /// If true, the snapshot is retrieved from DRSecondary endpoint.
-        /// Serialized Name: SnapshotRestoreRequest.properties.useDRSecondary
-        /// </summary>
+        /// <summary> If true, the snapshot is retrieved from DRSecondary endpoint. </summary>
         public bool? UseDRSecondary { get; set; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }
 }

@@ -7,36 +7,18 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The current status of the operation.
-    /// Serialized Name: OperationStatus
-    /// </summary>
+    /// <summary> The current status of the operation. </summary>
     public enum OperationStatus
     {
-        /// <summary>
-        /// InProgress
-        /// Serialized Name: OperationStatus.InProgress
-        /// </summary>
+        /// <summary> InProgress. </summary>
         InProgress,
-        /// <summary>
-        /// Failed
-        /// Serialized Name: OperationStatus.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         Failed,
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: OperationStatus.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         Succeeded,
-        /// <summary>
-        /// TimedOut
-        /// Serialized Name: OperationStatus.TimedOut
-        /// </summary>
+        /// <summary> TimedOut. </summary>
         TimedOut,
-        /// <summary>
-        /// Created
-        /// Serialized Name: OperationStatus.Created
-        /// </summary>
+        /// <summary> Created. </summary>
         Created
     }
 }

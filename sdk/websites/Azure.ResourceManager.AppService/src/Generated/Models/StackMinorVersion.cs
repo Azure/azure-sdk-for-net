@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Application stack minor version.
-    /// Serialized Name: StackMinorVersion
-    /// </summary>
+    /// <summary> Application stack minor version. </summary>
     public partial class StackMinorVersion
     {
         /// <summary> Initializes a new instance of StackMinorVersion. </summary>
@@ -19,22 +16,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of StackMinorVersion. </summary>
-        /// <param name="displayVersion">
-        /// Application stack minor version (display only).
-        /// Serialized Name: StackMinorVersion.displayVersion
-        /// </param>
-        /// <param name="runtimeVersion">
-        /// Application stack minor version (runtime only).
-        /// Serialized Name: StackMinorVersion.runtimeVersion
-        /// </param>
-        /// <param name="isDefault">
-        /// &lt;code&gt;true&lt;/code&gt; if this is the default minor version; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: StackMinorVersion.isDefault
-        /// </param>
-        /// <param name="isRemoteDebuggingEnabled">
-        /// &lt;code&gt;true&lt;/code&gt; if this supports Remote Debugging, otherwise &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: StackMinorVersion.isRemoteDebuggingEnabled
-        /// </param>
+        /// <param name="displayVersion"> Application stack minor version (display only). </param>
+        /// <param name="runtimeVersion"> Application stack minor version (runtime only). </param>
+        /// <param name="isDefault"> &lt;code&gt;true&lt;/code&gt; if this is the default minor version; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isRemoteDebuggingEnabled"> &lt;code&gt;true&lt;/code&gt; if this supports Remote Debugging, otherwise &lt;code&gt;false&lt;/code&gt;. </param>
         internal StackMinorVersion(string displayVersion, string runtimeVersion, bool? isDefault, bool? isRemoteDebuggingEnabled)
         {
             DisplayVersion = displayVersion;
@@ -43,25 +28,13 @@ namespace Azure.ResourceManager.AppService.Models
             IsRemoteDebuggingEnabled = isRemoteDebuggingEnabled;
         }
 
-        /// <summary>
-        /// Application stack minor version (display only).
-        /// Serialized Name: StackMinorVersion.displayVersion
-        /// </summary>
+        /// <summary> Application stack minor version (display only). </summary>
         public string DisplayVersion { get; set; }
-        /// <summary>
-        /// Application stack minor version (runtime only).
-        /// Serialized Name: StackMinorVersion.runtimeVersion
-        /// </summary>
+        /// <summary> Application stack minor version (runtime only). </summary>
         public string RuntimeVersion { get; set; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if this is the default minor version; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: StackMinorVersion.isDefault
-        /// </summary>
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if this is the default minor version; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? IsDefault { get; set; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if this supports Remote Debugging, otherwise &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: StackMinorVersion.isRemoteDebuggingEnabled
-        /// </summary>
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if this supports Remote Debugging, otherwise &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? IsRemoteDebuggingEnabled { get; set; }
     }
 }

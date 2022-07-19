@@ -17,7 +17,6 @@ namespace Azure.ResourceManager.AppService.Models
     /// STATIC - Static route set on the app only
     /// 
     /// These values will be used for syncing an app&apos;s routes with those from a Virtual Network.
-    /// Serialized Name: RouteType
     /// </summary>
     public readonly partial struct RouteType : IEquatable<RouteType>
     {
@@ -34,20 +33,11 @@ namespace Azure.ResourceManager.AppService.Models
         private const string InheritedValue = "INHERITED";
         private const string StaticValue = "STATIC";
 
-        /// <summary>
-        /// DEFAULT
-        /// Serialized Name: RouteType.DEFAULT
-        /// </summary>
+        /// <summary> DEFAULT. </summary>
         public static RouteType Default { get; } = new RouteType(DefaultValue);
-        /// <summary>
-        /// INHERITED
-        /// Serialized Name: RouteType.INHERITED
-        /// </summary>
+        /// <summary> INHERITED. </summary>
         public static RouteType Inherited { get; } = new RouteType(InheritedValue);
-        /// <summary>
-        /// STATIC
-        /// Serialized Name: RouteType.STATIC
-        /// </summary>
+        /// <summary> STATIC. </summary>
         public static RouteType Static { get; } = new RouteType(StaticValue);
         /// <summary> Determines if two <see cref="RouteType"/> values are the same. </summary>
         public static bool operator ==(RouteType left, RouteType right) => left.Equals(right);

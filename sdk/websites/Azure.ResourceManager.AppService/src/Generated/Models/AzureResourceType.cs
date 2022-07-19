@@ -7,21 +7,12 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Type of the Azure resource the hostname is assigned to.
-    /// Serialized Name: AzureResourceType
-    /// </summary>
+    /// <summary> Type of the Azure resource the hostname is assigned to. </summary>
     public enum AzureResourceType
     {
-        /// <summary>
-        /// Website
-        /// Serialized Name: AzureResourceType.Website
-        /// </summary>
+        /// <summary> Website. </summary>
         Website,
-        /// <summary>
-        /// TrafficManager
-        /// Serialized Name: AzureResourceType.TrafficManager
-        /// </summary>
+        /// <summary> TrafficManager. </summary>
         TrafficManager
     }
 }

@@ -10,10 +10,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Details about restoring a deleted app.
-    /// Serialized Name: DeletedAppRestoreRequest
-    /// </summary>
+    /// <summary> Details about restoring a deleted app. </summary>
     public partial class DeletedAppRestoreRequestInfo : ResourceData
     {
         /// <summary> Initializes a new instance of DeletedAppRestoreRequestInfo. </summary>
@@ -29,25 +26,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="deletedSiteId">
         /// ARM resource ID of the deleted app. Example:
         /// /subscriptions/{subId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
-        /// Serialized Name: DeletedAppRestoreRequest.properties.deletedSiteId
         /// </param>
-        /// <param name="isRecoverConfiguration">
-        /// If true, deleted site configuration, in addition to content, will be restored.
-        /// Serialized Name: DeletedAppRestoreRequest.properties.recoverConfiguration
-        /// </param>
+        /// <param name="isRecoverConfiguration"> If true, deleted site configuration, in addition to content, will be restored. </param>
         /// <param name="snapshotTime">
         /// Point in time to restore the deleted app from, formatted as a DateTime string. 
         /// If unspecified, default value is the time that the app was deleted.
-        /// Serialized Name: DeletedAppRestoreRequest.properties.snapshotTime
         /// </param>
-        /// <param name="isUseDRSecondary">
-        /// If true, the snapshot is retrieved from DRSecondary endpoint.
-        /// Serialized Name: DeletedAppRestoreRequest.properties.useDRSecondary
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="isUseDRSecondary"> If true, the snapshot is retrieved from DRSecondary endpoint. </param>
+        /// <param name="kind"> Kind of resource. </param>
         internal DeletedAppRestoreRequestInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string deletedSiteId, bool? isRecoverConfiguration, string snapshotTime, bool? isUseDRSecondary, string kind) : base(id, name, resourceType, systemData)
         {
             DeletedSiteId = deletedSiteId;
@@ -60,29 +46,18 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary>
         /// ARM resource ID of the deleted app. Example:
         /// /subscriptions/{subId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
-        /// Serialized Name: DeletedAppRestoreRequest.properties.deletedSiteId
         /// </summary>
         public string DeletedSiteId { get; set; }
-        /// <summary>
-        /// If true, deleted site configuration, in addition to content, will be restored.
-        /// Serialized Name: DeletedAppRestoreRequest.properties.recoverConfiguration
-        /// </summary>
+        /// <summary> If true, deleted site configuration, in addition to content, will be restored. </summary>
         public bool? IsRecoverConfiguration { get; set; }
         /// <summary>
         /// Point in time to restore the deleted app from, formatted as a DateTime string. 
         /// If unspecified, default value is the time that the app was deleted.
-        /// Serialized Name: DeletedAppRestoreRequest.properties.snapshotTime
         /// </summary>
         public string SnapshotTime { get; set; }
-        /// <summary>
-        /// If true, the snapshot is retrieved from DRSecondary endpoint.
-        /// Serialized Name: DeletedAppRestoreRequest.properties.useDRSecondary
-        /// </summary>
+        /// <summary> If true, the snapshot is retrieved from DRSecondary endpoint. </summary>
         public bool? IsUseDRSecondary { get; set; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }
 }

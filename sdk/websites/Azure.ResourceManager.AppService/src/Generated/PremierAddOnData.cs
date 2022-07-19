@@ -27,30 +27,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="sku">
-        /// Premier add on SKU.
-        /// Serialized Name: PremierAddOn.properties.sku
-        /// </param>
-        /// <param name="product">
-        /// Premier add on Product.
-        /// Serialized Name: PremierAddOn.properties.product
-        /// </param>
-        /// <param name="vendor">
-        /// Premier add on Vendor.
-        /// Serialized Name: PremierAddOn.properties.vendor
-        /// </param>
-        /// <param name="marketplacePublisher">
-        /// Premier add on Marketplace publisher.
-        /// Serialized Name: PremierAddOn.properties.marketplacePublisher
-        /// </param>
-        /// <param name="marketplaceOffer">
-        /// Premier add on Marketplace offer.
-        /// Serialized Name: PremierAddOn.properties.marketplaceOffer
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: Resource.kind
-        /// </param>
+        /// <param name="sku"> Premier add on SKU. </param>
+        /// <param name="product"> Premier add on Product. </param>
+        /// <param name="vendor"> Premier add on Vendor. </param>
+        /// <param name="marketplacePublisher"> Premier add on Marketplace publisher. </param>
+        /// <param name="marketplaceOffer"> Premier add on Marketplace offer. </param>
+        /// <param name="kind"> Kind of resource. </param>
         internal PremierAddOnData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string sku, string product, string vendor, string marketplacePublisher, string marketplaceOffer, string kind) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
@@ -61,35 +43,17 @@ namespace Azure.ResourceManager.AppService
             Kind = kind;
         }
 
-        /// <summary>
-        /// Premier add on SKU.
-        /// Serialized Name: PremierAddOn.properties.sku
-        /// </summary>
+        /// <summary> Premier add on SKU. </summary>
         public string Sku { get; set; }
-        /// <summary>
-        /// Premier add on Product.
-        /// Serialized Name: PremierAddOn.properties.product
-        /// </summary>
+        /// <summary> Premier add on Product. </summary>
         public string Product { get; set; }
-        /// <summary>
-        /// Premier add on Vendor.
-        /// Serialized Name: PremierAddOn.properties.vendor
-        /// </summary>
+        /// <summary> Premier add on Vendor. </summary>
         public string Vendor { get; set; }
-        /// <summary>
-        /// Premier add on Marketplace publisher.
-        /// Serialized Name: PremierAddOn.properties.marketplacePublisher
-        /// </summary>
+        /// <summary> Premier add on Marketplace publisher. </summary>
         public string MarketplacePublisher { get; set; }
-        /// <summary>
-        /// Premier add on Marketplace offer.
-        /// Serialized Name: PremierAddOn.properties.marketplaceOffer
-        /// </summary>
+        /// <summary> Premier add on Marketplace offer. </summary>
         public string MarketplaceOffer { get; set; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: Resource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }
 }

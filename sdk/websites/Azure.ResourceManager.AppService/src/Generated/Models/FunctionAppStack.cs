@@ -11,10 +11,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Function App Stack.
-    /// Serialized Name: FunctionAppStack
-    /// </summary>
+    /// <summary> Function App Stack. </summary>
     public partial class FunctionAppStack : ResourceData
     {
         /// <summary> Initializes a new instance of FunctionAppStack. </summary>
@@ -28,30 +25,12 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="location">
-        /// Function App stack location.
-        /// Serialized Name: FunctionAppStack.location
-        /// </param>
-        /// <param name="displayText">
-        /// Function App stack (display only).
-        /// Serialized Name: FunctionAppStack.properties.displayText
-        /// </param>
-        /// <param name="value">
-        /// Function App stack name.
-        /// Serialized Name: FunctionAppStack.properties.value
-        /// </param>
-        /// <param name="majorVersions">
-        /// List of major versions available.
-        /// Serialized Name: FunctionAppStack.properties.majorVersions
-        /// </param>
-        /// <param name="preferredOS">
-        /// Function App stack preferred OS.
-        /// Serialized Name: FunctionAppStack.properties.preferredOs
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="location"> Function App stack location. </param>
+        /// <param name="displayText"> Function App stack (display only). </param>
+        /// <param name="value"> Function App stack name. </param>
+        /// <param name="majorVersions"> List of major versions available. </param>
+        /// <param name="preferredOS"> Function App stack preferred OS. </param>
+        /// <param name="kind"> Kind of resource. </param>
         internal FunctionAppStack(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string displayText, string value, IReadOnlyList<FunctionAppMajorVersion> majorVersions, StackPreferredOS? preferredOS, string kind) : base(id, name, resourceType, systemData)
         {
             Location = location;
@@ -62,35 +41,17 @@ namespace Azure.ResourceManager.AppService.Models
             Kind = kind;
         }
 
-        /// <summary>
-        /// Function App stack location.
-        /// Serialized Name: FunctionAppStack.location
-        /// </summary>
+        /// <summary> Function App stack location. </summary>
         public AzureLocation? Location { get; }
-        /// <summary>
-        /// Function App stack (display only).
-        /// Serialized Name: FunctionAppStack.properties.displayText
-        /// </summary>
+        /// <summary> Function App stack (display only). </summary>
         public string DisplayText { get; }
-        /// <summary>
-        /// Function App stack name.
-        /// Serialized Name: FunctionAppStack.properties.value
-        /// </summary>
+        /// <summary> Function App stack name. </summary>
         public string Value { get; }
-        /// <summary>
-        /// List of major versions available.
-        /// Serialized Name: FunctionAppStack.properties.majorVersions
-        /// </summary>
+        /// <summary> List of major versions available. </summary>
         public IReadOnlyList<FunctionAppMajorVersion> MajorVersions { get; }
-        /// <summary>
-        /// Function App stack preferred OS.
-        /// Serialized Name: FunctionAppStack.properties.preferredOs
-        /// </summary>
+        /// <summary> Function App stack preferred OS. </summary>
         public StackPreferredOS? PreferredOS { get; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }
 }

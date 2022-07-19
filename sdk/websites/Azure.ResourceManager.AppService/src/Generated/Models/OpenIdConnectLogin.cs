@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The configuration settings of the login flow of the custom Open ID Connect provider.
-    /// Serialized Name: OpenIdConnectLogin
-    /// </summary>
+    /// <summary> The configuration settings of the login flow of the custom Open ID Connect provider. </summary>
     public partial class OpenIdConnectLogin
     {
         /// <summary> Initializes a new instance of OpenIdConnectLogin. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of OpenIdConnectLogin. </summary>
-        /// <param name="nameClaimType">
-        /// The name of the claim that contains the users name.
-        /// Serialized Name: OpenIdConnectLogin.nameClaimType
-        /// </param>
-        /// <param name="scopes">
-        /// A list of the scopes that should be requested while authenticating.
-        /// Serialized Name: OpenIdConnectLogin.scopes
-        /// </param>
+        /// <param name="nameClaimType"> The name of the claim that contains the users name. </param>
+        /// <param name="scopes"> A list of the scopes that should be requested while authenticating. </param>
         internal OpenIdConnectLogin(string nameClaimType, IList<string> scopes)
         {
             NameClaimType = nameClaimType;
             Scopes = scopes;
         }
 
-        /// <summary>
-        /// The name of the claim that contains the users name.
-        /// Serialized Name: OpenIdConnectLogin.nameClaimType
-        /// </summary>
+        /// <summary> The name of the claim that contains the users name. </summary>
         public string NameClaimType { get; set; }
-        /// <summary>
-        /// A list of the scopes that should be requested while authenticating.
-        /// Serialized Name: OpenIdConnectLogin.scopes
-        /// </summary>
+        /// <summary> A list of the scopes that should be requested while authenticating. </summary>
         public IList<string> Scopes { get; }
     }
 }

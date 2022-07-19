@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The IP Addresses and Ports that require inbound network access to and within the subnet of the App Service Environment.
-    /// Serialized Name: InboundEnvironmentEndpoint
-    /// </summary>
+    /// <summary> The IP Addresses and Ports that require inbound network access to and within the subnet of the App Service Environment. </summary>
     public partial class InboundEnvironmentEndpoint
     {
         /// <summary> Initializes a new instance of InboundEnvironmentEndpoint. </summary>
@@ -24,18 +21,9 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of InboundEnvironmentEndpoint. </summary>
-        /// <param name="description">
-        /// Short text describing the purpose of the network traffic.
-        /// Serialized Name: InboundEnvironmentEndpoint.description
-        /// </param>
-        /// <param name="endpoints">
-        /// The IP addresses that network traffic will originate from in cidr notation.
-        /// Serialized Name: InboundEnvironmentEndpoint.endpoints
-        /// </param>
-        /// <param name="ports">
-        /// The ports that network traffic will arrive to the App Service Environment at.
-        /// Serialized Name: InboundEnvironmentEndpoint.ports
-        /// </param>
+        /// <param name="description"> Short text describing the purpose of the network traffic. </param>
+        /// <param name="endpoints"> The IP addresses that network traffic will originate from in cidr notation. </param>
+        /// <param name="ports"> The ports that network traffic will arrive to the App Service Environment at. </param>
         internal InboundEnvironmentEndpoint(string description, IReadOnlyList<string> endpoints, IReadOnlyList<string> ports)
         {
             Description = description;
@@ -43,20 +31,11 @@ namespace Azure.ResourceManager.AppService.Models
             Ports = ports;
         }
 
-        /// <summary>
-        /// Short text describing the purpose of the network traffic.
-        /// Serialized Name: InboundEnvironmentEndpoint.description
-        /// </summary>
+        /// <summary> Short text describing the purpose of the network traffic. </summary>
         public string Description { get; }
-        /// <summary>
-        /// The IP addresses that network traffic will originate from in cidr notation.
-        /// Serialized Name: InboundEnvironmentEndpoint.endpoints
-        /// </summary>
+        /// <summary> The IP addresses that network traffic will originate from in cidr notation. </summary>
         public IReadOnlyList<string> Endpoints { get; }
-        /// <summary>
-        /// The ports that network traffic will arrive to the App Service Environment at.
-        /// Serialized Name: InboundEnvironmentEndpoint.ports
-        /// </summary>
+        /// <summary> The ports that network traffic will arrive to the App Service Environment at. </summary>
         public IReadOnlyList<string> Ports { get; }
     }
 }

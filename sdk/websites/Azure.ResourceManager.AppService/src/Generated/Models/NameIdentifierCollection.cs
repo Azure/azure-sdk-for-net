@@ -11,17 +11,11 @@ using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Collection of domain name identifiers.
-    /// Serialized Name: NameIdentifierCollection
-    /// </summary>
+    /// <summary> Collection of domain name identifiers. </summary>
     internal partial class NameIdentifierCollection
     {
         /// <summary> Initializes a new instance of NameIdentifierCollection. </summary>
-        /// <param name="value">
-        /// Collection of resources.
-        /// Serialized Name: NameIdentifierCollection.value
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal NameIdentifierCollection(IEnumerable<NameIdentifier> value)
         {
@@ -34,29 +28,17 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of NameIdentifierCollection. </summary>
-        /// <param name="value">
-        /// Collection of resources.
-        /// Serialized Name: NameIdentifierCollection.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Link to next page of resources.
-        /// Serialized Name: NameIdentifierCollection.nextLink
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
+        /// <param name="nextLink"> Link to next page of resources. </param>
         internal NameIdentifierCollection(IReadOnlyList<NameIdentifier> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Collection of resources.
-        /// Serialized Name: NameIdentifierCollection.value
-        /// </summary>
+        /// <summary> Collection of resources. </summary>
         public IReadOnlyList<NameIdentifier> Value { get; }
-        /// <summary>
-        /// Link to next page of resources.
-        /// Serialized Name: NameIdentifierCollection.nextLink
-        /// </summary>
+        /// <summary> Link to next page of resources. </summary>
         public string NextLink { get; }
     }
 }

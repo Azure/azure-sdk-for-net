@@ -11,17 +11,11 @@ using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Collection of resources.
-    /// Serialized Name: ResourceCollection
-    /// </summary>
+    /// <summary> Collection of resources. </summary>
     internal partial class ResourceCollection
     {
         /// <summary> Initializes a new instance of ResourceCollection. </summary>
-        /// <param name="value">
-        /// Collection of resources.
-        /// Serialized Name: ResourceCollection.value
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ResourceCollection(IEnumerable<string> value)
         {
@@ -34,29 +28,17 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of ResourceCollection. </summary>
-        /// <param name="value">
-        /// Collection of resources.
-        /// Serialized Name: ResourceCollection.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Link to next page of resources.
-        /// Serialized Name: ResourceCollection.nextLink
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
+        /// <param name="nextLink"> Link to next page of resources. </param>
         internal ResourceCollection(IReadOnlyList<string> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Collection of resources.
-        /// Serialized Name: ResourceCollection.value
-        /// </summary>
+        /// <summary> Collection of resources. </summary>
         public IReadOnlyList<string> Value { get; }
-        /// <summary>
-        /// Link to next page of resources.
-        /// Serialized Name: ResourceCollection.nextLink
-        /// </summary>
+        /// <summary> Link to next page of resources. </summary>
         public string NextLink { get; }
     }
 }

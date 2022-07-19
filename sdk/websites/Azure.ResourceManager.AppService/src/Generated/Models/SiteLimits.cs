@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Metric limits set on an app.
-    /// Serialized Name: SiteLimits
-    /// </summary>
+    /// <summary> Metric limits set on an app. </summary>
     public partial class SiteLimits
     {
         /// <summary> Initializes a new instance of SiteLimits. </summary>
@@ -19,18 +16,9 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of SiteLimits. </summary>
-        /// <param name="maxPercentageCpu">
-        /// Maximum allowed CPU usage percentage.
-        /// Serialized Name: SiteLimits.maxPercentageCpu
-        /// </param>
-        /// <param name="maxMemoryInMb">
-        /// Maximum allowed memory usage in MB.
-        /// Serialized Name: SiteLimits.maxMemoryInMb
-        /// </param>
-        /// <param name="maxDiskSizeInMb">
-        /// Maximum allowed disk size usage in MB.
-        /// Serialized Name: SiteLimits.maxDiskSizeInMb
-        /// </param>
+        /// <param name="maxPercentageCpu"> Maximum allowed CPU usage percentage. </param>
+        /// <param name="maxMemoryInMb"> Maximum allowed memory usage in MB. </param>
+        /// <param name="maxDiskSizeInMb"> Maximum allowed disk size usage in MB. </param>
         internal SiteLimits(double? maxPercentageCpu, long? maxMemoryInMb, long? maxDiskSizeInMb)
         {
             MaxPercentageCpu = maxPercentageCpu;
@@ -38,20 +26,11 @@ namespace Azure.ResourceManager.AppService.Models
             MaxDiskSizeInMb = maxDiskSizeInMb;
         }
 
-        /// <summary>
-        /// Maximum allowed CPU usage percentage.
-        /// Serialized Name: SiteLimits.maxPercentageCpu
-        /// </summary>
+        /// <summary> Maximum allowed CPU usage percentage. </summary>
         public double? MaxPercentageCpu { get; set; }
-        /// <summary>
-        /// Maximum allowed memory usage in MB.
-        /// Serialized Name: SiteLimits.maxMemoryInMb
-        /// </summary>
+        /// <summary> Maximum allowed memory usage in MB. </summary>
         public long? MaxMemoryInMb { get; set; }
-        /// <summary>
-        /// Maximum allowed disk size usage in MB.
-        /// Serialized Name: SiteLimits.maxDiskSizeInMb
-        /// </summary>
+        /// <summary> Maximum allowed disk size usage in MB. </summary>
         public long? MaxDiskSizeInMb { get; set; }
     }
 }

@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Class representing Diagnostic Metric
-    /// Serialized Name: DiagnosticMetricSample
-    /// </summary>
+    /// <summary> Class representing Diagnostic Metric. </summary>
     public partial class DiagnosticMetricSample
     {
         /// <summary> Initializes a new instance of DiagnosticMetricSample. </summary>
@@ -21,33 +18,17 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of DiagnosticMetricSample. </summary>
-        /// <param name="timestampOn">
-        /// Time at which metric is measured
-        /// Serialized Name: DiagnosticMetricSample.timestamp
-        /// </param>
+        /// <param name="timestampOn"> Time at which metric is measured. </param>
         /// <param name="roleInstance">
         /// Role Instance. Null if this counter is not per instance 
         /// This is returned and should be whichever instance name we desire to be returned
         /// i.e. CPU and Memory return RDWORKERNAME (LargeDed..._IN_0) 
         /// where RDWORKERNAME is Machine name below and RoleInstance name in parenthesis
-        /// Serialized Name: DiagnosticMetricSample.roleInstance
         /// </param>
-        /// <param name="total">
-        /// Total value of the metric. If multiple measurements are made this will have sum of all.
-        /// Serialized Name: DiagnosticMetricSample.total
-        /// </param>
-        /// <param name="maximum">
-        /// Maximum of the metric sampled during the time period
-        /// Serialized Name: DiagnosticMetricSample.maximum
-        /// </param>
-        /// <param name="minimum">
-        /// Minimum of the metric sampled during the time period
-        /// Serialized Name: DiagnosticMetricSample.minimum
-        /// </param>
-        /// <param name="isAggregated">
-        /// Whether the values are aggregates across all workers or not
-        /// Serialized Name: DiagnosticMetricSample.isAggregated
-        /// </param>
+        /// <param name="total"> Total value of the metric. If multiple measurements are made this will have sum of all. </param>
+        /// <param name="maximum"> Maximum of the metric sampled during the time period. </param>
+        /// <param name="minimum"> Minimum of the metric sampled during the time period. </param>
+        /// <param name="isAggregated"> Whether the values are aggregates across all workers or not. </param>
         internal DiagnosticMetricSample(DateTimeOffset? timestampOn, string roleInstance, double? total, double? maximum, double? minimum, bool? isAggregated)
         {
             TimestampOn = timestampOn;
@@ -58,38 +39,22 @@ namespace Azure.ResourceManager.AppService.Models
             IsAggregated = isAggregated;
         }
 
-        /// <summary>
-        /// Time at which metric is measured
-        /// Serialized Name: DiagnosticMetricSample.timestamp
-        /// </summary>
+        /// <summary> Time at which metric is measured. </summary>
         public DateTimeOffset? TimestampOn { get; set; }
         /// <summary>
         /// Role Instance. Null if this counter is not per instance 
         /// This is returned and should be whichever instance name we desire to be returned
         /// i.e. CPU and Memory return RDWORKERNAME (LargeDed..._IN_0) 
         /// where RDWORKERNAME is Machine name below and RoleInstance name in parenthesis
-        /// Serialized Name: DiagnosticMetricSample.roleInstance
         /// </summary>
         public string RoleInstance { get; set; }
-        /// <summary>
-        /// Total value of the metric. If multiple measurements are made this will have sum of all.
-        /// Serialized Name: DiagnosticMetricSample.total
-        /// </summary>
+        /// <summary> Total value of the metric. If multiple measurements are made this will have sum of all. </summary>
         public double? Total { get; set; }
-        /// <summary>
-        /// Maximum of the metric sampled during the time period
-        /// Serialized Name: DiagnosticMetricSample.maximum
-        /// </summary>
+        /// <summary> Maximum of the metric sampled during the time period. </summary>
         public double? Maximum { get; set; }
-        /// <summary>
-        /// Minimum of the metric sampled during the time period
-        /// Serialized Name: DiagnosticMetricSample.minimum
-        /// </summary>
+        /// <summary> Minimum of the metric sampled during the time period. </summary>
         public double? Minimum { get; set; }
-        /// <summary>
-        /// Whether the values are aggregates across all workers or not
-        /// Serialized Name: DiagnosticMetricSample.isAggregated
-        /// </summary>
+        /// <summary> Whether the values are aggregates across all workers or not. </summary>
         public bool? IsAggregated { get; set; }
     }
 }

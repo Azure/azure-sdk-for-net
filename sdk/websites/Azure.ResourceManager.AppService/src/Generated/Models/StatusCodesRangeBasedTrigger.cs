@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Trigger based on range of status codes.
-    /// Serialized Name: StatusCodesRangeBasedTrigger
-    /// </summary>
+    /// <summary> Trigger based on range of status codes. </summary>
     public partial class StatusCodesRangeBasedTrigger
     {
         /// <summary> Initializes a new instance of StatusCodesRangeBasedTrigger. </summary>
@@ -19,19 +16,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of StatusCodesRangeBasedTrigger. </summary>
-        /// <param name="statusCodes">
-        /// HTTP status code.
-        /// Serialized Name: StatusCodesRangeBasedTrigger.statusCodes
-        /// </param>
-        /// <param name="path"> Serialized Name: StatusCodesRangeBasedTrigger.path. </param>
-        /// <param name="count">
-        /// Request Count.
-        /// Serialized Name: StatusCodesRangeBasedTrigger.count
-        /// </param>
-        /// <param name="timeInterval">
-        /// Time interval.
-        /// Serialized Name: StatusCodesRangeBasedTrigger.timeInterval
-        /// </param>
+        /// <param name="statusCodes"> HTTP status code. </param>
+        /// <param name="path"></param>
+        /// <param name="count"> Request Count. </param>
+        /// <param name="timeInterval"> Time interval. </param>
         internal StatusCodesRangeBasedTrigger(string statusCodes, string path, int? count, string timeInterval)
         {
             StatusCodes = statusCodes;
@@ -40,22 +28,13 @@ namespace Azure.ResourceManager.AppService.Models
             TimeInterval = timeInterval;
         }
 
-        /// <summary>
-        /// HTTP status code.
-        /// Serialized Name: StatusCodesRangeBasedTrigger.statusCodes
-        /// </summary>
+        /// <summary> HTTP status code. </summary>
         public string StatusCodes { get; set; }
-        /// <summary> Serialized Name: StatusCodesRangeBasedTrigger.path. </summary>
+        /// <summary> Gets or sets the path. </summary>
         public string Path { get; set; }
-        /// <summary>
-        /// Request Count.
-        /// Serialized Name: StatusCodesRangeBasedTrigger.count
-        /// </summary>
+        /// <summary> Request Count. </summary>
         public int? Count { get; set; }
-        /// <summary>
-        /// Time interval.
-        /// Serialized Name: StatusCodesRangeBasedTrigger.timeInterval
-        /// </summary>
+        /// <summary> Time interval. </summary>
         public string TimeInterval { get; set; }
     }
 }

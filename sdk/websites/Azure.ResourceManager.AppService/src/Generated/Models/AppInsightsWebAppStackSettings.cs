@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// App Insights Web App stack settings.
-    /// Serialized Name: AppInsightsWebAppStackSettings
-    /// </summary>
+    /// <summary> App Insights Web App stack settings. </summary>
     public partial class AppInsightsWebAppStackSettings
     {
         /// <summary> Initializes a new instance of AppInsightsWebAppStackSettings. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of AppInsightsWebAppStackSettings. </summary>
-        /// <param name="isSupported">
-        /// &lt;code&gt;true&lt;/code&gt; if remote Application Insights is supported for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: AppInsightsWebAppStackSettings.isSupported
-        /// </param>
-        /// <param name="isDefaultOff">
-        /// &lt;code&gt;true&lt;/code&gt; if Application Insights is disabled by default for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: AppInsightsWebAppStackSettings.isDefaultOff
-        /// </param>
+        /// <param name="isSupported"> &lt;code&gt;true&lt;/code&gt; if remote Application Insights is supported for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isDefaultOff"> &lt;code&gt;true&lt;/code&gt; if Application Insights is disabled by default for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         internal AppInsightsWebAppStackSettings(bool? isSupported, bool? isDefaultOff)
         {
             IsSupported = isSupported;
             IsDefaultOff = isDefaultOff;
         }
 
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if remote Application Insights is supported for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: AppInsightsWebAppStackSettings.isSupported
-        /// </summary>
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if remote Application Insights is supported for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? IsSupported { get; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if Application Insights is disabled by default for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: AppInsightsWebAppStackSettings.isDefaultOff
-        /// </summary>
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if Application Insights is disabled by default for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? IsDefaultOff { get; }
     }
 }

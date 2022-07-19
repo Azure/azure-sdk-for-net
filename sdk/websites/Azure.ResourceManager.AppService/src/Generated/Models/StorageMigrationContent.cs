@@ -10,10 +10,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Options for app content migration.
-    /// Serialized Name: StorageMigrationOptions
-    /// </summary>
+    /// <summary> Options for app content migration. </summary>
     public partial class StorageMigrationContent : ResourceData
     {
         /// <summary> Initializes a new instance of StorageMigrationContent. </summary>
@@ -26,26 +23,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="azurefilesConnectionString">
-        /// AzureFiles connection string.
-        /// Serialized Name: StorageMigrationOptions.properties.azurefilesConnectionString
-        /// </param>
-        /// <param name="azurefilesShare">
-        /// AzureFiles share.
-        /// Serialized Name: StorageMigrationOptions.properties.azurefilesShare
-        /// </param>
-        /// <param name="switchSiteAfterMigration">
-        /// &lt;code&gt;true&lt;/code&gt;if the app should be switched over; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: StorageMigrationOptions.properties.switchSiteAfterMigration
-        /// </param>
-        /// <param name="isBlockWriteAccessToSite">
-        /// &lt;code&gt;true&lt;/code&gt; if the app should be read only during copy operation; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: StorageMigrationOptions.properties.blockWriteAccessToSite
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="azurefilesConnectionString"> AzureFiles connection string. </param>
+        /// <param name="azurefilesShare"> AzureFiles share. </param>
+        /// <param name="switchSiteAfterMigration"> &lt;code&gt;true&lt;/code&gt;if the app should be switched over; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isBlockWriteAccessToSite"> &lt;code&gt;true&lt;/code&gt; if the app should be read only during copy operation; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="kind"> Kind of resource. </param>
         internal StorageMigrationContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string azurefilesConnectionString, string azurefilesShare, bool? switchSiteAfterMigration, bool? isBlockWriteAccessToSite, string kind) : base(id, name, resourceType, systemData)
         {
             AzurefilesConnectionString = azurefilesConnectionString;
@@ -55,30 +37,15 @@ namespace Azure.ResourceManager.AppService.Models
             Kind = kind;
         }
 
-        /// <summary>
-        /// AzureFiles connection string.
-        /// Serialized Name: StorageMigrationOptions.properties.azurefilesConnectionString
-        /// </summary>
+        /// <summary> AzureFiles connection string. </summary>
         public string AzurefilesConnectionString { get; set; }
-        /// <summary>
-        /// AzureFiles share.
-        /// Serialized Name: StorageMigrationOptions.properties.azurefilesShare
-        /// </summary>
+        /// <summary> AzureFiles share. </summary>
         public string AzurefilesShare { get; set; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt;if the app should be switched over; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: StorageMigrationOptions.properties.switchSiteAfterMigration
-        /// </summary>
+        /// <summary> &lt;code&gt;true&lt;/code&gt;if the app should be switched over; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? SwitchSiteAfterMigration { get; set; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if the app should be read only during copy operation; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: StorageMigrationOptions.properties.blockWriteAccessToSite
-        /// </summary>
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if the app should be read only during copy operation; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? IsBlockWriteAccessToSite { get; set; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }
 }

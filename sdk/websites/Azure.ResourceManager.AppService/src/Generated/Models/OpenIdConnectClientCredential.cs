@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The authentication client credentials of the custom Open ID Connect provider.
-    /// Serialized Name: OpenIdConnectClientCredential
-    /// </summary>
+    /// <summary> The authentication client credentials of the custom Open ID Connect provider. </summary>
     public partial class OpenIdConnectClientCredential
     {
         /// <summary> Initializes a new instance of OpenIdConnectClientCredential. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of OpenIdConnectClientCredential. </summary>
-        /// <param name="method">
-        /// The method that should be used to authenticate the user.
-        /// Serialized Name: OpenIdConnectClientCredential.method
-        /// </param>
-        /// <param name="clientSecretSettingName">
-        /// The app setting that contains the client secret for the custom Open ID Connect provider.
-        /// Serialized Name: OpenIdConnectClientCredential.clientSecretSettingName
-        /// </param>
+        /// <param name="method"> The method that should be used to authenticate the user. </param>
+        /// <param name="clientSecretSettingName"> The app setting that contains the client secret for the custom Open ID Connect provider. </param>
         internal OpenIdConnectClientCredential(ClientCredentialMethod? method, string clientSecretSettingName)
         {
             Method = method;
             ClientSecretSettingName = clientSecretSettingName;
         }
 
-        /// <summary>
-        /// The method that should be used to authenticate the user.
-        /// Serialized Name: OpenIdConnectClientCredential.method
-        /// </summary>
+        /// <summary> The method that should be used to authenticate the user. </summary>
         public ClientCredentialMethod? Method { get; set; }
-        /// <summary>
-        /// The app setting that contains the client secret for the custom Open ID Connect provider.
-        /// Serialized Name: OpenIdConnectClientCredential.clientSecretSettingName
-        /// </summary>
+        /// <summary> The app setting that contains the client secret for the custom Open ID Connect provider. </summary>
         public string ClientSecretSettingName { get; set; }
     }
 }

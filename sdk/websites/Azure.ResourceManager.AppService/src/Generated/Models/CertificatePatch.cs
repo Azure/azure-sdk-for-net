@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// ARM resource for a certificate.
-    /// Serialized Name: CertificatePatchResource
-    /// </summary>
+    /// <summary> ARM resource for a certificate. </summary>
     public partial class CertificatePatch : ResourceData
     {
         /// <summary> Initializes a new instance of CertificatePatch. </summary>
@@ -29,94 +26,28 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="password">
-        /// Certificate password.
-        /// Serialized Name: CertificatePatchResource.properties.password
-        /// </param>
-        /// <param name="friendlyName">
-        /// Friendly name of the certificate.
-        /// Serialized Name: CertificatePatchResource.properties.friendlyName
-        /// </param>
-        /// <param name="subjectName">
-        /// Subject name of the certificate.
-        /// Serialized Name: CertificatePatchResource.properties.subjectName
-        /// </param>
-        /// <param name="hostNames">
-        /// Host names the certificate applies to.
-        /// Serialized Name: CertificatePatchResource.properties.hostNames
-        /// </param>
-        /// <param name="pfxBlob">
-        /// Pfx blob.
-        /// Serialized Name: CertificatePatchResource.properties.pfxBlob
-        /// </param>
-        /// <param name="siteName">
-        /// App name.
-        /// Serialized Name: CertificatePatchResource.properties.siteName
-        /// </param>
-        /// <param name="selfLink">
-        /// Self link.
-        /// Serialized Name: CertificatePatchResource.properties.selfLink
-        /// </param>
-        /// <param name="issuer">
-        /// Certificate issuer.
-        /// Serialized Name: CertificatePatchResource.properties.issuer
-        /// </param>
-        /// <param name="issueOn">
-        /// Certificate issue Date.
-        /// Serialized Name: CertificatePatchResource.properties.issueDate
-        /// </param>
-        /// <param name="expirationOn">
-        /// Certificate expiration date.
-        /// Serialized Name: CertificatePatchResource.properties.expirationDate
-        /// </param>
-        /// <param name="thumbprint">
-        /// Certificate thumbprint.
-        /// Serialized Name: CertificatePatchResource.properties.thumbprint
-        /// </param>
-        /// <param name="isValid">
-        /// Is the certificate valid?.
-        /// Serialized Name: CertificatePatchResource.properties.valid
-        /// </param>
-        /// <param name="cerBlob">
-        /// Raw bytes of .cer file
-        /// Serialized Name: CertificatePatchResource.properties.cerBlob
-        /// </param>
-        /// <param name="publicKeyHash">
-        /// Public key hash.
-        /// Serialized Name: CertificatePatchResource.properties.publicKeyHash
-        /// </param>
-        /// <param name="hostingEnvironmentProfile">
-        /// Specification for the App Service Environment to use for the certificate.
-        /// Serialized Name: CertificatePatchResource.properties.hostingEnvironmentProfile
-        /// </param>
-        /// <param name="keyVaultId">
-        /// Key Vault Csm resource Id.
-        /// Serialized Name: CertificatePatchResource.properties.keyVaultId
-        /// </param>
-        /// <param name="keyVaultSecretName">
-        /// Key Vault secret name.
-        /// Serialized Name: CertificatePatchResource.properties.keyVaultSecretName
-        /// </param>
-        /// <param name="keyVaultSecretStatus">
-        /// Status of the Key Vault secret.
-        /// Serialized Name: CertificatePatchResource.properties.keyVaultSecretStatus
-        /// </param>
-        /// <param name="serverFarmId">
-        /// Resource ID of the associated App Service plan, formatted as: &quot;/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}&quot;.
-        /// Serialized Name: CertificatePatchResource.properties.serverFarmId
-        /// </param>
-        /// <param name="canonicalName">
-        /// CNAME of the certificate to be issued via free certificate
-        /// Serialized Name: CertificatePatchResource.properties.canonicalName
-        /// </param>
-        /// <param name="domainValidationMethod">
-        /// Method of domain validation for free cert
-        /// Serialized Name: CertificatePatchResource.properties.domainValidationMethod
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="password"> Certificate password. </param>
+        /// <param name="friendlyName"> Friendly name of the certificate. </param>
+        /// <param name="subjectName"> Subject name of the certificate. </param>
+        /// <param name="hostNames"> Host names the certificate applies to. </param>
+        /// <param name="pfxBlob"> Pfx blob. </param>
+        /// <param name="siteName"> App name. </param>
+        /// <param name="selfLink"> Self link. </param>
+        /// <param name="issuer"> Certificate issuer. </param>
+        /// <param name="issueOn"> Certificate issue Date. </param>
+        /// <param name="expirationOn"> Certificate expiration date. </param>
+        /// <param name="thumbprint"> Certificate thumbprint. </param>
+        /// <param name="isValid"> Is the certificate valid?. </param>
+        /// <param name="cerBlob"> Raw bytes of .cer file. </param>
+        /// <param name="publicKeyHash"> Public key hash. </param>
+        /// <param name="hostingEnvironmentProfile"> Specification for the App Service Environment to use for the certificate. </param>
+        /// <param name="keyVaultId"> Key Vault Csm resource Id. </param>
+        /// <param name="keyVaultSecretName"> Key Vault secret name. </param>
+        /// <param name="keyVaultSecretStatus"> Status of the Key Vault secret. </param>
+        /// <param name="serverFarmId"> Resource ID of the associated App Service plan, formatted as: &quot;/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}&quot;. </param>
+        /// <param name="canonicalName"> CNAME of the certificate to be issued via free certificate. </param>
+        /// <param name="domainValidationMethod"> Method of domain validation for free cert. </param>
+        /// <param name="kind"> Kind of resource. </param>
         internal CertificatePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string password, string friendlyName, string subjectName, IList<string> hostNames, byte[] pfxBlob, string siteName, string selfLink, string issuer, DateTimeOffset? issueOn, DateTimeOffset? expirationOn, string thumbprint, bool? isValid, byte[] cerBlob, string publicKeyHash, HostingEnvironmentProfile hostingEnvironmentProfile, string keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? keyVaultSecretStatus, string serverFarmId, string canonicalName, string domainValidationMethod, string kind) : base(id, name, resourceType, systemData)
         {
             Password = password;
@@ -143,115 +74,49 @@ namespace Azure.ResourceManager.AppService.Models
             Kind = kind;
         }
 
-        /// <summary>
-        /// Certificate password.
-        /// Serialized Name: CertificatePatchResource.properties.password
-        /// </summary>
+        /// <summary> Certificate password. </summary>
         public string Password { get; set; }
-        /// <summary>
-        /// Friendly name of the certificate.
-        /// Serialized Name: CertificatePatchResource.properties.friendlyName
-        /// </summary>
+        /// <summary> Friendly name of the certificate. </summary>
         public string FriendlyName { get; }
-        /// <summary>
-        /// Subject name of the certificate.
-        /// Serialized Name: CertificatePatchResource.properties.subjectName
-        /// </summary>
+        /// <summary> Subject name of the certificate. </summary>
         public string SubjectName { get; }
-        /// <summary>
-        /// Host names the certificate applies to.
-        /// Serialized Name: CertificatePatchResource.properties.hostNames
-        /// </summary>
+        /// <summary> Host names the certificate applies to. </summary>
         public IList<string> HostNames { get; }
-        /// <summary>
-        /// Pfx blob.
-        /// Serialized Name: CertificatePatchResource.properties.pfxBlob
-        /// </summary>
+        /// <summary> Pfx blob. </summary>
         public byte[] PfxBlob { get; set; }
-        /// <summary>
-        /// App name.
-        /// Serialized Name: CertificatePatchResource.properties.siteName
-        /// </summary>
+        /// <summary> App name. </summary>
         public string SiteName { get; }
-        /// <summary>
-        /// Self link.
-        /// Serialized Name: CertificatePatchResource.properties.selfLink
-        /// </summary>
+        /// <summary> Self link. </summary>
         public string SelfLink { get; }
-        /// <summary>
-        /// Certificate issuer.
-        /// Serialized Name: CertificatePatchResource.properties.issuer
-        /// </summary>
+        /// <summary> Certificate issuer. </summary>
         public string Issuer { get; }
-        /// <summary>
-        /// Certificate issue Date.
-        /// Serialized Name: CertificatePatchResource.properties.issueDate
-        /// </summary>
+        /// <summary> Certificate issue Date. </summary>
         public DateTimeOffset? IssueOn { get; }
-        /// <summary>
-        /// Certificate expiration date.
-        /// Serialized Name: CertificatePatchResource.properties.expirationDate
-        /// </summary>
+        /// <summary> Certificate expiration date. </summary>
         public DateTimeOffset? ExpirationOn { get; }
-        /// <summary>
-        /// Certificate thumbprint.
-        /// Serialized Name: CertificatePatchResource.properties.thumbprint
-        /// </summary>
+        /// <summary> Certificate thumbprint. </summary>
         public string Thumbprint { get; }
-        /// <summary>
-        /// Is the certificate valid?.
-        /// Serialized Name: CertificatePatchResource.properties.valid
-        /// </summary>
+        /// <summary> Is the certificate valid?. </summary>
         public bool? IsValid { get; }
-        /// <summary>
-        /// Raw bytes of .cer file
-        /// Serialized Name: CertificatePatchResource.properties.cerBlob
-        /// </summary>
+        /// <summary> Raw bytes of .cer file. </summary>
         public byte[] CerBlob { get; }
-        /// <summary>
-        /// Public key hash.
-        /// Serialized Name: CertificatePatchResource.properties.publicKeyHash
-        /// </summary>
+        /// <summary> Public key hash. </summary>
         public string PublicKeyHash { get; }
-        /// <summary>
-        /// Specification for the App Service Environment to use for the certificate.
-        /// Serialized Name: CertificatePatchResource.properties.hostingEnvironmentProfile
-        /// </summary>
+        /// <summary> Specification for the App Service Environment to use for the certificate. </summary>
         public HostingEnvironmentProfile HostingEnvironmentProfile { get; }
-        /// <summary>
-        /// Key Vault Csm resource Id.
-        /// Serialized Name: CertificatePatchResource.properties.keyVaultId
-        /// </summary>
+        /// <summary> Key Vault Csm resource Id. </summary>
         public string KeyVaultId { get; set; }
-        /// <summary>
-        /// Key Vault secret name.
-        /// Serialized Name: CertificatePatchResource.properties.keyVaultSecretName
-        /// </summary>
+        /// <summary> Key Vault secret name. </summary>
         public string KeyVaultSecretName { get; set; }
-        /// <summary>
-        /// Status of the Key Vault secret.
-        /// Serialized Name: CertificatePatchResource.properties.keyVaultSecretStatus
-        /// </summary>
+        /// <summary> Status of the Key Vault secret. </summary>
         public KeyVaultSecretStatus? KeyVaultSecretStatus { get; }
-        /// <summary>
-        /// Resource ID of the associated App Service plan, formatted as: &quot;/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}&quot;.
-        /// Serialized Name: CertificatePatchResource.properties.serverFarmId
-        /// </summary>
+        /// <summary> Resource ID of the associated App Service plan, formatted as: &quot;/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}&quot;. </summary>
         public string ServerFarmId { get; set; }
-        /// <summary>
-        /// CNAME of the certificate to be issued via free certificate
-        /// Serialized Name: CertificatePatchResource.properties.canonicalName
-        /// </summary>
+        /// <summary> CNAME of the certificate to be issued via free certificate. </summary>
         public string CanonicalName { get; set; }
-        /// <summary>
-        /// Method of domain validation for free cert
-        /// Serialized Name: CertificatePatchResource.properties.domainValidationMethod
-        /// </summary>
+        /// <summary> Method of domain validation for free cert. </summary>
         public string DomainValidationMethod { get; set; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }
 }

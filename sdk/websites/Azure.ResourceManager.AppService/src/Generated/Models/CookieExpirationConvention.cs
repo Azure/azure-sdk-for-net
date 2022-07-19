@@ -7,21 +7,12 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The convention used when determining the session cookie&apos;s expiration.
-    /// Serialized Name: CookieExpirationConvention
-    /// </summary>
+    /// <summary> The convention used when determining the session cookie&apos;s expiration. </summary>
     public enum CookieExpirationConvention
     {
-        /// <summary>
-        /// FixedTime
-        /// Serialized Name: CookieExpirationConvention.FixedTime
-        /// </summary>
+        /// <summary> FixedTime. </summary>
         FixedTime,
-        /// <summary>
-        /// IdentityProviderDerived
-        /// Serialized Name: CookieExpirationConvention.IdentityProviderDerived
-        /// </summary>
+        /// <summary> IdentityProviderDerived. </summary>
         IdentityProviderDerived
     }
 }

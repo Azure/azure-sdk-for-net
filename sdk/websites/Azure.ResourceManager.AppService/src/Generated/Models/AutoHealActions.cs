@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Actions which to take by the auto-heal module when a rule is triggered.
-    /// Serialized Name: AutoHealActions
-    /// </summary>
+    /// <summary> Actions which to take by the auto-heal module when a rule is triggered. </summary>
     public partial class AutoHealActions
     {
         /// <summary> Initializes a new instance of AutoHealActions. </summary>
@@ -19,18 +16,11 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of AutoHealActions. </summary>
-        /// <param name="actionType">
-        /// Predefined action to be taken.
-        /// Serialized Name: AutoHealActions.actionType
-        /// </param>
-        /// <param name="customAction">
-        /// Custom action to be taken.
-        /// Serialized Name: AutoHealActions.customAction
-        /// </param>
+        /// <param name="actionType"> Predefined action to be taken. </param>
+        /// <param name="customAction"> Custom action to be taken. </param>
         /// <param name="minProcessExecutionTime">
         /// Minimum time the process must execute
         /// before taking the action
-        /// Serialized Name: AutoHealActions.minProcessExecutionTime
         /// </param>
         internal AutoHealActions(AutoHealActionType? actionType, AutoHealCustomAction customAction, string minProcessExecutionTime)
         {
@@ -39,20 +29,13 @@ namespace Azure.ResourceManager.AppService.Models
             MinProcessExecutionTime = minProcessExecutionTime;
         }
 
-        /// <summary>
-        /// Predefined action to be taken.
-        /// Serialized Name: AutoHealActions.actionType
-        /// </summary>
+        /// <summary> Predefined action to be taken. </summary>
         public AutoHealActionType? ActionType { get; set; }
-        /// <summary>
-        /// Custom action to be taken.
-        /// Serialized Name: AutoHealActions.customAction
-        /// </summary>
+        /// <summary> Custom action to be taken. </summary>
         public AutoHealCustomAction CustomAction { get; set; }
         /// <summary>
         /// Minimum time the process must execute
         /// before taking the action
-        /// Serialized Name: AutoHealActions.minProcessExecutionTime
         /// </summary>
         public string MinProcessExecutionTime { get; set; }
     }

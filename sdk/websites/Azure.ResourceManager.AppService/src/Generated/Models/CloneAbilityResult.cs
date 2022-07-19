@@ -7,26 +7,14 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Name of app.
-    /// Serialized Name: CloneAbilityResult
-    /// </summary>
+    /// <summary> Name of app. </summary>
     public enum CloneAbilityResult
     {
-        /// <summary>
-        /// Cloneable
-        /// Serialized Name: CloneAbilityResult.Cloneable
-        /// </summary>
+        /// <summary> Cloneable. </summary>
         Cloneable,
-        /// <summary>
-        /// PartiallyCloneable
-        /// Serialized Name: CloneAbilityResult.PartiallyCloneable
-        /// </summary>
+        /// <summary> PartiallyCloneable. </summary>
         PartiallyCloneable,
-        /// <summary>
-        /// NotCloneable
-        /// Serialized Name: CloneAbilityResult.NotCloneable
-        /// </summary>
+        /// <summary> NotCloneable. </summary>
         NotCloneable
     }
 }

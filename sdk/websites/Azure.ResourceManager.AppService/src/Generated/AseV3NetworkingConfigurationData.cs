@@ -28,18 +28,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="windowsOutboundIPAddresses"> Serialized Name: AseV3NetworkingConfiguration.properties.windowsOutboundIpAddresses. </param>
-        /// <param name="linuxOutboundIPAddresses"> Serialized Name: AseV3NetworkingConfiguration.properties.linuxOutboundIpAddresses. </param>
-        /// <param name="externalInboundIPAddresses"> Serialized Name: AseV3NetworkingConfiguration.properties.externalInboundIpAddresses. </param>
-        /// <param name="internalInboundIPAddresses"> Serialized Name: AseV3NetworkingConfiguration.properties.internalInboundIpAddresses. </param>
-        /// <param name="allowNewPrivateEndpointConnections">
-        /// Property to enable and disable new private endpoint connection creation on ASE
-        /// Serialized Name: AseV3NetworkingConfiguration.properties.allowNewPrivateEndpointConnections
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="windowsOutboundIPAddresses"></param>
+        /// <param name="linuxOutboundIPAddresses"></param>
+        /// <param name="externalInboundIPAddresses"></param>
+        /// <param name="internalInboundIPAddresses"></param>
+        /// <param name="allowNewPrivateEndpointConnections"> Property to enable and disable new private endpoint connection creation on ASE. </param>
+        /// <param name="kind"> Kind of resource. </param>
         internal AseV3NetworkingConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<string> windowsOutboundIPAddresses, IReadOnlyList<string> linuxOutboundIPAddresses, IReadOnlyList<string> externalInboundIPAddresses, IReadOnlyList<string> internalInboundIPAddresses, bool? allowNewPrivateEndpointConnections, string kind) : base(id, name, resourceType, systemData)
         {
             WindowsOutboundIPAddresses = windowsOutboundIPAddresses;
@@ -50,23 +44,17 @@ namespace Azure.ResourceManager.AppService
             Kind = kind;
         }
 
-        /// <summary> Serialized Name: AseV3NetworkingConfiguration.properties.windowsOutboundIpAddresses. </summary>
+        /// <summary> Gets the windows outbound ip addresses. </summary>
         public IReadOnlyList<string> WindowsOutboundIPAddresses { get; }
-        /// <summary> Serialized Name: AseV3NetworkingConfiguration.properties.linuxOutboundIpAddresses. </summary>
+        /// <summary> Gets the linux outbound ip addresses. </summary>
         public IReadOnlyList<string> LinuxOutboundIPAddresses { get; }
-        /// <summary> Serialized Name: AseV3NetworkingConfiguration.properties.externalInboundIpAddresses. </summary>
+        /// <summary> Gets the external inbound ip addresses. </summary>
         public IReadOnlyList<string> ExternalInboundIPAddresses { get; }
-        /// <summary> Serialized Name: AseV3NetworkingConfiguration.properties.internalInboundIpAddresses. </summary>
+        /// <summary> Gets the internal inbound ip addresses. </summary>
         public IReadOnlyList<string> InternalInboundIPAddresses { get; }
-        /// <summary>
-        /// Property to enable and disable new private endpoint connection creation on ASE
-        /// Serialized Name: AseV3NetworkingConfiguration.properties.allowNewPrivateEndpointConnections
-        /// </summary>
+        /// <summary> Property to enable and disable new private endpoint connection creation on ASE. </summary>
         public bool? AllowNewPrivateEndpointConnections { get; set; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }
 }

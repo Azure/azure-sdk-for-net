@@ -7,26 +7,14 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Type of Solution
-    /// Serialized Name: SolutionType
-    /// </summary>
+    /// <summary> Type of Solution. </summary>
     public enum SolutionType
     {
-        /// <summary>
-        /// QuickSolution
-        /// Serialized Name: SolutionType.QuickSolution
-        /// </summary>
+        /// <summary> QuickSolution. </summary>
         QuickSolution,
-        /// <summary>
-        /// DeepInvestigation
-        /// Serialized Name: SolutionType.DeepInvestigation
-        /// </summary>
+        /// <summary> DeepInvestigation. </summary>
         DeepInvestigation,
-        /// <summary>
-        /// BestPractices
-        /// Serialized Name: SolutionType.BestPractices
-        /// </summary>
+        /// <summary> BestPractices. </summary>
         BestPractices
     }
 }

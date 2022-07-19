@@ -9,17 +9,11 @@ using System;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Site seal
-    /// Serialized Name: SiteSeal
-    /// </summary>
+    /// <summary> Site seal. </summary>
     public partial class SiteSeal
     {
         /// <summary> Initializes a new instance of SiteSeal. </summary>
-        /// <param name="html">
-        /// HTML snippet
-        /// Serialized Name: SiteSeal.html
-        /// </param>
+        /// <param name="html"> HTML snippet. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="html"/> is null. </exception>
         internal SiteSeal(string html)
         {
@@ -31,10 +25,7 @@ namespace Azure.ResourceManager.AppService.Models
             Html = html;
         }
 
-        /// <summary>
-        /// HTML snippet
-        /// Serialized Name: SiteSeal.html
-        /// </summary>
+        /// <summary> HTML snippet. </summary>
         public string Html { get; }
     }
 }

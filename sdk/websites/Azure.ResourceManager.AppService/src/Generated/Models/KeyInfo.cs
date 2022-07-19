@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Function key info.
-    /// Serialized Name: KeyInfo
-    /// </summary>
+    /// <summary> Function key info. </summary>
     public partial class KeyInfo
     {
         /// <summary> Initializes a new instance of KeyInfo. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of KeyInfo. </summary>
-        /// <param name="name">
-        /// Key name
-        /// Serialized Name: KeyInfo.name
-        /// </param>
-        /// <param name="value">
-        /// Key value
-        /// Serialized Name: KeyInfo.value
-        /// </param>
+        /// <param name="name"> Key name. </param>
+        /// <param name="value"> Key value. </param>
         internal KeyInfo(string name, string value)
         {
             Name = name;
             Value = value;
         }
 
-        /// <summary>
-        /// Key name
-        /// Serialized Name: KeyInfo.name
-        /// </summary>
+        /// <summary> Key name. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// Key value
-        /// Serialized Name: KeyInfo.value
-        /// </summary>
+        /// <summary> Key value. </summary>
         public string Value { get; set; }
     }
 }

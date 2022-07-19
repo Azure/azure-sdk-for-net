@@ -11,17 +11,11 @@ using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Collection of Outbound Environment Endpoints
-    /// Serialized Name: OutboundEnvironmentEndpointCollection
-    /// </summary>
+    /// <summary> Collection of Outbound Environment Endpoints. </summary>
     internal partial class OutboundEnvironmentEndpointCollection
     {
         /// <summary> Initializes a new instance of OutboundEnvironmentEndpointCollection. </summary>
-        /// <param name="value">
-        /// Collection of resources.
-        /// Serialized Name: OutboundEnvironmentEndpointCollection.value
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal OutboundEnvironmentEndpointCollection(IEnumerable<OutboundEnvironmentEndpoint> value)
         {
@@ -34,29 +28,17 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of OutboundEnvironmentEndpointCollection. </summary>
-        /// <param name="value">
-        /// Collection of resources.
-        /// Serialized Name: OutboundEnvironmentEndpointCollection.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Link to next page of resources.
-        /// Serialized Name: OutboundEnvironmentEndpointCollection.nextLink
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
+        /// <param name="nextLink"> Link to next page of resources. </param>
         internal OutboundEnvironmentEndpointCollection(IReadOnlyList<OutboundEnvironmentEndpoint> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Collection of resources.
-        /// Serialized Name: OutboundEnvironmentEndpointCollection.value
-        /// </summary>
+        /// <summary> Collection of resources. </summary>
         public IReadOnlyList<OutboundEnvironmentEndpoint> Value { get; }
-        /// <summary>
-        /// Link to next page of resources.
-        /// Serialized Name: OutboundEnvironmentEndpointCollection.nextLink
-        /// </summary>
+        /// <summary> Link to next page of resources. </summary>
         public string NextLink { get; }
     }
 }

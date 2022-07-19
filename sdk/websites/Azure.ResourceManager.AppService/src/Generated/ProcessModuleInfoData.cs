@@ -23,54 +23,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="baseAddress">
-        /// Base address. Used as module identifier in ARM resource URI.
-        /// Serialized Name: ProcessModuleInfo.properties.base_address
-        /// </param>
-        /// <param name="fileName">
-        /// File name.
-        /// Serialized Name: ProcessModuleInfo.properties.file_name
-        /// </param>
-        /// <param name="href">
-        /// HRef URI.
-        /// Serialized Name: ProcessModuleInfo.properties.href
-        /// </param>
-        /// <param name="filePath">
-        /// File path.
-        /// Serialized Name: ProcessModuleInfo.properties.file_path
-        /// </param>
-        /// <param name="moduleMemorySize">
-        /// Module memory size.
-        /// Serialized Name: ProcessModuleInfo.properties.module_memory_size
-        /// </param>
-        /// <param name="fileVersion">
-        /// File version.
-        /// Serialized Name: ProcessModuleInfo.properties.file_version
-        /// </param>
-        /// <param name="fileDescription">
-        /// File description.
-        /// Serialized Name: ProcessModuleInfo.properties.file_description
-        /// </param>
-        /// <param name="product">
-        /// Product name.
-        /// Serialized Name: ProcessModuleInfo.properties.product
-        /// </param>
-        /// <param name="productVersion">
-        /// Product version.
-        /// Serialized Name: ProcessModuleInfo.properties.product_version
-        /// </param>
-        /// <param name="isDebug">
-        /// Is debug?
-        /// Serialized Name: ProcessModuleInfo.properties.is_debug
-        /// </param>
-        /// <param name="language">
-        /// Module language (locale).
-        /// Serialized Name: ProcessModuleInfo.properties.language
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="baseAddress"> Base address. Used as module identifier in ARM resource URI. </param>
+        /// <param name="fileName"> File name. </param>
+        /// <param name="href"> HRef URI. </param>
+        /// <param name="filePath"> File path. </param>
+        /// <param name="moduleMemorySize"> Module memory size. </param>
+        /// <param name="fileVersion"> File version. </param>
+        /// <param name="fileDescription"> File description. </param>
+        /// <param name="product"> Product name. </param>
+        /// <param name="productVersion"> Product version. </param>
+        /// <param name="isDebug"> Is debug?. </param>
+        /// <param name="language"> Module language (locale). </param>
+        /// <param name="kind"> Kind of resource. </param>
         internal ProcessModuleInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string baseAddress, string fileName, string href, string filePath, int? moduleMemorySize, string fileVersion, string fileDescription, string product, string productVersion, bool? isDebug, string language, string kind) : base(id, name, resourceType, systemData)
         {
             BaseAddress = baseAddress;
@@ -87,65 +51,29 @@ namespace Azure.ResourceManager.AppService
             Kind = kind;
         }
 
-        /// <summary>
-        /// Base address. Used as module identifier in ARM resource URI.
-        /// Serialized Name: ProcessModuleInfo.properties.base_address
-        /// </summary>
+        /// <summary> Base address. Used as module identifier in ARM resource URI. </summary>
         public string BaseAddress { get; set; }
-        /// <summary>
-        /// File name.
-        /// Serialized Name: ProcessModuleInfo.properties.file_name
-        /// </summary>
+        /// <summary> File name. </summary>
         public string FileName { get; set; }
-        /// <summary>
-        /// HRef URI.
-        /// Serialized Name: ProcessModuleInfo.properties.href
-        /// </summary>
+        /// <summary> HRef URI. </summary>
         public string Href { get; set; }
-        /// <summary>
-        /// File path.
-        /// Serialized Name: ProcessModuleInfo.properties.file_path
-        /// </summary>
+        /// <summary> File path. </summary>
         public string FilePath { get; set; }
-        /// <summary>
-        /// Module memory size.
-        /// Serialized Name: ProcessModuleInfo.properties.module_memory_size
-        /// </summary>
+        /// <summary> Module memory size. </summary>
         public int? ModuleMemorySize { get; set; }
-        /// <summary>
-        /// File version.
-        /// Serialized Name: ProcessModuleInfo.properties.file_version
-        /// </summary>
+        /// <summary> File version. </summary>
         public string FileVersion { get; set; }
-        /// <summary>
-        /// File description.
-        /// Serialized Name: ProcessModuleInfo.properties.file_description
-        /// </summary>
+        /// <summary> File description. </summary>
         public string FileDescription { get; set; }
-        /// <summary>
-        /// Product name.
-        /// Serialized Name: ProcessModuleInfo.properties.product
-        /// </summary>
+        /// <summary> Product name. </summary>
         public string Product { get; set; }
-        /// <summary>
-        /// Product version.
-        /// Serialized Name: ProcessModuleInfo.properties.product_version
-        /// </summary>
+        /// <summary> Product version. </summary>
         public string ProductVersion { get; set; }
-        /// <summary>
-        /// Is debug?
-        /// Serialized Name: ProcessModuleInfo.properties.is_debug
-        /// </summary>
+        /// <summary> Is debug?. </summary>
         public bool? IsDebug { get; set; }
-        /// <summary>
-        /// Module language (locale).
-        /// Serialized Name: ProcessModuleInfo.properties.language
-        /// </summary>
+        /// <summary> Module language (locale). </summary>
         public string Language { get; set; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }
 }

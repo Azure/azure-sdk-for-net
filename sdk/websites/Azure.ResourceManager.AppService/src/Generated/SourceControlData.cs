@@ -24,26 +24,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="token">
-        /// OAuth access token.
-        /// Serialized Name: SourceControl.properties.token
-        /// </param>
-        /// <param name="tokenSecret">
-        /// OAuth access token secret.
-        /// Serialized Name: SourceControl.properties.tokenSecret
-        /// </param>
-        /// <param name="refreshToken">
-        /// OAuth refresh token.
-        /// Serialized Name: SourceControl.properties.refreshToken
-        /// </param>
-        /// <param name="expirationOn">
-        /// OAuth token expiration.
-        /// Serialized Name: SourceControl.properties.expirationTime
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="token"> OAuth access token. </param>
+        /// <param name="tokenSecret"> OAuth access token secret. </param>
+        /// <param name="refreshToken"> OAuth refresh token. </param>
+        /// <param name="expirationOn"> OAuth token expiration. </param>
+        /// <param name="kind"> Kind of resource. </param>
         internal SourceControlData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string token, string tokenSecret, string refreshToken, DateTimeOffset? expirationOn, string kind) : base(id, name, resourceType, systemData)
         {
             Token = token;
@@ -53,30 +38,15 @@ namespace Azure.ResourceManager.AppService
             Kind = kind;
         }
 
-        /// <summary>
-        /// OAuth access token.
-        /// Serialized Name: SourceControl.properties.token
-        /// </summary>
+        /// <summary> OAuth access token. </summary>
         public string Token { get; set; }
-        /// <summary>
-        /// OAuth access token secret.
-        /// Serialized Name: SourceControl.properties.tokenSecret
-        /// </summary>
+        /// <summary> OAuth access token secret. </summary>
         public string TokenSecret { get; set; }
-        /// <summary>
-        /// OAuth refresh token.
-        /// Serialized Name: SourceControl.properties.refreshToken
-        /// </summary>
+        /// <summary> OAuth refresh token. </summary>
         public string RefreshToken { get; set; }
-        /// <summary>
-        /// OAuth token expiration.
-        /// Serialized Name: SourceControl.properties.expirationTime
-        /// </summary>
+        /// <summary> OAuth token expiration. </summary>
         public DateTimeOffset? ExpirationOn { get; set; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }
 }

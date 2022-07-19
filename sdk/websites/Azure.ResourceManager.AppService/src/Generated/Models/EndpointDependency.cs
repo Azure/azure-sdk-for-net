@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// A domain name that a service is reached at, including details of the current connection status.
-    /// Serialized Name: EndpointDependency
-    /// </summary>
+    /// <summary> A domain name that a service is reached at, including details of the current connection status. </summary>
     public partial class EndpointDependency
     {
         /// <summary> Initializes a new instance of EndpointDependency. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of EndpointDependency. </summary>
-        /// <param name="domainName">
-        /// The domain name of the dependency.
-        /// Serialized Name: EndpointDependency.domainName
-        /// </param>
-        /// <param name="endpointDetails">
-        /// The IP Addresses and Ports used when connecting to DomainName.
-        /// Serialized Name: EndpointDependency.endpointDetails
-        /// </param>
+        /// <param name="domainName"> The domain name of the dependency. </param>
+        /// <param name="endpointDetails"> The IP Addresses and Ports used when connecting to DomainName. </param>
         internal EndpointDependency(string domainName, IReadOnlyList<EndpointDetail> endpointDetails)
         {
             DomainName = domainName;
             EndpointDetails = endpointDetails;
         }
 
-        /// <summary>
-        /// The domain name of the dependency.
-        /// Serialized Name: EndpointDependency.domainName
-        /// </summary>
+        /// <summary> The domain name of the dependency. </summary>
         public string DomainName { get; }
-        /// <summary>
-        /// The IP Addresses and Ports used when connecting to DomainName.
-        /// Serialized Name: EndpointDependency.endpointDetails
-        /// </summary>
+        /// <summary> The IP Addresses and Ports used when connecting to DomainName. </summary>
         public IReadOnlyList<EndpointDetail> EndpointDetails { get; }
     }
 }
