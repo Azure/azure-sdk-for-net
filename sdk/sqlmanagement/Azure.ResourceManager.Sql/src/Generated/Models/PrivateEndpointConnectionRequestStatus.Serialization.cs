@@ -14,14 +14,19 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static PrivateEndpointConnectionRequestStatus DeserializePrivateEndpointConnectionRequestStatus(JsonElement element)
         {
-            Optional<string> privateLinkServiceId = default;
+            Optional<ResourceIdentifier> privateLinkServiceId = default;
             Optional<string> privateEndpointConnectionName = default;
             Optional<string> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("privateLinkServiceId"))
                 {
-                    privateLinkServiceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    privateLinkServiceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("privateEndpointConnectionName"))

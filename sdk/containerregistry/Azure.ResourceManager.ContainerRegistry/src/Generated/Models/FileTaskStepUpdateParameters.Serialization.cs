@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    internal partial class FileTaskStepUpdateParameters : IUtf8JsonSerializable
+    public partial class FileTaskStepUpdateParameters : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

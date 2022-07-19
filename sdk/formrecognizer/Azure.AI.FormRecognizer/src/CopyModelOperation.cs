@@ -25,7 +25,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         private readonly ClientDiagnostics _diagnostics;
 
         /// <summary>Operation progress (0-100)</summary>
-        private int _percentCompleted;
+        private int? _percentCompleted;
 
         /// <summary>
         /// Gets an ID representing the operation that can be used to poll for the status
@@ -36,7 +36,21 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary>
         /// Gets the operation progress. Value is from [0-100].
         /// </summary>
-        public virtual int PercentCompleted => _percentCompleted;
+        /// <remarks>
+        /// This property can be accessed only after an update request. Make sure to call UpdateStatus first.
+        /// </remarks>
+        public virtual int PercentCompleted
+        {
+            get
+            {
+                if (_percentCompleted.HasValue)
+                {
+                    return _percentCompleted.Value;
+                }
+
+                throw new InvalidOperationException("The operation has not done an update request yet. Make sure to call UpdateStatus first.");
+            }
+        }
 
         /// <summary>
         /// Final result of the long-running operation.

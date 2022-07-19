@@ -76,16 +76,12 @@ function update-metadata-table($readmeFolder, $readmeName, $serviceName, $msServ
   $readmePath = Join-Path $readmeFolder -ChildPath $readmeName
   $readmeContent = Get-Content -Path $readmePath -Raw
   $match = $readmeContent -match "^---\n*(?<metadata>(.*\n?)*?)---\n*(?<content>(.*\n?)*)"
-  if (!$match) {
-    # $Language, $LanguageDisplayName are the variables globally defined in Language-Settings.ps1
-    $metadataString = GenerateDocsMsMetadata -language $Language -languageDisplayName $LanguageDisplayName -serviceName $serviceName `
-      -tenantId $TenantId -clientId $ClientId -clientSecret $ClientSecret `
-      -msService $msService
-    Set-Content -Path $readmePath -Value "$metadataString$readmeContent" -NoNewline
-    return
+  $restContent = $readmeContent
+  $metadata = ""
+  if ($match) {
+    $restContent = $Matches["content"].trim()
+    $metadata = $Matches["metadata"].trim()
   }
-  $restContent = $Matches["content"].trim()
-  $metadata = $Matches["metadata"].trim()
   # $Language, $LanguageDisplayName are the variables globally defined in Language-Settings.ps1
   $metadataString = GenerateDocsMsMetadata -originalMetadata $metadata -language $Language -languageDisplayName $LanguageDisplayName -serviceName $serviceName `
     -tenantId $TenantId -clientId $ClientId -clientSecret $ClientSecret `
@@ -98,7 +94,7 @@ function generate-markdown-table($readmeFolder, $readmeName, $packageInfo, $moni
   $tableContent = ""
   # Here is the table, the versioned value will
   foreach ($pkg in $packageInfo) {
-    $repositoryLink = "$RepositoryUri/$($pkg.Package)"
+    $repositoryLink = "$PackageRepositoryUri/$($pkg.Package)"
     if (Test-Path "Function:$GetRepositoryLinkFn") {
       $repositoryLink = &$GetRepositoryLinkFn -packageInfo $pkg
     }

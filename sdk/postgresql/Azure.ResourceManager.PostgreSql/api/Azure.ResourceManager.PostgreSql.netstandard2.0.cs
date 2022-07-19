@@ -1381,6 +1381,28 @@ namespace Azure.ResourceManager.PostgreSql.Models
         public Azure.ResourceManager.PostgreSql.Models.StorageProfile StorageProfile { get { throw null; } set { } }
         public Azure.ResourceManager.PostgreSql.Models.ServerVersion? Version { get { throw null; } set { } }
     }
+    public partial class ServerPropertiesForDefaultCreate : Azure.ResourceManager.PostgreSql.Models.ServerPropertiesForCreate
+    {
+        public ServerPropertiesForDefaultCreate(string administratorLogin, string administratorLoginPassword) { }
+        public string AdministratorLogin { get { throw null; } }
+        public string AdministratorLoginPassword { get { throw null; } }
+    }
+    public partial class ServerPropertiesForGeoRestore : Azure.ResourceManager.PostgreSql.Models.ServerPropertiesForCreate
+    {
+        public ServerPropertiesForGeoRestore(string sourceServerId) { }
+        public string SourceServerId { get { throw null; } }
+    }
+    public partial class ServerPropertiesForReplica : Azure.ResourceManager.PostgreSql.Models.ServerPropertiesForCreate
+    {
+        public ServerPropertiesForReplica(string sourceServerId) { }
+        public string SourceServerId { get { throw null; } }
+    }
+    public partial class ServerPropertiesForRestore : Azure.ResourceManager.PostgreSql.Models.ServerPropertiesForCreate
+    {
+        public ServerPropertiesForRestore(string sourceServerId, System.DateTimeOffset restorePointInOn) { }
+        public System.DateTimeOffset RestorePointInOn { get { throw null; } }
+        public string SourceServerId { get { throw null; } }
+    }
     public enum ServerSecurityAlertPolicyState
     {
         Enabled = 0,
