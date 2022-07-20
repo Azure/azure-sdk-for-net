@@ -60,31 +60,29 @@ namespace Azure.Messaging.WebPubSub.Tests
         [Test]
         public void GetMinutesToExpireTest()
         {
-            var client = new WebPubSubServiceClient(string.Format("Endpoint=http://localhost;Port=8080;AccessKey={0};Version=1.0;", FakeAccessKey), "hub");
-
             DateTimeOffset expiresAt;
             expiresAt = DateTimeOffset.UtcNow.AddSeconds(0);
-            Assert.AreEqual(1, client.GetMinutesToExpire(expiresAt));
+            Assert.AreEqual(1, WebPubSubServiceClient.GetMinutesToExpire(expiresAt));
             expiresAt = DateTimeOffset.UtcNow.AddSeconds(59);
-            Assert.AreEqual(1, client.GetMinutesToExpire(expiresAt));
+            Assert.AreEqual(1, WebPubSubServiceClient.GetMinutesToExpire(expiresAt));
             expiresAt = DateTimeOffset.UtcNow.AddSeconds(61);
-            Assert.AreEqual(1, client.GetMinutesToExpire(expiresAt));
+            Assert.AreEqual(1, WebPubSubServiceClient.GetMinutesToExpire(expiresAt));
             expiresAt = DateTimeOffset.UtcNow.AddSeconds(119);
-            Assert.AreEqual(1, client.GetMinutesToExpire(expiresAt));
+            Assert.AreEqual(1, WebPubSubServiceClient.GetMinutesToExpire(expiresAt));
             expiresAt = DateTimeOffset.UtcNow.AddSeconds(121);
-            Assert.AreEqual(2, client.GetMinutesToExpire(expiresAt));
+            Assert.AreEqual(2, WebPubSubServiceClient.GetMinutesToExpire(expiresAt));
 
             TimeSpan expiresAfter;
             expiresAfter = TimeSpan.FromSeconds(0);
-            Assert.AreEqual(1, client.GetMinutesToExpire(expiresAfter));
+            Assert.AreEqual(1, WebPubSubServiceClient.GetMinutesToExpire(expiresAfter));
             expiresAfter = TimeSpan.FromSeconds(59);
-            Assert.AreEqual(1, client.GetMinutesToExpire(expiresAfter));
+            Assert.AreEqual(1, WebPubSubServiceClient.GetMinutesToExpire(expiresAfter));
             expiresAfter = TimeSpan.FromSeconds(61);
-            Assert.AreEqual(1, client.GetMinutesToExpire(expiresAfter));
+            Assert.AreEqual(1, WebPubSubServiceClient.GetMinutesToExpire(expiresAfter));
             expiresAfter = TimeSpan.FromSeconds(119);
-            Assert.AreEqual(1, client.GetMinutesToExpire(expiresAfter));
+            Assert.AreEqual(1, WebPubSubServiceClient.GetMinutesToExpire(expiresAfter));
             expiresAfter = TimeSpan.FromSeconds(121);
-            Assert.AreEqual(2, client.GetMinutesToExpire(expiresAfter));
+            Assert.AreEqual(2, WebPubSubServiceClient.GetMinutesToExpire(expiresAfter));
         }
 
         [Test]

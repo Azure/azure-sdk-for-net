@@ -1501,10 +1501,6 @@ namespace Azure.Messaging.WebPubSub
             }
         }
 
-        internal int GetMinutesToExpire(TimeSpan expiresAfter) => Math.Max(((int)expiresAfter.TotalMinutes), 1);
-
-        internal int GetMinutesToExpire(DateTimeOffset expiresAt) => Math.Max(((int)expiresAt.Subtract(DateTimeOffset.UtcNow).TotalMinutes), 1);
-
         internal HttpMessage CreateGenerateClientTokenImplRequest(string userId, IEnumerable<string> role, int? minutesToExpire, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
