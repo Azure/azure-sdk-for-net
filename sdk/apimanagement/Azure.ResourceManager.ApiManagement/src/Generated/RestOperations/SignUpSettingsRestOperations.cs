@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PortalSignupSettingsData>> GetAsync(string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
+        public async Task<Response<PortalSignupSettingData>> GetAsync(string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -161,13 +161,13 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        PortalSignupSettingsData value = default;
+                        PortalSignupSettingData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PortalSignupSettingsData.DeserializePortalSignupSettingsData(document.RootElement);
+                        value = PortalSignupSettingData.DeserializePortalSignupSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((PortalSignupSettingsData)null, message.Response);
+                    return Response.FromValue((PortalSignupSettingData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PortalSignupSettingsData> Get(string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
+        public Response<PortalSignupSettingData> Get(string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -192,19 +192,19 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        PortalSignupSettingsData value = default;
+                        PortalSignupSettingData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PortalSignupSettingsData.DeserializePortalSignupSettingsData(document.RootElement);
+                        value = PortalSignupSettingData.DeserializePortalSignupSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((PortalSignupSettingsData)null, message.Response);
+                    return Response.FromValue((PortalSignupSettingData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string ifMatch, PortalSignupSettingsData data)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string ifMatch, PortalSignupSettingData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="ifMatch"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string ifMatch, PortalSignupSettingsData data, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string ifMatch, PortalSignupSettingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="ifMatch"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string serviceName, string ifMatch, PortalSignupSettingsData data, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string serviceName, string ifMatch, PortalSignupSettingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, PortalSignupSettingsData data, string ifMatch)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, PortalSignupSettingData data, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PortalSignupSettingsData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, PortalSignupSettingsData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PortalSignupSettingData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, PortalSignupSettingData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -337,9 +337,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        PortalSignupSettingsData value = default;
+                        PortalSignupSettingData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PortalSignupSettingsData.DeserializePortalSignupSettingsData(document.RootElement);
+                        value = PortalSignupSettingData.DeserializePortalSignupSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PortalSignupSettingsData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceName, PortalSignupSettingsData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response<PortalSignupSettingData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceName, PortalSignupSettingData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -369,9 +369,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        PortalSignupSettingsData value = default;
+                        PortalSignupSettingData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PortalSignupSettingsData.DeserializePortalSignupSettingsData(document.RootElement);
+                        value = PortalSignupSettingData.DeserializePortalSignupSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

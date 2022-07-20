@@ -2089,20 +2089,20 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region HybridConnectionLimitsResource
+        #region HybridConnectionLimitResource
         /// <summary>
-        /// Gets an object representing a <see cref="HybridConnectionLimitsResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HybridConnectionLimitsResource.CreateResourceIdentifier" /> to create a <see cref="HybridConnectionLimitsResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HybridConnectionLimitResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HybridConnectionLimitResource.CreateResourceIdentifier" /> to create a <see cref="HybridConnectionLimitResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HybridConnectionLimitsResource" /> object. </returns>
-        public static HybridConnectionLimitsResource GetHybridConnectionLimitsResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HybridConnectionLimitResource" /> object. </returns>
+        public static HybridConnectionLimitResource GetHybridConnectionLimitResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                HybridConnectionLimitsResource.ValidateResourceId(id);
-                return new HybridConnectionLimitsResource(client, id);
+                HybridConnectionLimitResource.ValidateResourceId(id);
+                return new HybridConnectionLimitResource(client, id);
             }
             );
         }
@@ -3666,20 +3666,20 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region NetworkFeaturesResource
+        #region NetworkFeatureResource
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkFeaturesResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkFeaturesResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFeaturesResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkFeatureResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkFeatureResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFeatureResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkFeaturesResource" /> object. </returns>
-        public static NetworkFeaturesResource GetNetworkFeaturesResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkFeatureResource" /> object. </returns>
+        public static NetworkFeatureResource GetNetworkFeatureResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                NetworkFeaturesResource.ValidateResourceId(id);
-                return new NetworkFeaturesResource(client, id);
+                NetworkFeatureResource.ValidateResourceId(id);
+                return new NetworkFeatureResource(client, id);
             }
             );
         }

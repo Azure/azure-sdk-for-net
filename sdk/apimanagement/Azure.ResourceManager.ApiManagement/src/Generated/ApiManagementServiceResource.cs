@@ -874,25 +874,25 @@ namespace Azure.ResourceManager.ApiManagement
             return GetPortalRevisionContracts().Get(portalRevisionId, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a PortalSigninSettingsResource along with the instance operations that can be performed on it in the ApiManagementServiceResource. </summary>
-        /// <returns> Returns a <see cref="PortalSigninSettingsResource" /> object. </returns>
-        public virtual PortalSigninSettingsResource GetPortalSigninSettings()
+        /// <summary> Gets an object representing a PortalSigninSettingResource along with the instance operations that can be performed on it in the ApiManagementServiceResource. </summary>
+        /// <returns> Returns a <see cref="PortalSigninSettingResource" /> object. </returns>
+        public virtual PortalSigninSettingResource GetPortalSigninSetting()
         {
-            return new PortalSigninSettingsResource(Client, new ResourceIdentifier(Id.ToString() + "/portalsettings/signin"));
+            return new PortalSigninSettingResource(Client, new ResourceIdentifier(Id.ToString() + "/portalsettings/signin"));
         }
 
-        /// <summary> Gets an object representing a PortalSignupSettingsResource along with the instance operations that can be performed on it in the ApiManagementServiceResource. </summary>
-        /// <returns> Returns a <see cref="PortalSignupSettingsResource" /> object. </returns>
-        public virtual PortalSignupSettingsResource GetPortalSignupSettings()
+        /// <summary> Gets an object representing a PortalSignupSettingResource along with the instance operations that can be performed on it in the ApiManagementServiceResource. </summary>
+        /// <returns> Returns a <see cref="PortalSignupSettingResource" /> object. </returns>
+        public virtual PortalSignupSettingResource GetPortalSignupSetting()
         {
-            return new PortalSignupSettingsResource(Client, new ResourceIdentifier(Id.ToString() + "/portalsettings/signup"));
+            return new PortalSignupSettingResource(Client, new ResourceIdentifier(Id.ToString() + "/portalsettings/signup"));
         }
 
-        /// <summary> Gets an object representing a PortalDelegationSettingsResource along with the instance operations that can be performed on it in the ApiManagementServiceResource. </summary>
-        /// <returns> Returns a <see cref="PortalDelegationSettingsResource" /> object. </returns>
-        public virtual PortalDelegationSettingsResource GetPortalDelegationSettings()
+        /// <summary> Gets an object representing a PortalDelegationSettingResource along with the instance operations that can be performed on it in the ApiManagementServiceResource. </summary>
+        /// <returns> Returns a <see cref="PortalDelegationSettingResource" /> object. </returns>
+        public virtual PortalDelegationSettingResource GetPortalDelegationSetting()
         {
-            return new PortalDelegationSettingsResource(Client, new ResourceIdentifier(Id.ToString() + "/portalsettings/delegation"));
+            return new PortalDelegationSettingResource(Client, new ResourceIdentifier(Id.ToString() + "/portalsettings/delegation"));
         }
 
         /// <summary> Gets a collection of ApiManagementPrivateEndpointConnectionResources in the ApiManagementServiceResource. </summary>

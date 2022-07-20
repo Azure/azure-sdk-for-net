@@ -311,11 +311,11 @@ namespace Azure.ResourceManager.Sql
             return GetSqlDatabaseVulnerabilityAssessments().Get(vulnerabilityAssessmentName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DataWarehouseUserActivitiesResources in the SqlDatabase. </summary>
-        /// <returns> An object representing collection of DataWarehouseUserActivitiesResources and their operations over a DataWarehouseUserActivitiesResource. </returns>
-        public virtual DataWarehouseUserActivitiesCollection GetAllDataWarehouseUserActivities()
+        /// <summary> Gets a collection of DataWarehouseUserActivityResources in the SqlDatabase. </summary>
+        /// <returns> An object representing collection of DataWarehouseUserActivityResources and their operations over a DataWarehouseUserActivityResource. </returns>
+        public virtual DataWarehouseUserActivityCollection GetDataWarehouseUserActivities()
         {
-            return GetCachedClient(Client => new DataWarehouseUserActivitiesCollection(Client, Id));
+            return GetCachedClient(Client => new DataWarehouseUserActivityCollection(Client, Id));
         }
 
         /// <summary>
@@ -326,9 +326,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="dataWarehouseUserActivityName"> The activity name of the data warehouse. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DataWarehouseUserActivitiesResource>> GetDataWarehouseUserActivitiesAsync(DataWarehouseUserActivityName dataWarehouseUserActivityName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataWarehouseUserActivityResource>> GetDataWarehouseUserActivityAsync(DataWarehouseUserActivityName dataWarehouseUserActivityName, CancellationToken cancellationToken = default)
         {
-            return await GetAllDataWarehouseUserActivities().GetAsync(dataWarehouseUserActivityName, cancellationToken).ConfigureAwait(false);
+            return await GetDataWarehouseUserActivities().GetAsync(dataWarehouseUserActivityName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -339,9 +339,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="dataWarehouseUserActivityName"> The activity name of the data warehouse. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<DataWarehouseUserActivitiesResource> GetDataWarehouseUserActivities(DataWarehouseUserActivityName dataWarehouseUserActivityName, CancellationToken cancellationToken = default)
+        public virtual Response<DataWarehouseUserActivityResource> GetDataWarehouseUserActivity(DataWarehouseUserActivityName dataWarehouseUserActivityName, CancellationToken cancellationToken = default)
         {
-            return GetAllDataWarehouseUserActivities().Get(dataWarehouseUserActivityName, cancellationToken);
+            return GetDataWarehouseUserActivities().Get(dataWarehouseUserActivityName, cancellationToken);
         }
 
         /// <summary> Gets a collection of LongTermRetentionPolicyResources in the SqlDatabase. </summary>
@@ -377,18 +377,18 @@ namespace Azure.ResourceManager.Sql
             return GetLongTermRetentionPolicies().Get(policyName, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a MaintenanceWindowOptionsResource along with the instance operations that can be performed on it in the SqlDatabase. </summary>
-        /// <returns> Returns a <see cref="MaintenanceWindowOptionsResource" /> object. </returns>
-        public virtual MaintenanceWindowOptionsResource GetMaintenanceWindowOptions()
+        /// <summary> Gets an object representing a MaintenanceWindowOptionResource along with the instance operations that can be performed on it in the SqlDatabase. </summary>
+        /// <returns> Returns a <see cref="MaintenanceWindowOptionResource" /> object. </returns>
+        public virtual MaintenanceWindowOptionResource GetMaintenanceWindowOption()
         {
-            return new MaintenanceWindowOptionsResource(Client, new ResourceIdentifier(Id.ToString() + "/maintenanceWindowOptions/current"));
+            return new MaintenanceWindowOptionResource(Client, new ResourceIdentifier(Id.ToString() + "/maintenanceWindowOptions/current"));
         }
 
-        /// <summary> Gets an object representing a MaintenanceWindowsResource along with the instance operations that can be performed on it in the SqlDatabase. </summary>
-        /// <returns> Returns a <see cref="MaintenanceWindowsResource" /> object. </returns>
-        public virtual MaintenanceWindowsResource GetMaintenanceWindows()
+        /// <summary> Gets an object representing a MaintenanceWindowResource along with the instance operations that can be performed on it in the SqlDatabase. </summary>
+        /// <returns> Returns a <see cref="MaintenanceWindowResource" /> object. </returns>
+        public virtual MaintenanceWindowResource GetMaintenanceWindow()
         {
-            return new MaintenanceWindowsResource(Client, new ResourceIdentifier(Id.ToString() + "/maintenanceWindows/current"));
+            return new MaintenanceWindowResource(Client, new ResourceIdentifier(Id.ToString() + "/maintenanceWindows/current"));
         }
 
         /// <summary> Gets a collection of SqlServerDatabaseRestorePointResources in the SqlDatabase. </summary>
