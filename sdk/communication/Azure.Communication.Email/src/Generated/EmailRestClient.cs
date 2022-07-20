@@ -58,7 +58,6 @@ namespace Azure.Communication.Email
         /// <param name="messageId"> System generated message id (GUID) returned from a previous call to send email. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="messageId"/> is null. </exception>
-        /// <remarks> Gets the status of a message sent previously. </remarks>
         public async Task<ResponseWithHeaders<SendStatusResult, EmailGetSendStatusHeaders>> GetSendStatusAsync(string messageId, CancellationToken cancellationToken = default)
         {
             if (messageId == null)
@@ -87,7 +86,6 @@ namespace Azure.Communication.Email
         /// <param name="messageId"> System generated message id (GUID) returned from a previous call to send email. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="messageId"/> is null. </exception>
-        /// <remarks> Gets the status of a message sent previously. </remarks>
         public ResponseWithHeaders<SendStatusResult, EmailGetSendStatusHeaders> GetSendStatus(string messageId, CancellationToken cancellationToken = default)
         {
             if (messageId == null)
@@ -138,7 +136,6 @@ namespace Azure.Communication.Email
         /// <param name="emailMessage"> Message payload for sending an email. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="repeatabilityRequestId"/>, <paramref name="repeatabilityFirstSent"/> or <paramref name="emailMessage"/> is null. </exception>
-        /// <remarks> Queues an email message to be sent to one or more recipients. </remarks>
         public async Task<ResponseWithHeaders<EmailSendHeaders>> SendAsync(string repeatabilityRequestId, string repeatabilityFirstSent, EmailMessage emailMessage, CancellationToken cancellationToken = default)
         {
             if (repeatabilityRequestId == null)
@@ -172,7 +169,6 @@ namespace Azure.Communication.Email
         /// <param name="emailMessage"> Message payload for sending an email. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="repeatabilityRequestId"/>, <paramref name="repeatabilityFirstSent"/> or <paramref name="emailMessage"/> is null. </exception>
-        /// <remarks> Queues an email message to be sent to one or more recipients. </remarks>
         public ResponseWithHeaders<EmailSendHeaders> Send(string repeatabilityRequestId, string repeatabilityFirstSent, EmailMessage emailMessage, CancellationToken cancellationToken = default)
         {
             if (repeatabilityRequestId == null)

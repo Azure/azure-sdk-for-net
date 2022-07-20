@@ -42,8 +42,6 @@ namespace Azure.Security.ConfidentialLedger.Certificate
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Gets identity information for a Confidential Ledger instance.
-        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -82,8 +80,6 @@ namespace Azure.Security.ConfidentialLedger.Certificate
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Gets identity information for a Confidential Ledger instance.
-        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
