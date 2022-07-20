@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Storage.Tests
             account1 = await account1.GetAsync();
             Assert.AreEqual(StorageKind.StorageV2, account1.Data.Kind);
             Assert.IsTrue(account1.Data.EnableHttpsTrafficOnly);
-            Assert.NotNull(account1.Data.PrimaryEndpoints.Web);
+            Assert.NotNull(account1.Data.PrimaryEndpoints.WebUri);
         }
 
         [Test]
@@ -728,11 +728,11 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(StorageKind.BlockBlobStorage, account1.Data.Kind);
             Assert.AreEqual(StorageSkuName.PremiumLrs, account1.Data.Sku.Name);
             //this storage account should only have endpoints on blob and dfs
-            Assert.NotNull(account1.Data.PrimaryEndpoints.Blob);
-            Assert.NotNull(account1.Data.PrimaryEndpoints.Dfs);
-            Assert.IsNull(account1.Data.PrimaryEndpoints.File);
-            Assert.IsNull(account1.Data.PrimaryEndpoints.Table);
-            Assert.IsNull(account1.Data.PrimaryEndpoints.Queue);
+            Assert.NotNull(account1.Data.PrimaryEndpoints.BlobUri);
+            Assert.NotNull(account1.Data.PrimaryEndpoints.DfsUri);
+            Assert.IsNull(account1.Data.PrimaryEndpoints.FileUri);
+            Assert.IsNull(account1.Data.PrimaryEndpoints.TableUri);
+            Assert.IsNull(account1.Data.PrimaryEndpoints.QueueUri);
         }
 
         [Test]
@@ -768,7 +768,7 @@ namespace Azure.ResourceManager.Storage.Tests
 
             //validate
             VerifyAccountProperties(account1, false);
-            Assert.NotNull(account1.Data.PrimaryEndpoints.Dfs);
+            Assert.NotNull(account1.Data.PrimaryEndpoints.DfsUri);
             Assert.IsTrue(account1.Data.IsHnsEnabled);
         }
 
@@ -789,11 +789,11 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(StorageKind.FileStorage, account1.Data.Kind);
             Assert.AreEqual(StorageSkuName.PremiumLrs, account1.Data.Sku.Name);
             //this storage account should only have endpoints on file
-            Assert.IsNull(account1.Data.PrimaryEndpoints.Blob);
-            Assert.IsNull(account1.Data.PrimaryEndpoints.Dfs);
-            Assert.NotNull(account1.Data.PrimaryEndpoints.File);
-            Assert.IsNull(account1.Data.PrimaryEndpoints.Table);
-            Assert.IsNull(account1.Data.PrimaryEndpoints.Queue);
+            Assert.IsNull(account1.Data.PrimaryEndpoints.BlobUri);
+            Assert.IsNull(account1.Data.PrimaryEndpoints.DfsUri);
+            Assert.NotNull(account1.Data.PrimaryEndpoints.FileUri);
+            Assert.IsNull(account1.Data.PrimaryEndpoints.TableUri);
+            Assert.IsNull(account1.Data.PrimaryEndpoints.QueueUri);
         }
 
         [Test]
@@ -979,7 +979,7 @@ namespace Azure.ResourceManager.Storage.Tests
             //validate
             account = await account.GetAsync();
             VerifyAccountProperties(account, false);
-            Assert.NotNull(account.Data.PrimaryEndpoints.Web);
+            Assert.NotNull(account.Data.PrimaryEndpoints.WebUri);
             Assert.AreEqual(StorageKind.StorageV2, account.Data.Kind);
             Assert.AreEqual(ExtendedLocationType.EdgeZone, account.Data.ExtendedLocation.ExtendedLocationType);
             Assert.AreEqual("microsoftrrdclab1", account.Data.ExtendedLocation.Name);
@@ -1262,7 +1262,7 @@ namespace Azure.ResourceManager.Storage.Tests
 
             //validate
             VerifyAccountProperties(account, false);
-            Assert.NotNull(account.Data.PrimaryEndpoints.Web);
+            Assert.NotNull(account.Data.PrimaryEndpoints.WebUri);
             Assert.AreEqual(StorageKind.StorageV2, account.Data.Kind);
             Assert.False(account.Data.IsNfsV3Enabled);
         }

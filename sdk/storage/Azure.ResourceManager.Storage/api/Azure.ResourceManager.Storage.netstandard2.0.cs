@@ -1658,14 +1658,14 @@ namespace Azure.ResourceManager.Storage.Models
     public partial class StorageAccountEndpoints
     {
         internal StorageAccountEndpoints() { }
-        public string Blob { get { throw null; } }
-        public string Dfs { get { throw null; } }
-        public string File { get { throw null; } }
+        public System.Uri BlobUri { get { throw null; } }
+        public System.Uri DfsUri { get { throw null; } }
+        public System.Uri FileUri { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.StorageAccountInternetEndpoints InternetEndpoints { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.StorageAccountMicrosoftEndpoints MicrosoftEndpoints { get { throw null; } }
-        public string Queue { get { throw null; } }
-        public string Table { get { throw null; } }
-        public string Web { get { throw null; } }
+        public System.Uri QueueUri { get { throw null; } }
+        public System.Uri TableUri { get { throw null; } }
+        public System.Uri WebUri { get { throw null; } }
     }
     public enum StorageAccountExpand
     {
@@ -1685,10 +1685,10 @@ namespace Azure.ResourceManager.Storage.Models
     public partial class StorageAccountInternetEndpoints
     {
         internal StorageAccountInternetEndpoints() { }
-        public string Blob { get { throw null; } }
-        public string Dfs { get { throw null; } }
-        public string File { get { throw null; } }
-        public string Web { get { throw null; } }
+        public System.Uri BlobUri { get { throw null; } }
+        public System.Uri DfsUri { get { throw null; } }
+        public System.Uri FileUri { get { throw null; } }
+        public System.Uri WebUri { get { throw null; } }
     }
     public partial class StorageAccountIPRule
     {
@@ -1746,12 +1746,12 @@ namespace Azure.ResourceManager.Storage.Models
     public partial class StorageAccountMicrosoftEndpoints
     {
         internal StorageAccountMicrosoftEndpoints() { }
-        public string Blob { get { throw null; } }
-        public string Dfs { get { throw null; } }
-        public string File { get { throw null; } }
-        public string Queue { get { throw null; } }
-        public string Table { get { throw null; } }
-        public string Web { get { throw null; } }
+        public System.Uri BlobUri { get { throw null; } }
+        public System.Uri DfsUri { get { throw null; } }
+        public System.Uri FileUri { get { throw null; } }
+        public System.Uri QueueUri { get { throw null; } }
+        public System.Uri TableUri { get { throw null; } }
+        public System.Uri WebUri { get { throw null; } }
     }
     public partial class StorageAccountNameAvailabilityContent
     {

@@ -214,6 +214,25 @@ rename-mapping:
   UpdateHistoryProperty: UpdateHistoryEntry
   UpdateHistoryProperty.update: UpdateType
   PublicAccess: StoragePublicAccessType
+  Endpoints.blob: BlobUri
+  Endpoints.queue: QueueUri
+  Endpoints.table: TableUri
+  Endpoints.file: FileUri
+  Endpoints.web: WebUri
+  Endpoints.dfs: DfsUri
+  StorageAccountMicrosoftEndpoints.blob: BlobUri
+  StorageAccountMicrosoftEndpoints.queue: QueueUri
+  StorageAccountMicrosoftEndpoints.table: TableUri
+  StorageAccountMicrosoftEndpoints.file: FileUri
+  StorageAccountMicrosoftEndpoints.web: WebUri
+  StorageAccountMicrosoftEndpoints.dfs: DfsUri
+  StorageAccountInternetEndpoints.blob: BlobUri
+  StorageAccountInternetEndpoints.file: FileUri
+  StorageAccountInternetEndpoints.web: WebUri
+  StorageAccountInternetEndpoints.dfs: DfsUri
+
+# mgmt-debug:
+#   show-serialized-names: true
 
 directive:
   - from: swagger-document
