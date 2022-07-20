@@ -11,6 +11,6 @@ input-file:
 namespace: Azure.Template
 security: AADToken
 security-scopes: https://vault.azure.net/.default
-generation1-convenience-client: true
-public-clients: true
+#generation1-convenience-client: true
+#public-clients: true
 ```

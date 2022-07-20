@@ -52,5 +52,18 @@ namespace Azure.Template.Models
             }
             return new Pet(name, tag.Value, age);
         }
+
+        internal RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
+        internal static Pet FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePet(document.RootElement);
+        }
     }
 }

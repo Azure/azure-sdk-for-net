@@ -6,21 +6,27 @@
 #nullable disable
 
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Template.Models;
 
 namespace Azure.Template
 {
     /// <summary> The Pets service client. </summary>
     public partial class PetsClient
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
+        private static readonly string[] AuthorizationScopes = new string[] { "https://vault.azure.net/.default" };
+        private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        internal PetsRestClient RestClient { get; }
+        private readonly int _petId;
+        private readonly Uri _endpoint;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of PetsClient for mocking. </summary>
         protected PetsClient()
@@ -30,45 +36,42 @@ namespace Azure.Template
         /// <summary> Initializes a new instance of PetsClient. </summary>
         /// <param name="petId"> The Integer to use. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        public PetsClient(int petId, TokenCredential credential, Uri endpoint = null, PetStoreServiceClientOptions options = null)
+        /// <exception cref="ArgumentNullException"> <paramref name="credential"/> is null. </exception>
+        public PetsClient(int petId, TokenCredential credential) : this(petId, credential, new Uri(""), new PetStoreServiceClientOptions())
         {
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
-            endpoint ??= new Uri("");
-
-            options ??= new PetStoreServiceClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            string[] scopes = { "https://vault.azure.net/.default" };
-            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
-            RestClient = new PetsRestClient(_clientDiagnostics, _pipeline, petId, endpoint);
         }
 
         /// <summary> Initializes a new instance of PetsClient. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="petId"> The Integer to use. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/> or <paramref name="pipeline"/> is null. </exception>
-        internal PetsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, int petId, Uri endpoint = null)
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="credential"/> or <paramref name="endpoint"/> is null. </exception>
+        public PetsClient(int petId, TokenCredential credential, Uri endpoint, PetStoreServiceClientOptions options)
         {
-            RestClient = new PetsRestClient(clientDiagnostics, pipeline, petId, endpoint);
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
+            Argument.AssertNotNull(credential, nameof(credential));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            options ??= new PetStoreServiceClientOptions();
+
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+            _tokenCredential = credential;
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            _petId = petId;
+            _endpoint = endpoint;
         }
 
         /// <summary> Delete a pet. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> DeleteAsync(RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("PetsClient.Delete");
+            using var scope = ClientDiagnostics.CreateScope("PetsClient.Delete");
             scope.Start();
             try
             {
-                return await RestClient.DeleteAsync(cancellationToken).ConfigureAwait(false);
+                using HttpMessage message = CreateDeleteRequest(context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -78,14 +81,17 @@ namespace Azure.Template
         }
 
         /// <summary> Delete a pet. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Delete(CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response Delete(RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("PetsClient.Delete");
+            using var scope = ClientDiagnostics.CreateScope("PetsClient.Delete");
             scope.Start();
             try
             {
-                return RestClient.Delete(cancellationToken);
+                using HttpMessage message = CreateDeleteRequest(context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -95,14 +101,31 @@ namespace Azure.Template
         }
 
         /// <summary> Returns a pet. Supports eTags. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Pet>> ReadAsync(CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Pet</c>:
+        /// <code>{
+        ///   name: string, # Required.
+        ///   tag: string, # Optional.
+        ///   age: number, # Required.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> ReadAsync(RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("PetsClient.Read");
+            using var scope = ClientDiagnostics.CreateScope("PetsClient.Read");
             scope.Start();
             try
             {
-                return await RestClient.ReadAsync(cancellationToken).ConfigureAwait(false);
+                using HttpMessage message = CreateReadRequest(context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -112,14 +135,31 @@ namespace Azure.Template
         }
 
         /// <summary> Returns a pet. Supports eTags. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Pet> Read(CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Pet</c>:
+        /// <code>{
+        ///   name: string, # Required.
+        ///   tag: string, # Optional.
+        ///   age: number, # Required.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response Read(RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("PetsClient.Read");
+            using var scope = ClientDiagnostics.CreateScope("PetsClient.Read");
             scope.Start();
             try
             {
-                return RestClient.Read(cancellationToken);
+                using HttpMessage message = CreateReadRequest(context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -130,14 +170,36 @@ namespace Azure.Template
 
         /// <summary> &lt;blink&gt;List pets.&lt;/blink&gt;. </summary>
         /// <param name="nextLink"> The String to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PetListResults>> ListAsync(string nextLink = null, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>PetListResults</c>:
+        /// <code>{
+        ///   items: [
+        ///     {
+        ///       name: string, # Required.
+        ///       tag: string, # Optional.
+        ///       age: number, # Required.
+        ///     }
+        ///   ], # Required.
+        ///   nextLink: string, # Optional.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> GetPetsAsync(string nextLink = null, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("PetsClient.List");
+            using var scope = ClientDiagnostics.CreateScope("PetsClient.GetPets");
             scope.Start();
             try
             {
-                return await RestClient.ListAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                using HttpMessage message = CreateGetPetsRequest(nextLink, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -148,14 +210,36 @@ namespace Azure.Template
 
         /// <summary> &lt;blink&gt;List pets.&lt;/blink&gt;. </summary>
         /// <param name="nextLink"> The String to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PetListResults> List(string nextLink = null, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>PetListResults</c>:
+        /// <code>{
+        ///   items: [
+        ///     {
+        ///       name: string, # Required.
+        ///       tag: string, # Optional.
+        ///       age: number, # Required.
+        ///     }
+        ///   ], # Required.
+        ///   nextLink: string, # Optional.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response GetPets(string nextLink = null, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("PetsClient.List");
+            using var scope = ClientDiagnostics.CreateScope("PetsClient.GetPets");
             scope.Start();
             try
             {
-                return RestClient.List(nextLink, cancellationToken);
+                using HttpMessage message = CreateGetPetsRequest(nextLink, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -164,15 +248,42 @@ namespace Azure.Template
             }
         }
 
-        /// <param name="body"> The Pet to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Pet>> CreateAsync(Pet body = null, CancellationToken cancellationToken = default)
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>Pet</c>:
+        /// <code>{
+        ///   name: string, # Required.
+        ///   tag: string, # Optional.
+        ///   age: number, # Required.
+        /// }
+        /// </code>
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Pet</c>:
+        /// <code>{
+        ///   name: string, # Required.
+        ///   tag: string, # Optional.
+        ///   age: number, # Required.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> CreateAsync(RequestContent content, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("PetsClient.Create");
+            using var scope = ClientDiagnostics.CreateScope("PetsClient.Create");
             scope.Start();
             try
             {
-                return await RestClient.CreateAsync(body, cancellationToken).ConfigureAwait(false);
+                using HttpMessage message = CreateCreateRequest(content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -181,15 +292,42 @@ namespace Azure.Template
             }
         }
 
-        /// <param name="body"> The Pet to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Pet> Create(Pet body = null, CancellationToken cancellationToken = default)
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>Pet</c>:
+        /// <code>{
+        ///   name: string, # Required.
+        ///   tag: string, # Optional.
+        ///   age: number, # Required.
+        /// }
+        /// </code>
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Pet</c>:
+        /// <code>{
+        ///   name: string, # Required.
+        ///   tag: string, # Optional.
+        ///   age: number, # Required.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response Create(RequestContent content, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("PetsClient.Create");
+            using var scope = ClientDiagnostics.CreateScope("PetsClient.Create");
             scope.Start();
             try
             {
-                return RestClient.Create(body, cancellationToken);
+                using HttpMessage message = CreateCreateRequest(content, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -197,5 +335,70 @@ namespace Azure.Template
                 throw;
             }
         }
+
+        internal HttpMessage CreateDeleteRequest(RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/pets/", false);
+            uri.AppendPath(_petId, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateReadRequest(RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200304);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/pets/", false);
+            uri.AppendPath(_petId, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetPetsRequest(string nextLink, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/pets", false);
+            if (nextLink != null)
+            {
+                uri.AppendQuery("nextLink", nextLink, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateCreateRequest(RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/pets", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        private static ResponseClassifier _responseClassifier200;
+        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier _responseClassifier200304;
+        private static ResponseClassifier ResponseClassifier200304 => _responseClassifier200304 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 304 });
     }
 }
