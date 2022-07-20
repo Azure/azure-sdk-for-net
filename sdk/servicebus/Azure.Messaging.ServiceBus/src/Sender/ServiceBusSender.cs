@@ -140,6 +140,14 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
+        ///   Initializes a new instance of the <see cref="ServiceBusSender"/> class for mocking.
+        /// </summary>
+        ///
+        protected ServiceBusSender()
+        {
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ServiceBusSender"/> class for use with derived types.
         /// </summary>
         /// <param name="client">The client instance to use for the sender.</param>
@@ -157,14 +165,6 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="options">The set of options to use when configuring the sender.</param>
         protected ServiceBusSender(ServiceBusClient client, string queueOrTopicName, ServiceBusSenderOptions options) :
             this(queueOrTopicName, client.Connection, options)
-        {
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusSender"/> class for mocking.
-        /// </summary>
-        ///
-        protected ServiceBusSender()
         {
         }
 
