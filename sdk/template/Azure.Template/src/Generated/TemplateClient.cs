@@ -66,6 +66,23 @@ namespace Azure.Template
         /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetSecretAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new TemplateClient("<vaultBaseUrl>", credential);
+        /// 
+        /// Response response = await client.GetSecretAsync("<secretName>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("contentType").ToString());
+        /// Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("kid").ToString());
+        /// Console.WriteLine(result.GetProperty("managed").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// The GET operation is applicable to any secret stored in Azure Key Vault. This operation requires the secrets/get permission.
         /// 
@@ -110,6 +127,23 @@ namespace Azure.Template
         /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetSecret with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new TemplateClient("<vaultBaseUrl>", credential);
+        /// 
+        /// Response response = client.GetSecret("<secretName>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("contentType").ToString());
+        /// Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("kid").ToString());
+        /// Console.WriteLine(result.GetProperty("managed").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// The GET operation is applicable to any secret stored in Azure Key Vault. This operation requires the secrets/get permission.
         /// 
