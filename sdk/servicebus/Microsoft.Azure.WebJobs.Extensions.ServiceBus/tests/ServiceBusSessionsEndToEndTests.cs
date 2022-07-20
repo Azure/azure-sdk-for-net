@@ -1151,10 +1151,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             public static async Task RunAsync(
                 [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)]
                 ServiceBusReceivedMessage message,
-                ServiceBusMessageActions messageActions,
-                ServiceBusReceiveActions receiveActions)
+                ServiceBusSessionMessageActions sessionActions)
             {
-                await messageActions.CompleteMessageAsync(message);
+                await sessionActions.CompleteMessageAsync(message);
             }
 
             public static Task SessionInitializingHandler(ProcessSessionEventArgs arg)
@@ -1169,10 +1168,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             public static async Task RunAsync(
                 [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)]
                 ServiceBusReceivedMessage message,
-                ServiceBusMessageActions messageActions,
                 ServiceBusSessionMessageActions sessionActions)
             {
-                await messageActions.CompleteMessageAsync(message);
+                await sessionActions.CompleteMessageAsync(message);
                 sessionActions.ReleaseSession();
             }
 
