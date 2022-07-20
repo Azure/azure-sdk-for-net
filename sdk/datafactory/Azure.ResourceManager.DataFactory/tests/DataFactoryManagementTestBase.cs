@@ -37,5 +37,12 @@ namespace Azure.ResourceManager.DataFactory.Tests
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
             return lro.Value;
         }
+
+        protected async Task<DataFactoryResource> CreateDataFactory(ResourceGroupResource resourceGroup,string dataFactoryName)
+        {
+            DataFactoryData data = new DataFactoryData(resourceGroup.Data.Location);
+            var dataFactory = await resourceGroup.GetDataFactories().CreateOrUpdateAsync(WaitUntil.Completed, dataFactoryName, data);
+            return dataFactory.Value;
+        }
     }
 }
