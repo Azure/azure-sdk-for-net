@@ -8,10 +8,10 @@
         "Authorization": "Sanitized",
         "Content-Length": "258",
         "Content-Type": "application/json",
-        "traceparent": "00-4d00820feb9680ee43b69c5b52d6c307-f1059520d8b44e98-00",
+        "traceparent": "00-84024c7f86d407bbb043928405c5ff3a-965c320bf3e90543-00",
         "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220719.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "b6cfb545b69274b54df3662365b56c5c",
+        "x-ms-client-request-id": "ebb095eb966a8ae36659cd48961689d9",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -27,13 +27,13 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json",
-        "Date": "Mon, 18 Jul 2022 22:08:09 GMT",
+        "Date": "Mon, 18 Jul 2022 23:58:38 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: BB6631F6A4304745B9157052302E7E69 Ref B: PAOEDGE0611 Ref C: 2022-07-18T22:08:09Z"
+        "X-MSEdge-Ref": "Ref A: 637EE53B05D64A1DA2133AEE071821CD Ref B: PAOEDGE0610 Ref C: 2022-07-18T23:58:39Z"
       },
       "ResponseBody": {
         "batchItems": [
@@ -54,7 +54,7 @@
                     "streetName": "Niuwei Road",
                     "streetNameAndNumber": "1-20Niuwei Road",
                     "countryCode": "TW",
-                    "countrySubdivision": "T\u00E1iw\u0101n",
+                    "countrySubdivision": "Taiwan",
                     "municipality": "Nantou County",
                     "postalCode": "545",
                     "municipalitySubdivision": "Puli Township",
@@ -78,7 +78,7 @@
             "statusCode": 200,
             "response": {
               "summary": {
-                "queryTime": 3,
+                "queryTime": 2,
                 "numResults": 1
               },
               "addresses": [
@@ -125,6 +125,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "1352380833"
+    "RandomSeed": "76504475"
   }
 }

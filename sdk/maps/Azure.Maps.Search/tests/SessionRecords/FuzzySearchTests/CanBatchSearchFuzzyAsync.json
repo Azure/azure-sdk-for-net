@@ -8,10 +8,10 @@
         "Authorization": "Sanitized",
         "Content-Length": "190",
         "Content-Type": "application/json",
-        "traceparent": "00-1b91d60f0bab8146f679da89b15bbe04-4012e02415b774ec-00",
+        "traceparent": "00-b64210ff84e8411f64cd01560951009c-fd8459a698a82f44-00",
         "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220719.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "dc8a97309e6da85b6250f46a1f75d129",
+        "x-ms-client-request-id": "dfd45d9d4e6d9ab75a4db162eb156354",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -27,13 +27,13 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json",
-        "Date": "Mon, 18 Jul 2022 22:08:00 GMT",
+        "Date": "Mon, 18 Jul 2022 23:58:29 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: B9F37C23F536473D89A4774A98504A67 Ref B: PAOEDGE0611 Ref C: 2022-07-18T22:08:01Z"
+        "X-MSEdge-Ref": "Ref A: 49437C4AEA7A4D8EA5306FAAEA43EA3E Ref B: PAOEDGE0610 Ref C: 2022-07-18T23:58:29Z"
       },
       "ResponseBody": {
         "batchItems": [
@@ -43,7 +43,7 @@
               "summary": {
                 "query": "coffee",
                 "queryType": "NON_NEAR",
-                "queryTime": 8,
+                "queryTime": 9,
                 "numResults": 10,
                 "offset": 0,
                 "totalResults": 1802554,
@@ -79,11 +79,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "caf\u00E9/pub"
+                            "name": "caf\u00E9"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "caf\u00E9"
+                            "name": "caf\u00E9/pub"
                           }
                         ]
                       }
@@ -148,11 +148,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "caf\u00E9/pub"
+                            "name": "caf\u00E9"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "caf\u00E9"
+                            "name": "caf\u00E9/pub"
                           }
                         ]
                       }
@@ -219,11 +219,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "caf\u00E9/pub"
+                            "name": "caf\u00E9"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "caf\u00E9"
+                            "name": "caf\u00E9/pub"
                           }
                         ]
                       }
@@ -295,11 +295,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "caf\u00E9/pub"
+                            "name": "coffee shop"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "coffee shop"
+                            "name": "caf\u00E9/pub"
                           }
                         ]
                       }
@@ -366,11 +366,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "caf\u00E9/pub"
+                            "name": "coffee shop"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "coffee shop"
+                            "name": "caf\u00E9/pub"
                           }
                         ]
                       }
@@ -437,11 +437,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "caf\u00E9/pub"
+                            "name": "coffee shop"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "coffee shop"
+                            "name": "caf\u00E9/pub"
                           }
                         ]
                       }
@@ -508,11 +508,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "caf\u00E9/pub"
+                            "name": "coffee shop"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "coffee shop"
+                            "name": "caf\u00E9/pub"
                           }
                         ]
                       }
@@ -580,11 +580,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "caf\u00E9/pub"
+                            "name": "coffee shop"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "coffee shop"
+                            "name": "caf\u00E9/pub"
                           }
                         ]
                       }
@@ -656,11 +656,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "caf\u00E9/pub"
+                            "name": "coffee shop"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "coffee shop"
+                            "name": "caf\u00E9/pub"
                           }
                         ]
                       }
@@ -784,7 +784,7 @@
               "summary": {
                 "query": "pizza",
                 "queryType": "NON_NEAR",
-                "queryTime": 9,
+                "queryTime": 8,
                 "numResults": 10,
                 "offset": 0,
                 "totalResults": 377578,
@@ -1531,6 +1531,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "1271187213"
+    "RandomSeed": "688065633"
   }
 }

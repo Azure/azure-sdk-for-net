@@ -8,10 +8,10 @@
         "Authorization": "Sanitized",
         "Content-Length": "258",
         "Content-Type": "application/json",
-        "traceparent": "00-b4e413f86e1c8e1ef522c73b81f517d2-f436c061ba828165-00",
+        "traceparent": "00-6d786ff06c5dfb19aacc219a4d5dd1e7-be01089e88143eee-00",
         "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220719.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "e31d7cd1f2b332ead9756f52164b71be",
+        "x-ms-client-request-id": "23b07a3660aa1f43f0f86a51d8a8e8a1",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -27,13 +27,13 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json",
-        "Date": "Mon, 18 Jul 2022 22:08:07 GMT",
+        "Date": "Mon, 18 Jul 2022 23:58:36 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: DC5FDB1AD92D4B978183007E68484EE9 Ref B: PAOEDGE0611 Ref C: 2022-07-18T22:08:07Z"
+        "X-MSEdge-Ref": "Ref A: 713838D92BB84023BD6AFC67CE5974AC Ref B: PAOEDGE0610 Ref C: 2022-07-18T23:58:37Z"
       },
       "ResponseBody": {
         "batchItems": [
@@ -54,7 +54,7 @@
                     "streetName": "Niuwei Road",
                     "streetNameAndNumber": "1-20Niuwei Road",
                     "countryCode": "TW",
-                    "countrySubdivision": "T\u00E1iw\u0101n",
+                    "countrySubdivision": "Taiwan",
                     "municipality": "Nantou County",
                     "postalCode": "545",
                     "municipalitySubdivision": "Puli Township",
@@ -125,6 +125,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "891085578"
+    "RandomSeed": "898923044"
   }
 }

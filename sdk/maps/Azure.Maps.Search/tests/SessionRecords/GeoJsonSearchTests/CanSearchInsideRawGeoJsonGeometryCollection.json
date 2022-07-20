@@ -6,12 +6,12 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "364",
+        "Content-Length": "365",
         "Content-Type": "application/json",
-        "traceparent": "00-74670645001ac14182cdfbcb014b2c99-bb362eabdae7a94b-00",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220719.1 (.NET Core 3.1.27; Microsoft Windows 10.0.19044)",
+        "traceparent": "00-16dfef48f6f68642b30abb0ad6a8cfdf-c5b42843f535e74b-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220720.1 (.NET Core 3.1.27; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "a5164e23947e55ff305fffafcd59d0ed",
+        "x-ms-client-request-id": "8b2a56ea43ec27f61f7155da11453f68",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -25,7 +25,7 @@
                     37.7524152343544
                   ],
                   [
-                    -122.433013916,
+                    -122.4330139159,
                     37.70660472542312
                   ],
                   [
@@ -73,9 +73,9 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "9748",
+        "Content-Length": "9747",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 18 Jul 2022 22:42:40 GMT",
+        "Date": "Tue, 19 Jul 2022 22:26:55 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": [
           "Accept-Encoding",
@@ -84,13 +84,13 @@
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 3745A8F4A9E842C8924A9C382A227EC2 Ref B: PAOEDGE0519 Ref C: 2022-07-18T22:42:40Z"
+        "X-MSEdge-Ref": "Ref A: AFA0061B61924844AF7607F2FE4E227A Ref B: PAOEDGE0511 Ref C: 2022-07-19T22:26:55Z"
       },
       "ResponseBody": {
         "summary": {
           "query": "coffee",
           "queryType": "NON_NEAR",
-          "queryTime": 67,
+          "queryTime": 9,
           "numResults": 10,
           "offset": 0,
           "totalResults": 154,
@@ -802,6 +802,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "1957950392"
+    "RandomSeed": "1307318479"
   }
 }

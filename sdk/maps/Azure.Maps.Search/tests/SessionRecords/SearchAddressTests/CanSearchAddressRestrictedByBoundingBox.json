@@ -6,10 +6,10 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-5dfb64172bce3ff2a32fcbd6747dfbf0-5c982911c782812f-00",
+        "traceparent": "00-527fef445d8cd91c64a5bea77be13959-d12ca03cab2d03ea-00",
         "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220719.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "b7e477df6e02a8150ae85f5df34c00ab",
+        "x-ms-client-request-id": "42b8d0abcc687b10c072c0b83461f243",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,19 +17,19 @@
       "ResponseHeaders": {
         "Content-Length": "766",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 18 Jul 2022 22:08:12 GMT",
+        "Date": "Mon, 18 Jul 2022 23:58:42 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 2D2519B463F24C86B9814792D29D687D Ref B: PAOEDGE0611 Ref C: 2022-07-18T22:08:13Z"
+        "X-MSEdge-Ref": "Ref A: 628622DA208B42DABE78559D46C14AC0 Ref B: PAOEDGE0610 Ref C: 2022-07-18T23:58:42Z"
       },
       "ResponseBody": {
         "summary": {
           "query": "moke",
           "queryType": "NON_NEAR",
-          "queryTime": 5,
+          "queryTime": 4,
           "numResults": 1,
           "offset": 0,
           "totalResults": 1,
@@ -38,10 +38,10 @@
         "results": [
           {
             "type": "Street",
-            "id": "NZ/STR/p0/176316",
-            "score": 2.0553233624,
+            "id": "NZ/STR/p0/159958",
+            "score": 2.0553629398,
             "matchConfidence": {
-              "score": 0.8924785436310729
+              "score": 0.8924786087880523
             },
             "address": {
               "streetName": "Moke Lake Road",
@@ -79,6 +79,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "1447897268"
+    "RandomSeed": "1229947007"
   }
 }

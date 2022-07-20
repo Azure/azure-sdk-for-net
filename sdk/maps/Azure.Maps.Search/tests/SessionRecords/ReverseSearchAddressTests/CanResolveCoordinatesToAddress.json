@@ -6,28 +6,28 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-7424d021d913ad6f02dec4138a4cbe27-353577121ef4d774-00",
+        "traceparent": "00-f29efc13622a3ceca6b042f5da55a74c-e5c2e6ca45add7d0-00",
         "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220719.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "cd691744cf5a0b3119e527a01628ee27",
+        "x-ms-client-request-id": "bfef1ca1f2eda84aea75250e64df92b1",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "681",
+        "Content-Length": "679",
         "Content-Type": "application/json",
-        "Date": "Mon, 18 Jul 2022 22:08:08 GMT",
+        "Date": "Mon, 18 Jul 2022 23:58:37 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: DD70712C23D844A48ECCAFB30AFB146D Ref B: PAOEDGE0611 Ref C: 2022-07-18T22:08:08Z"
+        "X-MSEdge-Ref": "Ref A: 8FCFB94E896A4FE8BB1FA186524D20EE Ref B: PAOEDGE0610 Ref C: 2022-07-18T23:58:37Z"
       },
       "ResponseBody": {
         "summary": {
-          "queryTime": 5,
+          "queryTime": 6,
           "numResults": 1
         },
         "addresses": [
@@ -40,7 +40,7 @@
               "streetName": "Niuwei Road",
               "streetNameAndNumber": "1-20Niuwei Road",
               "countryCode": "TW",
-              "countrySubdivision": "T\u00E1iw\u0101n",
+              "countrySubdivision": "Taiwan",
               "municipality": "Nantou County",
               "postalCode": "545",
               "municipalitySubdivision": "Puli Township",
@@ -65,6 +65,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "1214940188"
+    "RandomSeed": "1086834694"
   }
 }
