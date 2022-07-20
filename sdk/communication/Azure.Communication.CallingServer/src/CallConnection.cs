@@ -453,14 +453,14 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        /// <summary> Initializes a new instance of CallContent. <see cref="CallContent"/>.</summary>
-        public virtual CallContent GetCallContent()
+        /// <summary> Initializes a new instance of CallContent. <see cref="CallMedia"/>.</summary>
+        public virtual CallMedia GetCallMedia()
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetCallContent)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetCallMedia)}");
             scope.Start();
             try
             {
-                return new CallContent(CallConnectionId, ContentRestClient, _clientDiagnostics);
+                return new CallMedia(CallConnectionId, ContentRestClient, _clientDiagnostics);
             }
             catch (Exception ex)
             {
