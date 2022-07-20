@@ -40,6 +40,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public string GetNewNonAsciiDirectoryName() => SharesClientBuilder.GetNewNonAsciiDirectoryName();
         public string GetNewFileName() => SharesClientBuilder.GetNewFileName();
         public string GetNewNonAsciiFileName() => SharesClientBuilder.GetNewNonAsciiFileName();
+        public Uri GetDefaultPrimaryEndpoint() => new Uri(SharesClientBuilder.Tenants.TestConfigDefault.FileServiceEndpoint);
 
         public async Task<DisposingShare> GetTestShareAsync(
             ShareServiceClient service = default,
@@ -141,6 +142,37 @@ namespace Azure.Storage.Files.Shares.Tests
             };
             builder.SetPermissions(ShareFileSasPermissions.All);
             return builder.ToSasQueryParameters(sharedKeyCredentials ?? Tenants.GetNewSharedKeyCredentials());
+        }
+
+        /// <summary>
+        /// Gets a custom account SAS where the permissions, services and resourceType
+        /// comes back in the string character order that the user inputs it as.
+        /// </summary>
+        /// <param name="permissions"></param>
+        /// <param name="services"></param>
+        /// <param name="resourceType"></param>
+        /// <param name="sharedKeyCredential"></param>
+        /// <returns></returns>
+        public string GetCustomAccountSas(
+            string permissions = default,
+            string services = default,
+            string resourceType = default,
+            StorageSharedKeyCredential sharedKeyCredential = default)
+        {
+            sharedKeyCredential ??= Tenants.GetNewSharedKeyCredentials();
+            permissions ??= "rwdylacuptfi";
+            services ??= "bqtf";
+            resourceType ??= "sco";
+
+            // Generate a SAS that would set the srt / ResourceTypes in a different order than
+            // the .NET SDK would normally create the SAS
+            TestAccountSasBuilder accountSasBuilder = new TestAccountSasBuilder(
+                permissions: permissions,
+                expiresOn: Recording.UtcNow.AddDays(1),
+                services: services,
+                resourceTypes: resourceType);
+
+            return accountSasBuilder.ToTestSasQueryParameters(sharedKeyCredential).ToString();
         }
 
         public ShareSignedIdentifier[] BuildSignedIdentifiers() =>

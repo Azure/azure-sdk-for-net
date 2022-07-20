@@ -64,6 +64,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public string GetNewNonAsciiDirectoryName() => DataLakeClientBuilder.GetNewNonAsciiDirectoryName();
         public string GetNewFileName() => DataLakeClientBuilder.GetNewFileName();
         public string GetNewNonAsciiFileName() => DataLakeClientBuilder.GetNewNonAsciiFileName();
+        public Uri GetDefaultPrimaryEndpoint() => new Uri(DataLakeClientBuilder.Tenants.TestConfigHierarchicalNamespace.BlobServiceEndpoint);
 
         public async Task<DisposingFileSystem> GetNewFileSystem(
             DataLakeServiceClient service = default,
@@ -376,6 +377,37 @@ namespace Azure.Storage.Files.DataLake.Tests
                 lease = await InstrumentClient(fileSystem.GetDataLakeLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync(DataLakeLeaseClient.InfiniteLeaseDuration);
             }
             return leaseId == ReceivedLeaseId ? lease.LeaseId : leaseId;
+        }
+
+        /// <summary>
+        /// Gets a custom account SAS where the permissions, services and resourceType
+        /// comes back in the string character order that the user inputs it as.
+        /// </summary>
+        /// <param name="permissions"></param>
+        /// <param name="services"></param>
+        /// <param name="resourceType"></param>
+        /// <param name="sharedKeyCredential"></param>
+        /// <returns></returns>
+        public string GetCustomAccountSas(
+            string permissions = default,
+            string services = default,
+            string resourceType = default,
+            StorageSharedKeyCredential sharedKeyCredential = default)
+        {
+            sharedKeyCredential ??= Tenants.GetNewHnsSharedKeyCredentials();
+            permissions ??= "racwdlxyuptf";
+            services ??= "bqtf";
+            resourceType ??= "sco";
+
+            // Generate a SAS that would set the srt / ResourceTypes in a different order than
+            // the .NET SDK would normally create the SAS
+            TestAccountSasBuilder accountSasBuilder = new TestAccountSasBuilder(
+                permissions: permissions,
+                expiresOn: Recording.UtcNow.AddDays(1),
+                services: services,
+                resourceTypes: resourceType);
+
+            return accountSasBuilder.ToTestSasQueryParameters(sharedKeyCredential).ToString();
         }
 
         public DataLakeSignedIdentifier[] BuildSignedIdentifiers() =>
