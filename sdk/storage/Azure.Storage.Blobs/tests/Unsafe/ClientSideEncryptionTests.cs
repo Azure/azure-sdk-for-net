@@ -328,7 +328,7 @@ namespace Azure.Storage.Blobs.Test
             {
                 var blobName = GetNewBlobName();
                 var blob = InstrumentClient(disposable.Container.GetBlobClient(blobName));
-                blob.ClientSideEncryptionV2EncryptionRegionDataLength = V2TestingRegionDataLength;
+                blob._clientSideEncryptionV2EncryptionRegionDataLength = V2TestingRegionDataLength;
 
                 // upload with encryption
                 await blob.UploadAsync(new MemoryStream(plaintext), cancellationToken: s_cancellationToken);
@@ -364,7 +364,7 @@ namespace Azure.Storage.Blobs.Test
             {
                 var blobName = GetNewBlobName();
                 var blob = InstrumentClient(disposable.Container.GetBlobClient(blobName));
-                blob.ClientSideEncryptionV2EncryptionRegionDataLength = V2TestingRegionDataLength;
+                blob._clientSideEncryptionV2EncryptionRegionDataLength = V2TestingRegionDataLength;
 
                 // upload with encryption
                 using (Stream writeStream = await blob.OpenWriteAsync(true, new BlobOpenWriteOptions
@@ -536,7 +536,7 @@ namespace Azure.Storage.Blobs.Test
                 }))
             {
                 var blob = InstrumentClient(disposable.Container.GetBlobClient(GetNewBlobName()));
-                blob.ClientSideEncryptionV2EncryptionRegionDataLength = V2TestingRegionDataLength;
+                blob._clientSideEncryptionV2EncryptionRegionDataLength = V2TestingRegionDataLength;
 
                 // upload with encryption
                 await blob.UploadAsync(new MemoryStream(data), cancellationToken: s_cancellationToken);
@@ -607,10 +607,10 @@ namespace Azure.Storage.Blobs.Test
 
 #pragma warning disable CS0618 // obsolete
         [RecordedTest]
-        [TestCase(ClientSideEncryptionVersion.V1_0, Constants.KB, 64)]
+        [TestCase(ClientSideEncryptionVersion.V1_0, Constants.KB, 60)]
         [TestCase(ClientSideEncryptionVersion.V1_0, Constants.KB, Constants.KB)]
         [TestCase(ClientSideEncryptionVersion.V1_0, Constants.KB, 4 * Constants.KB)]
-        [TestCase(ClientSideEncryptionVersion.V2_0, Constants.KB, 64)]
+        [TestCase(ClientSideEncryptionVersion.V2_0, Constants.KB, 60)]
         [TestCase(ClientSideEncryptionVersion.V2_0, 2 * V2TestingRegionDataLength, 500)]
         [TestCase(ClientSideEncryptionVersion.V2_0, 2 * V2TestingRegionDataLength + 10, 500)]
 #pragma warning restore CS0618 // obsolete
@@ -628,7 +628,7 @@ namespace Azure.Storage.Blobs.Test
                 }))
             {
                 var blob = InstrumentClient(disposable.Container.GetBlobClient(GetNewBlobName()));
-                blob.ClientSideEncryptionV2EncryptionRegionDataLength = V2TestingRegionDataLength;
+                blob._clientSideEncryptionV2EncryptionRegionDataLength = V2TestingRegionDataLength;
 
                 // upload with encryption
                 await blob.UploadAsync(new MemoryStream(data), cancellationToken: s_cancellationToken);
@@ -783,7 +783,7 @@ namespace Azure.Storage.Blobs.Test
                 }))
             {
                 var blob = InstrumentClient(disposable.Container.GetBlobClient(GetNewBlobName()));
-                blob.ClientSideEncryptionV2EncryptionRegionDataLength = V2TestingRegionDataLength;
+                blob._clientSideEncryptionV2EncryptionRegionDataLength = V2TestingRegionDataLength;
 
                 // upload with encryption
                 await blob.UploadAsync(new MemoryStream(data), cancellationToken: s_cancellationToken);

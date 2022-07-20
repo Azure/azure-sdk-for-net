@@ -31,7 +31,7 @@ namespace Azure.Storage.Blobs
         /// <remarks>
         /// Encryption v2 does not officially support a dynamic value for encryption region data length.
         /// </remarks>
-        internal int ClientSideEncryptionV2EncryptionRegionDataLength { get; set; } = Constants.ClientSideEncryption.V2.EncryptionRegionDataSize;
+        internal int _clientSideEncryptionV2EncryptionRegionDataLength = Constants.ClientSideEncryption.V2.EncryptionRegionDataSize;
 
         #region ctors
         /// <summary>
@@ -1639,7 +1639,7 @@ namespace Azure.Storage.Blobs
 
                 // if content length was known, we retain that for dividing REST requests appropriately
                 expectedContentLength = content.GetLengthOrDefault();
-                IClientSideEncryptor encryptor = ClientSideEncryption.GetClientSideEncryptor(ClientSideEncryptionV2EncryptionRegionDataLength);
+                IClientSideEncryptor encryptor = ClientSideEncryption.GetClientSideEncryptor(_clientSideEncryptionV2EncryptionRegionDataLength);
                 if (expectedContentLength.HasValue)
                 {
                     expectedContentLength = encryptor.ExpectedOutputContentLength(expectedContentLength.Value);
@@ -1783,7 +1783,7 @@ namespace Azure.Storage.Blobs
         {
             if (UsingClientSideEncryption)
             {
-                IClientSideEncryptor encryptor = ClientSideEncryption.GetClientSideEncryptor(ClientSideEncryptionV2EncryptionRegionDataLength);
+                IClientSideEncryptor encryptor = ClientSideEncryption.GetClientSideEncryptor(_clientSideEncryptionV2EncryptionRegionDataLength);
                 return await new BlobClientSideEncryptor(encryptor)
                     .ClientSideEncryptionOpenWriteInternal(
                         BlockBlobClient,
