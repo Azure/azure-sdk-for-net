@@ -57,8 +57,8 @@ namespace Azure.Security.ConfidentialLedger.Tests
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
             Assert.That(stringResult, Does.Contain(objId));
         }
-
 #if NET6_0_OR_GREATER
+        [LiveOnly]
         [RecordedTest]
         public async Task AuthWithClientCert()
         {
