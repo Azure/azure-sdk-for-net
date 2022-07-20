@@ -41,6 +41,20 @@ namespace Azure.Security.ConfidentialLedger.Certificate
         /// <exception cref="ArgumentException"> <paramref name="ledgerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetLedgerIdentityAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new ConfidentialLedgerCertificateClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetLedgerIdentityAsync("<ledgerId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("ledgerId").ToString());
+        /// Console.WriteLine(result.GetProperty("ledgerTlsCertificate").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -79,6 +93,20 @@ namespace Azure.Security.ConfidentialLedger.Certificate
         /// <exception cref="ArgumentException"> <paramref name="ledgerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetLedgerIdentity with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new ConfidentialLedgerCertificateClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetLedgerIdentity("<ledgerId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("ledgerId").ToString());
+        /// Console.WriteLine(result.GetProperty("ledgerTlsCertificate").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 

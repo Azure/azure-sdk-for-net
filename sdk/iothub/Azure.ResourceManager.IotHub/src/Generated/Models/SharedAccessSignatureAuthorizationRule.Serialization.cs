@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.IotHub.Models
             string keyName = default;
             Optional<string> primaryKey = default;
             Optional<string> secondaryKey = default;
-            AccessRight rights = default;
+            IotHubSharedAccessRight rights = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyName"))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 if (property.NameEquals("rights"))
                 {
-                    rights = property.Value.GetString().ToAccessRight();
+                    rights = property.Value.GetString().ToIotHubSharedAccessRight();
                     continue;
                 }
             }

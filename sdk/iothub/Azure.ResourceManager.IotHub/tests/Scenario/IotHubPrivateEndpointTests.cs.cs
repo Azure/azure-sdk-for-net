@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
             // [Update the status of a private endpoint connection with the specified name]
             // The Sdk does not support create it.
             string privateEndpointConnectionName = $"{iotHubName}.{Guid.NewGuid()}";
-            var connectionState = new IotHubPrivateLinkServiceConnectionState(PrivateLinkServiceConnectionStatus.Approved, "description");
-            var privateEndpointConnectionProperties = new PrivateEndpointConnectionProperties(connectionState) { };
+            var connectionState = new IotHubPrivateLinkServiceConnectionState(IotHubPrivateLinkServiceConnectionStatus.Approved, "description");
+            var privateEndpointConnectionProperties = new IotHubPrivateEndpointConnectionProperties(connectionState) { };
             var iotHubPrivateEndpointConnectionData = new IotHubPrivateEndpointConnectionData(privateEndpointConnectionProperties) {};
             var connection = await collection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnectionName, iotHubPrivateEndpointConnectionData);
             Assert.IsNotNull(connection);

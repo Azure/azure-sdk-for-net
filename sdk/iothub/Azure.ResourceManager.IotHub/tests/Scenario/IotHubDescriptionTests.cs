@@ -38,16 +38,6 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
             _resourceGroup = await Client.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
         }
 
-        //[TearDown]
-        //public async Task TestTearDown()
-        //{
-        //    var list = await _resourceGroup.GetIotHubDescriptions().GetAllAsync().ToEnumerableAsync();
-        //    foreach (var item in list)
-        //    {
-        //        await item.DeleteAsync(WaitUntil.Completed);
-        //    }
-        //}
-
         [Test]
         [RecordedTest]
         public async Task Exist()

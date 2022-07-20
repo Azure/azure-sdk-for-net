@@ -69,6 +69,26 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetFarmerAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new FarmersClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetFarmerAsync("<farmerId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -116,6 +136,26 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetFarmer with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new FarmersClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetFarmer("<farmerId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -164,6 +204,48 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new FarmersClient(endpoint, credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.CreateOrUpdateAsync("<farmerId>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new FarmersClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     status = "<FarmerStatus>",
+        ///     name = "<FarmerName>",
+        ///     description = "<FarmerDescription>",
+        ///     properties = new {
+        ///         key = new {},
+        ///     },
+        /// };
+        /// 
+        /// Response response = await client.CreateOrUpdateAsync("<farmerId>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
@@ -230,6 +312,48 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateOrUpdate with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new FarmersClient(endpoint, credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.CreateOrUpdate("<farmerId>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new FarmersClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     status = "<FarmerStatus>",
+        ///     name = "<FarmerName>",
+        ///     description = "<FarmerDescription>",
+        ///     properties = new {
+        ///         key = new {},
+        ///     },
+        /// };
+        /// 
+        /// Response response = client.CreateOrUpdate("<farmerId>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
@@ -295,6 +419,17 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call DeleteAsync with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new FarmersClient(endpoint, credential);
+        /// 
+        /// Response response = await client.DeleteAsync("<farmerId>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         public virtual async Task<Response> DeleteAsync(string farmerId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -320,6 +455,17 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call Delete with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new FarmersClient(endpoint, credential);
+        /// 
+        /// Response response = client.Delete("<farmerId>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         public virtual Response Delete(string farmerId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -345,6 +491,32 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetCascadeDeleteJobDetailsAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new FarmersClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("resourceType").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+        /// Console.WriteLine(result.GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -399,6 +571,32 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetCascadeDeleteJobDetails with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new FarmersClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetCascadeDeleteJobDetails("<jobId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("resourceType").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+        /// Console.WriteLine(result.GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -466,6 +664,39 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetFarmersAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new FarmersClient(endpoint, credential);
+        /// 
+        /// await foreach (var data in client.GetFarmersAsync())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
+        /// ]]></code>
+        /// This sample shows how to call GetFarmersAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new FarmersClient(endpoint, credential);
+        /// 
+        /// await foreach (var data in client.GetFarmersAsync(new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
+        ///     Console.WriteLine(result.GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
         /// 
@@ -530,6 +761,39 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetFarmers and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new FarmersClient(endpoint, credential);
+        /// 
+        /// foreach (var data in client.GetFarmers())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
+        /// ]]></code>
+        /// This sample shows how to call GetFarmers with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new FarmersClient(endpoint, credential);
+        /// 
+        /// foreach (var data in client.GetFarmers(new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
+        ///     Console.WriteLine(result.GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
         /// 
@@ -583,6 +847,33 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateCascadeDeleteJobAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new FarmersClient(endpoint, credential);
+        /// 
+        /// var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<farmerId>");
+        /// 
+        /// BinaryData data = await operation.WaitForCompletionAsync();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("resourceType").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+        /// Console.WriteLine(result.GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -640,6 +931,33 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateCascadeDeleteJob with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new FarmersClient(endpoint, credential);
+        /// 
+        /// var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<farmerId>");
+        /// 
+        /// BinaryData data = operation.WaitForCompletion();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("resourceType").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+        /// Console.WriteLine(result.GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 

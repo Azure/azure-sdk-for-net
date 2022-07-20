@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.Storage.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string BValue = "b";
-        private const string CValue = "c";
-        private const string FValue = "f";
-        private const string SValue = "s";
+        private const string BlobValue = "b";
+        private const string ContainerValue = "c";
+        private const string FileValue = "f";
+        private const string ShareValue = "s";
 
         /// <summary> b. </summary>
-        public static ServiceSasSignedResourceType B { get; } = new ServiceSasSignedResourceType(BValue);
+        public static ServiceSasSignedResourceType Blob { get; } = new ServiceSasSignedResourceType(BlobValue);
         /// <summary> c. </summary>
-        public static ServiceSasSignedResourceType C { get; } = new ServiceSasSignedResourceType(CValue);
+        public static ServiceSasSignedResourceType Container { get; } = new ServiceSasSignedResourceType(ContainerValue);
         /// <summary> f. </summary>
-        public static ServiceSasSignedResourceType F { get; } = new ServiceSasSignedResourceType(FValue);
+        public static ServiceSasSignedResourceType File { get; } = new ServiceSasSignedResourceType(FileValue);
         /// <summary> s. </summary>
-        public static ServiceSasSignedResourceType S { get; } = new ServiceSasSignedResourceType(SValue);
+        public static ServiceSasSignedResourceType Share { get; } = new ServiceSasSignedResourceType(ShareValue);
         /// <summary> Determines if two <see cref="ServiceSasSignedResourceType"/> values are the same. </summary>
         public static bool operator ==(ServiceSasSignedResourceType left, ServiceSasSignedResourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceSasSignedResourceType"/> values are not the same. </summary>
