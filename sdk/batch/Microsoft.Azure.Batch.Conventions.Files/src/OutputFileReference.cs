@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files
         {
             get
             {
-                var storagePath = Uri.AbsolutePath;  // /container/$kind/path or /container/taskid/$kind/path
+                var storagePath = Uri.AbsolutePath.Replace("%24", "$");  // /container/$kind/path or /container/taskid/$kind/path
                 var pathFromContainer = storagePath.Substring(storagePath.IndexOf('/', 1) + 1);
                 var kindAndRelativePath = pathFromContainer.Substring(pathFromContainer.IndexOf('$'));
                 var relativePath = kindAndRelativePath.Substring(kindAndRelativePath.IndexOf('/') + 1);
