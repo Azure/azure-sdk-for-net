@@ -275,13 +275,21 @@ namespace Azure.ResourceManager.EnergyServices
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            var content = new Utf8JsonRequestContent();
+            
             if (data != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(data);
+                request.Headers.Add("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJodHRwczovL21hbmFnZW1lbnQuYXp1cmUuY29tIiwiaXNzIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvNzJmOTg4YmYtODZmMS00MWFmLTkxYWItMmQ3Y2QwMTFkYjQ3LyIsImlhdCI6MTY1NzY0NTc3MywibmJmIjoxNjU3NjQ1NzczLCJleHAiOjE2NTc3MzI0NzMsImFpbyI6IkUyWmdZSmhUR1A0aUt1Wi9CT1BVbzQ5NDMrektCd0E9IiwiYXBwaWQiOiIyZjU5YWJiYy03YjQwLTRkMGUtOTFiMi0yMmNhMzA4NGJjODQiLCJhcHBpZGFjciI6IjEiLCJpZHAiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83MmY5ODhiZi04NmYxLTQxYWYtOTFhYi0yZDdjZDAxMWRiNDcvIiwiaWR0eXAiOiJhcHAiLCJvaWQiOiI1MWQyZjc5MS03OTViLTRjOGQtOTY1Ny1jZDIzYjFmOWYyYTciLCJyaCI6IjAuQVJvQXY0ajVjdkdHcjBHUnF5MTgwQkhiUjBaSWYza0F1dGRQdWtQYXdmajJNQk1hQUFBLiIsInN1YiI6IjUxZDJmNzkxLTc5NWItNGM4ZC05NjU3LWNkMjNiMWY5ZjJhNyIsInRpZCI6IjcyZjk4OGJmLTg2ZjEtNDFhZi05MWFiLTJkN2NkMDExZGI0NyIsInV0aSI6IlctTkhIa2FSd0V1Zlp3ekUwZ1NOQVEiLCJ2ZXIiOiIxLjAiLCJ4bXNfdGNkdCI6MTI4OTI0MTU0N30.WKa4PFet1_swNlowlpBeXjuYmHtJKG_9XS02AnUK0EQCTRx_4rhGxE_fjA8ouIPu5iT0Y6OzU-lvUE-3da9f_XLQrngOe2dVdAoBEgNBUz6IEaEKNhqymfAub4sYwkh-XTkKeEKjDet7jIFGYjfBE2pWvUYz1Y8xaEEnqHvC9zh5u77V-1vd0o2JMXJqqDL7naXTNwzmlvOSqxNfL790kVLfkIE1Q8Eqs5s5k3FmCrkEpFGXH9QrYHKIlvvhrwiJsZs_00JX4_JcELoJac4CJKFCrznEJUITWpC1Or2cvlyRRu7u_EgGS62tY7fdLYZMfKVh54KNaTP0rcf9oq4I_g");
+                content.JsonWriter.WriteObjectValue("{\"location\":\"centraluseuap\",\"properties\":{\"authAppId\":\"2f59abbc-7b40-4d0e-91b2-22ca3084bc84\",\"dataPartitionNames\":[{\"name\":\"dp\"},{\"name\":\"dp1\"}]},\"tags\":{\"environment\":\"test\",\"program\":\"exploration\"}}");
                 request.Content = content;
             }
+
+            Console.WriteLine("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+            Console.WriteLine("{\"location\":\"centraluseuap\",\"properties\":{\"authAppId\":\"2f59abbc-7b40-4d0e-91b2-22ca3084bc84\",\"dataPartitionNames\":[{\"name\":\"dp\"},{\"name\":\"dp1\"}]},\"tags\":{\"environment\":\"test\",\"program\":\"exploration\"}}");
+
+            Console.WriteLine(uri);
+            Console.WriteLine("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
             _userAgent.Apply(message);
             return message;
         }
