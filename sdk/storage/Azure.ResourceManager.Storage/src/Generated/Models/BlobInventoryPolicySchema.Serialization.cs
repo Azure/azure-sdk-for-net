@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WritePropertyName("enabled");
             writer.WriteBooleanValue(IsEnabled);
             writer.WritePropertyName("type");
-            writer.WriteStringValue(InventoryRuleType.ToString());
+            writer.WriteStringValue(RuleType.ToString());
             writer.WritePropertyName("rules");
             writer.WriteStartArray();
             foreach (var item in Rules)
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Storage.Models
         {
             bool enabled = default;
             Optional<string> destination = default;
-            InventoryRuleType type = default;
+            BlobInventoryRuleType type = default;
             IList<BlobInventoryPolicyRule> rules = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = new InventoryRuleType(property.Value.GetString());
+                    type = new BlobInventoryRuleType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("rules"))

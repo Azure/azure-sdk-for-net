@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="restorePolicy"> The blob service properties for blob restore policy. </param>
         /// <param name="containerDeleteRetentionPolicy"> The blob service properties for container soft delete. </param>
         /// <param name="lastAccessTimeTrackingPolicy"> The blob service property to configure last access time based tracking policy. </param>
-        internal BlobServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StorageSku sku, StorageCorsRules cors, string defaultServiceVersion, DeleteRetentionPolicy deleteRetentionPolicy, bool? isVersioningEnabled, bool? isAutomaticSnapshotPolicyEnabled, BlobServiceChangeFeed changeFeed, RestorePolicyProperties restorePolicy, DeleteRetentionPolicy containerDeleteRetentionPolicy, LastAccessTimeTrackingPolicy lastAccessTimeTrackingPolicy) : base(id, name, resourceType, systemData)
+        internal BlobServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StorageSku sku, StorageCorsRules cors, string defaultServiceVersion, DeleteRetentionPolicy deleteRetentionPolicy, bool? isVersioningEnabled, bool? isAutomaticSnapshotPolicyEnabled, BlobServiceChangeFeed changeFeed, RestorePolicy restorePolicy, DeleteRetentionPolicy containerDeleteRetentionPolicy, LastAccessTimeTrackingPolicy lastAccessTimeTrackingPolicy) : base(id, name, resourceType, systemData)
         {
             Sku = sku;
             Cors = cors;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Storage
         /// <summary> The blob service properties for change feed events. </summary>
         public BlobServiceChangeFeed ChangeFeed { get; set; }
         /// <summary> The blob service properties for blob restore policy. </summary>
-        public RestorePolicyProperties RestorePolicy { get; set; }
+        public RestorePolicy RestorePolicy { get; set; }
         /// <summary> The blob service properties for container soft delete. </summary>
         public DeleteRetentionPolicy ContainerDeleteRetentionPolicy { get; set; }
         /// <summary> The blob service property to configure last access time based tracking policy. </summary>
