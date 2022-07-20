@@ -63,7 +63,6 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="body"> The phone number search request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="countryCode"/> or <paramref name="body"/> is null. </exception>
-        /// <remarks> Search for available phone numbers to purchase. </remarks>
         public async Task<ResponseWithHeaders<PhoneNumbersSearchAvailablePhoneNumbersHeaders>> SearchAvailablePhoneNumbersAsync(string countryCode, PhoneNumberSearchRequest body, CancellationToken cancellationToken = default)
         {
             if (countryCode == null)
@@ -92,7 +91,6 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="body"> The phone number search request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="countryCode"/> or <paramref name="body"/> is null. </exception>
-        /// <remarks> Search for available phone numbers to purchase. </remarks>
         public ResponseWithHeaders<PhoneNumbersSearchAvailablePhoneNumbersHeaders> SearchAvailablePhoneNumbers(string countryCode, PhoneNumberSearchRequest body, CancellationToken cancellationToken = default)
         {
             if (countryCode == null)
@@ -135,7 +133,6 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="searchId"> The search Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
-        /// <remarks> Gets a phone number search result by search id. </remarks>
         public async Task<Response<PhoneNumberSearchResult>> GetSearchResultAsync(string searchId, CancellationToken cancellationToken = default)
         {
             if (searchId == null)
@@ -163,7 +160,6 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="searchId"> The search Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
-        /// <remarks> Gets a phone number search result by search id. </remarks>
         public Response<PhoneNumberSearchResult> GetSearchResult(string searchId, CancellationToken cancellationToken = default)
         {
             if (searchId == null)
@@ -212,7 +208,6 @@ namespace Azure.Communication.PhoneNumbers
         /// <summary> Purchases phone numbers. </summary>
         /// <param name="searchId"> The search id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Purchases phone numbers. </remarks>
         public async Task<ResponseWithHeaders<PhoneNumbersPurchasePhoneNumbersHeaders>> PurchasePhoneNumbersAsync(string searchId = null, CancellationToken cancellationToken = default)
         {
             using var message = CreatePurchasePhoneNumbersRequest(searchId);
@@ -230,7 +225,6 @@ namespace Azure.Communication.PhoneNumbers
         /// <summary> Purchases phone numbers. </summary>
         /// <param name="searchId"> The search id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Purchases phone numbers. </remarks>
         public ResponseWithHeaders<PhoneNumbersPurchasePhoneNumbersHeaders> PurchasePhoneNumbers(string searchId = null, CancellationToken cancellationToken = default)
         {
             using var message = CreatePurchasePhoneNumbersRequest(searchId);
@@ -264,7 +258,6 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="operationId"> The id of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <remarks> Gets an operation by its id. </remarks>
         public async Task<ResponseWithHeaders<PhoneNumberOperation, PhoneNumbersGetOperationHeaders>> GetOperationAsync(string operationId, CancellationToken cancellationToken = default)
         {
             if (operationId == null)
@@ -293,7 +286,6 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="operationId"> The id of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <remarks> Gets an operation by its id. </remarks>
         public ResponseWithHeaders<PhoneNumberOperation, PhoneNumbersGetOperationHeaders> GetOperation(string operationId, CancellationToken cancellationToken = default)
         {
             if (operationId == null)
@@ -337,7 +329,6 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="operationId"> The id of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <remarks> Cancels an operation by its id. </remarks>
         public async Task<Response> CancelOperationAsync(string operationId, CancellationToken cancellationToken = default)
         {
             if (operationId == null)
@@ -360,7 +351,6 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="operationId"> The id of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <remarks> Cancels an operation by its id. </remarks>
         public Response CancelOperation(string operationId, CancellationToken cancellationToken = default)
         {
             if (operationId == null)
@@ -410,7 +400,6 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="sms"> Capability value for SMS. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
-        /// <remarks> Updates the capabilities of a phone number. </remarks>
         public async Task<ResponseWithHeaders<PhoneNumbersUpdateCapabilitiesHeaders>> UpdateCapabilitiesAsync(string phoneNumber, PhoneNumberCapabilityType? calling = null, PhoneNumberCapabilityType? sms = null, CancellationToken cancellationToken = default)
         {
             if (phoneNumber == null)
@@ -436,7 +425,6 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="sms"> Capability value for SMS. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
-        /// <remarks> Updates the capabilities of a phone number. </remarks>
         public ResponseWithHeaders<PhoneNumbersUpdateCapabilitiesHeaders> UpdateCapabilities(string phoneNumber, PhoneNumberCapabilityType? calling = null, PhoneNumberCapabilityType? sms = null, CancellationToken cancellationToken = default)
         {
             if (phoneNumber == null)
@@ -475,7 +463,6 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="phoneNumber"> The purchased phone number whose details are to be fetched in E.164 format, e.g. +11234567890. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
-        /// <remarks> Gets the details of the given purchased phone number. </remarks>
         public async Task<Response<PurchasedPhoneNumber>> GetByNumberAsync(string phoneNumber, CancellationToken cancellationToken = default)
         {
             if (phoneNumber == null)
@@ -503,7 +490,6 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="phoneNumber"> The purchased phone number whose details are to be fetched in E.164 format, e.g. +11234567890. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
-        /// <remarks> Gets the details of the given purchased phone number. </remarks>
         public Response<PurchasedPhoneNumber> GetByNumber(string phoneNumber, CancellationToken cancellationToken = default)
         {
             if (phoneNumber == null)
@@ -546,7 +532,6 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="phoneNumber"> Phone number to be released, e.g. +11234567890. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
-        /// <remarks> Releases a purchased phone number. </remarks>
         public async Task<ResponseWithHeaders<PhoneNumbersReleasePhoneNumberHeaders>> ReleasePhoneNumberAsync(string phoneNumber, CancellationToken cancellationToken = default)
         {
             if (phoneNumber == null)
@@ -570,7 +555,6 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="phoneNumber"> Phone number to be released, e.g. +11234567890. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
-        /// <remarks> Releases a purchased phone number. </remarks>
         public ResponseWithHeaders<PhoneNumbersReleasePhoneNumberHeaders> ReleasePhoneNumber(string phoneNumber, CancellationToken cancellationToken = default)
         {
             if (phoneNumber == null)
@@ -616,7 +600,6 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="skip"> An optional parameter for how many entries to skip, for pagination purposes. The default value is 0. </param>
         /// <param name="top"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Gets the list of all purchased phone numbers. </remarks>
         public async Task<Response<PurchasedPhoneNumbers>> ListPhoneNumbersAsync(int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListPhoneNumbersRequest(skip, top);
@@ -639,7 +622,6 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="skip"> An optional parameter for how many entries to skip, for pagination purposes. The default value is 0. </param>
         /// <param name="top"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Gets the list of all purchased phone numbers. </remarks>
         public Response<PurchasedPhoneNumbers> ListPhoneNumbers(int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListPhoneNumbersRequest(skip, top);
@@ -677,7 +659,6 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="top"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        /// <remarks> Gets the list of all purchased phone numbers. </remarks>
         public async Task<Response<PurchasedPhoneNumbers>> ListPhoneNumbersNextPageAsync(string nextLink, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -707,7 +688,6 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="top"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        /// <remarks> Gets the list of all purchased phone numbers. </remarks>
         public Response<PurchasedPhoneNumbers> ListPhoneNumbersNextPage(string nextLink, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

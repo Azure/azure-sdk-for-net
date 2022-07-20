@@ -65,7 +65,6 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <param name="knowledgeBaseQueryOptions"> Post body of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="knowledgeBaseQueryOptions"/> is null. </exception>
-        /// <remarks> Answers the specified question using your knowledge base. It is the runtime API for Custom Question Answering. </remarks>
         public async Task<Response<AnswersResult>> GetAnswersAsync(string projectName, string deploymentName, AnswersOptions knowledgeBaseQueryOptions, CancellationToken cancellationToken = default)
         {
             if (projectName == null)
@@ -103,7 +102,6 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <param name="knowledgeBaseQueryOptions"> Post body of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="knowledgeBaseQueryOptions"/> is null. </exception>
-        /// <remarks> Answers the specified question using your knowledge base. It is the runtime API for Custom Question Answering. </remarks>
         public Response<AnswersResult> GetAnswers(string projectName, string deploymentName, AnswersOptions knowledgeBaseQueryOptions, CancellationToken cancellationToken = default)
         {
             if (projectName == null)
@@ -158,7 +156,6 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <param name="textQueryOptions"> Post body of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="textQueryOptions"/> is null. </exception>
-        /// <remarks> Answers the specified question using the provided text in the body. It is the runtime API for Prebuilt Question Answering. </remarks>
         public async Task<Response<AnswersFromTextResult>> GetAnswersFromTextAsync(AnswersFromTextOptions textQueryOptions, CancellationToken cancellationToken = default)
         {
             if (textQueryOptions == null)
@@ -186,7 +183,6 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <param name="textQueryOptions"> Post body of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="textQueryOptions"/> is null. </exception>
-        /// <remarks> Answers the specified question using the provided text in the body. It is the runtime API for Prebuilt Question Answering. </remarks>
         public Response<AnswersFromTextResult> GetAnswersFromText(AnswersFromTextOptions textQueryOptions, CancellationToken cancellationToken = default)
         {
             if (textQueryOptions == null)
