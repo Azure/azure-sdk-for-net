@@ -302,7 +302,7 @@ namespace Azure.Core.TestFramework
                     // TestCase attribute allows specifying a test name
                     foreach (var attribute in method.GetCustomAttributes(true))
                     {
-                        if (attribute is ITestData { TestName: { } name})
+                        if (attribute is ITestData { TestName: { } name })
                         {
                             knownMethods.Add(name);
                         }
@@ -330,6 +330,19 @@ namespace Azure.Core.TestFramework
             }
         }
 
+        protected async Task SetProxyOptionsAsync(ProxyOptions options)
+        {
+            if (Mode == RecordedTestMode.Record && options != null)
+            {
+                await _proxy.Client.SetRecordingTransportOptionsAsync(Recording.RecordingId, options).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary>
+        /// If set to true, the proxy will be configured to connect on ports 5000 and 5001. This is useful when running the proxy locally for debugging recorded test issues.
+        /// </summary>
+        protected bool UseLocalDebugProxy { get; set; }
+
         [SetUp]
         public virtual async Task StartTestRecordingAsync()
         {
@@ -341,13 +354,13 @@ namespace Azure.Core.TestFramework
             if (Mode != RecordedTestMode.Live &&
                 test.Properties.ContainsKey("_SkipRecordings"))
             {
-                throw new IgnoreException((string) test.Properties.Get("_SkipRecordings"));
+                throw new IgnoreException((string)test.Properties.Get("_SkipRecordings"));
             }
 
             if (Mode == RecordedTestMode.Live &&
                 test.Properties.ContainsKey("_SkipLive"))
             {
-                throw new IgnoreException((string) test.Properties.Get("_SkipLive"));
+                throw new IgnoreException((string)test.Properties.Get("_SkipLive"));
             }
 
             Recording = await CreateTestRecordingAsync(Mode, GetSessionFilePath());
