@@ -151,7 +151,8 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="phoneNumber"> The purchased phone number whose details are to be fetched in E.164 format, e.g. +11234567890. </param>
         /// <param name="acceptLanguage"> The locale to display in the localized fields in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PurchasedPhoneNumber>> GetByNumberAsync(string phoneNumber, string acceptLanguage = null, CancellationToken cancellationToken = default)
+        /// <remarks> Gets the details of the given purchased phone number. </remarks>
+        public virtual async Task<Response<PurchasedPhoneNumber>> GetByNumberAsync(string phoneNumber, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.GetByNumber");
             scope.Start();
@@ -170,7 +171,8 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="phoneNumber"> The purchased phone number whose details are to be fetched in E.164 format, e.g. +11234567890. </param>
         /// <param name="acceptLanguage"> The locale to display in the localized fields in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PurchasedPhoneNumber> GetByNumber(string phoneNumber, string acceptLanguage = null, CancellationToken cancellationToken = default)
+        /// <remarks> Gets the details of the given purchased phone number. </remarks>
+        public virtual Response<PurchasedPhoneNumber> GetByNumber(string phoneNumber, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.GetByNumber");
             scope.Start();
@@ -562,7 +564,8 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="top"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
         /// <param name="acceptLanguage"> The locale to display in the localized fields in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<PurchasedPhoneNumber> ListPhoneNumbersAsync(int? skip = null, int? top = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
+        /// <remarks> Gets the list of all purchased phone numbers. </remarks>
+        public virtual AsyncPageable<PurchasedPhoneNumber> ListPhoneNumbersAsync(int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<PurchasedPhoneNumber>> FirstPageFunc(int? pageSizeHint)
             {
@@ -602,7 +605,8 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="top"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
         /// <param name="acceptLanguage"> The locale to display in the localized fields in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<PurchasedPhoneNumber> ListPhoneNumbers(int? skip = null, int? top = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
+        /// <remarks> Gets the list of all purchased phone numbers. </remarks>
+        public virtual Pageable<PurchasedPhoneNumber> ListPhoneNumbers(int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Page<PurchasedPhoneNumber> FirstPageFunc(int? pageSizeHint)
             {
