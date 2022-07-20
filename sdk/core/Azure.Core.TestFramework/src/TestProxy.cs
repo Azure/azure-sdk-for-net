@@ -145,7 +145,7 @@ namespace Azure.Core.TestFramework
         /// Starts the test proxy
         /// </summary>
         /// <param name="debugMode">If true, the proxy will be configured to look for port 5000 and 5001, which is the default used when running the proxy locally in debug mode.</param>
-        /// <returns></returns>
+        /// <returns>The started TestProxy instance.</returns>
         public static TestProxy Start(bool debugMode = false)
         {
             if (_shared != null)
