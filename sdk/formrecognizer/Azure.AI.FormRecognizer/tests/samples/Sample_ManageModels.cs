@@ -12,7 +12,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
     public partial class DocumentAnalysisSamples : SamplesBase<DocumentAnalysisTestEnvironment>
     {
         [RecordedTest]
-        public async Task ManageModels()
+        public void ManageModels()
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
@@ -45,9 +45,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 #else
             Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 #endif
-            BuildModelOperation operation = client.StartBuildModel(trainingFileUri, DocumentBuildMode.Template);
-            Response<DocumentModel> operationResponse = await operation.WaitForCompletionAsync();
-            DocumentModel model = operationResponse.Value;
+            BuildModelOperation operation = client.BuildModel(WaitUntil.Completed, trainingFileUri, DocumentBuildMode.Template);
+            DocumentModel model = operation.Value;
 
             // Get the model that was just created
             DocumentModel newCreatedModel = client.GetModel(model.ModelId);

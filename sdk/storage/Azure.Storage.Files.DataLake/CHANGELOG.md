@@ -3,6 +3,7 @@
 ## 12.12.0-beta.1 (Unreleased)
 
 ### Features Added
+Support for SDK-calculated transactional checksums on data transfer.
 
 ### Breaking Changes
 

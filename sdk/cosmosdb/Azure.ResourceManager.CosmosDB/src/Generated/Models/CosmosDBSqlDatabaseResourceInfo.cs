@@ -13,19 +13,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class CosmosDBSqlDatabaseResourceInfo
     {
         /// <summary> Initializes a new instance of CosmosDBSqlDatabaseResourceInfo. </summary>
-        /// <param name="id"> Name of the Cosmos DB SQL database. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public CosmosDBSqlDatabaseResourceInfo(string id)
+        /// <param name="databaseName"> Name of the Cosmos DB SQL database. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        public CosmosDBSqlDatabaseResourceInfo(string databaseName)
         {
-            if (id == null)
+            if (databaseName == null)
             {
-                throw new ArgumentNullException(nameof(id));
+                throw new ArgumentNullException(nameof(databaseName));
             }
 
-            Id = id;
+            DatabaseName = databaseName;
         }
 
         /// <summary> Name of the Cosmos DB SQL database. </summary>
-        public string Id { get; set; }
+        public string DatabaseName { get; set; }
     }
 }

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="name"> License type identifier. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
-        internal LicenseTypeCapability(string name, CapabilityStatus? status, string reason)
+        internal LicenseTypeCapability(string name, SqlCapabilityStatus? status, string reason)
         {
             Name = name;
             Status = status;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> License type identifier. </summary>
         public string Name { get; }
         /// <summary> The status of the capability. </summary>
-        public CapabilityStatus? Status { get; }
+        public SqlCapabilityStatus? Status { get; }
         /// <summary> The reason for the capability not being available. </summary>
         public string Reason { get; }
     }

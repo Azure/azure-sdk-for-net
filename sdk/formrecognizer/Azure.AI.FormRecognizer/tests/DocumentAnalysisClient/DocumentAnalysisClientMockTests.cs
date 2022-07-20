@@ -62,7 +62,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var client = CreateInstrumentedClient(options);
 
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.InvoiceLeTiff);
-            await client.StartAnalyzeDocumentAsync(FakeGuid, stream);
+            await client.AnalyzeDocumentAsync(WaitUntil.Started, FakeGuid, stream);
 
             var request = mockTransport.Requests.Single();
 
@@ -84,7 +84,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.ReceiptJpg);
             var analyzeOptions = new AnalyzeDocumentOptions { Locale = locale };
-            await client.StartAnalyzeDocumentAsync(FakeGuid, stream, analyzeOptions);
+            await client.AnalyzeDocumentAsync(WaitUntil.Started, FakeGuid, stream, analyzeOptions);
 
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"locale={locale}";
@@ -106,7 +106,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             var uri = new Uri("https://fakeuri.com/");
             var analyzeOptions = new AnalyzeDocumentOptions { Locale = locale };
-            await client.StartAnalyzeDocumentFromUriAsync(FakeGuid, uri, analyzeOptions);
+            await client.AnalyzeDocumentFromUriAsync(WaitUntil.Started, FakeGuid, uri, analyzeOptions);
 
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"locale={locale}";
@@ -128,7 +128,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.ReceiptJpg);
             var analyzeOptions = new AnalyzeDocumentOptions { Pages = { pages } };
-            await client.StartAnalyzeDocumentAsync(FakeGuid, stream, analyzeOptions);
+            await client.AnalyzeDocumentAsync(WaitUntil.Started, FakeGuid, stream, analyzeOptions);
 
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"pages={pages}";
@@ -150,7 +150,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             var uri = new Uri("https://fakeuri.com/");
             var analyzeOptions = new AnalyzeDocumentOptions { Pages = { pages } };
-            await client.StartAnalyzeDocumentFromUriAsync(FakeGuid, uri, analyzeOptions);
+            await client.AnalyzeDocumentFromUriAsync(WaitUntil.Started, FakeGuid, uri, analyzeOptions);
 
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"pages={pages}";
@@ -172,7 +172,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.ReceiptJpg);
             var analyzeOptions = new AnalyzeDocumentOptions { Pages = { page1, page2 } };
-            await client.StartAnalyzeDocumentAsync(FakeGuid, stream, analyzeOptions);
+            await client.AnalyzeDocumentAsync(WaitUntil.Started, FakeGuid, stream, analyzeOptions);
 
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"pages={page1}%2C{page2}";
@@ -194,7 +194,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             var uri = new Uri("https://fakeuri.com/");
             var analyzeOptions = new AnalyzeDocumentOptions { Pages = { page1, page2 } };
-            await client.StartAnalyzeDocumentFromUriAsync(FakeGuid, uri, analyzeOptions);
+            await client.AnalyzeDocumentFromUriAsync(WaitUntil.Started, FakeGuid, uri, analyzeOptions);
 
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"pages={page1}%2C{page2}";
@@ -215,8 +215,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var encodedUriString = "https://fakeuri.com/blank%20space";
             var decodedUriString = "https://fakeuri.com/blank space";
 
-            await client.StartAnalyzeDocumentFromUriAsync(FakeGuid, new Uri(encodedUriString));
-            await client.StartAnalyzeDocumentFromUriAsync(FakeGuid, new Uri(decodedUriString));
+            await client.AnalyzeDocumentFromUriAsync(WaitUntil.Started, FakeGuid, new Uri(encodedUriString));
+            await client.AnalyzeDocumentFromUriAsync(WaitUntil.Started, FakeGuid, new Uri(decodedUriString));
 
             Assert.AreEqual(2, mockTransport.Requests.Count);
 

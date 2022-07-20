@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The properties for updating encoded task step. </summary>
-    internal partial class EncodedTaskStepUpdateParameters : TaskStepUpdateParameters
+    public partial class EncodedTaskStepUpdateParameters : TaskStepUpdateParameters
     {
         /// <summary> Initializes a new instance of EncodedTaskStepUpdateParameters. </summary>
         public EncodedTaskStepUpdateParameters()

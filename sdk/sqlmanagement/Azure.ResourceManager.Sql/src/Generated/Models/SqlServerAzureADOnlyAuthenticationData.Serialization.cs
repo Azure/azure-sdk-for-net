@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Sql
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(AzureADOnlyAuthentication))
+            if (Optional.IsDefined(IsAzureADOnlyAuthenticationEnabled))
             {
                 writer.WritePropertyName("azureADOnlyAuthentication");
-                writer.WriteBooleanValue(AzureADOnlyAuthentication.Value);
+                writer.WriteBooleanValue(IsAzureADOnlyAuthenticationEnabled.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

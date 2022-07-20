@@ -31,9 +31,9 @@ namespace Azure.ResourceManager.Authorization
         /// <summary> Gets a collection of ProviderOperationsResources in the TenantResource. </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ProviderOperationsResources and their operations over a ProviderOperationsResource. </returns>
-        public static ProviderOperationsCollection GetProviderOperations(this TenantResource tenantResource)
+        public static ProviderOperationsCollection GetAllProviderOperations(this TenantResource tenantResource)
         {
-            return GetExtensionClient(tenantResource).GetProviderOperations();
+            return GetExtensionClient(tenantResource).GetAllProviderOperations();
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Authorization
         [ForwardsClientCalls]
         public static async Task<Response<ProviderOperationsResource>> GetProviderOperationsAsync(this TenantResource tenantResource, string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetProviderOperations().GetAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
+            return await tenantResource.GetAllProviderOperations().GetAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Authorization
         [ForwardsClientCalls]
         public static Response<ProviderOperationsResource> GetProviderOperations(this TenantResource tenantResource, string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetProviderOperations().Get(resourceProviderNamespace, expand, cancellationToken);
+            return tenantResource.GetAllProviderOperations().Get(resourceProviderNamespace, expand, cancellationToken);
         }
 
         /// <summary>

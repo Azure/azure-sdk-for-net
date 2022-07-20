@@ -6,6 +6,7 @@ products:
 - azure
 - azure-cognitive-services
 - azure-language-understanding
+- language-service
 name: Azure.AI.Language.Conversations samples for .NET
 description: Samples for the Azure.AI.Language.Conversations client library
 ---

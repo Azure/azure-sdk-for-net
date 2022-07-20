@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("longTermRetentionBackupResourceId");
                 writer.WriteStringValue(LongTermRetentionBackupResourceId);
             }
-            if (Optional.IsDefined(AutoCompleteRestore))
+            if (Optional.IsDefined(AllowAutoCompleteRestore))
             {
                 writer.WritePropertyName("autoCompleteRestore");
-                writer.WriteBooleanValue(AutoCompleteRestore.Value);
+                writer.WriteBooleanValue(AllowAutoCompleteRestore.Value);
             }
             if (Optional.IsDefined(LastBackupName))
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Sql
             Optional<ResourceIdentifier> sourceDatabaseId = default;
             Optional<ResourceIdentifier> restorableDroppedDatabaseId = default;
             Optional<string> storageContainerSasToken = default;
-            Optional<string> failoverGroupId = default;
+            Optional<ResourceIdentifier> failoverGroupId = default;
             Optional<ResourceIdentifier> recoverableDatabaseId = default;
             Optional<ResourceIdentifier> longTermRetentionBackupResourceId = default;
             Optional<bool> autoCompleteRestore = default;
@@ -291,7 +291,12 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("failoverGroupId"))
                         {
-                            failoverGroupId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            failoverGroupId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("recoverableDatabaseId"))
