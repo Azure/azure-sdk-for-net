@@ -54,7 +54,7 @@ There are now methods with similar names, signatures, and locations to create se
 
 ### Client constructors and authentication
 
-In `Microsoft.Azure.ApplicationInsights.Query` v1.0.0, client authentication requires providing a `ServiceCredentials` implementation to the client object's constructor. One such approach is an API key-based authentication via the `ApiKeyClientCredentials` class. For example:
+In `Microsoft.Azure.ApplicationInsights.Query` v1.0.0, client authentication requires providing a `ServiceCredentials` implementation to the client object's constructor. One such approach is API key-based authentication via the `ApiKeyClientCredentials` class. For example:
 
 ```csharp
 using Microsoft.Azure.ApplicationInsights.Query;
