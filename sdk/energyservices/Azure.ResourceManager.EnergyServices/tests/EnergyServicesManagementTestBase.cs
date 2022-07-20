@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.EnergyServices.Tests
 
             EnergyServiceData energyServiceData = new EnergyServiceData(AzureLocation.EastUS);
             var properties = new EnergyServiceProperties("" ,null, "50BC6073-5E08-4A2A-BFE9-8CB317ABED9D", dataPartitionNames);
-            
+
             energyServiceData.Properties = properties;
             return energyServiceData;
         }
