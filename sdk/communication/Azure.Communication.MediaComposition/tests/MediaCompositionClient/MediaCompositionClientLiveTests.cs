@@ -443,7 +443,6 @@ namespace Azure.Communication.MediaComposition.Tests
         {
             var mediaCompositionClient = CreateClient();
             await CreateMediaCompositionHelper(mediaCompositionClient);
-            #region Snippet:AddOutputs
             var outputsToAdd = new Dictionary<string, MediaOutput>()
             {
                 {
@@ -455,7 +454,6 @@ namespace Azure.Communication.MediaComposition.Tests
                 }
             };
             var response = await mediaCompositionClient.AddOutputsAsync(mediaCompositionId, outputsToAdd);
-            #endregion Snippet:AddOutputs
             Assert.AreEqual(response.Value.Id, mediaCompositionId);
             response.Value.Outputs.TryGetValue("youtube", out var youtube);
             Assert.IsNotNull(youtube);
@@ -469,13 +467,11 @@ namespace Azure.Communication.MediaComposition.Tests
         {
             var mediaCompositionClient = CreateClient();
             await CreateMediaCompositionHelper(mediaCompositionClient);
-            #region Snippet:RemoveOutputs
             var outputIdsToRemove = new List<string>()
             {
                 "acsGroupCall"
             };
             var response = await mediaCompositionClient.RemoveOutputsAsync(mediaCompositionId, outputIdsToRemove);
-            #endregion Snippet:RemoveOutputs
             Assert.AreEqual(response.Value.Id, mediaCompositionId);
             response.Value.Outputs.TryGetValue("acsGroupCall", out var acsGroupCall);
             Assert.IsNull(acsGroupCall);

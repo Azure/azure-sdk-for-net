@@ -133,7 +133,7 @@ namespace Azure.Communication.MediaComposition
     {
         public MediaCompositionBody() { }
         public string Id { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.Communication.MediaComposition.MediaInput> Inputs { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.Communication.MediaComposition.MediaInput> Inputs { get { throw null; } }
         public Azure.Communication.MediaComposition.Models.MediaCompositionLayout Layout { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.Communication.MediaComposition.MediaOutput> Outputs { get { throw null; } }
         public Azure.Communication.MediaComposition.CompositionStreamState? StreamState { get { throw null; } set { } }
