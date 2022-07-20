@@ -74,6 +74,7 @@ prepend-rp-prefix:
   - JobStatus
   - JobType
   - PrivateLinkResources
+  - PrivateEndpointConnectionsList
   - PrivateLinkServiceConnectionStatus
   - PrivateEndpointConnectionProperties
   - RegistryStatistics
@@ -123,5 +124,25 @@ directive:
     transform: >
       $.EventHubConsumerGroupBodyDescription.properties.properties['x-ms-client-flatten'] = true;
       $.EventHubConsumerGroupBodyDescription['x-ms-client-name'] = 'ConsumerGroupEventHubContent';
+
+  - from: iothub.json
+    where: $.definitions.EventHubConsumerGroupInfo.properties.etag
+    transform: $["x-nullable"] = true
+
+  # Resolve service issue: Azure/azure-rest-api-specs issue #19827
+  - from: iothub.json
+    where: $.definitions.PrivateEndpointConnectionsList
+    transform: >
+      $.type = "object";
+      $.items = {};
+      $.properties = {
+        "value": {
+          "description": "The array of Private Endpoint Connections.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PrivateEndpointConnection"
+          }
+        }
+      }
 
 ```
