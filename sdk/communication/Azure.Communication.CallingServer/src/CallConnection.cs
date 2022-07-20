@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Communication.CallingServer
@@ -454,154 +453,14 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        /// <summary>
-        /// Plays a file async.
-        /// </summary>
-        /// <param name="playSource"></param>
-        /// <param name="cancellationToken"></param>
-        /// <param name="playTo"></param>
-        /// <returns></returns>
-        public virtual async Task<Response> PlayMediaAsync(PlaySource playSource, IEnumerable<CommunicationIdentifier> playTo, CancellationToken cancellationToken = default)
+        /// <summary> Initializes a new instance of CallContent. <see cref="CallContent"/>.</summary>
+        public virtual CallContent GetCallContent()
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(PlayMedia)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetCallContent)}");
             scope.Start();
             try
             {
-                PlaySourceInternal sourceInternal;
-                if (playSource is FileSource)
-                {
-                    sourceInternal = new PlaySourceInternal(PlaySourceTypeInternal.File);
-                    sourceInternal.FileSource = new FileSourceInternal(((FileSource)playSource).FileUri.AbsoluteUri);
-                    sourceInternal.PlaySourceId = playSource.PlaySourceId;
-                }
-                else
-                {
-                    throw new NotSupportedException(playSource.GetType().Name);
-                }
-
-                PlayRequestInternal request = new PlayRequestInternal(sourceInternal);
-                request.PlayTo = playTo.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList();
-
-                return await ContentRestClient.PlayAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Plays a file.
-        /// </summary>
-        /// <param name="playSource"></param>
-        /// <param name="cancellationToken"></param>
-        /// <param name="playTo"></param>
-        /// <returns></returns>
-        public virtual Response PlayMedia(PlaySource playSource, IEnumerable<CommunicationIdentifier> playTo, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(PlayMedia)}");
-            scope.Start();
-            try
-            {
-                PlaySourceInternal sourceInternal;
-                if (playSource is FileSource)
-                {
-                    sourceInternal = new PlaySourceInternal(PlaySourceTypeInternal.File);
-                    sourceInternal.FileSource = new FileSourceInternal(((FileSource)playSource).FileUri.AbsoluteUri);
-                    sourceInternal.PlaySourceId = playSource.PlaySourceId;
-                }
-                else
-                {
-                    throw new NotSupportedException(playSource.GetType().Name);
-                }
-
-                PlayRequestInternal request = new PlayRequestInternal(sourceInternal);
-                request.PlayTo = playTo.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList();
-
-                return ContentRestClient.Play(CallConnectionId, request, cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Play to all participants async.
-        /// </summary>
-        /// <param name="playSource"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public virtual async Task<Response> PlayMediaToAllAsync(PlaySource playSource, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(PlayMediaToAll)}");
-            scope.Start();
-            try
-            {
-                return await PlayMediaAsync(playSource, Enumerable.Empty<CommunicationIdentifier>(), cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Play to all participants.
-        /// </summary>
-        /// <param name="playSource"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public virtual Response PlayMediaToAll(PlaySource playSource, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(PlayMediaToAll)}");
-            scope.Start();
-            try
-            {
-                return PlayMedia(playSource, Enumerable.Empty<CommunicationIdentifier>(), cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Cancel any media operation to all participants.
-        /// </summary>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public virtual async Task<Response> CancelAllMediaOperationsAsync(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(CancelAllMediaOperations)}");
-            scope.Start();
-            try
-            {
-                return await ContentRestClient.CancelAllMediaOperationsAsync(CallConnectionId, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Cancel any media operation to all participants.
-        /// </summary>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public virtual Response CancelAllMediaOperations(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(CancelAllMediaOperations)}");
-            scope.Start();
-            try
-            {
-                return ContentRestClient.CancelAllMediaOperations(CallConnectionId, cancellationToken);
+                return new CallContent(CallConnectionId, ContentRestClient, _clientDiagnostics);
             }
             catch (Exception ex)
             {
