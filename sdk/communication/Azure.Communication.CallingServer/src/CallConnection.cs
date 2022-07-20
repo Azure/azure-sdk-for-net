@@ -454,9 +454,9 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Initializes a new instance of CallContent. <see cref="CallMedia"/>.</summary>
-        public virtual CallMedia GetCallContent()
+        public virtual CallMedia GetCallMedia()
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetCallContent)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetCallMedia)}");
             scope.Start();
             try
             {
