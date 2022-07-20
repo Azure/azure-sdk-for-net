@@ -61,7 +61,6 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <param name="accountId"> Identifier for the Azure Object Anchors account. </param>
         /// <param name="xMrcCv"> The client request correlation vector, which should be set to a new value for each request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Gets a blob upload uri. </remarks>
         public async Task<ResponseWithHeaders<AssetUploadUriResult, BlobUploadEndpointGetHeaders>> GetAsync(Guid accountId, string xMrcCv = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetRequest(accountId, xMrcCv);
@@ -85,7 +84,6 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <param name="accountId"> Identifier for the Azure Object Anchors account. </param>
         /// <param name="xMrcCv"> The client request correlation vector, which should be set to a new value for each request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Gets a blob upload uri. </remarks>
         public ResponseWithHeaders<AssetUploadUriResult, BlobUploadEndpointGetHeaders> Get(Guid accountId, string xMrcCv = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetRequest(accountId, xMrcCv);

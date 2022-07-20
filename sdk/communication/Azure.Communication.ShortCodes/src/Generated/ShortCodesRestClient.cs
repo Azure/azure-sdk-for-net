@@ -65,7 +65,6 @@ namespace Azure.Communication.ShortCodes
         /// <param name="skip"> An optional parameter for how many entries to skip, for pagination purposes. </param>
         /// <param name="top"> An optional parameter for how many entries to return, for pagination purposes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Gets the list of short codes for the current resource. </remarks>
         public async Task<Response<Models.ShortCodes>> GetShortCodesAsync(int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetShortCodesRequest(skip, top);
@@ -88,7 +87,6 @@ namespace Azure.Communication.ShortCodes
         /// <param name="skip"> An optional parameter for how many entries to skip, for pagination purposes. </param>
         /// <param name="top"> An optional parameter for how many entries to return, for pagination purposes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Gets the list of short codes for the current resource. </remarks>
         public Response<Models.ShortCodes> GetShortCodes(int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetShortCodesRequest(skip, top);
@@ -133,7 +131,6 @@ namespace Azure.Communication.ShortCodes
         /// <param name="programBriefId"> Program Brief Id. Must be a valid GUID. </param>
         /// <param name="body"> Data to create new a Program Brief or fields to update an existing Program Brief. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Creates or updates a US Program Brief. </remarks>
         public async Task<Response<USProgramBrief>> UpsertUSProgramBriefAsync(Guid programBriefId, USProgramBrief body = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateUpsertUSProgramBriefRequest(programBriefId, body);
@@ -157,7 +154,6 @@ namespace Azure.Communication.ShortCodes
         /// <param name="programBriefId"> Program Brief Id. Must be a valid GUID. </param>
         /// <param name="body"> Data to create new a Program Brief or fields to update an existing Program Brief. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Creates or updates a US Program Brief. </remarks>
         public Response<USProgramBrief> UpsertUSProgramBrief(Guid programBriefId, USProgramBrief body = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateUpsertUSProgramBriefRequest(programBriefId, body);
@@ -195,7 +191,6 @@ namespace Azure.Communication.ShortCodes
         /// <summary> Deletes a US Program Brief. </summary>
         /// <param name="programBriefId"> Program Brief Id. Must be a valid GUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Deletes a US Program Brief. </remarks>
         public async Task<Response> DeleteUSProgramBriefAsync(Guid programBriefId, CancellationToken cancellationToken = default)
         {
             using var message = CreateDeleteUSProgramBriefRequest(programBriefId);
@@ -212,7 +207,6 @@ namespace Azure.Communication.ShortCodes
         /// <summary> Deletes a US Program Brief. </summary>
         /// <param name="programBriefId"> Program Brief Id. Must be a valid GUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Deletes a US Program Brief. </remarks>
         public Response DeleteUSProgramBrief(Guid programBriefId, CancellationToken cancellationToken = default)
         {
             using var message = CreateDeleteUSProgramBriefRequest(programBriefId);
@@ -244,7 +238,6 @@ namespace Azure.Communication.ShortCodes
         /// <summary> Get a US Program Brief by id. </summary>
         /// <param name="programBriefId"> Program Brief Id. Must be a valid GUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get a US Program Brief by id. </remarks>
         public async Task<Response<USProgramBrief>> GetUSProgramBriefAsync(Guid programBriefId, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetUSProgramBriefRequest(programBriefId);
@@ -266,7 +259,6 @@ namespace Azure.Communication.ShortCodes
         /// <summary> Get a US Program Brief by id. </summary>
         /// <param name="programBriefId"> Program Brief Id. Must be a valid GUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get a US Program Brief by id. </remarks>
         public Response<USProgramBrief> GetUSProgramBrief(Guid programBriefId, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetUSProgramBriefRequest(programBriefId);
@@ -304,7 +296,6 @@ namespace Azure.Communication.ShortCodes
         /// <summary> Submits a US Program Brief for review. </summary>
         /// <param name="programBriefId"> Program Brief Id. Must be a valid GUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Submits a US Program Brief for review. </remarks>
         public async Task<Response<USProgramBrief>> SubmitUSProgramBriefAsync(Guid programBriefId, CancellationToken cancellationToken = default)
         {
             using var message = CreateSubmitUSProgramBriefRequest(programBriefId);
@@ -326,7 +317,6 @@ namespace Azure.Communication.ShortCodes
         /// <summary> Submits a US Program Brief for review. </summary>
         /// <param name="programBriefId"> Program Brief Id. Must be a valid GUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Submits a US Program Brief for review. </remarks>
         public Response<USProgramBrief> SubmitUSProgramBrief(Guid programBriefId, CancellationToken cancellationToken = default)
         {
             using var message = CreateSubmitUSProgramBriefRequest(programBriefId);
@@ -371,7 +361,6 @@ namespace Azure.Communication.ShortCodes
         /// <param name="skip"> An optional parameter for how many entries to skip, for pagination purposes. </param>
         /// <param name="top"> An optional parameter for how many entries to return, for pagination purposes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Gets the list of US Program Briefs for the current resource. </remarks>
         public async Task<Response<USProgramBriefs>> GetUSProgramBriefsAsync(int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetUSProgramBriefsRequest(skip, top);
@@ -394,7 +383,6 @@ namespace Azure.Communication.ShortCodes
         /// <param name="skip"> An optional parameter for how many entries to skip, for pagination purposes. </param>
         /// <param name="top"> An optional parameter for how many entries to return, for pagination purposes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Gets the list of US Program Briefs for the current resource. </remarks>
         public Response<USProgramBriefs> GetUSProgramBriefs(int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetUSProgramBriefsRequest(skip, top);
@@ -432,7 +420,6 @@ namespace Azure.Communication.ShortCodes
         /// <param name="top"> An optional parameter for how many entries to return, for pagination purposes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        /// <remarks> Gets the list of short codes for the current resource. </remarks>
         public async Task<Response<Models.ShortCodes>> GetShortCodesNextPageAsync(string nextLink, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -462,7 +449,6 @@ namespace Azure.Communication.ShortCodes
         /// <param name="top"> An optional parameter for how many entries to return, for pagination purposes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        /// <remarks> Gets the list of short codes for the current resource. </remarks>
         public Response<Models.ShortCodes> GetShortCodesNextPage(string nextLink, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -505,7 +491,6 @@ namespace Azure.Communication.ShortCodes
         /// <param name="top"> An optional parameter for how many entries to return, for pagination purposes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        /// <remarks> Gets the list of US Program Briefs for the current resource. </remarks>
         public async Task<Response<USProgramBriefs>> GetUSProgramBriefsNextPageAsync(string nextLink, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -535,7 +520,6 @@ namespace Azure.Communication.ShortCodes
         /// <param name="top"> An optional parameter for how many entries to return, for pagination purposes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        /// <remarks> Gets the list of US Program Briefs for the current resource. </remarks>
         public Response<USProgramBriefs> GetUSProgramBriefsNextPage(string nextLink, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

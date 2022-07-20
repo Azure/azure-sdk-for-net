@@ -71,8 +71,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Get the requested project metadata.
-        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -119,8 +117,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Get the requested project metadata.
-        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -168,8 +164,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Create or update a project.
-        /// 
         /// Below is the JSON schema for the request and response payloads.
         /// 
         /// Request Body:
@@ -231,8 +225,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Create or update a project.
-        /// 
         /// Below is the JSON schema for the request and response payloads.
         /// 
         /// Request Body:
@@ -293,8 +285,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Gets the status of a Project delete job.
-        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -353,8 +343,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Gets the status of a Project delete job.
-        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -414,8 +402,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Gets the status of an Export job, once job completes, returns the project metadata, and assets.
-        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -475,8 +461,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Gets the status of an Export job, once job completes, returns the project metadata, and assets.
-        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -536,8 +520,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Gets the status of an Import job.
-        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -598,8 +580,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Gets the status of an Import job.
-        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -661,8 +641,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Gets the status of a Deploy job.
-        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -725,8 +703,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Gets the status of a Deploy job.
-        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -788,8 +764,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <remarks>
-        /// Updates all the synonyms of a project.
-        /// 
         /// Below is the JSON schema for the request payload.
         /// 
         /// Request Body:
@@ -834,8 +808,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <remarks>
-        /// Updates all the synonyms of a project.
-        /// 
         /// Below is the JSON schema for the request payload.
         /// 
         /// Request Body:
@@ -880,8 +852,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Gets the status of update sources job.
-        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -942,8 +912,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Gets the status of update sources job.
-        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -1004,8 +972,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Gets the status of update QnAs job.
-        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -1066,8 +1032,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Gets the status of update QnAs job.
-        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -1128,8 +1092,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <remarks>
-        /// Add Active Learning feedback
-        /// 
         /// Below is the JSON schema for the request payload.
         /// 
         /// Request Body:
@@ -1175,8 +1137,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <remarks>
-        /// Add Active Learning feedback
-        /// 
         /// Below is the JSON schema for the request payload.
         /// 
         /// Request Body:
@@ -1221,8 +1181,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <remarks>
-        /// Gets all projects for a user.
-        /// 
         /// Below is the JSON schema for one item in the pageable response.
         /// 
         /// Response Body:
@@ -1273,8 +1231,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <remarks>
-        /// Gets all projects for a user.
-        /// 
         /// Below is the JSON schema for one item in the pageable response.
         /// 
         /// Response Body:
@@ -1328,8 +1284,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <remarks>
-        /// List all deployments of a project.
-        /// 
         /// Below is the JSON schema for one item in the pageable response.
         /// 
         /// Response Body:
@@ -1377,8 +1331,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <remarks>
-        /// List all deployments of a project.
-        /// 
         /// Below is the JSON schema for one item in the pageable response.
         /// 
         /// Response Body:
@@ -1426,8 +1378,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <remarks>
-        /// Gets all the synonyms of a project.
-        /// 
         /// Below is the JSON schema for one item in the pageable response.
         /// 
         /// Response Body:
@@ -1474,8 +1424,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <remarks>
-        /// Gets all the synonyms of a project.
-        /// 
         /// Below is the JSON schema for one item in the pageable response.
         /// 
         /// Response Body:
@@ -1522,8 +1470,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <remarks>
-        /// Gets all the sources of a project.
-        /// 
         /// Below is the JSON schema for one item in the pageable response.
         /// 
         /// Response Body:
@@ -1575,8 +1521,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <remarks>
-        /// Gets all the sources of a project.
-        /// 
         /// Below is the JSON schema for one item in the pageable response.
         /// 
         /// Response Body:
@@ -1629,8 +1573,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <remarks>
-        /// Gets all the QnAs of a project.
-        /// 
         /// Below is the JSON schema for one item in the pageable response.
         /// 
         /// Response Body:
@@ -1714,8 +1656,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <remarks>
-        /// Gets all the QnAs of a project.
-        /// 
         /// Below is the JSON schema for one item in the pageable response.
         /// 
         /// Response Body:
@@ -1796,8 +1736,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <remarks>
-        /// Delete the project.
-        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -1857,8 +1795,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <remarks>
-        /// Delete the project.
-        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -1920,8 +1856,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <remarks>
-        /// Export project metadata and assets.
-        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -1982,8 +1916,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <remarks>
-        /// Export project metadata and assets.
-        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -2045,8 +1977,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <remarks>
-        /// Import project assets.
-        /// 
         /// Below is the JSON schema for the request and response payloads.
         /// 
         /// Request Body:
@@ -2174,8 +2104,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <remarks>
-        /// Import project assets.
-        /// 
         /// Below is the JSON schema for the request and response payloads.
         /// 
         /// Request Body:
@@ -2301,8 +2229,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <remarks>
-        /// Deploy project to production.
-        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -2364,8 +2290,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <remarks>
-        /// Deploy project to production.
-        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -2427,8 +2351,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <remarks>
-        /// Updates the sources of a project.
-        /// 
         /// Below is the JSON schema for the request and response payloads.
         /// 
         /// Request Body:
@@ -2506,8 +2428,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <remarks>
-        /// Updates the sources of a project.
-        /// 
         /// Below is the JSON schema for the request and response payloads.
         /// 
         /// Request Body:
@@ -2585,8 +2505,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <remarks>
-        /// Updates the QnAs of a project.
-        /// 
         /// Below is the JSON schema for the request and response payloads.
         /// 
         /// Request Body:
@@ -2686,8 +2604,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <remarks>
-        /// Updates the QnAs of a project.
-        /// 
         /// Below is the JSON schema for the request and response payloads.
         /// 
         /// Request Body:
