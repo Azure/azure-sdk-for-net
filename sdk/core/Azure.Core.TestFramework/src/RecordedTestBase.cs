@@ -273,7 +273,7 @@ namespace Azure.Core.TestFramework
 
             if (Mode != RecordedTestMode.Live)
             {
-                _proxy = TestProxy.Start();
+                _proxy = TestProxy.Start(UseLocalDebugProxy);
             }
         }
 
