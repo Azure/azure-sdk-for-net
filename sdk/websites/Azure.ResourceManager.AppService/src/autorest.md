@@ -365,6 +365,12 @@ directive:
   - from: Certificates.json
     where: $.definitions.Certificate.properties.properties.properties.keyVaultId
     transform: $["x-ms-format"] = "arm-id"
+  - from: Certificates.json
+    where: $.definitions.CertificatePatchResource.properties.properties.properties.keyVaultId
+    transform: $["x-ms-format"] = "arm-id"
+  - from: Certificates.json
+    where: $.definitions.CertificatePatchResource.properties.properties.properties.serverFarmId
+    transform: $["x-ms-format"] = "arm-id"
 # not sure
   - from: KubeEnvironments.json
     where: $.definitions.KubeEnvironment.properties.properties.properties.aksResourceID
@@ -378,8 +384,71 @@ directive:
   - from: WebApps.json
     where: $.definitions.SwiftVirtualNetwork.properties.properties.properties.subnetResourceId
     transform: $["x-ms-format"] = "arm-id"
+  - from: WebApps.json
+    where: $.definitions.SwiftVirtualNetwork.properties.properties.properties.serverFarmId
+    transform: $["x-ms-format"] = "arm-id"
   - from: CommonDefinitions.json
     where: $.definitions.VnetInfo.properties.vnetResourceId
+    transform: $["x-ms-format"] = "arm-id"
+  - from: Recommendations.json
+    where: $.definitions.Recommendation.properties.properties.properties.resourceId
+    transform: $["x-ms-format"] = "arm-id"
+  - from: ResourceProvider.json
+    where: $.definitions.BillingMeter.properties.properties.properties.meterId
+    transform: $["x-ms-format"] = "uuid"
+  - from: CommonDefinitions.json
+    where: $.definitions.CloningInfo.properties.sourceWebAppId
+    transform: $["x-ms-format"] = "arm-id"
+  - from: CommonDefinitions.json
+    where: $.definitions.CloningInfo.properties.trafficManagerProfileId
+    transform: $["x-ms-format"] = "arm-id"
+  - from: CommonDefinitions.json
+    where: $.definitions.SupportTopic.properties.pesId
+    transform: $["x-ms-format"] = "arm-id"
+  - from: CommonDefinitions.json
+    where: $.definitions.VnetInfo.properties.vnetResourceId
+    transform: $["x-ms-format"] = "arm-id"
+  - from: CommonDefinitions.json
+    where: $.definitions.VirtualNetworkProfile.properties.id
+    transform: $["x-ms-format"] = "arm-id"
+  - from: CommonDefinitions.json
+    where: $.definitions.VirtualNetworkProfile.properties.type
+    transform: $["x-ms-format"] = "resource-type"
+  - from: CommonDefinitions.json
+    where: $.definitions.HostingEnvironmentProfile.properties.id
+    transform: $["x-ms-format"] = "arm-id"
+  - from: CommonDefinitions.json
+    where: $.definitions.HostingEnvironmentProfile.properties.type
+    transform: $["x-ms-format"] = "resource-type"
+  - from: CommonDefinitions.json
+    where: $.definitions.KubeEnvironmentProfile.properties.id
+    transform: $["x-ms-format"] = "arm-id"
+  - from: CommonDefinitions.json
+    where: $.definitions.KubeEnvironmentProfile.properties.type
+    transform: $["x-ms-format"] = "resource-type"
+  - from: WebApps.json
+    where: $.definitions.DeletedAppRestoreRequest.properties.properties.properties.deletedSiteId
+    transform: $["x-ms-format"] = "arm-id"
+  - from: ResourceProvider.json
+    where: $.definitions.SkuInfos.properties.resourceType
+    transform: $["x-ms-format"] = "resource-type"
+  - from: ResourceProvider.json
+    where: $.definitions.ValidateProperties.properties.serverFarmId
+    transform: $["x-ms-format"] = "arm-id"
+  - from: AppServiceEnvironments.json
+    where: $.definitions.SkuInfo.properties.resourceType
+    transform: $["x-ms-format"] = "resource-type"
+  - from: WebApps.json
+    where: $.definitions.SnapshotRecoverySource.properties.id
+    transform: $["x-ms-format"] = "arm-id"
+  - from: StaticSites.json
+    where: $.definitions.StaticSiteUserProvidedFunctionApp.properties.properties.properties.functionAppResourceId
+    transform: $["x-ms-format"] = "arm-id"
+  - from: StaticSites.json
+    where: $.definitions.StaticSiteUserProvidedFunctionAppARMResource.properties.properties.properties.functionAppResourceId
+    transform: $["x-ms-format"] = "arm-id"
+  - from: ResourceProvider.json
+    where: $.definitions.VnetParameters.properties.properties.properties.subnetResourceId
     transform: $["x-ms-format"] = "arm-id"
 # Enum rename
   - from: swagger-document

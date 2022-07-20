@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Expected location of the resource. </summary>
         public AzureLocation Location { get; }
         /// <summary> ARM resource ID of an App Service plan that would host the app. </summary>
-        public string ServerFarmId { get; set; }
+        public ResourceIdentifier ServerFarmId { get; set; }
         /// <summary> Name of the target SKU for the App Service plan. </summary>
         public string SkuName { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if App Service plan is for Linux workers; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>

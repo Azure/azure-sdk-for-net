@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<bool> overwrite = default;
             Optional<bool> cloneCustomHostNames = default;
             Optional<bool> cloneSourceControl = default;
-            string sourceWebAppId = default;
+            ResourceIdentifier sourceWebAppId = default;
             Optional<string> sourceWebAppLocation = default;
             Optional<string> hostingEnvironment = default;
             Optional<IDictionary<string, string>> appSettingsOverrides = default;
             Optional<bool> configureLoadBalancing = default;
-            Optional<string> trafficManagerProfileId = default;
+            Optional<ResourceIdentifier> trafficManagerProfileId = default;
             Optional<string> trafficManagerProfileName = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("sourceWebAppId"))
                 {
-                    sourceWebAppId = property.Value.GetString();
+                    sourceWebAppId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sourceWebAppLocation"))
@@ -175,7 +175,12 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("trafficManagerProfileId"))
                 {
-                    trafficManagerProfileId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    trafficManagerProfileId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("trafficManagerProfileName"))

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> deletedSiteId = default;
+            Optional<ResourceIdentifier> deletedSiteId = default;
             Optional<bool> recoverConfiguration = default;
             Optional<string> snapshotTime = default;
             Optional<bool> useDRSecondary = default;
@@ -101,7 +101,12 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         if (property0.NameEquals("deletedSiteId"))
                         {
-                            deletedSiteId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            deletedSiteId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("recoverConfiguration"))

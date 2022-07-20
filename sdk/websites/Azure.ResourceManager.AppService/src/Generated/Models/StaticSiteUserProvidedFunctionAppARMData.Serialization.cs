@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppService
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> functionAppResourceId = default;
+            Optional<ResourceIdentifier> functionAppResourceId = default;
             Optional<string> functionAppRegion = default;
             Optional<DateTimeOffset> createdOn = default;
             foreach (var property in element.EnumerateObject())
@@ -91,7 +91,12 @@ namespace Azure.ResourceManager.AppService
                     {
                         if (property0.NameEquals("functionAppResourceId"))
                         {
-                            functionAppResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            functionAppResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("functionAppRegion"))

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="canonicalName"> CNAME of the certificate to be issued via free certificate. </param>
         /// <param name="domainValidationMethod"> Method of domain validation for free cert. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal CertificatePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string password, string friendlyName, string subjectName, IList<string> hostNames, byte[] pfxBlob, string siteName, string selfLink, string issuer, DateTimeOffset? issueOn, DateTimeOffset? expirationOn, string thumbprint, bool? isValid, byte[] cerBlob, string publicKeyHash, HostingEnvironmentProfile hostingEnvironmentProfile, string keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? keyVaultSecretStatus, string serverFarmId, string canonicalName, string domainValidationMethod, string kind) : base(id, name, resourceType, systemData)
+        internal CertificatePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string password, string friendlyName, string subjectName, IList<string> hostNames, byte[] pfxBlob, string siteName, string selfLink, string issuer, DateTimeOffset? issueOn, DateTimeOffset? expirationOn, string thumbprint, bool? isValid, byte[] cerBlob, string publicKeyHash, HostingEnvironmentProfile hostingEnvironmentProfile, ResourceIdentifier keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? keyVaultSecretStatus, ResourceIdentifier serverFarmId, string canonicalName, string domainValidationMethod, string kind) : base(id, name, resourceType, systemData)
         {
             Password = password;
             FriendlyName = friendlyName;
@@ -105,13 +105,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Specification for the App Service Environment to use for the certificate. </summary>
         public HostingEnvironmentProfile HostingEnvironmentProfile { get; }
         /// <summary> Key Vault Csm resource Id. </summary>
-        public string KeyVaultId { get; set; }
+        public ResourceIdentifier KeyVaultId { get; set; }
         /// <summary> Key Vault secret name. </summary>
         public string KeyVaultSecretName { get; set; }
         /// <summary> Status of the Key Vault secret. </summary>
         public KeyVaultSecretStatus? KeyVaultSecretStatus { get; }
         /// <summary> Resource ID of the associated App Service plan, formatted as: &quot;/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}&quot;. </summary>
-        public string ServerFarmId { get; set; }
+        public ResourceIdentifier ServerFarmId { get; set; }
         /// <summary> CNAME of the certificate to be issued via free certificate. </summary>
         public string CanonicalName { get; set; }
         /// <summary> Method of domain validation for free cert. </summary>

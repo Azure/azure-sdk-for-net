@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="isUseDRSecondary"> If true, the snapshot is retrieved from DRSecondary endpoint. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal DeletedAppRestoreRequestInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string deletedSiteId, bool? isRecoverConfiguration, string snapshotTime, bool? isUseDRSecondary, string kind) : base(id, name, resourceType, systemData)
+        internal DeletedAppRestoreRequestInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier deletedSiteId, bool? isRecoverConfiguration, string snapshotTime, bool? isUseDRSecondary, string kind) : base(id, name, resourceType, systemData)
         {
             DeletedSiteId = deletedSiteId;
             IsRecoverConfiguration = isRecoverConfiguration;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// ARM resource ID of the deleted app. Example:
         /// /subscriptions/{subId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
         /// </summary>
-        public string DeletedSiteId { get; set; }
+        public ResourceIdentifier DeletedSiteId { get; set; }
         /// <summary> If true, deleted site configuration, in addition to content, will be restored. </summary>
         public bool? IsRecoverConfiguration { get; set; }
         /// <summary>
