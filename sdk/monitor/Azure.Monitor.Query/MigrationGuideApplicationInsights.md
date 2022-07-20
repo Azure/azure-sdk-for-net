@@ -54,7 +54,19 @@ There are now methods with similar names, signatures, and locations to create se
 
 ### Client constructors and authentication
 
-In `Microsoft.Azure.ApplicationInsights.Query` v1.0.0:
+In `Microsoft.Azure.ApplicationInsights.Query` v1.0.0, client authentication requires providing a `ServiceCredentials` implementation to the client object's constructor. One such approach is an API key-based authentication via the `ApiKeyClientCredentials` class. For example:
+
+```csharp
+using Microsoft.Azure.ApplicationInsights.Query;
+
+// code omitted for brevity
+
+var credentials = new ApiKeyClientCredentials(
+    _configuration["ApplicationInsights:ApiKey"]);
+var client = new ApplicationInsightsDataClient(credentials);
+```
+
+An alternative approach is to invoke the `ApplicationTokenProvider.LoginSilentAsync` method. For example:
 
 ```csharp
 using Microsoft.Azure.ApplicationInsights.Query;
@@ -71,11 +83,14 @@ var adSettings = new ActiveDirectoryServiceSettings
 };
 
 ServiceClientCredentials credentials = ApplicationTokenProvider.LoginSilentAsync(
-    "<domainId or tenantId>", "<clientId>", "<clientSecret>", adSettings).GetAwaiter().GetResult();
+    "<domainId or tenantId>",
+    "<clientId>",
+    "<clientSecret>",
+    adSettings).GetAwaiter().GetResult();
 var client = new ApplicationInsightsDataClient(credentials);
 ```
 
-In `Azure.Monitor.Query` v1.0.x:
+In `Azure.Monitor.Query` v1.0.x, Azure AD token-based authentication is required. In fact, the underlying Azure Log Analytics service doesn't support API keys. For a list of `TokenCredential` types that satisfy this token-based authentication requirement, see [Credential Classes](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#credential-classes). For example:
 
 ```csharp
 using Azure.Identity;
@@ -83,7 +98,10 @@ using Azure.Monitor.Query;
 
 // code omitted for brevity
 
-var credential = new ClientSecretCredential("<domainId or tenantId>", "<clientId>", "<clientSecret>");
+var credential = new ClientSecretCredential(
+    "<domainId or tenantId>",
+    "<clientId>",
+    "<clientSecret>");
 var client = new LogsQueryClient(credential);
 ```
 
