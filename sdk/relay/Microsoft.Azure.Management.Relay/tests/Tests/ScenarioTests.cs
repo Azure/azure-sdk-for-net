@@ -18,6 +18,9 @@ namespace Relay.Tests.ScenarioTests
     using System.Net;
     using Microsoft.Azure.Management.Resources;
     using Microsoft.Azure.Management.Relay;
+    using Microsoft.Azure.Management.Network;
+    using Microsoft.Azure.Management.KeyVault;
+    using Microsoft.Azure.Management.ManagedServiceIdentity;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Relay.Tests.TestHelper;
 
@@ -26,6 +29,9 @@ namespace Relay.Tests.ScenarioTests
         private ResourceManagementClient _resourceManagementClient;
         private RelayManagementClient _relayManagementClient;
         private RecordedDelegatingHandler handler = new RecordedDelegatingHandler();
+        private KeyVaultManagementClient _KeyVaultManagementClient;
+        private NetworkManagementClient _NetworkManagementClient;
+        private ManagedServiceIdentityClient _IdentityManagementClient;
 
         protected bool m_initialized = false;
         protected object m_lock = new object();
@@ -44,6 +50,9 @@ namespace Relay.Tests.ScenarioTests
                     {
                         _resourceManagementClient = RelayManagementHelper.GetResourceManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                         _relayManagementClient = RelayManagementHelper.GetRelayManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                        _NetworkManagementClient = RelayManagementHelper.GetNetworkManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                        _KeyVaultManagementClient = RelayManagementHelper.GetKeyVaultManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });                       
+                        _IdentityManagementClient = RelayManagementHelper.GetIdentityManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                     }
                 }
             }
@@ -63,7 +72,31 @@ namespace Relay.Tests.ScenarioTests
             {               
                 return _relayManagementClient;
             }
-        }  
+        }
+
+        public KeyVaultManagementClient KeyVaultManagementClient
+        {
+            get
+            {
+                return _KeyVaultManagementClient;
+            }
+        }
+
+        public NetworkManagementClient NetworkManagementClient
+        {
+            get
+            {
+                return _NetworkManagementClient;
+            }
+        }
+
+        public ManagedServiceIdentityClient IdentityManagementClient
+        {
+            get
+            {
+                return _IdentityManagementClient;
+            }
+        }
     }
 }
 
