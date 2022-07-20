@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.IotHub.Models
             AllowedFqdnList = new ChangeTrackingList<string>();
             IPFilterRules = new ChangeTrackingList<IotHubIPFilterRule>();
             PrivateEndpointConnections = new ChangeTrackingList<IotHubPrivateEndpointConnectionData>();
-            EventHubEndpoints = new ChangeTrackingDictionary<string, EventHubProperties>();
-            StorageEndpoints = new ChangeTrackingDictionary<string, StorageEndpointProperties>();
+            EventHubEndpoints = new ChangeTrackingDictionary<string, EventHubCompatibleEndpointProperties>();
+            StorageEndpoints = new ChangeTrackingDictionary<string, IotHubStorageEndpointProperties>();
             MessagingEndpoints = new ChangeTrackingDictionary<string, MessagingEndpointProperties>();
             Locations = new ChangeTrackingList<IotHubLocationDescription>();
         }
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// This property when set to true, will enable data residency, thus, disabling disaster recovery.
         /// Serialized Name: IotHubProperties.enableDataResidency
         /// </param>
-        internal IotHubProperties(IList<SharedAccessSignatureAuthorizationRule> authorizationPolicies, bool? disableLocalAuth, bool? disableDeviceSas, bool? disableModuleSas, bool? restrictOutboundNetworkAccess, IList<string> allowedFqdnList, IotHubPublicNetworkAccess? publicNetworkAccess, IList<IotHubIPFilterRule> ipFilterRules, NetworkRuleSetProperties networkRuleSets, string minTlsVersion, IList<IotHubPrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, string state, string hostName, IDictionary<string, EventHubProperties> eventHubEndpoints, RoutingProperties routing, IDictionary<string, StorageEndpointProperties> storageEndpoints, IDictionary<string, MessagingEndpointProperties> messagingEndpoints, bool? enableFileUploadNotifications, CloudToDeviceProperties cloudToDevice, string comments, IotHubCapability? features, IReadOnlyList<IotHubLocationDescription> locations, bool? enableDataResidency)
+        internal IotHubProperties(IList<SharedAccessSignatureAuthorizationRule> authorizationPolicies, bool? disableLocalAuth, bool? disableDeviceSas, bool? disableModuleSas, bool? restrictOutboundNetworkAccess, IList<string> allowedFqdnList, IotHubPublicNetworkAccess? publicNetworkAccess, IList<IotHubIPFilterRule> ipFilterRules, IotHubNetworkRuleSetProperties networkRuleSets, string minTlsVersion, IList<IotHubPrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, string state, string hostName, IDictionary<string, EventHubCompatibleEndpointProperties> eventHubEndpoints, IotHubRoutingProperties routing, IDictionary<string, IotHubStorageEndpointProperties> storageEndpoints, IDictionary<string, MessagingEndpointProperties> messagingEndpoints, bool? enableFileUploadNotifications, CloudToDeviceProperties cloudToDevice, string comments, IotHubCapability? features, IReadOnlyList<IotHubLocationDescription> locations, bool? enableDataResidency)
         {
             AuthorizationPolicies = authorizationPolicies;
             DisableLocalAuth = disableLocalAuth;
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// Network Rule Set Properties of IotHub
         /// Serialized Name: IotHubProperties.networkRuleSets
         /// </summary>
-        public NetworkRuleSetProperties NetworkRuleSets { get; set; }
+        public IotHubNetworkRuleSetProperties NetworkRuleSets { get; set; }
         /// <summary>
         /// Specifies the minimum TLS version to support for this hub. Can be set to &quot;1.2&quot; to have clients that use a TLS version below 1.2 to be rejected.
         /// Serialized Name: IotHubProperties.minTlsVersion
@@ -229,17 +229,17 @@ namespace Azure.ResourceManager.IotHub.Models
         /// The Event Hub-compatible endpoint properties. The only possible keys to this dictionary is events. This key has to be present in the dictionary while making create or update calls for the IoT hub.
         /// Serialized Name: IotHubProperties.eventHubEndpoints
         /// </summary>
-        public IDictionary<string, EventHubProperties> EventHubEndpoints { get; }
+        public IDictionary<string, EventHubCompatibleEndpointProperties> EventHubEndpoints { get; }
         /// <summary>
         /// The routing related properties of the IoT hub. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging
         /// Serialized Name: IotHubProperties.routing
         /// </summary>
-        public RoutingProperties Routing { get; set; }
+        public IotHubRoutingProperties Routing { get; set; }
         /// <summary>
         /// The list of Azure Storage endpoints where you can upload files. Currently you can configure only one Azure Storage account and that MUST have its key as $default. Specifying more than one storage account causes an error to be thrown. Not specifying a value for this property when the enableFileUploadNotifications property is set to True, causes an error to be thrown.
         /// Serialized Name: IotHubProperties.storageEndpoints
         /// </summary>
-        public IDictionary<string, StorageEndpointProperties> StorageEndpoints { get; }
+        public IDictionary<string, IotHubStorageEndpointProperties> StorageEndpoints { get; }
         /// <summary>
         /// The messaging endpoint properties for the file upload notification queue.
         /// Serialized Name: IotHubProperties.messagingEndpoints

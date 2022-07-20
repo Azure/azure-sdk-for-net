@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class NetworkRuleSetProperties : IUtf8JsonSerializable
+    public partial class IotHubNetworkRuleSetProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.IotHub.Models
             writer.WriteEndObject();
         }
 
-        internal static NetworkRuleSetProperties DeserializeNetworkRuleSetProperties(JsonElement element)
+        internal static IotHubNetworkRuleSetProperties DeserializeIotHubNetworkRuleSetProperties(JsonElement element)
         {
             Optional<IotHubNetworkRuleSetDefaultAction> defaultAction = default;
             bool applyToBuiltInEventHubEndpoint = default;
-            IList<NetworkRuleSetIPRule> ipRules = default;
+            IList<IotHubNetworkRuleSetIPRule> ipRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defaultAction"))
@@ -57,16 +57,16 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 if (property.NameEquals("ipRules"))
                 {
-                    List<NetworkRuleSetIPRule> array = new List<NetworkRuleSetIPRule>();
+                    List<IotHubNetworkRuleSetIPRule> array = new List<IotHubNetworkRuleSetIPRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkRuleSetIPRule.DeserializeNetworkRuleSetIPRule(item));
+                        array.Add(IotHubNetworkRuleSetIPRule.DeserializeIotHubNetworkRuleSetIPRule(item));
                     }
                     ipRules = array;
                     continue;
                 }
             }
-            return new NetworkRuleSetProperties(Optional.ToNullable(defaultAction), applyToBuiltInEventHubEndpoint, ipRules);
+            return new IotHubNetworkRuleSetProperties(Optional.ToNullable(defaultAction), applyToBuiltInEventHubEndpoint, ipRules);
         }
     }
 }

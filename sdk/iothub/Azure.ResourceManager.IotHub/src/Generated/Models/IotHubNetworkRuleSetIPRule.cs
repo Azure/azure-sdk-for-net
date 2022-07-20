@@ -13,9 +13,9 @@ namespace Azure.ResourceManager.IotHub.Models
     /// IP Rule to be applied as part of Network Rule Set
     /// Serialized Name: NetworkRuleSetIpRule
     /// </summary>
-    public partial class NetworkRuleSetIPRule
+    public partial class IotHubNetworkRuleSetIPRule
     {
-        /// <summary> Initializes a new instance of NetworkRuleSetIPRule. </summary>
+        /// <summary> Initializes a new instance of IotHubNetworkRuleSetIPRule. </summary>
         /// <param name="filterName">
         /// Name of the IP filter rule.
         /// Serialized Name: NetworkRuleSetIpRule.filterName
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// Serialized Name: NetworkRuleSetIpRule.ipMask
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> or <paramref name="ipMask"/> is null. </exception>
-        public NetworkRuleSetIPRule(string filterName, string ipMask)
+        public IotHubNetworkRuleSetIPRule(string filterName, string ipMask)
         {
             if (filterName == null)
             {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.IotHub.Models
             IPMask = ipMask;
         }
 
-        /// <summary> Initializes a new instance of NetworkRuleSetIPRule. </summary>
+        /// <summary> Initializes a new instance of IotHubNetworkRuleSetIPRule. </summary>
         /// <param name="filterName">
         /// Name of the IP filter rule.
         /// Serialized Name: NetworkRuleSetIpRule.filterName
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// A string that contains the IP address range in CIDR notation for the rule.
         /// Serialized Name: NetworkRuleSetIpRule.ipMask
         /// </param>
-        internal NetworkRuleSetIPRule(string filterName, NetworkRuleIPAction? action, string ipMask)
+        internal IotHubNetworkRuleSetIPRule(string filterName, IotHubNetworkRuleIPAction? action, string ipMask)
         {
             FilterName = filterName;
             Action = action;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// IP Filter Action
         /// Serialized Name: NetworkRuleSetIpRule.action
         /// </summary>
-        public NetworkRuleIPAction? Action { get; set; }
+        public IotHubNetworkRuleIPAction? Action { get; set; }
         /// <summary>
         /// A string that contains the IP address range in CIDR notation for the rule.
         /// Serialized Name: NetworkRuleSetIpRule.ipMask

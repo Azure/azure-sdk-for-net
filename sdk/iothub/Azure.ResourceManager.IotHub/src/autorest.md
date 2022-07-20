@@ -40,6 +40,8 @@ rename-mapping:
   AccessRights: IotHubSharedAccessRight
   FeedbackProperties: CloudToDeviceFeedbackQueueProperties
   Name: IotHubTypeName
+  EventHubProperties: EventHubCompatibleEndpointProperties
+  RouteProperties: RoutingRuleProperties
 
 prepend-rp-prefix:
   - AuthenticationType
@@ -75,6 +77,12 @@ prepend-rp-prefix:
   - PrivateLinkServiceConnectionStatus
   - PrivateEndpointConnectionProperties
   - RegistryStatistics
+  - MatchedRoute
+  - NetworkRuleSetProperties
+  - NetworkRuleSetIPRule
+  - NetworkRuleIPAction
+  - RoutingProperties
+  - StorageEndpointProperties
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -114,6 +122,6 @@ directive:
     where: $.definitions
     transform: >
       $.EventHubConsumerGroupBodyDescription.properties.properties['x-ms-client-flatten'] = true;
-      $.EventHubConsumerGroupBodyDescription['x-ms-client-name'] = 'EventHubConsumerGroupContent';
+      $.EventHubConsumerGroupBodyDescription['x-ms-client-name'] = 'ConsumerGroupEventHubContent';
 
 ```

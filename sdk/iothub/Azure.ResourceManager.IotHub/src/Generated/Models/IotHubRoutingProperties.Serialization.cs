@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class RoutingProperties : IUtf8JsonSerializable
+    public partial class IotHubRoutingProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.IotHub.Models
             writer.WriteEndObject();
         }
 
-        internal static RoutingProperties DeserializeRoutingProperties(JsonElement element)
+        internal static IotHubRoutingProperties DeserializeIotHubRoutingProperties(JsonElement element)
         {
             Optional<RoutingEndpoints> endpoints = default;
-            Optional<IList<RouteProperties>> routes = default;
+            Optional<IList<RoutingRuleProperties>> routes = default;
             Optional<IotHubFallbackRouteProperties> fallbackRoute = default;
             Optional<IList<IotHubEnrichmentProperties>> enrichments = default;
             foreach (var property in element.EnumerateObject())
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.IotHub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<RouteProperties> array = new List<RouteProperties>();
+                    List<RoutingRuleProperties> array = new List<RoutingRuleProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouteProperties.DeserializeRouteProperties(item));
+                        array.Add(RoutingRuleProperties.DeserializeRoutingRuleProperties(item));
                     }
                     routes = array;
                     continue;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     continue;
                 }
             }
-            return new RoutingProperties(endpoints.Value, Optional.ToList(routes), fallbackRoute.Value, Optional.ToList(enrichments));
+            return new IotHubRoutingProperties(endpoints.Value, Optional.ToList(routes), fallbackRoute.Value, Optional.ToList(enrichments));
         }
     }
 }

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class RouteProperties : IUtf8JsonSerializable
+    public partial class RoutingRuleProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.IotHub.Models
             writer.WriteEndObject();
         }
 
-        internal static RouteProperties DeserializeRouteProperties(JsonElement element)
+        internal static RoutingRuleProperties DeserializeRoutingRuleProperties(JsonElement element)
         {
             string name = default;
             IotHubRoutingSource source = default;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     continue;
                 }
             }
-            return new RouteProperties(name, source, condition.Value, endpointNames, isEnabled);
+            return new RoutingRuleProperties(name, source, condition.Value, endpointNames, isEnabled);
         }
     }
 }

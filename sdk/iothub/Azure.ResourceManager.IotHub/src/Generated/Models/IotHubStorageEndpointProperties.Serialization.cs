@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class StorageEndpointProperties : IUtf8JsonSerializable
+    public partial class IotHubStorageEndpointProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.IotHub.Models
             writer.WriteEndObject();
         }
 
-        internal static StorageEndpointProperties DeserializeStorageEndpointProperties(JsonElement element)
+        internal static IotHubStorageEndpointProperties DeserializeIotHubStorageEndpointProperties(JsonElement element)
         {
             Optional<TimeSpan> sasTtlAsIso8601 = default;
             string connectionString = default;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     continue;
                 }
             }
-            return new StorageEndpointProperties(Optional.ToNullable(sasTtlAsIso8601), connectionString, containerName, Optional.ToNullable(authenticationType), identity.Value);
+            return new IotHubStorageEndpointProperties(Optional.ToNullable(sasTtlAsIso8601), connectionString, containerName, Optional.ToNullable(authenticationType), identity.Value);
         }
     }
 }

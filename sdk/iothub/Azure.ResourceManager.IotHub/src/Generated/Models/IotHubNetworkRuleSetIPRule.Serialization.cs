@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class NetworkRuleSetIPRule : IUtf8JsonSerializable
+    public partial class IotHubNetworkRuleSetIPRule : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.IotHub.Models
             writer.WriteEndObject();
         }
 
-        internal static NetworkRuleSetIPRule DeserializeNetworkRuleSetIPRule(JsonElement element)
+        internal static IotHubNetworkRuleSetIPRule DeserializeIotHubNetworkRuleSetIPRule(JsonElement element)
         {
             string filterName = default;
-            Optional<NetworkRuleIPAction> action = default;
+            Optional<IotHubNetworkRuleIPAction> action = default;
             string ipMask = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.IotHub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    action = new NetworkRuleIPAction(property.Value.GetString());
+                    action = new IotHubNetworkRuleIPAction(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ipMask"))
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     continue;
                 }
             }
-            return new NetworkRuleSetIPRule(filterName, Optional.ToNullable(action), ipMask);
+            return new IotHubNetworkRuleSetIPRule(filterName, Optional.ToNullable(action), ipMask);
         }
     }
 }

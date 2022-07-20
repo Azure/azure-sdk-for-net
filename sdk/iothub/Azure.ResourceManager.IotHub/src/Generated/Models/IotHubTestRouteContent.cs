@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// Serialized Name: TestRouteInput.route
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="route"/> is null. </exception>
-        public IotHubTestRouteContent(RouteProperties route)
+        public IotHubTestRouteContent(RoutingRuleProperties route)
         {
             if (route == null)
             {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// Route properties
         /// Serialized Name: TestRouteInput.route
         /// </summary>
-        public RouteProperties Route { get; }
+        public RoutingRuleProperties Route { get; }
         /// <summary>
         /// Routing Twin Reference
         /// Serialized Name: TestRouteInput.twin

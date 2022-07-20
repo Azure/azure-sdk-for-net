@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> Initializes a new instance of IotHubTestAllRoutesResult. </summary>
         internal IotHubTestAllRoutesResult()
         {
-            Routes = new ChangeTrackingList<MatchedRoute>();
+            Routes = new ChangeTrackingList<IotHubMatchedRoute>();
         }
 
         /// <summary> Initializes a new instance of IotHubTestAllRoutesResult. </summary>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// JSON-serialized array of matched routes
         /// Serialized Name: TestAllRoutesResult.routes
         /// </param>
-        internal IotHubTestAllRoutesResult(IReadOnlyList<MatchedRoute> routes)
+        internal IotHubTestAllRoutesResult(IReadOnlyList<IotHubMatchedRoute> routes)
         {
             Routes = routes;
         }
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.IotHub.Models
         /// JSON-serialized array of matched routes
         /// Serialized Name: TestAllRoutesResult.routes
         /// </summary>
-        public IReadOnlyList<MatchedRoute> Routes { get; }
+        public IReadOnlyList<IotHubMatchedRoute> Routes { get; }
     }
 }

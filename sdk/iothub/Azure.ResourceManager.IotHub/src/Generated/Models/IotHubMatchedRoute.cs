@@ -11,19 +11,19 @@ namespace Azure.ResourceManager.IotHub.Models
     /// Routes that matched
     /// Serialized Name: MatchedRoute
     /// </summary>
-    public partial class MatchedRoute
+    public partial class IotHubMatchedRoute
     {
-        /// <summary> Initializes a new instance of MatchedRoute. </summary>
-        internal MatchedRoute()
+        /// <summary> Initializes a new instance of IotHubMatchedRoute. </summary>
+        internal IotHubMatchedRoute()
         {
         }
 
-        /// <summary> Initializes a new instance of MatchedRoute. </summary>
+        /// <summary> Initializes a new instance of IotHubMatchedRoute. </summary>
         /// <param name="properties">
         /// Properties of routes that matched
         /// Serialized Name: MatchedRoute.properties
         /// </param>
-        internal MatchedRoute(RouteProperties properties)
+        internal IotHubMatchedRoute(RoutingRuleProperties properties)
         {
             Properties = properties;
         }
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.IotHub.Models
         /// Properties of routes that matched
         /// Serialized Name: MatchedRoute.properties
         /// </summary>
-        public RouteProperties Properties { get; }
+        public RoutingRuleProperties Properties { get; }
     }
 }

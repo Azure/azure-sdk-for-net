@@ -10,11 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class MatchedRoute
+    public partial class IotHubMatchedRoute
     {
-        internal static MatchedRoute DeserializeMatchedRoute(JsonElement element)
+        internal static IotHubMatchedRoute DeserializeIotHubMatchedRoute(JsonElement element)
         {
-            Optional<RouteProperties> properties = default;
+            Optional<RoutingRuleProperties> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"))
@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.IotHub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = RouteProperties.DeserializeRouteProperties(property.Value);
+                    properties = RoutingRuleProperties.DeserializeRoutingRuleProperties(property.Value);
                     continue;
                 }
             }
-            return new MatchedRoute(properties.Value);
+            return new IotHubMatchedRoute(properties.Value);
         }
     }
 }
