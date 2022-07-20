@@ -629,7 +629,7 @@
             "type": "Geography",
             "id": "NZ/GEO/p0/1283",
             "score": 2.0992157459,
-            "entityType": "Neighbourhood",
+            "entityType": "Neighborhood",
             "matchConfidence": {
               "score": 0.8596350221373878
             },
