@@ -173,14 +173,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         #region management ops
 
         [RecordedTest]
-        public async Task GetResourceInfo()
+        public async Task GetResourceDetails()
         {
             var client = CreateDocumentModelAdministrationClient();
 
-            ResourceInfo resourceInfo = await client.GetResourceInfoAsync();
+            ResourceDetails resourceDetails = await client.GetResourceDetailsAsync();
 
-            Assert.IsNotNull(resourceInfo.DocumentModelCount);
-            Assert.IsNotNull(resourceInfo.DocumentModelLimit);
+            Assert.IsNotNull(resourceDetails.DocumentModelCount);
+            Assert.IsNotNull(resourceDetails.DocumentModelLimit);
         }
 
         [RecordedTest]

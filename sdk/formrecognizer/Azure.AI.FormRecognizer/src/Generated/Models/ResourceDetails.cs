@@ -8,12 +8,12 @@
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary> Info regarding custom document models. </summary>
-    public partial class ResourceInfo
+    public partial class ResourceDetails
     {
-        /// <summary> Initializes a new instance of ResourceInfo. </summary>
+        /// <summary> Initializes a new instance of ResourceDetails. </summary>
         /// <param name="documentModelCount"> Number of custom models in the current resource. </param>
         /// <param name="documentModelLimit"> Maximum number of custom models supported in the current resource. </param>
-        internal ResourceInfo(int documentModelCount, int documentModelLimit)
+        internal ResourceDetails(int documentModelCount, int documentModelLimit)
         {
             DocumentModelCount = documentModelCount;
             DocumentModelLimit = documentModelLimit;

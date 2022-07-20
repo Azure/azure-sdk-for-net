@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    public partial class ResourceInfo
+    public partial class ResourceDetails
     {
-        internal static ResourceInfo DeserializeResourceInfo(JsonElement element)
+        internal static ResourceDetails DeserializeResourceDetails(JsonElement element)
         {
             int count = default;
             int limit = default;
@@ -29,7 +29,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new ResourceInfo(count, limit);
+            return new ResourceDetails(count, limit);
         }
     }
 }

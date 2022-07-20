@@ -481,11 +481,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// Gets the number of built models on this Form Recognizer resource and the resource limits.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to an <see cref="ResourceInfo"/> containing
+        /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to an <see cref="ResourceDetails"/> containing
         /// the resource information.</returns>
-        public virtual Response<ResourceInfo> GetResourceInfo(CancellationToken cancellationToken = default)
+        public virtual Response<ResourceDetails> GetResourceDetails(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(GetResourceInfo)}");
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(GetResourceDetails)}");
             scope.Start();
 
             try
@@ -504,11 +504,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// Gets the number of built models on this Form Recognizer resource and the resource limits.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to an <see cref="ResourceInfo"/> containing
+        /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to an <see cref="ResourceDetails"/> containing
         /// the resource information.</returns>
-        public virtual async Task<Response<ResourceInfo>> GetResourceInfoAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceDetails>> GetResourceDetailsAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(GetResourceInfo)}");
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(GetResourceDetails)}");
             scope.Start();
 
             try

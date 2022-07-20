@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary> Initializes a new instance of GetInfoResponse. </summary>
         /// <param name="customDocumentModels"> Info regarding custom document models. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customDocumentModels"/> is null. </exception>
-        internal GetInfoResponse(ResourceInfo customDocumentModels)
+        internal GetInfoResponse(ResourceDetails customDocumentModels)
         {
             if (customDocumentModels == null)
             {
@@ -26,6 +26,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         }
 
         /// <summary> Info regarding custom document models. </summary>
-        public ResourceInfo CustomDocumentModels { get; }
+        public ResourceDetails CustomDocumentModels { get; }
     }
 }

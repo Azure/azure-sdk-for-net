@@ -826,13 +826,13 @@ namespace Azure.AI.FormRecognizer.Models
             return new DocTypeInfo(description, buildMode, fieldSchema, fieldConfidence);
         }
 
-        /// <summary> Initializes a new instance of ResourceInfo. </summary>
+        /// <summary> Initializes a new instance of ResourceDetails. </summary>
         /// <param name="documentModelCount"> Number of custom models in the current resource. </param>
         /// <param name="documentModelLimit"> Maximum number of custom models supported in the current resource. </param>
-        /// <returns> A new <see cref="DocumentAnalysis.ResourceInfo"/> instance for mocking. </returns>
-        internal static ResourceInfo ResourceInfo(int documentModelCount = default, int documentModelLimit = default)
+        /// <returns> A new <see cref="DocumentAnalysis.ResourceDetails"/> instance for mocking. </returns>
+        internal static ResourceDetails ResourceDetails(int documentModelCount = default, int documentModelLimit = default)
         {
-            return new ResourceInfo(documentModelCount, documentModelLimit);
+            return new ResourceDetails(documentModelCount, documentModelLimit);
         }
 
         #endregion
