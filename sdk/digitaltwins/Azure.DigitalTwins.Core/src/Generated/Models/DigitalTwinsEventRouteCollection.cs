@@ -5,8 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
+using System.Linq;
 
 namespace Azure.DigitalTwins.Core
 {
@@ -14,9 +15,16 @@ namespace Azure.DigitalTwins.Core
     internal partial class DigitalTwinsEventRouteCollection
     {
         /// <summary> Initializes a new instance of DigitalTwinsEventRouteCollection. </summary>
-        internal DigitalTwinsEventRouteCollection()
+        /// <param name="value"> The EventRoute objects. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal DigitalTwinsEventRouteCollection(IEnumerable<DigitalTwinsEventRoute> value)
         {
-            Value = new ChangeTrackingList<DigitalTwinsEventRoute>();
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of DigitalTwinsEventRouteCollection. </summary>

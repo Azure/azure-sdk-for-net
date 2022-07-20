@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the request routing rule resource. </param>
         internal ApplicationGatewayRequestRoutingRule(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, ApplicationGatewayRequestRoutingRuleType? ruleType, int? priority, WritableSubResource backendAddressPool, WritableSubResource backendHttpSettings, WritableSubResource httpListener, WritableSubResource urlPathMap, WritableSubResource rewriteRuleSet, WritableSubResource redirectConfiguration, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            Etag = etag;
+            ETag = etag;
             RuleType = ruleType;
             Priority = priority;
             BackendAddressPool = backendAddressPool;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> Rule type. </summary>
         public ApplicationGatewayRequestRoutingRuleType? RuleType { get; set; }
         /// <summary> Priority of the request routing rule. </summary>

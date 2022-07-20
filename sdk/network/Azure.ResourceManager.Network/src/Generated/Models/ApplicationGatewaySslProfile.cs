@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the HTTP listener resource. </param>
         internal ApplicationGatewaySslProfile(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, IList<WritableSubResource> trustedClientCertificates, ApplicationGatewaySslPolicy sslPolicy, ApplicationGatewayClientAuthConfiguration clientAuthConfiguration, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            Etag = etag;
+            ETag = etag;
             TrustedClientCertificates = trustedClientCertificates;
             SslPolicy = sslPolicy;
             ClientAuthConfiguration = clientAuthConfiguration;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> Array of references to application gateway trusted client certificates. </summary>
         public IList<WritableSubResource> TrustedClientCertificates { get; }
         /// <summary> SSL policy of the application gateway resource. </summary>

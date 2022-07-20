@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Workloads.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    highAvailabilitySoftwareConfiguration = HighAvailabilitySoftwareConfiguration.DeserializeHighAvailabilitySoftwareConfiguration(property.Value);
+                    highAvailabilitySoftwareConfiguration = Models.HighAvailabilitySoftwareConfiguration.DeserializeHighAvailabilitySoftwareConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("softwareInstallationType"))

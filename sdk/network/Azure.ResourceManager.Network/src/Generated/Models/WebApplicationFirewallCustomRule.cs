@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
         internal WebApplicationFirewallCustomRule(string name, ETag? etag, int priority, WebApplicationFirewallRuleType ruleType, IList<MatchCondition> matchConditions, WebApplicationFirewallAction action)
         {
             Name = name;
-            Etag = etag;
+            ETag = etag;
             Priority = priority;
             RuleType = ruleType;
             MatchConditions = matchConditions;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The name of the resource that is unique within a policy. This name can be used to access the resource. </summary>
         public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> Priority of the rule. Rules with a lower value will be evaluated before rules with a higher value. </summary>
         public int Priority { get; set; }
         /// <summary> The rule type. </summary>

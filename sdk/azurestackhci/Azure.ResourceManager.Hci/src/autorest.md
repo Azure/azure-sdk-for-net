@@ -10,15 +10,25 @@ library-name: Hci
 namespace: Azure.ResourceManager.Hci
 require: https://github.com/Azure/azure-rest-api-specs/blob/324a148497f28ef7588eee7bdb61dcd28b74f505/specification/azurestackhci/resource-manager/readme.md
 tag: package-2022-05
-output-folder: Generated/
+output-folder: $(this-folder)/Generated
 clear-output-folder: true
+skip-csproj: true
+modelerfour:
+  flatten-payloads: false
+
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'etag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
 
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
   Ip: IP
-  Ips: IPs
+  Ips: IPs|ips
   ID: Id
   IDs: Ids
   VM: Vm
@@ -29,11 +39,12 @@ rename-rules:
   VPN: Vpn
   NAT: Nat
   WAN: Wan
-  Ipv4: IPv4
-  Ipv6: IPv6
-  Ipsec: IPsec
+  Ipv4: IPv4|ipv4
+  Ipv6: IPv6|ipv6
+  Ipsec: IPsec|ipsec
   SSO: Sso
   URI: Uri
+  Etag: ETag|etag
 
 directive:
   - from: extensions.json

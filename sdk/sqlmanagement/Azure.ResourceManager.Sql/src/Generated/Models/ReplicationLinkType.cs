@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Sql.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string GEOValue = "GEO";
+        private const string GeoValue = "GEO";
         private const string NamedValue = "NAMED";
 
         /// <summary> GEO. </summary>
-        public static ReplicationLinkType GEO { get; } = new ReplicationLinkType(GEOValue);
+        public static ReplicationLinkType Geo { get; } = new ReplicationLinkType(GeoValue);
         /// <summary> NAMED. </summary>
         public static ReplicationLinkType Named { get; } = new ReplicationLinkType(NamedValue);
         /// <summary> Determines if two <see cref="ReplicationLinkType"/> values are the same. </summary>

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network
         internal AzureFirewallData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IList<string> zones, ETag? etag, IList<AzureFirewallApplicationRuleCollectionData> applicationRuleCollections, IList<AzureFirewallNatRuleCollectionData> natRuleCollections, IList<AzureFirewallNetworkRuleCollectionData> networkRuleCollections, IList<AzureFirewallIPConfiguration> ipConfigurations, AzureFirewallIPConfiguration managementIPConfiguration, NetworkProvisioningState? provisioningState, AzureFirewallThreatIntelMode? threatIntelMode, WritableSubResource virtualHub, WritableSubResource firewallPolicy, HubIPAddresses hubIPAddresses, IReadOnlyList<AzureFirewallIPGroups> ipGroups, AzureFirewallSku sku, IDictionary<string, string> additionalProperties) : base(id, name, resourceType, location, tags)
         {
             Zones = zones;
-            Etag = etag;
+            ETag = etag;
             ApplicationRuleCollections = applicationRuleCollections;
             NatRuleCollections = natRuleCollections;
             NetworkRuleCollections = networkRuleCollections;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> A list of availability zones denoting where the resource needs to come from. </summary>
         public IList<string> Zones { get; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> Collection of application rule collections used by Azure Firewall. </summary>
         public IList<AzureFirewallApplicationRuleCollectionData> ApplicationRuleCollections { get; }
         /// <summary> Collection of NAT rule collections used by Azure Firewall. </summary>

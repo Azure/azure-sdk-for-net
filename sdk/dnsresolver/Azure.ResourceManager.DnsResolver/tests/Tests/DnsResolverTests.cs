@@ -36,24 +36,22 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             // ARRANGE
             var dnsResolverName = Recording.GenerateAssetName("dnsResolver-");
             var vnetName = Recording.GenerateAssetName("dnsResolver-");
-            var dnsResolverData = new DnsResolverData(this.DefaultLocation);
             var vnetId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{vnetName}";
+            var dnsResolverData = new DnsResolverData(this.DefaultLocation, new WritableSubResource
+            {
+                Id = new ResourceIdentifier(vnetId)
+            });
 
             if (Mode == RecordedTestMode.Record)
             {
                 await CreateVirtualNetworkAsync(vnetName);
             }
 
-            dnsResolverData.VirtualNetwork = new WritableSubResource()
-            {
-                Id = new ResourceIdentifier(vnetId)
-            };
-
             // ACT
             var dnsResolver = await this.dnsResolverCollection.CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverName, dnsResolverData);
 
             // ASSERT
-            Assert.AreEqual(dnsResolver.Value.Data.ProvisioningState, ProvisioningState.Succeeded);
+            Assert.AreEqual(dnsResolver.Value.Data.ProvisioningState, DnsResolverProvisioningState.Succeeded);
         }
 
         [Test]
@@ -63,18 +61,16 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             // ARRANGE
             var dnsResolverName = Recording.GenerateAssetName("dnsResolver-");
             var vnetName = Recording.GenerateAssetName("dnsResolver-");
-            var dnsResolverData = new DnsResolverData(this.DefaultLocation);
             var vnetId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{vnetName}";
+            var dnsResolverData = new DnsResolverData(this.DefaultLocation, new WritableSubResource
+            {
+                Id = new ResourceIdentifier(vnetId)
+            });
 
             if (Mode == RecordedTestMode.Record)
             {
                 await CreateVirtualNetworkAsync(vnetName);
             }
-
-            dnsResolverData.VirtualNetwork = new WritableSubResource()
-            {
-                Id = new ResourceIdentifier(vnetId)
-            };
 
             await this.dnsResolverCollection.CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverName, dnsResolverData);
 
@@ -93,18 +89,16 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             // ARRANGE
             var dnsResolverName = Recording.GenerateAssetName("dnsResolver-");
             var vnetName = Recording.GenerateAssetName("dnsResolver-");
-            var dnsResolverData = new DnsResolverData(this.DefaultLocation);
             var vnetId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{vnetName}";
+            var dnsResolverData = new DnsResolverData(this.DefaultLocation, new WritableSubResource
+            {
+                Id = new ResourceIdentifier(vnetId)
+            });
 
             if (Mode == RecordedTestMode.Record)
             {
                 await CreateVirtualNetworkAsync(vnetName);
             }
-
-            dnsResolverData.VirtualNetwork = new WritableSubResource()
-            {
-                Id = new ResourceIdentifier(vnetId)
-            };
 
             var createdDnsResolver = await this.dnsResolverCollection.CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverName, dnsResolverData);
 
@@ -125,18 +119,16 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             // ARRANGE
             var dnsResolverName = Recording.GenerateAssetName("dnsResolver-");
             var vnetName = Recording.GenerateAssetName("dnsResolver-");
-            var dnsResolverData = new DnsResolverData(this.DefaultLocation);
             var vnetId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{vnetName}";
+            var dnsResolverData = new DnsResolverData(this.DefaultLocation, new WritableSubResource
+            {
+                Id = new ResourceIdentifier(vnetId)
+            });
 
             if (Mode == RecordedTestMode.Record)
             {
                 await CreateVirtualNetworkAsync(vnetName);
             }
-
-            dnsResolverData.VirtualNetwork = new WritableSubResource()
-            {
-                Id = new ResourceIdentifier(vnetId)
-            };
 
             var dnsResolver = await this.dnsResolverCollection.CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverName, dnsResolverData);
 

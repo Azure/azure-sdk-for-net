@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Resources
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> displayName = default;
             Optional<string> policyDefinitionId = default;
             Optional<string> scope = default;
@@ -151,6 +151,11 @@ namespace Azure.ResourceManager.Resources
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -252,7 +257,7 @@ namespace Azure.ResourceManager.Resources
                     continue;
                 }
             }
-            return new PolicyAssignmentData(id, name, type, systemData, Optional.ToNullable(location), identity, displayName.Value, policyDefinitionId.Value, scope.Value, Optional.ToList(notScopes), Optional.ToDictionary(parameters), description.Value, metadata.Value, Optional.ToNullable(enforcementMode), Optional.ToList(nonComplianceMessages));
+            return new PolicyAssignmentData(id, name, type, systemData.Value, Optional.ToNullable(location), identity, displayName.Value, policyDefinitionId.Value, scope.Value, Optional.ToList(notScopes), Optional.ToDictionary(parameters), description.Value, metadata.Value, Optional.ToNullable(enforcementMode), Optional.ToList(nonComplianceMessages));
         }
     }
 }

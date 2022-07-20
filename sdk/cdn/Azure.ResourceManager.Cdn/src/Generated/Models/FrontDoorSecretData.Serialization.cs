@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.Cdn
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<FrontDoorProvisioningState> provisioningState = default;
             Optional<FrontDoorDeploymentStatus> deploymentStatus = default;
             Optional<string> profileName = default;
-            Optional<SecretProperties> parameters = default;
+            Optional<FrontDoorSecretProperties> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -57,6 +57,11 @@ namespace Azure.ResourceManager.Cdn
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -101,14 +106,14 @@ namespace Azure.ResourceManager.Cdn
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            parameters = SecretProperties.DeserializeSecretProperties(property0.Value);
+                            parameters = FrontDoorSecretProperties.DeserializeFrontDoorSecretProperties(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new FrontDoorSecretData(id, name, type, systemData, Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus), profileName.Value, parameters.Value);
+            return new FrontDoorSecretData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus), profileName.Value, parameters.Value);
         }
     }
 }

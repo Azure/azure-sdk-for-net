@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="provisioningState"> State of the operation on the resource. </param>
         /// <param name="status"> Operational status of the iSCSI Target. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetIqn"/> is null. </exception>
-        public IscsiTargetData(IscsiTargetAclMode aclMode, string targetIqn, ProvisioningStates provisioningState, OperationalStatus status)
+        public IscsiTargetData(IscsiTargetAclMode aclMode, string targetIqn, ProvisioningState provisioningState, OperationalStatus status)
         {
             if (targetIqn == null)
             {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="endpoints"> List of private IPv4 addresses to connect to the iSCSI Target. </param>
         /// <param name="port"> The port used by iSCSI Target portal group. </param>
         /// <param name="sessions"> List of identifiers for active sessions on the iSCSI target. </param>
-        internal IscsiTargetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string managedBy, IReadOnlyList<string> managedByExtended, IscsiTargetAclMode aclMode, IList<Acl> staticAcls, IList<IscsiLun> luns, string targetIqn, ProvisioningStates provisioningState, OperationalStatus status, IList<string> endpoints, int? port, IReadOnlyList<string> sessions) : base(id, name, resourceType, systemData)
+        internal IscsiTargetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string managedBy, IReadOnlyList<string> managedByExtended, IscsiTargetAclMode aclMode, IList<Acl> staticAcls, IList<IscsiLun> luns, string targetIqn, ProvisioningState provisioningState, OperationalStatus status, IList<string> endpoints, int? port, IReadOnlyList<string> sessions) : base(id, name, resourceType, systemData)
         {
             ManagedBy = managedBy;
             ManagedByExtended = managedByExtended;
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <summary> iSCSI Target IQN (iSCSI Qualified Name); example: &quot;iqn.2005-03.org.iscsi:server&quot;. </summary>
         public string TargetIqn { get; set; }
         /// <summary> State of the operation on the resource. </summary>
-        public ProvisioningStates ProvisioningState { get; }
+        public ProvisioningState ProvisioningState { get; }
         /// <summary> Operational status of the iSCSI Target. </summary>
         public OperationalStatus Status { get; set; }
         /// <summary> List of private IPv4 addresses to connect to the iSCSI Target. </summary>

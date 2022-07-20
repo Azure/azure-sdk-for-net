@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="port"> The destination port on the backend. </param>
         /// <param name="protocol"> The protocol used to communicate with the backend. </param>
         /// <param name="cookieBasedAffinity"> Cookie based affinity. </param>
-        /// <param name="requestTimeout"> Request timeout in seconds. Application Gateway will fail the request if response is not received within RequestTimeout. Acceptable values are from 1 second to 86400 seconds. </param>
+        /// <param name="requestTimeoutInSeconds"> Request timeout in seconds. Application Gateway will fail the request if response is not received within RequestTimeout. Acceptable values are from 1 second to 86400 seconds. </param>
         /// <param name="probe"> Probe resource of an application gateway. </param>
         /// <param name="authenticationCertificates"> Array of references to application gateway authentication certificates. </param>
         /// <param name="trustedRootCertificates"> Array of references to application gateway trusted root certificates. </param>
@@ -41,13 +41,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="probeEnabled"> Whether the probe is enabled. Default value is false. </param>
         /// <param name="path"> Path which should be used as a prefix for all HTTP requests. Null means no path will be prefixed. Default value is null. </param>
         /// <param name="provisioningState"> The provisioning state of the backend HTTP settings resource. </param>
-        internal ApplicationGatewayBackendHttpSettings(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, int? port, ApplicationGatewayProtocol? protocol, ApplicationGatewayCookieBasedAffinity? cookieBasedAffinity, int? requestTimeout, WritableSubResource probe, IList<WritableSubResource> authenticationCertificates, IList<WritableSubResource> trustedRootCertificates, ApplicationGatewayConnectionDraining connectionDraining, string hostName, bool? pickHostNameFromBackendAddress, string affinityCookieName, bool? probeEnabled, string path, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal ApplicationGatewayBackendHttpSettings(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, int? port, ApplicationGatewayProtocol? protocol, ApplicationGatewayCookieBasedAffinity? cookieBasedAffinity, int? requestTimeoutInSeconds, WritableSubResource probe, IList<WritableSubResource> authenticationCertificates, IList<WritableSubResource> trustedRootCertificates, ApplicationGatewayConnectionDraining connectionDraining, string hostName, bool? pickHostNameFromBackendAddress, string affinityCookieName, bool? probeEnabled, string path, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            Etag = etag;
+            ETag = etag;
             Port = port;
             Protocol = protocol;
             CookieBasedAffinity = cookieBasedAffinity;
-            RequestTimeout = requestTimeout;
+            RequestTimeoutInSeconds = requestTimeoutInSeconds;
             Probe = probe;
             AuthenticationCertificates = authenticationCertificates;
             TrustedRootCertificates = trustedRootCertificates;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> The destination port on the backend. </summary>
         public int? Port { get; set; }
         /// <summary> The protocol used to communicate with the backend. </summary>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Cookie based affinity. </summary>
         public ApplicationGatewayCookieBasedAffinity? CookieBasedAffinity { get; set; }
         /// <summary> Request timeout in seconds. Application Gateway will fail the request if response is not received within RequestTimeout. Acceptable values are from 1 second to 86400 seconds. </summary>
-        public int? RequestTimeout { get; set; }
+        public int? RequestTimeoutInSeconds { get; set; }
         /// <summary> Probe resource of an application gateway. </summary>
         internal WritableSubResource Probe { get; set; }
         /// <summary> Gets or sets Id. </summary>

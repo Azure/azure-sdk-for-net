@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the NAT rule collection resource. </param>
         internal AzureFirewallNatRuleCollectionData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, int? priority, AzureFirewallNatRCAction action, IList<AzureFirewallNatRule> rules, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            Etag = etag;
+            ETag = etag;
             Priority = priority;
             Action = action;
             Rules = rules;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> Priority of the NAT rule collection resource. </summary>
         public int? Priority { get; set; }
         /// <summary> The action type of a NAT rule collection. </summary>

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="provisioningState"> The provisioning state of the RouteTable resource. </param>
         internal HubRouteTableData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, IList<HubRoute> routes, IList<string> labels, IReadOnlyList<string> associatedConnections, IReadOnlyList<string> propagatingConnections, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            Etag = etag;
+            ETag = etag;
             Routes = routes;
             Labels = labels;
             AssociatedConnections = associatedConnections;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> List of all routes. </summary>
         public IList<HubRoute> Routes { get; }
         /// <summary> List of labels associated with this route table. </summary>

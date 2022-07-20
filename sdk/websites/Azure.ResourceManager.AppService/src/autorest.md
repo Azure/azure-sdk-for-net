@@ -12,9 +12,11 @@ library-name: AppService
 namespace: Azure.ResourceManager.AppService
 require: https://github.com/Azure/azure-rest-api-specs/blob/35f8a4df47aedc1ce185c854595cba6b83fa6c71/specification/web/resource-manager/readme.md
 tag: package-2021-02
+output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
+  flatten-payloads: false
   lenient-model-deduplication: true
   naming:
     override:
@@ -35,8 +37,6 @@ modelerfour:
       Status: OperationStatus
       DetectorResponse: AppServiceDetector
       DetectorDefinitionResource: DetectorDefinition
-    
-output-folder: ./Generated
 
 list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
@@ -105,12 +105,22 @@ override-operation-name:
 no-property-type-replacement:
 - ApiManagementConfig
 
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'etag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
+
+keep-plural-enums:
+- StackPreferredOS
+
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
   Ip: IP
-  Ips: IPs
+  Ips: IPs|ips
   ID: Id
   IDs: Ids
   VM: Vm
@@ -121,11 +131,12 @@ rename-rules:
   VPN: Vpn
   NAT: Nat
   WAN: Wan
-  Ipv4: IPv4
-  Ipv6: IPv6
-  Ipsec: IPsec
+  Ipv4: IPv4|ipv4
+  Ipv6: IPv6|ipv6
+  Ipsec: IPsec|ipsec
   SSO: Sso
   URI: Uri
+  Etag: ETag|etag
       
 directive:
 # rename model

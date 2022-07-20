@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<AzureLocation> location = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<string> serviceName = default;
-            Optional<IList<BGPCommunity>> bgpCommunities = default;
+            Optional<IList<BgpCommunity>> bgpCommunities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -140,10 +140,10 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<BGPCommunity> array = new List<BGPCommunity>();
+                            List<BgpCommunity> array = new List<BgpCommunity>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(BGPCommunity.DeserializeBGPCommunity(item));
+                                array.Add(BgpCommunity.DeserializeBgpCommunity(item));
                             }
                             bgpCommunities = array;
                             continue;

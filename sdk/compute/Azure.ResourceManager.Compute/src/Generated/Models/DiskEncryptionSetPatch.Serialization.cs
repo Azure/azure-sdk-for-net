@@ -48,6 +48,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("rotationToLatestKeyVersionEnabled");
                 writer.WriteBooleanValue(RotationToLatestKeyVersionEnabled.Value);
             }
+            if (Optional.IsDefined(FederatedClientId))
+            {
+                writer.WritePropertyName("federatedClientId");
+                writer.WriteStringValue(FederatedClientId);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

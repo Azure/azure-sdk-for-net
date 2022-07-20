@@ -26,7 +26,13 @@ namespace Azure.Monitor.Query
         public TimeSpan? Granularity { get; set; }
 
         /// <summary>
+        /// <para>
         /// Gets the list of metric aggregations to retrieve.
+        /// </para>
+        /// <para>
+        /// Although this collection cannot be set, it can be modified.
+        /// See <see href="https://docs.microsoft.com/dotnet/csharp/programming-guide/classes-and-structs/object-and-collection-initializers#object-initializers-with-collection-read-only-property-initialization">Object initializers with collection read-only property initialization</see>.
+        /// </para>
         /// </summary>
         public IList<MetricAggregationType> Aggregations { get; } = new List<MetricAggregationType>();
 

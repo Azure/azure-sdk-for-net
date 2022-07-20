@@ -32,14 +32,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="provisioningState"> The provisioning state of the virtual hub route table v2 resource. </param>
         internal VirtualHubRouteTableV2Data(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, IList<VirtualHubRouteV2> routes, IList<string> attachedConnections, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            Etag = etag;
+            ETag = etag;
             Routes = routes;
             AttachedConnections = attachedConnections;
             ProvisioningState = provisioningState;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> List of all routes. </summary>
         public IList<VirtualHubRouteV2> Routes { get; }
         /// <summary> List of all connections attached to this route table v2. </summary>

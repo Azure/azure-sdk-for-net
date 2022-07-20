@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualHub"> The virtualHub to which the Security Partner Provider belongs. </param>
         internal SecurityPartnerProviderData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, NetworkProvisioningState? provisioningState, SecurityProviderName? securityProviderName, SecurityPartnerProviderConnectionStatus? connectionStatus, WritableSubResource virtualHub) : base(id, name, resourceType, location, tags)
         {
-            Etag = etag;
+            ETag = etag;
             ProvisioningState = provisioningState;
             SecurityProviderName = securityProviderName;
             ConnectionStatus = connectionStatus;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> The provisioning state of the Security Partner Provider resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The security provider name. </summary>

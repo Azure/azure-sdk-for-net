@@ -21,14 +21,14 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> The disks sku name. Can be Standard_LRS, Premium_LRS, StandardSSD_LRS, UltraSSD_LRS, Premium_ZRS, or StandardSSD_ZRS. </summary>
+        /// <summary> The disks sku name. Can be Standard_LRS, Premium_LRS, StandardSSD_LRS, UltraSSD_LRS, Premium_ZRS, StandardSSD_ZRS, or PremiumV2_LRS. </summary>
         public DiskSku Sku { get; set; }
         /// <summary> the Operating System type. </summary>
-        public OperatingSystemTypes? OSType { get; set; }
+        public SupportedOperatingSystemType? OSType { get; set; }
         /// <summary> If creationData.createOption is Empty, this field is mandatory and it indicates the size of the disk to create. If this field is present for updates or creation with other options, it indicates a resize. Resizes are only allowed if the disk is not attached to a running VM, and can only increase the disk&apos;s size. </summary>
         public int? DiskSizeGB { get; set; }
         /// <summary> Encryption settings collection used be Azure Disk Encryption, can contain multiple encryption settings per disk or snapshot. </summary>
-        public EncryptionSettingGroup EncryptionSettingGroup { get; set; }
+        public EncryptionSettingsGroup EncryptionSettingsGroup { get; set; }
         /// <summary> The number of IOPS allowed for this disk; only settable for UltraSSD disks. One operation can transfer between 4k and 256k bytes. </summary>
         public long? DiskIopsReadWrite { get; set; }
         /// <summary> The bandwidth allowed for this disk; only settable for UltraSSD disks. MBps means millions of bytes per second - MB here uses the ISO notation, of powers of 10. </summary>
@@ -51,20 +51,8 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? BurstingEnabled { get; set; }
         /// <summary> Purchase plan information to be added on the OS disk. </summary>
         public DiskPurchasePlan PurchasePlan { get; set; }
-        /// <summary> List of supported capabilities (like accelerated networking) to be added on the OS disk. </summary>
-        internal SupportedCapabilities SupportedCapabilities { get; set; }
-        /// <summary> True if the image from which the OS disk is created supports accelerated networking. </summary>
-        public bool? AcceleratedNetwork
-        {
-            get => SupportedCapabilities is null ? default : SupportedCapabilities.AcceleratedNetwork;
-            set
-            {
-                if (SupportedCapabilities is null)
-                    SupportedCapabilities = new SupportedCapabilities();
-                SupportedCapabilities.AcceleratedNetwork = value;
-            }
-        }
-
+        /// <summary> List of supported capabilities to be added on the OS disk. </summary>
+        public SupportedCapabilities SupportedCapabilities { get; set; }
         /// <summary> Properties of the disk for which update is pending. </summary>
         internal PropertyUpdatesInProgress PropertyUpdatesInProgress { get; }
         /// <summary> The target performance tier of the disk if a tier change operation is in progress. </summary>
@@ -76,6 +64,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Indicates the OS on a disk supports hibernation. </summary>
         public bool? SupportsHibernation { get; set; }
         /// <summary> Policy for controlling export on the disk. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public DiskPublicNetworkAccess? PublicNetworkAccess { get; set; }
+        /// <summary> Additional authentication requirements when exporting or uploading to a disk or snapshot. </summary>
+        public DataAccessAuthMode? DataAccessAuthMode { get; set; }
     }
 }

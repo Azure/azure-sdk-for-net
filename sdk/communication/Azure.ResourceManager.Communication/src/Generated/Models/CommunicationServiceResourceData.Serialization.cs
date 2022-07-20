@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -18,14 +19,17 @@ namespace Azure.ResourceManager.Communication
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("tags");
-            writer.WriteStartObject();
-            foreach (var item in Tags)
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
+                writer.WritePropertyName("tags");
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
@@ -51,23 +55,28 @@ namespace Azure.ResourceManager.Communication
 
         internal static CommunicationServiceResourceData DeserializeCommunicationServiceResourceData(JsonElement element)
         {
-            IDictionary<string, string> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<CommunicationServicesProvisioningState> provisioningState = default;
             Optional<string> hostName = default;
             Optional<string> dataLocation = default;
-            Optional<string> notificationHubId = default;
+            Optional<ResourceIdentifier> notificationHubId = default;
             Optional<string> version = default;
-            Optional<string> immutableResourceId = default;
+            Optional<Guid> immutableResourceId = default;
             Optional<IList<string>> linkedDomains = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -98,6 +107,11 @@ namespace Azure.ResourceManager.Communication
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -132,7 +146,12 @@ namespace Azure.ResourceManager.Communication
                         }
                         if (property0.NameEquals("notificationHubId"))
                         {
-                            notificationHubId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            notificationHubId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("version"))
@@ -142,7 +161,12 @@ namespace Azure.ResourceManager.Communication
                         }
                         if (property0.NameEquals("immutableResourceId"))
                         {
-                            immutableResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            immutableResourceId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("linkedDomains"))
@@ -164,7 +188,7 @@ namespace Azure.ResourceManager.Communication
                     continue;
                 }
             }
-            return new CommunicationServiceResourceData(id, name, type, systemData, tags, location, Optional.ToNullable(provisioningState), hostName.Value, dataLocation.Value, notificationHubId.Value, version.Value, immutableResourceId.Value, Optional.ToList(linkedDomains));
+            return new CommunicationServiceResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), hostName.Value, dataLocation.Value, notificationHubId.Value, version.Value, Optional.ToNullable(immutableResourceId), Optional.ToList(linkedDomains));
         }
     }
 }

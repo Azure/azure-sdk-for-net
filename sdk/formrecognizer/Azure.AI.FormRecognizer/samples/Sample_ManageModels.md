@@ -36,25 +36,24 @@ Console.WriteLine($"Account has {accountProperties.DocumentModelCount} models.")
 Console.WriteLine($"It can have at most {accountProperties.DocumentModelLimit} models.");
 
 // List the first ten or fewer models currently stored in the account.
-AsyncPageable<DocumentModelInfo> models = client.GetModelsAsync();
+AsyncPageable<DocumentModelSummary> models = client.GetModelsAsync();
 
 int count = 0;
-await foreach (DocumentModelInfo modelInfo in models)
+await foreach (DocumentModelSummary modelSummary in models)
 {
-    Console.WriteLine($"Custom Model Info:");
-    Console.WriteLine($"  Model Id: {modelInfo.ModelId}");
-    if (string.IsNullOrEmpty(modelInfo.Description))
-        Console.WriteLine($"  Model description: {modelInfo.Description}");
-    Console.WriteLine($"  Created on: {modelInfo.CreatedOn}");
+    Console.WriteLine($"Custom Model Summary:");
+    Console.WriteLine($"  Model Id: {modelSummary.ModelId}");
+    if (string.IsNullOrEmpty(modelSummary.Description))
+        Console.WriteLine($"  Model description: {modelSummary.Description}");
+    Console.WriteLine($"  Created on: {modelSummary.CreatedOn}");
     if (++count == 10)
         break;
 }
 
 // Create a new model to store in the account
 Uri trainingFileUri = new Uri("<trainingFileUri>");
-BuildModelOperation operation = await client.StartBuildModelAsync(trainingFileUri, DocumentBuildMode.Template);
-Response<DocumentModel> operationResponse = await operation.WaitForCompletionAsync();
-DocumentModel model = operationResponse.Value;
+BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, trainingFileUri, DocumentBuildMode.Template);
+DocumentModel model = operation.Value;
 
 // Get the model that was just created
 DocumentModel newCreatedModel = await client.GetModelAsync(model.ModelId);
@@ -72,8 +71,6 @@ await client.DeleteModelAsync(newCreatedModel.ModelId);
 
 ## Manage Models Synchronously
 
-Note that we are still making an asynchronous call to `WaitForCompletionAsync` for building a model, since this method does not have a synchronous counterpart.
-
 ```C# Snippet:FormRecognizerSampleManageModels
 var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
@@ -83,23 +80,22 @@ Console.WriteLine($"Account has {accountProperties.DocumentModelCount} models.")
 Console.WriteLine($"It can have at most {accountProperties.DocumentModelLimit} models.");
 
 // List the first ten or fewer models currently stored in the account.
-Pageable<DocumentModelInfo> models = client.GetModels();
+Pageable<DocumentModelSummary> models = client.GetModels();
 
-foreach (DocumentModelInfo modelInfo in models.Take(10))
+foreach (DocumentModelSummary modelSummary in models.Take(10))
 {
-    Console.WriteLine($"Custom Model Info:");
-    Console.WriteLine($"  Model Id: {modelInfo.ModelId}");
-    if (string.IsNullOrEmpty(modelInfo.Description))
-        Console.WriteLine($"  Model description: {modelInfo.Description}");
-    Console.WriteLine($"  Created on: {modelInfo.CreatedOn}");
+    Console.WriteLine($"Custom Model Summary:");
+    Console.WriteLine($"  Model Id: {modelSummary.ModelId}");
+    if (string.IsNullOrEmpty(modelSummary.Description))
+        Console.WriteLine($"  Model description: {modelSummary.Description}");
+    Console.WriteLine($"  Created on: {modelSummary.CreatedOn}");
 }
 
 // Create a new model to store in the account
 
 Uri trainingFileUri = new Uri("<trainingFileUri>");
-BuildModelOperation operation = client.StartBuildModel(trainingFileUri, DocumentBuildMode.Template);
-Response<DocumentModel> operationResponse = await operation.WaitForCompletionAsync();
-DocumentModel model = operationResponse.Value;
+BuildModelOperation operation = client.BuildModel(WaitUntil.Completed, trainingFileUri, DocumentBuildMode.Template);
+DocumentModel model = operation.Value;
 
 // Get the model that was just created
 DocumentModel newCreatedModel = client.GetModel(model.ModelId);

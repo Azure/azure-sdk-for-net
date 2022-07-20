@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="provisioningState"> The provisioning state of the probe resource. </param>
         internal ProbeData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, IReadOnlyList<WritableSubResource> loadBalancingRules, ProbeProtocol? protocol, int? port, int? intervalInSeconds, int? numberOfProbes, string requestPath, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            Etag = etag;
+            ETag = etag;
             LoadBalancingRules = loadBalancingRules;
             Protocol = protocol;
             Port = port;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> The load balancer rules that use this probe. </summary>
         public IReadOnlyList<WritableSubResource> LoadBalancingRules { get; }
         /// <summary> The protocol of the end point. If &apos;Tcp&apos; is specified, a received ACK is required for the probe to be successful. If &apos;Http&apos; or &apos;Https&apos; is specified, a 200 OK response from the specifies URI is required for the probe to be successful. </summary>

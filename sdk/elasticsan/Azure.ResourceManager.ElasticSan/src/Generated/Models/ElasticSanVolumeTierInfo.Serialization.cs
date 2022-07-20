@@ -17,11 +17,9 @@ namespace Azure.ResourceManager.ElasticSan.Models
             Optional<long> maxSizeGiB = default;
             Optional<long> minSizeGiB = default;
             Optional<long> minIncrementSizeGiB = default;
-            Optional<long> maxIopsPerGiB = default;
-            Optional<long> maxMBpsPerGiB = default;
+            Optional<long> iopsPerBaseGiB = default;
             Optional<long> maxIops = default;
-            Optional<long> maxMBps = default;
-            Optional<long> maxConnectedClientCount = default;
+            Optional<long> maxMbps = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxSizeGiB"))
@@ -54,24 +52,14 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     minIncrementSizeGiB = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("maxIopsPerGiB"))
+                if (property.NameEquals("iopsPerBaseGiB"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    maxIopsPerGiB = property.Value.GetInt64();
-                    continue;
-                }
-                if (property.NameEquals("maxMBpsPerGiB"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    maxMBpsPerGiB = property.Value.GetInt64();
+                    iopsPerBaseGiB = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("maxIops"))
@@ -91,21 +79,11 @@ namespace Azure.ResourceManager.ElasticSan.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    maxMBps = property.Value.GetInt64();
-                    continue;
-                }
-                if (property.NameEquals("maxConnectedClientCount"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    maxConnectedClientCount = property.Value.GetInt64();
+                    maxMbps = property.Value.GetInt64();
                     continue;
                 }
             }
-            return new ElasticSanVolumeTierInfo(Optional.ToNullable(maxSizeGiB), Optional.ToNullable(minSizeGiB), Optional.ToNullable(minIncrementSizeGiB), Optional.ToNullable(maxIopsPerGiB), Optional.ToNullable(maxMBpsPerGiB), Optional.ToNullable(maxIops), Optional.ToNullable(maxMBps), Optional.ToNullable(maxConnectedClientCount));
+            return new ElasticSanVolumeTierInfo(Optional.ToNullable(maxSizeGiB), Optional.ToNullable(minSizeGiB), Optional.ToNullable(minIncrementSizeGiB), Optional.ToNullable(iopsPerBaseGiB), Optional.ToNullable(maxIops), Optional.ToNullable(maxMbps));
         }
     }
 }

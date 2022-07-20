@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="hasBgpOverride"> A value indicating whether this route overrides overlapping BGP routes regardless of LPM. </param>
         internal RouteData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string addressPrefix, RouteNextHopType? nextHopType, string nextHopIPAddress, NetworkProvisioningState? provisioningState, bool? hasBgpOverride) : base(id, name, resourceType)
         {
-            Etag = etag;
+            ETag = etag;
             AddressPrefix = addressPrefix;
             NextHopType = nextHopType;
             NextHopIPAddress = nextHopIPAddress;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> The destination CIDR to which the route applies. </summary>
         public string AddressPrefix { get; set; }
         /// <summary> The type of Azure hop the packet should be sent to. </summary>

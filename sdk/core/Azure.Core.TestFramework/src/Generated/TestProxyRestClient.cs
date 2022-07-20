@@ -266,12 +266,13 @@ namespace Azure.Core.TestFramework
             return message;
         }
 
-        /// <summary> Stop recording for a test. </summary>
+        /// <summary> Stop recording a test. </summary>
         /// <param name="xRecordingId"> The recording ID. </param>
         /// <param name="variables"> Variables for the recording. </param>
         /// <param name="xRecordingSkip"> Set to request-response to skip recording this session. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="xRecordingId"/> or <paramref name="variables"/> is null. </exception>
+        /// <remarks> Stop recording for a test. </remarks>
         public async Task<Response> StopRecordAsync(string xRecordingId, IDictionary<string, string> variables, string xRecordingSkip = null, CancellationToken cancellationToken = default)
         {
             if (xRecordingId == null)
@@ -294,12 +295,13 @@ namespace Azure.Core.TestFramework
             }
         }
 
-        /// <summary> Stop recording for a test. </summary>
+        /// <summary> Stop recording a test. </summary>
         /// <param name="xRecordingId"> The recording ID. </param>
         /// <param name="variables"> Variables for the recording. </param>
         /// <param name="xRecordingSkip"> Set to request-response to skip recording this session. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="xRecordingId"/> or <paramref name="variables"/> is null. </exception>
+        /// <remarks> Stop recording for a test. </remarks>
         public Response StopRecord(string xRecordingId, IDictionary<string, string> variables, string xRecordingSkip = null, CancellationToken cancellationToken = default)
         {
             if (xRecordingId == null)
@@ -343,11 +345,12 @@ namespace Azure.Core.TestFramework
             return message;
         }
 
-        /// <summary> Stop recording for a test. </summary>
+        /// <summary> Add a sanitizer. </summary>
         /// <param name="sanitizer"> The body for a header regex sanitizer. </param>
         /// <param name="xRecordingId"> The recording ID to apply the sanitizer to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sanitizer"/> is null. </exception>
+        /// <remarks> Stop recording for a test. </remarks>
         public async Task<Response> AddBodyKeySanitizerAsync(BodyKeySanitizer sanitizer, string xRecordingId = null, CancellationToken cancellationToken = default)
         {
             if (sanitizer == null)
@@ -366,11 +369,12 @@ namespace Azure.Core.TestFramework
             }
         }
 
-        /// <summary> Stop recording for a test. </summary>
+        /// <summary> Add a sanitizer. </summary>
         /// <param name="sanitizer"> The body for a header regex sanitizer. </param>
         /// <param name="xRecordingId"> The recording ID to apply the sanitizer to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sanitizer"/> is null. </exception>
+        /// <remarks> Stop recording for a test. </remarks>
         public Response AddBodyKeySanitizer(BodyKeySanitizer sanitizer, string xRecordingId = null, CancellationToken cancellationToken = default)
         {
             if (sanitizer == null)
@@ -410,11 +414,12 @@ namespace Azure.Core.TestFramework
             return message;
         }
 
-        /// <summary> Add header sanitizer. </summary>
+        /// <summary> Add a sanitizer. </summary>
         /// <param name="sanitizer"> The body for a header regex sanitizer. </param>
         /// <param name="xRecordingId"> The recording ID to apply the sanitizer to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sanitizer"/> is null. </exception>
+        /// <remarks> Add header sanitizer. </remarks>
         public async Task<Response> AddHeaderSanitizerAsync(HeaderRegexSanitizer sanitizer, string xRecordingId = null, CancellationToken cancellationToken = default)
         {
             if (sanitizer == null)
@@ -433,11 +438,12 @@ namespace Azure.Core.TestFramework
             }
         }
 
-        /// <summary> Add header sanitizer. </summary>
+        /// <summary> Add a sanitizer. </summary>
         /// <param name="sanitizer"> The body for a header regex sanitizer. </param>
         /// <param name="xRecordingId"> The recording ID to apply the sanitizer to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sanitizer"/> is null. </exception>
+        /// <remarks> Add header sanitizer. </remarks>
         public Response AddHeaderSanitizer(HeaderRegexSanitizer sanitizer, string xRecordingId = null, CancellationToken cancellationToken = default)
         {
             if (sanitizer == null)

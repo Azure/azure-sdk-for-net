@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Monitor.Tests
 
         private async Task<DiagnosticSettingsResource> CreateDiagnosticSettingsAsync(string setting)
         {
-            var collection = (await CreateResourceGroupAsync()).GetDiagnosticSettings();
+            var collection = (await CreateResourceGroupAsync()).GetAllDiagnosticSettings();
             var input = ResourceDataHelper.GetBasicDiagnosticSettingsData();
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, setting, input);
             return lro.Value;

@@ -9,14 +9,13 @@ using System;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    /// <summary> Data used when creating a disk. </summary>
+    /// <summary> Data source used when creating the volume. </summary>
     public partial class SourceCreationData
     {
         /// <summary> Initializes a new instance of SourceCreationData. </summary>
-        /// <param name="createSource"> This enumerates the possible sources of a volume creation. </param>
-        public SourceCreationData(ElasticSanVolumeCreateOption createSource)
+        public SourceCreationData()
         {
-            CreateSource = createSource;
+            CreateSource = ElasticSanVolumeCreateOption.None;
         }
 
         /// <summary> Initializes a new instance of SourceCreationData. </summary>

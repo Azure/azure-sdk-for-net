@@ -5,21 +5,29 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
-csharp: true
 library-name: MachineLearning
+namespace: Azure.ResourceManager.MachineLearning
 require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/0bff4d0f259847b1fc97a4ca8f98b8c40d672ba5/specification/machinelearningservices/resource-manager/readme.md
 tag: package-2022-02-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
-namespace: Azure.ResourceManager.MachineLearning
 skip-csproj: true
+modelerfour:
+  flatten-payloads: false
+
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'etag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
 
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
   Ip: IP
-  Ips: IPs
+  Ips: IPs|ips
   ID: Id
   IDs: Ids
   VM: Vm
@@ -30,11 +38,12 @@ rename-rules:
   VPN: Vpn
   NAT: Nat
   WAN: Wan
-  Ipv4: IPv4
-  Ipv6: IPv6
-  Ipsec: IPsec
+  Ipv4: IPv4|ipv4
+  Ipv6: IPv6|ipv6
+  Ipsec: IPsec|ipsec
   SSO: Sso
   URI: Uri
+  Etag: ETag|etag
   AKS: Aks
   USD: Usd
 
@@ -101,10 +110,7 @@ directive:
   - from: machineLearningServices.json
     where: $.definitions
     transform: >
-      $.PrivateEndpointConnection.properties.location["x-ms-format"] = "azure-location";
       $.Workspace["x-ms-client-name"] = "MachineLearningWorkspace";
-      $.Workspace.properties.location["x-ms-format"] = "azure-location";
-      $.WorkspaceProperties.properties.tenantId["format"] = "uuid";
       $.ComputeResource["x-ms-client-name"] = "MachineLearningCompute";
       $.Compute.properties.resourceId["x-ms-format"] = "arm-id";
       $.AKS["x-ms-client-name"] = "AksCompute";
@@ -123,7 +129,6 @@ directive:
       $.CodeContainer["x-ms-client-name"] = "CodeContainerProperties";
       $.BatchDeploymentTrackedResource["x-ms-client-name"] = "BatchDeployment";
       $.BatchDeployment["x-ms-client-name"] = "BatchDeploymentProperties";
-      $.PartialBatchDeploymentPartialTrackedResource.properties.location["x-ms-format"] = "azure-location";
       $.BatchEndpointTrackedResource["x-ms-client-name"] = "BatchEndpoint";
       $.BatchEndpoint["x-ms-client-name"] = "BatchEndpointProperties";
       $.CodeVersionResource["x-ms-client-name"] = "CodeVersion";
@@ -136,8 +141,8 @@ directive:
       $.DataContainer["x-ms-client-name"] = "DataContainerProperties";
       $.DatastoreResource["x-ms-client-name"] = "Datastore";
       $.Datastore["x-ms-client-name"] = "DatastoreProperties";
-      $.DataVersionBaseResource["x-ms-client-name"] = "DataVersionBase";
-      $.DataVersionBase["x-ms-client-name"] = "DataVersionBaseProperties";
+      $.DataVersionBaseResource["x-ms-client-name"] = "DataVersion";
+      $.DataVersionBase["x-ms-client-name"] = "DataVersionProperties";
       $.EnvironmentContainerResource["x-ms-client-name"] = "EnvironmentContainer";
       $.EnvironmentContainer["x-ms-client-name"] = "EnvironmentContainerProperties";
       $.EnvironmentVersionResource["x-ms-client-name"] = "EnvironmentVersion";

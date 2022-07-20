@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Sql
     public partial class ManagedServerSecurityAlertPolicyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagedServerSecurityAlertPolicyResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, SecurityAlertPolicyName securityAlertPolicyName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, SqlSecurityAlertPolicyName securityAlertPolicyName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/securityAlertPolicies/{securityAlertPolicyName}";
             return new ResourceIdentifier(resourceId);

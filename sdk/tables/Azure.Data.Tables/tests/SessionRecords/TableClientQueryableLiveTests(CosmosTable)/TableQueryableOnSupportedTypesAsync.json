@@ -1,61 +1,53 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://jverazsdkprim.table.cosmos.azure.com/Tables?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrisstablesprim.table.cosmos.azure.com/Tables?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": "application/json; odata=minimalmetadata",
+        "Accept": "application/json;odata=minimalmetadata",
         "Authorization": "Sanitized",
         "Content-Length": "33",
-        "Content-Type": "application/json; odata=nometadata",
+        "Content-Type": "application/json;odata=nometadata",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-62f6c576dd1ab84ca276fc99d492b524-9bd1226373d00941-00",
-        "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-client-request-id": "faa254d2cb845b46d1856bc3dc176812",
-        "x-ms-date": "Tue, 23 Mar 2021 18:29:42 GMT",
+        "traceparent": "00-650103fa5b2100c125298f891895e5f5-b2822bfabbbce6cd-00",
+        "User-Agent": "azsdk-net-Data.Tables/12.7.0-alpha.20220613.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "e8575d83a5c3852882437722e00d79eb",
+        "x-ms-date": "Mon, 13 Jun 2022 17:06:47 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-02-02"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": {
-        "TableName": "testtablet55fm4or"
+        "TableName": "testtable8wnl5th4"
       },
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Type": "application/json; odata=minimalmetadata",
-        "Date": "Tue, 23 Mar 2021 18:29:45 GMT",
-        "ETag": "W/\u0022datetime\u00272021-03-23T18%3A29%3A45.3981704Z\u0027\u0022",
-        "Location": "https://jverazsdkprim.table.cosmos.azure.com/Tables(\u0027testtablet55fm4or\u0027)",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "faa254d2-cb84-5b46-d185-6bc3dc176812"
+        "Date": "Mon, 13 Jun 2022 17:06:47 GMT",
+        "ETag": "W/\u0022datetime\u00272022-06-13T17%3A06%3A47.2541192Z\u0027\u0022",
+        "Location": "https://chrisstablesprim.table.cosmos.azure.com/Tables(\u0027testtable8wnl5th4\u0027)",
+        "Transfer-Encoding": "chunked"
       },
       "ResponseBody": {
-        "TableName": "testtablet55fm4or",
-        "odata.metadata": "https://jverazsdkprim.table.cosmos.azure.com/$metadata#Tables/@Element"
+        "TableName": "testtable8wnl5th4",
+        "odata.metadata": "https://chrisstablesprim.table.cosmos.azure.com/$metadata#Tables/@Element"
       }
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.cosmos.azure.com/testtablet55fm4or?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrisstablesprim.table.cosmos.azure.com/testtable8wnl5th4?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": "application/json; odata=minimalmetadata",
+        "Accept": "application/json;odata=minimalmetadata",
         "Authorization": "Sanitized",
-        "Content-Length": "1642",
-        "Content-Type": "application/json; odata=nometadata",
+        "Content-Length": "1650",
+        "Content-Type": "application/json;odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
-        "traceparent": "00-e02337f523f8f34caeb849faeba0974f-0577a58c4dba3641-00",
-        "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-client-request-id": "ae9f0f5965f950a7e3919d1988eeb90a",
-        "x-ms-date": "Tue, 23 Mar 2021 18:29:42 GMT",
+        "traceparent": "00-e337e03b334f4a0f94b215dbff7057f5-88f57d349fe15427-00",
+        "User-Agent": "azsdk-net-Data.Tables/12.7.0-alpha.20220613.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "3e9d645c5564084f6348877f5b58413e",
+        "x-ms-date": "Mon, 13 Jun 2022 17:06:47 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-02-02"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": {
         "DateTimeOffsetNull": null,
@@ -75,10 +67,10 @@
         "BoolPrimitiveNull": null,
         "BoolPrimitiveN": false,
         "BoolPrimitive": false,
-        "Binary": "AQIB",
+        "Binary": "AQL/AQ==",
         "Binary@odata.type": "Edm.Binary",
         "BinaryNull": null,
-        "BinaryPrimitive": "AQIB",
+        "BinaryPrimitive": "AQL/AQ==",
         "BinaryPrimitive@odata.type": "Edm.Binary",
         "DoublePrimitiveNull": null,
         "DoublePrimitiveN": 1.5,
@@ -119,35 +111,30 @@
       },
       "StatusCode": 204,
       "ResponseHeaders": {
-        "Content-Length": "0",
-        "Date": "Tue, 23 Mar 2021 18:29:45 GMT",
-        "ETag": "W/\u0022datetime\u00272021-03-23T18%3A29%3A45.7713160Z\u0027\u0022",
-        "Location": "https://jverazsdkprim.table.cosmos.azure.com/testtablet55fm4or(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270001\u0027)",
-        "Preference-Applied": "return-no-content",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-request-id": "ae9f0f59-65f9-50a7-e391-9d1988eeb90a"
+        "Content-Type": "application/json",
+        "Date": "Mon, 13 Jun 2022 17:06:47 GMT",
+        "ETag": "W/\u0022datetime\u00272022-06-13T17%3A06%3A47.7772808Z\u0027\u0022",
+        "Location": "https://chrisstablesprim.table.cosmos.azure.com/testtable8wnl5th4(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270001\u0027)",
+        "Preference-Applied": "return-no-content"
       },
-      "ResponseBody": []
+      "ResponseBody": null
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.cosmos.azure.com/testtablet55fm4or?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrisstablesprim.table.cosmos.azure.com/testtable8wnl5th4?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": "application/json; odata=minimalmetadata",
+        "Accept": "application/json;odata=minimalmetadata",
         "Authorization": "Sanitized",
-        "Content-Length": "1640",
-        "Content-Type": "application/json; odata=nometadata",
+        "Content-Length": "1648",
+        "Content-Type": "application/json;odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
-        "traceparent": "00-75dac2a5bd79ae45af686c9b709fdc60-30ba6ad67dc08e46-00",
-        "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-client-request-id": "3a1edb11948f1ca3e0e93d37e2ceb34c",
-        "x-ms-date": "Tue, 23 Mar 2021 18:29:42 GMT",
+        "traceparent": "00-92906395e6aad3d24dbb73679e6eeab0-49d0927e31d2cf11-00",
+        "User-Agent": "azsdk-net-Data.Tables/12.7.0-alpha.20220613.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "6f8b6b9cd4200cb1b3596c45a9977806",
+        "x-ms-date": "Mon, 13 Jun 2022 17:06:47 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-02-02"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": {
         "DateTimeOffsetNull": null,
@@ -167,10 +154,10 @@
         "BoolPrimitiveNull": null,
         "BoolPrimitiveN": false,
         "BoolPrimitive": true,
-        "Binary": "AQIC",
+        "Binary": "AQL/Ag==",
         "Binary@odata.type": "Edm.Binary",
         "BinaryNull": null,
-        "BinaryPrimitive": "AQIC",
+        "BinaryPrimitive": "AQL/Ag==",
         "BinaryPrimitive@odata.type": "Edm.Binary",
         "DoublePrimitiveNull": null,
         "DoublePrimitiveN": 2.5,
@@ -211,35 +198,30 @@
       },
       "StatusCode": 204,
       "ResponseHeaders": {
-        "Content-Length": "0",
-        "Date": "Tue, 23 Mar 2021 18:29:45 GMT",
-        "ETag": "W/\u0022datetime\u00272021-03-23T18%3A29%3A45.8020360Z\u0027\u0022",
-        "Location": "https://jverazsdkprim.table.cosmos.azure.com/testtablet55fm4or(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270002\u0027)",
-        "Preference-Applied": "return-no-content",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-request-id": "3a1edb11-948f-1ca3-e0e9-3d37e2ceb34c"
+        "Content-Type": "application/json",
+        "Date": "Mon, 13 Jun 2022 17:06:47 GMT",
+        "ETag": "W/\u0022datetime\u00272022-06-13T17%3A06%3A47.8545928Z\u0027\u0022",
+        "Location": "https://chrisstablesprim.table.cosmos.azure.com/testtable8wnl5th4(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270002\u0027)",
+        "Preference-Applied": "return-no-content"
       },
-      "ResponseBody": []
+      "ResponseBody": null
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.cosmos.azure.com/testtablet55fm4or?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrisstablesprim.table.cosmos.azure.com/testtable8wnl5th4?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": "application/json; odata=minimalmetadata",
+        "Accept": "application/json;odata=minimalmetadata",
         "Authorization": "Sanitized",
-        "Content-Length": "1642",
-        "Content-Type": "application/json; odata=nometadata",
+        "Content-Length": "1650",
+        "Content-Type": "application/json;odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
-        "traceparent": "00-9c7d665f7186f34d992a0a87fb8fed4e-f9a61ad1e2efd441-00",
-        "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-client-request-id": "b76d06c64d0e6de4ad5117f22e2dd2e3",
-        "x-ms-date": "Tue, 23 Mar 2021 18:29:42 GMT",
+        "traceparent": "00-10d56285303ec9b139697cc531bc8841-1d74d2668c587fb3-00",
+        "User-Agent": "azsdk-net-Data.Tables/12.7.0-alpha.20220613.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "f9805bb9436b2e610e4e847a1da82929",
+        "x-ms-date": "Mon, 13 Jun 2022 17:06:47 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-02-02"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": {
         "DateTimeOffsetNull": null,
@@ -259,10 +241,10 @@
         "BoolPrimitiveNull": null,
         "BoolPrimitiveN": false,
         "BoolPrimitive": false,
-        "Binary": "AQID",
+        "Binary": "AQL/Aw==",
         "Binary@odata.type": "Edm.Binary",
         "BinaryNull": null,
-        "BinaryPrimitive": "AQID",
+        "BinaryPrimitive": "AQL/Aw==",
         "BinaryPrimitive@odata.type": "Edm.Binary",
         "DoublePrimitiveNull": null,
         "DoublePrimitiveN": 3.5,
@@ -303,35 +285,30 @@
       },
       "StatusCode": 204,
       "ResponseHeaders": {
-        "Content-Length": "0",
-        "Date": "Tue, 23 Mar 2021 18:29:45 GMT",
-        "ETag": "W/\u0022datetime\u00272021-03-23T18%3A29%3A45.8263048Z\u0027\u0022",
-        "Location": "https://jverazsdkprim.table.cosmos.azure.com/testtablet55fm4or(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270003\u0027)",
-        "Preference-Applied": "return-no-content",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-request-id": "b76d06c6-4d0e-6de4-ad51-17f22e2dd2e3"
+        "Content-Type": "application/json",
+        "Date": "Mon, 13 Jun 2022 17:06:47 GMT",
+        "ETag": "W/\u0022datetime\u00272022-06-13T17%3A06%3A47.9299592Z\u0027\u0022",
+        "Location": "https://chrisstablesprim.table.cosmos.azure.com/testtable8wnl5th4(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270003\u0027)",
+        "Preference-Applied": "return-no-content"
       },
-      "ResponseBody": []
+      "ResponseBody": null
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.cosmos.azure.com/testtablet55fm4or?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrisstablesprim.table.cosmos.azure.com/testtable8wnl5th4?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": "application/json; odata=minimalmetadata",
+        "Accept": "application/json;odata=minimalmetadata",
         "Authorization": "Sanitized",
-        "Content-Length": "1640",
-        "Content-Type": "application/json; odata=nometadata",
+        "Content-Length": "1648",
+        "Content-Type": "application/json;odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
-        "traceparent": "00-e9d96d86ed535740bdc4939c90e6fac2-a1d0571a884ae441-00",
-        "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-client-request-id": "01b260cc2ef9c4836b83ce0f276f6e15",
-        "x-ms-date": "Tue, 23 Mar 2021 18:29:42 GMT",
+        "traceparent": "00-1ee6076f6619d1d07dce3a80556c19d9-672b96812babe5a9-00",
+        "User-Agent": "azsdk-net-Data.Tables/12.7.0-alpha.20220613.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "74863801098187cbb3918b0ae90a5fcb",
+        "x-ms-date": "Mon, 13 Jun 2022 17:06:47 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-02-02"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": {
         "DateTimeOffsetNull": null,
@@ -351,10 +328,10 @@
         "BoolPrimitiveNull": null,
         "BoolPrimitiveN": false,
         "BoolPrimitive": true,
-        "Binary": "AQIE",
+        "Binary": "AQL/BA==",
         "Binary@odata.type": "Edm.Binary",
         "BinaryNull": null,
-        "BinaryPrimitive": "AQIE",
+        "BinaryPrimitive": "AQL/BA==",
         "BinaryPrimitive@odata.type": "Edm.Binary",
         "DoublePrimitiveNull": null,
         "DoublePrimitiveN": 4.5,
@@ -395,46 +372,39 @@
       },
       "StatusCode": 204,
       "ResponseHeaders": {
-        "Content-Length": "0",
-        "Date": "Tue, 23 Mar 2021 18:29:45 GMT",
-        "ETag": "W/\u0022datetime\u00272021-03-23T18%3A29%3A45.8522120Z\u0027\u0022",
-        "Location": "https://jverazsdkprim.table.cosmos.azure.com/testtablet55fm4or(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270004\u0027)",
-        "Preference-Applied": "return-no-content",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-request-id": "01b260cc-2ef9-c483-6b83-ce0f276f6e15"
+        "Content-Type": "application/json",
+        "Date": "Mon, 13 Jun 2022 17:06:47 GMT",
+        "ETag": "W/\u0022datetime\u00272022-06-13T17%3A06%3A47.9996936Z\u0027\u0022",
+        "Location": "https://chrisstablesprim.table.cosmos.azure.com/testtable8wnl5th4(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270004\u0027)",
+        "Preference-Applied": "return-no-content"
       },
-      "ResponseBody": []
+      "ResponseBody": null
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.cosmos.azure.com/testtablet55fm4or()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=String%20ge%20%270003%27",
+      "RequestUri": "https://chrisstablesprim.table.cosmos.azure.com/testtable8wnl5th4()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=String%20ge%20%270003%27",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": "application/json; odata=minimalmetadata",
+        "Accept": "application/json;odata=minimalmetadata",
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-75c5062042650e49a2220994860b79c8-009ab664d0770040-00",
-        "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-client-request-id": "815350dd0281c3fcf6b08d3d7db1eeb3",
-        "x-ms-date": "Tue, 23 Mar 2021 18:29:42 GMT",
+        "traceparent": "00-64edc78dbb08c3e5a1c47556e5875828-0044a21702ab458e-00",
+        "User-Agent": "azsdk-net-Data.Tables/12.7.0-alpha.20220613.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "00c681d048d759d2095d61d14f36ef0a",
+        "x-ms-date": "Mon, 13 Jun 2022 17:06:47 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-02-02"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; odata=minimalmetadata",
-        "Date": "Tue, 23 Mar 2021 18:29:45 GMT",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "815350dd-0281-c3fc-f6b0-8d3d7db1eeb3"
+        "Date": "Mon, 13 Jun 2022 17:06:47 GMT",
+        "Transfer-Encoding": "chunked"
       },
       "ResponseBody": {
         "value": [
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A29%3A45.8263048Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272022-06-13T17%3A06%3A47.9299592Z\u0027\u0022",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:04:00.0000000Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -449,14 +419,14 @@
             "BoolPrimitiveN": false,
             "BoolPrimitive": false,
             "Binary@odata.type": "Edm.Binary",
-            "Binary": "AQID",
+            "Binary": "AQL/Aw==",
             "BinaryPrimitive@odata.type": "Edm.Binary",
-            "BinaryPrimitive": "AQID",
+            "BinaryPrimitive": "AQL/Aw==",
             "DoublePrimitiveN": 3.5,
             "DoublePrimitive": 3.5,
             "DoubleN": 3.5,
             "Double": 3.5,
-            "DoubleInteger": 3,
+            "DoubleInteger": 3.0,
             "GuidN@odata.type": "Edm.Guid",
             "GuidN": "0d391d16-97f1-4b9a-be68-4cc871f90003",
             "Guid@odata.type": "Edm.Guid",
@@ -476,10 +446,10 @@
             "String": "0003",
             "PartitionKey": "somPartition",
             "RowKey": "0003",
-            "Timestamp": "2021-03-23T18:29:45.8263048Z"
+            "Timestamp": "2022-06-13T17:06:47.9299592Z"
           },
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A29%3A45.8522120Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272022-06-13T17%3A06%3A47.9996936Z\u0027\u0022",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:05:00.0000000Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -494,14 +464,14 @@
             "BoolPrimitiveN": false,
             "BoolPrimitive": true,
             "Binary@odata.type": "Edm.Binary",
-            "Binary": "AQIE",
+            "Binary": "AQL/BA==",
             "BinaryPrimitive@odata.type": "Edm.Binary",
-            "BinaryPrimitive": "AQIE",
+            "BinaryPrimitive": "AQL/BA==",
             "DoublePrimitiveN": 4.5,
             "DoublePrimitive": 4.5,
             "DoubleN": 4.5,
             "Double": 4.5,
-            "DoubleInteger": 4,
+            "DoubleInteger": 4.0,
             "GuidN@odata.type": "Edm.Guid",
             "GuidN": "0d391d16-97f1-4b9a-be68-4cc871f90004",
             "Guid@odata.type": "Edm.Guid",
@@ -521,42 +491,37 @@
             "String": "0004",
             "PartitionKey": "somPartition",
             "RowKey": "0004",
-            "Timestamp": "2021-03-23T18:29:45.8522120Z"
+            "Timestamp": "2022-06-13T17:06:47.9996936Z"
           }
         ],
-        "odata.metadata": "https://jverazsdkprim.table.cosmos.azure.com/$metadata#testtablet55fm4or"
+        "odata.metadata": "https://chrisstablesprim.table.cosmos.azure.com/$metadata#testtable8wnl5th4"
       }
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.cosmos.azure.com/testtablet55fm4or()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=Guid%20eq%20guid%270d391d16-97f1-4b9a-be68-4cc871f90003%27",
+      "RequestUri": "https://chrisstablesprim.table.cosmos.azure.com/testtable8wnl5th4()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=Guid%20eq%20guid%270d391d16-97f1-4b9a-be68-4cc871f90003%27",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": "application/json; odata=minimalmetadata",
+        "Accept": "application/json;odata=minimalmetadata",
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-b64bea86fa7a6a419933e821db8baf0c-7690b146ca877945-00",
-        "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-client-request-id": "816b5a17b11c975383a84c8b7fd5463d",
-        "x-ms-date": "Tue, 23 Mar 2021 18:29:43 GMT",
+        "traceparent": "00-5935c622a05d37967925e9b7bb98f5bb-00dedba23cc408db-00",
+        "User-Agent": "azsdk-net-Data.Tables/12.7.0-alpha.20220613.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "7043422f0311af8490f946dab8574403",
+        "x-ms-date": "Mon, 13 Jun 2022 17:06:48 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-02-02"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; odata=minimalmetadata",
-        "Date": "Tue, 23 Mar 2021 18:29:45 GMT",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "816b5a17-b11c-9753-83a8-4c8b7fd5463d"
+        "Date": "Mon, 13 Jun 2022 17:06:47 GMT",
+        "Transfer-Encoding": "chunked"
       },
       "ResponseBody": {
         "value": [
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A29%3A45.8263048Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272022-06-13T17%3A06%3A47.9299592Z\u0027\u0022",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:04:00.0000000Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -571,14 +536,14 @@
             "BoolPrimitiveN": false,
             "BoolPrimitive": false,
             "Binary@odata.type": "Edm.Binary",
-            "Binary": "AQID",
+            "Binary": "AQL/Aw==",
             "BinaryPrimitive@odata.type": "Edm.Binary",
-            "BinaryPrimitive": "AQID",
+            "BinaryPrimitive": "AQL/Aw==",
             "DoublePrimitiveN": 3.5,
             "DoublePrimitive": 3.5,
             "DoubleN": 3.5,
             "Double": 3.5,
-            "DoubleInteger": 3,
+            "DoubleInteger": 3.0,
             "GuidN@odata.type": "Edm.Guid",
             "GuidN": "0d391d16-97f1-4b9a-be68-4cc871f90003",
             "Guid@odata.type": "Edm.Guid",
@@ -598,42 +563,37 @@
             "String": "0003",
             "PartitionKey": "somPartition",
             "RowKey": "0003",
-            "Timestamp": "2021-03-23T18:29:45.8263048Z"
+            "Timestamp": "2022-06-13T17:06:47.9299592Z"
           }
         ],
-        "odata.metadata": "https://jverazsdkprim.table.cosmos.azure.com/$metadata#testtablet55fm4or"
+        "odata.metadata": "https://chrisstablesprim.table.cosmos.azure.com/$metadata#testtable8wnl5th4"
       }
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.cosmos.azure.com/testtablet55fm4or()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=Int64%20ge%202147483650L",
+      "RequestUri": "https://chrisstablesprim.table.cosmos.azure.com/testtable8wnl5th4()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=Int64%20ge%202147483650L",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": "application/json; odata=minimalmetadata",
+        "Accept": "application/json;odata=minimalmetadata",
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-6dc99830e3809e478ffe4d5feeb70f88-40589a3ff5098346-00",
-        "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-client-request-id": "dd1501e350d9ca6264ee0b48a14546ba",
-        "x-ms-date": "Tue, 23 Mar 2021 18:29:43 GMT",
+        "traceparent": "00-1927280f56041c7ce9ba2f66bf911c88-a9fefa52b80de88d-00",
+        "User-Agent": "azsdk-net-Data.Tables/12.7.0-alpha.20220613.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "9ba9b8ee29e2b952652d6a24a7f9377c",
+        "x-ms-date": "Mon, 13 Jun 2022 17:06:48 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-02-02"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; odata=minimalmetadata",
-        "Date": "Tue, 23 Mar 2021 18:29:45 GMT",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "dd1501e3-50d9-ca62-64ee-0b48a14546ba"
+        "Date": "Mon, 13 Jun 2022 17:06:47 GMT",
+        "Transfer-Encoding": "chunked"
       },
       "ResponseBody": {
         "value": [
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A29%3A45.8263048Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272022-06-13T17%3A06%3A47.9299592Z\u0027\u0022",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:04:00.0000000Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -648,14 +608,14 @@
             "BoolPrimitiveN": false,
             "BoolPrimitive": false,
             "Binary@odata.type": "Edm.Binary",
-            "Binary": "AQID",
+            "Binary": "AQL/Aw==",
             "BinaryPrimitive@odata.type": "Edm.Binary",
-            "BinaryPrimitive": "AQID",
+            "BinaryPrimitive": "AQL/Aw==",
             "DoublePrimitiveN": 3.5,
             "DoublePrimitive": 3.5,
             "DoubleN": 3.5,
             "Double": 3.5,
-            "DoubleInteger": 3,
+            "DoubleInteger": 3.0,
             "GuidN@odata.type": "Edm.Guid",
             "GuidN": "0d391d16-97f1-4b9a-be68-4cc871f90003",
             "Guid@odata.type": "Edm.Guid",
@@ -675,10 +635,10 @@
             "String": "0003",
             "PartitionKey": "somPartition",
             "RowKey": "0003",
-            "Timestamp": "2021-03-23T18:29:45.8263048Z"
+            "Timestamp": "2022-06-13T17:06:47.9299592Z"
           },
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A29%3A45.8522120Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272022-06-13T17%3A06%3A47.9996936Z\u0027\u0022",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:05:00.0000000Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -693,14 +653,14 @@
             "BoolPrimitiveN": false,
             "BoolPrimitive": true,
             "Binary@odata.type": "Edm.Binary",
-            "Binary": "AQIE",
+            "Binary": "AQL/BA==",
             "BinaryPrimitive@odata.type": "Edm.Binary",
-            "BinaryPrimitive": "AQIE",
+            "BinaryPrimitive": "AQL/BA==",
             "DoublePrimitiveN": 4.5,
             "DoublePrimitive": 4.5,
             "DoubleN": 4.5,
             "Double": 4.5,
-            "DoubleInteger": 4,
+            "DoubleInteger": 4.0,
             "GuidN@odata.type": "Edm.Guid",
             "GuidN": "0d391d16-97f1-4b9a-be68-4cc871f90004",
             "Guid@odata.type": "Edm.Guid",
@@ -720,42 +680,37 @@
             "String": "0004",
             "PartitionKey": "somPartition",
             "RowKey": "0004",
-            "Timestamp": "2021-03-23T18:29:45.8522120Z"
+            "Timestamp": "2022-06-13T17:06:47.9996936Z"
           }
         ],
-        "odata.metadata": "https://jverazsdkprim.table.cosmos.azure.com/$metadata#testtablet55fm4or"
+        "odata.metadata": "https://chrisstablesprim.table.cosmos.azure.com/$metadata#testtable8wnl5th4"
       }
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.cosmos.azure.com/testtablet55fm4or()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=LongPrimitive%20ge%202147483650L",
+      "RequestUri": "https://chrisstablesprim.table.cosmos.azure.com/testtable8wnl5th4()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=LongPrimitive%20ge%202147483650L",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": "application/json; odata=minimalmetadata",
+        "Accept": "application/json;odata=minimalmetadata",
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-459beb85c9d4004e925bdb8e22aa3ad9-14feab46b557884d-00",
-        "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-client-request-id": "cdf71b94ec042cf9fdbbfed8b6704421",
-        "x-ms-date": "Tue, 23 Mar 2021 18:29:43 GMT",
+        "traceparent": "00-8f83fca6118a8a7755569e64e49e4246-859457ac3658154d-00",
+        "User-Agent": "azsdk-net-Data.Tables/12.7.0-alpha.20220613.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "a6db81a2eec6ccbafd1770de01f8a1b2",
+        "x-ms-date": "Mon, 13 Jun 2022 17:06:48 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-02-02"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; odata=minimalmetadata",
-        "Date": "Tue, 23 Mar 2021 18:29:45 GMT",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "cdf71b94-ec04-2cf9-fdbb-fed8b6704421"
+        "Date": "Mon, 13 Jun 2022 17:06:47 GMT",
+        "Transfer-Encoding": "chunked"
       },
       "ResponseBody": {
         "value": [
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A29%3A45.8263048Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272022-06-13T17%3A06%3A47.9299592Z\u0027\u0022",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:04:00.0000000Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -770,14 +725,14 @@
             "BoolPrimitiveN": false,
             "BoolPrimitive": false,
             "Binary@odata.type": "Edm.Binary",
-            "Binary": "AQID",
+            "Binary": "AQL/Aw==",
             "BinaryPrimitive@odata.type": "Edm.Binary",
-            "BinaryPrimitive": "AQID",
+            "BinaryPrimitive": "AQL/Aw==",
             "DoublePrimitiveN": 3.5,
             "DoublePrimitive": 3.5,
             "DoubleN": 3.5,
             "Double": 3.5,
-            "DoubleInteger": 3,
+            "DoubleInteger": 3.0,
             "GuidN@odata.type": "Edm.Guid",
             "GuidN": "0d391d16-97f1-4b9a-be68-4cc871f90003",
             "Guid@odata.type": "Edm.Guid",
@@ -797,10 +752,10 @@
             "String": "0003",
             "PartitionKey": "somPartition",
             "RowKey": "0003",
-            "Timestamp": "2021-03-23T18:29:45.8263048Z"
+            "Timestamp": "2022-06-13T17:06:47.9299592Z"
           },
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A29%3A45.8522120Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272022-06-13T17%3A06%3A47.9996936Z\u0027\u0022",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:05:00.0000000Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -815,14 +770,14 @@
             "BoolPrimitiveN": false,
             "BoolPrimitive": true,
             "Binary@odata.type": "Edm.Binary",
-            "Binary": "AQIE",
+            "Binary": "AQL/BA==",
             "BinaryPrimitive@odata.type": "Edm.Binary",
-            "BinaryPrimitive": "AQIE",
+            "BinaryPrimitive": "AQL/BA==",
             "DoublePrimitiveN": 4.5,
             "DoublePrimitive": 4.5,
             "DoubleN": 4.5,
             "Double": 4.5,
-            "DoubleInteger": 4,
+            "DoubleInteger": 4.0,
             "GuidN@odata.type": "Edm.Guid",
             "GuidN": "0d391d16-97f1-4b9a-be68-4cc871f90004",
             "Guid@odata.type": "Edm.Guid",
@@ -842,42 +797,37 @@
             "String": "0004",
             "PartitionKey": "somPartition",
             "RowKey": "0004",
-            "Timestamp": "2021-03-23T18:29:45.8522120Z"
+            "Timestamp": "2022-06-13T17:06:47.9996936Z"
           }
         ],
-        "odata.metadata": "https://jverazsdkprim.table.cosmos.azure.com/$metadata#testtablet55fm4or"
+        "odata.metadata": "https://chrisstablesprim.table.cosmos.azure.com/$metadata#testtable8wnl5th4"
       }
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.cosmos.azure.com/testtablet55fm4or()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=LongPrimitiveN%20ge%202147483650L",
+      "RequestUri": "https://chrisstablesprim.table.cosmos.azure.com/testtable8wnl5th4()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=LongPrimitiveN%20ge%202147483650L",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": "application/json; odata=minimalmetadata",
+        "Accept": "application/json;odata=minimalmetadata",
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-fdb64dad7f0daa41adffec5c331ecbd4-808f84105f871e4d-00",
-        "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-client-request-id": "7c5a4f6a109bc6d9f7a11d2da60af63d",
-        "x-ms-date": "Tue, 23 Mar 2021 18:29:43 GMT",
+        "traceparent": "00-fd3a57fa243ff289bb4337cc71f98dd4-1776041607f79c0e-00",
+        "User-Agent": "azsdk-net-Data.Tables/12.7.0-alpha.20220613.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "97e25e18538c0527ef8a0ae4995f0796",
+        "x-ms-date": "Mon, 13 Jun 2022 17:06:48 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-02-02"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; odata=minimalmetadata",
-        "Date": "Tue, 23 Mar 2021 18:29:45 GMT",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "7c5a4f6a-109b-c6d9-f7a1-1d2da60af63d"
+        "Date": "Mon, 13 Jun 2022 17:06:47 GMT",
+        "Transfer-Encoding": "chunked"
       },
       "ResponseBody": {
         "value": [
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A29%3A45.8263048Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272022-06-13T17%3A06%3A47.9299592Z\u0027\u0022",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:04:00.0000000Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -892,14 +842,14 @@
             "BoolPrimitiveN": false,
             "BoolPrimitive": false,
             "Binary@odata.type": "Edm.Binary",
-            "Binary": "AQID",
+            "Binary": "AQL/Aw==",
             "BinaryPrimitive@odata.type": "Edm.Binary",
-            "BinaryPrimitive": "AQID",
+            "BinaryPrimitive": "AQL/Aw==",
             "DoublePrimitiveN": 3.5,
             "DoublePrimitive": 3.5,
             "DoubleN": 3.5,
             "Double": 3.5,
-            "DoubleInteger": 3,
+            "DoubleInteger": 3.0,
             "GuidN@odata.type": "Edm.Guid",
             "GuidN": "0d391d16-97f1-4b9a-be68-4cc871f90003",
             "Guid@odata.type": "Edm.Guid",
@@ -919,10 +869,10 @@
             "String": "0003",
             "PartitionKey": "somPartition",
             "RowKey": "0003",
-            "Timestamp": "2021-03-23T18:29:45.8263048Z"
+            "Timestamp": "2022-06-13T17:06:47.9299592Z"
           },
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A29%3A45.8522120Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272022-06-13T17%3A06%3A47.9996936Z\u0027\u0022",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:05:00.0000000Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -937,14 +887,14 @@
             "BoolPrimitiveN": false,
             "BoolPrimitive": true,
             "Binary@odata.type": "Edm.Binary",
-            "Binary": "AQIE",
+            "Binary": "AQL/BA==",
             "BinaryPrimitive@odata.type": "Edm.Binary",
-            "BinaryPrimitive": "AQIE",
+            "BinaryPrimitive": "AQL/BA==",
             "DoublePrimitiveN": 4.5,
             "DoublePrimitive": 4.5,
             "DoubleN": 4.5,
             "Double": 4.5,
-            "DoubleInteger": 4,
+            "DoubleInteger": 4.0,
             "GuidN@odata.type": "Edm.Guid",
             "GuidN": "0d391d16-97f1-4b9a-be68-4cc871f90004",
             "Guid@odata.type": "Edm.Guid",
@@ -964,42 +914,37 @@
             "String": "0004",
             "PartitionKey": "somPartition",
             "RowKey": "0004",
-            "Timestamp": "2021-03-23T18:29:45.8522120Z"
+            "Timestamp": "2022-06-13T17:06:47.9996936Z"
           }
         ],
-        "odata.metadata": "https://jverazsdkprim.table.cosmos.azure.com/$metadata#testtablet55fm4or"
+        "odata.metadata": "https://chrisstablesprim.table.cosmos.azure.com/$metadata#testtable8wnl5th4"
       }
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.cosmos.azure.com/testtablet55fm4or()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=Double%20ge%203.5",
+      "RequestUri": "https://chrisstablesprim.table.cosmos.azure.com/testtable8wnl5th4()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=Double%20ge%203.5",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": "application/json; odata=minimalmetadata",
+        "Accept": "application/json;odata=minimalmetadata",
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-25d2db2555edac418ccbc669fdc5ecfa-28037a2c8c17ea4d-00",
-        "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-client-request-id": "63f6926178ddf63907e8e01e528913f4",
-        "x-ms-date": "Tue, 23 Mar 2021 18:29:43 GMT",
+        "traceparent": "00-09773b8121803a36d999cab24c96b056-413fca80fc8490b7-00",
+        "User-Agent": "azsdk-net-Data.Tables/12.7.0-alpha.20220613.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "3638c9c19e7bff3cfedd9dcbb973b76d",
+        "x-ms-date": "Mon, 13 Jun 2022 17:06:48 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-02-02"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; odata=minimalmetadata",
-        "Date": "Tue, 23 Mar 2021 18:29:45 GMT",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "63f69261-78dd-f639-07e8-e01e528913f4"
+        "Date": "Mon, 13 Jun 2022 17:06:48 GMT",
+        "Transfer-Encoding": "chunked"
       },
       "ResponseBody": {
         "value": [
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A29%3A45.8263048Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272022-06-13T17%3A06%3A47.9299592Z\u0027\u0022",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:04:00.0000000Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -1014,14 +959,14 @@
             "BoolPrimitiveN": false,
             "BoolPrimitive": false,
             "Binary@odata.type": "Edm.Binary",
-            "Binary": "AQID",
+            "Binary": "AQL/Aw==",
             "BinaryPrimitive@odata.type": "Edm.Binary",
-            "BinaryPrimitive": "AQID",
+            "BinaryPrimitive": "AQL/Aw==",
             "DoublePrimitiveN": 3.5,
             "DoublePrimitive": 3.5,
             "DoubleN": 3.5,
             "Double": 3.5,
-            "DoubleInteger": 3,
+            "DoubleInteger": 3.0,
             "GuidN@odata.type": "Edm.Guid",
             "GuidN": "0d391d16-97f1-4b9a-be68-4cc871f90003",
             "Guid@odata.type": "Edm.Guid",
@@ -1041,10 +986,10 @@
             "String": "0003",
             "PartitionKey": "somPartition",
             "RowKey": "0003",
-            "Timestamp": "2021-03-23T18:29:45.8263048Z"
+            "Timestamp": "2022-06-13T17:06:47.9299592Z"
           },
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A29%3A45.8522120Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272022-06-13T17%3A06%3A47.9996936Z\u0027\u0022",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:05:00.0000000Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -1059,14 +1004,14 @@
             "BoolPrimitiveN": false,
             "BoolPrimitive": true,
             "Binary@odata.type": "Edm.Binary",
-            "Binary": "AQIE",
+            "Binary": "AQL/BA==",
             "BinaryPrimitive@odata.type": "Edm.Binary",
-            "BinaryPrimitive": "AQIE",
+            "BinaryPrimitive": "AQL/BA==",
             "DoublePrimitiveN": 4.5,
             "DoublePrimitive": 4.5,
             "DoubleN": 4.5,
             "Double": 4.5,
-            "DoubleInteger": 4,
+            "DoubleInteger": 4.0,
             "GuidN@odata.type": "Edm.Guid",
             "GuidN": "0d391d16-97f1-4b9a-be68-4cc871f90004",
             "Guid@odata.type": "Edm.Guid",
@@ -1086,42 +1031,37 @@
             "String": "0004",
             "PartitionKey": "somPartition",
             "RowKey": "0004",
-            "Timestamp": "2021-03-23T18:29:45.8522120Z"
+            "Timestamp": "2022-06-13T17:06:47.9996936Z"
           }
         ],
-        "odata.metadata": "https://jverazsdkprim.table.cosmos.azure.com/$metadata#testtablet55fm4or"
+        "odata.metadata": "https://chrisstablesprim.table.cosmos.azure.com/$metadata#testtable8wnl5th4"
       }
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.cosmos.azure.com/testtablet55fm4or()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=DoublePrimitive%20ge%203.5",
+      "RequestUri": "https://chrisstablesprim.table.cosmos.azure.com/testtable8wnl5th4()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=DoublePrimitive%20ge%203.5",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": "application/json; odata=minimalmetadata",
+        "Accept": "application/json;odata=minimalmetadata",
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-6412e0f857d2ee4f915606173a58a945-8ff0d0de75e4984c-00",
-        "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-client-request-id": "52dde9a9caeb831e4131d563cfcb85f2",
-        "x-ms-date": "Tue, 23 Mar 2021 18:29:43 GMT",
+        "traceparent": "00-953d07f2adf678bc409cfaaf444a6c06-d2b9c0e16d973cfa-00",
+        "User-Agent": "azsdk-net-Data.Tables/12.7.0-alpha.20220613.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "490bb78ca0164eef59d5b63ce3d5339d",
+        "x-ms-date": "Mon, 13 Jun 2022 17:06:48 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-02-02"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; odata=minimalmetadata",
-        "Date": "Tue, 23 Mar 2021 18:29:45 GMT",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "52dde9a9-caeb-831e-4131-d563cfcb85f2"
+        "Date": "Mon, 13 Jun 2022 17:06:48 GMT",
+        "Transfer-Encoding": "chunked"
       },
       "ResponseBody": {
         "value": [
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A29%3A45.8263048Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272022-06-13T17%3A06%3A47.9299592Z\u0027\u0022",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:04:00.0000000Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -1136,14 +1076,14 @@
             "BoolPrimitiveN": false,
             "BoolPrimitive": false,
             "Binary@odata.type": "Edm.Binary",
-            "Binary": "AQID",
+            "Binary": "AQL/Aw==",
             "BinaryPrimitive@odata.type": "Edm.Binary",
-            "BinaryPrimitive": "AQID",
+            "BinaryPrimitive": "AQL/Aw==",
             "DoublePrimitiveN": 3.5,
             "DoublePrimitive": 3.5,
             "DoubleN": 3.5,
             "Double": 3.5,
-            "DoubleInteger": 3,
+            "DoubleInteger": 3.0,
             "GuidN@odata.type": "Edm.Guid",
             "GuidN": "0d391d16-97f1-4b9a-be68-4cc871f90003",
             "Guid@odata.type": "Edm.Guid",
@@ -1163,10 +1103,10 @@
             "String": "0003",
             "PartitionKey": "somPartition",
             "RowKey": "0003",
-            "Timestamp": "2021-03-23T18:29:45.8263048Z"
+            "Timestamp": "2022-06-13T17:06:47.9299592Z"
           },
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A29%3A45.8522120Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272022-06-13T17%3A06%3A47.9996936Z\u0027\u0022",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:05:00.0000000Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -1181,14 +1121,14 @@
             "BoolPrimitiveN": false,
             "BoolPrimitive": true,
             "Binary@odata.type": "Edm.Binary",
-            "Binary": "AQIE",
+            "Binary": "AQL/BA==",
             "BinaryPrimitive@odata.type": "Edm.Binary",
-            "BinaryPrimitive": "AQIE",
+            "BinaryPrimitive": "AQL/BA==",
             "DoublePrimitiveN": 4.5,
             "DoublePrimitive": 4.5,
             "DoubleN": 4.5,
             "Double": 4.5,
-            "DoubleInteger": 4,
+            "DoubleInteger": 4.0,
             "GuidN@odata.type": "Edm.Guid",
             "GuidN": "0d391d16-97f1-4b9a-be68-4cc871f90004",
             "Guid@odata.type": "Edm.Guid",
@@ -1208,42 +1148,37 @@
             "String": "0004",
             "PartitionKey": "somPartition",
             "RowKey": "0004",
-            "Timestamp": "2021-03-23T18:29:45.8522120Z"
+            "Timestamp": "2022-06-13T17:06:47.9996936Z"
           }
         ],
-        "odata.metadata": "https://jverazsdkprim.table.cosmos.azure.com/$metadata#testtablet55fm4or"
+        "odata.metadata": "https://chrisstablesprim.table.cosmos.azure.com/$metadata#testtable8wnl5th4"
       }
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.cosmos.azure.com/testtablet55fm4or()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=Int32%20ge%203",
+      "RequestUri": "https://chrisstablesprim.table.cosmos.azure.com/testtable8wnl5th4()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=Int32%20ge%203",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": "application/json; odata=minimalmetadata",
+        "Accept": "application/json;odata=minimalmetadata",
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-e7389244aaaab54bae1e60c169489e95-6b8111aea7161240-00",
-        "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-client-request-id": "2477c0c5e079f244156374b330bb746e",
-        "x-ms-date": "Tue, 23 Mar 2021 18:29:43 GMT",
+        "traceparent": "00-8ccfd29c96d3ed810fe181a36ff5d5e6-02b4c9c304302856-00",
+        "User-Agent": "azsdk-net-Data.Tables/12.7.0-alpha.20220613.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "381dd90f6ac07a3721e298afb65c4c7b",
+        "x-ms-date": "Mon, 13 Jun 2022 17:06:48 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-02-02"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; odata=minimalmetadata",
-        "Date": "Tue, 23 Mar 2021 18:29:45 GMT",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "2477c0c5-e079-f244-1563-74b330bb746e"
+        "Date": "Mon, 13 Jun 2022 17:06:48 GMT",
+        "Transfer-Encoding": "chunked"
       },
       "ResponseBody": {
         "value": [
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A29%3A45.8263048Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272022-06-13T17%3A06%3A47.9299592Z\u0027\u0022",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:04:00.0000000Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -1258,14 +1193,14 @@
             "BoolPrimitiveN": false,
             "BoolPrimitive": false,
             "Binary@odata.type": "Edm.Binary",
-            "Binary": "AQID",
+            "Binary": "AQL/Aw==",
             "BinaryPrimitive@odata.type": "Edm.Binary",
-            "BinaryPrimitive": "AQID",
+            "BinaryPrimitive": "AQL/Aw==",
             "DoublePrimitiveN": 3.5,
             "DoublePrimitive": 3.5,
             "DoubleN": 3.5,
             "Double": 3.5,
-            "DoubleInteger": 3,
+            "DoubleInteger": 3.0,
             "GuidN@odata.type": "Edm.Guid",
             "GuidN": "0d391d16-97f1-4b9a-be68-4cc871f90003",
             "Guid@odata.type": "Edm.Guid",
@@ -1285,10 +1220,10 @@
             "String": "0003",
             "PartitionKey": "somPartition",
             "RowKey": "0003",
-            "Timestamp": "2021-03-23T18:29:45.8263048Z"
+            "Timestamp": "2022-06-13T17:06:47.9299592Z"
           },
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A29%3A45.8522120Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272022-06-13T17%3A06%3A47.9996936Z\u0027\u0022",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:05:00.0000000Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -1303,14 +1238,14 @@
             "BoolPrimitiveN": false,
             "BoolPrimitive": true,
             "Binary@odata.type": "Edm.Binary",
-            "Binary": "AQIE",
+            "Binary": "AQL/BA==",
             "BinaryPrimitive@odata.type": "Edm.Binary",
-            "BinaryPrimitive": "AQIE",
+            "BinaryPrimitive": "AQL/BA==",
             "DoublePrimitiveN": 4.5,
             "DoublePrimitive": 4.5,
             "DoubleN": 4.5,
             "Double": 4.5,
-            "DoubleInteger": 4,
+            "DoubleInteger": 4.0,
             "GuidN@odata.type": "Edm.Guid",
             "GuidN": "0d391d16-97f1-4b9a-be68-4cc871f90004",
             "Guid@odata.type": "Edm.Guid",
@@ -1330,42 +1265,37 @@
             "String": "0004",
             "PartitionKey": "somPartition",
             "RowKey": "0004",
-            "Timestamp": "2021-03-23T18:29:45.8522120Z"
+            "Timestamp": "2022-06-13T17:06:47.9996936Z"
           }
         ],
-        "odata.metadata": "https://jverazsdkprim.table.cosmos.azure.com/$metadata#testtablet55fm4or"
+        "odata.metadata": "https://chrisstablesprim.table.cosmos.azure.com/$metadata#testtable8wnl5th4"
       }
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.cosmos.azure.com/testtablet55fm4or()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=Int32N%20ge%203",
+      "RequestUri": "https://chrisstablesprim.table.cosmos.azure.com/testtable8wnl5th4()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=Int32N%20ge%203",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": "application/json; odata=minimalmetadata",
+        "Accept": "application/json;odata=minimalmetadata",
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-4b8812368c84774c948f5d1fb7bc7fb5-31fedcd8974c8d45-00",
-        "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-client-request-id": "bc83298da42d9752737222aba2d6263b",
-        "x-ms-date": "Tue, 23 Mar 2021 18:29:43 GMT",
+        "traceparent": "00-5f1310f8a7f882844379954c182b0e67-3767eeb0d21ee937-00",
+        "User-Agent": "azsdk-net-Data.Tables/12.7.0-alpha.20220613.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "e1589dd2bd54207fd9e9dda6e7ff1c28",
+        "x-ms-date": "Mon, 13 Jun 2022 17:06:48 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-02-02"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; odata=minimalmetadata",
-        "Date": "Tue, 23 Mar 2021 18:29:45 GMT",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "bc83298d-a42d-9752-7372-22aba2d6263b"
+        "Date": "Mon, 13 Jun 2022 17:06:48 GMT",
+        "Transfer-Encoding": "chunked"
       },
       "ResponseBody": {
         "value": [
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A29%3A45.8263048Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272022-06-13T17%3A06%3A47.9299592Z\u0027\u0022",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:04:00.0000000Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -1380,14 +1310,14 @@
             "BoolPrimitiveN": false,
             "BoolPrimitive": false,
             "Binary@odata.type": "Edm.Binary",
-            "Binary": "AQID",
+            "Binary": "AQL/Aw==",
             "BinaryPrimitive@odata.type": "Edm.Binary",
-            "BinaryPrimitive": "AQID",
+            "BinaryPrimitive": "AQL/Aw==",
             "DoublePrimitiveN": 3.5,
             "DoublePrimitive": 3.5,
             "DoubleN": 3.5,
             "Double": 3.5,
-            "DoubleInteger": 3,
+            "DoubleInteger": 3.0,
             "GuidN@odata.type": "Edm.Guid",
             "GuidN": "0d391d16-97f1-4b9a-be68-4cc871f90003",
             "Guid@odata.type": "Edm.Guid",
@@ -1407,10 +1337,10 @@
             "String": "0003",
             "PartitionKey": "somPartition",
             "RowKey": "0003",
-            "Timestamp": "2021-03-23T18:29:45.8263048Z"
+            "Timestamp": "2022-06-13T17:06:47.9299592Z"
           },
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A29%3A45.8522120Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272022-06-13T17%3A06%3A47.9996936Z\u0027\u0022",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:05:00.0000000Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -1425,14 +1355,14 @@
             "BoolPrimitiveN": false,
             "BoolPrimitive": true,
             "Binary@odata.type": "Edm.Binary",
-            "Binary": "AQIE",
+            "Binary": "AQL/BA==",
             "BinaryPrimitive@odata.type": "Edm.Binary",
-            "BinaryPrimitive": "AQIE",
+            "BinaryPrimitive": "AQL/BA==",
             "DoublePrimitiveN": 4.5,
             "DoublePrimitive": 4.5,
             "DoubleN": 4.5,
             "Double": 4.5,
-            "DoubleInteger": 4,
+            "DoubleInteger": 4.0,
             "GuidN@odata.type": "Edm.Guid",
             "GuidN": "0d391d16-97f1-4b9a-be68-4cc871f90004",
             "Guid@odata.type": "Edm.Guid",
@@ -1452,42 +1382,37 @@
             "String": "0004",
             "PartitionKey": "somPartition",
             "RowKey": "0004",
-            "Timestamp": "2021-03-23T18:29:45.8522120Z"
+            "Timestamp": "2022-06-13T17:06:47.9996936Z"
           }
         ],
-        "odata.metadata": "https://jverazsdkprim.table.cosmos.azure.com/$metadata#testtablet55fm4or"
+        "odata.metadata": "https://chrisstablesprim.table.cosmos.azure.com/$metadata#testtable8wnl5th4"
       }
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.cosmos.azure.com/testtablet55fm4or()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=DateTimeOffset%20ge%20datetime%272020-01-01T01%3A04%3A00Z%27",
+      "RequestUri": "https://chrisstablesprim.table.cosmos.azure.com/testtable8wnl5th4()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=DateTimeOffset%20ge%20datetime%272020-01-01T01%3A04%3A00Z%27",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": "application/json; odata=minimalmetadata",
+        "Accept": "application/json;odata=minimalmetadata",
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-521f3bdb415b194c8308cb84f848c5f6-b15fe00aa021264e-00",
-        "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-client-request-id": "9158ed63ef12c97aa5eb3c87556a5385",
-        "x-ms-date": "Tue, 23 Mar 2021 18:29:43 GMT",
+        "traceparent": "00-bf1bdea82b4f3eeb3362ed716643ef0d-2d708d7ab3ed3beb-00",
+        "User-Agent": "azsdk-net-Data.Tables/12.7.0-alpha.20220613.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "dfbb00a97f5621ac80912733074098fc",
+        "x-ms-date": "Mon, 13 Jun 2022 17:06:48 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-02-02"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; odata=minimalmetadata",
-        "Date": "Tue, 23 Mar 2021 18:29:46 GMT",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "9158ed63-ef12-c97a-a5eb-3c87556a5385"
+        "Date": "Mon, 13 Jun 2022 17:06:48 GMT",
+        "Transfer-Encoding": "chunked"
       },
       "ResponseBody": {
         "value": [
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A29%3A45.8263048Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272022-06-13T17%3A06%3A47.9299592Z\u0027\u0022",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:04:00.0000000Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -1502,14 +1427,14 @@
             "BoolPrimitiveN": false,
             "BoolPrimitive": false,
             "Binary@odata.type": "Edm.Binary",
-            "Binary": "AQID",
+            "Binary": "AQL/Aw==",
             "BinaryPrimitive@odata.type": "Edm.Binary",
-            "BinaryPrimitive": "AQID",
+            "BinaryPrimitive": "AQL/Aw==",
             "DoublePrimitiveN": 3.5,
             "DoublePrimitive": 3.5,
             "DoubleN": 3.5,
             "Double": 3.5,
-            "DoubleInteger": 3,
+            "DoubleInteger": 3.0,
             "GuidN@odata.type": "Edm.Guid",
             "GuidN": "0d391d16-97f1-4b9a-be68-4cc871f90003",
             "Guid@odata.type": "Edm.Guid",
@@ -1529,10 +1454,10 @@
             "String": "0003",
             "PartitionKey": "somPartition",
             "RowKey": "0003",
-            "Timestamp": "2021-03-23T18:29:45.8263048Z"
+            "Timestamp": "2022-06-13T17:06:47.9299592Z"
           },
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A29%3A45.8522120Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272022-06-13T17%3A06%3A47.9996936Z\u0027\u0022",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:05:00.0000000Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -1547,14 +1472,14 @@
             "BoolPrimitiveN": false,
             "BoolPrimitive": true,
             "Binary@odata.type": "Edm.Binary",
-            "Binary": "AQIE",
+            "Binary": "AQL/BA==",
             "BinaryPrimitive@odata.type": "Edm.Binary",
-            "BinaryPrimitive": "AQIE",
+            "BinaryPrimitive": "AQL/BA==",
             "DoublePrimitiveN": 4.5,
             "DoublePrimitive": 4.5,
             "DoubleN": 4.5,
             "Double": 4.5,
-            "DoubleInteger": 4,
+            "DoubleInteger": 4.0,
             "GuidN@odata.type": "Edm.Guid",
             "GuidN": "0d391d16-97f1-4b9a-be68-4cc871f90004",
             "Guid@odata.type": "Edm.Guid",
@@ -1574,42 +1499,37 @@
             "String": "0004",
             "PartitionKey": "somPartition",
             "RowKey": "0004",
-            "Timestamp": "2021-03-23T18:29:45.8522120Z"
+            "Timestamp": "2022-06-13T17:06:47.9996936Z"
           }
         ],
-        "odata.metadata": "https://jverazsdkprim.table.cosmos.azure.com/$metadata#testtablet55fm4or"
+        "odata.metadata": "https://chrisstablesprim.table.cosmos.azure.com/$metadata#testtable8wnl5th4"
       }
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.cosmos.azure.com/testtablet55fm4or()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=DateTimeOffset%20lt%20datetime%272020-01-01T01%3A04%3A00Z%27",
+      "RequestUri": "https://chrisstablesprim.table.cosmos.azure.com/testtable8wnl5th4()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=DateTimeOffset%20lt%20datetime%272020-01-01T01%3A04%3A00Z%27",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": "application/json; odata=minimalmetadata",
+        "Accept": "application/json;odata=minimalmetadata",
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-132eeedb4802da428e39f7c38c7efdde-6e4c63574e95c449-00",
-        "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-client-request-id": "a6d566bcc84721c56ee0b006be984f3f",
-        "x-ms-date": "Tue, 23 Mar 2021 18:29:43 GMT",
+        "traceparent": "00-d27126fbf84b7aaf44601634dfcf5fee-93360eda3961d5e2-00",
+        "User-Agent": "azsdk-net-Data.Tables/12.7.0-alpha.20220613.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "46693a89517d524959fc5ed68c909322",
+        "x-ms-date": "Mon, 13 Jun 2022 17:06:48 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-02-02"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; odata=minimalmetadata",
-        "Date": "Tue, 23 Mar 2021 18:29:46 GMT",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "a6d566bc-c847-21c5-6ee0-b006be984f3f"
+        "Date": "Mon, 13 Jun 2022 17:06:48 GMT",
+        "Transfer-Encoding": "chunked"
       },
       "ResponseBody": {
         "value": [
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A29%3A45.7713160Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272022-06-13T17%3A06%3A47.7772808Z\u0027\u0022",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:02:00.0000000Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -1624,14 +1544,14 @@
             "BoolPrimitiveN": false,
             "BoolPrimitive": false,
             "Binary@odata.type": "Edm.Binary",
-            "Binary": "AQIB",
+            "Binary": "AQL/AQ==",
             "BinaryPrimitive@odata.type": "Edm.Binary",
-            "BinaryPrimitive": "AQIB",
+            "BinaryPrimitive": "AQL/AQ==",
             "DoublePrimitiveN": 1.5,
             "DoublePrimitive": 1.5,
             "DoubleN": 1.5,
             "Double": 1.5,
-            "DoubleInteger": 1,
+            "DoubleInteger": 1.0,
             "GuidN@odata.type": "Edm.Guid",
             "GuidN": "0d391d16-97f1-4b9a-be68-4cc871f90001",
             "Guid@odata.type": "Edm.Guid",
@@ -1651,10 +1571,10 @@
             "String": "0001",
             "PartitionKey": "somPartition",
             "RowKey": "0001",
-            "Timestamp": "2021-03-23T18:29:45.7713160Z"
+            "Timestamp": "2022-06-13T17:06:47.7772808Z"
           },
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A29%3A45.8020360Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272022-06-13T17%3A06%3A47.8545928Z\u0027\u0022",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:03:00.0000000Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -1669,14 +1589,14 @@
             "BoolPrimitiveN": false,
             "BoolPrimitive": true,
             "Binary@odata.type": "Edm.Binary",
-            "Binary": "AQIC",
+            "Binary": "AQL/Ag==",
             "BinaryPrimitive@odata.type": "Edm.Binary",
-            "BinaryPrimitive": "AQIC",
+            "BinaryPrimitive": "AQL/Ag==",
             "DoublePrimitiveN": 2.5,
             "DoublePrimitive": 2.5,
             "DoubleN": 2.5,
             "Double": 2.5,
-            "DoubleInteger": 2,
+            "DoubleInteger": 2.0,
             "GuidN@odata.type": "Edm.Guid",
             "GuidN": "0d391d16-97f1-4b9a-be68-4cc871f90002",
             "Guid@odata.type": "Edm.Guid",
@@ -1696,42 +1616,37 @@
             "String": "0002",
             "PartitionKey": "somPartition",
             "RowKey": "0002",
-            "Timestamp": "2021-03-23T18:29:45.8020360Z"
+            "Timestamp": "2022-06-13T17:06:47.8545928Z"
           }
         ],
-        "odata.metadata": "https://jverazsdkprim.table.cosmos.azure.com/$metadata#testtablet55fm4or"
+        "odata.metadata": "https://chrisstablesprim.table.cosmos.azure.com/$metadata#testtable8wnl5th4"
       }
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.cosmos.azure.com/testtablet55fm4or()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=Bool%20eq%20false",
+      "RequestUri": "https://chrisstablesprim.table.cosmos.azure.com/testtable8wnl5th4()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=Bool%20eq%20false",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": "application/json; odata=minimalmetadata",
+        "Accept": "application/json;odata=minimalmetadata",
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-e1298bb2fd6fa54a8f18d2a020f44ecb-2eb63398b859734a-00",
-        "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-client-request-id": "434f383de2629d5caeba174267ca4108",
-        "x-ms-date": "Tue, 23 Mar 2021 18:29:43 GMT",
+        "traceparent": "00-303cefa9de6b15c394d4f779ce04dde8-d567c888843d8e95-00",
+        "User-Agent": "azsdk-net-Data.Tables/12.7.0-alpha.20220613.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "b50570c66ca15325f13661c3964c1899",
+        "x-ms-date": "Mon, 13 Jun 2022 17:06:48 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-02-02"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; odata=minimalmetadata",
-        "Date": "Tue, 23 Mar 2021 18:29:46 GMT",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "434f383d-e262-9d5c-aeba-174267ca4108"
+        "Date": "Mon, 13 Jun 2022 17:06:48 GMT",
+        "Transfer-Encoding": "chunked"
       },
       "ResponseBody": {
         "value": [
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A29%3A45.7713160Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272022-06-13T17%3A06%3A47.7772808Z\u0027\u0022",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:02:00.0000000Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -1746,14 +1661,14 @@
             "BoolPrimitiveN": false,
             "BoolPrimitive": false,
             "Binary@odata.type": "Edm.Binary",
-            "Binary": "AQIB",
+            "Binary": "AQL/AQ==",
             "BinaryPrimitive@odata.type": "Edm.Binary",
-            "BinaryPrimitive": "AQIB",
+            "BinaryPrimitive": "AQL/AQ==",
             "DoublePrimitiveN": 1.5,
             "DoublePrimitive": 1.5,
             "DoubleN": 1.5,
             "Double": 1.5,
-            "DoubleInteger": 1,
+            "DoubleInteger": 1.0,
             "GuidN@odata.type": "Edm.Guid",
             "GuidN": "0d391d16-97f1-4b9a-be68-4cc871f90001",
             "Guid@odata.type": "Edm.Guid",
@@ -1773,10 +1688,10 @@
             "String": "0001",
             "PartitionKey": "somPartition",
             "RowKey": "0001",
-            "Timestamp": "2021-03-23T18:29:45.7713160Z"
+            "Timestamp": "2022-06-13T17:06:47.7772808Z"
           },
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A29%3A45.8263048Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272022-06-13T17%3A06%3A47.9299592Z\u0027\u0022",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:04:00.0000000Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -1791,14 +1706,14 @@
             "BoolPrimitiveN": false,
             "BoolPrimitive": false,
             "Binary@odata.type": "Edm.Binary",
-            "Binary": "AQID",
+            "Binary": "AQL/Aw==",
             "BinaryPrimitive@odata.type": "Edm.Binary",
-            "BinaryPrimitive": "AQID",
+            "BinaryPrimitive": "AQL/Aw==",
             "DoublePrimitiveN": 3.5,
             "DoublePrimitive": 3.5,
             "DoubleN": 3.5,
             "Double": 3.5,
-            "DoubleInteger": 3,
+            "DoubleInteger": 3.0,
             "GuidN@odata.type": "Edm.Guid",
             "GuidN": "0d391d16-97f1-4b9a-be68-4cc871f90003",
             "Guid@odata.type": "Edm.Guid",
@@ -1818,42 +1733,37 @@
             "String": "0003",
             "PartitionKey": "somPartition",
             "RowKey": "0003",
-            "Timestamp": "2021-03-23T18:29:45.8263048Z"
+            "Timestamp": "2022-06-13T17:06:47.9299592Z"
           }
         ],
-        "odata.metadata": "https://jverazsdkprim.table.cosmos.azure.com/$metadata#testtablet55fm4or"
+        "odata.metadata": "https://chrisstablesprim.table.cosmos.azure.com/$metadata#testtable8wnl5th4"
       }
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.cosmos.azure.com/testtablet55fm4or()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=BoolPrimitive%20eq%20false",
+      "RequestUri": "https://chrisstablesprim.table.cosmos.azure.com/testtable8wnl5th4()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=BoolPrimitive%20eq%20false",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": "application/json; odata=minimalmetadata",
+        "Accept": "application/json;odata=minimalmetadata",
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-321378817e698343883fbdd941c4b9ea-73c7baceb5c7bf40-00",
-        "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-client-request-id": "3bee9c1f80009af3283723313f730a0c",
-        "x-ms-date": "Tue, 23 Mar 2021 18:29:43 GMT",
+        "traceparent": "00-33b9be6634e87bebc7ae030e323fd83e-403f5df339dc166c-00",
+        "User-Agent": "azsdk-net-Data.Tables/12.7.0-alpha.20220613.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "ac1de151d59558abb668865920d595ef",
+        "x-ms-date": "Mon, 13 Jun 2022 17:06:48 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-02-02"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; odata=minimalmetadata",
-        "Date": "Tue, 23 Mar 2021 18:29:46 GMT",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "3bee9c1f-8000-9af3-2837-23313f730a0c"
+        "Date": "Mon, 13 Jun 2022 17:06:48 GMT",
+        "Transfer-Encoding": "chunked"
       },
       "ResponseBody": {
         "value": [
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A29%3A45.7713160Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272022-06-13T17%3A06%3A47.7772808Z\u0027\u0022",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:02:00.0000000Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -1868,14 +1778,14 @@
             "BoolPrimitiveN": false,
             "BoolPrimitive": false,
             "Binary@odata.type": "Edm.Binary",
-            "Binary": "AQIB",
+            "Binary": "AQL/AQ==",
             "BinaryPrimitive@odata.type": "Edm.Binary",
-            "BinaryPrimitive": "AQIB",
+            "BinaryPrimitive": "AQL/AQ==",
             "DoublePrimitiveN": 1.5,
             "DoublePrimitive": 1.5,
             "DoubleN": 1.5,
             "Double": 1.5,
-            "DoubleInteger": 1,
+            "DoubleInteger": 1.0,
             "GuidN@odata.type": "Edm.Guid",
             "GuidN": "0d391d16-97f1-4b9a-be68-4cc871f90001",
             "Guid@odata.type": "Edm.Guid",
@@ -1895,10 +1805,10 @@
             "String": "0001",
             "PartitionKey": "somPartition",
             "RowKey": "0001",
-            "Timestamp": "2021-03-23T18:29:45.7713160Z"
+            "Timestamp": "2022-06-13T17:06:47.7772808Z"
           },
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A29%3A45.8263048Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272022-06-13T17%3A06%3A47.9299592Z\u0027\u0022",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:04:00.0000000Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -1913,14 +1823,14 @@
             "BoolPrimitiveN": false,
             "BoolPrimitive": false,
             "Binary@odata.type": "Edm.Binary",
-            "Binary": "AQID",
+            "Binary": "AQL/Aw==",
             "BinaryPrimitive@odata.type": "Edm.Binary",
-            "BinaryPrimitive": "AQID",
+            "BinaryPrimitive": "AQL/Aw==",
             "DoublePrimitiveN": 3.5,
             "DoublePrimitive": 3.5,
             "DoubleN": 3.5,
             "Double": 3.5,
-            "DoubleInteger": 3,
+            "DoubleInteger": 3.0,
             "GuidN@odata.type": "Edm.Guid",
             "GuidN": "0d391d16-97f1-4b9a-be68-4cc871f90003",
             "Guid@odata.type": "Edm.Guid",
@@ -1940,42 +1850,37 @@
             "String": "0003",
             "PartitionKey": "somPartition",
             "RowKey": "0003",
-            "Timestamp": "2021-03-23T18:29:45.8263048Z"
+            "Timestamp": "2022-06-13T17:06:47.9299592Z"
           }
         ],
-        "odata.metadata": "https://jverazsdkprim.table.cosmos.azure.com/$metadata#testtablet55fm4or"
+        "odata.metadata": "https://chrisstablesprim.table.cosmos.azure.com/$metadata#testtable8wnl5th4"
       }
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.cosmos.azure.com/testtablet55fm4or()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=Binary%20eq%20X%27010203%27",
+      "RequestUri": "https://chrisstablesprim.table.cosmos.azure.com/testtable8wnl5th4()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=Binary%20eq%20X%270102FF03%27",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": "application/json; odata=minimalmetadata",
+        "Accept": "application/json;odata=minimalmetadata",
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-9c2cab1bfe447645b65469c2dfd6e983-9a684b94fbb77743-00",
-        "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-client-request-id": "1d4afc9b101bda230a38f88db082b9a3",
-        "x-ms-date": "Tue, 23 Mar 2021 18:29:43 GMT",
+        "traceparent": "00-93346112c326791c1a96855ea14f6963-5645cd9ad4e61f07-00",
+        "User-Agent": "azsdk-net-Data.Tables/12.7.0-alpha.20220613.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "976c05fde23a1d5a15165446ef86bc0d",
+        "x-ms-date": "Mon, 13 Jun 2022 17:06:48 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-02-02"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; odata=minimalmetadata",
-        "Date": "Tue, 23 Mar 2021 18:29:46 GMT",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "1d4afc9b-101b-da23-0a38-f88db082b9a3"
+        "Date": "Mon, 13 Jun 2022 17:06:48 GMT",
+        "Transfer-Encoding": "chunked"
       },
       "ResponseBody": {
         "value": [
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A29%3A45.8263048Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272022-06-13T17%3A06%3A47.9299592Z\u0027\u0022",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:04:00.0000000Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -1990,14 +1895,14 @@
             "BoolPrimitiveN": false,
             "BoolPrimitive": false,
             "Binary@odata.type": "Edm.Binary",
-            "Binary": "AQID",
+            "Binary": "AQL/Aw==",
             "BinaryPrimitive@odata.type": "Edm.Binary",
-            "BinaryPrimitive": "AQID",
+            "BinaryPrimitive": "AQL/Aw==",
             "DoublePrimitiveN": 3.5,
             "DoublePrimitive": 3.5,
             "DoubleN": 3.5,
             "Double": 3.5,
-            "DoubleInteger": 3,
+            "DoubleInteger": 3.0,
             "GuidN@odata.type": "Edm.Guid",
             "GuidN": "0d391d16-97f1-4b9a-be68-4cc871f90003",
             "Guid@odata.type": "Edm.Guid",
@@ -2017,42 +1922,37 @@
             "String": "0003",
             "PartitionKey": "somPartition",
             "RowKey": "0003",
-            "Timestamp": "2021-03-23T18:29:45.8263048Z"
+            "Timestamp": "2022-06-13T17:06:47.9299592Z"
           }
         ],
-        "odata.metadata": "https://jverazsdkprim.table.cosmos.azure.com/$metadata#testtablet55fm4or"
+        "odata.metadata": "https://chrisstablesprim.table.cosmos.azure.com/$metadata#testtable8wnl5th4"
       }
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.cosmos.azure.com/testtablet55fm4or()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=BinaryPrimitive%20eq%20X%27010203%27",
+      "RequestUri": "https://chrisstablesprim.table.cosmos.azure.com/testtable8wnl5th4()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=BinaryPrimitive%20eq%20X%270102FF03%27",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": "application/json; odata=minimalmetadata",
+        "Accept": "application/json;odata=minimalmetadata",
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-b43f7ac894e79d4f977cb5df4e8af55d-1c425673ed5f9d4e-00",
-        "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-client-request-id": "21e6a79f13a9bc3f44b51a2bbf2a5e3a",
-        "x-ms-date": "Tue, 23 Mar 2021 18:29:43 GMT",
+        "traceparent": "00-502cbb44df3a49b3413147d0ba8287fe-ced37f8c37028a26-00",
+        "User-Agent": "azsdk-net-Data.Tables/12.7.0-alpha.20220613.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "ab85c5e4e773f18cc5adff38e6cb331b",
+        "x-ms-date": "Mon, 13 Jun 2022 17:06:48 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-02-02"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; odata=minimalmetadata",
-        "Date": "Tue, 23 Mar 2021 18:29:46 GMT",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "21e6a79f-13a9-bc3f-44b5-1a2bbf2a5e3a"
+        "Date": "Mon, 13 Jun 2022 17:06:48 GMT",
+        "Transfer-Encoding": "chunked"
       },
       "ResponseBody": {
         "value": [
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A29%3A45.8263048Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272022-06-13T17%3A06%3A47.9299592Z\u0027\u0022",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:04:00.0000000Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -2067,14 +1967,14 @@
             "BoolPrimitiveN": false,
             "BoolPrimitive": false,
             "Binary@odata.type": "Edm.Binary",
-            "Binary": "AQID",
+            "Binary": "AQL/Aw==",
             "BinaryPrimitive@odata.type": "Edm.Binary",
-            "BinaryPrimitive": "AQID",
+            "BinaryPrimitive": "AQL/Aw==",
             "DoublePrimitiveN": 3.5,
             "DoublePrimitive": 3.5,
             "DoubleN": 3.5,
             "Double": 3.5,
-            "DoubleInteger": 3,
+            "DoubleInteger": 3.0,
             "GuidN@odata.type": "Edm.Guid",
             "GuidN": "0d391d16-97f1-4b9a-be68-4cc871f90003",
             "Guid@odata.type": "Edm.Guid",
@@ -2094,42 +1994,37 @@
             "String": "0003",
             "PartitionKey": "somPartition",
             "RowKey": "0003",
-            "Timestamp": "2021-03-23T18:29:45.8263048Z"
+            "Timestamp": "2022-06-13T17:06:47.9299592Z"
           }
         ],
-        "odata.metadata": "https://jverazsdkprim.table.cosmos.azure.com/$metadata#testtablet55fm4or"
+        "odata.metadata": "https://chrisstablesprim.table.cosmos.azure.com/$metadata#testtable8wnl5th4"
       }
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.cosmos.azure.com/testtablet55fm4or()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=%28%28%28%28%28%28%28PartitionKey%20eq%20%27somPartition%27%29%20and%20%28String%20ge%20%270003%27%29%29%20and%20%28Int64%20ge%202147483650L%29%29%20and%20%28LongPrimitive%20ge%202147483650L%29%29%20and%20%28LongPrimitiveN%20ge%202147483650L%29%29%20and%20%28Int32%20ge%203%29%29%20and%20%28Int32N%20ge%203%29%29%20and%20%28DateTimeOffset%20ge%20datetime%272020-01-01T01%3A04%3A00Z%27%29",
+      "RequestUri": "https://chrisstablesprim.table.cosmos.azure.com/testtable8wnl5th4()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=%28%28%28%28%28%28%28PartitionKey%20eq%20%27somPartition%27%29%20and%20%28String%20ge%20%270003%27%29%29%20and%20%28Int64%20ge%202147483650L%29%29%20and%20%28LongPrimitive%20ge%202147483650L%29%29%20and%20%28LongPrimitiveN%20ge%202147483650L%29%29%20and%20%28Int32%20ge%203%29%29%20and%20%28Int32N%20ge%203%29%29%20and%20%28DateTimeOffset%20ge%20datetime%272020-01-01T01%3A04%3A00Z%27%29",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": "application/json; odata=minimalmetadata",
+        "Accept": "application/json;odata=minimalmetadata",
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-3df8185c1bf3fb4e9a563ee65ed49f56-a78965271b5ef940-00",
-        "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-client-request-id": "6ba60ab023800fed791431c88766e9a5",
-        "x-ms-date": "Tue, 23 Mar 2021 18:29:43 GMT",
+        "traceparent": "00-583a27dec597252faa7469ff6e37d29a-70576dac5edf7f2e-00",
+        "User-Agent": "azsdk-net-Data.Tables/12.7.0-alpha.20220613.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "90c571a180df6f5e8600967f8164682f",
+        "x-ms-date": "Mon, 13 Jun 2022 17:06:49 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-02-02"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; odata=minimalmetadata",
-        "Date": "Tue, 23 Mar 2021 18:29:46 GMT",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "6ba60ab0-2380-0fed-7914-31c88766e9a5"
+        "Date": "Mon, 13 Jun 2022 17:06:48 GMT",
+        "Transfer-Encoding": "chunked"
       },
       "ResponseBody": {
         "value": [
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A29%3A45.8263048Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272022-06-13T17%3A06%3A47.9299592Z\u0027\u0022",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:04:00.0000000Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -2144,14 +2039,14 @@
             "BoolPrimitiveN": false,
             "BoolPrimitive": false,
             "Binary@odata.type": "Edm.Binary",
-            "Binary": "AQID",
+            "Binary": "AQL/Aw==",
             "BinaryPrimitive@odata.type": "Edm.Binary",
-            "BinaryPrimitive": "AQID",
+            "BinaryPrimitive": "AQL/Aw==",
             "DoublePrimitiveN": 3.5,
             "DoublePrimitive": 3.5,
             "DoubleN": 3.5,
             "Double": 3.5,
-            "DoubleInteger": 3,
+            "DoubleInteger": 3.0,
             "GuidN@odata.type": "Edm.Guid",
             "GuidN": "0d391d16-97f1-4b9a-be68-4cc871f90003",
             "Guid@odata.type": "Edm.Guid",
@@ -2171,10 +2066,10 @@
             "String": "0003",
             "PartitionKey": "somPartition",
             "RowKey": "0003",
-            "Timestamp": "2021-03-23T18:29:45.8263048Z"
+            "Timestamp": "2022-06-13T17:06:47.9299592Z"
           },
           {
-            "odata.etag": "W/\u0022datetime\u00272021-03-23T18%3A29%3A45.8522120Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272022-06-13T17%3A06%3A47.9996936Z\u0027\u0022",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:05:00.0000000Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -2189,14 +2084,14 @@
             "BoolPrimitiveN": false,
             "BoolPrimitive": true,
             "Binary@odata.type": "Edm.Binary",
-            "Binary": "AQIE",
+            "Binary": "AQL/BA==",
             "BinaryPrimitive@odata.type": "Edm.Binary",
-            "BinaryPrimitive": "AQIE",
+            "BinaryPrimitive": "AQL/BA==",
             "DoublePrimitiveN": 4.5,
             "DoublePrimitive": 4.5,
             "DoubleN": 4.5,
             "Double": 4.5,
-            "DoubleInteger": 4,
+            "DoubleInteger": 4.0,
             "GuidN@odata.type": "Edm.Guid",
             "GuidN": "0d391d16-97f1-4b9a-be68-4cc871f90004",
             "Guid@odata.type": "Edm.Guid",
@@ -2216,43 +2111,38 @@
             "String": "0004",
             "PartitionKey": "somPartition",
             "RowKey": "0004",
-            "Timestamp": "2021-03-23T18:29:45.8522120Z"
+            "Timestamp": "2022-06-13T17:06:47.9996936Z"
           }
         ],
-        "odata.metadata": "https://jverazsdkprim.table.cosmos.azure.com/$metadata#testtablet55fm4or"
+        "odata.metadata": "https://chrisstablesprim.table.cosmos.azure.com/$metadata#testtable8wnl5th4"
       }
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.cosmos.azure.com/Tables(\u0027testtablet55fm4or\u0027)",
+      "RequestUri": "https://chrisstablesprim.table.cosmos.azure.com/Tables(\u0027testtable8wnl5th4\u0027)",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-13355f5d6bbefa43b24ee931eed99d66-317923fb9435e948-00",
-        "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-client-request-id": "9892807de98d8863bd8dd865f5f71bdf",
-        "x-ms-date": "Tue, 23 Mar 2021 18:29:43 GMT",
+        "traceparent": "00-46a8f31b6b7ac93ba9a23c1fdb1fa486-5cc1223d6cf66641-00",
+        "User-Agent": "azsdk-net-Data.Tables/12.7.0-alpha.20220613.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "5a7578ace950167c797bd28de221364a",
+        "x-ms-date": "Mon, 13 Jun 2022 17:06:49 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-02-02"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 204,
       "ResponseHeaders": {
-        "Content-Length": "0",
-        "Date": "Tue, 23 Mar 2021 18:29:46 GMT",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-request-id": "9892807d-e98d-8863-bd8d-d865f5f71bdf"
+        "Content-Type": "application/json",
+        "Date": "Mon, 13 Jun 2022 17:06:48 GMT"
       },
-      "ResponseBody": []
+      "ResponseBody": null
     }
   ],
   "Variables": {
-    "COSMOS_TABLES_ENDPOINT_SUFFIX": null,
-    "RandomSeed": "750583255",
-    "TABLES_COSMOS_ACCOUNT_NAME": "jverazsdkprim",
+    "COSMOS_TABLES_ENDPOINT_SUFFIX": "cosmos.azure.com",
+    "RandomSeed": "1457447037",
+    "TABLES_COSMOS_ACCOUNT_NAME": "chrisstablesprim",
     "TABLES_PRIMARY_COSMOS_ACCOUNT_KEY": "Kg=="
   }
 }

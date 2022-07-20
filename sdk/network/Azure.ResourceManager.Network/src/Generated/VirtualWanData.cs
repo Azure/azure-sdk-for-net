@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualWanType"> The type of the VirtualWAN. </param>
         internal VirtualWanData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, bool? disableVpnEncryption, IReadOnlyList<WritableSubResource> virtualHubs, IReadOnlyList<WritableSubResource> vpnSites, bool? allowBranchToBranchTraffic, bool? allowVnetToVnetTraffic, OfficeTrafficCategory? office365LocalBreakoutCategory, NetworkProvisioningState? provisioningState, string virtualWanType) : base(id, name, resourceType, location, tags)
         {
-            Etag = etag;
+            ETag = etag;
             DisableVpnEncryption = disableVpnEncryption;
             VirtualHubs = virtualHubs;
             VpnSites = vpnSites;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> Vpn encryption to be disabled or not. </summary>
         public bool? DisableVpnEncryption { get; set; }
         /// <summary> List of VirtualHubs in the VirtualWAN. </summary>

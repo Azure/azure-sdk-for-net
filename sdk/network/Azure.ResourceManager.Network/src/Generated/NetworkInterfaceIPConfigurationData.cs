@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="applicationSecurityGroups"> Application security groups in which the IP configuration is included. </param>
         /// <param name="provisioningState"> The provisioning state of the network interface IP configuration. </param>
         /// <param name="privateLinkConnectionProperties"> PrivateLinkConnection properties for the network interface. </param>
-        internal NetworkInterfaceIPConfigurationData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, WritableSubResource gatewayLoadBalancer, IList<VirtualNetworkTapData> virtualNetworkTaps, IList<ApplicationGatewayBackendAddressPool> applicationGatewayBackendAddressPools, IList<BackendAddressPoolData> loadBalancerBackendAddressPools, IList<InboundNatRuleData> loadBalancerInboundNatRules, string privateIPAddress, IPAllocationMethod? privateIPAllocationMethod, IPVersion? privateIPAddressVersion, SubnetData subnet, bool? primary, PublicIPAddressData publicIPAddress, IList<ApplicationSecurityGroupData> applicationSecurityGroups, NetworkProvisioningState? provisioningState, NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties privateLinkConnectionProperties) : base(id, name, resourceType)
+        internal NetworkInterfaceIPConfigurationData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, WritableSubResource gatewayLoadBalancer, IList<VirtualNetworkTapData> virtualNetworkTaps, IList<ApplicationGatewayBackendAddressPool> applicationGatewayBackendAddressPools, IList<BackendAddressPoolData> loadBalancerBackendAddressPools, IList<InboundNatRuleData> loadBalancerInboundNatRules, string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, NetworkIPVersion? privateIPAddressVersion, SubnetData subnet, bool? primary, PublicIPAddressData publicIPAddress, IList<ApplicationSecurityGroupData> applicationSecurityGroups, NetworkProvisioningState? provisioningState, NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties privateLinkConnectionProperties) : base(id, name, resourceType)
         {
-            Etag = etag;
+            ETag = etag;
             GatewayLoadBalancer = gatewayLoadBalancer;
             VirtualNetworkTaps = virtualNetworkTaps;
             ApplicationGatewayBackendAddressPools = applicationGatewayBackendAddressPools;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> The reference to gateway load balancer frontend IP. </summary>
         internal WritableSubResource GatewayLoadBalancer { get; set; }
         /// <summary> Gets or sets Id. </summary>
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Private IP address of the IP configuration. </summary>
         public string PrivateIPAddress { get; set; }
         /// <summary> The private IP address allocation method. </summary>
-        public IPAllocationMethod? PrivateIPAllocationMethod { get; set; }
+        public NetworkIPAllocationMethod? PrivateIPAllocationMethod { get; set; }
         /// <summary> Whether the specific IP configuration is IPv4 or IPv6. Default is IPv4. </summary>
-        public IPVersion? PrivateIPAddressVersion { get; set; }
+        public NetworkIPVersion? PrivateIPAddressVersion { get; set; }
         /// <summary> Subnet bound to the IP configuration. </summary>
         public SubnetData Subnet { get; set; }
         /// <summary> Whether this is a primary customer address on the network interface. </summary>

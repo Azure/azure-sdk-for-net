@@ -30,13 +30,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="privateDnsZoneConfigs"> A collection of private dns zone configurations of the private dns zone group. </param>
         internal PrivateDnsZoneGroupData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, NetworkProvisioningState? provisioningState, IList<PrivateDnsZoneConfig> privateDnsZoneConfigs) : base(id, name, resourceType)
         {
-            Etag = etag;
+            ETag = etag;
             ProvisioningState = provisioningState;
             PrivateDnsZoneConfigs = privateDnsZoneConfigs;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> The provisioning state of the private dns zone group resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> A collection of private dns zone configurations of the private dns zone group. </summary>

@@ -34,15 +34,15 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> serverName = default;
             Optional<DateTimeOffset> serverCreateTime = default;
             Optional<string> databaseName = default;
             Optional<DateTimeOffset> databaseDeletionTime = default;
             Optional<DateTimeOffset> backupTime = default;
             Optional<DateTimeOffset> backupExpirationTime = default;
-            Optional<BackupStorageRedundancy> backupStorageRedundancy = default;
-            Optional<BackupStorageRedundancy> requestedBackupStorageRedundancy = default;
+            Optional<SqlBackupStorageRedundancy> backupStorageRedundancy = default;
+            Optional<SqlBackupStorageRedundancy> requestedBackupStorageRedundancy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -62,6 +62,11 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -131,7 +136,7 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            backupStorageRedundancy = new BackupStorageRedundancy(property0.Value.GetString());
+                            backupStorageRedundancy = new SqlBackupStorageRedundancy(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("requestedBackupStorageRedundancy"))
@@ -141,14 +146,14 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            requestedBackupStorageRedundancy = new BackupStorageRedundancy(property0.Value.GetString());
+                            requestedBackupStorageRedundancy = new SqlBackupStorageRedundancy(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new LongTermRetentionBackupData(id, name, type, systemData, serverName.Value, Optional.ToNullable(serverCreateTime), databaseName.Value, Optional.ToNullable(databaseDeletionTime), Optional.ToNullable(backupTime), Optional.ToNullable(backupExpirationTime), Optional.ToNullable(backupStorageRedundancy), Optional.ToNullable(requestedBackupStorageRedundancy));
+            return new LongTermRetentionBackupData(id, name, type, systemData.Value, serverName.Value, Optional.ToNullable(serverCreateTime), databaseName.Value, Optional.ToNullable(databaseDeletionTime), Optional.ToNullable(backupTime), Optional.ToNullable(backupExpirationTime), Optional.ToNullable(backupStorageRedundancy), Optional.ToNullable(requestedBackupStorageRedundancy));
         }
     }
 }

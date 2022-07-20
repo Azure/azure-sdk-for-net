@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of ServiceEndpointPolicyDefinitionData. </summary>
         public ServiceEndpointPolicyDefinitionData()
         {
-            ServiceResources = new ChangeTrackingList<string>();
+            ServiceResources = new ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of ServiceEndpointPolicyDefinitionData. </summary>
@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="service"> Service endpoint name. </param>
         /// <param name="serviceResources"> A list of service resources. </param>
         /// <param name="provisioningState"> The provisioning state of the service endpoint policy definition resource. </param>
-        internal ServiceEndpointPolicyDefinitionData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string description, string service, IList<string> serviceResources, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal ServiceEndpointPolicyDefinitionData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string description, string service, IList<ResourceIdentifier> serviceResources, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            Etag = etag;
+            ETag = etag;
             Description = description;
             Service = service;
             ServiceResources = serviceResources;
@@ -40,13 +40,13 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> A description for this rule. Restricted to 140 chars. </summary>
         public string Description { get; set; }
         /// <summary> Service endpoint name. </summary>
         public string Service { get; set; }
         /// <summary> A list of service resources. </summary>
-        public IList<string> ServiceResources { get; }
+        public IList<ResourceIdentifier> ServiceResources { get; }
         /// <summary> The provisioning state of the service endpoint policy definition resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
     }

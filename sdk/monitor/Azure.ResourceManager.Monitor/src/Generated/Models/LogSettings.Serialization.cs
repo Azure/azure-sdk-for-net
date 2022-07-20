@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStringValue(Category);
             }
             writer.WritePropertyName("enabled");
-            writer.WriteBooleanValue(Enabled);
+            writer.WriteBooleanValue(IsEnabled);
             if (Optional.IsDefined(RetentionPolicy))
             {
                 writer.WritePropertyName("retentionPolicy");

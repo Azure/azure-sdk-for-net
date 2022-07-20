@@ -94,8 +94,8 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PolicyAssignmentResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentResource.Get");
-            scope.Start();
+            using var scope0 = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentResource.Get");
+            scope0.Start();
             try
             {
                 var response = await _policyAssignmentRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Resources
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }
@@ -118,8 +118,8 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PolicyAssignmentResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentResource.Get");
-            scope.Start();
+            using var scope0 = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentResource.Get");
+            scope0.Start();
             try
             {
                 var response = _policyAssignmentRestClient.Get(Id.Parent, Id.Name, cancellationToken);
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Resources
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }
@@ -143,8 +143,8 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<PolicyAssignmentResource>> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentResource.Delete");
-            scope.Start();
+            using var scope0 = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentResource.Delete");
+            scope0.Start();
             try
             {
                 var response = await _policyAssignmentRestClient.DeleteAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Resources
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }
@@ -169,8 +169,8 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<PolicyAssignmentResource> Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentResource.Delete");
-            scope.Start();
+            using var scope0 = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentResource.Delete");
+            scope0.Start();
             try
             {
                 var response = _policyAssignmentRestClient.Delete(Id.Parent, Id.Name, cancellationToken);
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Resources
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }
@@ -199,8 +199,8 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentResource.Update");
-            scope.Start();
+            using var scope0 = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentResource.Update");
+            scope0.Start();
             try
             {
                 var response = await _policyAssignmentRestClient.CreateAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Resources
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }
@@ -229,8 +229,8 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentResource.Update");
-            scope.Start();
+            using var scope0 = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentResource.Update");
+            scope0.Start();
             try
             {
                 var response = _policyAssignmentRestClient.Create(Id.Parent, Id.Name, data, cancellationToken);
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Resources
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }

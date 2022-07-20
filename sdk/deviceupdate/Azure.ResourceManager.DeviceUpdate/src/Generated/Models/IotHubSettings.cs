@@ -25,22 +25,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             ResourceId = resourceId;
         }
 
-        /// <summary> Initializes a new instance of IotHubSettings. </summary>
-        /// <param name="resourceId"> IoTHub resource ID. </param>
-        /// <param name="ioTHubConnectionString"> IoTHub connection string. </param>
-        /// <param name="eventHubConnectionString"> EventHub connection string. </param>
-        internal IotHubSettings(string resourceId, string ioTHubConnectionString, string eventHubConnectionString)
-        {
-            ResourceId = resourceId;
-            IoTHubConnectionString = ioTHubConnectionString;
-            EventHubConnectionString = eventHubConnectionString;
-        }
-
         /// <summary> IoTHub resource ID. </summary>
         public string ResourceId { get; set; }
-        /// <summary> IoTHub connection string. </summary>
-        public string IoTHubConnectionString { get; set; }
-        /// <summary> EventHub connection string. </summary>
-        public string EventHubConnectionString { get; set; }
     }
 }

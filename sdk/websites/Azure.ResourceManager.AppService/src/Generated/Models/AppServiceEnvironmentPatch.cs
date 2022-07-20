@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> ARM resource for a app service environment. </summary>
-    public partial class AppServiceEnvironmentPatch : ProxyOnlyResource
+    public partial class AppServiceEnvironmentPatch : ResourceData
     {
         /// <summary> Initializes a new instance of AppServiceEnvironmentPatch. </summary>
         public AppServiceEnvironmentPatch()
@@ -26,7 +26,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="provisioningState"> Provisioning state of the App Service Environment. </param>
         /// <param name="status"> Current status of the App Service Environment. </param>
         /// <param name="virtualNetwork"> Description of the Virtual Network. </param>
@@ -46,7 +45,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="hasLinuxWorkers"> Flag that displays whether an ASE has linux workers or not. </param>
         /// <param name="dedicatedHostCount"> Dedicated Host Count. </param>
         /// <param name="zoneRedundant"> Whether or not this App Service Environment is zone-redundant. </param>
-        internal AppServiceEnvironmentPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, ProvisioningState? provisioningState, HostingEnvironmentStatus? status, VirtualNetworkProfile virtualNetwork, LoadBalancingMode? internalLoadBalancingMode, string multiSize, int? multiRoleCount, int? ipsslAddressCount, string dnsSuffix, int? maximumNumberOfMachines, int? frontEndScaleFactor, bool? suspended, IList<NameValuePair> clusterSettings, IList<string> userWhitelistedIPRanges, bool? hasLinuxWorkers, int? dedicatedHostCount, bool? zoneRedundant) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal AppServiceEnvironmentPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, HostingEnvironmentStatus? status, VirtualNetworkProfile virtualNetwork, LoadBalancingMode? internalLoadBalancingMode, string multiSize, int? multiRoleCount, int? ipsslAddressCount, string dnsSuffix, int? maximumNumberOfMachines, int? frontEndScaleFactor, bool? suspended, IList<NameValuePair> clusterSettings, IList<string> userWhitelistedIPRanges, bool? hasLinuxWorkers, int? dedicatedHostCount, bool? zoneRedundant, string kind) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             Status = status;
@@ -64,6 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
             HasLinuxWorkers = hasLinuxWorkers;
             DedicatedHostCount = dedicatedHostCount;
             ZoneRedundant = zoneRedundant;
+            Kind = kind;
         }
 
         /// <summary> Provisioning state of the App Service Environment. </summary>
@@ -101,5 +102,7 @@ namespace Azure.ResourceManager.AppService.Models
         public int? DedicatedHostCount { get; set; }
         /// <summary> Whether or not this App Service Environment is zone-redundant. </summary>
         public bool? ZoneRedundant { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }
