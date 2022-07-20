@@ -3874,7 +3874,7 @@ namespace Azure.ResourceManager.AppService
         public StaticSiteUserProvidedFunctionAppARMData() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string FunctionAppRegion { get { throw null; } set { } }
-        public string FunctionAppResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier FunctionAppResourceId { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
     }
     public partial class StaticSiteUserProvidedFunctionAppCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.StaticSiteUserProvidedFunctionAppResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.StaticSiteUserProvidedFunctionAppResource>, System.Collections.IEnumerable
@@ -4681,7 +4681,7 @@ namespace Azure.ResourceManager.AppService.Models
         public System.DateTimeOffset? NotificationExpirationOn { get { throw null; } set { } }
         public System.DateTimeOffset? NotifiedOn { get { throw null; } set { } }
         public System.Guid? RecommendationId { get { throw null; } set { } }
-        public string ResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.ResourceScopeType? ResourceScope { get { throw null; } set { } }
         public string RuleName { get { throw null; } set { } }
         public double? Score { get { throw null; } set { } }
@@ -5052,7 +5052,7 @@ namespace Azure.ResourceManager.AppService.Models
         public System.DateTimeOffset? IssueOn { get { throw null; } }
         public string Issuer { get { throw null; } }
         public bool? IsValid { get { throw null; } }
-        public string KeyVaultId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier KeyVaultId { get { throw null; } set { } }
         public string KeyVaultSecretName { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.KeyVaultSecretStatus? KeyVaultSecretStatus { get { throw null; } }
         public string Kind { get { throw null; } set { } }
@@ -5060,7 +5060,7 @@ namespace Azure.ResourceManager.AppService.Models
         public byte[] PfxBlob { get { throw null; } set { } }
         public string PublicKeyHash { get { throw null; } }
         public string SelfLink { get { throw null; } }
-        public string ServerFarmId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ServerFarmId { get { throw null; } set { } }
         public string SiteName { get { throw null; } }
         public string SubjectName { get { throw null; } }
         public string Thumbprint { get { throw null; } }
@@ -5139,7 +5139,7 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class CloningInfo
     {
-        public CloningInfo(string sourceWebAppId) { }
+        public CloningInfo(Azure.Core.ResourceIdentifier sourceWebAppId) { }
         public System.Collections.Generic.IDictionary<string, string> AppSettingsOverrides { get { throw null; } }
         public System.Guid? CorrelationId { get { throw null; } set { } }
         public string HostingEnvironment { get { throw null; } set { } }
@@ -5147,9 +5147,9 @@ namespace Azure.ResourceManager.AppService.Models
         public bool? IsCloneSourceControl { get { throw null; } set { } }
         public bool? IsConfigureLoadBalancing { get { throw null; } set { } }
         public bool? IsOverwrite { get { throw null; } set { } }
-        public string SourceWebAppId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SourceWebAppId { get { throw null; } set { } }
         public string SourceWebAppLocation { get { throw null; } set { } }
-        public string TrafficManagerProfileId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier TrafficManagerProfileId { get { throw null; } set { } }
         public string TrafficManagerProfileName { get { throw null; } set { } }
     }
     public enum ComputeModeOption
@@ -5457,7 +5457,7 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class DeletedAppRestoreRequestInfo : Azure.ResourceManager.Models.ResourceData
     {
         public DeletedAppRestoreRequestInfo() { }
-        public string DeletedSiteId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier DeletedSiteId { get { throw null; } set { } }
         public bool? IsRecoverConfiguration { get { throw null; } set { } }
         public bool? IsUseDRSecondary { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
@@ -5869,9 +5869,9 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class HostingEnvironmentProfile
     {
         public HostingEnvironmentProfile() { }
-        public string Id { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
         public string Name { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.Core.ResourceType? ResourceType { get { throw null; } }
     }
     public enum HostingEnvironmentStatus
     {
@@ -6076,9 +6076,9 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class KubeEnvironmentProfile
     {
         public KubeEnvironmentProfile() { }
-        public string Id { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
         public string Name { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.Core.ResourceType? ResourceType { get { throw null; } }
     }
     public enum KubeEnvironmentProvisioningState
     {
@@ -7052,13 +7052,13 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal SkuInfo() { }
         public Azure.ResourceManager.AppService.Models.SkuCapacity Capacity { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.Core.ResourceType? ResourceType { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.SkuDescription Sku { get { throw null; } }
     }
     public partial class SkuInfos
     {
         internal SkuInfos() { }
-        public string ResourceType { get { throw null; } }
+        public Azure.Core.ResourceType? ResourceType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.GlobalCsmSkuDescription> Skus { get { throw null; } }
     }
     public partial class SlotDifference : Azure.ResourceManager.Models.ResourceData
@@ -7097,7 +7097,7 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class SnapshotRecoverySource
     {
         public SnapshotRecoverySource() { }
-        public string Id { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
     }
     public partial class SnapshotRestoreRequest : Azure.ResourceManager.Models.ResourceData
@@ -7287,7 +7287,7 @@ namespace Azure.ResourceManager.AppService.Models
         public StaticSiteUserProvidedFunctionApp() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string FunctionAppRegion { get { throw null; } set { } }
-        public string FunctionAppResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier FunctionAppResourceId { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
     }
     public partial class StaticSiteZipDeploymentARM : Azure.ResourceManager.Models.ResourceData
@@ -7385,7 +7385,7 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal SupportTopic() { }
         public string Id { get { throw null; } }
-        public string PesId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier PesId { get { throw null; } }
     }
     public partial class TldLegalAgreement
     {
@@ -7494,7 +7494,7 @@ namespace Azure.ResourceManager.AppService.Models
         public bool? IsXenon { get { throw null; } set { } }
         public Azure.Core.AzureLocation Location { get { throw null; } }
         public string Name { get { throw null; } }
-        public string ServerFarmId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ServerFarmId { get { throw null; } set { } }
         public string SkuName { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.ValidateResourceType ValidateResourceType { get { throw null; } }
     }
@@ -7554,10 +7554,10 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class VirtualNetworkProfile
     {
-        public VirtualNetworkProfile(string id) { }
-        public string Id { get { throw null; } set { } }
+        public VirtualNetworkProfile(Azure.Core.ResourceIdentifier id) { }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
         public string Name { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.Core.ResourceType? ResourceType { get { throw null; } }
         public string Subnet { get { throw null; } set { } }
     }
     public partial class VnetContent : Azure.ResourceManager.Models.ResourceData
