@@ -52,7 +52,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///   A unique name used to identify this <see cref="ServiceBusClient"/>.
         /// </summary>
-        internal string Identifier { get; }
+        public string Identifier { get; }
 
         /// <summary>
         ///   The instance of <see cref="ServiceBusEventSource" /> which can be mocked for testing.
@@ -151,7 +151,7 @@ namespace Azure.Messaging.ServiceBus
             _options = options?.Clone() ?? new ServiceBusClientOptions();
             Connection = new ServiceBusConnection(connectionString, _options);
             Logger.ClientCreateStart(typeof(ServiceBusClient), FullyQualifiedNamespace);
-            Identifier = DiagnosticUtilities.GenerateIdentifier(FullyQualifiedNamespace);
+            Identifier = options.Identifier ?? DiagnosticUtilities.GenerateIdentifier(FullyQualifiedNamespace);
             TransportType = _options.TransportType;
             Logger.ClientCreateComplete(typeof(ServiceBusClient), Identifier);
         }

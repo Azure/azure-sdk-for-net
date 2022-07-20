@@ -67,7 +67,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <remarks>Every new client has a unique ID.</remarks>
         ///
-        internal string Identifier { get; private set; }
+        public string Identifier { get; }
 
         /// <summary>
         ///   The policy to use for determining retry behavior for when an operation fails.
@@ -128,14 +128,6 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusSender"/> class for mocking.
-        /// </summary>
-        ///
-        protected ServiceBusSender()
-        {
-        }
-
-        /// <summary>
         ///   Initializes a new instance of the <see cref="ServiceBusSender"/> class.
         /// </summary>
         /// <param name="entityPath">The entity path to send the message to.</param>
@@ -165,6 +157,14 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="options">The set of options to use when configuring the sender.</param>
         protected ServiceBusSender(ServiceBusClient client, string queueOrTopicName, ServiceBusSenderOptions options) :
             this(queueOrTopicName, client.Connection, options)
+        {
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="ServiceBusSender"/> class for mocking.
+        /// </summary>
+        ///
+        protected ServiceBusSender()
         {
         }
 
