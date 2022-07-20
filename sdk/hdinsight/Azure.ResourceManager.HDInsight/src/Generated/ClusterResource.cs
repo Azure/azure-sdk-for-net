@@ -1994,19 +1994,19 @@ namespace Azure.ResourceManager.HDInsight
         /// Operation Id: VirtualMachines_RestartHosts
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The list of hosts to restart. </param>
+        /// <param name="hosts"> The list of hosts to restart. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> RestartHostsVirtualMachineAsync(WaitUntil waitUntil, IEnumerable<string> content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="hosts"/> is null. </exception>
+        public virtual async Task<ArmOperation> RestartHostsVirtualMachineAsync(WaitUntil waitUntil, IEnumerable<string> hosts, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(hosts, nameof(hosts));
 
             using var scope = _virtualMachinesClientDiagnostics.CreateScope("ClusterResource.RestartHostsVirtualMachine");
             scope.Start();
             try
             {
-                var response = await _virtualMachinesRestClient.RestartHostsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new HDInsightArmOperation(_virtualMachinesClientDiagnostics, Pipeline, _virtualMachinesRestClient.CreateRestartHostsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = await _virtualMachinesRestClient.RestartHostsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hosts, cancellationToken).ConfigureAwait(false);
+                var operation = new HDInsightArmOperation(_virtualMachinesClientDiagnostics, Pipeline, _virtualMachinesRestClient.CreateRestartHostsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hosts).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -2024,19 +2024,19 @@ namespace Azure.ResourceManager.HDInsight
         /// Operation Id: VirtualMachines_RestartHosts
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The list of hosts to restart. </param>
+        /// <param name="hosts"> The list of hosts to restart. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation RestartHostsVirtualMachine(WaitUntil waitUntil, IEnumerable<string> content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="hosts"/> is null. </exception>
+        public virtual ArmOperation RestartHostsVirtualMachine(WaitUntil waitUntil, IEnumerable<string> hosts, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(hosts, nameof(hosts));
 
             using var scope = _virtualMachinesClientDiagnostics.CreateScope("ClusterResource.RestartHostsVirtualMachine");
             scope.Start();
             try
             {
-                var response = _virtualMachinesRestClient.RestartHosts(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new HDInsightArmOperation(_virtualMachinesClientDiagnostics, Pipeline, _virtualMachinesRestClient.CreateRestartHostsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = _virtualMachinesRestClient.RestartHosts(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hosts, cancellationToken);
+                var operation = new HDInsightArmOperation(_virtualMachinesClientDiagnostics, Pipeline, _virtualMachinesRestClient.CreateRestartHostsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hosts).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the NetworkFeatures data model. </summary>
+    /// <summary> A class representing the NetworkFeature data model. </summary>
     public partial class NetworkFeatureData : ResourceData
     {
         /// <summary> Initializes a new instance of NetworkFeatureData. </summary>

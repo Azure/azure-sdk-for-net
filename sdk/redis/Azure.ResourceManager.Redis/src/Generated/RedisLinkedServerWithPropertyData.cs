@@ -11,7 +11,7 @@ using Azure.ResourceManager.Redis.Models;
 
 namespace Azure.ResourceManager.Redis
 {
-    /// <summary> A class representing the RedisLinkedServerWithProperties data model. </summary>
+    /// <summary> A class representing the RedisLinkedServerWithProperty data model. </summary>
     public partial class RedisLinkedServerWithPropertyData : ResourceData
     {
         /// <summary> Initializes a new instance of RedisLinkedServerWithPropertyData. </summary>

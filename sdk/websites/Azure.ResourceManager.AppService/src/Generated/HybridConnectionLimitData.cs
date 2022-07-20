@@ -10,7 +10,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the HybridConnectionLimits data model. </summary>
+    /// <summary> A class representing the HybridConnectionLimit data model. </summary>
     public partial class HybridConnectionLimitData : ResourceData
     {
         /// <summary> Initializes a new instance of HybridConnectionLimitData. </summary>

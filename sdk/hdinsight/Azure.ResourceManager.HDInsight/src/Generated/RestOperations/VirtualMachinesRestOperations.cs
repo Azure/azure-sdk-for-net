@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.HDInsight
             }
         }
 
-        internal HttpMessage CreateRestartHostsRequest(string subscriptionId, string resourceGroupName, string clusterName, IEnumerable<string> content)
+        internal HttpMessage CreateRestartHostsRequest(string subscriptionId, string resourceGroupName, string clusterName, IEnumerable<string> hosts)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -145,14 +145,14 @@ namespace Azure.ResourceManager.HDInsight
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteStartArray();
-            foreach (var item in content)
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteStartArray();
+            foreach (var item in hosts)
             {
-                content0.JsonWriter.WriteStringValue(item);
+                content.JsonWriter.WriteStringValue(item);
             }
-            content0.JsonWriter.WriteEndArray();
-            request.Content = content0;
+            content.JsonWriter.WriteEndArray();
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -161,18 +161,18 @@ namespace Azure.ResourceManager.HDInsight
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
-        /// <param name="content"> The list of hosts to restart. </param>
+        /// <param name="hosts"> The list of hosts to restart. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="hosts"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> RestartHostsAsync(string subscriptionId, string resourceGroupName, string clusterName, IEnumerable<string> content, CancellationToken cancellationToken = default)
+        public async Task<Response> RestartHostsAsync(string subscriptionId, string resourceGroupName, string clusterName, IEnumerable<string> hosts, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(hosts, nameof(hosts));
 
-            using var message = CreateRestartHostsRequest(subscriptionId, resourceGroupName, clusterName, content);
+            using var message = CreateRestartHostsRequest(subscriptionId, resourceGroupName, clusterName, hosts);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -188,18 +188,18 @@ namespace Azure.ResourceManager.HDInsight
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
-        /// <param name="content"> The list of hosts to restart. </param>
+        /// <param name="hosts"> The list of hosts to restart. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="hosts"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response RestartHosts(string subscriptionId, string resourceGroupName, string clusterName, IEnumerable<string> content, CancellationToken cancellationToken = default)
+        public Response RestartHosts(string subscriptionId, string resourceGroupName, string clusterName, IEnumerable<string> hosts, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(hosts, nameof(hosts));
 
-            using var message = CreateRestartHostsRequest(subscriptionId, resourceGroupName, clusterName, content);
+            using var message = CreateRestartHostsRequest(subscriptionId, resourceGroupName, clusterName, hosts);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
