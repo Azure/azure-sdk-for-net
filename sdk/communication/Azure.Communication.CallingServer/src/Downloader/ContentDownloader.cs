@@ -5,7 +5,6 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Communication.CallingServer.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -13,9 +12,9 @@ namespace Azure.Communication.CallingServer
 {
     internal class ContentDownloader
     {
-        private readonly CallRecordingClient _client;
+        private readonly CallRecording _client;
 
-        internal ContentDownloader(CallRecordingClient client)
+        internal ContentDownloader(CallRecording client)
         {
             _client = client;
         }

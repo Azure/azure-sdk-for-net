@@ -46,7 +46,6 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
             AssetConversionOperation conversionOperation = client.StartConversion(conversionId, conversionOptions);
 
             #endregion Snippet:StartAnAssetConversion
-            #region Snippet:QueryAssetConversion
 
             AssetConversion conversion = conversionOperation.WaitForCompletionAsync().Result;
             if (conversion.Status == AssetConversionStatus.Succeeded)
@@ -57,8 +56,6 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
             {
                 Console.WriteLine($"Conversion failed: {conversion.Error.Code} {conversion.Error.Message}");
             }
-
-            #endregion Snippet:QueryAssetConversion
         }
 
         [Test]
@@ -86,6 +83,7 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
             AssetConversionOperation conversionOperation = client.StartConversion(conversionId, conversionOptions);
             #endregion Snippet:StartAComplexAssetConversion
 
+            #region Snippet:QueryConversionStatus
             AssetConversion conversion = conversionOperation.WaitForCompletionAsync().Result;
             if (conversion.Status == AssetConversionStatus.Succeeded)
             {
@@ -95,6 +93,7 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
             {
                 Console.WriteLine($"Conversion failed: {conversion.Error.Code} {conversion.Error.Message}");
             }
+            #endregion Snippet:QueryConversionStatus
         }
 
         [Test]

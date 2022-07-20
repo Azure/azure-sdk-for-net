@@ -69,6 +69,38 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetSatelliteDataIngestionJobDetailsAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new ScenesClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetSatelliteDataIngestionJobDetailsAsync("<jobId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("startDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("endDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("data").GetProperty("imageNames")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("data").GetProperty("imageFormats")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("data").GetProperty("imageResolutions")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+        /// Console.WriteLine(result.GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -131,6 +163,38 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetSatelliteDataIngestionJobDetails with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new ScenesClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetSatelliteDataIngestionJobDetails("<jobId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("startDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("endDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("data").GetProperty("imageNames")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("data").GetProperty("imageFormats")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("data").GetProperty("imageResolutions")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+        /// Console.WriteLine(result.GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -192,6 +256,17 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="filePath"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call DownloadAsync with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new ScenesClient(endpoint, credential);
+        /// 
+        /// Response response = await client.DownloadAsync("<filePath>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         public virtual async Task<Response> DownloadAsync(string filePath, RequestContext context = null)
         {
             Argument.AssertNotNull(filePath, nameof(filePath));
@@ -216,6 +291,17 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="filePath"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call Download with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new ScenesClient(endpoint, credential);
+        /// 
+        /// Response response = client.Download("<filePath>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         public virtual Response Download(string filePath, RequestContext context = null)
         {
             Argument.AssertNotNull(filePath, nameof(filePath));
@@ -255,6 +341,46 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="farmerId"/> or <paramref name="boundaryId"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetScenesAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new ScenesClient(endpoint, credential);
+        /// 
+        /// await foreach (var data in client.GetScenesAsync("<provider>", "<farmerId>", "<boundaryId>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
+        /// ]]></code>
+        /// This sample shows how to call GetScenesAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new ScenesClient(endpoint, credential);
+        /// 
+        /// await foreach (var data in client.GetScenesAsync("<provider>", "<farmerId>", "<boundaryId>", "<source>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<imageNames>"}, new Double[]{1234}, new String[]{"<imageFormats>"}, 1234, "<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("sceneDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("provider").ToString());
+        ///     Console.WriteLine(result.GetProperty("source").ToString());
+        ///     Console.WriteLine(result.GetProperty("imageFiles")[0].GetProperty("fileLink").ToString());
+        ///     Console.WriteLine(result.GetProperty("imageFiles")[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("imageFiles")[0].GetProperty("imageFormat").ToString());
+        ///     Console.WriteLine(result.GetProperty("imageFiles")[0].GetProperty("resolution").ToString());
+        ///     Console.WriteLine(result.GetProperty("imageFormat").ToString());
+        ///     Console.WriteLine(result.GetProperty("cloudCoverPercentage").ToString());
+        ///     Console.WriteLine(result.GetProperty("darkPixelPercentage").ToString());
+        ///     Console.WriteLine(result.GetProperty("ndviMedianValue").ToString());
+        ///     Console.WriteLine(result.GetProperty("boundaryId").ToString());
+        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
         /// 
@@ -332,6 +458,46 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="farmerId"/> or <paramref name="boundaryId"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetScenes with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new ScenesClient(endpoint, credential);
+        /// 
+        /// foreach (var data in client.GetScenes("<provider>", "<farmerId>", "<boundaryId>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
+        /// ]]></code>
+        /// This sample shows how to call GetScenes with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new ScenesClient(endpoint, credential);
+        /// 
+        /// foreach (var data in client.GetScenes("<provider>", "<farmerId>", "<boundaryId>", "<source>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<imageNames>"}, new Double[]{1234}, new String[]{"<imageFormats>"}, 1234, "<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("sceneDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("provider").ToString());
+        ///     Console.WriteLine(result.GetProperty("source").ToString());
+        ///     Console.WriteLine(result.GetProperty("imageFiles")[0].GetProperty("fileLink").ToString());
+        ///     Console.WriteLine(result.GetProperty("imageFiles")[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("imageFiles")[0].GetProperty("imageFormat").ToString());
+        ///     Console.WriteLine(result.GetProperty("imageFiles")[0].GetProperty("resolution").ToString());
+        ///     Console.WriteLine(result.GetProperty("imageFormat").ToString());
+        ///     Console.WriteLine(result.GetProperty("cloudCoverPercentage").ToString());
+        ///     Console.WriteLine(result.GetProperty("darkPixelPercentage").ToString());
+        ///     Console.WriteLine(result.GetProperty("ndviMedianValue").ToString());
+        ///     Console.WriteLine(result.GetProperty("boundaryId").ToString());
+        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
         /// 
@@ -397,6 +563,86 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateSatelliteDataIngestionJobAsync with required parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new ScenesClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     farmerId = "<SatelliteDataIngestionJobFarmerId>",
+        ///     boundaryId = "<SatelliteDataIngestionJobBoundaryId>",
+        ///     startDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///     endDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
+        /// };
+        /// 
+        /// var operation = await client.CreateSatelliteDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+        /// 
+        /// BinaryData data = await operation.WaitForCompletionAsync();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("startDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("endDateTime").ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateSatelliteDataIngestionJobAsync with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new ScenesClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     farmerId = "<SatelliteDataIngestionJobFarmerId>",
+        ///     boundaryId = "<SatelliteDataIngestionJobBoundaryId>",
+        ///     startDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///     endDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///     provider = "<Microsoft>",
+        ///     source = "<Sentinel_2_L2A>",
+        ///     data = new {
+        ///         imageNames = new[] {
+        ///             "<SatelliteDataImageNamesItem>"
+        ///         },
+        ///         imageFormats = new[] {
+        ///             "<SatelliteDataImageFormatsItem>"
+        ///         },
+        ///         imageResolutions = new[] {
+        ///             1234
+        ///         },
+        ///     },
+        ///     name = "<SatelliteDataIngestionJobName>",
+        ///     description = "<SatelliteDataIngestionJobDescription>",
+        ///     properties = new {
+        ///         key = new {},
+        ///     },
+        /// };
+        /// 
+        /// var operation = await client.CreateSatelliteDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+        /// 
+        /// BinaryData data = await operation.WaitForCompletionAsync();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("startDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("endDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("data").GetProperty("imageNames")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("data").GetProperty("imageFormats")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("data").GetProperty("imageResolutions")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+        /// Console.WriteLine(result.GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
@@ -494,6 +740,86 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateSatelliteDataIngestionJob with required parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new ScenesClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     farmerId = "<SatelliteDataIngestionJobFarmerId>",
+        ///     boundaryId = "<SatelliteDataIngestionJobBoundaryId>",
+        ///     startDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///     endDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
+        /// };
+        /// 
+        /// var operation = client.CreateSatelliteDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+        /// 
+        /// BinaryData data = operation.WaitForCompletion();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("startDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("endDateTime").ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateSatelliteDataIngestionJob with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new ScenesClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     farmerId = "<SatelliteDataIngestionJobFarmerId>",
+        ///     boundaryId = "<SatelliteDataIngestionJobBoundaryId>",
+        ///     startDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///     endDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///     provider = "<Microsoft>",
+        ///     source = "<Sentinel_2_L2A>",
+        ///     data = new {
+        ///         imageNames = new[] {
+        ///             "<SatelliteDataImageNamesItem>"
+        ///         },
+        ///         imageFormats = new[] {
+        ///             "<SatelliteDataImageFormatsItem>"
+        ///         },
+        ///         imageResolutions = new[] {
+        ///             1234
+        ///         },
+        ///     },
+        ///     name = "<SatelliteDataIngestionJobName>",
+        ///     description = "<SatelliteDataIngestionJobDescription>",
+        ///     properties = new {
+        ///         key = new {},
+        ///     },
+        /// };
+        /// 
+        /// var operation = client.CreateSatelliteDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+        /// 
+        /// BinaryData data = operation.WaitForCompletion();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("startDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("endDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("data").GetProperty("imageNames")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("data").GetProperty("imageFormats")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("data").GetProperty("imageResolutions")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+        /// Console.WriteLine(result.GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 

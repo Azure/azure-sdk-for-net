@@ -6,7 +6,10 @@
 - Added `Length` property to `BoundingPolygon`.
 
 ### Breaking Changes
-- Renamed method `StartCreateComposedModel` to `StartComposeModel`.
+- Updated all long-running operation client methods to a new pattern. This affects `StartAnalyzeDocument`, `StartAnalyzeDocumentFromUri`, `StartBuildModel`, `StartCopyModelTo`, and `StartCreateComposedModel` methods. Changes are:
+  - Removed the "Start" prefix. For example, `StartAnalyzeDocument` was renamed to `AnalyzeDocument`.
+  - Added a new required parameter: `waitUntil`. It specifies whether the operation should run to completion before returning or not, removing the need to call `WaitForCompletion` in most scenarios.
+- Renamed method `StartCreateComposedModel` to `ComposeModel`.
 - Renamed `BuildModelOptions.ModelDescription` to `Description`.
 - Renamed `modelDescription` parameters to `description` in methods `GetCopyAuthorization` and `StartCreateComposedModel` (now called `StartComposeModel`).
 - Renamed `CopyAuthorization.ExpirationDateTime` to `ExpiresOn`.

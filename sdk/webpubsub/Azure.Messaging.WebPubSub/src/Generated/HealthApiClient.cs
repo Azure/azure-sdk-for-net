@@ -57,6 +57,15 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call GetServiceStatusAsync.
+        /// <code><![CDATA[
+        /// var client = new HealthApiClient("<https://my-account-name.azure.com>");
+        /// 
+        /// Response response = await client.GetServiceStatusAsync();
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         public virtual async Task<Response> GetServiceStatusAsync(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("HealthApiClient.GetServiceStatus");
@@ -77,6 +86,15 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call GetServiceStatus.
+        /// <code><![CDATA[
+        /// var client = new HealthApiClient("<https://my-account-name.azure.com>");
+        /// 
+        /// Response response = client.GetServiceStatus();
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         public virtual Response GetServiceStatus(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("HealthApiClient.GetServiceStatus");

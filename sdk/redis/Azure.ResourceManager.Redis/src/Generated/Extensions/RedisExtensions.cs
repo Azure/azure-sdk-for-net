@@ -68,9 +68,9 @@ namespace Azure.ResourceManager.Redis
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RedisResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<RedisResource> GetRedisAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<RedisResource> GetAllRedisAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetRedisAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetAllRedisAsync(cancellationToken);
         }
 
         /// <summary>
@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.Redis
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RedisResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<RedisResource> GetRedis(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<RedisResource> GetAllRedis(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetRedis(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetAllRedis(cancellationToken);
         }
 
         /// <summary>
@@ -134,9 +134,9 @@ namespace Azure.ResourceManager.Redis
         /// <summary> Gets a collection of RedisResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of RedisResources and their operations over a RedisResource. </returns>
-        public static RedisCollection GetRedis(this ResourceGroupResource resourceGroupResource)
+        public static RedisCollection GetAllRedis(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetRedis();
+            return GetExtensionClient(resourceGroupResource).GetAllRedis();
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Redis
         [ForwardsClientCalls]
         public static async Task<Response<RedisResource>> GetRedisAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetRedis().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetAllRedis().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Redis
         [ForwardsClientCalls]
         public static Response<RedisResource> GetRedis(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetRedis().Get(name, cancellationToken);
+            return resourceGroupResource.GetAllRedis().Get(name, cancellationToken);
         }
 
         #region RedisResource

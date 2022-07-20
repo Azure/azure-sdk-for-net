@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Storage.Models
         internal static ImmutableStorageAccount DeserializeImmutableStorageAccount(JsonElement element)
         {
             Optional<bool> enabled = default;
-            Optional<AccountImmutabilityPolicyProperties> immutabilityPolicy = default;
+            Optional<AccountImmutabilityPolicy> immutabilityPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Storage.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    immutabilityPolicy = AccountImmutabilityPolicyProperties.DeserializeAccountImmutabilityPolicyProperties(property.Value);
+                    immutabilityPolicy = AccountImmutabilityPolicy.DeserializeAccountImmutabilityPolicy(property.Value);
                     continue;
                 }
             }

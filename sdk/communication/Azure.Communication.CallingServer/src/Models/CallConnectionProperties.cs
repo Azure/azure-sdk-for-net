@@ -5,19 +5,28 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.Communication.CallingServer.Models
+namespace Azure.Communication.CallingServer
 {
     /// <summary> The call connection properties. </summary>
     public class CallConnectionProperties
     {
-        /// <summary> Initializes a new instance of CallConnectionProperties. </summary>
-        /// <param name="callConnectionPropertiesDtoInternal">The call connection properties internal.</param>
+        internal CallConnectionProperties(string callConnectionId, string serverCallId, CallSource callSource, IEnumerable<CommunicationIdentifier> targets, CallConnectionState callConnectionState, string subject, Uri callbackUri)
+        {
+            CallConnectionId = callConnectionId;
+            ServerCallId = serverCallId;
+            CallSource = callSource;
+            Targets = targets.ToList();
+            CallConnectionState = callConnectionState;
+            Subject = subject;
+            CallbackUri = callbackUri;
+        }
+
         internal CallConnectionProperties(CallConnectionPropertiesDtoInternal callConnectionPropertiesDtoInternal)
         {
             CallConnectionId = callConnectionPropertiesDtoInternal.CallConnectionId;
             ServerCallId = callConnectionPropertiesDtoInternal.ServerCallId;
-            Source = CommunicationIdentifierSerializer.Deserialize(callConnectionPropertiesDtoInternal.Source);
-            AlternateCallerId = callConnectionPropertiesDtoInternal.AlternateCallerId == null ? null : new PhoneNumberIdentifier(callConnectionPropertiesDtoInternal.AlternateCallerId.Value);
+            CallSource = new CallSource(CommunicationIdentifierSerializer.Deserialize(callConnectionPropertiesDtoInternal.Source.Identifier));
+            CallSource.CallerId = callConnectionPropertiesDtoInternal.Source.CallerId == null ? null : new PhoneNumberIdentifier(callConnectionPropertiesDtoInternal.Source.CallerId.Value);
             Targets = callConnectionPropertiesDtoInternal.Targets.Select(t => CommunicationIdentifierSerializer.Deserialize(t)).ToList();
             CallConnectionState = callConnectionPropertiesDtoInternal.CallConnectionState;
             Subject = callConnectionPropertiesDtoInternal.Subject;
@@ -29,9 +38,7 @@ namespace Azure.Communication.CallingServer.Models
         /// <summary> The server call id. </summary>
         public string ServerCallId { get; }
         /// <summary> The source of the call. </summary>
-        public CommunicationIdentifier Source { get; }
-        /// <summary> The alternate identity of the source of the call if dialing out to a pstn number. </summary>
-        public PhoneNumberIdentifier AlternateCallerId { get; }
+        public CallSource CallSource { get; }
         /// <summary> The targets of the call. </summary>
         public IReadOnlyList<CommunicationIdentifier> Targets { get; }
         /// <summary> The state of the call connection. </summary>
