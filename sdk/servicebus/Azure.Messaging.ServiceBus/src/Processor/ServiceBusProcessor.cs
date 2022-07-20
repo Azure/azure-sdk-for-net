@@ -71,7 +71,7 @@ namespace Azure.Messaging.ServiceBus
         /// Gets the ID to identify this processor. This can be used to correlate logs and exceptions.
         /// </summary>
         /// <remarks>Every new processor has a unique ID.</remarks>
-        internal string Identifier { get; }
+        public string Identifier { get; }
 
         /// <summary>
         /// Gets the <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.
@@ -238,7 +238,7 @@ namespace Azure.Messaging.ServiceBus
             Options = options?.Clone() ?? new ServiceBusProcessorOptions();
             Connection = connection;
             EntityPath = EntityNameFormatter.FormatEntityPath(entityPath, Options.SubQueue);
-            Identifier = DiagnosticUtilities.GenerateIdentifier(EntityPath);
+            Identifier = options.Identifier ?? DiagnosticUtilities.GenerateIdentifier(EntityPath);
 
             ReceiveMode = Options.ReceiveMode;
             PrefetchCount = Options.PrefetchCount;

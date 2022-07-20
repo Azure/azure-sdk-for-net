@@ -136,6 +136,12 @@ namespace Azure.Messaging.ServiceBus
         public SubQueue SubQueue { get; set; } = SubQueue.None;
 
         /// <summary>
+        /// Gets the ID to identify this client. This can be used to correlate logs and exceptions.
+        /// </summary>
+        /// <remarks>Every new client has a unique ID.</remarks>
+        public string Identifier { get; set; }
+
+        /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
         /// </summary>
         ///
