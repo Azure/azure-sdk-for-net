@@ -182,4 +182,10 @@ $mutatedContent = $mutatedContent -replace $hrefRegex, '"./$1"'
 Set-Content -Path $baseUrl -Value $mutatedContent -NoNewline
 
 Write-Verbose "Compress and copy HTML into the staging Area"
+Write-Verbose "Path to Archive"
+Write-Verbose ${DocOutHtmlDir}
+Write-Verbose "Path to Archive Contents"
+Get-ChildItem ${DocOutHtmlDiv}
+Write-Verbose "Destination Archive Path"
+Write-Verbose "${ArtifactStagingDirectory}/${ArtifactName}/${ArtifactName}.docs.zip"
 Compress-Archive -Path "${DocOutHtmlDir}/*" -DestinationPath "${ArtifactStagingDirectory}/${ArtifactName}/${ArtifactName}.docs.zip" -CompressionLevel Fastest  
