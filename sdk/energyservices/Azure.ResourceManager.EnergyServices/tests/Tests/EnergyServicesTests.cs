@@ -1,8 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.EnergyServices.Models;
 using Azure.ResourceManager.EnergyServices.Tests.Helpers;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.EnergyServices.Tests.Tests
@@ -15,30 +22,53 @@ namespace Azure.ResourceManager.EnergyServices.Tests.Tests
         }
 
         [SetUp]
-        public void ClearAndInitialize()
+        public async Task ClearAndInitialize()
         {
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
-                CreateCommonClient();
+                await CreateCommonClient();
             }
         }
 
         [OneTimeTearDown]
         public void Cleanup()
         {
-            CleanupResourceGroups();
+            //CleanupResourceGroups();
         }
 
         [TestCase]
-        public async void TestEnergyServicesOperations()
+        public async Task TestEnergyServicesOperations()
         {
-            var resourceGroupName = Recording.GenerateAssetName("SdkRg");
-            await EnergyServicesTestUtilities.TryRegisterResourceGroupAsync(ResourceGroupsOperations,
-                EnergyServicesTestUtilities.DefaultResourceLocation, resourceGroupName);
-            var energyServicesResourceName = Recording.GenerateAssetName("SdkAddress");
-            EnergyServiceCollection energyServicesCollection = await GetEnergyServicesCollectionAsync(resourceGroupName);
-            //EnergyServiceData energyServiceData = new EnergyServiceData();
-            var createAddressOperation = await energyServicesCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName: energyServicesResourceName );
+            // Set-up
+            SubscriptionResource subscription = await ArmClient.GetDefaultSubscriptionAsync();
+
+            var resourceGroupName = Recording.GenerateAssetName("komakkarsdk");
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, resourceGroupName, AzureLocation.EastUS);
+
+            var energyServicesName = "komakkarsdk11"; //Recording.GenerateAssetName("Sdk-EnergyServices");
+            EnergyServiceCollection energyServiceCollection = rg.GetEnergyServices();
+            EnergyServiceData energyServiceData = GetDefaultEnergyServiceData();
+
+            // Act - Create.
+            var createEnergyServicesOperation = await energyServiceCollection.CreateOrUpdateAsync(data: energyServiceData, resourceName: energyServicesName, waitUntil: WaitUntil.Completed);
+
+            // Assert
+            await createEnergyServicesOperation.WaitForCompletionAsync();
+            Assert.IsTrue(createEnergyServicesOperation.HasCompleted);
+            Assert.IsTrue(createEnergyServicesOperation.HasValue);
+
+            // Act - Get
+            Response<EnergyServiceResource> energyServiceResponse = await energyServiceCollection.GetAsync(energyServicesName);
+            EnergyServiceResource energyServiceResource = energyServiceResponse.Value;
+
+            // Assert
+            Assert.IsNotNull(energyServiceResource);
+
+            // Act - Delete
+            var deleteEnergyServicesByNameOperation = await energyServiceResource.DeleteAsync(WaitUntil.Completed);
+
+            // Assert
+            Assert.IsTrue(deleteEnergyServicesByNameOperation.HasCompleted);
         }
     }
 }

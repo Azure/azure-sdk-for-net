@@ -10,7 +10,7 @@ title: EnergyServices
 namespace: Azure.ResourceManager.EnergyServices
 require: https://github.com/Azure/azure-rest-api-specs/blob/cd3bae20cb3d8b2125e98dffc46f24c5eaba729a/specification/oep/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
-tag: package-2022-04-04-preview
+tag: package-2021-06-01-preview
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
