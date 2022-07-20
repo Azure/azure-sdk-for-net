@@ -28,11 +28,15 @@ namespace Azure.ResourceManager.FluidRelay
         /// <param name="frsTenantId"> The Fluid tenantId for this container. </param>
         /// <param name="frsContainerId"> The frsContainerId for this container. </param>
         /// <param name="provisioningState"> Provision states for FluidRelay RP. </param>
-        internal FluidRelayContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? frsTenantId, Guid? frsContainerId, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="creationOn"> The creation time of this resource. </param>
+        /// <param name="lastAccessOn"> Last time when user access this resource. </param>
+        internal FluidRelayContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? frsTenantId, Guid? frsContainerId, ProvisioningState? provisioningState, DateTimeOffset? creationOn, DateTimeOffset? lastAccessOn) : base(id, name, resourceType, systemData)
         {
             FrsTenantId = frsTenantId;
             FrsContainerId = frsContainerId;
             ProvisioningState = provisioningState;
+            CreationOn = creationOn;
+            LastAccessOn = lastAccessOn;
         }
 
         /// <summary> The Fluid tenantId for this container. </summary>
@@ -41,5 +45,9 @@ namespace Azure.ResourceManager.FluidRelay
         public Guid? FrsContainerId { get; }
         /// <summary> Provision states for FluidRelay RP. </summary>
         public ProvisioningState? ProvisioningState { get; }
+        /// <summary> The creation time of this resource. </summary>
+        public DateTimeOffset? CreationOn { get; }
+        /// <summary> Last time when user access this resource. </summary>
+        public DateTimeOffset? LastAccessOn { get; }
     }
 }
