@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.Sql
         private readonly TdeCertificatesRestOperations _tdeCertificatesRestClient;
         private readonly ClientDiagnostics _sqlDatabaseDatabasesClientDiagnostics;
         private readonly DatabasesRestOperations _sqlDatabaseDatabasesRestClient;
-        private readonly ClientDiagnostics _replicationLinkClientDiagnostics;
-        private readonly ReplicationLinksRestOperations _replicationLinkRestClient;
+        private readonly ClientDiagnostics _sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics;
+        private readonly ReplicationLinksRestOperations _sqlServerDatabaseReplicationLinkReplicationLinksRestClient;
         private readonly SqlServerData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SqlServerResource"/> class for mocking. </summary>
@@ -80,9 +80,9 @@ namespace Azure.ResourceManager.Sql
             _sqlDatabaseDatabasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlDatabaseResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SqlDatabaseResource.ResourceType, out string sqlDatabaseDatabasesApiVersion);
             _sqlDatabaseDatabasesRestClient = new DatabasesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlDatabaseDatabasesApiVersion);
-            _replicationLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ReplicationLinkResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ReplicationLinkResource.ResourceType, out string replicationLinkApiVersion);
-            _replicationLinkRestClient = new ReplicationLinksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, replicationLinkApiVersion);
+            _sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlServerDatabaseReplicationLinkResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SqlServerDatabaseReplicationLinkResource.ResourceType, out string sqlServerDatabaseReplicationLinkReplicationLinksApiVersion);
+            _sqlServerDatabaseReplicationLinkReplicationLinksRestClient = new ReplicationLinksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerDatabaseReplicationLinkReplicationLinksApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -677,7 +677,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SqlServerSecurityAlertPolicyResource>> GetSqlServerSecurityAlertPolicyAsync(SecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlServerSecurityAlertPolicyResource>> GetSqlServerSecurityAlertPolicyAsync(SqlSecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
         {
             return await GetSqlServerSecurityAlertPolicies().GetAsync(securityAlertPolicyName, cancellationToken).ConfigureAwait(false);
         }
@@ -690,7 +690,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<SqlServerSecurityAlertPolicyResource> GetSqlServerSecurityAlertPolicy(SecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
+        public virtual Response<SqlServerSecurityAlertPolicyResource> GetSqlServerSecurityAlertPolicy(SqlSecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
         {
             return GetSqlServerSecurityAlertPolicies().Get(securityAlertPolicyName, cancellationToken);
         }
@@ -765,11 +765,11 @@ namespace Azure.ResourceManager.Sql
             return GetSyncAgents().Get(syncAgentName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VirtualNetworkRuleResources in the SqlServer. </summary>
-        /// <returns> An object representing collection of VirtualNetworkRuleResources and their operations over a VirtualNetworkRuleResource. </returns>
-        public virtual VirtualNetworkRuleCollection GetVirtualNetworkRules()
+        /// <summary> Gets a collection of SqlServerVirtualNetworkRuleResources in the SqlServer. </summary>
+        /// <returns> An object representing collection of SqlServerVirtualNetworkRuleResources and their operations over a SqlServerVirtualNetworkRuleResource. </returns>
+        public virtual SqlServerVirtualNetworkRuleCollection GetSqlServerVirtualNetworkRules()
         {
-            return GetCachedClient(Client => new VirtualNetworkRuleCollection(Client, Id));
+            return GetCachedClient(Client => new SqlServerVirtualNetworkRuleCollection(Client, Id));
         }
 
         /// <summary>
@@ -782,9 +782,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="virtualNetworkRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<VirtualNetworkRuleResource>> GetVirtualNetworkRuleAsync(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlServerVirtualNetworkRuleResource>> GetSqlServerVirtualNetworkRuleAsync(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
         {
-            return await GetVirtualNetworkRules().GetAsync(virtualNetworkRuleName, cancellationToken).ConfigureAwait(false);
+            return await GetSqlServerVirtualNetworkRules().GetAsync(virtualNetworkRuleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -797,9 +797,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="virtualNetworkRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<VirtualNetworkRuleResource> GetVirtualNetworkRule(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
+        public virtual Response<SqlServerVirtualNetworkRuleResource> GetSqlServerVirtualNetworkRule(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
         {
-            return GetVirtualNetworkRules().Get(virtualNetworkRuleName, cancellationToken);
+            return GetSqlServerVirtualNetworkRules().Get(virtualNetworkRuleName, cancellationToken);
         }
 
         /// <summary> Gets a collection of OutboundFirewallRuleResources in the SqlServer. </summary>
@@ -1596,17 +1596,17 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ReplicationLinks_ListByServer
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ReplicationLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReplicationLinkResource> GetReplicationLinksAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SqlServerDatabaseReplicationLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SqlServerDatabaseReplicationLinkResource> GetReplicationLinksAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ReplicationLinkResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SqlServerDatabaseReplicationLinkResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _replicationLinkClientDiagnostics.CreateScope("SqlServerResource.GetReplicationLinks");
+                using var scope = _sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics.CreateScope("SqlServerResource.GetReplicationLinks");
                 scope.Start();
                 try
                 {
-                    var response = await _replicationLinkRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ReplicationLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerDatabaseReplicationLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1614,14 +1614,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<ReplicationLinkResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SqlServerDatabaseReplicationLinkResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _replicationLinkClientDiagnostics.CreateScope("SqlServerResource.GetReplicationLinks");
+                using var scope = _sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics.CreateScope("SqlServerResource.GetReplicationLinks");
                 scope.Start();
                 try
                 {
-                    var response = await _replicationLinkRestClient.ListByServerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ReplicationLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.ListByServerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerDatabaseReplicationLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1638,17 +1638,17 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ReplicationLinks_ListByServer
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ReplicationLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReplicationLinkResource> GetReplicationLinks(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SqlServerDatabaseReplicationLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SqlServerDatabaseReplicationLinkResource> GetReplicationLinks(CancellationToken cancellationToken = default)
         {
-            Page<ReplicationLinkResource> FirstPageFunc(int? pageSizeHint)
+            Page<SqlServerDatabaseReplicationLinkResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _replicationLinkClientDiagnostics.CreateScope("SqlServerResource.GetReplicationLinks");
+                using var scope = _sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics.CreateScope("SqlServerResource.GetReplicationLinks");
                 scope.Start();
                 try
                 {
-                    var response = _replicationLinkRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ReplicationLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerDatabaseReplicationLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1656,14 +1656,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<ReplicationLinkResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SqlServerDatabaseReplicationLinkResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _replicationLinkClientDiagnostics.CreateScope("SqlServerResource.GetReplicationLinks");
+                using var scope = _sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics.CreateScope("SqlServerResource.GetReplicationLinks");
                 scope.Start();
                 try
                 {
-                    var response = _replicationLinkRestClient.ListByServerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ReplicationLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.ListByServerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerDatabaseReplicationLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
         internal static SqlLocationCapabilities DeserializeSqlLocationCapabilities(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<IReadOnlyList<ServerVersionCapability>> supportedServerVersions = default;
+            Optional<IReadOnlyList<SqlServerVersionCapability>> supportedServerVersions = default;
             Optional<IReadOnlyList<ManagedInstanceVersionCapability>> supportedManagedInstanceVersions = default;
             Optional<SqlCapabilityStatus> status = default;
             Optional<string> reason = default;
@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ServerVersionCapability> array = new List<ServerVersionCapability>();
+                    List<SqlServerVersionCapability> array = new List<SqlServerVersionCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServerVersionCapability.DeserializeServerVersionCapability(item));
+                        array.Add(SqlServerVersionCapability.DeserializeSqlServerVersionCapability(item));
                     }
                     supportedServerVersions = array;
                     continue;

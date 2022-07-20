@@ -14,7 +14,7 @@ namespace Azure.Communication.CallingServer
     internal partial class CallSourceDto
     {
         /// <summary> Initializes a new instance of CallSourceDto. </summary>
-        /// <param name="identifier"></param>
+        /// <param name="identifier"> The identifier of the source of the call. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="identifier"/> is null. </exception>
         public CallSourceDto(CommunicationIdentifierModel identifier)
         {
@@ -26,9 +26,18 @@ namespace Azure.Communication.CallingServer
             Identifier = identifier;
         }
 
+        /// <summary> Initializes a new instance of CallSourceDto. </summary>
+        /// <param name="callerId"> The alternate identity of the source of the call if dialing out to a pstn number. </param>
+        /// <param name="identifier"> The identifier of the source of the call. </param>
+        internal CallSourceDto(PhoneNumberIdentifierModel callerId, CommunicationIdentifierModel identifier)
+        {
+            CallerId = callerId;
+            Identifier = identifier;
+        }
+
         /// <summary> The alternate identity of the source of the call if dialing out to a pstn number. </summary>
         public PhoneNumberIdentifierModel CallerId { get; set; }
-        /// <summary> Gets the identifier. </summary>
-        public CommunicationIdentifierModel Identifier { get; }
+        /// <summary> The identifier of the source of the call. </summary>
+        public CommunicationIdentifierModel Identifier { get; set; }
     }
 }

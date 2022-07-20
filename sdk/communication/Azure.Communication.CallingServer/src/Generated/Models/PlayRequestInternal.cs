@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Communication;
+using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
@@ -17,33 +17,20 @@ namespace Azure.Communication.CallingServer
     {
         /// <summary> Initializes a new instance of PlayRequestInternal. </summary>
         /// <param name="playSourceInfo"> The source of the audio to be played. </param>
-        /// <param name="playTo">
-        /// The list of call participants play provided audio to. 
-        /// Plays to everyone in the call when not provided.
-        /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="playSourceInfo"/> or <paramref name="playTo"/> is null. </exception>
-        public PlayRequestInternal(PlaySourceInternal playSourceInfo, IEnumerable<CommunicationIdentifierModel> playTo)
+        /// <exception cref="ArgumentNullException"> <paramref name="playSourceInfo"/> is null. </exception>
+        public PlayRequestInternal(PlaySourceInternal playSourceInfo)
         {
             if (playSourceInfo == null)
             {
                 throw new ArgumentNullException(nameof(playSourceInfo));
             }
-            if (playTo == null)
-            {
-                throw new ArgumentNullException(nameof(playTo));
-            }
 
             PlaySourceInfo = playSourceInfo;
-            PlayTo = playTo.ToList();
+            PlayTo = new ChangeTrackingList<CommunicationIdentifierModel>();
         }
 
         /// <summary> The source of the audio to be played. </summary>
         public PlaySourceInternal PlaySourceInfo { get; }
-        /// <summary>
-        /// The list of call participants play provided audio to. 
-        /// Plays to everyone in the call when not provided.
-        /// </summary>
-        public IList<CommunicationIdentifierModel> PlayTo { get; }
         /// <summary> Defines options for playing the audio. </summary>
         public PlayOptionsInternal PlayOptions { get; set; }
     }

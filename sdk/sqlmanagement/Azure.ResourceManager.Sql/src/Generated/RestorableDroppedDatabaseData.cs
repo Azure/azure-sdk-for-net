@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="deletedOn"> The deletion date of the database (ISO8601 format). </param>
         /// <param name="earliestRestoreOn"> The earliest restore date of the database (ISO8601 format). </param>
         /// <param name="backupStorageRedundancy"> The storage account type used to store backups for this database. </param>
-        internal RestorableDroppedDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlSku sku, string databaseName, long? maxSizeBytes, DateTimeOffset? createdOn, DateTimeOffset? deletedOn, DateTimeOffset? earliestRestoreOn, BackupStorageRedundancy? backupStorageRedundancy) : base(id, name, resourceType, systemData, tags, location)
+        internal RestorableDroppedDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlSku sku, string databaseName, long? maxSizeBytes, DateTimeOffset? createdOn, DateTimeOffset? deletedOn, DateTimeOffset? earliestRestoreOn, SqlBackupStorageRedundancy? backupStorageRedundancy) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             DatabaseName = databaseName;
@@ -60,6 +60,6 @@ namespace Azure.ResourceManager.Sql
         /// <summary> The earliest restore date of the database (ISO8601 format). </summary>
         public DateTimeOffset? EarliestRestoreOn { get; }
         /// <summary> The storage account type used to store backups for this database. </summary>
-        public BackupStorageRedundancy? BackupStorageRedundancy { get; }
+        public SqlBackupStorageRedundancy? BackupStorageRedundancy { get; }
     }
 }

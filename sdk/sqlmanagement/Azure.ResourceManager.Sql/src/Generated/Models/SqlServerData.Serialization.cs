@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Sql
             Optional<string> version = default;
             Optional<string> state = default;
             Optional<string> fullyQualifiedDomainName = default;
-            Optional<IReadOnlyList<ServerPrivateEndpointConnection>> privateEndpointConnections = default;
+            Optional<IReadOnlyList<SqlServerPrivateEndpointConnection>> privateEndpointConnections = default;
             Optional<string> minimalTlsVersion = default;
             Optional<ServerNetworkAccessFlag> publicNetworkAccess = default;
             Optional<ServerWorkspaceFeature> workspaceFeature = default;
@@ -222,10 +222,10 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ServerPrivateEndpointConnection> array = new List<ServerPrivateEndpointConnection>();
+                            List<SqlServerPrivateEndpointConnection> array = new List<SqlServerPrivateEndpointConnection>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ServerPrivateEndpointConnection.DeserializeServerPrivateEndpointConnection(item));
+                                array.Add(SqlServerPrivateEndpointConnection.DeserializeSqlServerPrivateEndpointConnection(item));
                             }
                             privateEndpointConnections = array;
                             continue;

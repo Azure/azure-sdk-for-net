@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="providerId"> Azure resource provider ID. </param>
         /// <param name="location"> Azure region. </param>
         /// <returns> An object representing collection of QuotaRequestDetailsResources and their operations over a QuotaRequestDetailsResource. </returns>
-        public virtual QuotaRequestDetailsCollection GetQuotaRequestDetails(string providerId, AzureLocation location)
+        public virtual QuotaRequestDetailsCollection GetAllQuotaRequestDetails(string providerId, AzureLocation location)
         {
             return new QuotaRequestDetailsCollection(Client, Id, providerId, location);
         }
