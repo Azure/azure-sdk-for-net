@@ -334,7 +334,7 @@ directive:
 
 ## Seal single value enums
 
-Prevents the creation of single-value extensible enum in generated code. The following single-value enum will be generated as string constants.
+Prevents the creation of single-value extensible enum in generated code. The following single-value enum will be generated as string constant.
 
 ```yaml
 directive:
