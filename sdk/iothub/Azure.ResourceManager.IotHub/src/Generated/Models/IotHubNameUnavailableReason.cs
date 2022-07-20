@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.IotHub.Models
 {
     /// <summary> The reason for unavailability. </summary>
-    public enum IotHubNameUnavailabilityReason
+    public enum IotHubNameUnavailableReason
     {
         /// <summary> Invalid. </summary>
         Invalid,

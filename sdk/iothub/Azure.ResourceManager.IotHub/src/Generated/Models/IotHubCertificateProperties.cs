@@ -19,16 +19,16 @@ namespace Azure.ResourceManager.IotHub.Models
 
         /// <summary> Initializes a new instance of IotHubCertificateProperties. </summary>
         /// <param name="subject"> The certificate&apos;s subject name. </param>
-        /// <param name="expiryOn"> The certificate&apos;s expiration date and time. </param>
+        /// <param name="expiresOn"> The certificate&apos;s expiration date and time. </param>
         /// <param name="thumbprint"> The certificate&apos;s thumbprint. </param>
         /// <param name="isVerified"> Determines whether certificate has been verified. </param>
         /// <param name="createdOn"> The certificate&apos;s create date and time. </param>
         /// <param name="updatedOn"> The certificate&apos;s last update date and time. </param>
         /// <param name="certificate"> The certificate content. </param>
-        internal IotHubCertificateProperties(string subject, DateTimeOffset? expiryOn, BinaryData thumbprint, bool? isVerified, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, BinaryData certificate)
+        internal IotHubCertificateProperties(string subject, DateTimeOffset? expiresOn, BinaryData thumbprint, bool? isVerified, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, BinaryData certificate)
         {
             Subject = subject;
-            ExpiryOn = expiryOn;
+            ExpiresOn = expiresOn;
             Thumbprint = thumbprint;
             IsVerified = isVerified;
             CreatedOn = createdOn;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> The certificate&apos;s subject name. </summary>
         public string Subject { get; }
         /// <summary> The certificate&apos;s expiration date and time. </summary>
-        public DateTimeOffset? ExpiryOn { get; }
+        public DateTimeOffset? ExpiresOn { get; }
         /// <summary> The certificate&apos;s thumbprint. </summary>
         public BinaryData Thumbprint { get; }
         /// <summary> Determines whether certificate has been verified. </summary>

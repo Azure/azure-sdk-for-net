@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="isNameAvailable"> The value which indicates whether the provided name is available. </param>
         /// <param name="reason"> The reason for unavailability. </param>
         /// <param name="message"> The detailed reason message. </param>
-        internal IotHubNameAvailabilityResponse(bool? isNameAvailable, IotHubNameUnavailabilityReason? reason, string message)
+        internal IotHubNameAvailabilityResponse(bool? isNameAvailable, IotHubNameUnavailableReason? reason, string message)
         {
             IsNameAvailable = isNameAvailable;
             Reason = reason;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> The value which indicates whether the provided name is available. </summary>
         public bool? IsNameAvailable { get; }
         /// <summary> The reason for unavailability. </summary>
-        public IotHubNameUnavailabilityReason? Reason { get; }
+        public IotHubNameUnavailableReason? Reason { get; }
         /// <summary> The detailed reason message. </summary>
         public string Message { get; }
     }

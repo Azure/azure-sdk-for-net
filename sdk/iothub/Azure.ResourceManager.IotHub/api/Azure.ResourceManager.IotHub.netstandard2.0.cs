@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public IotHubCertificateProperties() { }
         public System.BinaryData Certificate { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public System.DateTimeOffset? ExpiryOn { get { throw null; } }
+        public System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public bool? IsVerified { get { throw null; } set { } }
         public string Subject { get { throw null; } }
         public System.BinaryData Thumbprint { get { throw null; } }
@@ -503,9 +503,9 @@ namespace Azure.ResourceManager.IotHub.Models
         internal IotHubNameAvailabilityResponse() { }
         public bool? IsNameAvailable { get { throw null; } }
         public string Message { get { throw null; } }
-        public Azure.ResourceManager.IotHub.Models.IotHubNameUnavailabilityReason? Reason { get { throw null; } }
+        public Azure.ResourceManager.IotHub.Models.IotHubNameUnavailableReason? Reason { get { throw null; } }
     }
-    public enum IotHubNameUnavailabilityReason
+    public enum IotHubNameUnavailableReason
     {
         Invalid = 0,
         AlreadyExists = 1,

@@ -27,7 +27,7 @@ rename-mapping:
   Capabilities: IotHubCapability
   CertificateProperties.created: CreatedOn
   CertificateProperties.updated: UpdatedOn
-  CertificateProperties.expiry: ExpiryOn
+  CertificateProperties.expiry: ExpiresOn
   CertificatePropertiesWithNonce.created: CreatedOn
   CertificatePropertiesWithNonce.updated: UpdatedOn
   CertificatePropertiesWithNonce.expiry: ExpiryOn
@@ -47,6 +47,7 @@ rename-mapping:
   EndpointHealthData: IotHubEndpointHealthInfo
   EndpointHealthDataListResult: IotHubEndpointHealthInfoListResult
   UserSubscriptionQuota.id: IotHubTypeId
+  IotHubNameUnavailabilityReason: IotHubNameUnavailableReason
 
 prepend-rp-prefix:
   - AuthenticationType

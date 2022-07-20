@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.IotHub.Models
         internal static IotHubNameAvailabilityResponse DeserializeIotHubNameAvailabilityResponse(JsonElement element)
         {
             Optional<bool> nameAvailable = default;
-            Optional<IotHubNameUnavailabilityReason> reason = default;
+            Optional<IotHubNameUnavailableReason> reason = default;
             Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.IotHub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    reason = property.Value.GetString().ToIotHubNameUnavailabilityReason();
+                    reason = property.Value.GetString().ToIotHubNameUnavailableReason();
                     continue;
                 }
                 if (property.NameEquals("message"))
