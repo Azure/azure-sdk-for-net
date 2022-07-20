@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="IotHubUserSubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<IotHubUserSubscriptionQuota> GetSubscriptionQuotaResourceProviderCommonsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<IotHubUserSubscriptionQuota> GetIotHubUserSubscriptionQuotaAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetSubscriptionQuotaResourceProviderCommonsAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetIotHubUserSubscriptionQuotaAsync(cancellationToken);
         }
 
         /// <summary>
@@ -107,9 +107,9 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="IotHubUserSubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<IotHubUserSubscriptionQuota> GetSubscriptionQuotaResourceProviderCommons(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<IotHubUserSubscriptionQuota> GetIotHubUserSubscriptionQuota(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetSubscriptionQuotaResourceProviderCommons(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetIotHubUserSubscriptionQuota(cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)

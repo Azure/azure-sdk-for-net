@@ -18,6 +18,7 @@ modelerfour:
 
 override-operation-name:
   IotHubResource_CheckNameAvailability: CheckIotHubNameAvailability
+  ResourceProviderCommon_GetSubscriptionQuota: GetIotHubUserSubscriptionQuota
 
 rename-mapping:
   IotHubNameAvailabilityInfo: IotHubNameAvailabilityResponse
@@ -41,7 +42,7 @@ rename-mapping:
   RouteProperties: RoutingRuleProperties
   JobResponse.startTimeUtc: StartOn
   JobResponse.endTimeUtc: EndOn
-  JobResponse : IotHubJobInfo
+  JobResponse: IotHubJobInfo
   JobResponseListResult : IotHubJobInfoListResult
   EndpointHealthData: IotHubEndpointHealthInfo
   EndpointHealthDataListResult: IotHubEndpointHealthInfoListResult
