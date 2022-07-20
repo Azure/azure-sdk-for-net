@@ -136,7 +136,7 @@ var layout = new MediaCompositionLayout()
 var response = await mediaCompositionClient.UpdateLayoutAsync(mediaCompositionId, layout);
 ```
 
-Note: Updating `GroupCall`, `Room`, and `TeamsMeeting` input kind is currently not supported. A new media composition will need to be created if `GroupCall`, `Room`, or `TeamsMeeting` inputs needs to change.
+Note: Updating `GroupCall`, `Room`, and `TeamsMeeting` input kind is currently not supported. A new media composition will need to be created if `GroupCall`, `Room`, or `TeamsMeeting` inputs need to change.
 You can add or remove an input:
 
 ```C# Snippet:AddInputs
