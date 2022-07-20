@@ -30,6 +30,7 @@ namespace Azure.Storage.Blobs
         /// </summary>
         /// <remarks>
         /// Encryption v2 does not officially support a dynamic value for encryption region data length.
+        /// Field settable for testing purposes.
         /// </remarks>
         internal int _clientSideEncryptionV2EncryptionRegionDataLength = Constants.ClientSideEncryption.V2.EncryptionRegionDataSize;
 
