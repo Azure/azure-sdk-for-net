@@ -60,8 +60,7 @@ We continue to support API key and AAD authentication methods when creating the 
 
 - In `4.0.x`, we have added `DocumentAnalysisClient` and `DocumentModelAdministrationClient` which support API version `2022-06-30-preview` and later.
 - `FormRecognizerClient` and `FormTrainingClient` will continue to work targetting API version `2.1` and `2.0`. 
-- In `DocumentAnalysisClient` all prebuilt model methods along with custom model, layout, and a prebuilt general document analysis model are unified into two methods called
-`StartAnalyzeDocument` and `StartAnalyzeDocumentFromUri`.
+- In `DocumentAnalysisClient` all prebuilt model methods along with custom model, layout, and a prebuilt general document analysis model are unified into two methods called `AnalyzeDocument` and `AnalyzeDocumentFromUri`.
 - In `FormRecognizerClient` there are two methods (a stream and Uri method) for each of the prebuilt models supported by the service. This results in two methods for business card, receipt, identity document, and invoice models, along with a pair of methods for recognizing custom documents and for recognizing content/layout. 
 
 Creating new clients in `3.1.x`:
@@ -87,12 +86,12 @@ var documentModelAdministrationClient = new DocumentModelAdministrationClient(ne
 ### Analyzing documents
 
 Differences between the versions:
-- `StartAnalyzeDocument` and `StartAnalyzeDocumentFromUri` accept a string with the desired model ID for analysis. The model ID can be any of the prebuilt model IDs or a custom model ID.
+- `AnalyzeDocument` and `AnalyzeDocumentFromUri` accept a string with the desired model ID for analysis. The model ID can be any of the prebuilt model IDs or a custom model ID.
 - Along with more consolidated analysis methods in the `DocumentAnalysisClient`, the return types have also been improved and remove the hierarchical dependencies between elements. An instance of the `AnalyzeResult` model is now returned which showcases important document elements, such as key-value pairs, entities, tables, and document fields and values, among others, at the top level of the returned model. This can be contrasted with `RecognizedForm` which included more hierarchical relationships, for instance tables were an element of a `FormPage` and not a top-level element.
-- In the new version of the library, the functionality of `StartRecognizeContent` has been added as a prebuilt model and can be called in library version `Azure.AI.FormRecognizer (4.0.x)` with `StartAnalyzeDocument` by passing in the `prebuilt-layout` model ID. Similarly, to get general document information, such as key-value pairs, entities, and text layout, the `prebuilt-document` model ID can be used with `StartAnalyzeDocument`.
-- When calling `StartAnalyzeDocument` and `StartAnalyzeDocumentFromUri` the returned type is an `AnalyzeResult` object, while the various methods used with `FormRecognizerClient` return a list of `RecognizedForm`.
+- In the new version of the library, the functionality of `StartRecognizeContent` has been added as a prebuilt model and can be called in library version `Azure.AI.FormRecognizer (4.0.x)` with `AnalyzeDocument` by passing in the `prebuilt-layout` model ID. Similarly, to get general document information, such as key-value pairs, entities, and text layout, the `prebuilt-document` model ID can be used with `AnalyzeDocument`.
+- When calling `AnalyzeDocument` and `AnalyzeDocumentFromUri` the returned type is an `AnalyzeResult` object, while the various methods used with `FormRecognizerClient` return a list of `RecognizedForm`.
 - The optional `IncludeFieldElements` parameter is not supported with the `DocumentAnalysisClient`. Text details are automatically included with API version `2022-06-30-preview` and later.
-- The optional `ReadingOrder` parameter does not exist on `StartAnalyzeDocument` and `StartAnalyzeDocumentFromUri`. The service uses `natural` reading order to return data.
+- The optional `ReadingOrder` parameter does not exist on `AnalyzeDocument` and `AnalyzeDocumentFromUri`. The service uses `natural` reading order to return data.
 
 Analyzing prebuilt models like business cards, identity documents, invoices, and receipts with `3.1.x`:
 ```C# Snippet:FormRecognizerSampleRecognizeInvoicesUri
@@ -224,10 +223,7 @@ Analyzing prebuilt models like business cards, identity documents, invoices, and
 ```C# Snippet:FormRecognizerAnalyzeWithPrebuiltModelFromUriAsync
 Uri fileUri = new Uri("<fileUri>");
 
-AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-invoice", fileUri);
-
-await operation.WaitForCompletionAsync();
-
+AnalyzeDocumentOperation operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-invoice", fileUri);
 AnalyzeResult result = operation.Value;
 
 // To see the list of all the supported fields returned by service and its corresponding types for the
@@ -386,10 +382,7 @@ Analyzing document layout with `4.0.x`:
 ```C# Snippet:FormRecognizerExtractLayoutFromUriAsync
 Uri fileUri = new Uri("<fileUri>");
 
-AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-layout", fileUri);
-
-await operation.WaitForCompletionAsync();
-
+AnalyzeDocumentOperation operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-layout", fileUri);
 AnalyzeResult result = operation.Value;
 
 foreach (DocumentPage page in result.Pages)
@@ -404,7 +397,7 @@ foreach (DocumentPage page in result.Pages)
 
         Console.WriteLine($"    Its bounding polygon (points ordered clockwise):");
 
-        for (int j = 0; j < line.BoundingPolygon.Points.Length; j++)
+        for (int j = 0; j < line.BoundingPolygon.Length; j++)
         {
             Console.WriteLine($"      Point {j} => X: {line.BoundingPolygon[j].X}, Y: {line.BoundingPolygon[j].Y}");
         }
@@ -417,7 +410,7 @@ foreach (DocumentPage page in result.Pages)
         Console.WriteLine($"  Selection Mark {i} is {selectionMark.State}.");
         Console.WriteLine($"    Its bounding polygon (points ordered clockwise):");
 
-        for (int j = 0; j < selectionMark.BoundingPolygon.Points.Length; j++)
+        for (int j = 0; j < selectionMark.BoundingPolygon.Length; j++)
         {
             Console.WriteLine($"      Point {j} => X: {selectionMark.BoundingPolygon[j].X}, Y: {selectionMark.BoundingPolygon[j].Y}");
         }
@@ -475,10 +468,7 @@ Analyzing general prebuilt document types with `4.0.x`:
 ```C# Snippet:FormRecognizerAnalyzePrebuiltDocumentFromUriAsync
 Uri fileUri = new Uri("<fileUri>");
 
-AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-document", fileUri);
-
-await operation.WaitForCompletionAsync();
-
+AnalyzeDocumentOperation operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-document", fileUri);
 AnalyzeResult result = operation.Value;
 
 Console.WriteLine("Detected key-value pairs:");
@@ -507,7 +497,7 @@ foreach (DocumentPage page in result.Pages)
 
         Console.WriteLine($"    Its bounding polygon (points ordered clockwise):");
 
-        for (int j = 0; j < line.BoundingPolygon.Points.Length; j++)
+        for (int j = 0; j < line.BoundingPolygon.Length; j++)
         {
             Console.WriteLine($"      Point {j} => X: {line.BoundingPolygon[j].X}, Y: {line.BoundingPolygon[j].Y}");
         }
@@ -520,7 +510,7 @@ foreach (DocumentPage page in result.Pages)
         Console.WriteLine($"  Selection Mark {i} is {selectionMark.State}.");
         Console.WriteLine($"    Its bounding polygon (points ordered clockwise):");
 
-        for (int j = 0; j < selectionMark.BoundingPolygon.Points.Length; j++)
+        for (int j = 0; j < selectionMark.BoundingPolygon.Length; j++)
         {
             Console.WriteLine($"      Point {j} => X: {selectionMark.BoundingPolygon[j].X}, Y: {selectionMark.BoundingPolygon[j].Y}");
         }
@@ -559,7 +549,7 @@ for (int i = 0; i < result.Tables.Count; i++)
 }
 ```
 
-> NOTE: All of these samples also work with `StartAnalyzeDocument` when providing a document Stream.
+> NOTE: All of these samples also work with `AnalyzeDocument` when providing a document Stream.
 
 ### Training a custom model
 
@@ -629,9 +619,8 @@ var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureK
 // build modes and their differences, please see:
 // https://aka.ms/azsdk/formrecognizer/buildmode
 
-BuildModelOperation operation = await client.StartBuildModelAsync(trainingFileUri, DocumentBuildMode.Template);
-Response<DocumentModel> operationResponse = await operation.WaitForCompletionAsync();
-DocumentModel model = operationResponse.Value;
+BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, trainingFileUri, DocumentBuildMode.Template);
+DocumentModel model = operation.Value;
 
 Console.WriteLine($"  Model Id: {model.ModelId}");
 if (string.IsNullOrEmpty(model.Description))
@@ -651,7 +640,7 @@ foreach (KeyValuePair<string, DocTypeInfo> docType in model.DocTypes)
 ### Analyzing a document with a custom model
 
 Differences between the versions:
-- Analyzing a custom model with `DocumentAnalysisClient` uses the general `StartAnalyzeDocument` and `StartAnalyzeDocumentFromUri` methods.
+- Analyzing a custom model with `DocumentAnalysisClient` uses the general `AnalyzeDocument` and `AnalyzeDocumentFromUri` methods.
 - In order to analyze a custom model with `FormRecognizerClient` the `StartRecognizeCustomModels` and its corresponding Uri methods are used.
 - The `IncludeFieldElements` keyword argument is not supported with the `DocumentAnalysisClient`, text details are automatically included with API version `2022-06-30-preview` and later.
 
@@ -718,10 +707,7 @@ Analyze a document using a custom model with `4.0.x`:
 string modelId = "<modelId>";
 Uri fileUri = new Uri("<fileUri>");
 
-AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync(modelId, fileUri);
-
-await operation.WaitForCompletionAsync();
-
+AnalyzeDocumentOperation operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, modelId, fileUri);
 AnalyzeResult result = operation.Value;
 
 Console.WriteLine($"Document was analyzed with model with ID: {result.ModelId}");

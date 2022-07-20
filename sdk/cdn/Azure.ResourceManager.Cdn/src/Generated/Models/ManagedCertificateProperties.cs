@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Managed Certificate used for https. </summary>
-    public partial class ManagedCertificateProperties : SecretProperties
+    public partial class ManagedCertificateProperties : FrontDoorSecretProperties
     {
         /// <summary> Initializes a new instance of ManagedCertificateProperties. </summary>
         public ManagedCertificateProperties()
@@ -19,17 +21,17 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of ManagedCertificateProperties. </summary>
         /// <param name="secretType"> The type of the secret resource. </param>
         /// <param name="subject"> Subject name in the certificate. </param>
-        /// <param name="expirationDate"> Certificate expiration date. </param>
-        internal ManagedCertificateProperties(SecretType secretType, string subject, string expirationDate) : base(secretType)
+        /// <param name="expiresOn"> Certificate expiration date. </param>
+        internal ManagedCertificateProperties(SecretType secretType, string subject, DateTimeOffset? expiresOn) : base(secretType)
         {
             Subject = subject;
-            ExpirationDate = expirationDate;
+            ExpiresOn = expiresOn;
             SecretType = secretType;
         }
 
         /// <summary> Subject name in the certificate. </summary>
         public string Subject { get; }
         /// <summary> Certificate expiration date. </summary>
-        public string ExpirationDate { get; }
+        public DateTimeOffset? ExpiresOn { get; }
     }
 }

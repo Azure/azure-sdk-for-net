@@ -65,57 +65,92 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Get a specified application data resource under a particular farmer. </summary>
         /// <param name="farmerId"> ID of the associated farmer resource. </param>
         /// <param name="applicationDataId"> ID of the application data resource. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="applicationDataId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="applicationDataId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetApplicationDataAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new ApplicationDataClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetApplicationDataAsync("<farmerId>", "<applicationDataId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("productName").ToString());
+        /// Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("isCarrier").ToString());
+        /// Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("avgMaterial").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("avgMaterial").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("totalMaterial").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("totalMaterial").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("avgMaterial").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("avgMaterial").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("totalMaterial").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("totalMaterial").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("operationModifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("operationStartDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
+        /// Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("operationBoundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ApplicationData</c>:
         /// <code>{
         ///   applicationProductDetails: [
         ///     {
-        ///       productName: string,
-        ///       isCarrier: boolean,
+        ///       productName: string, # Optional. Name of the product applied.
+        ///       isCarrier: boolean, # Optional. A flag indicating whether product is a carrier for a tank mix.
         ///       avgMaterial: {
-        ///         unit: string,
-        ///         value: number
-        ///       },
-        ///       totalMaterial: Measure
+        ///         unit: string, # Optional. Data unit.
+        ///         value: number, # Optional. Data value.
+        ///       }, # Optional. Schema for storing measurement reading and unit.
+        ///       totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
         ///     }
-        ///   ],
-        ///   avgMaterial: Measure,
-        ///   totalMaterial: Measure,
-        ///   area: Measure,
-        ///   source: string,
-        ///   operationModifiedDateTime: string (ISO 8601 Format),
-        ///   operationStartDateTime: string (ISO 8601 Format),
-        ///   operationEndDateTime: string (ISO 8601 Format),
-        ///   attachmentsLink: string,
-        ///   associatedBoundaryId: string,
-        ///   operationBoundaryId: string,
-        ///   farmerId: string,
-        ///   id: string,
-        ///   eTag: string,
-        ///   status: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   modifiedDateTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///   ], # Optional. Application product details.
+        ///   avgMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   area: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   source: string, # Optional. Source of the operation data.
+        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        /// Note: this will be specified by the source provider itself.
+        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   attachmentsLink: string, # Optional. Link for attachments.
+        ///   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
+        ///   operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
+        ///   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
+        ///   id: string, # Optional. Unique resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -142,57 +177,92 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Get a specified application data resource under a particular farmer. </summary>
         /// <param name="farmerId"> ID of the associated farmer resource. </param>
         /// <param name="applicationDataId"> ID of the application data resource. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="applicationDataId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="applicationDataId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetApplicationData with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new ApplicationDataClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetApplicationData("<farmerId>", "<applicationDataId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("productName").ToString());
+        /// Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("isCarrier").ToString());
+        /// Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("avgMaterial").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("avgMaterial").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("totalMaterial").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("totalMaterial").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("avgMaterial").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("avgMaterial").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("totalMaterial").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("totalMaterial").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("operationModifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("operationStartDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
+        /// Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("operationBoundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ApplicationData</c>:
         /// <code>{
         ///   applicationProductDetails: [
         ///     {
-        ///       productName: string,
-        ///       isCarrier: boolean,
+        ///       productName: string, # Optional. Name of the product applied.
+        ///       isCarrier: boolean, # Optional. A flag indicating whether product is a carrier for a tank mix.
         ///       avgMaterial: {
-        ///         unit: string,
-        ///         value: number
-        ///       },
-        ///       totalMaterial: Measure
+        ///         unit: string, # Optional. Data unit.
+        ///         value: number, # Optional. Data value.
+        ///       }, # Optional. Schema for storing measurement reading and unit.
+        ///       totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
         ///     }
-        ///   ],
-        ///   avgMaterial: Measure,
-        ///   totalMaterial: Measure,
-        ///   area: Measure,
-        ///   source: string,
-        ///   operationModifiedDateTime: string (ISO 8601 Format),
-        ///   operationStartDateTime: string (ISO 8601 Format),
-        ///   operationEndDateTime: string (ISO 8601 Format),
-        ///   attachmentsLink: string,
-        ///   associatedBoundaryId: string,
-        ///   operationBoundaryId: string,
-        ///   farmerId: string,
-        ///   id: string,
-        ///   eTag: string,
-        ///   status: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   modifiedDateTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///   ], # Optional. Application product details.
+        ///   avgMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   area: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   source: string, # Optional. Source of the operation data.
+        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        /// Note: this will be specified by the source provider itself.
+        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   attachmentsLink: string, # Optional. Link for attachments.
+        ///   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
+        ///   operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
+        ///   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
+        ///   id: string, # Optional. Unique resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -219,92 +289,188 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Creates or updates an application data resource under a particular farmer. </summary>
         /// <param name="farmerId"> ID of the associated farmer. </param>
         /// <param name="applicationDataId"> ID of the application data resource. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="applicationDataId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="applicationDataId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new ApplicationDataClient(endpoint, credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.CreateOrUpdateAsync("<farmerId>", "<applicationDataId>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new ApplicationDataClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     applicationProductDetails = new[] {
+        ///         new {
+        ///             productName = "<ApplicationProductDetailProductName>",
+        ///             isCarrier = false,
+        ///             avgMaterial = new {
+        ///                 unit = "<MeasureUnit>",
+        ///                 value = 1234,
+        ///             },
+        ///             totalMaterial = new {
+        ///                 unit = "<MeasureUnit>",
+        ///                 value = 1234,
+        ///             },
+        ///         }
+        ///     },
+        ///     avgMaterial = new {
+        ///         unit = "<MeasureUnit>",
+        ///         value = 1234,
+        ///     },
+        ///     totalMaterial = new {
+        ///         unit = "<MeasureUnit>",
+        ///         value = 1234,
+        ///     },
+        ///     area = new {
+        ///         unit = "<MeasureUnit>",
+        ///         value = 1234,
+        ///     },
+        ///     source = "<ApplicationDataSource>",
+        ///     operationModifiedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///     operationStartDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///     operationEndDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///     associatedBoundaryId = "<ApplicationDataAssociatedBoundaryId>",
+        ///     operationBoundaryId = "<ApplicationDataOperationBoundaryId>",
+        ///     status = "<ApplicationDataStatus>",
+        ///     name = "<ApplicationDataName>",
+        ///     description = "<ApplicationDataDescription>",
+        ///     properties = new {
+        ///         key = new {},
+        ///     },
+        /// };
+        /// 
+        /// Response response = await client.CreateOrUpdateAsync("<farmerId>", "<applicationDataId>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("productName").ToString());
+        /// Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("isCarrier").ToString());
+        /// Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("avgMaterial").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("avgMaterial").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("totalMaterial").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("totalMaterial").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("avgMaterial").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("avgMaterial").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("totalMaterial").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("totalMaterial").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("operationModifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("operationStartDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
+        /// Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("operationBoundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>ApplicationData</c>:
         /// <code>{
         ///   applicationProductDetails: [
         ///     {
-        ///       productName: string,
-        ///       isCarrier: boolean,
+        ///       productName: string, # Optional. Name of the product applied.
+        ///       isCarrier: boolean, # Optional. A flag indicating whether product is a carrier for a tank mix.
         ///       avgMaterial: {
-        ///         unit: string,
-        ///         value: number
-        ///       },
-        ///       totalMaterial: Measure
+        ///         unit: string, # Optional. Data unit.
+        ///         value: number, # Optional. Data value.
+        ///       }, # Optional. Schema for storing measurement reading and unit.
+        ///       totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
         ///     }
-        ///   ],
-        ///   avgMaterial: Measure,
-        ///   totalMaterial: Measure,
-        ///   area: Measure,
-        ///   source: string,
-        ///   operationModifiedDateTime: string (ISO 8601 Format),
-        ///   operationStartDateTime: string (ISO 8601 Format),
-        ///   operationEndDateTime: string (ISO 8601 Format),
-        ///   attachmentsLink: string,
-        ///   associatedBoundaryId: string,
-        ///   operationBoundaryId: string,
-        ///   farmerId: string,
-        ///   id: string,
-        ///   eTag: string,
-        ///   status: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   modifiedDateTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        ///   ], # Optional. Application product details.
+        ///   avgMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   area: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   source: string, # Optional. Source of the operation data.
+        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        /// Note: this will be specified by the source provider itself.
+        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   attachmentsLink: string, # Optional. Link for attachments.
+        ///   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
+        ///   operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
+        ///   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
+        ///   id: string, # Optional. Unique resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ApplicationData</c>:
         /// <code>{
         ///   applicationProductDetails: [
         ///     {
-        ///       productName: string,
-        ///       isCarrier: boolean,
+        ///       productName: string, # Optional. Name of the product applied.
+        ///       isCarrier: boolean, # Optional. A flag indicating whether product is a carrier for a tank mix.
         ///       avgMaterial: {
-        ///         unit: string,
-        ///         value: number
-        ///       },
-        ///       totalMaterial: Measure
+        ///         unit: string, # Optional. Data unit.
+        ///         value: number, # Optional. Data value.
+        ///       }, # Optional. Schema for storing measurement reading and unit.
+        ///       totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
         ///     }
-        ///   ],
-        ///   avgMaterial: Measure,
-        ///   totalMaterial: Measure,
-        ///   area: Measure,
-        ///   source: string,
-        ///   operationModifiedDateTime: string (ISO 8601 Format),
-        ///   operationStartDateTime: string (ISO 8601 Format),
-        ///   operationEndDateTime: string (ISO 8601 Format),
-        ///   attachmentsLink: string,
-        ///   associatedBoundaryId: string,
-        ///   operationBoundaryId: string,
-        ///   farmerId: string,
-        ///   id: string,
-        ///   eTag: string,
-        ///   status: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   modifiedDateTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///   ], # Optional. Application product details.
+        ///   avgMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   area: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   source: string, # Optional. Source of the operation data.
+        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        /// Note: this will be specified by the source provider itself.
+        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   attachmentsLink: string, # Optional. Link for attachments.
+        ///   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
+        ///   operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
+        ///   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
+        ///   id: string, # Optional. Unique resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -331,92 +497,188 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Creates or updates an application data resource under a particular farmer. </summary>
         /// <param name="farmerId"> ID of the associated farmer. </param>
         /// <param name="applicationDataId"> ID of the application data resource. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="applicationDataId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="applicationDataId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateOrUpdate with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new ApplicationDataClient(endpoint, credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.CreateOrUpdate("<farmerId>", "<applicationDataId>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new ApplicationDataClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     applicationProductDetails = new[] {
+        ///         new {
+        ///             productName = "<ApplicationProductDetailProductName>",
+        ///             isCarrier = false,
+        ///             avgMaterial = new {
+        ///                 unit = "<MeasureUnit>",
+        ///                 value = 1234,
+        ///             },
+        ///             totalMaterial = new {
+        ///                 unit = "<MeasureUnit>",
+        ///                 value = 1234,
+        ///             },
+        ///         }
+        ///     },
+        ///     avgMaterial = new {
+        ///         unit = "<MeasureUnit>",
+        ///         value = 1234,
+        ///     },
+        ///     totalMaterial = new {
+        ///         unit = "<MeasureUnit>",
+        ///         value = 1234,
+        ///     },
+        ///     area = new {
+        ///         unit = "<MeasureUnit>",
+        ///         value = 1234,
+        ///     },
+        ///     source = "<ApplicationDataSource>",
+        ///     operationModifiedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///     operationStartDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///     operationEndDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///     associatedBoundaryId = "<ApplicationDataAssociatedBoundaryId>",
+        ///     operationBoundaryId = "<ApplicationDataOperationBoundaryId>",
+        ///     status = "<ApplicationDataStatus>",
+        ///     name = "<ApplicationDataName>",
+        ///     description = "<ApplicationDataDescription>",
+        ///     properties = new {
+        ///         key = new {},
+        ///     },
+        /// };
+        /// 
+        /// Response response = client.CreateOrUpdate("<farmerId>", "<applicationDataId>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("productName").ToString());
+        /// Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("isCarrier").ToString());
+        /// Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("avgMaterial").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("avgMaterial").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("totalMaterial").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("totalMaterial").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("avgMaterial").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("avgMaterial").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("totalMaterial").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("totalMaterial").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("operationModifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("operationStartDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
+        /// Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("operationBoundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>ApplicationData</c>:
         /// <code>{
         ///   applicationProductDetails: [
         ///     {
-        ///       productName: string,
-        ///       isCarrier: boolean,
+        ///       productName: string, # Optional. Name of the product applied.
+        ///       isCarrier: boolean, # Optional. A flag indicating whether product is a carrier for a tank mix.
         ///       avgMaterial: {
-        ///         unit: string,
-        ///         value: number
-        ///       },
-        ///       totalMaterial: Measure
+        ///         unit: string, # Optional. Data unit.
+        ///         value: number, # Optional. Data value.
+        ///       }, # Optional. Schema for storing measurement reading and unit.
+        ///       totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
         ///     }
-        ///   ],
-        ///   avgMaterial: Measure,
-        ///   totalMaterial: Measure,
-        ///   area: Measure,
-        ///   source: string,
-        ///   operationModifiedDateTime: string (ISO 8601 Format),
-        ///   operationStartDateTime: string (ISO 8601 Format),
-        ///   operationEndDateTime: string (ISO 8601 Format),
-        ///   attachmentsLink: string,
-        ///   associatedBoundaryId: string,
-        ///   operationBoundaryId: string,
-        ///   farmerId: string,
-        ///   id: string,
-        ///   eTag: string,
-        ///   status: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   modifiedDateTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        ///   ], # Optional. Application product details.
+        ///   avgMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   area: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   source: string, # Optional. Source of the operation data.
+        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        /// Note: this will be specified by the source provider itself.
+        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   attachmentsLink: string, # Optional. Link for attachments.
+        ///   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
+        ///   operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
+        ///   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
+        ///   id: string, # Optional. Unique resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ApplicationData</c>:
         /// <code>{
         ///   applicationProductDetails: [
         ///     {
-        ///       productName: string,
-        ///       isCarrier: boolean,
+        ///       productName: string, # Optional. Name of the product applied.
+        ///       isCarrier: boolean, # Optional. A flag indicating whether product is a carrier for a tank mix.
         ///       avgMaterial: {
-        ///         unit: string,
-        ///         value: number
-        ///       },
-        ///       totalMaterial: Measure
+        ///         unit: string, # Optional. Data unit.
+        ///         value: number, # Optional. Data value.
+        ///       }, # Optional. Schema for storing measurement reading and unit.
+        ///       totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
         ///     }
-        ///   ],
-        ///   avgMaterial: Measure,
-        ///   totalMaterial: Measure,
-        ///   area: Measure,
-        ///   source: string,
-        ///   operationModifiedDateTime: string (ISO 8601 Format),
-        ///   operationStartDateTime: string (ISO 8601 Format),
-        ///   operationEndDateTime: string (ISO 8601 Format),
-        ///   attachmentsLink: string,
-        ///   associatedBoundaryId: string,
-        ///   operationBoundaryId: string,
-        ///   farmerId: string,
-        ///   id: string,
-        ///   eTag: string,
-        ///   status: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   modifiedDateTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///   ], # Optional. Application product details.
+        ///   avgMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   area: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   source: string, # Optional. Source of the operation data.
+        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        /// Note: this will be specified by the source provider itself.
+        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   attachmentsLink: string, # Optional. Link for attachments.
+        ///   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
+        ///   operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
+        ///   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
+        ///   id: string, # Optional. Unique resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -443,27 +705,22 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Deletes a specified application data resource under a particular farmer. </summary>
         /// <param name="farmerId"> ID of the associated farmer resource. </param>
         /// <param name="applicationDataId"> ID of the application data. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="applicationDataId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="applicationDataId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
-        /// }
-        /// </code>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call DeleteAsync with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new ApplicationDataClient(endpoint, credential);
         /// 
-        /// </remarks>
+        /// Response response = await client.DeleteAsync("<farmerId>", "<applicationDataId>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         public virtual async Task<Response> DeleteAsync(string farmerId, string applicationDataId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -486,27 +743,22 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Deletes a specified application data resource under a particular farmer. </summary>
         /// <param name="farmerId"> ID of the associated farmer resource. </param>
         /// <param name="applicationDataId"> ID of the application data. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="applicationDataId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="applicationDataId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
-        /// }
-        /// </code>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call Delete with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new ApplicationDataClient(endpoint, credential);
         /// 
-        /// </remarks>
+        /// Response response = client.Delete("<farmerId>", "<applicationDataId>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         public virtual Response Delete(string farmerId, string applicationDataId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -559,63 +811,105 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   value: [
-        ///     {
-        ///       applicationProductDetails: [
-        ///         {
-        ///           productName: string,
-        ///           isCarrier: boolean,
-        ///           avgMaterial: {
-        ///             unit: string,
-        ///             value: number
-        ///           },
-        ///           totalMaterial: Measure
-        ///         }
-        ///       ],
-        ///       avgMaterial: Measure,
-        ///       totalMaterial: Measure,
-        ///       area: Measure,
-        ///       source: string,
-        ///       operationModifiedDateTime: string (ISO 8601 Format),
-        ///       operationStartDateTime: string (ISO 8601 Format),
-        ///       operationEndDateTime: string (ISO 8601 Format),
-        ///       attachmentsLink: string,
-        ///       associatedBoundaryId: string,
-        ///       operationBoundaryId: string,
-        ///       farmerId: string,
-        ///       id: string,
-        ///       eTag: string,
-        ///       status: string,
-        ///       createdDateTime: string (ISO 8601 Format),
-        ///       modifiedDateTime: string (ISO 8601 Format),
-        ///       name: string,
-        ///       description: string,
-        ///       properties: Dictionary&lt;string, AnyObject&gt;
-        ///     }
-        ///   ],
-        ///   $skipToken: string,
-        ///   nextLink: string
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetAllApplicationDataByFarmerIdAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new ApplicationDataClient(endpoint, credential);
+        /// 
+        /// await foreach (var data in client.GetAllApplicationDataByFarmerIdAsync("<farmerId>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
         /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
+        /// ]]></code>
+        /// This sample shows how to call GetAllApplicationDataByFarmerIdAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new ApplicationDataClient(endpoint, credential);
+        /// 
+        /// await foreach (var data in client.GetAllApplicationDataByFarmerIdAsync("<farmerId>", 1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, new String[]{"<operationBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("productName").ToString());
+        ///     Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("isCarrier").ToString());
+        ///     Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("avgMaterial").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("avgMaterial").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("totalMaterial").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("totalMaterial").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgMaterial").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgMaterial").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("totalMaterial").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("totalMaterial").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("source").ToString());
+        ///     Console.WriteLine(result.GetProperty("operationModifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("operationStartDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
+        ///     Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
+        ///     Console.WriteLine(result.GetProperty("operationBoundaryId").ToString());
+        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
+        ///     Console.WriteLine(result.GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ApplicationDataListResponseValue</c>:
         /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
+        ///   applicationProductDetails: [
+        ///     {
+        ///       productName: string, # Optional. Name of the product applied.
+        ///       isCarrier: boolean, # Optional. A flag indicating whether product is a carrier for a tank mix.
+        ///       avgMaterial: {
+        ///         unit: string, # Optional. Data unit.
+        ///         value: number, # Optional. Data value.
+        ///       }, # Optional. Schema for storing measurement reading and unit.
+        ///       totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
         ///     }
-        ///   },
-        ///   traceId: string
+        ///   ], # Optional. Application product details.
+        ///   avgMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   area: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   source: string, # Optional. Source of the operation data.
+        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        /// Note: this will be specified by the source provider itself.
+        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   attachmentsLink: string, # Optional. Link for attachments.
+        ///   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
+        ///   operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
+        ///   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
+        ///   id: string, # Optional. Unique resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -677,63 +971,105 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   value: [
-        ///     {
-        ///       applicationProductDetails: [
-        ///         {
-        ///           productName: string,
-        ///           isCarrier: boolean,
-        ///           avgMaterial: {
-        ///             unit: string,
-        ///             value: number
-        ///           },
-        ///           totalMaterial: Measure
-        ///         }
-        ///       ],
-        ///       avgMaterial: Measure,
-        ///       totalMaterial: Measure,
-        ///       area: Measure,
-        ///       source: string,
-        ///       operationModifiedDateTime: string (ISO 8601 Format),
-        ///       operationStartDateTime: string (ISO 8601 Format),
-        ///       operationEndDateTime: string (ISO 8601 Format),
-        ///       attachmentsLink: string,
-        ///       associatedBoundaryId: string,
-        ///       operationBoundaryId: string,
-        ///       farmerId: string,
-        ///       id: string,
-        ///       eTag: string,
-        ///       status: string,
-        ///       createdDateTime: string (ISO 8601 Format),
-        ///       modifiedDateTime: string (ISO 8601 Format),
-        ///       name: string,
-        ///       description: string,
-        ///       properties: Dictionary&lt;string, AnyObject&gt;
-        ///     }
-        ///   ],
-        ///   $skipToken: string,
-        ///   nextLink: string
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetAllApplicationDataByFarmerId with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new ApplicationDataClient(endpoint, credential);
+        /// 
+        /// foreach (var data in client.GetAllApplicationDataByFarmerId("<farmerId>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
         /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
+        /// ]]></code>
+        /// This sample shows how to call GetAllApplicationDataByFarmerId with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new ApplicationDataClient(endpoint, credential);
+        /// 
+        /// foreach (var data in client.GetAllApplicationDataByFarmerId("<farmerId>", 1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, new String[]{"<operationBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("productName").ToString());
+        ///     Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("isCarrier").ToString());
+        ///     Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("avgMaterial").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("avgMaterial").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("totalMaterial").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("totalMaterial").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgMaterial").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgMaterial").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("totalMaterial").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("totalMaterial").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("source").ToString());
+        ///     Console.WriteLine(result.GetProperty("operationModifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("operationStartDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
+        ///     Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
+        ///     Console.WriteLine(result.GetProperty("operationBoundaryId").ToString());
+        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
+        ///     Console.WriteLine(result.GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ApplicationDataListResponseValue</c>:
         /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
+        ///   applicationProductDetails: [
+        ///     {
+        ///       productName: string, # Optional. Name of the product applied.
+        ///       isCarrier: boolean, # Optional. A flag indicating whether product is a carrier for a tank mix.
+        ///       avgMaterial: {
+        ///         unit: string, # Optional. Data unit.
+        ///         value: number, # Optional. Data value.
+        ///       }, # Optional. Schema for storing measurement reading and unit.
+        ///       totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
         ///     }
-        ///   },
-        ///   traceId: string
+        ///   ], # Optional. Application product details.
+        ///   avgMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   area: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   source: string, # Optional. Source of the operation data.
+        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        /// Note: this will be specified by the source provider itself.
+        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   attachmentsLink: string, # Optional. Link for attachments.
+        ///   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
+        ///   operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
+        ///   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
+        ///   id: string, # Optional. Unique resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -794,61 +1130,103 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   value: [
-        ///     {
-        ///       applicationProductDetails: [
-        ///         {
-        ///           productName: string,
-        ///           isCarrier: boolean,
-        ///           avgMaterial: {
-        ///             unit: string,
-        ///             value: number
-        ///           },
-        ///           totalMaterial: Measure
-        ///         }
-        ///       ],
-        ///       avgMaterial: Measure,
-        ///       totalMaterial: Measure,
-        ///       area: Measure,
-        ///       source: string,
-        ///       operationModifiedDateTime: string (ISO 8601 Format),
-        ///       operationStartDateTime: string (ISO 8601 Format),
-        ///       operationEndDateTime: string (ISO 8601 Format),
-        ///       attachmentsLink: string,
-        ///       associatedBoundaryId: string,
-        ///       operationBoundaryId: string,
-        ///       farmerId: string,
-        ///       id: string,
-        ///       eTag: string,
-        ///       status: string,
-        ///       createdDateTime: string (ISO 8601 Format),
-        ///       modifiedDateTime: string (ISO 8601 Format),
-        ///       name: string,
-        ///       description: string,
-        ///       properties: Dictionary&lt;string, AnyObject&gt;
-        ///     }
-        ///   ],
-        ///   $skipToken: string,
-        ///   nextLink: string
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetAllApplicationDataAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new ApplicationDataClient(endpoint, credential);
+        /// 
+        /// await foreach (var data in client.GetAllApplicationDataAsync())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
         /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
+        /// ]]></code>
+        /// This sample shows how to call GetAllApplicationDataAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new ApplicationDataClient(endpoint, credential);
+        /// 
+        /// await foreach (var data in client.GetAllApplicationDataAsync(1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, new String[]{"<operationBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("productName").ToString());
+        ///     Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("isCarrier").ToString());
+        ///     Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("avgMaterial").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("avgMaterial").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("totalMaterial").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("totalMaterial").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgMaterial").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgMaterial").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("totalMaterial").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("totalMaterial").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("source").ToString());
+        ///     Console.WriteLine(result.GetProperty("operationModifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("operationStartDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
+        ///     Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
+        ///     Console.WriteLine(result.GetProperty("operationBoundaryId").ToString());
+        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
+        ///     Console.WriteLine(result.GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ApplicationDataListResponseValue</c>:
         /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
+        ///   applicationProductDetails: [
+        ///     {
+        ///       productName: string, # Optional. Name of the product applied.
+        ///       isCarrier: boolean, # Optional. A flag indicating whether product is a carrier for a tank mix.
+        ///       avgMaterial: {
+        ///         unit: string, # Optional. Data unit.
+        ///         value: number, # Optional. Data value.
+        ///       }, # Optional. Schema for storing measurement reading and unit.
+        ///       totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
         ///     }
-        ///   },
-        ///   traceId: string
+        ///   ], # Optional. Application product details.
+        ///   avgMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   area: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   source: string, # Optional. Source of the operation data.
+        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        /// Note: this will be specified by the source provider itself.
+        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   attachmentsLink: string, # Optional. Link for attachments.
+        ///   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
+        ///   operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
+        ///   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
+        ///   id: string, # Optional. Unique resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -907,61 +1285,103 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   value: [
-        ///     {
-        ///       applicationProductDetails: [
-        ///         {
-        ///           productName: string,
-        ///           isCarrier: boolean,
-        ///           avgMaterial: {
-        ///             unit: string,
-        ///             value: number
-        ///           },
-        ///           totalMaterial: Measure
-        ///         }
-        ///       ],
-        ///       avgMaterial: Measure,
-        ///       totalMaterial: Measure,
-        ///       area: Measure,
-        ///       source: string,
-        ///       operationModifiedDateTime: string (ISO 8601 Format),
-        ///       operationStartDateTime: string (ISO 8601 Format),
-        ///       operationEndDateTime: string (ISO 8601 Format),
-        ///       attachmentsLink: string,
-        ///       associatedBoundaryId: string,
-        ///       operationBoundaryId: string,
-        ///       farmerId: string,
-        ///       id: string,
-        ///       eTag: string,
-        ///       status: string,
-        ///       createdDateTime: string (ISO 8601 Format),
-        ///       modifiedDateTime: string (ISO 8601 Format),
-        ///       name: string,
-        ///       description: string,
-        ///       properties: Dictionary&lt;string, AnyObject&gt;
-        ///     }
-        ///   ],
-        ///   $skipToken: string,
-        ///   nextLink: string
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetAllApplicationData and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new ApplicationDataClient(endpoint, credential);
+        /// 
+        /// foreach (var data in client.GetAllApplicationData())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
         /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
+        /// ]]></code>
+        /// This sample shows how to call GetAllApplicationData with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new ApplicationDataClient(endpoint, credential);
+        /// 
+        /// foreach (var data in client.GetAllApplicationData(1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, new String[]{"<operationBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("productName").ToString());
+        ///     Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("isCarrier").ToString());
+        ///     Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("avgMaterial").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("avgMaterial").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("totalMaterial").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("totalMaterial").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgMaterial").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgMaterial").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("totalMaterial").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("totalMaterial").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("source").ToString());
+        ///     Console.WriteLine(result.GetProperty("operationModifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("operationStartDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
+        ///     Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
+        ///     Console.WriteLine(result.GetProperty("operationBoundaryId").ToString());
+        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
+        ///     Console.WriteLine(result.GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ApplicationDataListResponseValue</c>:
         /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
+        ///   applicationProductDetails: [
+        ///     {
+        ///       productName: string, # Optional. Name of the product applied.
+        ///       isCarrier: boolean, # Optional. A flag indicating whether product is a carrier for a tank mix.
+        ///       avgMaterial: {
+        ///         unit: string, # Optional. Data unit.
+        ///         value: number, # Optional. Data value.
+        ///       }, # Optional. Schema for storing measurement reading and unit.
+        ///       totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
         ///     }
-        ///   },
-        ///   traceId: string
+        ///   ], # Optional. Application product details.
+        ///   avgMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   totalMaterial: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   area: Measure, # Optional. Schema for storing measurement reading and unit.
+        ///   source: string, # Optional. Source of the operation data.
+        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        /// Note: this will be specified by the source provider itself.
+        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   attachmentsLink: string, # Optional. Link for attachments.
+        ///   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
+        ///   operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
+        ///   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
+        ///   id: string, # Optional. Unique resource ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 

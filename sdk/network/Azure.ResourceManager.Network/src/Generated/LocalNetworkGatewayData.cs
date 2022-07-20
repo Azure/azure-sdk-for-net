@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="provisioningState"> The provisioning state of the local network gateway resource. </param>
         internal LocalNetworkGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, AddressSpace localNetworkAddressSpace, string gatewayIPAddress, string fqdn, BgpSettings bgpSettings, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
         {
-            Etag = etag;
+            ETag = etag;
             LocalNetworkAddressSpace = localNetworkAddressSpace;
             GatewayIPAddress = gatewayIPAddress;
             Fqdn = fqdn;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> Local network site address space. </summary>
         internal AddressSpace LocalNetworkAddressSpace { get; set; }
         /// <summary> A list of address blocks reserved for this virtual network in CIDR notation. </summary>

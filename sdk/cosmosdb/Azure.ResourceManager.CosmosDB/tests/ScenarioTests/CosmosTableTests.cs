@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
     public class CosmosTableTests : CosmosDBManagementClientBase
     {
         private ResourceIdentifier _databaseAccountIdentifier;
-        private DatabaseAccountResource _databaseAccount;
+        private CosmosDBAccountResource _databaseAccount;
 
         private string _databaseName;
 
@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
         }
 
-        protected CosmosTableCollection TableCollection => _databaseAccount.GetCosmosTables();
+        protected CosmosDBTableCollection TableCollection => _databaseAccount.GetCosmosDBTables();
 
         [OneTimeSetUp]
         public async Task GlobalSetup()
         {
             _resourceGroup = await GlobalClient.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
 
-            _databaseAccountIdentifier = (await CreateDatabaseAccount(SessionRecording.GenerateAssetName("dbaccount-"), DatabaseAccountKind.GlobalDocumentDB, new DatabaseAccountCapability("EnableTable"))).Id;
+            _databaseAccountIdentifier = (await CreateDatabaseAccount(SessionRecording.GenerateAssetName("dbaccount-"), CosmosDBAccountKind.GlobalDocumentDB, new CosmosDBAccountCapability("EnableTable"))).Id;
             await StopSessionRecordingAsync();
         }
 
@@ -36,14 +36,14 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             if (_databaseAccountIdentifier != null)
             {
-                ArmClient.GetDatabaseAccountResource(_databaseAccountIdentifier).Delete(WaitUntil.Completed);
+                ArmClient.GetCosmosDBAccountResource(_databaseAccountIdentifier).Delete(WaitUntil.Completed);
             }
         }
 
         [SetUp]
         public async Task SetUp()
         {
-            _databaseAccount = await ArmClient.GetDatabaseAccountResource(_databaseAccountIdentifier).GetAsync();
+            _databaseAccount = await ArmClient.GetCosmosDBAccountResource(_databaseAccountIdentifier).GetAsync();
         }
 
         [TearDown]
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             if (await TableCollection.ExistsAsync(_databaseName))
             {
                 var id = TableCollection.Id;
-                id = CosmosTableResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Name, _databaseName);
-                CosmosTableResource table = this.ArmClient.GetCosmosTableResource(id);
+                id = CosmosDBTableResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Name, _databaseName);
+                CosmosDBTableResource table = this.ArmClient.GetCosmosDBTableResource(id);
                 await table.DeleteAsync(WaitUntil.Completed);
             }
         }
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task TableCreateAndUpdate()
         {
             var table = await CreateTable(null);
-            Assert.AreEqual(_databaseName, table.Data.Resource.Id);
+            Assert.AreEqual(_databaseName, table.Data.Resource.TableName);
             // Seems bug in swagger definition
             //Assert.AreEqual(TestThroughput1, database.Data.Options.Throughput);
 
@@ -72,20 +72,20 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             // NOT WORKING API
             //ThroughputSettingsData throughtput = await database.GetMongoDBCollectionThroughputAsync();
-            CosmosTableResource table2 = await TableCollection.GetAsync(_databaseName);
-            Assert.AreEqual(_databaseName, table2.Data.Resource.Id);
+            CosmosDBTableResource table2 = await TableCollection.GetAsync(_databaseName);
+            Assert.AreEqual(_databaseName, table2.Data.Resource.TableName);
             //Assert.AreEqual(TestThroughput1, database2.Data.Options.Throughput);
 
             VerifyTables(table, table2);
 
             // TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
-            var updateOptions = new CosmosTableCreateOrUpdateContent(AzureLocation.WestUS, table.Data.Resource)
+            var updateOptions = new CosmosDBTableCreateOrUpdateContent(AzureLocation.WestUS, table.Data.Resource)
             {
-                Options = new CreateUpdateOptions { Throughput = TestThroughput2 }
+                Options = new CosmosDBCreateUpdateConfig { Throughput = TestThroughput2 }
             };
 
             table = (await TableCollection.CreateOrUpdateAsync(WaitUntil.Completed, _databaseName, updateOptions)).Value;
-            Assert.AreEqual(_databaseName, table.Data.Resource.Id);
+            Assert.AreEqual(_databaseName, table.Data.Resource.TableName);
             table2 = await TableCollection.GetAsync(_databaseName);
             VerifyTables(table, table2);
         }
@@ -108,13 +108,13 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task TableThroughput()
         {
             var database = await CreateTable(null);
-            DatabaseAccountTableThroughputSettingResource throughput = await database.GetDatabaseAccountTableThroughputSetting().GetAsync();
+            CosmosTableThroughputSettingResource throughput = await database.GetCosmosTableThroughputSetting().GetAsync();
             ;
 
             Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
 
-            DatabaseAccountTableThroughputSettingResource throughput2 = (await throughput.CreateOrUpdateAsync(WaitUntil.Completed, new ThroughputSettingsUpdateData(AzureLocation.WestUS,
-                new ThroughputSettingsResource(TestThroughput2, null, null, null)))).Value;
+            CosmosTableThroughputSettingResource throughput2 = (await throughput.CreateOrUpdateAsync(WaitUntil.Completed, new ThroughputSettingsUpdateData(AzureLocation.WestUS,
+                new ThroughputSettingsResourceInfo(TestThroughput2, null, null, null)))).Value;
 
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
         }
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task TableMigrateToAutoscale()
         {
             var database = await CreateTable(null);
-            DatabaseAccountTableThroughputSettingResource throughput = await database.GetDatabaseAccountTableThroughputSetting().GetAsync();
+            CosmosTableThroughputSettingResource throughput = await database.GetCosmosTableThroughputSetting().GetAsync();
             AssertManualThroughput(throughput.Data);
 
             ThroughputSettingsData throughputData = (await throughput.MigrateTableToAutoscaleAsync(WaitUntil.Completed)).Value.Data;
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 MaxThroughput = DefaultMaxThroughput,
             });
 
-            DatabaseAccountTableThroughputSettingResource throughput = await database.GetDatabaseAccountTableThroughputSetting().GetAsync();
+            CosmosTableThroughputSettingResource throughput = await database.GetCosmosTableThroughputSetting().GetAsync();
             AssertAutoscale(throughput.Data);
 
             ThroughputSettingsData throughputData = (await throughput.MigrateTableToManualThroughputAsync(WaitUntil.Completed)).Value.Data;
@@ -160,16 +160,16 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.IsFalse(exists);
         }
 
-        internal async Task<CosmosTableResource> CreateTable(AutoscaleSettings autoscale)
+        internal async Task<CosmosDBTableResource> CreateTable(AutoscaleSettings autoscale)
         {
             _databaseName = Recording.GenerateAssetName("table-");
-            return await CreateTable(_databaseName, autoscale, _databaseAccount.GetCosmosTables());
+            return await CreateTable(_databaseName, autoscale, _databaseAccount.GetCosmosDBTables());
         }
 
-        internal static async Task<CosmosTableResource> CreateTable(string name, AutoscaleSettings autoscale, CosmosTableCollection collection)
+        internal static async Task<CosmosDBTableResource> CreateTable(string name, AutoscaleSettings autoscale, CosmosDBTableCollection collection)
         {
-            var mongoDBDatabaseCreateUpdateOptions = new CosmosTableCreateOrUpdateContent(AzureLocation.WestUS,
-                new TableResource(name))
+            var mongoDBDatabaseCreateUpdateOptions = new CosmosDBTableCreateOrUpdateContent(AzureLocation.WestUS,
+                new CosmosDBTableResourceInfo(name))
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),
             };
@@ -177,14 +177,14 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             return databaseLro.Value;
         }
 
-        private void VerifyTables(CosmosTableResource expectedValue, CosmosTableResource actualValue)
+        private void VerifyTables(CosmosDBTableResource expectedValue, CosmosDBTableResource actualValue)
         {
             Assert.AreEqual(expectedValue.Id, actualValue.Id);
             Assert.AreEqual(expectedValue.Data.Name, actualValue.Data.Name);
-            Assert.AreEqual(expectedValue.Data.Resource.Id, actualValue.Data.Resource.Id);
+            Assert.AreEqual(expectedValue.Data.Resource.TableName, actualValue.Data.Resource.TableName);
             Assert.AreEqual(expectedValue.Data.Resource.Rid, actualValue.Data.Resource.Rid);
-            Assert.AreEqual(expectedValue.Data.Resource.Ts, actualValue.Data.Resource.Ts);
-            Assert.AreEqual(expectedValue.Data.Resource.Etag, actualValue.Data.Resource.Etag);
+            Assert.AreEqual(expectedValue.Data.Resource.Timestamp, actualValue.Data.Resource.Timestamp);
+            Assert.AreEqual(expectedValue.Data.Resource.ETag, actualValue.Data.Resource.ETag);
         }
     }
 }

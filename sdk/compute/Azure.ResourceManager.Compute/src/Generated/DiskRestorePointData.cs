@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="osType"> The Operating System type. </param>
         /// <param name="hyperVGeneration"> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </param>
         /// <param name="purchasePlan"> Purchase plan information for the the image from which the OS disk was created. </param>
-        /// <param name="supportedCapabilities"> List of supported capabilities (like accelerated networking) for the image from which the OS disk was created. </param>
+        /// <param name="supportedCapabilities"> List of supported capabilities for the image from which the OS disk was created. </param>
         /// <param name="familyId"> id of the backing snapshot&apos;s MIS family. </param>
         /// <param name="sourceUniqueId"> unique incarnation id of the source disk. </param>
         /// <param name="encryption"> Encryption property can be used to encrypt data at rest with customer managed keys or platform managed keys. </param>
@@ -41,7 +41,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="completionPercent"> Percentage complete for the background copy of disk restore point when source resource is from a different region. </param>
         /// <param name="replicationState"> Replication state of disk restore point when source resource is from a different region. </param>
         /// <param name="sourceResourceLocation"> Location of source disk or source disk restore point when source resource is from a different region. </param>
-        internal DiskRestorePointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? timeCreated, ResourceIdentifier sourceResourceId, OperatingSystemTypes? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, string familyId, string sourceUniqueId, DiskEncryption encryption, bool? supportsHibernation, NetworkAccessPolicy? networkAccessPolicy, PublicNetworkAccess? publicNetworkAccess, ResourceIdentifier diskAccessId, float? completionPercent, string replicationState, AzureLocation? sourceResourceLocation) : base(id, name, resourceType, systemData)
+        /// <param name="securityProfile"> Contains the security related information for the resource. </param>
+        internal DiskRestorePointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? timeCreated, ResourceIdentifier sourceResourceId, SupportedOperatingSystemType? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, string familyId, string sourceUniqueId, DiskEncryption encryption, bool? supportsHibernation, NetworkAccessPolicy? networkAccessPolicy, DiskPublicNetworkAccess? publicNetworkAccess, ResourceIdentifier diskAccessId, float? completionPercent, string replicationState, AzureLocation? sourceResourceLocation, DiskSecurityProfile securityProfile) : base(id, name, resourceType, systemData)
         {
             TimeCreated = timeCreated;
             SourceResourceId = sourceResourceId;
@@ -59,6 +60,7 @@ namespace Azure.ResourceManager.Compute
             CompletionPercent = completionPercent;
             ReplicationState = replicationState;
             SourceResourceLocation = sourceResourceLocation;
+            SecurityProfile = securityProfile;
         }
 
         /// <summary> The timestamp of restorePoint creation. </summary>
@@ -66,19 +68,13 @@ namespace Azure.ResourceManager.Compute
         /// <summary> arm id of source disk or source disk restore point. </summary>
         public ResourceIdentifier SourceResourceId { get; }
         /// <summary> The Operating System type. </summary>
-        public OperatingSystemTypes? OSType { get; }
+        public SupportedOperatingSystemType? OSType { get; }
         /// <summary> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </summary>
         public HyperVGeneration? HyperVGeneration { get; }
         /// <summary> Purchase plan information for the the image from which the OS disk was created. </summary>
         public DiskPurchasePlan PurchasePlan { get; }
-        /// <summary> List of supported capabilities (like accelerated networking) for the image from which the OS disk was created. </summary>
-        internal SupportedCapabilities SupportedCapabilities { get; }
-        /// <summary> True if the image from which the OS disk is created supports accelerated networking. </summary>
-        public bool? AcceleratedNetwork
-        {
-            get => SupportedCapabilities?.AcceleratedNetwork;
-        }
-
+        /// <summary> List of supported capabilities for the image from which the OS disk was created. </summary>
+        public SupportedCapabilities SupportedCapabilities { get; }
         /// <summary> id of the backing snapshot&apos;s MIS family. </summary>
         public string FamilyId { get; }
         /// <summary> unique incarnation id of the source disk. </summary>
@@ -90,7 +86,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Policy for accessing the disk via network. </summary>
         public NetworkAccessPolicy? NetworkAccessPolicy { get; }
         /// <summary> Policy for controlling export on the disk. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; }
+        public DiskPublicNetworkAccess? PublicNetworkAccess { get; }
         /// <summary> ARM id of the DiskAccess resource for using private endpoints on disks. </summary>
         public ResourceIdentifier DiskAccessId { get; }
         /// <summary> Percentage complete for the background copy of disk restore point when source resource is from a different region. </summary>
@@ -99,5 +95,7 @@ namespace Azure.ResourceManager.Compute
         public string ReplicationState { get; }
         /// <summary> Location of source disk or source disk restore point when source resource is from a different region. </summary>
         public AzureLocation? SourceResourceLocation { get; }
+        /// <summary> Contains the security related information for the resource. </summary>
+        public DiskSecurityProfile SecurityProfile { get; }
     }
 }

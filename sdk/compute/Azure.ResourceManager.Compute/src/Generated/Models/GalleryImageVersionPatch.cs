@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Models;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the gallery image version that you want to update. </summary>
-    public partial class GalleryImageVersionPatch : GalleryUpdateResourceDefinition
+    public partial class GalleryImageVersionPatch : ResourceData
     {
         /// <summary> Initializes a new instance of GalleryImageVersionPatch. </summary>
         public GalleryImageVersionPatch()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> The publishing profile of a gallery image Version. </summary>
         public GalleryImageVersionPublishingProfile PublishingProfile { get; set; }
         /// <summary> The provisioning state, which only appears in the response. </summary>
-        public GalleryImageVersionPropertiesProvisioningState? ProvisioningState { get; }
+        public GalleryProvisioningState? ProvisioningState { get; }
         /// <summary> This is the storage profile of a Gallery Image Version. </summary>
         public GalleryImageVersionStorageProfile StorageProfile { get; set; }
         /// <summary> This is the replication status of the gallery image version. </summary>
         public ReplicationStatus ReplicationStatus { get; }
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
     }
 }

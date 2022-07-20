@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
                         AddressPrefix = "10.10.2.0/24",
                         Delegations =
                         {
-                            new Delegation() { ServiceName  = "Microsoft.Sql/managedInstances",Name="Microsoft.Sql/managedInstances" ,ResourceType="Microsoft.Sql"}
+                            new ServiceDelegation() { ServiceName  = "Microsoft.Sql/managedInstances",Name="Microsoft.Sql/managedInstances" ,ResourceType="Microsoft.Sql"}
                         },
                         RouteTable = new RouteTableData(){ Id = routeTable.Value.Data.Id },
                         NetworkSecurityGroup = new NetworkSecurityGroupData(){ Id = networkSecurityGroup.Value.Data.Id },
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             };
             vnetData.AddressPrefixes.Add("10.10.0.0/16");
             var vnet = await _resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnetData);
-            string subnetId = $"{vnet.Value.Data.Id.ToString()}/subnets/ManagedInstance";
+            ResourceIdentifier subnetId = new ResourceIdentifier($"{vnet.Value.Data.Id.ToString()}/subnets/ManagedInstance");
             InstancePoolData data = new InstancePoolData(AzureLocation.WestUS2)
             {
                 Sku = new SqlSku("GP_Gen5", "GeneralPurpose", null, "Gen5", null),

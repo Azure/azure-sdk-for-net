@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Properties specific to a KubernetesOnlineDeployment. </summary>
-    internal partial class PartialKubernetesOnlineDeployment : PartialOnlineDeployment
+    public partial class PartialKubernetesOnlineDeployment : PartialOnlineDeployment
     {
         /// <summary> Initializes a new instance of PartialKubernetesOnlineDeployment. </summary>
         public PartialKubernetesOnlineDeployment()

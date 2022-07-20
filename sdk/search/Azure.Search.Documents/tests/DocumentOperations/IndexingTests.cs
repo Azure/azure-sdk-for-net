@@ -854,7 +854,7 @@ namespace Azure.Search.Documents.Tests
 
             JsonElement errorElement = JsonDocument.Parse(errorJsonContent).RootElement.GetProperty("error");
             StringAssert.AreEqualIgnoringCase("OperationNotAllowed", errorElement.GetProperty("code").GetString());
-            StringAssert.AreEqualIgnoringCase("The request is invalid.", errorElement.GetProperty("message").GetString());
+            StringAssert.StartsWith("The request is invalid.", errorElement.GetProperty("message").GetString());
             JsonElement details = errorElement.GetProperty("details");
             StringAssert.AreEqualIgnoringCase("MissingKeyField", details[0].GetProperty("code").GetString());
             StringAssert.AreEqualIgnoringCase("0: Document key cannot be missing or empty. Parameters: actions", details[0].GetProperty("message").GetString());

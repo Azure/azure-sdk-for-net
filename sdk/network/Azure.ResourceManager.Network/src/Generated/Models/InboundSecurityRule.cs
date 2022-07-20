@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         internal InboundSecurityRule(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, IList<InboundSecurityRules> rules, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            Etag = etag;
+            ETag = etag;
             Rules = rules;
             ProvisioningState = provisioningState;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> List of allowed rules. </summary>
         public IList<InboundSecurityRules> Rules { get; }
         /// <summary> The provisioning state of the resource. </summary>

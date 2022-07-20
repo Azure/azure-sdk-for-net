@@ -119,8 +119,8 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <param name='partnerRegistrationName'>
         /// Name of the partner registration.
         /// </param>
-        /// <param name='partnerRegistrationUpdateParameters'>
-        /// Partner registration update information.
+        /// <param name='tags'>
+        /// Tags of the partner registration resource.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -137,7 +137,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PartnerRegistration>> UpdateWithHttpMessagesAsync(string resourceGroupName, string partnerRegistrationName, PartnerRegistrationUpdateParameters partnerRegistrationUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PartnerRegistration>> UpdateWithHttpMessagesAsync(string resourceGroupName, string partnerRegistrationName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List partner registrations under an Azure subscription.
         /// </summary>
@@ -285,8 +285,8 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <param name='partnerRegistrationName'>
         /// Name of the partner registration.
         /// </param>
-        /// <param name='partnerRegistrationUpdateParameters'>
-        /// Partner registration update information.
+        /// <param name='tags'>
+        /// Tags of the partner registration resource.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -303,7 +303,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PartnerRegistration>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string partnerRegistrationName, PartnerRegistrationUpdateParameters partnerRegistrationUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PartnerRegistration>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string partnerRegistrationName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List partner registrations under an Azure subscription.
         /// </summary>

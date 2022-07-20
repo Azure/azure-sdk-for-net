@@ -10,39 +10,62 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Compute
 namespace: Azure.ResourceManager.Compute
-require: https://github.com/Azure/azure-rest-api-specs/blob/ac40996ab146d1360a4783665bb6c0b13f345aec/specification/compute/resource-manager/readme.md
-tag: package-2021-08-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/6c11930fe7757c6416cb2580eeddb4e57695c707/specification/compute/resource-manager/readme.md
+tag: package-2022-04-04
+output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
-output-folder: ./Generated
+modelerfour:
+  flatten-payloads: false
+
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'etag': 'etag'
+  'location': 'azure-location'
+  'locations': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
+
+keep-plural-enums:
+- IntervalInMins
+- VmGuestPatchClassificationForWindows # we have this because the generator will change windows to window which does not make sense
 
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
   Ip: IP
-  Ips: IPs
+  Ips: IPs|ips
   ID: Id
   IDs: Ids
   VM: Vm
   VMs: Vms
   Vmos: VmOS
-  VMScaleSet: VmScaleSet
+  VMScaleSet: VirtualMachineScaleSet
+  VmScaleSet: VirtualMachineScaleSet
+  VmScaleSets: VirtualMachineScaleSets
+  VMScaleSets: VirtualMachineScaleSets
   DNS: Dns
   VPN: Vpn
   NAT: Nat
   WAN: Wan
-  Ipv4: IPv4
-  Ipv6: IPv6
-  Ipsec: IPsec
+  Ipv4: IPv4|ipv4
+  Ipv6: IPv6|ipv6
+  Ipsec: IPsec|ipsec
   SSO: Sso
   URI: Uri
+  Etag: ETag|etag
   SSD: Ssd
   SAS: Sas
+  VCPUs: VCpus
+  LRS: Lrs
+  ZRS: Zrs
+  RestorePointCollection: RestorePointGroup # the word `collection` is reserved by the SDK, therefore we need to rename all the occurrences of this in all resources and models
+  EncryptionSettingsCollection: EncryptionSettingsGroup # the word `collection` is reserved by the SDK, therefore we need to rename all the occurrences of this in all resources and models
 
-#TODO: remove after we resolve why RestorePoint has no list
 list-exception:
-- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{restorePointName}
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointGroupName}/restorePoints/{restorePointName} # compute RP did not provide an API for listing this resource
+- /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualMachines/{instanceId}/runCommands/{runCommandName}: VirtualMachineScaleSetVmRunCommand
@@ -63,116 +86,229 @@ override-operation-name:
   VirtualMachineScaleSetRollingUpgrades_StartOSUpgrade: StartOSUpgrade
   LogAnalytics_ExportRequestRateByInterval: ExportLogAnalyticsRequestRateByInterval
   LogAnalytics_ExportThrottledRequests: ExportLogAnalyticsThrottledRequests
+  ResourceSkus_List: GetComputeResourceSkus
 
 request-path-to-resource-data:
   /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}: SharedGallery
   /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}/images/{galleryImageName}: SharedGalleryImage
   /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}/images/{galleryImageName}/versions/{galleryImageVersionName}: SharedGalleryImageVersion
+  /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}: CommunityGallery
+  /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}/images/{galleryImageName}: CommunityGalleryImage
+  /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}/images/{galleryImageName}/versions/{galleryImageVersionName}: CommunityGalleryImageVersion
+
+prepend-rp-prefix:
+- UsageName
+- UsageUnit
+- ApiError
+- ApiErrorBase
+- DeleteOptions
+- ResourceSku
+- ResourceSkuCapacity
+- ResourceSkuLocationInfo
+- ResourceSkuRestrictions
+- ResourceSkuRestrictionInfo
+- ResourceSkuRestrictionsReasonCode
+- ResourceSkuRestrictionsType
+- ResourceSkuZoneDetails
+- ResourceSkuCapacityScaleType
+- EncryptionType
+- PublicIPAddressSku
+- PublicIPAddressSkuName
+- PublicIPAddressSkuTier
+- StatusLevelTypes
+
+rename-mapping:
+  DiskSecurityTypes.ConfidentialVM_VMGuestStateOnlyEncryptedWithPlatformKey: ConfidentialVmGuestStateOnlyEncryptedWithPlatformKey
+  SubResource: ComputeWriteableSubResourceData
+  SubResourceReadOnly: ComputeSubResourceData
+  HyperVGenerationType: HyperVGeneration
+  HyperVGenerationTypes: HyperVGeneration
+  VirtualMachineExtension.properties.type: ExtensionType
+  VirtualMachineExtensionUpdate.properties.type: ExtensionType
+  VirtualMachineScaleSetExtension.properties.type: ExtensionType
+  VirtualMachineScaleSetExtensionUpdate.properties.type: ExtensionType
+  VirtualMachineScaleSetVMExtension.properties.type: ExtensionType
+  VirtualMachineScaleSetVMExtensionUpdate.properties.type: ExtensionType
+  RollingUpgradeStatusInfo: VirtualMachineScaleSetRollingUpgrade
+  OperatingSystemTypes: SupportedOperatingSystemType
+  VirtualMachineImageResource: VirtualMachineImageBase
+  RestorePointCollectionSourceProperties: RestorePointCollectionSource
+  RestorePointExpandOptions: RestorePointExpand
+  RestorePointCollectionExpandOptions: RestorePointCollectionExpand
+  ImageReference.sharedGalleryImageId: sharedGalleryImageUniqueId
+  UpdateResource: ComputeResourcePatch
+  SubResourceWithColocationStatus: ComputeSubResourceDataWithColocationStatus
+  SshPublicKey: SshPublicKeyConfiguration
+  SshPublicKeyResource: SshPublicKey
+  LogAnalyticsOperationResult: LogAnalytics
+  PrivateLinkResource: ComputePrivateLinkResourceData
+  Disk: ManagedDisk
+  Encryption: DiskEncryption
+  CreationData: DiskCreationData
+  Architecture: ArchitectureType
+  OSFamily: CloudServiceOSFamily
+  OSFamily.name: ResourceName
+  OSFamily.properties.name: OSFamilyName
+  OSVersion: CloudServiceOSVersion
+  UpdateDomain: UpdateDomainIdentifier
+  Extension: CloudServiceExtension
+  RoleInstance: CloudServiceRoleInstance
+  UpdateResourceDefinition: GalleryUpdateResourceData
+  StorageAccountType: ImageStorageAccountType
+  SharingProfile.permissions: permission
+  UserArtifactManage: UserArtifactManagement
+  GalleryExpandParams: GalleryExpand
+  PirResource: PirResourceData
+  PirSharedGalleryResource: PirSharedGalleryResourceData
+  PirCommunityGalleryResource: PirCommunityGalleryResourceData
+  PirCommunityGalleryResource.type: ResourceType
+  ExpandTypesForGetCapacityReservationGroups: CapacityReservationGroupGetExpand
+  ExpandTypesForGetVMScaleSets: VirtualMachineScaleSetGetExpand
+  DedicatedHostGroup.properties.hosts: DedicatedHosts
+  UefiSettings.secureBootEnabled: IsSecureBootEnabled
+  UefiSettings.vTpmEnabled: IsVirtualTpmEnabled
+  NetworkProfile: VirtualMachineNetworkProfile
+  NetworkInterfaceReference: VirtualMachineNetworkInterfaceReference
+  Image: DiskImage
+  VMDiskSecurityProfile: VirtualMachineDiskSecurityProfile
+  VmDiskTypes: VirtualMachineDiskType
+  VMGalleryApplication: VirtualMachineGalleryApplication
+  VMSizeProperties: VirtualMachineSizeProperties
+  ManagedDiskParameters: VirtualMachineManagedDisk
+  VirtualMachineScaleSetManagedDiskParameters: VirtualMachineScaleSetManagedDisk
+  StorageProfile: VirtualMachineStorageProfile
+  OSProfile: VirtualMachineOSProfile
+  OSDisk: VirtualMachineOSDisk
+  DataDisk: VirtualMachineDataDisk
+  HardwareProfile: VirtualMachineHardwareProfile
+  PublicNetworkAccess: DiskPublicNetworkAccess
+  LoadBalancerConfiguration: CloudServiceLoadBalancerConfiguration
+  ReplicationMode: GalleryReplicationMode
+  ReplicationState: RegionalReplicationState
+  RunCommandResult: VirtualMachineRunCommandResult
+  UpgradeMode: VirtualMachineScaleSetUpgradeMode
+  UpgradePolicy: VirtualMachineScaleSetUpgradePolicy
+  ResourceSkuCapabilities: ComputeResourceSkuCapabilities
+  ProtocolTypes: WinRMListenerProtocolType
+  VMGuestPatchClassificationLinux: VmGuestPatchClassificationForLinux
+  VMGuestPatchClassificationWindows: VmGuestPatchClassificationForWindows
 
 directive:
-  - rename-model:
-      from: SshPublicKey
-      to: SshPublicKeyInfo
-  - rename-model:
-      from: LogAnalyticsOperationResult
-      to: LogAnalytics
-  - rename-model:
-      from: SshPublicKeyResource
-      to: SshPublicKey
-  - rename-model:
-      from: RollingUpgradeStatusInfo
-      to: VirtualMachineScaleSetRollingUpgrade
-  - rename-model:
-      from: RestorePointCollection
-      to: RestorePointGroup
-  - rename-model:
-      from: Disk
-      to: ManagedDisk
-  - rename-model:
-      from: EncryptionSettingsCollection
-      to: EncryptionSettingGroup
-  - rename-model:
-      from: UpdateResource
-      to: ComputeUpdateResourceData
-  - rename-model:
-      from: SubResourceWithColocationStatus
-      to: ComputeSubResourceDataWithColocationStatus
-  - rename-model:
-      from: PrivateLinkResource
-      to: PrivateLinkResourceData
-# transform enum values
-  - from: swagger-document
-    where: $.definitions.DiskSecurityType["x-ms-enum"].values[1]
-    transform: $["name"] = "ConfidentialVmGuestStateOnlyEncryptedWithPlatformKey"
-  - from: swagger-document
-    where: $.definitions.DiskSecurityType["x-ms-enum"].values[2]
-    transform: $["name"] = "ConfidentialVmDiskEncryptedWithPlatformKey"
-  - from: swagger-document
-    where: $.definitions.DiskSecurityType["x-ms-enum"].values[3]
-    transform: $["name"] = "ConfidentialVmDiskEncryptedWithCustomerKey"
-  - from: swagger-document
-    where: $.paths..parameters[?(@.name === 'location')]
-    transform: $['x-ms-format'] = 'azure-location';
-  - from: swagger-document
-    where: $..parameters[?(@.name === 'location')]
-    transform: $['x-ms-format'] = 'azure-location'
-  - from: skus.json
+# copy the systemData from common-types here so that it will be automatically replaced
+  - from: common.json
     where: $.definitions
     transform: >
-      $.ResourceSku["x-ms-client-name"] = "ComputeResourceSku";
-      $.ResourceSku.properties.locations.items["x-ms-format"] = "azure-location";
-      $.ResourceSkuCapacity["x-ms-client-name"] = "ComputeResourceSkuCapacity";
-      $.ResourceSkuLocationInfo["x-ms-client-name"] = "ComputeResourceSkuLocationInfo";
-      $.ResourceSkuLocationInfo.properties.location["x-ms-format"] = "azure-location";
-      $.ResourceSkuRestrictionInfo["x-ms-format"] = "ComputeResourceSkuRestrictionInfo";
-      $.ResourceSkuRestrictionInfo.properties.locations.items["x-ms-format"] = "azure-location";
-  - from: compute.json
+      $.SubResource.properties.id["x-ms-format"] = "arm-id";
+      $.SubResourceReadOnly.properties.id["x-ms-format"] = "arm-id";
+      $.SystemData = {
+        "description": "Metadata pertaining to creation and last modification of the resource.",
+        "type": "object",
+        "readOnly": true,
+        "properties": {
+            "createdBy": {
+            "type": "string",
+            "description": "The identity that created the resource."
+            },
+            "createdByType": {
+            "type": "string",
+            "description": "The type of identity that created the resource.",
+            "enum": [
+                "User",
+                "Application",
+                "ManagedIdentity",
+                "Key"
+            ],
+            "x-ms-enum": {
+                "name": "createdByType",
+                "modelAsString": true
+            }
+            },
+            "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The timestamp of resource creation (UTC)."
+            },
+            "lastModifiedBy": {
+            "type": "string",
+            "description": "The identity that last modified the resource."
+            },
+            "lastModifiedByType": {
+            "type": "string",
+            "description": "The type of identity that last modified the resource.",
+            "enum": [
+                "User",
+                "Application",
+                "ManagedIdentity",
+                "Key"
+            ],
+            "x-ms-enum": {
+                "name": "createdByType",
+                "modelAsString": true
+            }
+            },
+            "lastModifiedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The timestamp of resource last modification (UTC)"
+            }
+          }
+        };
+  - from: virtualMachine.json
+    where: $.definitions
+    transform: >
+      $.VirtualMachineInstallPatchesParameters.properties.maximumDuration["format"] = "duration";
+  - from: virtualMachineImage.json
     where: $.definitions
     transform: >
       $.VirtualMachineImageProperties.properties.dataDiskImages.description = "The list of data disk images information.";
-      $.VirtualMachineInstallPatchesParameters.properties.maximumDuration["format"] = "duration";
-      $.VirtualMachineExtensionUpdateProperties.properties.type["x-ms-client-name"] = "ExtensionType";
-      $.VirtualMachineExtensionProperties.properties.type["x-ms-client-name"] = "ExtensionType";
-      $.VirtualMachineScaleSetExtensionProperties.properties.type["x-ms-client-name"] = "ExtensionType";
+  - from: virtualMachineScaleSet.json
+    where: $.definitions
+    transform: >
       $.VirtualMachineScaleSetExtension.properties.type["x-ms-format"] = "resource-type";
       $.VirtualMachineScaleSetExtensionUpdate.properties.type["x-ms-format"] = "resource-type";
-      $.VirtualMachineScaleSetVMExtensionUpdate.properties.type["x-ms-format"] = "resource-type";
-      $.VirtualMachineNetworkInterfaceIPConfigurationProperties.properties.privateIPAddressVersion["x-ms-enum"].name = "IPVersion";
-      $.VirtualMachinePublicIPAddressConfigurationProperties.properties.publicIPAddressVersion["x-ms-enum"].name = "IPVersion";
-      $.SubResource["x-ms-client-name"] = "ComputeWriteableSubResourceData";
-      $.SubResource.properties.id["x-ms-format"] = "arm-id";
-      $.SubResourceReadOnly["x-ms-client-name"] = "ComputeSubResourceData";
-      $.SubResourceReadOnly.properties.id["x-ms-format"] = "arm-id";
-      $.RestorePointCollectionSourceProperties["x-ms-client-name"] = "RestorePointCollectionSource";
-      $.RestorePointCollectionSourceProperties.properties.id["x-ms-format"] = "arm-id";
-      $.RestorePointCollectionSourceProperties.properties.location["x-ms-format"] = "azure-location";
-      $.RestorePointCollectionProperties.properties.restorePointCollectionId["x-ms-client-name"] = "restorePointGroupId";
-      $.RestorePointSourceMetadata.properties.location["x-ms-format"] = "azure-location";
       $.VirtualMachineScaleSetVMExtension.properties.type["x-ms-format"] = "resource-type";
-      $.ImageReference.properties.sharedGalleryImageId["x-ms-client-name"] = "sharedGalleryImageUniqueId";
+      $.VirtualMachineScaleSetVMExtensionUpdate.properties.type["x-ms-format"] = "resource-type";
+      $.VirtualMachineScaleSetSku.properties.resourceType["x-ms-format"] = "resource-type";
+      $.VirtualMachineScaleSetVMInstanceView.properties.assignedHost["x-ms-format"] = "arm-id";
+  - from: restorePoint.json
+    where: $.definitions
+    transform: >
+      $.RestorePointCollectionSourceProperties.properties.id["x-ms-format"] = "arm-id";
+  - from: sshPublicKey.json
+    where: $.definitions
+    transform: >
       $.SshPublicKeyGenerateKeyPairResult.properties.id["x-ms-format"] = "arm-id";
-      $.UpgradeOperationHistoricalStatusInfo.properties.location["x-ms-format"] = "azure-location";
-      $.VirtualMachineImageResource["x-ms-client-name"] = "VirtualMachineImageBase";
-      $.VirtualMachineImageResource.properties.location["x-ms-format"] = "azure-location";
-  - from: disk.json
+  - from: diskRPCommon.json
     where: $.definitions
     transform: >
       $.PurchasePlan["x-ms-client-name"] = "DiskPurchasePlan";
       $.GrantAccessData.properties.access.description = "The Access Level, accepted values include None, Read, Write.";
+  - from: disk.json
+    where: $.definitions
+    transform: >
+      $.Disk.properties.managedBy["x-ms-format"] = "arm-id";
+      $.Disk.properties.managedByExtended.items["x-ms-format"] = "arm-id";
       $.DiskProperties.properties.diskAccessId["x-ms-format"] = "arm-id";
       $.DiskUpdateProperties.properties.diskAccessId["x-ms-format"] = "arm-id";
+  - from: diskAccess.json
+    where: $.definitions
+    transform: >
+      $.PrivateLinkResourceProperties.properties.groupId["x-ms-format"] = "arm-id";
+  - from: diskRestorePoint.json
+    where: $.definitions
+    transform: >
       $.DiskRestorePointProperties.properties.sourceResourceId["x-ms-format"] = "arm-id";
-      $.DiskProperties.properties.encryptionSettingsCollection["x-ms-client-name"] = "encryptionSettingGroup";
-      $.DiskUpdateProperties.properties.encryptionSettingsCollection["x-ms-client-name"] = "encryptionSettingGroup";
-      $.SnapshotProperties.properties.encryptionSettingsCollection["x-ms-client-name"] = "encryptionSettingGroup";
-      $.SnapshotProperties.properties.diskAccessId["x-ms-format"] = "arm-id";
-      $.SnapshotUpdateProperties.properties.encryptionSettingsCollection["x-ms-client-name"] = "encryptionSettingGroup";
-      $.SnapshotUpdateProperties.properties.diskAccessId["x-ms-format"] = "arm-id";
-      $.Encryption["x-ms-client-name"] = "DiskEncryption";
-      $.Encryption.properties.diskEncryptionSetId["x-ms-format"] = "arm-id";
       $.DiskRestorePointProperties.properties.diskAccessId["x-ms-format"] = "arm-id";
       $.DiskRestorePointProperties.properties.sourceResourceLocation["x-ms-format"] = "azure-location";
-      $.CreationData["x-ms-client-name"] = "DiskCreationData";
+  - from: snapshot.json
+    where: $.definitions
+    transform: >
+      $.SnapshotProperties.properties.diskAccessId["x-ms-format"] = "arm-id";
+      $.SnapshotUpdateProperties.properties.diskAccessId["x-ms-format"] = "arm-id";
+  - from: diskRPCommon.json
+    where: $.definitions
+    transform: >
+      $.Encryption.properties.diskEncryptionSetId["x-ms-format"] = "arm-id";
       $.CreationData.properties.storageAccountId["x-ms-format"] = "arm-id";
       $.CreationData.properties.sourceResourceId["x-ms-format"] = "arm-id";
       $.DiskSecurityProfile.properties.secureVMDiskEncryptionSetId["x-ms-format"] = "arm-id";
@@ -181,22 +317,11 @@ directive:
     where: $.definitions
     transform: >
       $.CloudService.properties.properties["x-ms-client-flatten"] = true;
-      $.OSFamily["x-ms-client-name"] = "CloudServiceOSFamily";
-      $.OSFamily.properties.location["x-ms-format"] = "azure-location";
       $.OSFamily.properties.properties["x-ms-client-flatten"] = true;
-      $.OSVersion["x-ms-client-name"] = "CloudServiceOSVersion";
       $.OSVersion.properties.properties["x-ms-client-flatten"] = true;
-      $.OSVersion.properties.location["x-ms-format"] = "azure-location";
-      $.UpdateDomain["x-ms-client-name"] = "UpdateDomainIdentifier";
       $.UpdateDomain.properties.id["x-ms-format"] = "arm-id";
-      $.Extension["x-ms-client-name"] = "CloudServiceExtension";
       $.Extension.properties.properties["x-ms-client-flatten"] = true;
-      $.SubResource["x-ms-client-name"] = "ComputeWriteableSubResourceData";
-      $.SubResource.properties.id["x-ms-format"] = "arm-id";
-      $.CloudServiceRole.properties.location["x-ms-format"] = "azure-location";
       $.CloudServiceRole.properties.properties["x-ms-client-flatten"] = true;
-      $.RoleInstance["x-ms-client-name"] = "CloudServiceRoleInstance";
-      $.RoleInstance.properties.location["x-ms-format"] = "azure-location";
       $.RoleInstance.properties.properties["x-ms-client-flatten"] = true;
       $.LoadBalancerConfiguration.properties.id["x-ms-format"] = "arm-id";
       $.LoadBalancerConfiguration.properties.properties["x-ms-client-flatten"] = true;
@@ -206,19 +331,9 @@ directive:
     transform: >
       $.DiskImageEncryption.properties.diskEncryptionSetId["x-ms-format"] = "arm-id";
       $.GalleryArtifactVersionSource.properties.id["x-ms-format"] = "arm-id";
-      $.UpdateResourceDefinition["x-ms-client-name"] = "GalleryUpdateResourceDefinition";
-  - from: sharedGallery.json
-    where: $.definitions
-    transform: >
-      $.PirResource["x-ms-client-name"] = "PirResourceData";
-      $.PirResource.properties.location["x-ms-format"] = "azure-location";
-      $.PirSharedGalleryResource["x-ms-client-name"] = "PirSharedGalleryResourceData";
   - from: communityGallery.json
     where: $.definitions
     transform: >
-      $.PirCommunityGalleryResource["x-ms-client-name"] = "PirCommunityGalleryResourceData";
-      $.PirCommunityGalleryResource.properties.type["x-ms-client-name"] = "ResourceType";
-      $.PirCommunityGalleryResource.properties.location["x-ms-format"] = "azure-location";
       $.PirCommunityGalleryResource.properties.type["x-ms-format"] = "resource-type";
   - from: cloudService.json
     where: $.definitions.LoadBalancerConfigurationProperties
@@ -228,4 +343,13 @@ directive:
       $.required = ["frontendIpConfigurations"];
       $.properties.frontendIPConfigurations = undefined;
     reason: Service returns response with property name as frontendIpConfigurations.
+  # this enforces the body parameter of CloudServices_CreateOrUpdate to be required
+  - from: cloudService.json
+    where: $.paths
+    transform: >
+      $["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}"].put.parameters[4]["required"] = true;
+  # this makes the name in VirtualMachineScaleSetExtension to be readonly so that our inheritance chooser could properly make it inherit from Azure.ResourceManager.ResourceData. We have some customized code to add the setter for name back (as in constructor)
+  - from: virtualMachineScaleSet.json
+    where: $.definitions.VirtualMachineScaleSetExtension.properties.name
+    transform: $["readOnly"] = true;
 ```

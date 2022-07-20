@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CosmosDB
     /// A Class representing a GremlinDatabase along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="GremlinDatabaseResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetGremlinDatabaseResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DatabaseAccountResource" /> using the GetGremlinDatabase method.
+    /// Otherwise you can get one from its parent resource <see cref="CosmosDBAccountResource" /> using the GetGremlinDatabase method.
     /// </summary>
     public partial class GremlinDatabaseResource : ArmResource
     {
@@ -88,11 +88,11 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets an object representing a DatabaseAccountGremlinDatabaseThroughputSettingResource along with the instance operations that can be performed on it in the GremlinDatabase. </summary>
-        /// <returns> Returns a <see cref="DatabaseAccountGremlinDatabaseThroughputSettingResource" /> object. </returns>
-        public virtual DatabaseAccountGremlinDatabaseThroughputSettingResource GetDatabaseAccountGremlinDatabaseThroughputSetting()
+        /// <summary> Gets an object representing a GremlinDatabaseThroughputSettingResource along with the instance operations that can be performed on it in the GremlinDatabase. </summary>
+        /// <returns> Returns a <see cref="GremlinDatabaseThroughputSettingResource" /> object. </returns>
+        public virtual GremlinDatabaseThroughputSettingResource GetGremlinDatabaseThroughputSetting()
         {
-            return new DatabaseAccountGremlinDatabaseThroughputSettingResource(Client, new ResourceIdentifier(Id.ToString() + "/throughputSettings/default"));
+            return new GremlinDatabaseThroughputSettingResource(Client, new ResourceIdentifier(Id.ToString() + "/throughputSettings/default"));
         }
 
         /// <summary> Gets a collection of GremlinGraphResources in the GremlinDatabase. </summary>

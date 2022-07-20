@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the application gateway IP configuration resource. </param>
         internal ApplicationGatewayIPConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, WritableSubResource subnet, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            Etag = etag;
+            ETag = etag;
             Subnet = subnet;
             ProvisioningState = provisioningState;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> Reference to the subnet resource. A subnet from where application gateway gets its private address. </summary>
         internal WritableSubResource Subnet { get; set; }
         /// <summary> Gets or sets Id. </summary>

@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Core.Tests;
+using Azure.Messaging.ServiceBus.Administration;
 using Azure.Messaging.ServiceBus.Diagnostics;
 using NUnit.Framework;
 
@@ -279,6 +280,39 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     AssertCommonTags(processScope.Activity, processor.EntityPath, processor.FullyQualifiedNamespace);
                 }
                 Assert.IsTrue(callbackExecuted);
+            }
+        }
+
+        [Test]
+        public async Task RuleManagerActivities()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithTopic(enablePartitioning: false, enableSession: false))
+            {
+                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                ServiceBusRuleManager ruleManager = client.CreateRuleManager(scope.TopicName, scope.SubscriptionNames.First());
+                for (int i = 0; i < 100; i++)
+                {
+                    var ruleName = $"CorrelationUserPropertyRule-{i}";
+                    await ruleManager.CreateRuleAsync(new CreateRuleOptions
+                    {
+                        Filter = new CorrelationRuleFilter { ApplicationProperties = { { "color", "red" } } },
+                        Name = ruleName
+                    });
+                    _listener.AssertAndRemoveScope(DiagnosticProperty.CreateRuleActivityName);
+                }
+
+                int ruleCount = 0;
+                await foreach (var rule in ruleManager.GetRulesAsync())
+                {
+                    ruleCount++;
+                }
+
+                // default rule + our added rules
+                Assert.AreEqual(101, ruleCount);
+
+                // two get rule scopes (1st scope for the initial 100 rules, 2nd scope for the final rule)
+                _listener.AssertAndRemoveScope(DiagnosticProperty.GetRulesActivityName);
+                _listener.AssertAndRemoveScope(DiagnosticProperty.GetRulesActivityName);
             }
         }
 

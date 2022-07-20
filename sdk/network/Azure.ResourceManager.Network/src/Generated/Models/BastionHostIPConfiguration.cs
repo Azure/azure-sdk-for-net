@@ -28,9 +28,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="publicIPAddress"> Reference of the PublicIP resource. </param>
         /// <param name="provisioningState"> The provisioning state of the bastion host IP configuration resource. </param>
         /// <param name="privateIPAllocationMethod"> Private IP allocation method. </param>
-        internal BastionHostIPConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, WritableSubResource subnet, WritableSubResource publicIPAddress, NetworkProvisioningState? provisioningState, IPAllocationMethod? privateIPAllocationMethod) : base(id, name, resourceType)
+        internal BastionHostIPConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, WritableSubResource subnet, WritableSubResource publicIPAddress, NetworkProvisioningState? provisioningState, NetworkIPAllocationMethod? privateIPAllocationMethod) : base(id, name, resourceType)
         {
-            Etag = etag;
+            ETag = etag;
             Subnet = subnet;
             PublicIPAddress = publicIPAddress;
             ProvisioningState = provisioningState;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> Reference of the subnet resource. </summary>
         internal WritableSubResource Subnet { get; set; }
         /// <summary> Gets or sets Id. </summary>
@@ -70,6 +70,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The provisioning state of the bastion host IP configuration resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> Private IP allocation method. </summary>
-        public IPAllocationMethod? PrivateIPAllocationMethod { get; set; }
+        public NetworkIPAllocationMethod? PrivateIPAllocationMethod { get; set; }
     }
 }

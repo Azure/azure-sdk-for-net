@@ -10,7 +10,15 @@ namespace Azure.Storage
     }
     public enum ClientSideEncryptionVersion
     {
+        [System.ObsoleteAttribute("This version is considered insecure. Applications are encouraged to migrate to version 2.0 or to one of Azure Storage's server-side encryption solutions. See http://aka.ms/azstorageclientencryptionblog for more details.")]
         V1_0 = 1,
+        V2_0 = 2,
+    }
+    public partial class DownloadTransferValidationOptions
+    {
+        public DownloadTransferValidationOptions() { }
+        public Azure.Storage.ValidationAlgorithm Algorithm { get { throw null; } set { } }
+        public bool Validate { get { throw null; } set { } }
     }
     public partial class StorageCrc64HashAlgorithm : System.IO.Hashing.NonCryptographicHashAlgorithm
     {
@@ -51,6 +59,19 @@ namespace Azure.Storage
         public static bool operator ==(Azure.Storage.StorageTransferOptions left, Azure.Storage.StorageTransferOptions right) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static bool operator !=(Azure.Storage.StorageTransferOptions left, Azure.Storage.StorageTransferOptions right) { throw null; }
+    }
+    public partial class UploadTransferValidationOptions
+    {
+        public UploadTransferValidationOptions() { }
+        public Azure.Storage.ValidationAlgorithm Algorithm { get { throw null; } set { } }
+        public byte[] PrecalculatedChecksum { get { throw null; } set { } }
+    }
+    public enum ValidationAlgorithm
+    {
+        Auto = 0,
+        None = 1,
+        StorageCrc64 = 2,
+        MD5 = 3,
     }
 }
 namespace Azure.Storage.Sas

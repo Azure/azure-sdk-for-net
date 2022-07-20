@@ -12,12 +12,11 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing the ApiKeyVaultReference data model. </summary>
-    public partial class ApiKeyVaultReferenceData : ProxyOnlyResource
+    public partial class ApiKeyVaultReferenceData : ResourceData
     {
         /// <summary> Initializes a new instance of ApiKeyVaultReferenceData. </summary>
         public ApiKeyVaultReferenceData()
         {
-            Source = "KeyVault";
         }
 
         /// <summary> Initializes a new instance of ApiKeyVaultReferenceData. </summary>
@@ -25,7 +24,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="reference"></param>
         /// <param name="status"></param>
         /// <param name="vaultName"></param>
@@ -35,7 +33,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="details"></param>
         /// <param name="source"></param>
         /// <param name="activeVersion"></param>
-        internal ApiKeyVaultReferenceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string reference, ResolveStatus? status, string vaultName, string secretName, string secretVersion, ManagedServiceIdentity identityType, string details, string source, string activeVersion) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal ApiKeyVaultReferenceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string reference, ResolveStatus? status, string vaultName, string secretName, string secretVersion, ManagedServiceIdentity identityType, string details, ConfigReferenceSource? source, string activeVersion, string kind) : base(id, name, resourceType, systemData)
         {
             Reference = reference;
             Status = status;
@@ -46,6 +45,7 @@ namespace Azure.ResourceManager.AppService
             Details = details;
             Source = source;
             ActiveVersion = activeVersion;
+            Kind = kind;
         }
 
         /// <summary> Gets or sets the reference. </summary>
@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Gets or sets the details. </summary>
         public string Details { get; set; }
         /// <summary> Gets or sets the source. </summary>
-        public string Source { get; set; }
+        public ConfigReferenceSource? Source { get; set; }
         /// <summary> Gets or sets the active version. </summary>
         public string ActiveVersion { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

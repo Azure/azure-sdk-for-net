@@ -3,19 +3,32 @@
 Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
-
 azure-arm: true
-require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/ccdf0b74eedb671fe038ed1a30a9be9f911ebc4f/specification/dnsresolver/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/a9e895ccfe29d0646795f7ff1cb78e185bd09529/specification/dnsresolver/resource-manager/readme.md
+tag: package-2022-07
 library-name: dnsresolver
 namespace: Azure.ResourceManager.DnsResolver
+output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
-output-folder: Generated/
+modelerfour:
+  flatten-payloads: false
+
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'ETag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
+  '*IPAddress': 'ip-address'
+  'ResourceGuid': 'uuid'
 
 rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
   Os: OS
   Ip: IP
-  Ips: IPs
+  Ips: IPs|ips
   ID: Id
   IDs: Ids
   VM: Vm
@@ -26,3 +39,29 @@ rename-rules:
   VPN: Vpn
   NAT: Nat
   WAN: Wan
+  Ipv4: IPv4|ipv4
+  Ipv6: IPv6|ipv6
+  Ipsec: IPsec|ipsec
+  SSO: Sso
+  URI: Uri
+  Etag: ETag|etag
+  DnsForwardingRulesetName: rulesetName
+
+rename-mapping:
+  ProvisioningState: DnsResolverProvisioningState
+  ForwardingRule: DnsForwardingRule
+  ForwardingRuleState: DnsForwardingRuleState
+  ForwardingRule.properties.forwardingRuleState: DnsForwardingRuleState
+  ForwardingRulePatch.properties.forwardingRuleState: DnsForwardingRuleState
+  InboundEndpoint: DnsResolverInboundEndpoint
+  IpConfiguration: InboundEndpointIpConfiguration
+  IpAllocationMethod: InboundEndpointIPAllocationMethod
+  OutboundEndpoint: DnsResolverOutboundEndpoint
+  VirtualNetworkLink: DnsForwardingRulesetVirtualNetworkLink
+
+directive:
+  - from: dnsresolver.json
+    where: $.definitions
+    transform: >
+      $.VirtualNetworkDnsForwardingRuleset.properties.id['x-ms-format'] = 'arm-id';
+```

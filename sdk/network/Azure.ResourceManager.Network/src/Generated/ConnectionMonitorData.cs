@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="connectionMonitorType"> Type of connection monitor. </param>
         internal ConnectionMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, AzureLocation? location, IReadOnlyDictionary<string, string> tags, ConnectionMonitorSource source, ConnectionMonitorDestination destination, bool? autoStart, int? monitoringIntervalInSeconds, IReadOnlyList<ConnectionMonitorEndpoint> endpoints, IReadOnlyList<ConnectionMonitorTestConfiguration> testConfigurations, IReadOnlyList<ConnectionMonitorTestGroup> testGroups, IReadOnlyList<ConnectionMonitorOutput> outputs, string notes, NetworkProvisioningState? provisioningState, DateTimeOffset? startOn, string monitoringStatus, ConnectionMonitorType? connectionMonitorType) : base(id, name, resourceType, systemData)
         {
-            Etag = etag;
+            ETag = etag;
             Location = location;
             Tags = tags;
             Source = source;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> Connection monitor location. </summary>
         public AzureLocation? Location { get; }
         /// <summary> Connection monitor tags. </summary>

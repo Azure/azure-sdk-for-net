@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.Network
         internal PrivateLinkServiceData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, ETag? etag, IList<FrontendIPConfigurationData> loadBalancerFrontendIPConfigurations, IList<PrivateLinkServiceIPConfiguration> ipConfigurations, IReadOnlyList<NetworkInterfaceData> networkInterfaces, NetworkProvisioningState? provisioningState, IReadOnlyList<NetworkPrivateEndpointConnectionData> privateEndpointConnections, PrivateLinkServicePropertiesVisibility visibility, PrivateLinkServicePropertiesAutoApproval autoApproval, IList<string> fqdns, string @alias, bool? enableProxyProtocol) : base(id, name, resourceType, location, tags)
         {
             ExtendedLocation = extendedLocation;
-            Etag = etag;
+            ETag = etag;
             LoadBalancerFrontendIPConfigurations = loadBalancerFrontendIPConfigurations;
             IPConfigurations = ipConfigurations;
             NetworkInterfaces = networkInterfaces;
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The extended location of the load balancer. </summary>
         public ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> An array of references to the load balancer IP configurations. </summary>
         public IList<FrontendIPConfigurationData> LoadBalancerFrontendIPConfigurations { get; }
         /// <summary> An array of private link service IP configurations. </summary>

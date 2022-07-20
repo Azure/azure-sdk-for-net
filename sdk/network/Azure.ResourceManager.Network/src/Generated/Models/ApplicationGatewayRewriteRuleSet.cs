@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the rewrite rule set resource. </param>
         internal ApplicationGatewayRewriteRuleSet(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, IList<ApplicationGatewayRewriteRule> rewriteRules, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            Etag = etag;
+            ETag = etag;
             RewriteRules = rewriteRules;
             ProvisioningState = provisioningState;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> Rewrite rules in the rewrite rule set. </summary>
         public IList<ApplicationGatewayRewriteRule> RewriteRules { get; }
         /// <summary> The provisioning state of the rewrite rule set resource. </summary>

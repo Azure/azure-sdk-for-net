@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
-            Optional<IReadOnlyList<string>> windowsOutboundIpAddresses = default;
-            Optional<IReadOnlyList<string>> linuxOutboundIpAddresses = default;
-            Optional<IReadOnlyList<string>> externalInboundIpAddresses = default;
-            Optional<IReadOnlyList<string>> internalInboundIpAddresses = default;
+            Optional<SystemData> systemData = default;
+            Optional<IReadOnlyList<string>> windowsOutboundIPAddresses = default;
+            Optional<IReadOnlyList<string>> linuxOutboundIPAddresses = default;
+            Optional<IReadOnlyList<string>> externalInboundIPAddresses = default;
+            Optional<IReadOnlyList<string>> internalInboundIPAddresses = default;
             Optional<bool> allowNewPrivateEndpointConnections = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -69,6 +69,11 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -93,7 +98,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 array.Add(item.GetString());
                             }
-                            windowsOutboundIpAddresses = array;
+                            windowsOutboundIPAddresses = array;
                             continue;
                         }
                         if (property0.NameEquals("linuxOutboundIpAddresses"))
@@ -108,7 +113,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 array.Add(item.GetString());
                             }
-                            linuxOutboundIpAddresses = array;
+                            linuxOutboundIPAddresses = array;
                             continue;
                         }
                         if (property0.NameEquals("externalInboundIpAddresses"))
@@ -123,7 +128,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 array.Add(item.GetString());
                             }
-                            externalInboundIpAddresses = array;
+                            externalInboundIPAddresses = array;
                             continue;
                         }
                         if (property0.NameEquals("internalInboundIpAddresses"))
@@ -138,7 +143,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 array.Add(item.GetString());
                             }
-                            internalInboundIpAddresses = array;
+                            internalInboundIPAddresses = array;
                             continue;
                         }
                         if (property0.NameEquals("allowNewPrivateEndpointConnections"))
@@ -155,7 +160,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new AseV3NetworkingConfigurationData(id, name, type, systemData, kind.Value, Optional.ToList(windowsOutboundIpAddresses), Optional.ToList(linuxOutboundIpAddresses), Optional.ToList(externalInboundIpAddresses), Optional.ToList(internalInboundIpAddresses), Optional.ToNullable(allowNewPrivateEndpointConnections));
+            return new AseV3NetworkingConfigurationData(id, name, type, systemData.Value, Optional.ToList(windowsOutboundIPAddresses), Optional.ToList(linuxOutboundIPAddresses), Optional.ToList(externalInboundIPAddresses), Optional.ToList(internalInboundIPAddresses), Optional.ToNullable(allowNewPrivateEndpointConnections), kind.Value);
         }
     }
 }

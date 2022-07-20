@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://language-dev-frontend-westus2-qna.cognitiveservices.azure.com/language/:analyze-conversations?api-version=2022-05-15-preview",
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/:analyze-conversations?api-version=2022-05-15-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "195",
+        "Content-Length": "236",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220519.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "4dd50975723c0f09bcb77bc6d8dfdfdf",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20220628.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "85f4b71187b87e1b5634168260e9757c",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -21,24 +21,25 @@
           }
         },
         "parameters": {
-          "projectName": "OrchestrationProject",
-          "deploymentName": "production"
+          "projectName": "OrchestrationScriptDeployed",
+          "deploymentName": "production",
+          "stringIndexType": "Utf16CodeUnit"
         },
         "kind": "Conversation"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "9df7a702-04e9-4e06-b937-c4865a37b9df",
+        "apim-request-id": "6249df19-fb1d-4012-af3b-d9897660c7d4",
         "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.Language.OrchestrationWorkflow.Prediction=1",
-        "Date": "Thu, 19 May 2022 15:14:06 GMT",
+        "Date": "Wed, 29 Jun 2022 00:01:16 GMT",
         "Pragma": "no-cache",
-        "request-id": "9df7a702-04e9-4e06-b937-c4865a37b9df",
+        "request-id": "6249df19-fb1d-4012-af3b-d9897660c7d4",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "551"
+        "x-envoy-upstream-service-time": "783"
       },
       "ResponseBody": {
         "kind": "ConversationResult",
@@ -49,7 +50,7 @@
             "projectKind": "Orchestration",
             "intents": {
               "ChitChat-QnA": {
-                "confidenceScore": 0.98765355,
+                "confidenceScore": 1,
                 "targetProjectKind": "QuestionAnswering",
                 "result": {
                   "answers": [
@@ -88,10 +89,10 @@
                         "How is the day treating ya?",
                         "How\u0027s it hanging?"
                       ],
-                      "answer": "Great, thanks.",
+                      "answer": "I\u0027m doing great, thanks for asking!",
                       "confidenceScore": 1.0,
-                      "id": 58,
-                      "source": "qna_chitchat_Professional",
+                      "id": 72,
+                      "source": "qna_chitchat_friendly.tsv",
                       "metadata": {
                         "editorial": "chitchat"
                       },
@@ -103,16 +104,12 @@
                   ]
                 }
               },
-              "RestaurantIntent": {
-                "confidenceScore": 0.52488893,
-                "targetProjectKind": "Luis"
-              },
               "EmailIntent": {
-                "confidenceScore": 0.20137206,
+                "confidenceScore": 0.2013731,
                 "targetProjectKind": "Conversation"
               },
               "None": {
-                "confidenceScore": 0.16740133,
+                "confidenceScore": 0.1674014,
                 "targetProjectKind": "NonLinked"
               }
             }
@@ -122,10 +119,10 @@
     }
   ],
   "Variables": {
-    "AZURE_CONVERSATIONS_ENDPOINT": "https://language-dev-frontend-westus2-qna.cognitiveservices.azure.com/",
-    "AZURE_CONVERSATIONS_KEY": "Sanitized",
-    "AZURE_CONVERSATIONS_WORKFLOW_DEPLOYMENT_NAME": "production",
-    "AZURE_CONVERSATIONS_WORKFLOW_PROJECT_NAME": "OrchestrationProject",
-    "RandomSeed": "1297811612"
+    "CONVERSATIONS_ENDPOINT": "https://languagesdkresource.cognitiveservices.azure.com/",
+    "CONVERSATIONS_KEY": "Sanitized",
+    "CONVERSATIONS_WORKFLOW_DEPLOYMENT_NAME": "production",
+    "CONVERSATIONS_WORKFLOW_PROJECT_NAME": "OrchestrationScriptDeployed",
+    "RandomSeed": "1909991329"
   }
 }

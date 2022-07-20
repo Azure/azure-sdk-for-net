@@ -27,7 +27,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             writer.WritePropertyName("accessToken");
             writer.WriteStringValue(AccessToken);
             writer.WritePropertyName("expirationDateTime");
-            writer.WriteStringValue(ExpirationDateTime, "O");
+            writer.WriteStringValue(ExpiresOn, "O");
             writer.WriteEndObject();
         }
 

@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<IReadOnlyList<ComputeResourceSkuLocationInfo>> locationInfo = default;
             Optional<IReadOnlyList<string>> apiVersions = default;
             Optional<IReadOnlyList<ResourceSkuCosts>> costs = default;
-            Optional<IReadOnlyList<ResourceSkuCapabilities>> capabilities = default;
-            Optional<IReadOnlyList<ResourceSkuRestrictions>> restrictions = default;
+            Optional<IReadOnlyList<ComputeResourceSkuCapabilities>> capabilities = default;
+            Optional<IReadOnlyList<ComputeResourceSkuRestrictions>> restrictions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"))
@@ -137,10 +137,10 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ResourceSkuCapabilities> array = new List<ResourceSkuCapabilities>();
+                    List<ComputeResourceSkuCapabilities> array = new List<ComputeResourceSkuCapabilities>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSkuCapabilities.DeserializeResourceSkuCapabilities(item));
+                        array.Add(ComputeResourceSkuCapabilities.DeserializeComputeResourceSkuCapabilities(item));
                     }
                     capabilities = array;
                     continue;
@@ -152,10 +152,10 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ResourceSkuRestrictions> array = new List<ResourceSkuRestrictions>();
+                    List<ComputeResourceSkuRestrictions> array = new List<ComputeResourceSkuRestrictions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSkuRestrictions.DeserializeResourceSkuRestrictions(item));
+                        array.Add(ComputeResourceSkuRestrictions.DeserializeComputeResourceSkuRestrictions(item));
                     }
                     restrictions = array;
                     continue;

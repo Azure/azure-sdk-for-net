@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="o365Policy"> Office365 Policy. </param>
         internal VpnSiteData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, WritableSubResource virtualWan, DeviceProperties deviceProperties, string ipAddress, string siteKey, AddressSpace addressSpace, BgpSettings bgpProperties, NetworkProvisioningState? provisioningState, bool? isSecuritySite, IList<VpnSiteLinkData> vpnSiteLinks, O365PolicyProperties o365Policy) : base(id, name, resourceType, location, tags)
         {
-            Etag = etag;
+            ETag = etag;
             VirtualWan = virtualWan;
             DeviceProperties = deviceProperties;
             IPAddress = ipAddress;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> The VirtualWAN to which the vpnSite belongs. </summary>
         internal WritableSubResource VirtualWan { get; set; }
         /// <summary> Gets or sets Id. </summary>

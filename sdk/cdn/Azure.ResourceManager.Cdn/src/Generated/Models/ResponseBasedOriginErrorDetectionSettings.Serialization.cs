@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResponseBasedDetectedErrorTypes))
+            if (Optional.IsDefined(ResponseBasedDetectedErrorType))
             {
                 writer.WritePropertyName("responseBasedDetectedErrorTypes");
-                writer.WriteStringValue(ResponseBasedDetectedErrorTypes.Value.ToSerialString());
+                writer.WriteStringValue(ResponseBasedDetectedErrorType.Value.ToSerialString());
             }
             if (Optional.IsDefined(ResponseBasedFailoverThresholdPercentage))
             {

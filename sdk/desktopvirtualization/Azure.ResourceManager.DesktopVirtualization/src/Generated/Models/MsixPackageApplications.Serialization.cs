@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         {
             Optional<string> appId = default;
             Optional<string> description = default;
-            Optional<string> appUserModelID = default;
+            Optional<string> appUserModelId = default;
             Optional<string> friendlyName = default;
             Optional<string> iconImageName = default;
             Optional<byte[]> rawIcon = default;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 if (property.NameEquals("appUserModelID"))
                 {
-                    appUserModelID = property.Value.GetString();
+                    appUserModelId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("friendlyName"))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     continue;
                 }
             }
-            return new MsixPackageApplications(appId.Value, description.Value, appUserModelID.Value, friendlyName.Value, iconImageName.Value, rawIcon.Value, rawPng.Value);
+            return new MsixPackageApplications(appId.Value, description.Value, appUserModelId.Value, friendlyName.Value, iconImageName.Value, rawIcon.Value, rawPng.Value);
         }
     }
 }

@@ -15,16 +15,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of AssignedUser. </summary>
         /// <param name="objectId"> User’s AAD Object Id. </param>
         /// <param name="tenantId"> User’s AAD Tenant Id. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> or <paramref name="tenantId"/> is null. </exception>
-        public AssignedUser(string objectId, string tenantId)
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
+        public AssignedUser(string objectId, Guid tenantId)
         {
             if (objectId == null)
             {
                 throw new ArgumentNullException(nameof(objectId));
-            }
-            if (tenantId == null)
-            {
-                throw new ArgumentNullException(nameof(tenantId));
             }
 
             ObjectId = objectId;
@@ -34,6 +30,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> User’s AAD Object Id. </summary>
         public string ObjectId { get; set; }
         /// <summary> User’s AAD Tenant Id. </summary>
-        public string TenantId { get; set; }
+        public Guid TenantId { get; set; }
     }
 }

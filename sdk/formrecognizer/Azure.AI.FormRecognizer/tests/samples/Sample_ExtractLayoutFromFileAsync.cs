@@ -6,13 +6,12 @@ using System.IO;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.DocumentAnalysis.Tests;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 {
     public partial class DocumentAnalysisSamples : SamplesBase<DocumentAnalysisTestEnvironment>
     {
-        [Test]
+        [RecordedTest]
         public async Task ExtractLayoutFromFileAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
@@ -28,10 +27,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 #endif
             using var stream = new FileStream(filePath, FileMode.Open);
 
-            AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentAsync("prebuilt-layout", stream);
-
-            await operation.WaitForCompletionAsync();
-
+            AnalyzeDocumentOperation operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", stream);
             AnalyzeResult result = operation.Value;
 
             foreach (DocumentPage page in result.Pages)
@@ -46,7 +42,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
                     Console.WriteLine($"    Its bounding polygon (points ordered clockwise):");
 
-                    for (int j = 0; j < line.BoundingPolygon.Points.Length; j++)
+                    for (int j = 0; j < line.BoundingPolygon.Length; j++)
                     {
                         Console.WriteLine($"      Point {j} => X: {line.BoundingPolygon[j].X}, Y: {line.BoundingPolygon[j].Y}");
                     }
@@ -59,7 +55,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
                     Console.WriteLine($"  Selection Mark {i} is {selectionMark.State}.");
                     Console.WriteLine($"    Its bounding polygon (points ordered clockwise):");
 
-                    for (int j = 0; j < selectionMark.BoundingPolygon.Points.Length; j++)
+                    for (int j = 0; j < selectionMark.BoundingPolygon.Length; j++)
                     {
                         Console.WriteLine($"      Point {j} => X: {selectionMark.BoundingPolygon[j].X}, Y: {selectionMark.BoundingPolygon[j].Y}");
                     }
