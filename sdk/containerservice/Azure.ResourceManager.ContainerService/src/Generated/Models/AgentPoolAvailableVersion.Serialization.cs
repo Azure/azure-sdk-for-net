@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem
+    public partial class AgentPoolAvailableVersion
     {
-        internal static AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem DeserializeAgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem(JsonElement element)
+        internal static AgentPoolAvailableVersion DeserializeAgentPoolAvailableVersion(JsonElement element)
         {
             Optional<bool> @default = default;
             Optional<string> kubernetesVersion = default;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem(Optional.ToNullable(@default), kubernetesVersion.Value, Optional.ToNullable(isPreview));
+            return new AgentPoolAvailableVersion(Optional.ToNullable(@default), kubernetesVersion.Value, Optional.ToNullable(isPreview));
         }
     }
 }

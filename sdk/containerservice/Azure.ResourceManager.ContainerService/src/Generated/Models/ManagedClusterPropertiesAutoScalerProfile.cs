@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="scaleDownUtilizationThreshold"> The default is &apos;0.5&apos;. </param>
         /// <param name="skipNodesWithLocalStorage"> The default is true. </param>
         /// <param name="skipNodesWithSystemPods"> The default is true. </param>
-        internal ManagedClusterPropertiesAutoScalerProfile(string balanceSimilarNodeGroups, Expander? expander, string maxEmptyBulkDelete, string maxGracefulTerminationSec, string maxNodeProvisionTime, string maxTotalUnreadyPercentage, string newPodScaleUpDelay, string okTotalUnreadyCount, string scanInterval, string scaleDownDelayAfterAdd, string scaleDownDelayAfterDelete, string scaleDownDelayAfterFailure, string scaleDownUnneededTime, string scaleDownUnreadyTime, string scaleDownUtilizationThreshold, string skipNodesWithLocalStorage, string skipNodesWithSystemPods)
+        internal ManagedClusterPropertiesAutoScalerProfile(string balanceSimilarNodeGroups, AutoScaleExpander? expander, string maxEmptyBulkDelete, string maxGracefulTerminationSec, string maxNodeProvisionTime, string maxTotalUnreadyPercentage, string newPodScaleUpDelay, string okTotalUnreadyCount, string scanInterval, string scaleDownDelayAfterAdd, string scaleDownDelayAfterDelete, string scaleDownDelayAfterFailure, string scaleDownUnneededTime, string scaleDownUnreadyTime, string scaleDownUtilizationThreshold, string skipNodesWithLocalStorage, string skipNodesWithSystemPods)
         {
             BalanceSimilarNodeGroups = balanceSimilarNodeGroups;
             Expander = expander;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Valid values are &apos;true&apos; and &apos;false&apos;. </summary>
         public string BalanceSimilarNodeGroups { get; set; }
         /// <summary> If not specified, the default is &apos;random&apos;. See [expanders](https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/FAQ.md#what-are-expanders) for more information. </summary>
-        public Expander? Expander { get; set; }
+        public AutoScaleExpander? Expander { get; set; }
         /// <summary> The default is 10. </summary>
         public string MaxEmptyBulkDelete { get; set; }
         /// <summary> The default is 600. </summary>

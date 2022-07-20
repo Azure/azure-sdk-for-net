@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterAPIServerAccessProfile : IUtf8JsonSerializable
+    public partial class ManagedClusterApiServerAccessProfile : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteEndObject();
         }
 
-        internal static ManagedClusterAPIServerAccessProfile DeserializeManagedClusterAPIServerAccessProfile(JsonElement element)
+        internal static ManagedClusterApiServerAccessProfile DeserializeManagedClusterApiServerAccessProfile(JsonElement element)
         {
             Optional<IList<string>> authorizedIPRanges = default;
             Optional<bool> enablePrivateCluster = default;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ManagedClusterAPIServerAccessProfile(Optional.ToList(authorizedIPRanges), Optional.ToNullable(enablePrivateCluster), privateDnsZone.Value, Optional.ToNullable(enablePrivateClusterPublicFQDN), Optional.ToNullable(disableRunCommand));
+            return new ManagedClusterApiServerAccessProfile(Optional.ToList(authorizedIPRanges), Optional.ToNullable(enablePrivateCluster), privateDnsZone.Value, Optional.ToNullable(enablePrivateClusterPublicFQDN), Optional.ToNullable(disableRunCommand));
         }
     }
 }

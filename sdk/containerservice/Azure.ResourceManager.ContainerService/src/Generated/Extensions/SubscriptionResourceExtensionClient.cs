@@ -47,13 +47,6 @@ namespace Azure.ResourceManager.ContainerService
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of OSOptionProfileResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of OSOptionProfileResources and their operations over a OSOptionProfileResource. </returns>
-        public virtual OSOptionProfileCollection GetOSOptionProfiles()
-        {
-            return GetCachedClient(Client => new OSOptionProfileCollection(Client, Id));
-        }
-
         /// <summary>
         /// Gets a list of managed clusters in the specified subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/managedClusters

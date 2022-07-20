@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(ResourceType);
+                writer.WriteStringValue(ResourceType.Value);
             }
             if (Optional.IsDefined(GroupId))
             {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
             Optional<string> id = default;
             Optional<string> name = default;
-            Optional<string> type = default;
+            Optional<ResourceType> type = default;
             Optional<string> groupId = default;
             Optional<IList<string>> requiredMembers = default;
             Optional<string> privateLinkServiceId = default;
@@ -71,7 +71,12 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("groupId"))
@@ -100,7 +105,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ContainerServicePrivateLinkResource(id.Value, name.Value, type.Value, groupId.Value, Optional.ToList(requiredMembers), privateLinkServiceId.Value);
+            return new ContainerServicePrivateLinkResource(id.Value, name.Value, Optional.ToNullable(type), groupId.Value, Optional.ToList(requiredMembers), privateLinkServiceId.Value);
         }
     }
 }

@@ -12,15 +12,15 @@ using Azure.Core;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> For more details see [managed AAD on AKS](https://docs.microsoft.com/azure/aks/managed-aad). </summary>
-    public partial class ManagedClusterAADProfile
+    public partial class ManagedClusterAadProfile
     {
-        /// <summary> Initializes a new instance of ManagedClusterAADProfile. </summary>
-        public ManagedClusterAADProfile()
+        /// <summary> Initializes a new instance of ManagedClusterAadProfile. </summary>
+        public ManagedClusterAadProfile()
         {
             AdminGroupObjectIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterAADProfile. </summary>
+        /// <summary> Initializes a new instance of ManagedClusterAadProfile. </summary>
         /// <param name="managed"> Whether to enable managed AAD. </param>
         /// <param name="enableAzureRbac"> Whether to enable Azure RBAC for Kubernetes authorization. </param>
         /// <param name="adminGroupObjectIds"> The list of AAD group object IDs that will have admin role of the cluster. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="serverAppId"> The server AAD application ID. </param>
         /// <param name="serverAppSecret"> The server AAD application secret. </param>
         /// <param name="tenantId"> The AAD tenant ID to use for authentication. If not specified, will use the tenant of the deployment subscription. </param>
-        internal ManagedClusterAADProfile(bool? managed, bool? enableAzureRbac, IList<string> adminGroupObjectIds, string clientAppId, string serverAppId, string serverAppSecret, Guid? tenantId)
+        internal ManagedClusterAadProfile(bool? managed, bool? enableAzureRbac, IList<string> adminGroupObjectIds, string clientAppId, string serverAppId, string serverAppSecret, Guid? tenantId)
         {
             Managed = managed;
             EnableAzureRbac = enableAzureRbac;

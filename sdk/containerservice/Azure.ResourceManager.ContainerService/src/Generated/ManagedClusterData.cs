@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="securityProfile"> Security profile for the managed cluster. </param>
         /// <param name="storageProfile"> Storage profile for the managed cluster. </param>
         /// <param name="publicNetworkAccess"> Allow or deny public network access for AKS. </param>
-        internal ManagedClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedClusterSKU sku, ExtendedLocation extendedLocation, ManagedClusterIdentity identity, string provisioningState, PowerState powerState, int? maxAgentPools, string kubernetesVersion, string currentKubernetesVersion, string dnsPrefix, string fqdnSubdomain, string fqdn, string privateFqdn, string azurePortalFqdn, IList<ManagedClusterAgentPoolProfile> agentPoolProfiles, ContainerServiceLinuxProfile linuxProfile, ManagedClusterWindowsProfile windowsProfile, ManagedClusterServicePrincipalProfile servicePrincipalProfile, IDictionary<string, ManagedClusterAddonProfile> addonProfiles, ManagedClusterPodIdentityProfile podIdentityProfile, string nodeResourceGroup, bool? enableRbac, bool? enablePodSecurityPolicy, ContainerServiceNetworkProfile networkProfile, ManagedClusterAADProfile aadProfile, ManagedClusterAutoUpgradeProfile autoUpgradeProfile, ManagedClusterPropertiesAutoScalerProfile autoScalerProfile, ManagedClusterAPIServerAccessProfile apiServerAccessProfile, string diskEncryptionSetId, IDictionary<string, Models.UserAssignedIdentity> identityProfile, IList<ContainerServicePrivateLinkResource> privateLinkResources, bool? disableLocalAccounts, ManagedClusterHttpProxyConfig httpProxyConfig, ManagedClusterSecurityProfile securityProfile, ManagedClusterStorageProfile storageProfile, PublicNetworkAccess? publicNetworkAccess) : base(id, name, resourceType, systemData, tags, location)
+        internal ManagedClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedClusterSku sku, ExtendedLocation extendedLocation, ManagedClusterIdentity identity, string provisioningState, PowerState powerState, int? maxAgentPools, string kubernetesVersion, string currentKubernetesVersion, string dnsPrefix, string fqdnSubdomain, string fqdn, string privateFqdn, string azurePortalFqdn, IList<ManagedClusterAgentPoolProfile> agentPoolProfiles, ContainerServiceLinuxProfile linuxProfile, ManagedClusterWindowsProfile windowsProfile, ManagedClusterServicePrincipalProfile servicePrincipalProfile, IDictionary<string, ManagedClusterAddonProfile> addonProfiles, ManagedClusterPodIdentityProfile podIdentityProfile, string nodeResourceGroup, bool? enableRbac, bool? enablePodSecurityPolicy, ContainerServiceNetworkProfile networkProfile, ManagedClusterAadProfile aadProfile, ManagedClusterAutoUpgradeProfile autoUpgradeProfile, ManagedClusterPropertiesAutoScalerProfile autoScalerProfile, ManagedClusterApiServerAccessProfile apiServerAccessProfile, string diskEncryptionSetId, IDictionary<string, Models.UserAssignedIdentity> identityProfile, IList<ContainerServicePrivateLinkResource> privateLinkResources, bool? disableLocalAccounts, ManagedClusterHttpProxyConfig httpProxyConfig, ManagedClusterSecurityProfile securityProfile, ManagedClusterStorageProfile storageProfile, PublicNetworkAccess? publicNetworkAccess) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             ExtendedLocation = extendedLocation;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary> The managed cluster SKU. </summary>
-        public ManagedClusterSKU Sku { get; set; }
+        public ManagedClusterSku Sku { get; set; }
         /// <summary> The extended location of the Virtual Machine. </summary>
         public ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> The identity of the managed cluster, if configured. </summary>
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <summary> The Power State of the cluster. </summary>
         internal PowerState PowerState { get; }
         /// <summary> Tells whether the cluster is Running or Stopped. </summary>
-        public Code? PowerStateCode
+        public ManagedClusterStateCode? PowerStateCode
         {
             get => PowerState?.Code;
         }
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <summary> The network configuration profile. </summary>
         public ContainerServiceNetworkProfile NetworkProfile { get; set; }
         /// <summary> The Azure Active Directory configuration. </summary>
-        public ManagedClusterAADProfile AadProfile { get; set; }
+        public ManagedClusterAadProfile AadProfile { get; set; }
         /// <summary> The auto upgrade configuration. </summary>
         internal ManagedClusterAutoUpgradeProfile AutoUpgradeProfile { get; set; }
         /// <summary> For more information see [setting the AKS cluster auto-upgrade channel](https://docs.microsoft.com/azure/aks/upgrade-cluster#set-auto-upgrade-channel). </summary>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <summary> Parameters to be applied to the cluster-autoscaler when enabled. </summary>
         public ManagedClusterPropertiesAutoScalerProfile AutoScalerProfile { get; set; }
         /// <summary> The access profile for managed cluster API server. </summary>
-        public ManagedClusterAPIServerAccessProfile ApiServerAccessProfile { get; set; }
+        public ManagedClusterApiServerAccessProfile ApiServerAccessProfile { get; set; }
         /// <summary> This is of the form: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskEncryptionSets/{encryptionSetName}&apos;. </summary>
         public string DiskEncryptionSetId { get; set; }
         /// <summary> Identities associated with the cluster. </summary>

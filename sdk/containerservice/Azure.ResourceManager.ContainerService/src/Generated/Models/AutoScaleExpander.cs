@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> If not specified, the default is &apos;random&apos;. See [expanders](https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/FAQ.md#what-are-expanders) for more information. </summary>
-    public readonly partial struct Expander : IEquatable<Expander>
+    public readonly partial struct AutoScaleExpander : IEquatable<AutoScaleExpander>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="Expander"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoScaleExpander"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public Expander(string value)
+        public AutoScaleExpander(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -28,25 +28,25 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string RandomValue = "random";
 
         /// <summary> Selects the node group that will have the least idle CPU (if tied, unused memory) after scale-up. This is useful when you have different classes of nodes, for example, high CPU or high memory nodes, and only want to expand those when there are pending pods that need a lot of those resources. </summary>
-        public static Expander LeastWaste { get; } = new Expander(LeastWasteValue);
+        public static AutoScaleExpander LeastWaste { get; } = new AutoScaleExpander(LeastWasteValue);
         /// <summary> Selects the node group that would be able to schedule the most pods when scaling up. This is useful when you are using nodeSelector to make sure certain pods land on certain nodes. Note that this won&apos;t cause the autoscaler to select bigger nodes vs. smaller, as it can add multiple smaller nodes at once. </summary>
-        public static Expander MostPods { get; } = new Expander(MostPodsValue);
+        public static AutoScaleExpander MostPods { get; } = new AutoScaleExpander(MostPodsValue);
         /// <summary> Selects the node group that has the highest priority assigned by the user. It&apos;s configuration is described in more details [here](https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/expander/priority/readme.md). </summary>
-        public static Expander Priority { get; } = new Expander(PriorityValue);
+        public static AutoScaleExpander Priority { get; } = new AutoScaleExpander(PriorityValue);
         /// <summary> Used when you don&apos;t have a particular need for the node groups to scale differently. </summary>
-        public static Expander Random { get; } = new Expander(RandomValue);
-        /// <summary> Determines if two <see cref="Expander"/> values are the same. </summary>
-        public static bool operator ==(Expander left, Expander right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="Expander"/> values are not the same. </summary>
-        public static bool operator !=(Expander left, Expander right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="Expander"/>. </summary>
-        public static implicit operator Expander(string value) => new Expander(value);
+        public static AutoScaleExpander Random { get; } = new AutoScaleExpander(RandomValue);
+        /// <summary> Determines if two <see cref="AutoScaleExpander"/> values are the same. </summary>
+        public static bool operator ==(AutoScaleExpander left, AutoScaleExpander right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="AutoScaleExpander"/> values are not the same. </summary>
+        public static bool operator !=(AutoScaleExpander left, AutoScaleExpander right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="AutoScaleExpander"/>. </summary>
+        public static implicit operator AutoScaleExpander(string value) => new AutoScaleExpander(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is Expander other && Equals(other);
+        public override bool Equals(object obj) => obj is AutoScaleExpander other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(Expander other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AutoScaleExpander other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

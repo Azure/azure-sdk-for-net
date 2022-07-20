@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterAADProfile : IUtf8JsonSerializable
+    public partial class ManagedClusterAadProfile : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteEndObject();
         }
 
-        internal static ManagedClusterAADProfile DeserializeManagedClusterAADProfile(JsonElement element)
+        internal static ManagedClusterAadProfile DeserializeManagedClusterAadProfile(JsonElement element)
         {
             Optional<bool> managed = default;
             Optional<bool> enableAzureRBAC = default;
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ManagedClusterAADProfile(Optional.ToNullable(managed), Optional.ToNullable(enableAzureRBAC), Optional.ToList(adminGroupObjectIds), clientAppId.Value, serverAppId.Value, serverAppSecret.Value, Optional.ToNullable(tenantId));
+            return new ManagedClusterAadProfile(Optional.ToNullable(managed), Optional.ToNullable(enableAzureRBAC), Optional.ToList(adminGroupObjectIds), clientAppId.Value, serverAppId.Value, serverAppSecret.Value, Optional.ToNullable(tenantId));
         }
     }
 }

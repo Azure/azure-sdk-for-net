@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("vmSize");
                 writer.WriteStringValue(VmSize);
             }
-            if (Optional.IsDefined(OSDiskSizeGB))
+            if (Optional.IsDefined(OSDiskSizeInGB))
             {
                 writer.WritePropertyName("osDiskSizeGB");
-                writer.WriteNumberValue(OSDiskSizeGB.Value);
+                writer.WriteNumberValue(OSDiskSizeInGB.Value);
             }
             if (Optional.IsDefined(OSDiskType))
             {
@@ -66,10 +66,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("osType");
                 writer.WriteStringValue(OSType.Value.ToString());
             }
-            if (Optional.IsDefined(OSSKU))
+            if (Optional.IsDefined(OSSku))
             {
                 writer.WritePropertyName("osSKU");
-                writer.WriteStringValue(OSSKU.Value.ToString());
+                writer.WriteStringValue(OSSku.Value.ToString());
             }
             if (Optional.IsDefined(MaxCount))
             {
@@ -203,10 +203,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("enableEncryptionAtHost");
                 writer.WriteBooleanValue(EnableEncryptionAtHost.Value);
             }
-            if (Optional.IsDefined(EnableUltraSSD))
+            if (Optional.IsDefined(EnableUltraSsd))
             {
                 writer.WritePropertyName("enableUltraSSD");
-                writer.WriteBooleanValue(EnableUltraSSD.Value);
+                writer.WriteBooleanValue(EnableUltraSsd.Value);
             }
             if (Optional.IsDefined(EnableFips))
             {
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<string> podSubnetId = default;
             Optional<int> maxPods = default;
             Optional<OSType> osType = default;
-            Optional<Ossku> ossku = default;
+            Optional<OSSku> osSku = default;
             Optional<int> maxCount = default;
             Optional<int> minCount = default;
             Optional<bool> enableAutoScaling = default;
@@ -264,9 +264,9 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<KubeletConfig> kubeletConfig = default;
             Optional<LinuxOSConfig> linuxOSConfig = default;
             Optional<bool> enableEncryptionAtHost = default;
-            Optional<bool> enableUltraSSD = default;
+            Optional<bool> enableUltraSsd = default;
             Optional<bool> enableFIPS = default;
-            Optional<GPUInstanceProfile> gpuInstanceProfile = default;
+            Optional<GpuInstanceProfile> gpuInstanceProfile = default;
             Optional<CreationData> creationData = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    ossku = new Ossku(property.Value.GetString());
+                    osSku = new OSSku(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("maxCount"))
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    enableUltraSSD = property.Value.GetBoolean();
+                    enableUltraSsd = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("enableFIPS"))
@@ -632,7 +632,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    gpuInstanceProfile = new GPUInstanceProfile(property.Value.GetString());
+                    gpuInstanceProfile = new GpuInstanceProfile(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("creationData"))
@@ -646,7 +646,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ManagedClusterAgentPoolProfileProperties(Optional.ToNullable(count), vmSize.Value, Optional.ToNullable(osDiskSizeGB), Optional.ToNullable(osDiskType), Optional.ToNullable(kubeletDiskType), Optional.ToNullable(workloadRuntime), vnetSubnetId.Value, podSubnetId.Value, Optional.ToNullable(maxPods), Optional.ToNullable(osType), Optional.ToNullable(ossku), Optional.ToNullable(maxCount), Optional.ToNullable(minCount), Optional.ToNullable(enableAutoScaling), Optional.ToNullable(scaleDownMode), Optional.ToNullable(type), Optional.ToNullable(mode), orchestratorVersion.Value, currentOrchestratorVersion.Value, nodeImageVersion.Value, upgradeSettings.Value, provisioningState.Value, powerState.Value, Optional.ToList(availabilityZones), Optional.ToNullable(enableNodePublicIP), nodePublicIPPrefixId.Value, Optional.ToNullable(scaleSetPriority), Optional.ToNullable(scaleSetEvictionPolicy), Optional.ToNullable(spotMaxPrice), Optional.ToDictionary(tags), Optional.ToDictionary(nodeLabels), Optional.ToList(nodeTaints), proximityPlacementGroupId.Value, kubeletConfig.Value, linuxOSConfig.Value, Optional.ToNullable(enableEncryptionAtHost), Optional.ToNullable(enableUltraSSD), Optional.ToNullable(enableFIPS), Optional.ToNullable(gpuInstanceProfile), creationData.Value);
+            return new ManagedClusterAgentPoolProfileProperties(Optional.ToNullable(count), vmSize.Value, Optional.ToNullable(osDiskSizeGB), Optional.ToNullable(osDiskType), Optional.ToNullable(kubeletDiskType), Optional.ToNullable(workloadRuntime), vnetSubnetId.Value, podSubnetId.Value, Optional.ToNullable(maxPods), Optional.ToNullable(osType), Optional.ToNullable(osSku), Optional.ToNullable(maxCount), Optional.ToNullable(minCount), Optional.ToNullable(enableAutoScaling), Optional.ToNullable(scaleDownMode), Optional.ToNullable(type), Optional.ToNullable(mode), orchestratorVersion.Value, currentOrchestratorVersion.Value, nodeImageVersion.Value, upgradeSettings.Value, provisioningState.Value, powerState.Value, Optional.ToList(availabilityZones), Optional.ToNullable(enableNodePublicIP), nodePublicIPPrefixId.Value, Optional.ToNullable(scaleSetPriority), Optional.ToNullable(scaleSetEvictionPolicy), Optional.ToNullable(spotMaxPrice), Optional.ToDictionary(tags), Optional.ToDictionary(nodeLabels), Optional.ToList(nodeTaints), proximityPlacementGroupId.Value, kubeletConfig.Value, linuxOSConfig.Value, Optional.ToNullable(enableEncryptionAtHost), Optional.ToNullable(enableUltraSsd), Optional.ToNullable(enableFIPS), Optional.ToNullable(gpuInstanceProfile), creationData.Value);
         }
     }
 }

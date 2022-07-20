@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ContainerService
 
         internal static ManagedClusterData DeserializeManagedClusterData(JsonElement element)
         {
-            Optional<ManagedClusterSKU> sku = default;
+            Optional<ManagedClusterSku> sku = default;
             Optional<ExtendedLocation> extendedLocation = default;
             Optional<ManagedClusterIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -231,10 +231,10 @@ namespace Azure.ResourceManager.ContainerService
             Optional<bool> enableRBAC = default;
             Optional<bool> enablePodSecurityPolicy = default;
             Optional<ContainerServiceNetworkProfile> networkProfile = default;
-            Optional<ManagedClusterAADProfile> aadProfile = default;
+            Optional<ManagedClusterAadProfile> aadProfile = default;
             Optional<ManagedClusterAutoUpgradeProfile> autoUpgradeProfile = default;
             Optional<ManagedClusterPropertiesAutoScalerProfile> autoScalerProfile = default;
-            Optional<ManagedClusterAPIServerAccessProfile> apiServerAccessProfile = default;
+            Optional<ManagedClusterApiServerAccessProfile> apiServerAccessProfile = default;
             Optional<string> diskEncryptionSetId = default;
             Optional<IDictionary<string, Models.UserAssignedIdentity>> identityProfile = default;
             Optional<IList<ContainerServicePrivateLinkResource>> privateLinkResources = default;
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ContainerService
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = ManagedClusterSKU.DeserializeManagedClusterSKU(property.Value);
+                    sku = ManagedClusterSku.DeserializeManagedClusterSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("extendedLocation"))
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.ContainerService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            aadProfile = ManagedClusterAADProfile.DeserializeManagedClusterAADProfile(property0.Value);
+                            aadProfile = ManagedClusterAadProfile.DeserializeManagedClusterAadProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("autoUpgradeProfile"))
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.ContainerService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            apiServerAccessProfile = ManagedClusterAPIServerAccessProfile.DeserializeManagedClusterAPIServerAccessProfile(property0.Value);
+                            apiServerAccessProfile = ManagedClusterApiServerAccessProfile.DeserializeManagedClusterApiServerAccessProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("diskEncryptionSetID"))

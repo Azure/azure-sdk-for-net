@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         internal static ManagedClusterPropertiesAutoScalerProfile DeserializeManagedClusterPropertiesAutoScalerProfile(JsonElement element)
         {
             Optional<string> balanceSimilarNodeGroups = default;
-            Optional<Expander> expander = default;
+            Optional<AutoScaleExpander> expander = default;
             Optional<string> maxEmptyBulkDelete = default;
             Optional<string> maxGracefulTerminationSec = default;
             Optional<string> maxNodeProvisionTime = default;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    expander = new Expander(property.Value.GetString());
+                    expander = new AutoScaleExpander(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("max-empty-bulk-delete"))

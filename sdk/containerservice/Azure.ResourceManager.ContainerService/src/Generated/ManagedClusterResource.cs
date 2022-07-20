@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="serverFqdn"> server fqdn type for credentials to be returned. </param>
         /// <param name="format"> Only apply to AAD clusters, specifies the format of returned kubeconfig. Format &apos;azure&apos; will return azure auth-provider kubeconfig; format &apos;exec&apos; will return exec format kubeconfig, which requires kubelogin binary in the path. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CredentialResults>> GetClusterUserCredentialsAsync(string serverFqdn = null, Format? format = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CredentialResults>> GetClusterUserCredentialsAsync(string serverFqdn = null, KubeConfigFormat? format = null, CancellationToken cancellationToken = default)
         {
             using var scope = _managedClusterClientDiagnostics.CreateScope("ManagedClusterResource.GetClusterUserCredentials");
             scope.Start();
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="serverFqdn"> server fqdn type for credentials to be returned. </param>
         /// <param name="format"> Only apply to AAD clusters, specifies the format of returned kubeconfig. Format &apos;azure&apos; will return azure auth-provider kubeconfig; format &apos;exec&apos; will return exec format kubeconfig, which requires kubelogin binary in the path. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CredentialResults> GetClusterUserCredentials(string serverFqdn = null, Format? format = null, CancellationToken cancellationToken = default)
+        public virtual Response<CredentialResults> GetClusterUserCredentials(string serverFqdn = null, KubeConfigFormat? format = null, CancellationToken cancellationToken = default)
         {
             using var scope = _managedClusterClientDiagnostics.CreateScope("ManagedClusterResource.GetClusterUserCredentials");
             scope.Start();
@@ -639,19 +639,19 @@ namespace Azure.ResourceManager.ContainerService
         /// Operation Id: ManagedClusters_ResetAADProfile
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="managedClusterAADProfile"> The AAD profile to set on the Managed Cluster. </param>
+        /// <param name="managedClusterAadProfile"> The AAD profile to set on the Managed Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managedClusterAADProfile"/> is null. </exception>
-        public virtual async Task<ArmOperation> ResetAADProfileAsync(WaitUntil waitUntil, ManagedClusterAADProfile managedClusterAADProfile, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="managedClusterAadProfile"/> is null. </exception>
+        public virtual async Task<ArmOperation> ResetAadProfileAsync(WaitUntil waitUntil, ManagedClusterAadProfile managedClusterAadProfile, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(managedClusterAADProfile, nameof(managedClusterAADProfile));
+            Argument.AssertNotNull(managedClusterAadProfile, nameof(managedClusterAadProfile));
 
-            using var scope = _managedClusterClientDiagnostics.CreateScope("ManagedClusterResource.ResetAADProfile");
+            using var scope = _managedClusterClientDiagnostics.CreateScope("ManagedClusterResource.ResetAadProfile");
             scope.Start();
             try
             {
-                var response = await _managedClusterRestClient.ResetAADProfileAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedClusterAADProfile, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerServiceArmOperation(_managedClusterClientDiagnostics, Pipeline, _managedClusterRestClient.CreateResetAADProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedClusterAADProfile).Request, response, OperationFinalStateVia.Location);
+                var response = await _managedClusterRestClient.ResetAadProfileAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedClusterAadProfile, cancellationToken).ConfigureAwait(false);
+                var operation = new ContainerServiceArmOperation(_managedClusterClientDiagnostics, Pipeline, _managedClusterRestClient.CreateResetAadProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedClusterAadProfile).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -669,19 +669,19 @@ namespace Azure.ResourceManager.ContainerService
         /// Operation Id: ManagedClusters_ResetAADProfile
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="managedClusterAADProfile"> The AAD profile to set on the Managed Cluster. </param>
+        /// <param name="managedClusterAadProfile"> The AAD profile to set on the Managed Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managedClusterAADProfile"/> is null. </exception>
-        public virtual ArmOperation ResetAADProfile(WaitUntil waitUntil, ManagedClusterAADProfile managedClusterAADProfile, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="managedClusterAadProfile"/> is null. </exception>
+        public virtual ArmOperation ResetAadProfile(WaitUntil waitUntil, ManagedClusterAadProfile managedClusterAadProfile, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(managedClusterAADProfile, nameof(managedClusterAADProfile));
+            Argument.AssertNotNull(managedClusterAadProfile, nameof(managedClusterAadProfile));
 
-            using var scope = _managedClusterClientDiagnostics.CreateScope("ManagedClusterResource.ResetAADProfile");
+            using var scope = _managedClusterClientDiagnostics.CreateScope("ManagedClusterResource.ResetAadProfile");
             scope.Start();
             try
             {
-                var response = _managedClusterRestClient.ResetAADProfile(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedClusterAADProfile, cancellationToken);
-                var operation = new ContainerServiceArmOperation(_managedClusterClientDiagnostics, Pipeline, _managedClusterRestClient.CreateResetAADProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedClusterAADProfile).Request, response, OperationFinalStateVia.Location);
+                var response = _managedClusterRestClient.ResetAadProfile(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedClusterAadProfile, cancellationToken);
+                var operation = new ContainerServiceArmOperation(_managedClusterClientDiagnostics, Pipeline, _managedClusterRestClient.CreateResetAadProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedClusterAadProfile).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

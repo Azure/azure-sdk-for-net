@@ -16,11 +16,16 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
-list-exception:
-- /subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/osOptions/default
+request-path-to-singleton-resource:
+  /subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/osOptions/default: osOptions/default
 
 rename-mapping:
   ManagedClusterPodIdentityProvisioningError.error: 'ErrorDetail'
+  Code: ManagedClusterStateCode
+  Format: KubeConfigFormat
+  Expander: AutoScaleExpander
+  KubeletConfig.containerLogMaxSizeMB: ContainerLogMaxSizeInMB
+  LinuxOSConfig.swapFileSizeMB: SwapFileSizeInMB
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -28,6 +33,9 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  'ResourceType': 'resource-type'
+  '*ResourceId': 'arm-id'
+  'nodePublicIPPrefixID': 'arm-id'
 
 rename-rules:
   CPU: Cpu
@@ -50,5 +58,31 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  SSD: Ssd
+  GPU: Gpu
+  SKU: Sku
+  AAD: Aad
+  TrustedCa: TrustedCA
+  CBLMariner: CblMariner
+  API: Api
+  OCI: Oci
 
+directive:
+  - from: managedClusters.json
+    where: $.definitions.AgentPoolAvailableVersionsProperties.properties.agentPoolVersions.items
+    transform: >
+      $['x-ms-client-name'] = 'AgentPoolAvailableVersion';
+      $.properties.default['x-ms-client-name'] = 'IsDefault';
+  - from: managedClusters.json
+    where: $.definitions.ManagedClusterAgentPoolProfileProperties.properties.osDiskSizeGB
+    transform: >
+      $['x-ms-client-name'] = 'OSDiskSizeInGB';
+  - from: managedClusters.json
+    where: $.definitions.ContainerServiceMasterProfile.properties.osDiskSizeGB
+    transform: >
+      $['x-ms-client-name'] = 'OSDiskSizeInGB';
+  - from: managedClusters.json
+    where: $.definitions
+    transform: >
+      $.OSSKU['x-ms-enum'].name = 'OSSku';
 ```

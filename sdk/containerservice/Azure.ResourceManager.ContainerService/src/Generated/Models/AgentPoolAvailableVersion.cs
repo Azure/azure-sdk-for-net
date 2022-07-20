@@ -7,27 +7,27 @@
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> The AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem. </summary>
-    public partial class AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem
+    /// <summary> The AgentPoolAvailableVersion. </summary>
+    public partial class AgentPoolAvailableVersion
     {
-        /// <summary> Initializes a new instance of AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem. </summary>
-        internal AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem()
+        /// <summary> Initializes a new instance of AgentPoolAvailableVersion. </summary>
+        internal AgentPoolAvailableVersion()
         {
         }
 
-        /// <summary> Initializes a new instance of AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem. </summary>
-        /// <param name="default"> Whether this version is the default agent pool version. </param>
+        /// <summary> Initializes a new instance of AgentPoolAvailableVersion. </summary>
+        /// <param name="isDefault"> Whether this version is the default agent pool version. </param>
         /// <param name="kubernetesVersion"> The Kubernetes version (major.minor.patch). </param>
         /// <param name="isPreview"> Whether Kubernetes version is currently in preview. </param>
-        internal AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem(bool? @default, string kubernetesVersion, bool? isPreview)
+        internal AgentPoolAvailableVersion(bool? isDefault, string kubernetesVersion, bool? isPreview)
         {
-            Default = @default;
+            IsDefault = isDefault;
             KubernetesVersion = kubernetesVersion;
             IsPreview = isPreview;
         }
 
         /// <summary> Whether this version is the default agent pool version. </summary>
-        public bool? Default { get; }
+        public bool? IsDefault { get; }
         /// <summary> The Kubernetes version (major.minor.patch). </summary>
         public string KubernetesVersion { get; }
         /// <summary> Whether Kubernetes version is currently in preview. </summary>

@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ContainerService
             Optional<string> kubernetesVersion = default;
             Optional<string> nodeImageVersion = default;
             Optional<OSType> osType = default;
-            Optional<Ossku> osSku = default;
+            Optional<OSSku> osSku = default;
             Optional<string> vmSize = default;
             Optional<bool> enableFIPS = default;
             foreach (var property in element.EnumerateObject())
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ContainerService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            osSku = new Ossku(property0.Value.GetString());
+                            osSku = new OSSku(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("vmSize"))

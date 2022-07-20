@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> If not specified, the default is &apos;Free&apos;. See [uptime SLA](https://docs.microsoft.com/azure/aks/uptime-sla) for more details. </summary>
-    public readonly partial struct ManagedClusterSKUTier : IEquatable<ManagedClusterSKUTier>
+    public readonly partial struct ManagedClusterSkuTier : IEquatable<ManagedClusterSkuTier>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="ManagedClusterSKUTier"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterSkuTier"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ManagedClusterSKUTier(string value)
+        public ManagedClusterSkuTier(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -26,21 +26,21 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string FreeValue = "Free";
 
         /// <summary> Guarantees 99.95% availability of the Kubernetes API server endpoint for clusters that use Availability Zones and 99.9% of availability for clusters that don&apos;t use Availability Zones. </summary>
-        public static ManagedClusterSKUTier Paid { get; } = new ManagedClusterSKUTier(PaidValue);
+        public static ManagedClusterSkuTier Paid { get; } = new ManagedClusterSkuTier(PaidValue);
         /// <summary> No guaranteed SLA, no additional charges. Free tier clusters have an SLO of 99.5%. </summary>
-        public static ManagedClusterSKUTier Free { get; } = new ManagedClusterSKUTier(FreeValue);
-        /// <summary> Determines if two <see cref="ManagedClusterSKUTier"/> values are the same. </summary>
-        public static bool operator ==(ManagedClusterSKUTier left, ManagedClusterSKUTier right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="ManagedClusterSKUTier"/> values are not the same. </summary>
-        public static bool operator !=(ManagedClusterSKUTier left, ManagedClusterSKUTier right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ManagedClusterSKUTier"/>. </summary>
-        public static implicit operator ManagedClusterSKUTier(string value) => new ManagedClusterSKUTier(value);
+        public static ManagedClusterSkuTier Free { get; } = new ManagedClusterSkuTier(FreeValue);
+        /// <summary> Determines if two <see cref="ManagedClusterSkuTier"/> values are the same. </summary>
+        public static bool operator ==(ManagedClusterSkuTier left, ManagedClusterSkuTier right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="ManagedClusterSkuTier"/> values are not the same. </summary>
+        public static bool operator !=(ManagedClusterSkuTier left, ManagedClusterSkuTier right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="ManagedClusterSkuTier"/>. </summary>
+        public static implicit operator ManagedClusterSkuTier(string value) => new ManagedClusterSkuTier(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ManagedClusterSKUTier other && Equals(other);
+        public override bool Equals(object obj) => obj is ManagedClusterSkuTier other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(ManagedClusterSKUTier other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ManagedClusterSkuTier other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

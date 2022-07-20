@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         internal static ManagedClusterSecurityProfileAzureDefender DeserializeManagedClusterSecurityProfileAzureDefender(JsonElement element)
         {
             Optional<bool> enabled = default;
-            Optional<string> logAnalyticsWorkspaceResourceId = default;
+            Optional<ResourceIdentifier> logAnalyticsWorkspaceResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"))
@@ -46,7 +46,12 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (property.NameEquals("logAnalyticsWorkspaceResourceId"))
                 {
-                    logAnalyticsWorkspaceResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    logAnalyticsWorkspaceResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

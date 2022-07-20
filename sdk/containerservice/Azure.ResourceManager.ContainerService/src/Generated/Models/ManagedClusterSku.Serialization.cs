@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterSKU : IUtf8JsonSerializable
+    public partial class ManagedClusterSku : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteEndObject();
         }
 
-        internal static ManagedClusterSKU DeserializeManagedClusterSKU(JsonElement element)
+        internal static ManagedClusterSku DeserializeManagedClusterSku(JsonElement element)
         {
-            Optional<ManagedClusterSKUName> name = default;
-            Optional<ManagedClusterSKUTier> tier = default;
+            Optional<ManagedClusterSkuName> name = default;
+            Optional<ManagedClusterSkuTier> tier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    name = new ManagedClusterSKUName(property.Value.GetString());
+                    name = new ManagedClusterSkuName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tier"))
@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    tier = new ManagedClusterSKUTier(property.Value.GetString());
+                    tier = new ManagedClusterSkuTier(property.Value.GetString());
                     continue;
                 }
             }
-            return new ManagedClusterSKU(Optional.ToNullable(name), Optional.ToNullable(tier));
+            return new ManagedClusterSku(Optional.ToNullable(name), Optional.ToNullable(tier));
         }
     }
 }

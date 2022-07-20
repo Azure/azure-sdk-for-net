@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="osSku"> Specifies an OS SKU. This value must not be specified if OSType is Windows. </param>
         /// <param name="vmSize"> The size of the VM. </param>
         /// <param name="enableFips"> Whether to use a FIPS-enabled OS. </param>
-        internal SnapshotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CreationData creationData, SnapshotType? snapshotType, string kubernetesVersion, string nodeImageVersion, OSType? osType, Ossku? osSku, string vmSize, bool? enableFips) : base(id, name, resourceType, systemData, tags, location)
+        internal SnapshotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CreationData creationData, SnapshotType? snapshotType, string kubernetesVersion, string nodeImageVersion, OSType? osType, OSSku? osSku, string vmSize, bool? enableFips) : base(id, name, resourceType, systemData, tags, location)
         {
             CreationData = creationData;
             SnapshotType = snapshotType;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <summary> CreationData to be used to specify the source agent pool resource ID to create this snapshot. </summary>
         internal CreationData CreationData { get; set; }
         /// <summary> This is the ARM ID of the source object to be used to create the target object. </summary>
-        public string CreationDataSourceResourceId
+        public ResourceIdentifier CreationDataSourceResourceId
         {
             get => CreationData is null ? default : CreationData.SourceResourceId;
             set
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <summary> The operating system type. The default is Linux. </summary>
         public OSType? OSType { get; }
         /// <summary> Specifies an OS SKU. This value must not be specified if OSType is Windows. </summary>
-        public Ossku? OSSku { get; }
+        public OSSku? OSSku { get; }
         /// <summary> The size of the VM. </summary>
         public string VmSize { get; }
         /// <summary> Whether to use a FIPS-enabled OS. </summary>
