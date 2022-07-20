@@ -2,12 +2,14 @@
 // Licensed under the MIT License.
 
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
     /// <summary>
     /// The add participants succeeded event.
     /// </summary>
+    [CodeGenModel("AddParticipantsSucceededEvent", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
     public partial class AddParticipantsSucceededEvent : CallingServerEventBase
     {
         /// <summary>

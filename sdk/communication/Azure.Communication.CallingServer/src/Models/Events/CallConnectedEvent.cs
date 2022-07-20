@@ -2,12 +2,14 @@
 // Licensed under the MIT License.
 
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
     /// <summary>
     /// The call connected event.
     /// </summary>
+    [CodeGenModel("CallConnectedEvent", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
     public partial class CallConnectedEvent: CallingServerEventBase
     {
         /// <summary>

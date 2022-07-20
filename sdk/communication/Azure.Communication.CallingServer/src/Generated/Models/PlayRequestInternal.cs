@@ -33,5 +33,7 @@ namespace Azure.Communication.CallingServer
         public PlaySourceInternal PlaySourceInfo { get; }
         /// <summary> Defines options for playing the audio. </summary>
         public PlayOptionsInternal PlayOptions { get; set; }
+        /// <summary> The value to identify context of the operation. </summary>
+        public string OperationContext { get; set; }
     }
 }

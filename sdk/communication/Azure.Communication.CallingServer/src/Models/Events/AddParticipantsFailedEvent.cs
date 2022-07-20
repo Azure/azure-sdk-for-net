@@ -2,12 +2,14 @@
 // Licensed under the MIT License.
 
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
     /// <summary>
     /// The add participant failed event.
     /// </summary>
+    [CodeGenModel("AddParticipantsFailedEvent", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
     public partial class AddParticipantsFailedEvent : CallingServerEventBase
     {
         /// <summary>

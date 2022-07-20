@@ -20,6 +20,25 @@ namespace Azure.Communication.CallingServer
             Participants = new ChangeTrackingList<CommunicationIdentifierModel>();
         }
 
+        /// <summary> Initializes a new instance of AddParticipantsFailedEvent. </summary>
+        /// <param name="operationContext"> Operation context. </param>
+        /// <param name="resultInfo"></param>
+        /// <param name="participants"> Participants failed to be added. </param>
+        /// <param name="type"></param>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        internal AddParticipantsFailedEvent(string operationContext, ResultInformation resultInfo, IReadOnlyList<CommunicationIdentifierModel> participants, AcsEventType? type, string callConnectionId, string serverCallId, string correlationId)
+        {
+            OperationContext = operationContext;
+            ResultInfo = resultInfo;
+            Participants = participants;
+            Type = type;
+            CallConnectionId = callConnectionId;
+            ServerCallId = serverCallId;
+            CorrelationId = correlationId;
+        }
+
         /// <summary> Operation context. </summary>
         public string OperationContext { get; }
         /// <summary> Gets the result info. </summary>

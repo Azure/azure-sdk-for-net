@@ -9,6 +9,7 @@ namespace Azure.Communication.CallingServer
     /// <summary>
     /// The participants updated event.
     /// </summary>
+    [CodeGenModel("ParticipantsUpdatedEvent", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
     public partial class ParticipantsUpdatedEvent : CallingServerEventBase
     {
         /// <summary>

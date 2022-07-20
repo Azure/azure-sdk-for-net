@@ -4,7 +4,7 @@
 using System;
 using Azure.Messaging;
 
-namespace Azure.Communication.CallingServer.Models.Events
+namespace Azure.Communication.CallingServer
 {
     /// <summary>
     /// Helper class for parsing Acs call back events.
@@ -41,7 +41,7 @@ namespace Azure.Communication.CallingServer.Models.Events
         /// </summary>
         /// <param name="content"></param>
         /// <returns></returns>
-        public static AcsCallbackEvent Parse(string content) {
+        public static CallingServerEventBase Parse(string content) {
             CloudEvent cloudEvent = CloudEvent.Parse(BinaryData.FromString(content));
 
             if (cloudEvent != null && cloudEvent.Data != null)

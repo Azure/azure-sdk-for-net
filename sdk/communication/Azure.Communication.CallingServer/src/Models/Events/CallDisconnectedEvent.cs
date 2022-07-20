@@ -9,6 +9,7 @@ namespace Azure.Communication.CallingServer
     /// <summary>
     /// The call disconnected event.
     /// </summary>
+    [CodeGenModel("CallDisconnectedEvent", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
     public partial class CallDisconnectedEvent : CallingServerEventBase
     {
         /// <summary>

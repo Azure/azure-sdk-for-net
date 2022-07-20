@@ -995,6 +995,10 @@
         "playOptions": {
           "$ref": "#/definitions/PlayOptions",
           "description": "Defines options for playing the audio."
+        },
+        "operationContext": {
+          "description": "The value to identify context of the operation.",
+          "type": "string"
         }
       }
     },
@@ -1023,7 +1027,8 @@
           "type": "string"
         },
         "fileSource": {
-          "$ref": "#/definitions/FileSource"
+          "$ref": "#/definitions/FileSource",
+          "description": "Defines the file source info to be used for play"
         }
       }
     },
