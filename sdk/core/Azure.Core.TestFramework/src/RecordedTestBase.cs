@@ -176,6 +176,7 @@ namespace Azure.Core.TestFramework
         public HashSet<string> IgnoredQueryParameters = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         {
         };
+        private bool _useLocalDebugProxy;
 
         /// <summary>
         /// Creats a new instance of <see cref="RecordedTestBase"/>.
@@ -341,7 +342,17 @@ namespace Azure.Core.TestFramework
         /// <summary>
         /// If set to true, the proxy will be configured to connect on ports 5000 and 5001. This is useful when running the proxy locally for debugging recorded test issues.
         /// </summary>
-        protected bool UseLocalDebugProxy { get; set; }
+        protected bool UseLocalDebugProxy
+        {
+            get => _useLocalDebugProxy; set
+            {
+                 if (value && TestEnvironment.GlobalIsRunningInCI)
+                {
+                    throw new AssertionException($"Setting {nameof(UseLocalDebugProxy)} must not be merged");
+                }
+                _useLocalDebugProxy = value;
+            }
+        }
 
         [SetUp]
         public virtual async Task StartTestRecordingAsync()

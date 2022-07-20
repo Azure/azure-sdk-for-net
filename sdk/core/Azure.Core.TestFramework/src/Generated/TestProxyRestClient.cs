@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -337,10 +336,6 @@ namespace Azure.Core.TestFramework
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(proxyOptions);
             request.Content = content;
-            var mem = new MemoryStream();
-            content.WriteTo(mem, default);
-            mem.Position = 0;
-            var stringResult = new StreamReader(mem).ReadToEnd();
             return message;
         }
 
