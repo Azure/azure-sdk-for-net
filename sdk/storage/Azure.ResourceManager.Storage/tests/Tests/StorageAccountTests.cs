@@ -1698,12 +1698,12 @@ namespace Azure.ResourceManager.Storage.Tests
             ResourceGroupResource resourceGroup1 = await CreateResourceGroupAsync();
             StorageAccountCollection storageAccountCollection = resourceGroup1.GetStorageAccounts();
             StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters(kind: StorageKind.StorageV2);
-            parameters.AzureFilesIdentityBasedAuthentication = new FilesIdentityBasedAuthentication(DirectoryServiceOption.AzureActiveDirectoryDomainServices);
+            parameters.AzureFilesIdentityBasedAuthentication = new FilesIdentityBasedAuthentication(DirectoryServiceOption.Aadds);
             StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName1, parameters)).Value;
 
             //validate
             account = await account.GetAsync();
-            Assert.AreEqual(DirectoryServiceOption.AzureActiveDirectoryDomainServices, account.Data.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
+            Assert.AreEqual(DirectoryServiceOption.Aadds, account.Data.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
 
             //Update storage account
             var updateParameters = new StorageAccountPatch

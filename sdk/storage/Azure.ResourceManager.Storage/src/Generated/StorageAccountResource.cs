@@ -700,11 +700,11 @@ namespace Azure.ResourceManager.Storage
         /// <param name="requestType"> Required. Hierarchical namespace migration type can either be a hierarchical namespace validation request &apos;HnsOnValidationRequest&apos; or a hydration request &apos;HnsOnHydrationRequest&apos;. The validation request will validate the migration whereas the hydration request will migrate the account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="requestType"/> is null. </exception>
-        public virtual async Task<ArmOperation> MigrateToEnableHierarchicalNamespaceAsync(WaitUntil waitUntil, string requestType, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> EnableHierarchicalNamespaceAsync(WaitUntil waitUntil, string requestType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(requestType, nameof(requestType));
 
-            using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.MigrateToEnableHierarchicalNamespace");
+            using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.EnableHierarchicalNamespace");
             scope.Start();
             try
             {
@@ -730,11 +730,11 @@ namespace Azure.ResourceManager.Storage
         /// <param name="requestType"> Required. Hierarchical namespace migration type can either be a hierarchical namespace validation request &apos;HnsOnValidationRequest&apos; or a hydration request &apos;HnsOnHydrationRequest&apos;. The validation request will validate the migration whereas the hydration request will migrate the account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="requestType"/> is null. </exception>
-        public virtual ArmOperation MigrateToEnableHierarchicalNamespace(WaitUntil waitUntil, string requestType, CancellationToken cancellationToken = default)
+        public virtual ArmOperation EnableHierarchicalNamespace(WaitUntil waitUntil, string requestType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(requestType, nameof(requestType));
 
-            using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.MigrateToEnableHierarchicalNamespace");
+            using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.EnableHierarchicalNamespace");
             scope.Start();
             try
             {

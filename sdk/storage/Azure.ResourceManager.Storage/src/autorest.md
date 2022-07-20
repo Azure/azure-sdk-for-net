@@ -19,7 +19,7 @@ list-exception:
 
 override-operation-name:
   StorageAccounts_CheckNameAvailability: CheckStorageAccountNameAvailability
-  StorageAccounts_HierarchicalNamespaceMigration: MigrateToEnableHierarchicalNamespace
+  StorageAccounts_HierarchicalNamespaceMigration: EnableHierarchicalNamespace
   BlobContainers_ObjectLevelWorm: EnableObjectLevelWorm
 
 request-path-to-singleton-resource:
@@ -65,6 +65,9 @@ rename-rules:
   ZRS: Zrs
   GRS: Grs
   TLS: Tls
+  AAD: Aad
+  GET: Get
+  PUT: Put
 
 prepend-rp-prefix:
 - CorsRules
@@ -178,12 +181,9 @@ rename-mapping:
   ProtocolSettings.smb: SmbSetting
   LocalUser: StorageAccountLocalUser
   ManagementPolicy: StorageAccountManagementPolicy
-  AllowedCopyScope.AAD: AzureActiveDirectory
   AzureFilesIdentityBasedAuthentication: FilesIdentityBasedAuthentication
   BlobInventoryPolicyFilter.prefixMatch: IncludePrefix
   CorsRuleAllowedMethodsItem: CorsRuleAllowedMethod
-  CorsRuleAllowedMethodsItem.GET: Get
-  CorsRuleAllowedMethodsItem.PUT: Put
   DefaultSharePermission.StorageFileDataSmbShareReader: Reader
   DefaultSharePermission.StorageFileDataSmbShareContributor: Contributor
   DefaultSharePermission.StorageFileDataSmbShareElevatedContributor: ElevatedContributor
@@ -214,8 +214,6 @@ rename-mapping:
   UpdateHistoryProperty: UpdateHistoryEntry
   UpdateHistoryProperty.update: UpdateType
   PublicAccess: StoragePublicAccessType
-  DirectoryServiceOptions.AADDS: AzureActiveDirectoryDomainServices
-  DirectoryServiceOptions.AD: ActiveDirectoryDomainServices
 
 directive:
   - from: swagger-document

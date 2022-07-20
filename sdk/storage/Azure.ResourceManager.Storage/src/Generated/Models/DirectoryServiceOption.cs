@@ -23,15 +23,15 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         private const string NoneValue = "None";
-        private const string AzureActiveDirectoryDomainServicesValue = "AADDS";
-        private const string ActiveDirectoryDomainServicesValue = "AD";
+        private const string AaddsValue = "AADDS";
+        private const string ADValue = "AD";
 
         /// <summary> None. </summary>
         public static DirectoryServiceOption None { get; } = new DirectoryServiceOption(NoneValue);
         /// <summary> AADDS. </summary>
-        public static DirectoryServiceOption AzureActiveDirectoryDomainServices { get; } = new DirectoryServiceOption(AzureActiveDirectoryDomainServicesValue);
+        public static DirectoryServiceOption Aadds { get; } = new DirectoryServiceOption(AaddsValue);
         /// <summary> AD. </summary>
-        public static DirectoryServiceOption ActiveDirectoryDomainServices { get; } = new DirectoryServiceOption(ActiveDirectoryDomainServicesValue);
+        public static DirectoryServiceOption AD { get; } = new DirectoryServiceOption(ADValue);
         /// <summary> Determines if two <see cref="DirectoryServiceOption"/> values are the same. </summary>
         public static bool operator ==(DirectoryServiceOption left, DirectoryServiceOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DirectoryServiceOption"/> values are not the same. </summary>
