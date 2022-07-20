@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary> Gets a collection of ProviderOperationsResources in the TenantResource. </summary>
         /// <returns> An object representing collection of ProviderOperationsResources and their operations over a ProviderOperationsResource. </returns>
-        public virtual ProviderOperationsCollection GetProviderOperations()
+        public virtual ProviderOperationsCollection GetAllProviderOperations()
         {
             return GetCachedClient(Client => new ProviderOperationsCollection(Client, Id));
         }

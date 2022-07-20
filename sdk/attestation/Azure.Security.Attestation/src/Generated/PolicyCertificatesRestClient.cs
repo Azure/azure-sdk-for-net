@@ -54,7 +54,6 @@ namespace Azure.Security.Attestation
 
         /// <summary> Retrieves the set of certificates used to express policy for the current tenant. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Retrieves the set of certificates used to express policy for the current tenant. </remarks>
         public async Task<Response<PolicyCertificatesResponse>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetRequest();
@@ -75,7 +74,6 @@ namespace Azure.Security.Attestation
 
         /// <summary> Retrieves the set of certificates used to express policy for the current tenant. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Retrieves the set of certificates used to express policy for the current tenant. </remarks>
         public Response<PolicyCertificatesResponse> Get(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetRequest();
@@ -116,7 +114,6 @@ namespace Azure.Security.Attestation
         /// <param name="policyCertificateToAdd"> An RFC7519 JSON Web Token whose body is an RFC7517 JSON Web Key object. The RFC7519 JWT must be signed with one of the existing signing certificates. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyCertificateToAdd"/> is null. </exception>
-        /// <remarks> Adds a new attestation policy certificate to the set of policy management certificates. </remarks>
         public async Task<Response<PolicyCertificatesModifyResponse>> AddAsync(string policyCertificateToAdd, CancellationToken cancellationToken = default)
         {
             if (policyCertificateToAdd == null)
@@ -144,7 +141,6 @@ namespace Azure.Security.Attestation
         /// <param name="policyCertificateToAdd"> An RFC7519 JSON Web Token whose body is an RFC7517 JSON Web Key object. The RFC7519 JWT must be signed with one of the existing signing certificates. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyCertificateToAdd"/> is null. </exception>
-        /// <remarks> Adds a new attestation policy certificate to the set of policy management certificates. </remarks>
         public Response<PolicyCertificatesModifyResponse> Add(string policyCertificateToAdd, CancellationToken cancellationToken = default)
         {
             if (policyCertificateToAdd == null)
@@ -190,7 +186,6 @@ namespace Azure.Security.Attestation
         /// <param name="policyCertificateToRemove"> An RFC7519 JSON Web Token whose body is an AttestationCertificateManagementBody object. The RFC7519 JWT must be signed with one of the existing signing certificates. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyCertificateToRemove"/> is null. </exception>
-        /// <remarks> Removes the specified policy management certificate. Note that the final policy management certificate cannot be removed. </remarks>
         public async Task<Response<PolicyCertificatesModifyResponse>> RemoveAsync(string policyCertificateToRemove, CancellationToken cancellationToken = default)
         {
             if (policyCertificateToRemove == null)
@@ -218,7 +213,6 @@ namespace Azure.Security.Attestation
         /// <param name="policyCertificateToRemove"> An RFC7519 JSON Web Token whose body is an AttestationCertificateManagementBody object. The RFC7519 JWT must be signed with one of the existing signing certificates. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyCertificateToRemove"/> is null. </exception>
-        /// <remarks> Removes the specified policy management certificate. Note that the final policy management certificate cannot be removed. </remarks>
         public Response<PolicyCertificatesModifyResponse> Remove(string policyCertificateToRemove, CancellationToken cancellationToken = default)
         {
             if (policyCertificateToRemove == null)

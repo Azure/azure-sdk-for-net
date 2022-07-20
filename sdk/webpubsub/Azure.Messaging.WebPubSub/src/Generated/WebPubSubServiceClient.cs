@@ -41,8 +41,6 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Generate token for the client to connect Azure Web PubSub service.
-        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -78,8 +76,6 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Generate token for the client to connect Azure Web PubSub service.
-        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -113,7 +109,6 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <remarks> Close the connections in the hub. </remarks>
         public virtual async Task<Response> CloseAllConnectionsAsync(IEnumerable<string> excluded = null, string reason = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.CloseAllConnections");
@@ -136,7 +131,6 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <remarks> Close the connections in the hub. </remarks>
         public virtual Response CloseAllConnections(IEnumerable<string> excluded = null, string reason = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.CloseAllConnections");
@@ -161,7 +155,6 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <remarks> Broadcast content inside request body to all the connected client connections. </remarks>
         public virtual async Task<Response> SendToAllAsync(RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -188,7 +181,6 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <remarks> Broadcast content inside request body to all the connected client connections. </remarks>
         public virtual Response SendToAll(RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -214,7 +206,6 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <remarks> Check if the connection with the given connectionId exists. </remarks>
         internal virtual async Task<Response> ConnectionExistsImplAsync(string connectionId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
@@ -240,7 +231,6 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <remarks> Check if the connection with the given connectionId exists. </remarks>
         internal virtual Response ConnectionExistsImpl(string connectionId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
@@ -267,7 +257,6 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <remarks> Close the client connection. </remarks>
         public virtual async Task<Response> CloseConnectionAsync(string connectionId, string reason = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
@@ -294,7 +283,6 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <remarks> Close the client connection. </remarks>
         public virtual Response CloseConnection(string connectionId, string reason = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
@@ -322,7 +310,6 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <remarks> Send content inside request body to the specific connection. </remarks>
         public virtual async Task<Response> SendToConnectionAsync(string connectionId, RequestContent content, ContentType contentType, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
@@ -351,7 +338,6 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <remarks> Send content inside request body to the specific connection. </remarks>
         public virtual Response SendToConnection(string connectionId, RequestContent content, ContentType contentType, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
@@ -378,7 +364,6 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <remarks> Check if there are any client connections inside the given group. </remarks>
         internal virtual async Task<Response> GroupExistsImplAsync(string group, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(group, nameof(group));
@@ -404,7 +389,6 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <remarks> Check if there are any client connections inside the given group. </remarks>
         internal virtual Response GroupExistsImpl(string group, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(group, nameof(group));
@@ -432,7 +416,6 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <remarks> Close connections in the specific group. </remarks>
         public virtual async Task<Response> CloseGroupConnectionsAsync(string group, IEnumerable<string> excluded = null, string reason = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(group, nameof(group));
@@ -460,7 +443,6 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <remarks> Close connections in the specific group. </remarks>
         public virtual Response CloseGroupConnections(string group, IEnumerable<string> excluded = null, string reason = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(group, nameof(group));
@@ -489,7 +471,6 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <remarks> Send content inside request body to a group of connections. </remarks>
         public virtual async Task<Response> SendToGroupAsync(string group, RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(group, nameof(group));
@@ -519,7 +500,6 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <remarks> Send content inside request body to a group of connections. </remarks>
         public virtual Response SendToGroup(string group, RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(group, nameof(group));
@@ -547,7 +527,6 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="group"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <remarks> Add a connection to the target group. </remarks>
         public virtual async Task<Response> AddConnectionToGroupAsync(string group, string connectionId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(group, nameof(group));
@@ -575,7 +554,6 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="group"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <remarks> Add a connection to the target group. </remarks>
         public virtual Response AddConnectionToGroup(string group, string connectionId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(group, nameof(group));
@@ -603,7 +581,6 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="group"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <remarks> Remove a connection from the target group. </remarks>
         public virtual async Task<Response> RemoveConnectionFromGroupAsync(string group, string connectionId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(group, nameof(group));
@@ -631,7 +608,6 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="group"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <remarks> Remove a connection from the target group. </remarks>
         public virtual Response RemoveConnectionFromGroup(string group, string connectionId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(group, nameof(group));
@@ -658,7 +634,6 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <remarks> Check if there are any client connections connected for the given user. </remarks>
         internal virtual async Task<Response> UserExistsImplAsync(string userId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
@@ -684,7 +659,6 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <remarks> Check if there are any client connections connected for the given user. </remarks>
         internal virtual Response UserExistsImpl(string userId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
@@ -712,7 +686,6 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <remarks> Close connections for the specific user. </remarks>
         public virtual async Task<Response> CloseUserConnectionsAsync(string userId, IEnumerable<string> excluded = null, string reason = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
@@ -740,7 +713,6 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <remarks> Close connections for the specific user. </remarks>
         public virtual Response CloseUserConnections(string userId, IEnumerable<string> excluded = null, string reason = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
@@ -768,7 +740,6 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <remarks> Send content inside request body to the specific user. </remarks>
         public virtual async Task<Response> SendToUserAsync(string userId, RequestContent content, ContentType contentType, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
@@ -797,7 +768,6 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <remarks> Send content inside request body to the specific user. </remarks>
         public virtual Response SendToUser(string userId, RequestContent content, ContentType contentType, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
@@ -824,7 +794,6 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <remarks> Remove a user from all groups. </remarks>
         public virtual async Task<Response> RemoveUserFromAllGroupsAsync(string userId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
@@ -850,7 +819,6 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <remarks> Remove a user from all groups. </remarks>
         public virtual Response RemoveUserFromAllGroups(string userId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
@@ -878,7 +846,6 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <remarks> Grant permission to the connection. </remarks>
         internal virtual async Task<Response> GrantPermissionAsync(string permission, string connectionId, string targetName = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(permission, nameof(permission));
@@ -907,7 +874,6 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <remarks> Grant permission to the connection. </remarks>
         internal virtual Response GrantPermission(string permission, string connectionId, string targetName = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(permission, nameof(permission));
@@ -936,7 +902,6 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <remarks> Revoke permission for the connection. </remarks>
         internal virtual async Task<Response> RevokePermissionAsync(string permission, string connectionId, string targetName = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(permission, nameof(permission));
@@ -965,7 +930,6 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <remarks> Revoke permission for the connection. </remarks>
         internal virtual Response RevokePermission(string permission, string connectionId, string targetName = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(permission, nameof(permission));
@@ -994,7 +958,6 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <remarks> Check if a connection has permission to the specified action. </remarks>
         internal virtual async Task<Response> CheckPermissionAsync(string permission, string connectionId, string targetName = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(permission, nameof(permission));
@@ -1023,7 +986,6 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <remarks> Check if a connection has permission to the specified action. </remarks>
         internal virtual Response CheckPermission(string permission, string connectionId, string targetName = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(permission, nameof(permission));

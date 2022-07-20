@@ -3,7 +3,7 @@
 
 using Azure.Core;
 
-namespace Azure.Communication.CallingServer.Models
+namespace Azure.Communication.CallingServer
 {
     /// <summary> The server call locator. </summary>
     public class ServerCallLocator : CallLocator

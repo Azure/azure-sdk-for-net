@@ -304,11 +304,11 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentException"> <paramref name="providerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerId"/> is null. </exception>
         /// <returns> An object representing collection of QuotaRequestDetailsResources and their operations over a QuotaRequestDetailsResource. </returns>
-        public static QuotaRequestDetailsCollection GetQuotaRequestDetails(this SubscriptionResource subscriptionResource, string providerId, AzureLocation location)
+        public static QuotaRequestDetailsCollection GetAllQuotaRequestDetails(this SubscriptionResource subscriptionResource, string providerId, AzureLocation location)
         {
             Argument.AssertNotNullOrEmpty(providerId, nameof(providerId));
 
-            return GetExtensionClient(subscriptionResource).GetQuotaRequestDetails(providerId, location);
+            return GetExtensionClient(subscriptionResource).GetAllQuotaRequestDetails(providerId, location);
         }
 
         /// <summary>
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Reservations
         [ForwardsClientCalls]
         public static async Task<Response<QuotaRequestDetailsResource>> GetQuotaRequestDetailsAsync(this SubscriptionResource subscriptionResource, string providerId, AzureLocation location, string id, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetQuotaRequestDetails(providerId, location).GetAsync(id, cancellationToken).ConfigureAwait(false);
+            return await subscriptionResource.GetAllQuotaRequestDetails(providerId, location).GetAsync(id, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Reservations
         [ForwardsClientCalls]
         public static Response<QuotaRequestDetailsResource> GetQuotaRequestDetails(this SubscriptionResource subscriptionResource, string providerId, AzureLocation location, string id, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetQuotaRequestDetails(providerId, location).Get(id, cancellationToken);
+            return subscriptionResource.GetAllQuotaRequestDetails(providerId, location).Get(id, cancellationToken);
         }
 
         /// <summary>

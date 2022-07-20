@@ -1734,8 +1734,41 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        public virtual async Task<Operation> DeleteProjectAsync(WaitUntil waitUntil, string projectName, RequestContext context = null)
+        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
+        /// <code>{
+        ///   resultUrl: string, # Required. URL to download the result of the Export Job.
+        ///   createdDateTime: string (ISO 8601 Format), # Required.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
+        ///   jobId: string, # Required.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
+        ///   errors: [
+        ///     {
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
+        ///       innererror: {
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
+        ///     }
+        ///   ], # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// 
+        /// </remarks>
+        public virtual async Task<Operation<BinaryData>> DeleteProjectAsync(WaitUntil waitUntil, string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -1744,7 +1777,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             try
             {
                 using HttpMessage message = CreateDeleteProjectRequest(projectName, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.DeleteProject", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.DeleteProject", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1760,8 +1793,41 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        public virtual Operation DeleteProject(WaitUntil waitUntil, string projectName, RequestContext context = null)
+        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
+        /// <code>{
+        ///   resultUrl: string, # Required. URL to download the result of the Export Job.
+        ///   createdDateTime: string (ISO 8601 Format), # Required.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
+        ///   jobId: string, # Required.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
+        ///   errors: [
+        ///     {
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
+        ///       innererror: {
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
+        ///     }
+        ///   ], # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// 
+        /// </remarks>
+        public virtual Operation<BinaryData> DeleteProject(WaitUntil waitUntil, string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -1770,7 +1836,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             try
             {
                 using HttpMessage message = CreateDeleteProjectRequest(projectName, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.DeleteProject", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.DeleteProject", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -1909,9 +1975,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <remarks>
-        /// Below is the JSON schema for the request payload.
+        /// Below is the JSON schema for the request and response payloads.
         /// 
         /// Request Body:
         /// 
@@ -1978,8 +2044,37 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// }
         /// </code>
         /// 
+        /// Response Body:
+        /// 
+        /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
+        /// <code>{
+        ///   resultUrl: string, # Required. URL to download the result of the Export Job.
+        ///   createdDateTime: string (ISO 8601 Format), # Required.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
+        ///   jobId: string, # Required.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
+        ///   errors: [
+        ///     {
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
+        ///       innererror: {
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
+        ///     }
+        ///   ], # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// 
         /// </remarks>
-        public virtual async Task<Operation> ImportAsync(WaitUntil waitUntil, string projectName, RequestContent content, string format = null, string assetKind = null, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> ImportAsync(WaitUntil waitUntil, string projectName, RequestContent content, string format = null, string assetKind = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -1988,7 +2083,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             try
             {
                 using HttpMessage message = CreateImportRequest(projectName, content, format, assetKind, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.Import", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.Import", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2007,9 +2102,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <remarks>
-        /// Below is the JSON schema for the request payload.
+        /// Below is the JSON schema for the request and response payloads.
         /// 
         /// Request Body:
         /// 
@@ -2076,8 +2171,37 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// }
         /// </code>
         /// 
+        /// Response Body:
+        /// 
+        /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
+        /// <code>{
+        ///   resultUrl: string, # Required. URL to download the result of the Export Job.
+        ///   createdDateTime: string (ISO 8601 Format), # Required.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
+        ///   jobId: string, # Required.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
+        ///   errors: [
+        ///     {
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
+        ///       innererror: {
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
+        ///     }
+        ///   ], # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// 
         /// </remarks>
-        public virtual Operation Import(WaitUntil waitUntil, string projectName, RequestContent content, string format = null, string assetKind = null, RequestContext context = null)
+        public virtual Operation<BinaryData> Import(WaitUntil waitUntil, string projectName, RequestContent content, string format = null, string assetKind = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -2086,7 +2210,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             try
             {
                 using HttpMessage message = CreateImportRequest(projectName, content, format, assetKind, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.Import", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.Import", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -2103,8 +2227,41 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        public virtual async Task<Operation> DeployProjectAsync(WaitUntil waitUntil, string projectName, string deploymentName, RequestContext context = null)
+        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
+        /// <code>{
+        ///   resultUrl: string, # Required. URL to download the result of the Export Job.
+        ///   createdDateTime: string (ISO 8601 Format), # Required.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
+        ///   jobId: string, # Required.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
+        ///   errors: [
+        ///     {
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
+        ///       innererror: {
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
+        ///     }
+        ///   ], # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// 
+        /// </remarks>
+        public virtual async Task<Operation<BinaryData>> DeployProjectAsync(WaitUntil waitUntil, string projectName, string deploymentName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
@@ -2114,7 +2271,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             try
             {
                 using HttpMessage message = CreateDeployProjectRequest(projectName, deploymentName, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.DeployProject", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.DeployProject", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2131,8 +2288,41 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        public virtual Operation DeployProject(WaitUntil waitUntil, string projectName, string deploymentName, RequestContext context = null)
+        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
+        /// <code>{
+        ///   resultUrl: string, # Required. URL to download the result of the Export Job.
+        ///   createdDateTime: string (ISO 8601 Format), # Required.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
+        ///   jobId: string, # Required.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
+        ///   errors: [
+        ///     {
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
+        ///       innererror: {
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
+        ///     }
+        ///   ], # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// 
+        /// </remarks>
+        public virtual Operation<BinaryData> DeployProject(WaitUntil waitUntil, string projectName, string deploymentName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
@@ -2142,7 +2332,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             try
             {
                 using HttpMessage message = CreateDeployProjectRequest(projectName, deploymentName, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.DeployProject", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.DeployProject", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -2159,9 +2349,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <remarks>
-        /// Below is the JSON schema for the request payload.
+        /// Below is the JSON schema for the request and response payloads.
         /// 
         /// Request Body:
         /// 
@@ -2179,8 +2369,37 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// }
         /// </code>
         /// 
+        /// Response Body:
+        /// 
+        /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
+        /// <code>{
+        ///   resultUrl: string, # Required. URL to download the result of the Export Job.
+        ///   createdDateTime: string (ISO 8601 Format), # Required.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
+        ///   jobId: string, # Required.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
+        ///   errors: [
+        ///     {
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
+        ///       innererror: {
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
+        ///     }
+        ///   ], # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// 
         /// </remarks>
-        public virtual async Task<Operation> UpdateSourcesAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> UpdateSourcesAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
@@ -2190,7 +2409,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             try
             {
                 using HttpMessage message = CreateUpdateSourcesRequest(projectName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.UpdateSources", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.UpdateSources", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2207,9 +2426,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <remarks>
-        /// Below is the JSON schema for the request payload.
+        /// Below is the JSON schema for the request and response payloads.
         /// 
         /// Request Body:
         /// 
@@ -2227,8 +2446,37 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// }
         /// </code>
         /// 
+        /// Response Body:
+        /// 
+        /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
+        /// <code>{
+        ///   resultUrl: string, # Required. URL to download the result of the Export Job.
+        ///   createdDateTime: string (ISO 8601 Format), # Required.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
+        ///   jobId: string, # Required.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
+        ///   errors: [
+        ///     {
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
+        ///       innererror: {
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
+        ///     }
+        ///   ], # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// 
         /// </remarks>
-        public virtual Operation UpdateSources(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        public virtual Operation<BinaryData> UpdateSources(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
@@ -2238,7 +2486,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             try
             {
                 using HttpMessage message = CreateUpdateSourcesRequest(projectName, content, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.UpdateSources", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.UpdateSources", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -2255,9 +2503,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <remarks>
-        /// Below is the JSON schema for the request payload.
+        /// Below is the JSON schema for the request and response payloads.
         /// 
         /// Request Body:
         /// 
@@ -2297,8 +2545,37 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// }
         /// </code>
         /// 
+        /// Response Body:
+        /// 
+        /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
+        /// <code>{
+        ///   resultUrl: string, # Required. URL to download the result of the Export Job.
+        ///   createdDateTime: string (ISO 8601 Format), # Required.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
+        ///   jobId: string, # Required.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
+        ///   errors: [
+        ///     {
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
+        ///       innererror: {
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
+        ///     }
+        ///   ], # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// 
         /// </remarks>
-        public virtual async Task<Operation> UpdateQnasAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> UpdateQnasAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
@@ -2308,7 +2585,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             try
             {
                 using HttpMessage message = CreateUpdateQnasRequest(projectName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.UpdateQnas", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.UpdateQnas", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2325,9 +2602,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <remarks>
-        /// Below is the JSON schema for the request payload.
+        /// Below is the JSON schema for the request and response payloads.
         /// 
         /// Request Body:
         /// 
@@ -2367,8 +2644,37 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// }
         /// </code>
         /// 
+        /// Response Body:
+        /// 
+        /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
+        /// <code>{
+        ///   resultUrl: string, # Required. URL to download the result of the Export Job.
+        ///   createdDateTime: string (ISO 8601 Format), # Required.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
+        ///   jobId: string, # Required.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
+        ///   errors: [
+        ///     {
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
+        ///       innererror: {
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
+        ///     }
+        ///   ], # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// 
         /// </remarks>
-        public virtual Operation UpdateQnas(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        public virtual Operation<BinaryData> UpdateQnas(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
@@ -2378,7 +2684,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             try
             {
                 using HttpMessage message = CreateUpdateQnasRequest(projectName, content, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.UpdateQnas", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.UpdateQnas", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -2450,7 +2756,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
 
         internal HttpMessage CreateDeleteProjectRequest(string projectName, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -2525,7 +2831,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
 
         internal HttpMessage CreateImportRequest(string projectName, RequestContent content, string format, string assetKind, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -2570,7 +2876,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
 
         internal HttpMessage CreateDeployProjectRequest(string projectName, string deploymentName, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -2714,7 +3020,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
 
         internal HttpMessage CreateUpdateSourcesRequest(string projectName, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
@@ -2784,7 +3090,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
 
         internal HttpMessage CreateUpdateQnasRequest(string projectName, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
@@ -2912,8 +3218,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
         private static ResponseClassifier _responseClassifier200201;
         private static ResponseClassifier ResponseClassifier200201 => _responseClassifier200201 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 201 });
-        private static ResponseClassifier _responseClassifier202;
-        private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
         private static ResponseClassifier _responseClassifier200202;
         private static ResponseClassifier ResponseClassifier200202 => _responseClassifier200202 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 202 });
         private static ResponseClassifier _responseClassifier204;

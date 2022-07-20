@@ -6,13 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 
-namespace Azure.Communication.CallingServer.Models
+namespace Azure.Communication.CallingServer
 {
     /// <summary> The options for transfering a call. </summary>
     public class TransferCallToParticipantOptions
     {
-        /// <summary> The alternate caller id of the source. </summary>
-        public PhoneNumberIdentifier AlternateCallerId { get; set; }
+        /// <summary> The caller id of the source. </summary>
+        public PhoneNumberIdentifier SourceCallerId { get; set; }
 
         /// <summary> The UserToUserInformation. </summary>
         public string UserToUserInformation { get; set; }
@@ -23,14 +23,8 @@ namespace Azure.Communication.CallingServer.Models
         /// <summary>
         /// Transfer Call Options.
         /// </summary>
-        /// <param name="alternateCallerId">The alternate caller id of the source</param>
-        /// <param name="userToUserInformation">The userToUserInformation.</param>
-        /// <param name="operationContext">The operationContext for this transfer call.</param>
-        public TransferCallToParticipantOptions(PhoneNumberIdentifier alternateCallerId = default, string userToUserInformation = default, string operationContext = default)
+        public TransferCallToParticipantOptions()
         {
-            AlternateCallerId = alternateCallerId;
-            UserToUserInformation = userToUserInformation;
-            OperationContext = operationContext;
         }
     }
 }

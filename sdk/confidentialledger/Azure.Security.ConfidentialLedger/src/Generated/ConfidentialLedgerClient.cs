@@ -372,8 +372,6 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Gets a receipt certifying ledger contents at a particular transaction id.
-        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -431,8 +429,6 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Gets a receipt certifying ledger contents at a particular transaction id.
-        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -490,8 +486,6 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Gets the status of an entry identified by a transaction id.
-        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -530,8 +524,6 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Gets the status of an entry identified by a transaction id.
-        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -642,7 +634,6 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <remarks> Deletes a user from the Confidential Ledger. </remarks>
         public virtual async Task<Response> DeleteUserAsync(string userId, RequestContext context = null)
         {
             Argument.AssertNotNull(userId, nameof(userId));
@@ -667,7 +658,6 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <remarks> Deletes a user from the Confidential Ledger. </remarks>
         public virtual Response DeleteUser(string userId, RequestContext context = null)
         {
             Argument.AssertNotNull(userId, nameof(userId));
@@ -693,8 +683,6 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Gets a user.
-        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
@@ -732,8 +720,6 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Gets a user.
-        /// 
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
