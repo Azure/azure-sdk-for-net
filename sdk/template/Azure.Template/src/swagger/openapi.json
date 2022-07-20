@@ -1,306 +1,132 @@
 {
-  "openapi": "3.0.0",
+  "swagger": "2.0",
   "info": {
-    "title": "Pet Store Service",
-    "version": "2021-03-25",
-    "description": "This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters."
+    "title": "DPGClient",
+    "version": "1.0.0",
+    "description": "DPG Swagger that tests our ability to grow up.",
+    "x-cadl-generated": [
+      {
+        "emitter": "@azure-tools/cadl-autorest"
+      }
+    ]
   },
+  "schemes": [
+    "http"
+  ],
+  "host": "localhost:3000",
+  "produces": [
+    "application/json"
+  ],
+  "consumes": [
+    "application/json"
+  ],
   "tags": [],
   "paths": {
-    "/pets/{petId}": {
-      "delete": {
-        "operationId": "Pets_delete",
-        "description": "Delete a pet.",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/PetId"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Ok"
-          },
-          "default": {
-            "description": "Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      },
+    "/models": {
       "get": {
-        "operationId": "Pets_read",
-        "description": "Returns a pet. Supports eTags.",
+        "operationId": "Testserver_GetModel",
         "parameters": [
           {
-            "$ref": "#/components/parameters/PetId"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "The request has succeeded.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Pet"
-                }
-              }
-            }
-          },
-          "304": {
-            "description": "Not modified",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Pet"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/pets": {
-      "get": {
-        "operationId": "Pets_list",
-        "description": "<blink>List pets.</blink>",
-        "parameters": [
-          {
-            "name": "nextLink",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "The request has succeeded.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/PetListResults"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "operationId": "Pets_create",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "The request has succeeded.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Pet"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Pet"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/pets/{petId}/toys": {
-      "get": {
-        "operationId": "ListPetToysResponse_list",
-        "parameters": [
-          {
-            "name": "petId",
-            "in": "path",
+            "name": "input",
+            "in": "body",
             "required": true,
             "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "nameFilter",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string"
+              "$ref": "#/definitions/InputModel"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "The request has succeeded.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ToyListResults"
-                }
-              }
-            }
+            "description": "Http response with status code"
           },
           "default": {
-            "description": "Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
+            "description": "A response containing error details.",
+            "schema": {
+              "$ref": "#/definitions/Azure.Core.Operations.ErrorResponse"
             }
           }
         }
       }
     }
   },
-  "components": {
-    "parameters": {
-      "PetId": {
-        "name": "petId",
-        "in": "path",
-        "required": true,
-        "schema": {
+  "definitions": {
+    "Azure.Core.Operations.Error": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "One of a server-defined set of error codes."
+        },
+        "message": {
+          "type": "string",
+          "description": "A human-readable representation of the error."
+        },
+        "target": {
+          "type": "string",
+          "description": "The target of the error."
+        },
+        "details": {
+          "$ref": "#/definitions/Azure.Core.Operations.Error",
+          "description": "An array of details about specific errors that led to this reported error."
+        },
+        "innererror": {
+          "$ref": "#/definitions/Azure.Core.Operations.InnerError",
+          "description": "An object containing more specific information than the current object about the error."
+        }
+      },
+      "description": "The error object.",
+      "required": [
+        "code",
+        "message",
+        "details"
+      ]
+    },
+    "Azure.Core.Operations.ErrorResponse": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "$ref": "#/definitions/Azure.Core.Operations.Error",
+          "description": "The error object."
+        }
+      },
+      "description": "A response containing error details.",
+      "required": [
+        "error"
+      ]
+    },
+    "Azure.Core.Operations.InnerError": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "One of a server-defined set of error codes."
+        },
+        "innererror": {
+          "$ref": "#/definitions/Azure.Core.Operations.InnerError",
+          "description": "Inner error."
+        }
+      },
+      "description": "An object containing more specific information about the error. As per Microsoft One API guidelines - https://github.com/Microsoft/api-guidelines/blob/vNext/Guidelines.md#7102-error-condition-responses.",
+      "required": [
+        "code"
+      ]
+    },
+    "InputModel": {
+      "type": "object",
+      "properties": {
+        "requiredString": {
+          "type": "string"
+        },
+        "requiredInt": {
           "type": "integer",
           "format": "int32"
         }
-      }
-    },
-    "schemas": {
-      "Error": {
-        "type": "object",
-        "properties": {
-          "code": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "message": {
-            "type": "string"
-          }
-        },
-        "description": "Error",
-        "required": [
-          "code",
-          "message"
-        ]
       },
-      "PetListResults": {
-        "type": "object",
-        "properties": {
-          "items": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Pet"
-            },
-            "x-cadl-name": "Pet[]"
-          },
-          "nextLink": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "items"
-        ]
-      },
-      "Pet": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "tag": {
-            "type": "string"
-          },
-          "age": {
-            "type": "integer",
-            "format": "int32",
-            "minimum": 0,
-            "maximum": 20
-          }
-        },
-        "required": [
-          "name",
-          "age"
-        ]
-      },
-      "ToyListResults": {
-        "type": "object",
-        "properties": {
-          "items": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Toy"
-            },
-            "x-cadl-name": "Toy[]"
-          },
-          "nextLink": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "items"
-        ]
-      },
-      "Toy": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "petId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "name": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "id",
-          "petId",
-          "name"
-        ]
-      }
+      "required": [
+        "requiredString",
+        "requiredInt"
+      ]
     }
-  }
+  },
+  "parameters": {}
 }
