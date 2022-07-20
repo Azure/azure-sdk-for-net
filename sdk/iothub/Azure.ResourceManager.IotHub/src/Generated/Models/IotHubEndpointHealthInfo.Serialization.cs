@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class IotHubEndpointHealthData
+    public partial class IotHubEndpointHealthInfo
     {
-        internal static IotHubEndpointHealthData DeserializeIotHubEndpointHealthData(JsonElement element)
+        internal static IotHubEndpointHealthInfo DeserializeIotHubEndpointHealthInfo(JsonElement element)
         {
             Optional<string> endpointId = default;
             Optional<IotHubEndpointHealthStatus> healthStatus = default;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     continue;
                 }
             }
-            return new IotHubEndpointHealthData(endpointId.Value, Optional.ToNullable(healthStatus), lastKnownError.Value, Optional.ToNullable(lastKnownErrorTime), Optional.ToNullable(lastSuccessfulSendAttemptTime), Optional.ToNullable(lastSendAttemptTime));
+            return new IotHubEndpointHealthInfo(endpointId.Value, Optional.ToNullable(healthStatus), lastKnownError.Value, Optional.ToNullable(lastKnownErrorTime), Optional.ToNullable(lastSuccessfulSendAttemptTime), Optional.ToNullable(lastSendAttemptTime));
         }
     }
 }

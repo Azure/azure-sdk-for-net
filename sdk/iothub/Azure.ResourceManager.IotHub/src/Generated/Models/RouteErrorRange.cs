@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary>
-    /// Range of route errors
-    /// Serialized Name: RouteErrorRange
-    /// </summary>
+    /// <summary> Range of route errors. </summary>
     public partial class RouteErrorRange
     {
         /// <summary> Initializes a new instance of RouteErrorRange. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary> Initializes a new instance of RouteErrorRange. </summary>
-        /// <param name="start">
-        /// Start where the route error happened
-        /// Serialized Name: RouteErrorRange.start
-        /// </param>
-        /// <param name="end">
-        /// End where the route error happened
-        /// Serialized Name: RouteErrorRange.end
-        /// </param>
+        /// <param name="start"> Start where the route error happened. </param>
+        /// <param name="end"> End where the route error happened. </param>
         internal RouteErrorRange(RouteErrorPosition start, RouteErrorPosition end)
         {
             Start = start;
             End = end;
         }
 
-        /// <summary>
-        /// Start where the route error happened
-        /// Serialized Name: RouteErrorRange.start
-        /// </summary>
+        /// <summary> Start where the route error happened. </summary>
         public RouteErrorPosition Start { get; }
-        /// <summary>
-        /// End where the route error happened
-        /// Serialized Name: RouteErrorRange.end
-        /// </summary>
+        /// <summary> End where the route error happened. </summary>
         public RouteErrorPosition End { get; }
     }
 }

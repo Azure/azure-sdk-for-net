@@ -11,10 +11,7 @@ using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary>
-    /// The list of private endpoint connections for an IotHub
-    /// Serialized Name: PrivateEndpointConnectionsList
-    /// </summary>
+    /// <summary> The list of private endpoint connections for an IotHub. </summary>
     internal partial class IotHubPrivateEndpointConnectionsList
     {
         /// <summary> Initializes a new instance of IotHubPrivateEndpointConnectionsList. </summary>
@@ -24,19 +21,13 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary> Initializes a new instance of IotHubPrivateEndpointConnectionsList. </summary>
-        /// <param name="value">
-        /// The array of Private Endpoint Connections.
-        /// Serialized Name: PrivateEndpointConnectionsList.value
-        /// </param>
+        /// <param name="value"> The array of Private Endpoint Connections. </param>
         internal IotHubPrivateEndpointConnectionsList(IReadOnlyList<IotHubPrivateEndpointConnectionData> value)
         {
             Value = value;
         }
 
-        /// <summary>
-        /// The array of Private Endpoint Connections.
-        /// Serialized Name: PrivateEndpointConnectionsList.value
-        /// </summary>
+        /// <summary> The array of Private Endpoint Connections. </summary>
         public IReadOnlyList<IotHubPrivateEndpointConnectionData> Value { get; }
     }
 }

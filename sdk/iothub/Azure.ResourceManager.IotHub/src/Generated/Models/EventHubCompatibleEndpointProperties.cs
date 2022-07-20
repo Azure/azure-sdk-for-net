@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary>
-    /// The properties of the provisioned Event Hub-compatible endpoint used by the IoT hub.
-    /// Serialized Name: EventHubProperties
-    /// </summary>
+    /// <summary> The properties of the provisioned Event Hub-compatible endpoint used by the IoT hub. </summary>
     public partial class EventHubCompatibleEndpointProperties
     {
         /// <summary> Initializes a new instance of EventHubCompatibleEndpointProperties. </summary>
@@ -23,26 +20,11 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary> Initializes a new instance of EventHubCompatibleEndpointProperties. </summary>
-        /// <param name="retentionTimeInDays">
-        /// The retention time for device-to-cloud messages in days. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging#device-to-cloud-messages
-        /// Serialized Name: EventHubProperties.retentionTimeInDays
-        /// </param>
-        /// <param name="partitionCount">
-        /// The number of partitions for receiving device-to-cloud messages in the Event Hub-compatible endpoint. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging#device-to-cloud-messages.
-        /// Serialized Name: EventHubProperties.partitionCount
-        /// </param>
-        /// <param name="partitionIds">
-        /// The partition ids in the Event Hub-compatible endpoint.
-        /// Serialized Name: EventHubProperties.partitionIds
-        /// </param>
-        /// <param name="path">
-        /// The Event Hub-compatible name.
-        /// Serialized Name: EventHubProperties.path
-        /// </param>
-        /// <param name="endpoint">
-        /// The Event Hub-compatible endpoint.
-        /// Serialized Name: EventHubProperties.endpoint
-        /// </param>
+        /// <param name="retentionTimeInDays"> The retention time for device-to-cloud messages in days. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging#device-to-cloud-messages. </param>
+        /// <param name="partitionCount"> The number of partitions for receiving device-to-cloud messages in the Event Hub-compatible endpoint. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging#device-to-cloud-messages. </param>
+        /// <param name="partitionIds"> The partition ids in the Event Hub-compatible endpoint. </param>
+        /// <param name="path"> The Event Hub-compatible name. </param>
+        /// <param name="endpoint"> The Event Hub-compatible endpoint. </param>
         internal EventHubCompatibleEndpointProperties(long? retentionTimeInDays, int? partitionCount, IReadOnlyList<string> partitionIds, string path, string endpoint)
         {
             RetentionTimeInDays = retentionTimeInDays;
@@ -52,30 +34,15 @@ namespace Azure.ResourceManager.IotHub.Models
             Endpoint = endpoint;
         }
 
-        /// <summary>
-        /// The retention time for device-to-cloud messages in days. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging#device-to-cloud-messages
-        /// Serialized Name: EventHubProperties.retentionTimeInDays
-        /// </summary>
+        /// <summary> The retention time for device-to-cloud messages in days. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging#device-to-cloud-messages. </summary>
         public long? RetentionTimeInDays { get; set; }
-        /// <summary>
-        /// The number of partitions for receiving device-to-cloud messages in the Event Hub-compatible endpoint. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging#device-to-cloud-messages.
-        /// Serialized Name: EventHubProperties.partitionCount
-        /// </summary>
+        /// <summary> The number of partitions for receiving device-to-cloud messages in the Event Hub-compatible endpoint. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging#device-to-cloud-messages. </summary>
         public int? PartitionCount { get; set; }
-        /// <summary>
-        /// The partition ids in the Event Hub-compatible endpoint.
-        /// Serialized Name: EventHubProperties.partitionIds
-        /// </summary>
+        /// <summary> The partition ids in the Event Hub-compatible endpoint. </summary>
         public IReadOnlyList<string> PartitionIds { get; }
-        /// <summary>
-        /// The Event Hub-compatible name.
-        /// Serialized Name: EventHubProperties.path
-        /// </summary>
+        /// <summary> The Event Hub-compatible name. </summary>
         public string Path { get; }
-        /// <summary>
-        /// The Event Hub-compatible endpoint.
-        /// Serialized Name: EventHubProperties.endpoint
-        /// </summary>
+        /// <summary> The Event Hub-compatible endpoint. </summary>
         public string Endpoint { get; }
     }
 }

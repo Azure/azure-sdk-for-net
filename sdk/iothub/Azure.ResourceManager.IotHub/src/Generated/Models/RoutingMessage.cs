@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary>
-    /// Routing message
-    /// Serialized Name: RoutingMessage
-    /// </summary>
+    /// <summary> Routing message. </summary>
     public partial class RoutingMessage
     {
         /// <summary> Initializes a new instance of RoutingMessage. </summary>
@@ -23,20 +20,11 @@ namespace Azure.ResourceManager.IotHub.Models
             SystemProperties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary>
-        /// Body of routing message
-        /// Serialized Name: RoutingMessage.body
-        /// </summary>
+        /// <summary> Body of routing message. </summary>
         public string Body { get; set; }
-        /// <summary>
-        /// App properties
-        /// Serialized Name: RoutingMessage.appProperties
-        /// </summary>
+        /// <summary> App properties. </summary>
         public IDictionary<string, string> AppProperties { get; }
-        /// <summary>
-        /// System properties
-        /// Serialized Name: RoutingMessage.systemProperties
-        /// </summary>
+        /// <summary> System properties. </summary>
         public IDictionary<string, string> SystemProperties { get; }
     }
 }

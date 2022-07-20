@@ -15,11 +15,11 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.IotHub.Tests.Scenario
 {
-    internal class GroupIdInformationTests : IotHubManagementTestBase
+    internal class IotHubPrivateEndpointGroupInformationTests : IotHubManagementTestBase
     {
         private ResourceIdentifier _resourceGroupIdentifier;
         private ResourceGroupResource _resourceGroup;
-        public GroupIdInformationTests(bool isAsync) : base(isAsync)
+        public IotHubPrivateEndpointGroupInformationTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
         {
             string iotHubName = Recording.GenerateAssetName("IotHub-");
             var iothub = await CreateIotHub(_resourceGroup, iotHubName);
-            bool isExisted = await iothub.GetAllGroupIdInformation().ExistsAsync("iotHub");
+            bool isExisted = await iothub.GetAllIotHubPrivateEndpointGroupInformation().ExistsAsync("iotHub");
             Assert.IsTrue(isExisted);
         }
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
             string iotHubName = Recording.GenerateAssetName("IotHub-");
             var iothub = await CreateIotHub(_resourceGroup, iotHubName);
             string groupId = $"{iothub.Data.Id}/PrivateLinkResources/iotHub";
-            var groupIdInfo = await iothub.GetAllGroupIdInformation().GetAsync("iotHub");
+            var groupIdInfo = await iothub.GetAllIotHubPrivateEndpointGroupInformation().GetAsync("iotHub");
             Assert.IsNotNull(groupIdInfo);
             Assert.AreEqual(groupId, groupIdInfo.Value.Data.Id.ToString());
             Assert.AreEqual("iotHub", groupIdInfo.Value.Data.Name);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
         {
             string iotHubName = Recording.GenerateAssetName("IotHub-");
             var iothub = await CreateIotHub(_resourceGroup, iotHubName);
-            var list = await iothub.GetAllGroupIdInformation().GetAllAsync().ToEnumerableAsync();
+            var list = await iothub.GetAllIotHubPrivateEndpointGroupInformation().GetAllAsync().ToEnumerableAsync();
             Assert.IsNotNull(list);
             Assert.AreEqual("iotHub", list.FirstOrDefault().Data.Name);
         }

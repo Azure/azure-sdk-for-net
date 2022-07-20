@@ -7,26 +7,14 @@
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary>
-    /// The type of the scaling enabled.
-    /// Serialized Name: IotHubScaleType
-    /// </summary>
+    /// <summary> The type of the scaling enabled. </summary>
     public enum IotHubScaleType
     {
-        /// <summary>
-        /// None
-        /// Serialized Name: IotHubScaleType.None
-        /// </summary>
+        /// <summary> None. </summary>
         None,
-        /// <summary>
-        /// Automatic
-        /// Serialized Name: IotHubScaleType.Automatic
-        /// </summary>
+        /// <summary> Automatic. </summary>
         Automatic,
-        /// <summary>
-        /// Manual
-        /// Serialized Name: IotHubScaleType.Manual
-        /// </summary>
+        /// <summary> Manual. </summary>
         Manual
     }
 }

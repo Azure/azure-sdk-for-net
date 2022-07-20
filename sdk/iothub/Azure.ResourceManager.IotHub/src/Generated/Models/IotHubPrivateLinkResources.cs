@@ -11,10 +11,7 @@ using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary>
-    /// The available private link resources for an IotHub
-    /// Serialized Name: PrivateLinkResources
-    /// </summary>
+    /// <summary> The available private link resources for an IotHub. </summary>
     internal partial class IotHubPrivateLinkResources
     {
         /// <summary> Initializes a new instance of IotHubPrivateLinkResources. </summary>
@@ -24,19 +21,13 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary> Initializes a new instance of IotHubPrivateLinkResources. </summary>
-        /// <param name="value">
-        /// The list of available private link resources for an IotHub
-        /// Serialized Name: PrivateLinkResources.value
-        /// </param>
+        /// <param name="value"> The list of available private link resources for an IotHub. </param>
         internal IotHubPrivateLinkResources(IReadOnlyList<IotHubPrivateEndpointGroupInformationData> value)
         {
             Value = value;
         }
 
-        /// <summary>
-        /// The list of available private link resources for an IotHub
-        /// Serialized Name: PrivateLinkResources.value
-        /// </summary>
+        /// <summary> The list of available private link resources for an IotHub. </summary>
         public IReadOnlyList<IotHubPrivateEndpointGroupInformationData> Value { get; }
     }
 }

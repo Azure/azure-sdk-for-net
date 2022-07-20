@@ -9,21 +9,12 @@ using System;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary>
-    /// Use to provide parameters when requesting an import of all devices in the hub.
-    /// Serialized Name: ImportDevicesRequest
-    /// </summary>
+    /// <summary> Use to provide parameters when requesting an import of all devices in the hub. </summary>
     public partial class IotHubImportDevicesContent
     {
         /// <summary> Initializes a new instance of IotHubImportDevicesContent. </summary>
-        /// <param name="inputBlobContainerUri">
-        /// The input blob container URI.
-        /// Serialized Name: ImportDevicesRequest.inputBlobContainerUri
-        /// </param>
-        /// <param name="outputBlobContainerUri">
-        /// The output blob container URI.
-        /// Serialized Name: ImportDevicesRequest.outputBlobContainerUri
-        /// </param>
+        /// <param name="inputBlobContainerUri"> The input blob container URI. </param>
+        /// <param name="outputBlobContainerUri"> The output blob container URI. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputBlobContainerUri"/> or <paramref name="outputBlobContainerUri"/> is null. </exception>
         public IotHubImportDevicesContent(Uri inputBlobContainerUri, Uri outputBlobContainerUri)
         {
@@ -40,40 +31,19 @@ namespace Azure.ResourceManager.IotHub.Models
             OutputBlobContainerUri = outputBlobContainerUri;
         }
 
-        /// <summary>
-        /// The input blob container URI.
-        /// Serialized Name: ImportDevicesRequest.inputBlobContainerUri
-        /// </summary>
+        /// <summary> The input blob container URI. </summary>
         public Uri InputBlobContainerUri { get; }
-        /// <summary>
-        /// The output blob container URI.
-        /// Serialized Name: ImportDevicesRequest.outputBlobContainerUri
-        /// </summary>
+        /// <summary> The output blob container URI. </summary>
         public Uri OutputBlobContainerUri { get; }
-        /// <summary>
-        /// The blob name to be used when importing from the provided input blob container.
-        /// Serialized Name: ImportDevicesRequest.inputBlobName
-        /// </summary>
+        /// <summary> The blob name to be used when importing from the provided input blob container. </summary>
         public string InputBlobName { get; set; }
-        /// <summary>
-        /// The blob name to use for storing the status of the import job.
-        /// Serialized Name: ImportDevicesRequest.outputBlobName
-        /// </summary>
+        /// <summary> The blob name to use for storing the status of the import job. </summary>
         public string OutputBlobName { get; set; }
-        /// <summary>
-        /// Specifies authentication type being used for connecting to the storage account.
-        /// Serialized Name: ImportDevicesRequest.authenticationType
-        /// </summary>
+        /// <summary> Specifies authentication type being used for connecting to the storage account. </summary>
         public IotHubAuthenticationType? AuthenticationType { get; set; }
-        /// <summary>
-        /// Managed identity properties of storage endpoint for import devices.
-        /// Serialized Name: ImportDevicesRequest.identity
-        /// </summary>
+        /// <summary> Managed identity properties of storage endpoint for import devices. </summary>
         internal ManagedIdentity Identity { get; set; }
-        /// <summary>
-        /// The user assigned identity.
-        /// Serialized Name: ManagedIdentity.userAssignedIdentity
-        /// </summary>
+        /// <summary> The user assigned identity. </summary>
         public string UserAssignedIdentity
         {
             get => Identity is null ? default : Identity.UserAssignedIdentity;
@@ -85,15 +55,9 @@ namespace Azure.ResourceManager.IotHub.Models
             }
         }
 
-        /// <summary>
-        /// The value indicating whether configurations should be imported.
-        /// Serialized Name: ImportDevicesRequest.includeConfigurations
-        /// </summary>
+        /// <summary> The value indicating whether configurations should be imported. </summary>
         public bool? IncludeConfigurations { get; set; }
-        /// <summary>
-        /// The blob name to be used when importing configurations from the provided input blob container.
-        /// Serialized Name: ImportDevicesRequest.configurationsBlobName
-        /// </summary>
+        /// <summary> The blob name to be used when importing configurations from the provided input blob container. </summary>
         public string ConfigurationsBlobName { get; set; }
     }
 }

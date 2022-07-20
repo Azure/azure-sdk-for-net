@@ -9,25 +9,13 @@ using System;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary>
-    /// The IP filter rules for the IoT hub.
-    /// Serialized Name: IpFilterRule
-    /// </summary>
+    /// <summary> The IP filter rules for the IoT hub. </summary>
     public partial class IotHubIPFilterRule
     {
         /// <summary> Initializes a new instance of IotHubIPFilterRule. </summary>
-        /// <param name="filterName">
-        /// The name of the IP filter rule.
-        /// Serialized Name: IpFilterRule.filterName
-        /// </param>
-        /// <param name="action">
-        /// The desired action for requests captured by this rule.
-        /// Serialized Name: IpFilterRule.action
-        /// </param>
-        /// <param name="ipMask">
-        /// A string that contains the IP address range in CIDR notation for the rule.
-        /// Serialized Name: IpFilterRule.ipMask
-        /// </param>
+        /// <param name="filterName"> The name of the IP filter rule. </param>
+        /// <param name="action"> The desired action for requests captured by this rule. </param>
+        /// <param name="ipMask"> A string that contains the IP address range in CIDR notation for the rule. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> or <paramref name="ipMask"/> is null. </exception>
         public IotHubIPFilterRule(string filterName, IotHubIPFilterActionType action, string ipMask)
         {
@@ -45,20 +33,11 @@ namespace Azure.ResourceManager.IotHub.Models
             IPMask = ipMask;
         }
 
-        /// <summary>
-        /// The name of the IP filter rule.
-        /// Serialized Name: IpFilterRule.filterName
-        /// </summary>
+        /// <summary> The name of the IP filter rule. </summary>
         public string FilterName { get; set; }
-        /// <summary>
-        /// The desired action for requests captured by this rule.
-        /// Serialized Name: IpFilterRule.action
-        /// </summary>
+        /// <summary> The desired action for requests captured by this rule. </summary>
         public IotHubIPFilterActionType Action { get; set; }
-        /// <summary>
-        /// A string that contains the IP address range in CIDR notation for the rule.
-        /// Serialized Name: IpFilterRule.ipMask
-        /// </summary>
+        /// <summary> A string that contains the IP address range in CIDR notation for the rule. </summary>
         public string IPMask { get; set; }
     }
 }

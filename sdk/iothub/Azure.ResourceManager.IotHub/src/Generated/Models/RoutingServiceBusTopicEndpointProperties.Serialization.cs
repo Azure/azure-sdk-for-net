@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.IotHub.Models
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
+                writer.WriteStringValue(Id.Value);
             }
             if (Optional.IsDefined(ConnectionString))
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.IotHub.Models
 
         internal static RoutingServiceBusTopicEndpointProperties DeserializeRoutingServiceBusTopicEndpointProperties(JsonElement element)
         {
-            Optional<string> id = default;
+            Optional<Guid> id = default;
             Optional<string> connectionString = default;
             Optional<Uri> endpointUri = default;
             Optional<string> entityPath = default;
@@ -76,7 +76,12 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("connectionString"))
@@ -135,7 +140,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     continue;
                 }
             }
-            return new RoutingServiceBusTopicEndpointProperties(id.Value, connectionString.Value, endpointUri.Value, entityPath.Value, Optional.ToNullable(authenticationType), identity.Value, name, subscriptionId.Value, resourceGroup.Value);
+            return new RoutingServiceBusTopicEndpointProperties(Optional.ToNullable(id), connectionString.Value, endpointUri.Value, entityPath.Value, Optional.ToNullable(authenticationType), identity.Value, name, subscriptionId.Value, resourceGroup.Value);
         }
     }
 }

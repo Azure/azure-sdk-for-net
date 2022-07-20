@@ -25,29 +25,17 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The description of an X509 CA Certificate.
-        /// Serialized Name: CertificateDescription.properties
-        /// </param>
-        /// <param name="etag">
-        /// The entity tag.
-        /// Serialized Name: CertificateDescription.etag
-        /// </param>
+        /// <param name="properties"> The description of an X509 CA Certificate. </param>
+        /// <param name="etag"> The entity tag. </param>
         internal IotHubCertificateDescriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IotHubCertificateProperties properties, ETag? etag) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ETag = etag;
         }
 
-        /// <summary>
-        /// The description of an X509 CA Certificate.
-        /// Serialized Name: CertificateDescription.properties
-        /// </summary>
+        /// <summary> The description of an X509 CA Certificate. </summary>
         public IotHubCertificateProperties Properties { get; set; }
-        /// <summary>
-        /// The entity tag.
-        /// Serialized Name: CertificateDescription.etag
-        /// </summary>
+        /// <summary> The entity tag. </summary>
         public ETag? ETag { get; }
     }
 }

@@ -7,21 +7,12 @@
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary>
-    /// The desired action for requests captured by this rule.
-    /// Serialized Name: IpFilterActionType
-    /// </summary>
+    /// <summary> The desired action for requests captured by this rule. </summary>
     public enum IotHubIPFilterActionType
     {
-        /// <summary>
-        /// Accept
-        /// Serialized Name: IpFilterActionType.Accept
-        /// </summary>
+        /// <summary> Accept. </summary>
         Accept,
-        /// <summary>
-        /// Reject
-        /// Serialized Name: IpFilterActionType.Reject
-        /// </summary>
+        /// <summary> Reject. </summary>
         Reject
     }
 }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary>
-    /// Severity of the route error
-    /// Serialized Name: RouteErrorSeverity
-    /// </summary>
+    /// <summary> Severity of the route error. </summary>
     public readonly partial struct RouteErrorSeverity : IEquatable<RouteErrorSeverity>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.IotHub.Models
         private const string ErrorValue = "error";
         private const string WarningValue = "warning";
 
-        /// <summary>
-        /// error
-        /// Serialized Name: RouteErrorSeverity.error
-        /// </summary>
+        /// <summary> error. </summary>
         public static RouteErrorSeverity Error { get; } = new RouteErrorSeverity(ErrorValue);
-        /// <summary>
-        /// warning
-        /// Serialized Name: RouteErrorSeverity.warning
-        /// </summary>
+        /// <summary> warning. </summary>
         public static RouteErrorSeverity Warning { get; } = new RouteErrorSeverity(WarningValue);
         /// <summary> Determines if two <see cref="RouteErrorSeverity"/> values are the same. </summary>
         public static bool operator ==(RouteErrorSeverity left, RouteErrorSeverity right) => left.Equals(right);

@@ -7,86 +7,38 @@
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary>
-    /// The permissions assigned to the shared access policy.
-    /// Serialized Name: AccessRights
-    /// </summary>
+    /// <summary> The permissions assigned to the shared access policy. </summary>
     public enum IotHubSharedAccessRight
     {
-        /// <summary>
-        /// RegistryRead
-        /// Serialized Name: AccessRights.RegistryRead
-        /// </summary>
+        /// <summary> RegistryRead. </summary>
         RegistryRead,
-        /// <summary>
-        /// RegistryWrite
-        /// Serialized Name: AccessRights.RegistryWrite
-        /// </summary>
+        /// <summary> RegistryWrite. </summary>
         RegistryWrite,
-        /// <summary>
-        /// ServiceConnect
-        /// Serialized Name: AccessRights.ServiceConnect
-        /// </summary>
+        /// <summary> ServiceConnect. </summary>
         ServiceConnect,
-        /// <summary>
-        /// DeviceConnect
-        /// Serialized Name: AccessRights.DeviceConnect
-        /// </summary>
+        /// <summary> DeviceConnect. </summary>
         DeviceConnect,
-        /// <summary>
-        /// RegistryRead, RegistryWrite
-        /// Serialized Name: AccessRights.RegistryRead, RegistryWrite
-        /// </summary>
+        /// <summary> RegistryRead, RegistryWrite. </summary>
         RegistryReadRegistryWrite,
-        /// <summary>
-        /// RegistryRead, ServiceConnect
-        /// Serialized Name: AccessRights.RegistryRead, ServiceConnect
-        /// </summary>
+        /// <summary> RegistryRead, ServiceConnect. </summary>
         RegistryReadServiceConnect,
-        /// <summary>
-        /// RegistryRead, DeviceConnect
-        /// Serialized Name: AccessRights.RegistryRead, DeviceConnect
-        /// </summary>
+        /// <summary> RegistryRead, DeviceConnect. </summary>
         RegistryReadDeviceConnect,
-        /// <summary>
-        /// RegistryWrite, ServiceConnect
-        /// Serialized Name: AccessRights.RegistryWrite, ServiceConnect
-        /// </summary>
+        /// <summary> RegistryWrite, ServiceConnect. </summary>
         RegistryWriteServiceConnect,
-        /// <summary>
-        /// RegistryWrite, DeviceConnect
-        /// Serialized Name: AccessRights.RegistryWrite, DeviceConnect
-        /// </summary>
+        /// <summary> RegistryWrite, DeviceConnect. </summary>
         RegistryWriteDeviceConnect,
-        /// <summary>
-        /// ServiceConnect, DeviceConnect
-        /// Serialized Name: AccessRights.ServiceConnect, DeviceConnect
-        /// </summary>
+        /// <summary> ServiceConnect, DeviceConnect. </summary>
         ServiceConnectDeviceConnect,
-        /// <summary>
-        /// RegistryRead, RegistryWrite, ServiceConnect
-        /// Serialized Name: AccessRights.RegistryRead, RegistryWrite, ServiceConnect
-        /// </summary>
+        /// <summary> RegistryRead, RegistryWrite, ServiceConnect. </summary>
         RegistryReadRegistryWriteServiceConnect,
-        /// <summary>
-        /// RegistryRead, RegistryWrite, DeviceConnect
-        /// Serialized Name: AccessRights.RegistryRead, RegistryWrite, DeviceConnect
-        /// </summary>
+        /// <summary> RegistryRead, RegistryWrite, DeviceConnect. </summary>
         RegistryReadRegistryWriteDeviceConnect,
-        /// <summary>
-        /// RegistryRead, ServiceConnect, DeviceConnect
-        /// Serialized Name: AccessRights.RegistryRead, ServiceConnect, DeviceConnect
-        /// </summary>
+        /// <summary> RegistryRead, ServiceConnect, DeviceConnect. </summary>
         RegistryReadServiceConnectDeviceConnect,
-        /// <summary>
-        /// RegistryWrite, ServiceConnect, DeviceConnect
-        /// Serialized Name: AccessRights.RegistryWrite, ServiceConnect, DeviceConnect
-        /// </summary>
+        /// <summary> RegistryWrite, ServiceConnect, DeviceConnect. </summary>
         RegistryWriteServiceConnectDeviceConnect,
-        /// <summary>
-        /// RegistryRead, RegistryWrite, ServiceConnect, DeviceConnect
-        /// Serialized Name: AccessRights.RegistryRead, RegistryWrite, ServiceConnect, DeviceConnect
-        /// </summary>
+        /// <summary> RegistryRead, RegistryWrite, ServiceConnect, DeviceConnect. </summary>
         RegistryReadRegistryWriteServiceConnectDeviceConnect
     }
 }

@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary>
-    /// The routing related properties of the IoT hub. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging
-    /// Serialized Name: RoutingProperties
-    /// </summary>
+    /// <summary> The routing related properties of the IoT hub. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging. </summary>
     public partial class IotHubRoutingProperties
     {
         /// <summary> Initializes a new instance of IotHubRoutingProperties. </summary>
@@ -24,22 +21,10 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary> Initializes a new instance of IotHubRoutingProperties. </summary>
-        /// <param name="endpoints">
-        /// The properties related to the custom endpoints to which your IoT hub routes messages based on the routing rules. A maximum of 10 custom endpoints are allowed across all endpoint types for paid hubs and only 1 custom endpoint is allowed across all endpoint types for free hubs.
-        /// Serialized Name: RoutingProperties.endpoints
-        /// </param>
-        /// <param name="routes">
-        /// The list of user-provided routing rules that the IoT hub uses to route messages to built-in and custom endpoints. A maximum of 100 routing rules are allowed for paid hubs and a maximum of 5 routing rules are allowed for free hubs.
-        /// Serialized Name: RoutingProperties.routes
-        /// </param>
-        /// <param name="fallbackRoute">
-        /// The properties of the route that is used as a fall-back route when none of the conditions specified in the &apos;routes&apos; section are met. This is an optional parameter. When this property is not set, the messages which do not meet any of the conditions specified in the &apos;routes&apos; section get routed to the built-in eventhub endpoint.
-        /// Serialized Name: RoutingProperties.fallbackRoute
-        /// </param>
-        /// <param name="enrichments">
-        /// The list of user-provided enrichments that the IoT hub applies to messages to be delivered to built-in and custom endpoints. See: https://aka.ms/telemetryoneventgrid
-        /// Serialized Name: RoutingProperties.enrichments
-        /// </param>
+        /// <param name="endpoints"> The properties related to the custom endpoints to which your IoT hub routes messages based on the routing rules. A maximum of 10 custom endpoints are allowed across all endpoint types for paid hubs and only 1 custom endpoint is allowed across all endpoint types for free hubs. </param>
+        /// <param name="routes"> The list of user-provided routing rules that the IoT hub uses to route messages to built-in and custom endpoints. A maximum of 100 routing rules are allowed for paid hubs and a maximum of 5 routing rules are allowed for free hubs. </param>
+        /// <param name="fallbackRoute"> The properties of the route that is used as a fall-back route when none of the conditions specified in the &apos;routes&apos; section are met. This is an optional parameter. When this property is not set, the messages which do not meet any of the conditions specified in the &apos;routes&apos; section get routed to the built-in eventhub endpoint. </param>
+        /// <param name="enrichments"> The list of user-provided enrichments that the IoT hub applies to messages to be delivered to built-in and custom endpoints. See: https://aka.ms/telemetryoneventgrid. </param>
         internal IotHubRoutingProperties(RoutingEndpoints endpoints, IList<RoutingRuleProperties> routes, IotHubFallbackRouteProperties fallbackRoute, IList<IotHubEnrichmentProperties> enrichments)
         {
             Endpoints = endpoints;
@@ -48,25 +33,13 @@ namespace Azure.ResourceManager.IotHub.Models
             Enrichments = enrichments;
         }
 
-        /// <summary>
-        /// The properties related to the custom endpoints to which your IoT hub routes messages based on the routing rules. A maximum of 10 custom endpoints are allowed across all endpoint types for paid hubs and only 1 custom endpoint is allowed across all endpoint types for free hubs.
-        /// Serialized Name: RoutingProperties.endpoints
-        /// </summary>
+        /// <summary> The properties related to the custom endpoints to which your IoT hub routes messages based on the routing rules. A maximum of 10 custom endpoints are allowed across all endpoint types for paid hubs and only 1 custom endpoint is allowed across all endpoint types for free hubs. </summary>
         public RoutingEndpoints Endpoints { get; set; }
-        /// <summary>
-        /// The list of user-provided routing rules that the IoT hub uses to route messages to built-in and custom endpoints. A maximum of 100 routing rules are allowed for paid hubs and a maximum of 5 routing rules are allowed for free hubs.
-        /// Serialized Name: RoutingProperties.routes
-        /// </summary>
+        /// <summary> The list of user-provided routing rules that the IoT hub uses to route messages to built-in and custom endpoints. A maximum of 100 routing rules are allowed for paid hubs and a maximum of 5 routing rules are allowed for free hubs. </summary>
         public IList<RoutingRuleProperties> Routes { get; }
-        /// <summary>
-        /// The properties of the route that is used as a fall-back route when none of the conditions specified in the &apos;routes&apos; section are met. This is an optional parameter. When this property is not set, the messages which do not meet any of the conditions specified in the &apos;routes&apos; section get routed to the built-in eventhub endpoint.
-        /// Serialized Name: RoutingProperties.fallbackRoute
-        /// </summary>
+        /// <summary> The properties of the route that is used as a fall-back route when none of the conditions specified in the &apos;routes&apos; section are met. This is an optional parameter. When this property is not set, the messages which do not meet any of the conditions specified in the &apos;routes&apos; section get routed to the built-in eventhub endpoint. </summary>
         public IotHubFallbackRouteProperties FallbackRoute { get; set; }
-        /// <summary>
-        /// The list of user-provided enrichments that the IoT hub applies to messages to be delivered to built-in and custom endpoints. See: https://aka.ms/telemetryoneventgrid
-        /// Serialized Name: RoutingProperties.enrichments
-        /// </summary>
+        /// <summary> The list of user-provided enrichments that the IoT hub applies to messages to be delivered to built-in and custom endpoints. See: https://aka.ms/telemetryoneventgrid. </summary>
         public IList<IotHubEnrichmentProperties> Enrichments { get; }
     }
 }

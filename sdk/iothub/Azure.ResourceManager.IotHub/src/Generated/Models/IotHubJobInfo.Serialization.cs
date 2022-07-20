@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class IotHubJobResponse
+    public partial class IotHubJobInfo
     {
-        internal static IotHubJobResponse DeserializeIotHubJobResponse(JsonElement element)
+        internal static IotHubJobInfo DeserializeIotHubJobInfo(JsonElement element)
         {
             Optional<string> jobId = default;
             Optional<DateTimeOffset> startTimeUtc = default;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     continue;
                 }
             }
-            return new IotHubJobResponse(jobId.Value, Optional.ToNullable(startTimeUtc), Optional.ToNullable(endTimeUtc), Optional.ToNullable(type), Optional.ToNullable(status), failureReason.Value, statusMessage.Value, parentJobId.Value);
+            return new IotHubJobInfo(jobId.Value, Optional.ToNullable(startTimeUtc), Optional.ToNullable(endTimeUtc), Optional.ToNullable(type), Optional.ToNullable(status), failureReason.Value, statusMessage.Value, parentJobId.Value);
         }
     }
 }

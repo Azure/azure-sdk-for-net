@@ -11,25 +11,13 @@ using System.Linq;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary>
-    /// The properties of an enrichment that your IoT hub applies to messages delivered to endpoints.
-    /// Serialized Name: EnrichmentProperties
-    /// </summary>
+    /// <summary> The properties of an enrichment that your IoT hub applies to messages delivered to endpoints. </summary>
     public partial class IotHubEnrichmentProperties
     {
         /// <summary> Initializes a new instance of IotHubEnrichmentProperties. </summary>
-        /// <param name="key">
-        /// The key or name for the enrichment property.
-        /// Serialized Name: EnrichmentProperties.key
-        /// </param>
-        /// <param name="value">
-        /// The value for the enrichment property.
-        /// Serialized Name: EnrichmentProperties.value
-        /// </param>
-        /// <param name="endpointNames">
-        /// The list of endpoints for which the enrichment is applied to the message.
-        /// Serialized Name: EnrichmentProperties.endpointNames
-        /// </param>
+        /// <param name="key"> The key or name for the enrichment property. </param>
+        /// <param name="value"> The value for the enrichment property. </param>
+        /// <param name="endpointNames"> The list of endpoints for which the enrichment is applied to the message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/>, <paramref name="value"/> or <paramref name="endpointNames"/> is null. </exception>
         public IotHubEnrichmentProperties(string key, string value, IEnumerable<string> endpointNames)
         {
@@ -52,18 +40,9 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary> Initializes a new instance of IotHubEnrichmentProperties. </summary>
-        /// <param name="key">
-        /// The key or name for the enrichment property.
-        /// Serialized Name: EnrichmentProperties.key
-        /// </param>
-        /// <param name="value">
-        /// The value for the enrichment property.
-        /// Serialized Name: EnrichmentProperties.value
-        /// </param>
-        /// <param name="endpointNames">
-        /// The list of endpoints for which the enrichment is applied to the message.
-        /// Serialized Name: EnrichmentProperties.endpointNames
-        /// </param>
+        /// <param name="key"> The key or name for the enrichment property. </param>
+        /// <param name="value"> The value for the enrichment property. </param>
+        /// <param name="endpointNames"> The list of endpoints for which the enrichment is applied to the message. </param>
         internal IotHubEnrichmentProperties(string key, string value, IList<string> endpointNames)
         {
             Key = key;
@@ -71,20 +50,11 @@ namespace Azure.ResourceManager.IotHub.Models
             EndpointNames = endpointNames;
         }
 
-        /// <summary>
-        /// The key or name for the enrichment property.
-        /// Serialized Name: EnrichmentProperties.key
-        /// </summary>
+        /// <summary> The key or name for the enrichment property. </summary>
         public string Key { get; set; }
-        /// <summary>
-        /// The value for the enrichment property.
-        /// Serialized Name: EnrichmentProperties.value
-        /// </summary>
+        /// <summary> The value for the enrichment property. </summary>
         public string Value { get; set; }
-        /// <summary>
-        /// The list of endpoints for which the enrichment is applied to the message.
-        /// Serialized Name: EnrichmentProperties.endpointNames
-        /// </summary>
+        /// <summary> The list of endpoints for which the enrichment is applied to the message. </summary>
         public IList<string> EndpointNames { get; }
     }
 }

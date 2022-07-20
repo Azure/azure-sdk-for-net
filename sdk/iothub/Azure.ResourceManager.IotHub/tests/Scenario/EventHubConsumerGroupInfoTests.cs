@@ -40,8 +40,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
 
         private async Task<EventHubConsumerGroupInfoResource> CreateConsumerGroup(IotHubDescriptionResource iothub, string consumerGroupName)
         {
-            EventHubConsumerGroupName eventHubConsumerGroupName = new EventHubConsumerGroupName(consumerGroupName);
-            EventHubConsumerGroupInfoCreateOrUpdateContent data = new EventHubConsumerGroupInfoCreateOrUpdateContent(eventHubConsumerGroupName) { };
+            EventHubConsumerGroupInfoCreateOrUpdateContent data = new EventHubConsumerGroupInfoCreateOrUpdateContent(consumerGroupName) { };
             var consumerGroupInfos = await iothub.GetEventHubConsumerGroupInfos("events").CreateOrUpdateAsync(WaitUntil.Completed, consumerGroupName, data);
             return consumerGroupInfos.Value;
         }

@@ -9,17 +9,11 @@ using System;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary>
-    /// Input values.
-    /// Serialized Name: OperationInputs
-    /// </summary>
+    /// <summary> Input values. </summary>
     public partial class IotHubNameAvailabilityContent
     {
         /// <summary> Initializes a new instance of IotHubNameAvailabilityContent. </summary>
-        /// <param name="name">
-        /// The name of the IoT hub to check.
-        /// Serialized Name: OperationInputs.name
-        /// </param>
+        /// <param name="name"> The name of the IoT hub to check. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public IotHubNameAvailabilityContent(string name)
         {
@@ -31,10 +25,7 @@ namespace Azure.ResourceManager.IotHub.Models
             Name = name;
         }
 
-        /// <summary>
-        /// The name of the IoT hub to check.
-        /// Serialized Name: OperationInputs.name
-        /// </summary>
+        /// <summary> The name of the IoT hub to check. </summary>
         public string Name { get; }
     }
 }

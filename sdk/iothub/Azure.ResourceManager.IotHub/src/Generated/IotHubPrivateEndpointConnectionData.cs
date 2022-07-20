@@ -16,10 +16,7 @@ namespace Azure.ResourceManager.IotHub
     public partial class IotHubPrivateEndpointConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of IotHubPrivateEndpointConnectionData. </summary>
-        /// <param name="properties">
-        /// The properties of a private endpoint connection
-        /// Serialized Name: PrivateEndpointConnection.properties
-        /// </param>
+        /// <param name="properties"> The properties of a private endpoint connection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public IotHubPrivateEndpointConnectionData(IotHubPrivateEndpointConnectionProperties properties)
         {
@@ -36,19 +33,13 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The properties of a private endpoint connection
-        /// Serialized Name: PrivateEndpointConnection.properties
-        /// </param>
+        /// <param name="properties"> The properties of a private endpoint connection. </param>
         internal IotHubPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IotHubPrivateEndpointConnectionProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
-        /// <summary>
-        /// The properties of a private endpoint connection
-        /// Serialized Name: PrivateEndpointConnection.properties
-        /// </summary>
+        /// <summary> The properties of a private endpoint connection. </summary>
         public IotHubPrivateEndpointConnectionProperties Properties { get; set; }
     }
 }

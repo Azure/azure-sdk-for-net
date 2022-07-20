@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary>
-    /// The role of the region, can be either primary or secondary. The primary region is where the IoT hub is currently provisioned. The secondary region is the Azure disaster recovery (DR) paired region and also the region where the IoT hub can failover to.
-    /// Serialized Name: IotHubReplicaRoleType
-    /// </summary>
+    /// <summary> The role of the region, can be either primary or secondary. The primary region is where the IoT hub is currently provisioned. The secondary region is the Azure disaster recovery (DR) paired region and also the region where the IoT hub can failover to. </summary>
     public readonly partial struct IotHubReplicaRoleType : IEquatable<IotHubReplicaRoleType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.IotHub.Models
         private const string PrimaryValue = "primary";
         private const string SecondaryValue = "secondary";
 
-        /// <summary>
-        /// primary
-        /// Serialized Name: IotHubReplicaRoleType.primary
-        /// </summary>
+        /// <summary> primary. </summary>
         public static IotHubReplicaRoleType Primary { get; } = new IotHubReplicaRoleType(PrimaryValue);
-        /// <summary>
-        /// secondary
-        /// Serialized Name: IotHubReplicaRoleType.secondary
-        /// </summary>
+        /// <summary> secondary. </summary>
         public static IotHubReplicaRoleType Secondary { get; } = new IotHubReplicaRoleType(SecondaryValue);
         /// <summary> Determines if two <see cref="IotHubReplicaRoleType"/> values are the same. </summary>
         public static bool operator ==(IotHubReplicaRoleType left, IotHubReplicaRoleType right) => left.Equals(right);

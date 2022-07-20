@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary>
-    /// Name of Iot Hub type
-    /// Serialized Name: Name
-    /// </summary>
+    /// <summary> Name of Iot Hub type. </summary>
     public partial class IotHubTypeName
     {
         /// <summary> Initializes a new instance of IotHubTypeName. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary> Initializes a new instance of IotHubTypeName. </summary>
-        /// <param name="value">
-        /// IotHub type
-        /// Serialized Name: Name.value
-        /// </param>
-        /// <param name="localizedValue">
-        /// Localized value of name
-        /// Serialized Name: Name.localizedValue
-        /// </param>
+        /// <param name="value"> IotHub type. </param>
+        /// <param name="localizedValue"> Localized value of name. </param>
         internal IotHubTypeName(string value, string localizedValue)
         {
             Value = value;
             LocalizedValue = localizedValue;
         }
 
-        /// <summary>
-        /// IotHub type
-        /// Serialized Name: Name.value
-        /// </summary>
+        /// <summary> IotHub type. </summary>
         public string Value { get; }
-        /// <summary>
-        /// Localized value of name
-        /// Serialized Name: Name.localizedValue
-        /// </summary>
+        /// <summary> Localized value of name. </summary>
         public string LocalizedValue { get; }
     }
 }

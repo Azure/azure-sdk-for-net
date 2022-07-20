@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary>
-    /// The capabilities and features enabled for the IoT hub.
-    /// Serialized Name: Capabilities
-    /// </summary>
+    /// <summary> The capabilities and features enabled for the IoT hub. </summary>
     public readonly partial struct IotHubCapability : IEquatable<IotHubCapability>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.IotHub.Models
         private const string NoneValue = "None";
         private const string DeviceManagementValue = "DeviceManagement";
 
-        /// <summary>
-        /// None
-        /// Serialized Name: Capabilities.None
-        /// </summary>
+        /// <summary> None. </summary>
         public static IotHubCapability None { get; } = new IotHubCapability(NoneValue);
-        /// <summary>
-        /// DeviceManagement
-        /// Serialized Name: Capabilities.DeviceManagement
-        /// </summary>
+        /// <summary> DeviceManagement. </summary>
         public static IotHubCapability DeviceManagement { get; } = new IotHubCapability(DeviceManagementValue);
         /// <summary> Determines if two <see cref="IotHubCapability"/> values are the same. </summary>
         public static bool operator ==(IotHubCapability left, IotHubCapability right) => left.Equals(right);

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary>
-    /// The name of the SKU.
-    /// Serialized Name: IotHubSku
-    /// </summary>
+    /// <summary> The name of the SKU. </summary>
     public readonly partial struct IotHubSku : IEquatable<IotHubSku>
     {
         private readonly string _value;
@@ -33,40 +30,19 @@ namespace Azure.ResourceManager.IotHub.Models
         private const string B2Value = "B2";
         private const string B3Value = "B3";
 
-        /// <summary>
-        /// F1
-        /// Serialized Name: IotHubSku.F1
-        /// </summary>
+        /// <summary> F1. </summary>
         public static IotHubSku F1 { get; } = new IotHubSku(F1Value);
-        /// <summary>
-        /// S1
-        /// Serialized Name: IotHubSku.S1
-        /// </summary>
+        /// <summary> S1. </summary>
         public static IotHubSku S1 { get; } = new IotHubSku(S1Value);
-        /// <summary>
-        /// S2
-        /// Serialized Name: IotHubSku.S2
-        /// </summary>
+        /// <summary> S2. </summary>
         public static IotHubSku S2 { get; } = new IotHubSku(S2Value);
-        /// <summary>
-        /// S3
-        /// Serialized Name: IotHubSku.S3
-        /// </summary>
+        /// <summary> S3. </summary>
         public static IotHubSku S3 { get; } = new IotHubSku(S3Value);
-        /// <summary>
-        /// B1
-        /// Serialized Name: IotHubSku.B1
-        /// </summary>
+        /// <summary> B1. </summary>
         public static IotHubSku B1 { get; } = new IotHubSku(B1Value);
-        /// <summary>
-        /// B2
-        /// Serialized Name: IotHubSku.B2
-        /// </summary>
+        /// <summary> B2. </summary>
         public static IotHubSku B2 { get; } = new IotHubSku(B2Value);
-        /// <summary>
-        /// B3
-        /// Serialized Name: IotHubSku.B3
-        /// </summary>
+        /// <summary> B3. </summary>
         public static IotHubSku B3 { get; } = new IotHubSku(B3Value);
         /// <summary> Determines if two <see cref="IotHubSku"/> values are the same. </summary>
         public static bool operator ==(IotHubSku left, IotHubSku right) => left.Equals(right);

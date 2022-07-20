@@ -16,9 +16,6 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
-mgmt-debug: 
-  show-serialized-names: true
-
 override-operation-name:
   IotHubResource_CheckNameAvailability: CheckIotHubNameAvailability
 
@@ -42,6 +39,13 @@ rename-mapping:
   Name: IotHubTypeName
   EventHubProperties: EventHubCompatibleEndpointProperties
   RouteProperties: RoutingRuleProperties
+  JobResponse.startTimeUtc: StartOn
+  JobResponse.endTimeUtc: EndOn
+  JobResponse : IotHubJobInfo
+  JobResponseListResult : IotHubJobInfoListResult
+  EndpointHealthData: IotHubEndpointHealthInfo
+  EndpointHealthDataListResult: IotHubEndpointHealthInfoListResult
+  UserSubscriptionQuota.id: IotHubTypeId
 
 prepend-rp-prefix:
   - AuthenticationType
@@ -56,8 +60,6 @@ prepend-rp-prefix:
   - CertificateDescription
   - CertificateListDescription
   - CertificateWithNonceDescription
-  - EndpointHealthData
-  - EndpointHealthDataListResult
   - EndpointHealthStatus
   - EnrichmentProperties
   - FailoverInput
@@ -69,8 +71,6 @@ prepend-rp-prefix:
   - IPFilterRule
   - IPFilterActionType
   - RoutingSource
-  - JobResponse
-  - JobResponseListResult
   - JobStatus
   - JobType
   - PrivateLinkResources
@@ -124,6 +124,10 @@ directive:
     transform: >
       $.EventHubConsumerGroupBodyDescription.properties.properties['x-ms-client-flatten'] = true;
       $.EventHubConsumerGroupBodyDescription['x-ms-client-name'] = 'ConsumerGroupEventHubContent';
+      $.RoutingEventHubProperties.properties.id['format'] = 'uuid';
+      $.RoutingServiceBusQueueEndpointProperties.properties.id['format'] = 'uuid';
+      $.RoutingServiceBusTopicEndpointProperties.properties.id['format'] = 'uuid';
+      $.RoutingStorageContainerProperties.properties.id['format'] = 'uuid';
 
   - from: iothub.json
     where: $.definitions.EventHubConsumerGroupInfo.properties.etag

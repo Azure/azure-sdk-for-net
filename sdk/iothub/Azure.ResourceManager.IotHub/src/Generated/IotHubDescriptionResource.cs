@@ -542,10 +542,10 @@ namespace Azure.ResourceManager.IotHub
         /// Operation Id: IotHubResource_ListJobs
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IotHubJobResponse" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<IotHubJobResponse> GetJobsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="IotHubJobInfo" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<IotHubJobInfo> GetJobsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<IotHubJobResponse>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<IotHubJobInfo>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _iotHubDescriptionIotHubResourceClientDiagnostics.CreateScope("IotHubDescriptionResource.GetJobs");
                 scope.Start();
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.IotHub
                     throw;
                 }
             }
-            async Task<Page<IotHubJobResponse>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<IotHubJobInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _iotHubDescriptionIotHubResourceClientDiagnostics.CreateScope("IotHubDescriptionResource.GetJobs");
                 scope.Start();
@@ -584,10 +584,10 @@ namespace Azure.ResourceManager.IotHub
         /// Operation Id: IotHubResource_ListJobs
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IotHubJobResponse" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<IotHubJobResponse> GetJobs(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="IotHubJobInfo" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<IotHubJobInfo> GetJobs(CancellationToken cancellationToken = default)
         {
-            Page<IotHubJobResponse> FirstPageFunc(int? pageSizeHint)
+            Page<IotHubJobInfo> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _iotHubDescriptionIotHubResourceClientDiagnostics.CreateScope("IotHubDescriptionResource.GetJobs");
                 scope.Start();
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.IotHub
                     throw;
                 }
             }
-            Page<IotHubJobResponse> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<IotHubJobInfo> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _iotHubDescriptionIotHubResourceClientDiagnostics.CreateScope("IotHubDescriptionResource.GetJobs");
                 scope.Start();
@@ -629,7 +629,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        public virtual async Task<Response<IotHubJobResponse>> GetJobAsync(string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IotHubJobInfo>> GetJobAsync(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -656,7 +656,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        public virtual Response<IotHubJobResponse> GetJob(string jobId, CancellationToken cancellationToken = default)
+        public virtual Response<IotHubJobInfo> GetJob(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -764,10 +764,10 @@ namespace Azure.ResourceManager.IotHub
         /// Operation Id: IotHubResource_GetEndpointHealth
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IotHubEndpointHealthData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<IotHubEndpointHealthData> GetEndpointHealthAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="IotHubEndpointHealthInfo" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<IotHubEndpointHealthInfo> GetEndpointHealthAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<IotHubEndpointHealthData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<IotHubEndpointHealthInfo>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _iotHubDescriptionIotHubResourceClientDiagnostics.CreateScope("IotHubDescriptionResource.GetEndpointHealth");
                 scope.Start();
@@ -782,7 +782,7 @@ namespace Azure.ResourceManager.IotHub
                     throw;
                 }
             }
-            async Task<Page<IotHubEndpointHealthData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<IotHubEndpointHealthInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _iotHubDescriptionIotHubResourceClientDiagnostics.CreateScope("IotHubDescriptionResource.GetEndpointHealth");
                 scope.Start();
@@ -806,10 +806,10 @@ namespace Azure.ResourceManager.IotHub
         /// Operation Id: IotHubResource_GetEndpointHealth
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IotHubEndpointHealthData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<IotHubEndpointHealthData> GetEndpointHealth(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="IotHubEndpointHealthInfo" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<IotHubEndpointHealthInfo> GetEndpointHealth(CancellationToken cancellationToken = default)
         {
-            Page<IotHubEndpointHealthData> FirstPageFunc(int? pageSizeHint)
+            Page<IotHubEndpointHealthInfo> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _iotHubDescriptionIotHubResourceClientDiagnostics.CreateScope("IotHubDescriptionResource.GetEndpointHealth");
                 scope.Start();
@@ -824,7 +824,7 @@ namespace Azure.ResourceManager.IotHub
                     throw;
                 }
             }
-            Page<IotHubEndpointHealthData> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<IotHubEndpointHealthInfo> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _iotHubDescriptionIotHubResourceClientDiagnostics.CreateScope("IotHubDescriptionResource.GetEndpointHealth");
                 scope.Start();
@@ -1092,7 +1092,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="content"> The parameters that specify the export devices operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<IotHubJobResponse>> ExportDevicesAsync(ExportDevicesContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IotHubJobInfo>> ExportDevicesAsync(ExportDevicesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1118,7 +1118,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="content"> The parameters that specify the export devices operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<IotHubJobResponse> ExportDevices(ExportDevicesContent content, CancellationToken cancellationToken = default)
+        public virtual Response<IotHubJobInfo> ExportDevices(ExportDevicesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1144,7 +1144,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="content"> The parameters that specify the import devices operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<IotHubJobResponse>> ImportDevicesAsync(IotHubImportDevicesContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IotHubJobInfo>> ImportDevicesAsync(IotHubImportDevicesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1170,7 +1170,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="content"> The parameters that specify the import devices operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<IotHubJobResponse> ImportDevices(IotHubImportDevicesContent content, CancellationToken cancellationToken = default)
+        public virtual Response<IotHubJobInfo> ImportDevices(IotHubImportDevicesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 

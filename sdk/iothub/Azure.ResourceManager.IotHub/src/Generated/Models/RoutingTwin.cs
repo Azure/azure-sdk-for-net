@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary>
-    /// Twin reference input parameter. This is an optional parameter
-    /// Serialized Name: RoutingTwin
-    /// </summary>
+    /// <summary> Twin reference input parameter. This is an optional parameter. </summary>
     public partial class RoutingTwin
     {
         /// <summary> Initializes a new instance of RoutingTwin. </summary>
@@ -20,12 +17,9 @@ namespace Azure.ResourceManager.IotHub.Models
         {
         }
 
-        /// <summary>
-        /// Twin Tags
-        /// Serialized Name: RoutingTwin.tags
-        /// </summary>
+        /// <summary> Twin Tags. </summary>
         public BinaryData Tags { get; set; }
-        /// <summary> Serialized Name: RoutingTwin.properties. </summary>
+        /// <summary> Gets or sets the properties. </summary>
         public RoutingTwinProperties Properties { get; set; }
     }
 }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary>
-    /// The type of the job.
-    /// Serialized Name: JobType
-    /// </summary>
+    /// <summary> The type of the job. </summary>
     public readonly partial struct IotHubJobType : IEquatable<IotHubJobType>
     {
         private readonly string _value;
@@ -36,55 +33,25 @@ namespace Azure.ResourceManager.IotHub.Models
         private const string FactoryResetDeviceValue = "factoryResetDevice";
         private const string FirmwareUpdateValue = "firmwareUpdate";
 
-        /// <summary>
-        /// unknown
-        /// Serialized Name: JobType.unknown
-        /// </summary>
+        /// <summary> unknown. </summary>
         public static IotHubJobType Unknown { get; } = new IotHubJobType(UnknownValue);
-        /// <summary>
-        /// export
-        /// Serialized Name: JobType.export
-        /// </summary>
+        /// <summary> export. </summary>
         public static IotHubJobType Export { get; } = new IotHubJobType(ExportValue);
-        /// <summary>
-        /// import
-        /// Serialized Name: JobType.import
-        /// </summary>
+        /// <summary> import. </summary>
         public static IotHubJobType Import { get; } = new IotHubJobType(ImportValue);
-        /// <summary>
-        /// backup
-        /// Serialized Name: JobType.backup
-        /// </summary>
+        /// <summary> backup. </summary>
         public static IotHubJobType Backup { get; } = new IotHubJobType(BackupValue);
-        /// <summary>
-        /// readDeviceProperties
-        /// Serialized Name: JobType.readDeviceProperties
-        /// </summary>
+        /// <summary> readDeviceProperties. </summary>
         public static IotHubJobType ReadDeviceProperties { get; } = new IotHubJobType(ReadDevicePropertiesValue);
-        /// <summary>
-        /// writeDeviceProperties
-        /// Serialized Name: JobType.writeDeviceProperties
-        /// </summary>
+        /// <summary> writeDeviceProperties. </summary>
         public static IotHubJobType WriteDeviceProperties { get; } = new IotHubJobType(WriteDevicePropertiesValue);
-        /// <summary>
-        /// updateDeviceConfiguration
-        /// Serialized Name: JobType.updateDeviceConfiguration
-        /// </summary>
+        /// <summary> updateDeviceConfiguration. </summary>
         public static IotHubJobType UpdateDeviceConfiguration { get; } = new IotHubJobType(UpdateDeviceConfigurationValue);
-        /// <summary>
-        /// rebootDevice
-        /// Serialized Name: JobType.rebootDevice
-        /// </summary>
+        /// <summary> rebootDevice. </summary>
         public static IotHubJobType RebootDevice { get; } = new IotHubJobType(RebootDeviceValue);
-        /// <summary>
-        /// factoryResetDevice
-        /// Serialized Name: JobType.factoryResetDevice
-        /// </summary>
+        /// <summary> factoryResetDevice. </summary>
         public static IotHubJobType FactoryResetDevice { get; } = new IotHubJobType(FactoryResetDeviceValue);
-        /// <summary>
-        /// firmwareUpdate
-        /// Serialized Name: JobType.firmwareUpdate
-        /// </summary>
+        /// <summary> firmwareUpdate. </summary>
         public static IotHubJobType FirmwareUpdate { get; } = new IotHubJobType(FirmwareUpdateValue);
         /// <summary> Determines if two <see cref="IotHubJobType"/> values are the same. </summary>
         public static bool operator ==(IotHubJobType left, IotHubJobType right) => left.Equals(right);

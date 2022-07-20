@@ -11,11 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    internal partial class IotHubEndpointHealthDataListResult
+    internal partial class IotHubEndpointHealthInfoListResult
     {
-        internal static IotHubEndpointHealthDataListResult DeserializeIotHubEndpointHealthDataListResult(JsonElement element)
+        internal static IotHubEndpointHealthInfoListResult DeserializeIotHubEndpointHealthInfoListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<IotHubEndpointHealthData>> value = default;
+            Optional<IReadOnlyList<IotHubEndpointHealthInfo>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.IotHub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<IotHubEndpointHealthData> array = new List<IotHubEndpointHealthData>();
+                    List<IotHubEndpointHealthInfo> array = new List<IotHubEndpointHealthInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotHubEndpointHealthData.DeserializeIotHubEndpointHealthData(item));
+                        array.Add(IotHubEndpointHealthInfo.DeserializeIotHubEndpointHealthInfo(item));
                     }
                     value = array;
                     continue;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     continue;
                 }
             }
-            return new IotHubEndpointHealthDataListResult(Optional.ToList(value), nextLink.Value);
+            return new IotHubEndpointHealthInfoListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

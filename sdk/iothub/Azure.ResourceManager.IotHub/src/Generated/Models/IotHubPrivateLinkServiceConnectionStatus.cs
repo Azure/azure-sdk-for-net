@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary>
-    /// The status of a private endpoint connection
-    /// Serialized Name: PrivateLinkServiceConnectionStatus
-    /// </summary>
+    /// <summary> The status of a private endpoint connection. </summary>
     public readonly partial struct IotHubPrivateLinkServiceConnectionStatus : IEquatable<IotHubPrivateLinkServiceConnectionStatus>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.IotHub.Models
         private const string RejectedValue = "Rejected";
         private const string DisconnectedValue = "Disconnected";
 
-        /// <summary>
-        /// Pending
-        /// Serialized Name: PrivateLinkServiceConnectionStatus.Pending
-        /// </summary>
+        /// <summary> Pending. </summary>
         public static IotHubPrivateLinkServiceConnectionStatus Pending { get; } = new IotHubPrivateLinkServiceConnectionStatus(PendingValue);
-        /// <summary>
-        /// Approved
-        /// Serialized Name: PrivateLinkServiceConnectionStatus.Approved
-        /// </summary>
+        /// <summary> Approved. </summary>
         public static IotHubPrivateLinkServiceConnectionStatus Approved { get; } = new IotHubPrivateLinkServiceConnectionStatus(ApprovedValue);
-        /// <summary>
-        /// Rejected
-        /// Serialized Name: PrivateLinkServiceConnectionStatus.Rejected
-        /// </summary>
+        /// <summary> Rejected. </summary>
         public static IotHubPrivateLinkServiceConnectionStatus Rejected { get; } = new IotHubPrivateLinkServiceConnectionStatus(RejectedValue);
-        /// <summary>
-        /// Disconnected
-        /// Serialized Name: PrivateLinkServiceConnectionStatus.Disconnected
-        /// </summary>
+        /// <summary> Disconnected. </summary>
         public static IotHubPrivateLinkServiceConnectionStatus Disconnected { get; } = new IotHubPrivateLinkServiceConnectionStatus(DisconnectedValue);
         /// <summary> Determines if two <see cref="IotHubPrivateLinkServiceConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(IotHubPrivateLinkServiceConnectionStatus left, IotHubPrivateLinkServiceConnectionStatus right) => left.Equals(right);

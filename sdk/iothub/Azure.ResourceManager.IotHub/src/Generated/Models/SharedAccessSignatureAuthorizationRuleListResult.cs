@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary>
-    /// The list of shared access policies with a next link.
-    /// Serialized Name: SharedAccessSignatureAuthorizationRuleListResult
-    /// </summary>
+    /// <summary> The list of shared access policies with a next link. </summary>
     internal partial class SharedAccessSignatureAuthorizationRuleListResult
     {
         /// <summary> Initializes a new instance of SharedAccessSignatureAuthorizationRuleListResult. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary> Initializes a new instance of SharedAccessSignatureAuthorizationRuleListResult. </summary>
-        /// <param name="value">
-        /// The list of shared access policies.
-        /// Serialized Name: SharedAccessSignatureAuthorizationRuleListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The next link.
-        /// Serialized Name: SharedAccessSignatureAuthorizationRuleListResult.nextLink
-        /// </param>
+        /// <param name="value"> The list of shared access policies. </param>
+        /// <param name="nextLink"> The next link. </param>
         internal SharedAccessSignatureAuthorizationRuleListResult(IReadOnlyList<SharedAccessSignatureAuthorizationRule> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The list of shared access policies.
-        /// Serialized Name: SharedAccessSignatureAuthorizationRuleListResult.value
-        /// </summary>
+        /// <summary> The list of shared access policies. </summary>
         public IReadOnlyList<SharedAccessSignatureAuthorizationRule> Value { get; }
-        /// <summary>
-        /// The next link.
-        /// Serialized Name: SharedAccessSignatureAuthorizationRuleListResult.nextLink
-        /// </summary>
+        /// <summary> The next link. </summary>
         public string NextLink { get; }
     }
 }

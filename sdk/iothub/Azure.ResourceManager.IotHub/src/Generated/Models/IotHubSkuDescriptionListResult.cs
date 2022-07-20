@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary>
-    /// The JSON-serialized array of IotHubSkuDescription objects with a next link.
-    /// Serialized Name: IotHubSkuDescriptionListResult
-    /// </summary>
+    /// <summary> The JSON-serialized array of IotHubSkuDescription objects with a next link. </summary>
     internal partial class IotHubSkuDescriptionListResult
     {
         /// <summary> Initializes a new instance of IotHubSkuDescriptionListResult. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary> Initializes a new instance of IotHubSkuDescriptionListResult. </summary>
-        /// <param name="value">
-        /// The array of IotHubSkuDescription.
-        /// Serialized Name: IotHubSkuDescriptionListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The next link.
-        /// Serialized Name: IotHubSkuDescriptionListResult.nextLink
-        /// </param>
+        /// <param name="value"> The array of IotHubSkuDescription. </param>
+        /// <param name="nextLink"> The next link. </param>
         internal IotHubSkuDescriptionListResult(IReadOnlyList<IotHubSkuDescription> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The array of IotHubSkuDescription.
-        /// Serialized Name: IotHubSkuDescriptionListResult.value
-        /// </summary>
+        /// <summary> The array of IotHubSkuDescription. </summary>
         public IReadOnlyList<IotHubSkuDescription> Value { get; }
-        /// <summary>
-        /// The next link.
-        /// Serialized Name: IotHubSkuDescriptionListResult.nextLink
-        /// </summary>
+        /// <summary> The next link. </summary>
         public string NextLink { get; }
     }
 }

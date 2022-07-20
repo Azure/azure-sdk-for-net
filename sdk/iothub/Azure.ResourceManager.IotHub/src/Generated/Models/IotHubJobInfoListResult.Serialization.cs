@@ -11,11 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    internal partial class IotHubJobResponseListResult
+    internal partial class IotHubJobInfoListResult
     {
-        internal static IotHubJobResponseListResult DeserializeIotHubJobResponseListResult(JsonElement element)
+        internal static IotHubJobInfoListResult DeserializeIotHubJobInfoListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<IotHubJobResponse>> value = default;
+            Optional<IReadOnlyList<IotHubJobInfo>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.IotHub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<IotHubJobResponse> array = new List<IotHubJobResponse>();
+                    List<IotHubJobInfo> array = new List<IotHubJobInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotHubJobResponse.DeserializeIotHubJobResponse(item));
+                        array.Add(IotHubJobInfo.DeserializeIotHubJobInfo(item));
                     }
                     value = array;
                     continue;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     continue;
                 }
             }
-            return new IotHubJobResponseListResult(Optional.ToList(value), nextLink.Value);
+            return new IotHubJobInfoListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

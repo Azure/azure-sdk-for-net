@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.IotHub.Models
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
+                writer.WriteStringValue(Id.Value);
             }
             if (Optional.IsDefined(ConnectionString))
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.IotHub.Models
 
         internal static RoutingStorageContainerProperties DeserializeRoutingStorageContainerProperties(JsonElement element)
         {
-            Optional<string> id = default;
+            Optional<Guid> id = default;
             Optional<string> connectionString = default;
             Optional<Uri> endpointUri = default;
             Optional<IotHubAuthenticationType> authenticationType = default;
@@ -97,7 +97,12 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("connectionString"))
@@ -191,7 +196,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     continue;
                 }
             }
-            return new RoutingStorageContainerProperties(id.Value, connectionString.Value, endpointUri.Value, Optional.ToNullable(authenticationType), identity.Value, name, subscriptionId.Value, resourceGroup.Value, containerName, fileNameFormat.Value, Optional.ToNullable(batchFrequencyInSeconds), Optional.ToNullable(maxChunkSizeInBytes), Optional.ToNullable(encoding));
+            return new RoutingStorageContainerProperties(Optional.ToNullable(id), connectionString.Value, endpointUri.Value, Optional.ToNullable(authenticationType), identity.Value, name, subscriptionId.Value, resourceGroup.Value, containerName, fileNameFormat.Value, Optional.ToNullable(batchFrequencyInSeconds), Optional.ToNullable(maxChunkSizeInBytes), Optional.ToNullable(encoding));
         }
     }
 }

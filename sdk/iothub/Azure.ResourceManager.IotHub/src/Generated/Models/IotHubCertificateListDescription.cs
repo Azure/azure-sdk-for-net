@@ -11,10 +11,7 @@ using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary>
-    /// The JSON-serialized array of Certificate objects.
-    /// Serialized Name: CertificateListDescription
-    /// </summary>
+    /// <summary> The JSON-serialized array of Certificate objects. </summary>
     internal partial class IotHubCertificateListDescription
     {
         /// <summary> Initializes a new instance of IotHubCertificateListDescription. </summary>
@@ -24,19 +21,13 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary> Initializes a new instance of IotHubCertificateListDescription. </summary>
-        /// <param name="value">
-        /// The array of Certificate objects.
-        /// Serialized Name: CertificateListDescription.value
-        /// </param>
+        /// <param name="value"> The array of Certificate objects. </param>
         internal IotHubCertificateListDescription(IReadOnlyList<IotHubCertificateDescriptionData> value)
         {
             Value = value;
         }
 
-        /// <summary>
-        /// The array of Certificate objects.
-        /// Serialized Name: CertificateListDescription.value
-        /// </summary>
+        /// <summary> The array of Certificate objects. </summary>
         public IReadOnlyList<IotHubCertificateDescriptionData> Value { get; }
     }
 }

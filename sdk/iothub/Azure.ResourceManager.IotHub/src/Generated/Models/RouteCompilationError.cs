@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary>
-    /// Compilation error when evaluating route
-    /// Serialized Name: RouteCompilationError
-    /// </summary>
+    /// <summary> Compilation error when evaluating route. </summary>
     public partial class RouteCompilationError
     {
         /// <summary> Initializes a new instance of RouteCompilationError. </summary>
@@ -19,18 +16,9 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary> Initializes a new instance of RouteCompilationError. </summary>
-        /// <param name="message">
-        /// Route error message
-        /// Serialized Name: RouteCompilationError.message
-        /// </param>
-        /// <param name="severity">
-        /// Severity of the route error
-        /// Serialized Name: RouteCompilationError.severity
-        /// </param>
-        /// <param name="location">
-        /// Location where the route error happened
-        /// Serialized Name: RouteCompilationError.location
-        /// </param>
+        /// <param name="message"> Route error message. </param>
+        /// <param name="severity"> Severity of the route error. </param>
+        /// <param name="location"> Location where the route error happened. </param>
         internal RouteCompilationError(string message, RouteErrorSeverity? severity, RouteErrorRange location)
         {
             Message = message;
@@ -38,20 +26,11 @@ namespace Azure.ResourceManager.IotHub.Models
             Location = location;
         }
 
-        /// <summary>
-        /// Route error message
-        /// Serialized Name: RouteCompilationError.message
-        /// </summary>
+        /// <summary> Route error message. </summary>
         public string Message { get; }
-        /// <summary>
-        /// Severity of the route error
-        /// Serialized Name: RouteCompilationError.severity
-        /// </summary>
+        /// <summary> Severity of the route error. </summary>
         public RouteErrorSeverity? Severity { get; }
-        /// <summary>
-        /// Location where the route error happened
-        /// Serialized Name: RouteCompilationError.location
-        /// </summary>
+        /// <summary> Location where the route error happened. </summary>
         public RouteErrorRange Location { get; }
     }
 }

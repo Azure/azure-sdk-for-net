@@ -11,10 +11,7 @@ using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary>
-    /// The JSON-serialized array of Event Hub-compatible consumer group names with a next link.
-    /// Serialized Name: EventHubConsumerGroupsListResult
-    /// </summary>
+    /// <summary> The JSON-serialized array of Event Hub-compatible consumer group names with a next link. </summary>
     internal partial class EventHubConsumerGroupsListResult
     {
         /// <summary> Initializes a new instance of EventHubConsumerGroupsListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary> Initializes a new instance of EventHubConsumerGroupsListResult. </summary>
-        /// <param name="value">
-        /// List of consumer groups objects
-        /// Serialized Name: EventHubConsumerGroupsListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The next link.
-        /// Serialized Name: EventHubConsumerGroupsListResult.nextLink
-        /// </param>
+        /// <param name="value"> List of consumer groups objects. </param>
+        /// <param name="nextLink"> The next link. </param>
         internal EventHubConsumerGroupsListResult(IReadOnlyList<EventHubConsumerGroupInfoData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// List of consumer groups objects
-        /// Serialized Name: EventHubConsumerGroupsListResult.value
-        /// </summary>
+        /// <summary> List of consumer groups objects. </summary>
         public IReadOnlyList<EventHubConsumerGroupInfoData> Value { get; }
-        /// <summary>
-        /// The next link.
-        /// Serialized Name: EventHubConsumerGroupsListResult.nextLink
-        /// </summary>
+        /// <summary> The next link. </summary>
         public string NextLink { get; }
     }
 }

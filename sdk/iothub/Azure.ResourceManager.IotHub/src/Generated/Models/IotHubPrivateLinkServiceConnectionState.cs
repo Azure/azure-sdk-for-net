@@ -9,21 +9,12 @@ using System;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary>
-    /// The current state of a private endpoint connection
-    /// Serialized Name: PrivateLinkServiceConnectionState
-    /// </summary>
+    /// <summary> The current state of a private endpoint connection. </summary>
     public partial class IotHubPrivateLinkServiceConnectionState
     {
         /// <summary> Initializes a new instance of IotHubPrivateLinkServiceConnectionState. </summary>
-        /// <param name="status">
-        /// The status of a private endpoint connection
-        /// Serialized Name: PrivateLinkServiceConnectionState.status
-        /// </param>
-        /// <param name="description">
-        /// The description for the current state of a private endpoint connection
-        /// Serialized Name: PrivateLinkServiceConnectionState.description
-        /// </param>
+        /// <param name="status"> The status of a private endpoint connection. </param>
+        /// <param name="description"> The description for the current state of a private endpoint connection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="description"/> is null. </exception>
         public IotHubPrivateLinkServiceConnectionState(IotHubPrivateLinkServiceConnectionStatus status, string description)
         {
@@ -37,18 +28,9 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary> Initializes a new instance of IotHubPrivateLinkServiceConnectionState. </summary>
-        /// <param name="status">
-        /// The status of a private endpoint connection
-        /// Serialized Name: PrivateLinkServiceConnectionState.status
-        /// </param>
-        /// <param name="description">
-        /// The description for the current state of a private endpoint connection
-        /// Serialized Name: PrivateLinkServiceConnectionState.description
-        /// </param>
-        /// <param name="actionsRequired">
-        /// Actions required for a private endpoint connection
-        /// Serialized Name: PrivateLinkServiceConnectionState.actionsRequired
-        /// </param>
+        /// <param name="status"> The status of a private endpoint connection. </param>
+        /// <param name="description"> The description for the current state of a private endpoint connection. </param>
+        /// <param name="actionsRequired"> Actions required for a private endpoint connection. </param>
         internal IotHubPrivateLinkServiceConnectionState(IotHubPrivateLinkServiceConnectionStatus status, string description, string actionsRequired)
         {
             Status = status;
@@ -56,20 +38,11 @@ namespace Azure.ResourceManager.IotHub.Models
             ActionsRequired = actionsRequired;
         }
 
-        /// <summary>
-        /// The status of a private endpoint connection
-        /// Serialized Name: PrivateLinkServiceConnectionState.status
-        /// </summary>
+        /// <summary> The status of a private endpoint connection. </summary>
         public IotHubPrivateLinkServiceConnectionStatus Status { get; set; }
-        /// <summary>
-        /// The description for the current state of a private endpoint connection
-        /// Serialized Name: PrivateLinkServiceConnectionState.description
-        /// </summary>
+        /// <summary> The description for the current state of a private endpoint connection. </summary>
         public string Description { get; set; }
-        /// <summary>
-        /// Actions required for a private endpoint connection
-        /// Serialized Name: PrivateLinkServiceConnectionState.actionsRequired
-        /// </summary>
+        /// <summary> Actions required for a private endpoint connection. </summary>
         public string ActionsRequired { get; set; }
     }
 }

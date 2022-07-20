@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary>
-    /// Json-serialized array of User subscription quota response
-    /// Serialized Name: UserSubscriptionQuotaListResult
-    /// </summary>
+    /// <summary> Json-serialized array of User subscription quota response. </summary>
     internal partial class IotHubUserSubscriptionQuotaListResult
     {
         /// <summary> Initializes a new instance of IotHubUserSubscriptionQuotaListResult. </summary>
@@ -23,17 +20,17 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary> Initializes a new instance of IotHubUserSubscriptionQuotaListResult. </summary>
-        /// <param name="value"> Serialized Name: UserSubscriptionQuotaListResult.value. </param>
-        /// <param name="nextLink"> Serialized Name: UserSubscriptionQuotaListResult.nextLink. </param>
+        /// <param name="value"></param>
+        /// <param name="nextLink"></param>
         internal IotHubUserSubscriptionQuotaListResult(IReadOnlyList<IotHubUserSubscriptionQuota> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Serialized Name: UserSubscriptionQuotaListResult.value. </summary>
+        /// <summary> Gets the value. </summary>
         public IReadOnlyList<IotHubUserSubscriptionQuota> Value { get; }
-        /// <summary> Serialized Name: UserSubscriptionQuotaListResult.nextLink. </summary>
+        /// <summary> Gets the next link. </summary>
         public string NextLink { get; }
     }
 }

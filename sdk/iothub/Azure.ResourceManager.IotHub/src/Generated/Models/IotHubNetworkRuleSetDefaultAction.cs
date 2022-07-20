@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary>
-    /// Default Action for Network Rule Set
-    /// Serialized Name: DefaultAction
-    /// </summary>
+    /// <summary> Default Action for Network Rule Set. </summary>
     public readonly partial struct IotHubNetworkRuleSetDefaultAction : IEquatable<IotHubNetworkRuleSetDefaultAction>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.IotHub.Models
         private const string DenyValue = "Deny";
         private const string AllowValue = "Allow";
 
-        /// <summary>
-        /// Deny
-        /// Serialized Name: DefaultAction.Deny
-        /// </summary>
+        /// <summary> Deny. </summary>
         public static IotHubNetworkRuleSetDefaultAction Deny { get; } = new IotHubNetworkRuleSetDefaultAction(DenyValue);
-        /// <summary>
-        /// Allow
-        /// Serialized Name: DefaultAction.Allow
-        /// </summary>
+        /// <summary> Allow. </summary>
         public static IotHubNetworkRuleSetDefaultAction Allow { get; } = new IotHubNetworkRuleSetDefaultAction(AllowValue);
         /// <summary> Determines if two <see cref="IotHubNetworkRuleSetDefaultAction"/> values are the same. </summary>
         public static bool operator ==(IotHubNetworkRuleSetDefaultAction left, IotHubNetworkRuleSetDefaultAction right) => left.Equals(right);

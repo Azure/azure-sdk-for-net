@@ -21,7 +21,8 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
         private ResourceGroupResource _resourceGroup;
 
         // Temporary certificate used for testing purposes only, valid until 20220815
-        private const string _certificationContent = "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tDQpNSUlDRkRDQ0FibWdBd0lCQWdJUWJVWXpKaGZHWFlaQmdqS2wyRXBicERBS0JnZ3Foa2pPUFFRREFqQW9NU1l3DQpKQVlEVlFRRERCMUJlblZ5WlNCSmIxUWdRMEVnVkdWemRFOXViSGtnVW05dmRDQkRRVEFlRncweU1qQTNNVFV3DQpOekU0TXpGYUZ3MHlNakE0TVRRd056STRNekZhTURJeE1EQXVCZ05WQkFNTUowRjZkWEpsSUVsdlZDQkRRU0JVDQpaWE4wVDI1c2VTQkpiblJsY20xbFpHbGhkR1VnTVNCRFFUQlpNQk1HQnlxR1NNNDlBZ0VHQ0NxR1NNNDlBd0VIDQpBMElBQkNDT2E5YVd4dU5jWUtuaC9nS2g2MlhFZEk3UStNaUVYbWNDRzlnLzg0UktGa3krMkFoREttZzdJTHlFDQpJMWptNjdEamdXV2VUWmlIamZVckpBQklsNjJqZ2Jvd2diY3dEZ1lEVlIwUEFRSC9CQVFEQWdJRU1CMEdBMVVkDQpKUVFXTUJRR0NDc0dBUVVGQndNQ0JnZ3JCZ0VGQlFjREFUQXlCZ05WSFJFRUt6QXBnaWRCZW5WeVpTQkpiMVFnDQpRMEVnVkdWemRFOXViSGtnU1c1MFpYSnRaV1JwWVhSbElERWdRMEV3RWdZRFZSMFRBUUgvQkFnd0JnRUIvd0lCDQpEREFmQmdOVkhTTUVHREFXZ0JRYmJ1UCsyblZuWGdDL0l1M1FHRVYvNVNObjdUQWRCZ05WSFE0RUZnUVV0VXYxDQphZVVIYWdWMDdWZWMzUFhlUzY2Q0VpZ3dDZ1lJS29aSXpqMEVBd0lEU1FBd1JnSWhBTUhMUk5zbjZqNjJ0eXE1DQp6cDJUd1o4RUtQU0VtbnU3QVNWSkJSVXAwaC9JQWlFQTM2SGljSUtQd1VSMXIwbGExWWYxeWJoMWFtK0lJVjl5DQpPUGYySWlpWjNNND0NCi0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0NCg==";
+        // The extra \" is to workaround the BinaryData serialization issue for pure string
+        private const string _certificationContent = "\"LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tDQpNSUlDRkRDQ0FibWdBd0lCQWdJUWJVWXpKaGZHWFlaQmdqS2wyRXBicERBS0JnZ3Foa2pPUFFRREFqQW9NU1l3DQpKQVlEVlFRRERCMUJlblZ5WlNCSmIxUWdRMEVnVkdWemRFOXViSGtnVW05dmRDQkRRVEFlRncweU1qQTNNVFV3DQpOekU0TXpGYUZ3MHlNakE0TVRRd056STRNekZhTURJeE1EQXVCZ05WQkFNTUowRjZkWEpsSUVsdlZDQkRRU0JVDQpaWE4wVDI1c2VTQkpiblJsY20xbFpHbGhkR1VnTVNCRFFUQlpNQk1HQnlxR1NNNDlBZ0VHQ0NxR1NNNDlBd0VIDQpBMElBQkNDT2E5YVd4dU5jWUtuaC9nS2g2MlhFZEk3UStNaUVYbWNDRzlnLzg0UktGa3krMkFoREttZzdJTHlFDQpJMWptNjdEamdXV2VUWmlIamZVckpBQklsNjJqZ2Jvd2diY3dEZ1lEVlIwUEFRSC9CQVFEQWdJRU1CMEdBMVVkDQpKUVFXTUJRR0NDc0dBUVVGQndNQ0JnZ3JCZ0VGQlFjREFUQXlCZ05WSFJFRUt6QXBnaWRCZW5WeVpTQkpiMVFnDQpRMEVnVkdWemRFOXViSGtnU1c1MFpYSnRaV1JwWVhSbElERWdRMEV3RWdZRFZSMFRBUUgvQkFnd0JnRUIvd0lCDQpEREFmQmdOVkhTTUVHREFXZ0JRYmJ1UCsyblZuWGdDL0l1M1FHRVYvNVNObjdUQWRCZ05WSFE0RUZnUVV0VXYxDQphZVVIYWdWMDdWZWMzUFhlUzY2Q0VpZ3dDZ1lJS29aSXpqMEVBd0lEU1FBd1JnSWhBTUhMUk5zbjZqNjJ0eXE1DQp6cDJUd1o4RUtQU0VtbnU3QVNWSkJSVXAwaC9JQWlFQTM2SGljSUtQd1VSMXIwbGExWWYxeWJoMWFtK0lJVjl5DQpPUGYySWlpWjNNND0NCi0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0NCg==\"";
 
         public CertificateDescriptionTests(bool isAsync) : base(isAsync)
         {
@@ -44,14 +45,14 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
 
         private async Task<IotHubCertificateDescriptionResource> CreateDefaultCertification(IotHubDescriptionResource iothub, string certName)
         {
-            CertificateDescriptionData data = new CertificateDescriptionData()
+            IotHubCertificateDescriptionData data = new IotHubCertificateDescriptionData()
             {
-                Properties = new CertificateProperties()
+                Properties = new IotHubCertificateProperties()
                 {
-                    Certificate = _certificationContent
+                    Certificate =  BinaryData.FromString(_certificationContent)
                 }
             };
-            var cert = await iothub.GetCertificateDescriptions().CreateOrUpdateAsync(WaitUntil.Completed, certName, data);
+            var cert = await iothub.GetIotHubCertificateDescriptions().CreateOrUpdateAsync(WaitUntil.Completed, certName, data);
             return cert.Value;
         }
 
@@ -87,11 +88,11 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
             string certName = Recording.GenerateAssetName("cert-");
             var iothub = await CreateIotHub(_resourceGroup, iotHubName);
 
-            var list = await iothub.GetCertificateDescriptions().GetAllAsync().ToEnumerableAsync();
+            var list = await iothub.GetIotHubCertificateDescriptions().GetAllAsync().ToEnumerableAsync();
             Assert.IsEmpty(list);
 
             await CreateDefaultCertification(iothub, certName);
-            list = await iothub.GetCertificateDescriptions().GetAllAsync().ToEnumerableAsync();
+            list = await iothub.GetIotHubCertificateDescriptions().GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
             Assert.AreEqual(1, list.Count);
             Assert.AreEqual(certName, list.FirstOrDefault().Data.Name);
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
             var iothub = await CreateIotHub(_resourceGroup, iotHubName);
 
             await CreateDefaultCertification(iothub, certName);
-            bool isExisted = await iothub.GetCertificateDescriptions().ExistsAsync(certName);
+            bool isExisted = await iothub.GetIotHubCertificateDescriptions().ExistsAsync(certName);
             Assert.IsTrue(isExisted);
         }
 
@@ -119,11 +120,11 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
             var iothub = await CreateIotHub(_resourceGroup, iotHubName);
 
             var deleteCertification = await CreateDefaultCertification(iothub, certName);
-            bool isExisted = await iothub.GetCertificateDescriptions().ExistsAsync(certName);
+            bool isExisted = await iothub.GetIotHubCertificateDescriptions().ExistsAsync(certName);
             Assert.IsTrue(isExisted);
 
             await deleteCertification.DeleteAsync(WaitUntil.Completed, deleteCertification.Data.ETag.ToString());
-            isExisted = await iothub.GetCertificateDescriptions().ExistsAsync(certName);
+            isExisted = await iothub.GetIotHubCertificateDescriptions().ExistsAsync(certName);
             Assert.IsFalse(isExisted);
         }
     }

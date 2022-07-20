@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary>
-    /// Identity registry statistics.
-    /// Serialized Name: RegistryStatistics
-    /// </summary>
+    /// <summary> Identity registry statistics. </summary>
     public partial class IotHubRegistryStatistics
     {
         /// <summary> Initializes a new instance of IotHubRegistryStatistics. </summary>
@@ -19,18 +16,9 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary> Initializes a new instance of IotHubRegistryStatistics. </summary>
-        /// <param name="totalDeviceCount">
-        /// The total count of devices in the identity registry.
-        /// Serialized Name: RegistryStatistics.totalDeviceCount
-        /// </param>
-        /// <param name="enabledDeviceCount">
-        /// The count of enabled devices in the identity registry.
-        /// Serialized Name: RegistryStatistics.enabledDeviceCount
-        /// </param>
-        /// <param name="disabledDeviceCount">
-        /// The count of disabled devices in the identity registry.
-        /// Serialized Name: RegistryStatistics.disabledDeviceCount
-        /// </param>
+        /// <param name="totalDeviceCount"> The total count of devices in the identity registry. </param>
+        /// <param name="enabledDeviceCount"> The count of enabled devices in the identity registry. </param>
+        /// <param name="disabledDeviceCount"> The count of disabled devices in the identity registry. </param>
         internal IotHubRegistryStatistics(long? totalDeviceCount, long? enabledDeviceCount, long? disabledDeviceCount)
         {
             TotalDeviceCount = totalDeviceCount;
@@ -38,20 +26,11 @@ namespace Azure.ResourceManager.IotHub.Models
             DisabledDeviceCount = disabledDeviceCount;
         }
 
-        /// <summary>
-        /// The total count of devices in the identity registry.
-        /// Serialized Name: RegistryStatistics.totalDeviceCount
-        /// </summary>
+        /// <summary> The total count of devices in the identity registry. </summary>
         public long? TotalDeviceCount { get; }
-        /// <summary>
-        /// The count of enabled devices in the identity registry.
-        /// Serialized Name: RegistryStatistics.enabledDeviceCount
-        /// </summary>
+        /// <summary> The count of enabled devices in the identity registry. </summary>
         public long? EnabledDeviceCount { get; }
-        /// <summary>
-        /// The count of disabled devices in the identity registry.
-        /// Serialized Name: RegistryStatistics.disabledDeviceCount
-        /// </summary>
+        /// <summary> The count of disabled devices in the identity registry. </summary>
         public long? DisabledDeviceCount { get; }
     }
 }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary>
-    /// Specifies authentication type being used for connecting to the storage account.
-    /// Serialized Name: AuthenticationType
-    /// </summary>
+    /// <summary> Specifies authentication type being used for connecting to the storage account. </summary>
     public readonly partial struct IotHubAuthenticationType : IEquatable<IotHubAuthenticationType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.IotHub.Models
         private const string KeyBasedValue = "keyBased";
         private const string IdentityBasedValue = "identityBased";
 
-        /// <summary>
-        /// keyBased
-        /// Serialized Name: AuthenticationType.keyBased
-        /// </summary>
+        /// <summary> keyBased. </summary>
         public static IotHubAuthenticationType KeyBased { get; } = new IotHubAuthenticationType(KeyBasedValue);
-        /// <summary>
-        /// identityBased
-        /// Serialized Name: AuthenticationType.identityBased
-        /// </summary>
+        /// <summary> identityBased. </summary>
         public static IotHubAuthenticationType IdentityBased { get; } = new IotHubAuthenticationType(IdentityBasedValue);
         /// <summary> Determines if two <see cref="IotHubAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(IotHubAuthenticationType left, IotHubAuthenticationType right) => left.Equals(right);

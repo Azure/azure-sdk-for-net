@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary>
-    /// The properties for a group information object
-    /// Serialized Name: GroupIdInformationProperties
-    /// </summary>
+    /// <summary> The properties for a group information object. </summary>
     public partial class IotHubPrivateEndpointGroupInformationProperties
     {
         /// <summary> Initializes a new instance of IotHubPrivateEndpointGroupInformationProperties. </summary>
@@ -24,18 +21,9 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary> Initializes a new instance of IotHubPrivateEndpointGroupInformationProperties. </summary>
-        /// <param name="groupId">
-        /// The group id
-        /// Serialized Name: GroupIdInformationProperties.groupId
-        /// </param>
-        /// <param name="requiredMembers">
-        /// The required members for a specific group id
-        /// Serialized Name: GroupIdInformationProperties.requiredMembers
-        /// </param>
-        /// <param name="requiredZoneNames">
-        /// The required DNS zones for a specific group id
-        /// Serialized Name: GroupIdInformationProperties.requiredZoneNames
-        /// </param>
+        /// <param name="groupId"> The group id. </param>
+        /// <param name="requiredMembers"> The required members for a specific group id. </param>
+        /// <param name="requiredZoneNames"> The required DNS zones for a specific group id. </param>
         internal IotHubPrivateEndpointGroupInformationProperties(string groupId, IReadOnlyList<string> requiredMembers, IReadOnlyList<string> requiredZoneNames)
         {
             GroupId = groupId;
@@ -43,20 +31,11 @@ namespace Azure.ResourceManager.IotHub.Models
             RequiredZoneNames = requiredZoneNames;
         }
 
-        /// <summary>
-        /// The group id
-        /// Serialized Name: GroupIdInformationProperties.groupId
-        /// </summary>
+        /// <summary> The group id. </summary>
         public string GroupId { get; }
-        /// <summary>
-        /// The required members for a specific group id
-        /// Serialized Name: GroupIdInformationProperties.requiredMembers
-        /// </summary>
+        /// <summary> The required members for a specific group id. </summary>
         public IReadOnlyList<string> RequiredMembers { get; }
-        /// <summary>
-        /// The required DNS zones for a specific group id
-        /// Serialized Name: GroupIdInformationProperties.requiredZoneNames
-        /// </summary>
+        /// <summary> The required DNS zones for a specific group id. </summary>
         public IReadOnlyList<string> RequiredZoneNames { get; }
     }
 }

@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary>
-    /// The description of an X509 CA Certificate including the challenge nonce issued for the Proof-Of-Possession flow.
-    /// Serialized Name: CertificatePropertiesWithNonce
-    /// </summary>
+    /// <summary> The description of an X509 CA Certificate including the challenge nonce issued for the Proof-Of-Possession flow. </summary>
     public partial class IotHubCertificatePropertiesWithNonce
     {
         /// <summary> Initializes a new instance of IotHubCertificatePropertiesWithNonce. </summary>
@@ -21,38 +18,14 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary> Initializes a new instance of IotHubCertificatePropertiesWithNonce. </summary>
-        /// <param name="subject">
-        /// The certificate&apos;s subject name.
-        /// Serialized Name: CertificatePropertiesWithNonce.subject
-        /// </param>
-        /// <param name="expiryOn">
-        /// The certificate&apos;s expiration date and time.
-        /// Serialized Name: CertificatePropertiesWithNonce.expiry
-        /// </param>
-        /// <param name="thumbprint">
-        /// The certificate&apos;s thumbprint.
-        /// Serialized Name: CertificatePropertiesWithNonce.thumbprint
-        /// </param>
-        /// <param name="isVerified">
-        /// Determines whether certificate has been verified.
-        /// Serialized Name: CertificatePropertiesWithNonce.isVerified
-        /// </param>
-        /// <param name="createdOn">
-        /// The certificate&apos;s create date and time.
-        /// Serialized Name: CertificatePropertiesWithNonce.created
-        /// </param>
-        /// <param name="updatedOn">
-        /// The certificate&apos;s last update date and time.
-        /// Serialized Name: CertificatePropertiesWithNonce.updated
-        /// </param>
-        /// <param name="verificationCode">
-        /// The certificate&apos;s verification code that will be used for proof of possession.
-        /// Serialized Name: CertificatePropertiesWithNonce.verificationCode
-        /// </param>
-        /// <param name="certificate">
-        /// The certificate content
-        /// Serialized Name: CertificatePropertiesWithNonce.certificate
-        /// </param>
+        /// <param name="subject"> The certificate&apos;s subject name. </param>
+        /// <param name="expiryOn"> The certificate&apos;s expiration date and time. </param>
+        /// <param name="thumbprint"> The certificate&apos;s thumbprint. </param>
+        /// <param name="isVerified"> Determines whether certificate has been verified. </param>
+        /// <param name="createdOn"> The certificate&apos;s create date and time. </param>
+        /// <param name="updatedOn"> The certificate&apos;s last update date and time. </param>
+        /// <param name="verificationCode"> The certificate&apos;s verification code that will be used for proof of possession. </param>
+        /// <param name="certificate"> The certificate content. </param>
         internal IotHubCertificatePropertiesWithNonce(string subject, DateTimeOffset? expiryOn, BinaryData thumbprint, bool? isVerified, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string verificationCode, BinaryData certificate)
         {
             Subject = subject;
@@ -65,45 +38,21 @@ namespace Azure.ResourceManager.IotHub.Models
             Certificate = certificate;
         }
 
-        /// <summary>
-        /// The certificate&apos;s subject name.
-        /// Serialized Name: CertificatePropertiesWithNonce.subject
-        /// </summary>
+        /// <summary> The certificate&apos;s subject name. </summary>
         public string Subject { get; }
-        /// <summary>
-        /// The certificate&apos;s expiration date and time.
-        /// Serialized Name: CertificatePropertiesWithNonce.expiry
-        /// </summary>
+        /// <summary> The certificate&apos;s expiration date and time. </summary>
         public DateTimeOffset? ExpiryOn { get; }
-        /// <summary>
-        /// The certificate&apos;s thumbprint.
-        /// Serialized Name: CertificatePropertiesWithNonce.thumbprint
-        /// </summary>
+        /// <summary> The certificate&apos;s thumbprint. </summary>
         public BinaryData Thumbprint { get; }
-        /// <summary>
-        /// Determines whether certificate has been verified.
-        /// Serialized Name: CertificatePropertiesWithNonce.isVerified
-        /// </summary>
+        /// <summary> Determines whether certificate has been verified. </summary>
         public bool? IsVerified { get; }
-        /// <summary>
-        /// The certificate&apos;s create date and time.
-        /// Serialized Name: CertificatePropertiesWithNonce.created
-        /// </summary>
+        /// <summary> The certificate&apos;s create date and time. </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// The certificate&apos;s last update date and time.
-        /// Serialized Name: CertificatePropertiesWithNonce.updated
-        /// </summary>
+        /// <summary> The certificate&apos;s last update date and time. </summary>
         public DateTimeOffset? UpdatedOn { get; }
-        /// <summary>
-        /// The certificate&apos;s verification code that will be used for proof of possession.
-        /// Serialized Name: CertificatePropertiesWithNonce.verificationCode
-        /// </summary>
+        /// <summary> The certificate&apos;s verification code that will be used for proof of possession. </summary>
         public string VerificationCode { get; }
-        /// <summary>
-        /// The certificate content
-        /// Serialized Name: CertificatePropertiesWithNonce.certificate
-        /// </summary>
+        /// <summary> The certificate content. </summary>
         public BinaryData Certificate { get; }
     }
 }

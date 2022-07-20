@@ -9,17 +9,11 @@ using System;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary>
-    /// Input for testing route
-    /// Serialized Name: TestRouteInput
-    /// </summary>
+    /// <summary> Input for testing route. </summary>
     public partial class IotHubTestRouteContent
     {
         /// <summary> Initializes a new instance of IotHubTestRouteContent. </summary>
-        /// <param name="route">
-        /// Route properties
-        /// Serialized Name: TestRouteInput.route
-        /// </param>
+        /// <param name="route"> Route properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="route"/> is null. </exception>
         public IotHubTestRouteContent(RoutingRuleProperties route)
         {
@@ -31,20 +25,11 @@ namespace Azure.ResourceManager.IotHub.Models
             Route = route;
         }
 
-        /// <summary>
-        /// Routing message
-        /// Serialized Name: TestRouteInput.message
-        /// </summary>
+        /// <summary> Routing message. </summary>
         public RoutingMessage Message { get; set; }
-        /// <summary>
-        /// Route properties
-        /// Serialized Name: TestRouteInput.route
-        /// </summary>
+        /// <summary> Route properties. </summary>
         public RoutingRuleProperties Route { get; }
-        /// <summary>
-        /// Routing Twin Reference
-        /// Serialized Name: TestRouteInput.twin
-        /// </summary>
+        /// <summary> Routing Twin Reference. </summary>
         public RoutingTwin Twin { get; set; }
     }
 }

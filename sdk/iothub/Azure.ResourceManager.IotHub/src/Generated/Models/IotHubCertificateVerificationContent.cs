@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary>
-    /// The JSON-serialized leaf certificate
-    /// Serialized Name: CertificateVerificationDescription
-    /// </summary>
+    /// <summary> The JSON-serialized leaf certificate. </summary>
     public partial class IotHubCertificateVerificationContent
     {
         /// <summary> Initializes a new instance of IotHubCertificateVerificationContent. </summary>
@@ -20,10 +17,7 @@ namespace Azure.ResourceManager.IotHub.Models
         {
         }
 
-        /// <summary>
-        /// base-64 representation of X509 certificate .cer file or just .pem file content.
-        /// Serialized Name: CertificateVerificationDescription.certificate
-        /// </summary>
+        /// <summary> base-64 representation of X509 certificate .cer file or just .pem file content. </summary>
         public BinaryData Certificate { get; set; }
     }
 }

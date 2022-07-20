@@ -16,10 +16,7 @@ namespace Azure.ResourceManager.IotHub
     public partial class IotHubPrivateEndpointGroupInformationData : ResourceData
     {
         /// <summary> Initializes a new instance of IotHubPrivateEndpointGroupInformationData. </summary>
-        /// <param name="properties">
-        /// The properties for a group information object
-        /// Serialized Name: GroupIdInformation.properties
-        /// </param>
+        /// <param name="properties"> The properties for a group information object. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         internal IotHubPrivateEndpointGroupInformationData(IotHubPrivateEndpointGroupInformationProperties properties)
         {
@@ -36,19 +33,13 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The properties for a group information object
-        /// Serialized Name: GroupIdInformation.properties
-        /// </param>
+        /// <param name="properties"> The properties for a group information object. </param>
         internal IotHubPrivateEndpointGroupInformationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IotHubPrivateEndpointGroupInformationProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
-        /// <summary>
-        /// The properties for a group information object
-        /// Serialized Name: GroupIdInformation.properties
-        /// </summary>
+        /// <summary> The properties for a group information object. </summary>
         public IotHubPrivateEndpointGroupInformationProperties Properties { get; }
     }
 }

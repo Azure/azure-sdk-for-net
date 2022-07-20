@@ -7,21 +7,12 @@
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary>
-    /// The reason for unavailability.
-    /// Serialized Name: IotHubNameUnavailabilityReason
-    /// </summary>
+    /// <summary> The reason for unavailability. </summary>
     public enum IotHubNameUnavailabilityReason
     {
-        /// <summary>
-        /// Invalid
-        /// Serialized Name: IotHubNameUnavailabilityReason.Invalid
-        /// </summary>
+        /// <summary> Invalid. </summary>
         Invalid,
-        /// <summary>
-        /// AlreadyExists
-        /// Serialized Name: IotHubNameUnavailabilityReason.AlreadyExists
-        /// </summary>
+        /// <summary> AlreadyExists. </summary>
         AlreadyExists
     }
 }
