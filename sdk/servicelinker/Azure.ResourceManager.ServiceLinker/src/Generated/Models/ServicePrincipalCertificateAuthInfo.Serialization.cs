@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             string clientId = default;
             string principalId = default;
             string certificate = default;
-            AuthType authType = default;
+            LinkerAuthType authType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientId"))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 if (property.NameEquals("authType"))
                 {
-                    authType = new AuthType(property.Value.GetString());
+                    authType = new LinkerAuthType(property.Value.GetString());
                     continue;
                 }
             }

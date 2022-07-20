@@ -11,6 +11,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation");
-                writer.WriteObjectValue(ExtendedLocation);
+                JsonSerializer.Serialize(writer, ExtendedLocation);
             }
             if (Optional.IsDefined(Kind))
             {
@@ -222,8 +223,8 @@ namespace Azure.ResourceManager.AppService
             Optional<string> clientCertExclusionPaths = default;
             Optional<bool> hostNamesDisabled = default;
             Optional<string> customDomainVerificationId = default;
-            Optional<string> outboundIpAddresses = default;
-            Optional<string> possibleOutboundIpAddresses = default;
+            Optional<string> outboundIPAddresses = default;
+            Optional<string> possibleOutboundIPAddresses = default;
             Optional<int> containerSize = default;
             Optional<int> dailyMemoryTimeQuota = default;
             Optional<DateTimeOffset?> suspendedTill = default;
@@ -258,7 +259,7 @@ namespace Azure.ResourceManager.AppService
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("kind"))
@@ -552,12 +553,12 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("outboundIpAddresses"))
                         {
-                            outboundIpAddresses = property0.Value.GetString();
+                            outboundIPAddresses = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("possibleOutboundIpAddresses"))
                         {
-                            possibleOutboundIpAddresses = property0.Value.GetString();
+                            possibleOutboundIPAddresses = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("containerSize"))
@@ -694,7 +695,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new WebSiteData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, extendedLocation.Value, state.Value, Optional.ToList(hostNames), repositorySiteName.Value, Optional.ToNullable(usageState), Optional.ToNullable(enabled), Optional.ToList(enabledHostNames), Optional.ToNullable(availabilityState), Optional.ToList(hostNameSslStates), serverFarmId.Value, Optional.ToNullable(reserved), Optional.ToNullable(isXenon), Optional.ToNullable(hyperV), Optional.ToNullable(lastModifiedTimeUtc), siteConfig.Value, Optional.ToList(trafficManagerHostNames), Optional.ToNullable(scmSiteAlsoStopped), targetSwapSlot.Value, hostingEnvironmentProfile.Value, Optional.ToNullable(clientAffinityEnabled), Optional.ToNullable(clientCertEnabled), Optional.ToNullable(clientCertMode), clientCertExclusionPaths.Value, Optional.ToNullable(hostNamesDisabled), customDomainVerificationId.Value, outboundIpAddresses.Value, possibleOutboundIpAddresses.Value, Optional.ToNullable(containerSize), Optional.ToNullable(dailyMemoryTimeQuota), Optional.ToNullable(suspendedTill), Optional.ToNullable(maxNumberOfWorkers), cloningInfo.Value, resourceGroup.Value, Optional.ToNullable(isDefaultContainer), defaultHostName.Value, slotSwapStatus.Value, Optional.ToNullable(httpsOnly), Optional.ToNullable(redundancyMode), Optional.ToNullable(inProgressOperationId), Optional.ToNullable(storageAccountRequired), keyVaultReferenceIdentity.Value, virtualNetworkSubnetId.Value, kind.Value);
+            return new WebSiteData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, extendedLocation, state.Value, Optional.ToList(hostNames), repositorySiteName.Value, Optional.ToNullable(usageState), Optional.ToNullable(enabled), Optional.ToList(enabledHostNames), Optional.ToNullable(availabilityState), Optional.ToList(hostNameSslStates), serverFarmId.Value, Optional.ToNullable(reserved), Optional.ToNullable(isXenon), Optional.ToNullable(hyperV), Optional.ToNullable(lastModifiedTimeUtc), siteConfig.Value, Optional.ToList(trafficManagerHostNames), Optional.ToNullable(scmSiteAlsoStopped), targetSwapSlot.Value, hostingEnvironmentProfile.Value, Optional.ToNullable(clientAffinityEnabled), Optional.ToNullable(clientCertEnabled), Optional.ToNullable(clientCertMode), clientCertExclusionPaths.Value, Optional.ToNullable(hostNamesDisabled), customDomainVerificationId.Value, outboundIPAddresses.Value, possibleOutboundIPAddresses.Value, Optional.ToNullable(containerSize), Optional.ToNullable(dailyMemoryTimeQuota), Optional.ToNullable(suspendedTill), Optional.ToNullable(maxNumberOfWorkers), cloningInfo.Value, resourceGroup.Value, Optional.ToNullable(isDefaultContainer), defaultHostName.Value, slotSwapStatus.Value, Optional.ToNullable(httpsOnly), Optional.ToNullable(redundancyMode), Optional.ToNullable(inProgressOperationId), Optional.ToNullable(storageAccountRequired), keyVaultReferenceIdentity.Value, virtualNetworkSubnetId.Value, kind.Value);
         }
     }
 }

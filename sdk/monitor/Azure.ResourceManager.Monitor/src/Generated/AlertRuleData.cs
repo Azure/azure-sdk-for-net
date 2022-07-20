@@ -18,26 +18,26 @@ namespace Azure.ResourceManager.Monitor
     {
         /// <summary> Initializes a new instance of AlertRuleData. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="namePropertiesName"> the name of the alert rule. </param>
+        /// <param name="alertRuleName"> the name of the alert rule. </param>
         /// <param name="isEnabled"> the flag that indicates whether the alert rule is enabled. </param>
         /// <param name="condition">
         /// the condition that results in the alert rule being activated.
         /// Please note <see cref="RuleCondition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="LocationThresholdRuleCondition"/>, <see cref="ManagementEventRuleCondition"/> and <see cref="ThresholdRuleCondition"/>.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="namePropertiesName"/> or <paramref name="condition"/> is null. </exception>
-        public AlertRuleData(AzureLocation location, string namePropertiesName, bool isEnabled, RuleCondition condition) : base(location)
+        /// <exception cref="ArgumentNullException"> <paramref name="alertRuleName"/> or <paramref name="condition"/> is null. </exception>
+        public AlertRuleData(AzureLocation location, string alertRuleName, bool isEnabled, RuleCondition condition) : base(location)
         {
-            if (namePropertiesName == null)
+            if (alertRuleName == null)
             {
-                throw new ArgumentNullException(nameof(namePropertiesName));
+                throw new ArgumentNullException(nameof(alertRuleName));
             }
             if (condition == null)
             {
                 throw new ArgumentNullException(nameof(condition));
             }
 
-            NamePropertiesName = namePropertiesName;
+            AlertRuleName = alertRuleName;
             IsEnabled = isEnabled;
             Condition = condition;
             Actions = new ChangeTrackingList<RuleAction>();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="namePropertiesName"> the name of the alert rule. </param>
+        /// <param name="alertRuleName"> the name of the alert rule. </param>
         /// <param name="description"> the description of the alert rule that will be included in the alert email. </param>
         /// <param name="provisioningState"> the provisioning state. </param>
         /// <param name="isEnabled"> the flag that indicates whether the alert rule is enabled. </param>
@@ -70,9 +70,9 @@ namespace Azure.ResourceManager.Monitor
         /// The available derived classes include <see cref="RuleEmailAction"/> and <see cref="RuleWebhookAction"/>.
         /// </param>
         /// <param name="lastUpdatedOn"> Last time the rule was updated in ISO8601 format. </param>
-        internal AlertRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string namePropertiesName, string description, string provisioningState, bool isEnabled, RuleCondition condition, RuleAction action, IList<RuleAction> actions, DateTimeOffset? lastUpdatedOn) : base(id, name, resourceType, systemData, tags, location)
+        internal AlertRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string alertRuleName, string description, string provisioningState, bool isEnabled, RuleCondition condition, RuleAction action, IList<RuleAction> actions, DateTimeOffset? lastUpdatedOn) : base(id, name, resourceType, systemData, tags, location)
         {
-            NamePropertiesName = namePropertiesName;
+            AlertRuleName = alertRuleName;
             Description = description;
             ProvisioningState = provisioningState;
             IsEnabled = isEnabled;
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary> the name of the alert rule. </summary>
-        public string NamePropertiesName { get; set; }
+        public string AlertRuleName { get; set; }
         /// <summary> the description of the alert rule that will be included in the alert email. </summary>
         public string Description { get; set; }
         /// <summary> the provisioning state. </summary>

@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStringValue(TimeZone);
             }
             writer.WritePropertyName("start");
-            writer.WriteStringValue(Start, "O");
+            writer.WriteStringValue(StartOn, "O");
             writer.WritePropertyName("end");
-            writer.WriteStringValue(End, "O");
+            writer.WriteStringValue(EndOn, "O");
             writer.WriteEndObject();
         }
 

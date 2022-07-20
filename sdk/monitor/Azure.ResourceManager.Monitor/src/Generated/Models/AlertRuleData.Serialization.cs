@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Monitor
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             writer.WritePropertyName("name");
-            writer.WriteStringValue(NamePropertiesName);
+            writer.WriteStringValue(AlertRuleName);
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");

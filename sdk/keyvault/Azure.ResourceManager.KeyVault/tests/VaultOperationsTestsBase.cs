@@ -32,17 +32,17 @@ namespace Azure.ResourceManager.KeyVault.Tests
         public AzureLocation Location { get; set; }
 
         public SubscriptionResource Subscription { get; private set; }
-        public VaultAccessPolicy AccessPolicy { get; internal set; }
+        public KeyVaultAccessPolicy AccessPolicy { get; internal set; }
         public string ResGroupName { get; internal set; }
         public Dictionary<string, string> Tags { get; internal set; }
         public Guid TenantIdGuid { get; internal set; }
         public string VaultName { get; internal set; }
         public string MHSMName { get; internal set; }
-        public VaultProperties VaultProperties { get; internal set; }
+        public KeyVaultProperties VaultProperties { get; internal set; }
         public ManagedHsmProperties ManagedHsmProperties { get; internal set; }
 
-        public VaultCollection VaultCollection { get; set; }
-        public DeletedVaultCollection DeletedVaultCollection { get; set; }
+        public KeyVaultCollection VaultCollection { get; set; }
+        public DeletedKeyVaultCollection DeletedVaultCollection { get; set; }
         public ManagedHsmCollection ManagedHsmCollection { get; set; }
         public ResourceGroupResource ResourceGroupResource { get; set; }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             Location = AzureLocation.CanadaCentral;
             Client = GetArmClient();
             Subscription = await Client.GetDefaultSubscriptionAsync();
-            DeletedVaultCollection = Subscription.GetDeletedVaults();
+            DeletedVaultCollection = Subscription.GetDeletedKeyVaults();
 
             if (Mode == RecordedTestMode.Playback)
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             ArmOperation<ResourceGroupResource> rgResponse = await Subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, ResGroupName, new ResourceGroupData(Location)).ConfigureAwait(false);
             ResourceGroupResource = rgResponse.Value;
 
-            VaultCollection = ResourceGroupResource.GetVaults();
+            VaultCollection = ResourceGroupResource.GetKeyVaults();
             VaultName = Recording.GenerateAssetName("sdktest-vault-");
             MHSMName = Recording.GenerateAssetName("sdktest-mhsm-");
             TenantIdGuid = new Guid(TestEnvironment.TenantId);
@@ -102,9 +102,9 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 Certificates = { new IdentityAccessCertificatePermission("all") },
                 Storage = { new IdentityAccessStoragePermission("all") },
             };
-            AccessPolicy = new VaultAccessPolicy(TenantIdGuid, ObjectId, permissions);
+            AccessPolicy = new KeyVaultAccessPolicy(TenantIdGuid, ObjectId, permissions);
 
-            VaultProperties = new VaultProperties(TenantIdGuid, new VaultSku(VaultSkuFamily.A, VaultSkuName.Standard));
+            VaultProperties = new KeyVaultProperties(TenantIdGuid, new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard));
 
             VaultProperties.EnabledForDeployment = true;
             VaultProperties.EnabledForDiskEncryption = true;
@@ -112,13 +112,13 @@ namespace Azure.ResourceManager.KeyVault.Tests
             VaultProperties.EnableSoftDelete = true;
             VaultProperties.SoftDeleteRetentionInDays = DefSoftDeleteRetentionInDays;
             VaultProperties.VaultUri = new Uri("http://vaulturi.com");
-            VaultProperties.NetworkRuleSet = new VaultNetworkRuleSet() {
+            VaultProperties.NetworkRuleSet = new KeyVaultNetworkRuleSet() {
                 Bypass = "AzureServices",
                 DefaultAction = "Allow",
                 IPRules =
                 {
-                    new VaultIPRule("1.2.3.4/32"),
-                    new VaultIPRule("1.0.0.0/25")
+                    new KeyVaultIPRule("1.2.3.4/32"),
+                    new KeyVaultIPRule("1.0.0.0/25")
                 }
             };
             VaultProperties.AccessPolicies.Add(AccessPolicy);

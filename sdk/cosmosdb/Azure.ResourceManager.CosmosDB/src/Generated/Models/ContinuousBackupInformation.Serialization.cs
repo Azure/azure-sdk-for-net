@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,16 +15,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static ContinuousBackupInformation DeserializeContinuousBackupInformation(JsonElement element)
         {
-            Optional<string> latestRestorableTimestamp = default;
+            Optional<DateTimeOffset> latestRestorableTimestamp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("latestRestorableTimestamp"))
                 {
-                    latestRestorableTimestamp = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    latestRestorableTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
-            return new ContinuousBackupInformation(latestRestorableTimestamp.Value);
+            return new ContinuousBackupInformation(Optional.ToNullable(latestRestorableTimestamp));
         }
     }
 }

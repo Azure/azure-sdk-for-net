@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             Optional<string> partitionId = default;
             Optional<string> partitionKeyRangeId = default;
-            Optional<UnitType> unit = default;
-            Optional<MetricName> name = default;
+            Optional<CosmosDBMetricUnitType> unit = default;
+            Optional<CosmosDBMetricName> name = default;
             Optional<string> quotaPeriod = default;
             Optional<long> limit = default;
             Optional<long> currentValue = default;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    unit = new UnitType(property.Value.GetString());
+                    unit = new CosmosDBMetricUnitType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    name = MetricName.DeserializeMetricName(property.Value);
+                    name = CosmosDBMetricName.DeserializeCosmosDBMetricName(property.Value);
                     continue;
                 }
                 if (property.NameEquals("quotaPeriod"))

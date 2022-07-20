@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Network
             Optional<float> bandwidthInGbps = default;
             Optional<int> stag = default;
             Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<string> gatewayManagerEtag = default;
+            Optional<string> gatewayManagerETag = default;
             Optional<bool> globalReachEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Network
                         }
                         if (property0.NameEquals("gatewayManagerEtag"))
                         {
-                            gatewayManagerEtag = property0.Value.GetString();
+                            gatewayManagerETag = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("globalReachEnabled"))
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new ExpressRouteCircuitData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), sku.Value, Optional.ToNullable(etag), Optional.ToNullable(allowClassicOperations), circuitProvisioningState.Value, Optional.ToNullable(serviceProviderProvisioningState), Optional.ToList(authorizations), Optional.ToList(peerings), serviceKey.Value, serviceProviderNotes.Value, serviceProviderProperties.Value, expressRoutePort, Optional.ToNullable(bandwidthInGbps), Optional.ToNullable(stag), Optional.ToNullable(provisioningState), gatewayManagerEtag.Value, Optional.ToNullable(globalReachEnabled));
+            return new ExpressRouteCircuitData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), sku.Value, Optional.ToNullable(etag), Optional.ToNullable(allowClassicOperations), circuitProvisioningState.Value, Optional.ToNullable(serviceProviderProvisioningState), Optional.ToList(authorizations), Optional.ToList(peerings), serviceKey.Value, serviceProviderNotes.Value, serviceProviderProperties.Value, expressRoutePort, Optional.ToNullable(bandwidthInGbps), Optional.ToNullable(stag), Optional.ToNullable(provisioningState), gatewayManagerETag.Value, Optional.ToNullable(globalReachEnabled));
         }
     }
 }

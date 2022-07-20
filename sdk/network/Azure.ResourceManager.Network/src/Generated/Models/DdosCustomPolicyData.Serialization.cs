@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network
             Optional<Guid> resourceGuid = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<IReadOnlyList<WritableSubResource>> publicIPAddresses = default;
-            Optional<IList<ProtocolCustomSettingsFormat>> protocolCustomSettings = default;
+            Optional<IList<ProtocolCustomSettings>> protocolCustomSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -182,10 +182,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ProtocolCustomSettingsFormat> array = new List<ProtocolCustomSettingsFormat>();
+                            List<ProtocolCustomSettings> array = new List<ProtocolCustomSettings>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ProtocolCustomSettingsFormat.DeserializeProtocolCustomSettingsFormat(item));
+                                array.Add(Models.ProtocolCustomSettings.DeserializeProtocolCustomSettings(item));
                             }
                             protocolCustomSettings = array;
                             continue;

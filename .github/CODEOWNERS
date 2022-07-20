@@ -6,7 +6,7 @@
 ################
 
 # Git Hub integration and bot rules
-/.github/                                       @jsquire
+/.github/                                       @jsquire @ronniegeraghty
 
 #########
 # SDK
@@ -263,7 +263,7 @@
 /sdk/containerregistry/Microsoft.*/ @toddysm @yugangw-MSFT
 
 # ServiceLabel: %Cosmos %Service Attention
-/sdk/cosmosdb/          @Wmengmsft @MehaKaushik @shurd @anfeldma-ms @zfoster @kushagraThapar @southpolesteve
+/sdk/cosmosdb/          @pjohari-ms @MehaKaushik @shurd @anfeldma-ms @zfoster @kushagraThapar
 
 # ServiceLabel: %Cost Management %Service Attention
 /sdk/cost-management/Microsoft.Azure.Management.CostManagement/           @ms-premp @ramaganesan-rg
@@ -621,13 +621,13 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 #/<NotInRepo>/            @azureSQLGitHub
 
 # PRLabel: %Storage
-/sdk/storage/                                   @tg-msft
+/sdk/storage/                                   @seanmcc-msft @amnguye @jaschrep-msft @tg-msft
 
 # PRLabel: %Storage
-/sdk/storage/Azure.Storage.*/                   @amishra-dev @seanmcc-msft @amnguye @jaschrep-msft @tg-msft
+/sdk/storage/Azure.Storage.*/                   @seanmcc-msft @amnguye @jaschrep-msft @tg-msft
 
 # PRLabel: %Storage
-/sdk/storage/Microsoft.Azure.WebJobs.*/         @amishra-dev @seanmcc-msft @amnguye @jaschrep-msft @tg-msft @fabiocav @mathewc
+/sdk/storage/Microsoft.Azure.WebJobs.*/         @seanmcc-msft @amnguye @jaschrep-msft @tg-msft @fabiocav @mathewc
 
 # ServiceLabel: %Storage %Service Attention
 #/<NotInRepo>/                                   @xgithubtriage

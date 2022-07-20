@@ -39,8 +39,6 @@ namespace Azure.ResourceManager.Sql
         private readonly ServersRestOperations _sqlServerServersRestClient;
         private readonly ClientDiagnostics _serverUsagesClientDiagnostics;
         private readonly ServerUsagesRestOperations _serverUsagesRestClient;
-        private readonly ClientDiagnostics _firewallRuleClientDiagnostics;
-        private readonly FirewallRulesRestOperations _firewallRuleRestClient;
         private readonly ClientDiagnostics _serverOperationsClientDiagnostics;
         private readonly ServerRestOperations _serverOperationsRestClient;
         private readonly ClientDiagnostics _tdeCertificatesClientDiagnostics;
@@ -75,9 +73,6 @@ namespace Azure.ResourceManager.Sql
             _sqlServerServersRestClient = new ServersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerServersApiVersion);
             _serverUsagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _serverUsagesRestClient = new ServerUsagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _firewallRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", FirewallRuleResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(FirewallRuleResource.ResourceType, out string firewallRuleApiVersion);
-            _firewallRuleRestClient = new FirewallRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, firewallRuleApiVersion);
             _serverOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _serverOperationsRestClient = new ServerRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _tdeCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
@@ -154,11 +149,11 @@ namespace Azure.ResourceManager.Sql
             return GetRecoverableDatabases().Get(databaseName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServerCommunicationLinkResources in the SqlServer. </summary>
-        /// <returns> An object representing collection of ServerCommunicationLinkResources and their operations over a ServerCommunicationLinkResource. </returns>
-        public virtual ServerCommunicationLinkCollection GetServerCommunicationLinks()
+        /// <summary> Gets a collection of SqlServerCommunicationLinkResources in the SqlServer. </summary>
+        /// <returns> An object representing collection of SqlServerCommunicationLinkResources and their operations over a SqlServerCommunicationLinkResource. </returns>
+        public virtual SqlServerCommunicationLinkCollection GetSqlServerCommunicationLinks()
         {
-            return GetCachedClient(Client => new ServerCommunicationLinkCollection(Client, Id));
+            return GetCachedClient(Client => new SqlServerCommunicationLinkCollection(Client, Id));
         }
 
         /// <summary>
@@ -171,9 +166,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="communicationLinkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationLinkName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ServerCommunicationLinkResource>> GetServerCommunicationLinkAsync(string communicationLinkName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlServerCommunicationLinkResource>> GetSqlServerCommunicationLinkAsync(string communicationLinkName, CancellationToken cancellationToken = default)
         {
-            return await GetServerCommunicationLinks().GetAsync(communicationLinkName, cancellationToken).ConfigureAwait(false);
+            return await GetSqlServerCommunicationLinks().GetAsync(communicationLinkName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -186,9 +181,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="communicationLinkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationLinkName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ServerCommunicationLinkResource> GetServerCommunicationLink(string communicationLinkName, CancellationToken cancellationToken = default)
+        public virtual Response<SqlServerCommunicationLinkResource> GetSqlServerCommunicationLink(string communicationLinkName, CancellationToken cancellationToken = default)
         {
-            return GetServerCommunicationLinks().Get(communicationLinkName, cancellationToken);
+            return GetSqlServerCommunicationLinks().Get(communicationLinkName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ServiceObjectiveResources in the SqlServer. </summary>
@@ -228,11 +223,11 @@ namespace Azure.ResourceManager.Sql
             return GetServiceObjectives().Get(serviceObjectiveName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServerAdvisorResources in the SqlServer. </summary>
-        /// <returns> An object representing collection of ServerAdvisorResources and their operations over a ServerAdvisorResource. </returns>
-        public virtual ServerAdvisorCollection GetServerAdvisors()
+        /// <summary> Gets a collection of SqlServerAdvisorResources in the SqlServer. </summary>
+        /// <returns> An object representing collection of SqlServerAdvisorResources and their operations over a SqlServerAdvisorResource. </returns>
+        public virtual SqlServerAdvisorCollection GetSqlServerAdvisors()
         {
-            return GetCachedClient(Client => new ServerAdvisorCollection(Client, Id));
+            return GetCachedClient(Client => new SqlServerAdvisorCollection(Client, Id));
         }
 
         /// <summary>
@@ -245,9 +240,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="advisorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="advisorName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ServerAdvisorResource>> GetServerAdvisorAsync(string advisorName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlServerAdvisorResource>> GetSqlServerAdvisorAsync(string advisorName, CancellationToken cancellationToken = default)
         {
-            return await GetServerAdvisors().GetAsync(advisorName, cancellationToken).ConfigureAwait(false);
+            return await GetSqlServerAdvisors().GetAsync(advisorName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -260,9 +255,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="advisorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="advisorName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ServerAdvisorResource> GetServerAdvisor(string advisorName, CancellationToken cancellationToken = default)
+        public virtual Response<SqlServerAdvisorResource> GetSqlServerAdvisor(string advisorName, CancellationToken cancellationToken = default)
         {
-            return GetServerAdvisors().Get(advisorName, cancellationToken);
+            return GetSqlServerAdvisors().Get(advisorName, cancellationToken);
         }
 
         /// <summary> Gets a collection of EncryptionProtectorResources in the SqlServer. </summary>
@@ -372,11 +367,11 @@ namespace Azure.ResourceManager.Sql
             return GetFirewallRules().Get(firewallRuleName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of JobAgentResources in the SqlServer. </summary>
-        /// <returns> An object representing collection of JobAgentResources and their operations over a JobAgentResource. </returns>
-        public virtual JobAgentCollection GetJobAgents()
+        /// <summary> Gets a collection of SqlServerJobAgentResources in the SqlServer. </summary>
+        /// <returns> An object representing collection of SqlServerJobAgentResources and their operations over a SqlServerJobAgentResource. </returns>
+        public virtual SqlServerJobAgentCollection GetSqlServerJobAgents()
         {
-            return GetCachedClient(Client => new JobAgentCollection(Client, Id));
+            return GetCachedClient(Client => new SqlServerJobAgentCollection(Client, Id));
         }
 
         /// <summary>
@@ -389,9 +384,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="jobAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobAgentName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<JobAgentResource>> GetJobAgentAsync(string jobAgentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlServerJobAgentResource>> GetSqlServerJobAgentAsync(string jobAgentName, CancellationToken cancellationToken = default)
         {
-            return await GetJobAgents().GetAsync(jobAgentName, cancellationToken).ConfigureAwait(false);
+            return await GetSqlServerJobAgents().GetAsync(jobAgentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -404,9 +399,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="jobAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobAgentName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<JobAgentResource> GetJobAgent(string jobAgentName, CancellationToken cancellationToken = default)
+        public virtual Response<SqlServerJobAgentResource> GetSqlServerJobAgent(string jobAgentName, CancellationToken cancellationToken = default)
         {
-            return GetJobAgents().Get(jobAgentName, cancellationToken);
+            return GetSqlServerJobAgents().Get(jobAgentName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SqlPrivateEndpointConnectionResources in the SqlServer. </summary>
@@ -483,31 +478,18 @@ namespace Azure.ResourceManager.Sql
             return GetSqlPrivateLinkResources().Get(groupName, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a ServerAutomaticTuningResource along with the instance operations that can be performed on it in the SqlServer. </summary>
-        /// <returns> Returns a <see cref="ServerAutomaticTuningResource" /> object. </returns>
-        public virtual ServerAutomaticTuningResource GetServerAutomaticTuning()
+        /// <summary> Gets an object representing a SqlServerAutomaticTuningResource along with the instance operations that can be performed on it in the SqlServer. </summary>
+        /// <returns> Returns a <see cref="SqlServerAutomaticTuningResource" /> object. </returns>
+        public virtual SqlServerAutomaticTuningResource GetSqlServerAutomaticTuning()
         {
-            return new ServerAutomaticTuningResource(Client, new ResourceIdentifier(Id.ToString() + "/automaticTuning/current"));
+            return new SqlServerAutomaticTuningResource(Client, new ResourceIdentifier(Id.ToString() + "/automaticTuning/current"));
         }
 
-        /// <summary> Gets a collection of ServerAzureADAdministratorResources in the SqlServer. </summary>
-        /// <returns> An object representing collection of ServerAzureADAdministratorResources and their operations over a ServerAzureADAdministratorResource. </returns>
-        public virtual ServerAzureADAdministratorCollection GetServerAzureADAdministrators()
+        /// <summary> Gets a collection of SqlServerAzureADAdministratorResources in the SqlServer. </summary>
+        /// <returns> An object representing collection of SqlServerAzureADAdministratorResources and their operations over a SqlServerAzureADAdministratorResource. </returns>
+        public virtual SqlServerAzureADAdministratorCollection GetSqlServerAzureADAdministrators()
         {
-            return GetCachedClient(Client => new ServerAzureADAdministratorCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets a Azure Active Directory administrator.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/administrators/{administratorName}
-        /// Operation Id: ServerAzureADAdministrators_Get
-        /// </summary>
-        /// <param name="administratorName"> The name of server active directory administrator. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ServerAzureADAdministratorResource>> GetServerAzureADAdministratorAsync(AdministratorName administratorName, CancellationToken cancellationToken = default)
-        {
-            return await GetServerAzureADAdministrators().GetAsync(administratorName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new SqlServerAzureADAdministratorCollection(Client, Id));
         }
 
         /// <summary>
@@ -518,16 +500,29 @@ namespace Azure.ResourceManager.Sql
         /// <param name="administratorName"> The name of server active directory administrator. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<ServerAzureADAdministratorResource> GetServerAzureADAdministrator(AdministratorName administratorName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlServerAzureADAdministratorResource>> GetSqlServerAzureADAdministratorAsync(AdministratorName administratorName, CancellationToken cancellationToken = default)
         {
-            return GetServerAzureADAdministrators().Get(administratorName, cancellationToken);
+            return await GetSqlServerAzureADAdministrators().GetAsync(administratorName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of ServerAzureADOnlyAuthenticationResources in the SqlServer. </summary>
-        /// <returns> An object representing collection of ServerAzureADOnlyAuthenticationResources and their operations over a ServerAzureADOnlyAuthenticationResource. </returns>
-        public virtual ServerAzureADOnlyAuthenticationCollection GetServerAzureADOnlyAuthentications()
+        /// <summary>
+        /// Gets a Azure Active Directory administrator.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/administrators/{administratorName}
+        /// Operation Id: ServerAzureADAdministrators_Get
+        /// </summary>
+        /// <param name="administratorName"> The name of server active directory administrator. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<SqlServerAzureADAdministratorResource> GetSqlServerAzureADAdministrator(AdministratorName administratorName, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(Client => new ServerAzureADOnlyAuthenticationCollection(Client, Id));
+            return GetSqlServerAzureADAdministrators().Get(administratorName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SqlServerAzureADOnlyAuthenticationResources in the SqlServer. </summary>
+        /// <returns> An object representing collection of SqlServerAzureADOnlyAuthenticationResources and their operations over a SqlServerAzureADOnlyAuthenticationResource. </returns>
+        public virtual SqlServerAzureADOnlyAuthenticationCollection GetSqlServerAzureADOnlyAuthentications()
+        {
+            return GetCachedClient(Client => new SqlServerAzureADOnlyAuthenticationCollection(Client, Id));
         }
 
         /// <summary>
@@ -538,9 +533,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="authenticationName"> The name of server azure active directory only authentication. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ServerAzureADOnlyAuthenticationResource>> GetServerAzureADOnlyAuthenticationAsync(AuthenticationName authenticationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlServerAzureADOnlyAuthenticationResource>> GetSqlServerAzureADOnlyAuthenticationAsync(AuthenticationName authenticationName, CancellationToken cancellationToken = default)
         {
-            return await GetServerAzureADOnlyAuthentications().GetAsync(authenticationName, cancellationToken).ConfigureAwait(false);
+            return await GetSqlServerAzureADOnlyAuthentications().GetAsync(authenticationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -551,16 +546,16 @@ namespace Azure.ResourceManager.Sql
         /// <param name="authenticationName"> The name of server azure active directory only authentication. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<ServerAzureADOnlyAuthenticationResource> GetServerAzureADOnlyAuthentication(AuthenticationName authenticationName, CancellationToken cancellationToken = default)
+        public virtual Response<SqlServerAzureADOnlyAuthenticationResource> GetSqlServerAzureADOnlyAuthentication(AuthenticationName authenticationName, CancellationToken cancellationToken = default)
         {
-            return GetServerAzureADOnlyAuthentications().Get(authenticationName, cancellationToken);
+            return GetSqlServerAzureADOnlyAuthentications().Get(authenticationName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServerDevOpsAuditingSettingsResources in the SqlServer. </summary>
-        /// <returns> An object representing collection of ServerDevOpsAuditingSettingsResources and their operations over a ServerDevOpsAuditingSettingsResource. </returns>
-        public virtual ServerDevOpsAuditingSettingsCollection GetServerDevOpsAuditingSettings()
+        /// <summary> Gets a collection of SqlServerDevOpsAuditingSettingResources in the SqlServer. </summary>
+        /// <returns> An object representing collection of SqlServerDevOpsAuditingSettingResources and their operations over a SqlServerDevOpsAuditingSettingResource. </returns>
+        public virtual SqlServerDevOpsAuditingSettingCollection GetSqlServerDevOpsAuditingSettings()
         {
-            return GetCachedClient(Client => new ServerDevOpsAuditingSettingsCollection(Client, Id));
+            return GetCachedClient(Client => new SqlServerDevOpsAuditingSettingCollection(Client, Id));
         }
 
         /// <summary>
@@ -573,9 +568,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="devOpsAuditingSettingsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="devOpsAuditingSettingsName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ServerDevOpsAuditingSettingsResource>> GetServerDevOpsAuditingSettingsAsync(string devOpsAuditingSettingsName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlServerDevOpsAuditingSettingResource>> GetSqlServerDevOpsAuditingSettingAsync(string devOpsAuditingSettingsName, CancellationToken cancellationToken = default)
         {
-            return await GetServerDevOpsAuditingSettings().GetAsync(devOpsAuditingSettingsName, cancellationToken).ConfigureAwait(false);
+            return await GetSqlServerDevOpsAuditingSettings().GetAsync(devOpsAuditingSettingsName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -588,31 +583,16 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="devOpsAuditingSettingsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="devOpsAuditingSettingsName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ServerDevOpsAuditingSettingsResource> GetServerDevOpsAuditingSettings(string devOpsAuditingSettingsName, CancellationToken cancellationToken = default)
+        public virtual Response<SqlServerDevOpsAuditingSettingResource> GetSqlServerDevOpsAuditingSetting(string devOpsAuditingSettingsName, CancellationToken cancellationToken = default)
         {
-            return GetServerDevOpsAuditingSettings().Get(devOpsAuditingSettingsName, cancellationToken);
+            return GetSqlServerDevOpsAuditingSettings().Get(devOpsAuditingSettingsName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServerDnsAliasResources in the SqlServer. </summary>
-        /// <returns> An object representing collection of ServerDnsAliasResources and their operations over a ServerDnsAliasResource. </returns>
-        public virtual ServerDnsAliasCollection GetServerDnsAliases()
+        /// <summary> Gets a collection of SqlServerDnsAliasResources in the SqlServer. </summary>
+        /// <returns> An object representing collection of SqlServerDnsAliasResources and their operations over a SqlServerDnsAliasResource. </returns>
+        public virtual SqlServerDnsAliasCollection GetSqlServerDnsAliases()
         {
-            return GetCachedClient(Client => new ServerDnsAliasCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets a server DNS alias.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/dnsAliases/{dnsAliasName}
-        /// Operation Id: ServerDnsAliases_Get
-        /// </summary>
-        /// <param name="dnsAliasName"> The name of the server dns alias. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dnsAliasName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="dnsAliasName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ServerDnsAliasResource>> GetServerDnsAliasAsync(string dnsAliasName, CancellationToken cancellationToken = default)
-        {
-            return await GetServerDnsAliases().GetAsync(dnsAliasName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new SqlServerDnsAliasCollection(Client, Id));
         }
 
         /// <summary>
@@ -625,16 +605,31 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="dnsAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsAliasName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ServerDnsAliasResource> GetServerDnsAlias(string dnsAliasName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlServerDnsAliasResource>> GetSqlServerDnsAliasAsync(string dnsAliasName, CancellationToken cancellationToken = default)
         {
-            return GetServerDnsAliases().Get(dnsAliasName, cancellationToken);
+            return await GetSqlServerDnsAliases().GetAsync(dnsAliasName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of ServerKeyResources in the SqlServer. </summary>
-        /// <returns> An object representing collection of ServerKeyResources and their operations over a ServerKeyResource. </returns>
-        public virtual ServerKeyCollection GetServerKeys()
+        /// <summary>
+        /// Gets a server DNS alias.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/dnsAliases/{dnsAliasName}
+        /// Operation Id: ServerDnsAliases_Get
+        /// </summary>
+        /// <param name="dnsAliasName"> The name of the server dns alias. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dnsAliasName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dnsAliasName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SqlServerDnsAliasResource> GetSqlServerDnsAlias(string dnsAliasName, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(Client => new ServerKeyCollection(Client, Id));
+            return GetSqlServerDnsAliases().Get(dnsAliasName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SqlServerKeyResources in the SqlServer. </summary>
+        /// <returns> An object representing collection of SqlServerKeyResources and their operations over a SqlServerKeyResource. </returns>
+        public virtual SqlServerKeyCollection GetSqlServerKeys()
+        {
+            return GetCachedClient(Client => new SqlServerKeyCollection(Client, Id));
         }
 
         /// <summary>
@@ -647,9 +642,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ServerKeyResource>> GetServerKeyAsync(string keyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlServerKeyResource>> GetSqlServerKeyAsync(string keyName, CancellationToken cancellationToken = default)
         {
-            return await GetServerKeys().GetAsync(keyName, cancellationToken).ConfigureAwait(false);
+            return await GetSqlServerKeys().GetAsync(keyName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -662,29 +657,16 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ServerKeyResource> GetServerKey(string keyName, CancellationToken cancellationToken = default)
+        public virtual Response<SqlServerKeyResource> GetSqlServerKey(string keyName, CancellationToken cancellationToken = default)
         {
-            return GetServerKeys().Get(keyName, cancellationToken);
+            return GetSqlServerKeys().Get(keyName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServerSecurityAlertPolicyResources in the SqlServer. </summary>
-        /// <returns> An object representing collection of ServerSecurityAlertPolicyResources and their operations over a ServerSecurityAlertPolicyResource. </returns>
-        public virtual ServerSecurityAlertPolicyCollection GetServerSecurityAlertPolicies()
+        /// <summary> Gets a collection of SqlServerSecurityAlertPolicyResources in the SqlServer. </summary>
+        /// <returns> An object representing collection of SqlServerSecurityAlertPolicyResources and their operations over a SqlServerSecurityAlertPolicyResource. </returns>
+        public virtual SqlServerSecurityAlertPolicyCollection GetSqlServerSecurityAlertPolicies()
         {
-            return GetCachedClient(Client => new ServerSecurityAlertPolicyCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Get a server&apos;s security alert policy.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/securityAlertPolicies/{securityAlertPolicyName}
-        /// Operation Id: ServerSecurityAlertPolicies_Get
-        /// </summary>
-        /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ServerSecurityAlertPolicyResource>> GetServerSecurityAlertPolicyAsync(SecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
-        {
-            return await GetServerSecurityAlertPolicies().GetAsync(securityAlertPolicyName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new SqlServerSecurityAlertPolicyCollection(Client, Id));
         }
 
         /// <summary>
@@ -695,16 +677,29 @@ namespace Azure.ResourceManager.Sql
         /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<ServerSecurityAlertPolicyResource> GetServerSecurityAlertPolicy(SecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlServerSecurityAlertPolicyResource>> GetSqlServerSecurityAlertPolicyAsync(SecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
         {
-            return GetServerSecurityAlertPolicies().Get(securityAlertPolicyName, cancellationToken);
+            return await GetSqlServerSecurityAlertPolicies().GetAsync(securityAlertPolicyName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of ServerVulnerabilityAssessmentResources in the SqlServer. </summary>
-        /// <returns> An object representing collection of ServerVulnerabilityAssessmentResources and their operations over a ServerVulnerabilityAssessmentResource. </returns>
-        public virtual ServerVulnerabilityAssessmentCollection GetServerVulnerabilityAssessments()
+        /// <summary>
+        /// Get a server&apos;s security alert policy.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/securityAlertPolicies/{securityAlertPolicyName}
+        /// Operation Id: ServerSecurityAlertPolicies_Get
+        /// </summary>
+        /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<SqlServerSecurityAlertPolicyResource> GetSqlServerSecurityAlertPolicy(SecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(Client => new ServerVulnerabilityAssessmentCollection(Client, Id));
+            return GetSqlServerSecurityAlertPolicies().Get(securityAlertPolicyName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SqlServerVulnerabilityAssessmentResources in the SqlServer. </summary>
+        /// <returns> An object representing collection of SqlServerVulnerabilityAssessmentResources and their operations over a SqlServerVulnerabilityAssessmentResource. </returns>
+        public virtual SqlServerVulnerabilityAssessmentCollection GetSqlServerVulnerabilityAssessments()
+        {
+            return GetCachedClient(Client => new SqlServerVulnerabilityAssessmentCollection(Client, Id));
         }
 
         /// <summary>
@@ -715,9 +710,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="vulnerabilityAssessmentName"> The name of the vulnerability assessment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ServerVulnerabilityAssessmentResource>> GetServerVulnerabilityAssessmentAsync(VulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlServerVulnerabilityAssessmentResource>> GetSqlServerVulnerabilityAssessmentAsync(VulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
         {
-            return await GetServerVulnerabilityAssessments().GetAsync(vulnerabilityAssessmentName, cancellationToken).ConfigureAwait(false);
+            return await GetSqlServerVulnerabilityAssessments().GetAsync(vulnerabilityAssessmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -728,9 +723,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="vulnerabilityAssessmentName"> The name of the vulnerability assessment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<ServerVulnerabilityAssessmentResource> GetServerVulnerabilityAssessment(VulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
+        public virtual Response<SqlServerVulnerabilityAssessmentResource> GetSqlServerVulnerabilityAssessment(VulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
         {
-            return GetServerVulnerabilityAssessments().Get(vulnerabilityAssessmentName, cancellationToken);
+            return GetSqlServerVulnerabilityAssessments().Get(vulnerabilityAssessmentName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SyncAgentResources in the SqlServer. </summary>
@@ -918,11 +913,11 @@ namespace Azure.ResourceManager.Sql
             return GetRestorableDroppedDatabases().Get(restorableDroppedDatabaseId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServerConnectionPolicyResources in the SqlServer. </summary>
-        /// <returns> An object representing collection of ServerConnectionPolicyResources and their operations over a ServerConnectionPolicyResource. </returns>
-        public virtual ServerConnectionPolicyCollection GetServerConnectionPolicies()
+        /// <summary> Gets a collection of SqlServerConnectionPolicyResources in the SqlServer. </summary>
+        /// <returns> An object representing collection of SqlServerConnectionPolicyResources and their operations over a SqlServerConnectionPolicyResource. </returns>
+        public virtual SqlServerConnectionPolicyCollection GetSqlServerConnectionPolicies()
         {
-            return GetCachedClient(Client => new ServerConnectionPolicyCollection(Client, Id));
+            return GetCachedClient(Client => new SqlServerConnectionPolicyCollection(Client, Id));
         }
 
         /// <summary>
@@ -933,9 +928,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="connectionPolicyName"> The name of the connection policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ServerConnectionPolicyResource>> GetServerConnectionPolicyAsync(ConnectionPolicyName connectionPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlServerConnectionPolicyResource>> GetSqlServerConnectionPolicyAsync(ConnectionPolicyName connectionPolicyName, CancellationToken cancellationToken = default)
         {
-            return await GetServerConnectionPolicies().GetAsync(connectionPolicyName, cancellationToken).ConfigureAwait(false);
+            return await GetSqlServerConnectionPolicies().GetAsync(connectionPolicyName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -946,9 +941,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="connectionPolicyName"> The name of the connection policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<ServerConnectionPolicyResource> GetServerConnectionPolicy(ConnectionPolicyName connectionPolicyName, CancellationToken cancellationToken = default)
+        public virtual Response<SqlServerConnectionPolicyResource> GetSqlServerConnectionPolicy(ConnectionPolicyName connectionPolicyName, CancellationToken cancellationToken = default)
         {
-            return GetServerConnectionPolicies().Get(connectionPolicyName, cancellationToken);
+            return GetSqlServerConnectionPolicies().Get(connectionPolicyName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ElasticPoolResources in the SqlServer. </summary>
@@ -1025,11 +1020,11 @@ namespace Azure.ResourceManager.Sql
             return GetIPv6FirewallRules().Get(firewallRuleName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServerBlobAuditingPolicyResources in the SqlServer. </summary>
-        /// <returns> An object representing collection of ServerBlobAuditingPolicyResources and their operations over a ServerBlobAuditingPolicyResource. </returns>
-        public virtual ServerBlobAuditingPolicyCollection GetServerBlobAuditingPolicies()
+        /// <summary> Gets a collection of SqlServerBlobAuditingPolicyResources in the SqlServer. </summary>
+        /// <returns> An object representing collection of SqlServerBlobAuditingPolicyResources and their operations over a SqlServerBlobAuditingPolicyResource. </returns>
+        public virtual SqlServerBlobAuditingPolicyCollection GetSqlServerBlobAuditingPolicies()
         {
-            return GetCachedClient(Client => new ServerBlobAuditingPolicyCollection(Client, Id));
+            return GetCachedClient(Client => new SqlServerBlobAuditingPolicyCollection(Client, Id));
         }
 
         /// <summary>
@@ -1040,9 +1035,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ServerBlobAuditingPolicyResource>> GetServerBlobAuditingPolicyAsync(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlServerBlobAuditingPolicyResource>> GetSqlServerBlobAuditingPolicyAsync(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
         {
-            return await GetServerBlobAuditingPolicies().GetAsync(blobAuditingPolicyName, cancellationToken).ConfigureAwait(false);
+            return await GetSqlServerBlobAuditingPolicies().GetAsync(blobAuditingPolicyName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1053,9 +1048,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<ServerBlobAuditingPolicyResource> GetServerBlobAuditingPolicy(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
+        public virtual Response<SqlServerBlobAuditingPolicyResource> GetSqlServerBlobAuditingPolicy(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
         {
-            return GetServerBlobAuditingPolicies().Get(blobAuditingPolicyName, cancellationToken);
+            return GetSqlServerBlobAuditingPolicies().Get(blobAuditingPolicyName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ExtendedServerBlobAuditingPolicyResources in the SqlServer. </summary>
@@ -1305,58 +1300,6 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
-        }
-
-        /// <summary>
-        /// Replaces all firewall rules on the server.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/firewallRules
-        /// Operation Id: FirewallRules_Replace
-        /// </summary>
-        /// <param name="firewallRuleList"> The FirewallRuleList to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleList"/> is null. </exception>
-        public virtual async Task<Response<FirewallRuleResource>> ReplaceFirewallRuleAsync(FirewallRuleList firewallRuleList, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(firewallRuleList, nameof(firewallRuleList));
-
-            using var scope = _firewallRuleClientDiagnostics.CreateScope("SqlServerResource.ReplaceFirewallRule");
-            scope.Start();
-            try
-            {
-                var response = await _firewallRuleRestClient.ReplaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleList, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new FirewallRuleResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Replaces all firewall rules on the server.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/firewallRules
-        /// Operation Id: FirewallRules_Replace
-        /// </summary>
-        /// <param name="firewallRuleList"> The FirewallRuleList to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleList"/> is null. </exception>
-        public virtual Response<FirewallRuleResource> ReplaceFirewallRule(FirewallRuleList firewallRuleList, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(firewallRuleList, nameof(firewallRuleList));
-
-            using var scope = _firewallRuleClientDiagnostics.CreateScope("SqlServerResource.ReplaceFirewallRule");
-            scope.Start();
-            try
-            {
-                var response = _firewallRuleRestClient.Replace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleList, cancellationToken);
-                return Response.FromValue(new FirewallRuleResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         /// <summary>

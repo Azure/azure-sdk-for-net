@@ -7,9 +7,13 @@
 ### Breaking Changes
 
 ### Bugs Fixed
-- Fixed a formatting issue with string based filter queries for Binary properties created via `CreateQueryFilter(System.FormattableString filter)`. ([#29256](https://github.com/Azure/azure-sdk-for-net/issues/29256))
 
 ### Other Changes
+
+## 12.6.1 (2022-07-07)
+
+### Bugs Fixed
+- Fixed a formatting issue with string based filter queries for Binary properties created via `CreateQueryFilter(System.FormattableString filter)`. ([#29256](https://github.com/Azure/azure-sdk-for-net/issues/29256))
 
 ## 12.6.0 (2022-06-07)
 

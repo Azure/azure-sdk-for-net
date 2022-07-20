@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Authorization
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> scope = default;
-            Optional<string> roleDefinitionId = default;
+            Optional<ResourceIdentifier> roleDefinitionId = default;
             Optional<string> principalId = default;
             Optional<PrincipalType> principalType = default;
-            Optional<string> roleAssignmentScheduleRequestId = default;
+            Optional<ResourceIdentifier> roleAssignmentScheduleRequestId = default;
             Optional<string> linkedRoleEligibilityScheduleId = default;
             Optional<AssignmentType> assignmentType = default;
             Optional<MemberType> memberType = default;
@@ -80,7 +80,12 @@ namespace Azure.ResourceManager.Authorization
                         }
                         if (property0.NameEquals("roleDefinitionId"))
                         {
-                            roleDefinitionId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            roleDefinitionId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("principalId"))
@@ -100,7 +105,12 @@ namespace Azure.ResourceManager.Authorization
                         }
                         if (property0.NameEquals("roleAssignmentScheduleRequestId"))
                         {
-                            roleAssignmentScheduleRequestId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            roleAssignmentScheduleRequestId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("linkedRoleEligibilityScheduleId"))

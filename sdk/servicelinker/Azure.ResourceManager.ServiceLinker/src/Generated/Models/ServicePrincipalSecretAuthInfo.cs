@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary> The authentication info when authType is servicePrincipal secret. </summary>
-    public partial class ServicePrincipalSecretAuthInfo : AuthInfoBase
+    public partial class ServicePrincipalSecretAuthInfo : AuthBaseInfo
     {
         /// <summary> Initializes a new instance of ServicePrincipalSecretAuthInfo. </summary>
         /// <param name="clientId"> ServicePrincipal application clientId for servicePrincipal auth. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             ClientId = clientId;
             PrincipalId = principalId;
             Secret = secret;
-            AuthType = AuthType.ServicePrincipalSecret;
+            AuthType = LinkerAuthType.ServicePrincipalSecret;
         }
 
         /// <summary> Initializes a new instance of ServicePrincipalSecretAuthInfo. </summary>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="clientId"> ServicePrincipal application clientId for servicePrincipal auth. </param>
         /// <param name="principalId"> Principal Id for servicePrincipal auth. </param>
         /// <param name="secret"> Secret for servicePrincipal auth. </param>
-        internal ServicePrincipalSecretAuthInfo(AuthType authType, string clientId, string principalId, string secret) : base(authType)
+        internal ServicePrincipalSecretAuthInfo(LinkerAuthType authType, string clientId, string principalId, string secret) : base(authType)
         {
             ClientId = clientId;
             PrincipalId = principalId;

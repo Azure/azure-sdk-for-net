@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="connectionState"> Details about the state of the connection. </param>
         /// <param name="provisioningState"> Provisioning state of the Private Endpoint Connection. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal ServiceBusPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WritableSubResource privateEndpoint, ConnectionState connectionState, EndpointProvisioningState? provisioningState, AzureLocation? location) : base(id, name, resourceType, systemData)
+        internal ServiceBusPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WritableSubResource privateEndpoint, ServiceBusPrivateLinkServiceConnectionState connectionState, ServiceBusPrivateEndpointConnectionProvisioningState? provisioningState, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             PrivateEndpoint = privateEndpoint;
             ConnectionState = connectionState;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary> Details about the state of the connection. </summary>
-        public ConnectionState ConnectionState { get; set; }
+        public ServiceBusPrivateLinkServiceConnectionState ConnectionState { get; set; }
         /// <summary> Provisioning state of the Private Endpoint Connection. </summary>
-        public EndpointProvisioningState? ProvisioningState { get; set; }
+        public ServiceBusPrivateEndpointConnectionProvisioningState? ProvisioningState { get; set; }
         /// <summary> The geo-location where the resource lives. </summary>
         public AzureLocation? Location { get; }
     }

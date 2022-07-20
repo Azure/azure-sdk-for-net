@@ -7,12 +7,10 @@ Run `dotnet build /t:GenerateCode` to generate code.
 title: Conversations
 license-header: MICROSOFT_MIT_NO_VERSION
 
-batch:
-- input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/725f4ca360426a32d20e81eb945065e62c285d6a/specification/cognitiveservices/data-plane/Language/stable/2022-05-01/analyzeconversations.json
-  clear-output-folder: true
-
-- input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/725f4ca360426a32d20e81eb945065e62c285d6a/specification/cognitiveservices/data-plane/Language/stable/2022-05-01/analyzeconversations-authoring.json
-  namespace: Azure.AI.Language.Conversations.Authoring
+input-file:
+- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/e7f37e4e43b1d12fd1988fda3ed39624c4b23303/specification/cognitiveservices/data-plane/Language/preview/2022-05-15-preview/analyzeconversations.json
+- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/e7f37e4e43b1d12fd1988fda3ed39624c4b23303/specification/cognitiveservices/data-plane/Language/preview/2022-05-15-preview/analyzeconversations-authoring.json
+clear-output-folder: true
 
 data-plane: true
 model-namespace: false
@@ -62,6 +60,15 @@ directive:
     multilingualParam.type = "boolean";
 
 # Define HTTP 200 responses for LROs to document result model.
+- where-operation: AnalyzeConversation_SubmitJob
+  transform: |
+    $.responses["200"] = {
+      description: "Analysis job status and metadata.",
+      schema: {
+        "$ref": "#/definitions/AnalyzeConversationJobState"
+      }
+    };
+
 - where-operation: ConversationalAnalysisAuthoring_DeleteProject
   transform: |
     $.responses["200"] = {
@@ -168,7 +175,24 @@ directive:
         url: "https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/" + operationId.replace(/([a-z0–9])([A-Z])/g, "$1-$2").toLowerCase()
     };
 
+# Mark the LRO as internal so we can call it from an overload, which we can't do using transforms since that results in duplicate operationIds.
+- where-operation: AnalyzeConversation_SubmitJob
+  transform: |
+    $["x-accessibility"] = "internal";
+
 # Rename operations to be consistent. Do this after other operation transforms for ease.
+- rename-operation:
+    from: AnalyzeConversation_SubmitJob
+    to: ConversationAnalysis_StartAnalyzeConversation
+
+- rename-operation:
+    from: AnalyzeConversation_JobStatus
+    to: ConversationAnalysis_GetAnalyzeConversationJobStatus
+
+- rename-operation:
+    from: AnalyzeConversation_CancelJob
+    to: ConversationAnalysis_CancelAnalyzeConversationJob
+
 - rename-operation:
     from: ConversationalAnalysisAuthoring_Export
     to: ConversationalAnalysisAuthoring_ExportProject

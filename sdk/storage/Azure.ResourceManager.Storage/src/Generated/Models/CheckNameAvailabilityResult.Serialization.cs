@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Storage.Models
         internal static CheckNameAvailabilityResult DeserializeCheckNameAvailabilityResult(JsonElement element)
         {
             Optional<bool> nameAvailable = default;
-            Optional<Reason> reason = default;
+            Optional<StorageAccountNameUnavailableReason> reason = default;
             Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Storage.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    reason = property.Value.GetString().ToReason();
+                    reason = property.Value.GetString().ToStorageAccountNameUnavailableReason();
                     continue;
                 }
                 if (property.NameEquals("message"))

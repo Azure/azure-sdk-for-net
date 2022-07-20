@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         public long? CpuReservationMHz { get { throw null; } }
         public string CpuSharesLevel { get { throw null; } }
         public string CustomResourceName { get { throw null; } }
-        public Azure.ResourceManager.ConnectedVMwarevSphere.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public string InventoryItemId { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
         public long? MemLimitMB { get { throw null; } }
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         public string ConnectionStatus { get { throw null; } }
         public Azure.ResourceManager.ConnectedVMwarevSphere.Models.VICredential Credentials { get { throw null; } set { } }
         public string CustomResourceName { get { throw null; } }
-        public Azure.ResourceManager.ConnectedVMwarevSphere.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public string Fqdn { get { throw null; } set { } }
         public string InstanceUuid { get { throw null; } }
         public string Kind { get { throw null; } set { } }
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     {
         public VirtualMachineData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string CustomResourceName { get { throw null; } }
-        public Azure.ResourceManager.ConnectedVMwarevSphere.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.ConnectedVMwarevSphere.Models.FirmwareType? FirmwareType { get { throw null; } set { } }
         public string FolderPath { get { throw null; } }
         public Azure.ResourceManager.ConnectedVMwarevSphere.Models.GuestAgentProfile GuestAgentProfile { get { throw null; } set { } }
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         public VirtualMachineTemplateData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string CustomResourceName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VirtualDisk> Disks { get { throw null; } }
-        public Azure.ResourceManager.ConnectedVMwarevSphere.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.ConnectedVMwarevSphere.Models.FirmwareType? FirmwareType { get { throw null; } }
         public string FolderPath { get { throw null; } }
         public string InventoryItemId { get { throw null; } set { } }
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     {
         public VirtualNetworkData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string CustomResourceName { get { throw null; } }
-        public Azure.ResourceManager.ConnectedVMwarevSphere.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public string InventoryItemId { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
         public string MoName { get { throw null; } }
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         public VMwareClusterData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string CustomResourceName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> DatastoreIds { get { throw null; } }
-        public Azure.ResourceManager.ConnectedVMwarevSphere.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public string InventoryItemId { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
         public string MoName { get { throw null; } }
@@ -586,7 +586,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     {
         public VMwareDatastoreData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string CustomResourceName { get { throw null; } }
-        public Azure.ResourceManager.ConnectedVMwarevSphere.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public string InventoryItemId { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
         public string MoName { get { throw null; } }
@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     {
         public VMwareHostData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string CustomResourceName { get { throw null; } }
-        public Azure.ResourceManager.ConnectedVMwarevSphere.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public string InventoryItemId { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
         public string MoName { get { throw null; } }
@@ -709,12 +709,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public static implicit operator Azure.ResourceManager.ConnectedVMwarevSphere.Models.DiskType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ConnectedVMwarevSphere.Models.DiskType left, Azure.ResourceManager.ConnectedVMwarevSphere.Models.DiskType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class ExtendedLocation
-    {
-        public ExtendedLocation() { }
-        public string ExtendedLocationType { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct FirmwareType : System.IEquatable<Azure.ResourceManager.ConnectedVMwarevSphere.Models.FirmwareType>
@@ -817,7 +811,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public MachineExtensionInstanceViewStatus() { }
         public string Code { get { throw null; } }
         public string DisplayStatus { get { throw null; } }
-        public Azure.ResourceManager.ConnectedVMwarevSphere.Models.StatusLevelType? Level { get { throw null; } }
+        public Azure.ResourceManager.ConnectedVMwarevSphere.Models.MachineExtensionStatusLevelType? Level { get { throw null; } }
         public string Message { get { throw null; } }
         public System.DateTimeOffset? Time { get { throw null; } }
     }
@@ -835,6 +829,25 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     public partial class MachineExtensionPropertiesInstanceView : Azure.ResourceManager.ConnectedVMwarevSphere.Models.MachineExtensionInstanceView
     {
         public MachineExtensionPropertiesInstanceView() { }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MachineExtensionStatusLevelType : System.IEquatable<Azure.ResourceManager.ConnectedVMwarevSphere.Models.MachineExtensionStatusLevelType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MachineExtensionStatusLevelType(string value) { throw null; }
+        public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.MachineExtensionStatusLevelType Error { get { throw null; } }
+        public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.MachineExtensionStatusLevelType Info { get { throw null; } }
+        public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.MachineExtensionStatusLevelType Warning { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ConnectedVMwarevSphere.Models.MachineExtensionStatusLevelType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ConnectedVMwarevSphere.Models.MachineExtensionStatusLevelType left, Azure.ResourceManager.ConnectedVMwarevSphere.Models.MachineExtensionStatusLevelType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ConnectedVMwarevSphere.Models.MachineExtensionStatusLevelType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ConnectedVMwarevSphere.Models.MachineExtensionStatusLevelType left, Azure.ResourceManager.ConnectedVMwarevSphere.Models.MachineExtensionStatusLevelType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class NetworkInterface
     {
@@ -1034,25 +1047,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public static bool operator ==(Azure.ResourceManager.ConnectedVMwarevSphere.Models.ScsiControllerType left, Azure.ResourceManager.ConnectedVMwarevSphere.Models.ScsiControllerType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ConnectedVMwarevSphere.Models.ScsiControllerType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ConnectedVMwarevSphere.Models.ScsiControllerType left, Azure.ResourceManager.ConnectedVMwarevSphere.Models.ScsiControllerType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct StatusLevelType : System.IEquatable<Azure.ResourceManager.ConnectedVMwarevSphere.Models.StatusLevelType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public StatusLevelType(string value) { throw null; }
-        public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.StatusLevelType Error { get { throw null; } }
-        public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.StatusLevelType Info { get { throw null; } }
-        public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.StatusLevelType Warning { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ConnectedVMwarevSphere.Models.StatusLevelType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ConnectedVMwarevSphere.Models.StatusLevelType left, Azure.ResourceManager.ConnectedVMwarevSphere.Models.StatusLevelType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ConnectedVMwarevSphere.Models.StatusLevelType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ConnectedVMwarevSphere.Models.StatusLevelType left, Azure.ResourceManager.ConnectedVMwarevSphere.Models.StatusLevelType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

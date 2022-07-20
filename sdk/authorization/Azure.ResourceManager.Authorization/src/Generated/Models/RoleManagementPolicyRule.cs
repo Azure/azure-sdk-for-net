@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary>
@@ -23,7 +25,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="id"> The id of the rule. </param>
         /// <param name="ruleType"> The type of rule. </param>
         /// <param name="target"> The target of the current rule. </param>
-        internal RoleManagementPolicyRule(string id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target)
+        internal RoleManagementPolicyRule(ResourceIdentifier id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target)
         {
             Id = id;
             RuleType = ruleType;
@@ -31,7 +33,7 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> The id of the rule. </summary>
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
         /// <summary> The type of rule. </summary>
         internal RoleManagementPolicyRuleType RuleType { get; set; }
         /// <summary> The target of the current rule. </summary>

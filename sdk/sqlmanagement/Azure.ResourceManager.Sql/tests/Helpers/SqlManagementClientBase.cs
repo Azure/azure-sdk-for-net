@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Sql.Tests
             };
             vnetData.AddressPrefixes.Add("10.10.0.0/16");
             var vnet = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnetData);
-            string subnetId = $"{vnet.Value.Data.Id}/subnets/ManagedInstance";
+            ResourceIdentifier subnetId = new ResourceIdentifier($"{vnet.Value.Data.Id}/subnets/ManagedInstance");
 
             //4. create ManagedInstance
             ManagedInstanceData data = new ManagedInstanceData(location)
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Sql.Tests
                 AdministratorLoginPassword = CreateGeneralPassword(),
                 SubnetId = subnetId,
                 PublicDataEndpointEnabled = false,
-                MaintenanceConfigurationId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default",
+                MaintenanceConfigurationId = new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default"),
                 ProxyOverride = new ManagedInstanceProxyOverride("Proxy") { },
                 TimezoneId = "UTC",
                 ZoneRedundant = false,
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Sql.Tests
                 Location = location,
                 PrivateLinkServiceConnections =
                 {
-                    new PrivateLinkServiceConnection()
+                    new NetworkPrivateLinkServiceConnection()
                     {
                         Name = privateEndpointName,
                         PrivateLinkServiceId = managedInstance.Data.Id,
