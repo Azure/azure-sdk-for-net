@@ -120,7 +120,7 @@ namespace Azure.Messaging.ServiceBus
 
             if (Processor._sessionInitializingAsync != null)
             {
-                var args = new ProcessSessionEventArgs(_receiver, processorCancellationToken);
+                var args = new ProcessSessionEventArgs(this, processorCancellationToken);
                 await Processor.OnSessionInitializingAsync(args).ConfigureAwait(false);
             }
         }
@@ -215,7 +215,7 @@ namespace Azure.Messaging.ServiceBus
             {
                 if (Processor._sessionClosingAsync != null)
                 {
-                    var args = new ProcessSessionEventArgs(_receiver, cancellationToken);
+                    var args = new ProcessSessionEventArgs(this, cancellationToken);
                     await Processor.OnSessionClosingAsync(args).ConfigureAwait(false);
                 }
             }
@@ -271,7 +271,7 @@ namespace Azure.Messaging.ServiceBus
                 try
                 {
                     canProcess = await EnsureCanProcess(processorCancellationToken).ConfigureAwait(false);
-                    if (!canProcess)
+                    if (!canProcess || _sessionCancellationSource.IsCancellationRequested)
                     {
                         return;
                     }

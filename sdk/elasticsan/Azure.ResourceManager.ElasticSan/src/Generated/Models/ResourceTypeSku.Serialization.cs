@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.ElasticSan.Models
     {
         internal static ResourceTypeSku DeserializeResourceTypeSku(JsonElement element)
         {
-            Optional<ElasticSanSku> sku = default;
+            Optional<IReadOnlyList<ElasticSanSku>> sku = default;
             Optional<IReadOnlyList<SkuLocationInfo>> locationInfo = default;
-            Optional<SanTierInfo> san = default;
+            Optional<SanTierInfo> elasticSan = default;
             Optional<ElasticSanVolumeGroupTierInfo> elasticSanVolumeGroup = default;
             Optional<ElasticSanVolumeTierInfo> elasticSanVolume = default;
             foreach (var property in element.EnumerateObject())
@@ -29,7 +29,12 @@ namespace Azure.ResourceManager.ElasticSan.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = ElasticSanSku.DeserializeElasticSanSku(property.Value);
+                    List<ElasticSanSku> array = new List<ElasticSanSku>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ElasticSanSku.DeserializeElasticSanSku(item));
+                    }
+                    sku = array;
                     continue;
                 }
                 if (property.NameEquals("locationInfo"))
@@ -47,14 +52,14 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     locationInfo = array;
                     continue;
                 }
-                if (property.NameEquals("san"))
+                if (property.NameEquals("elasticSan"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    san = SanTierInfo.DeserializeSanTierInfo(property.Value);
+                    elasticSan = SanTierInfo.DeserializeSanTierInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("volumeGroup"))
@@ -78,7 +83,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     continue;
                 }
             }
-            return new ResourceTypeSku(sku.Value, Optional.ToList(locationInfo), san.Value, elasticSanVolumeGroup.Value, elasticSanVolume.Value);
+            return new ResourceTypeSku(Optional.ToList(sku), Optional.ToList(locationInfo), elasticSan.Value, elasticSanVolumeGroup.Value, elasticSanVolume.Value);
         }
     }
 }

@@ -317,15 +317,6 @@ namespace Azure.Search.Documents.Models
             string queryPlusText) =>
             new AutocompleteItem(text, queryPlusText);
 
-        /// <summary> Initializes a new instance of FacetResult. </summary>
-        /// <param name="count"> The approximate count of documents falling within the bucket described by this facet. </param>
-        /// <param name="additionalProperties"> . </param>
-        /// <returns> A new FacetResult instance for mocking. </returns>
-        public static FacetResult FacetResult(
-            long? count,
-            IReadOnlyDictionary<string, object> additionalProperties) =>
-            new FacetResult(count, additionalProperties);
-
         /// <summary> Initializes a new instance of IndexDocumentsResult. </summary>
         /// <param name="results"> The list of status information for each document in the indexing request. </param>
         /// <returns> A new IndexDocumentsResult instance for mocking. </returns>

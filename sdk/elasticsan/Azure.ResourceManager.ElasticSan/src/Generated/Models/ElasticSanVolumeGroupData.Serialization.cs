@@ -29,8 +29,6 @@ namespace Azure.ResourceManager.ElasticSan
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
-            writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(ProtocolType))
@@ -55,7 +53,6 @@ namespace Azure.ResourceManager.ElasticSan
         internal static ElasticSanVolumeGroupData DeserializeElasticSanVolumeGroupData(JsonElement element)
         {
             Optional<IDictionary<string, string>> tags = default;
-            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -79,11 +76,6 @@ namespace Azure.ResourceManager.ElasticSan
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("location"))
-                {
-                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -164,7 +156,7 @@ namespace Azure.ResourceManager.ElasticSan
                     continue;
                 }
             }
-            return new ElasticSanVolumeGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), Optional.ToNullable(protocolType), Optional.ToNullable(encryption), networkAcls.Value);
+            return new ElasticSanVolumeGroupData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(protocolType), Optional.ToNullable(encryption), networkAcls.Value, Optional.ToDictionary(tags));
         }
     }
 }

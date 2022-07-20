@@ -52,9 +52,8 @@ await foreach (DocumentModelSummary modelSummary in models)
 
 // Create a new model to store in the account
 Uri trainingFileUri = new Uri("<trainingFileUri>");
-BuildModelOperation operation = await client.StartBuildModelAsync(trainingFileUri, DocumentBuildMode.Template);
-Response<DocumentModel> operationResponse = await operation.WaitForCompletionAsync();
-DocumentModel model = operationResponse.Value;
+BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, trainingFileUri, DocumentBuildMode.Template);
+DocumentModel model = operation.Value;
 
 // Get the model that was just created
 DocumentModel newCreatedModel = await client.GetModelAsync(model.ModelId);
@@ -71,8 +70,6 @@ await client.DeleteModelAsync(newCreatedModel.ModelId);
 ```
 
 ## Manage Models Synchronously
-
-Note that we are still making an asynchronous call to `WaitForCompletionAsync` for building a model, since this method does not have a synchronous counterpart.
 
 ```C# Snippet:FormRecognizerSampleManageModels
 var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
@@ -97,9 +94,8 @@ foreach (DocumentModelSummary modelSummary in models.Take(10))
 // Create a new model to store in the account
 
 Uri trainingFileUri = new Uri("<trainingFileUri>");
-BuildModelOperation operation = client.StartBuildModel(trainingFileUri, DocumentBuildMode.Template);
-Response<DocumentModel> operationResponse = await operation.WaitForCompletionAsync();
-DocumentModel model = operationResponse.Value;
+BuildModelOperation operation = client.BuildModel(WaitUntil.Completed, trainingFileUri, DocumentBuildMode.Template);
+DocumentModel model = operation.Value;
 
 // Get the model that was just created
 DocumentModel newCreatedModel = client.GetModel(model.ModelId);

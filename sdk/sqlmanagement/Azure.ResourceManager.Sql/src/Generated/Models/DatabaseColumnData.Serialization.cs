@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("temporalType");
                 writer.WriteStringValue(TemporalType.Value.ToString());
             }
-            if (Optional.IsDefined(MemoryOptimized))
+            if (Optional.IsDefined(IsMemoryOptimized))
             {
                 writer.WritePropertyName("memoryOptimized");
-                writer.WriteBooleanValue(MemoryOptimized.Value);
+                writer.WriteBooleanValue(IsMemoryOptimized.Value);
             }
             if (Optional.IsDefined(IsComputed))
             {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Sql
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ColumnDataType> columnType = default;
+            Optional<SqlColumnDataType> columnType = default;
             Optional<TableTemporalType> temporalType = default;
             Optional<bool> memoryOptimized = default;
             Optional<bool> isComputed = default;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            columnType = new ColumnDataType(property0.Value.GetString());
+                            columnType = new SqlColumnDataType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("temporalType"))

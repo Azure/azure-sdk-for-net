@@ -888,9 +888,9 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Gets a collection of DiagnosticSettingsResources in the ArmResource. </summary>
         /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DiagnosticSettingsResources and their operations over a DiagnosticSettingsResource. </returns>
-        public static DiagnosticSettingsCollection GetDiagnosticSettings(this ArmResource armResource)
+        public static DiagnosticSettingsCollection GetAllDiagnosticSettings(this ArmResource armResource)
         {
-            return GetExtensionClient(armResource).GetDiagnosticSettings();
+            return GetExtensionClient(armResource).GetAllDiagnosticSettings();
         }
 
         /// <summary>
@@ -906,7 +906,7 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static async Task<Response<DiagnosticSettingsResource>> GetDiagnosticSettingsAsync(this ArmResource armResource, string name, CancellationToken cancellationToken = default)
         {
-            return await armResource.GetDiagnosticSettings().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await armResource.GetAllDiagnosticSettings().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -922,7 +922,7 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static Response<DiagnosticSettingsResource> GetDiagnosticSettings(this ArmResource armResource, string name, CancellationToken cancellationToken = default)
         {
-            return armResource.GetDiagnosticSettings().Get(name, cancellationToken);
+            return armResource.GetAllDiagnosticSettings().Get(name, cancellationToken);
         }
 
         /// <summary> Gets a collection of DiagnosticSettingsCategoryResources in the ArmResource. </summary>

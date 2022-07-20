@@ -22,6 +22,10 @@ format-by-name-rules:
   'tenantId': 'uuid'
   'etag': 'etag'
   'location': 'azure-location'
+  'immutableResourceId': 'uuid'
+  'NotificationHubId': 'arm-id'
+  'ResourceId': 'arm-id'
+  'ResourceType': 'resource-type'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
@@ -49,21 +53,22 @@ rename-rules:
   Etag: ETag|etag
   SPF: Spf
 
-directive:
-  - rename-model:
-      from: DomainResource
-      to: CommunicationDomainResource
-  - rename-model:
-      from: VerificationParameter
-      to: VerificationContent
-  - from: types.json
-    where: $.definitions
-    transform: >
-      $.CheckNameAvailabilityRequest["x-ms-client-name"] = "CheckNameAvailabilityRequestBody";
-      $.CheckNameAvailabilityResponse["x-ms-client-name"] = "CommunicationServiceNameAvailabilityResult";
-  - from: CommunicationServices.json
-    where: $.definitions
-    transform: >
-      $.NameAvailabilityParameters["x-ms-client-name"] = "CommunicationServiceNameAvailabilityContent"; 
-      $.TaggedResource["x-ms-client-name"] = "AcceptTags";          
+rename-mapping:
+  NameAvailabilityParameters: CommunicationServiceNameAvailabilityContent
+  TaggedResource: CommunicationAcceptTags
+  DomainResource: CommunicationDomainResource
+  CheckNameAvailabilityRequest: CommunicationNameAvailabilityContent
+  CheckNameAvailabilityResponse: CommunicationNameAvailabilityResult
+  CheckNameAvailabilityReason: CommunicationNameAvailabilityReason
+  CheckNameAvailabilityResponse.nameAvailable: IsNameAvailable
+  RegenerateKeyParameters: RegenerateCommunicationServiceKeyContent
+  VerificationParameter: DomainsRecordVerificationContent
+  VerificationType: DomainRecordVerificationType
+  VerificationStatus: DomainRecordVerificationStatus
+  VerificationStatusRecord: DomainVerificationStatusRecord
+  KeyType: CommunicationServiceKeyType
+  DnsRecord.ttl: TimeToLiveInSeconds
+  DnsRecord: VerificationDnsRecord
+  DomainsProvisioningState: DomainProvisioningState
+
 ```

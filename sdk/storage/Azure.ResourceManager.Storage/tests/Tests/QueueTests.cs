@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Storage.Tests
                     {
                         new StorageCorsRule(
                             allowedHeaders: new string[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" },
-                            allowedMethods: new CorsRuleAllowedMethodsItem[] { "GET", "HEAD", "POST", "OPTIONS", "MERGE", "PUT" },
+                            allowedMethods: new CorsRuleAllowedMethod[] { "GET", "HEAD", "POST", "OPTIONS", "MERGE", "PUT" },
                              allowedOrigins: new string[] { "http://www.contoso.com", "http://www.fabrikam.com" },
                             exposedHeaders: new string[] { "x-ms-meta-*" },
                             maxAgeInSeconds: 100)
