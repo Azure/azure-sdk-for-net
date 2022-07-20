@@ -38,6 +38,18 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetMetadataRolesAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new PurviewMetadataRolesClient(endpoint, credential);
+        /// 
+        /// await foreach (var data in client.GetMetadataRolesAsync())
+        /// {
+        /// }
+        /// ]]></code>
+        /// </example>
         public virtual AsyncPageable<BinaryData> GetMetadataRolesAsync(RequestContext context = null)
         {
             return GetMetadataRolesImplementationAsync("PurviewMetadataRolesClient.GetMetadataRoles", context);
@@ -64,6 +76,18 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetMetadataRoles and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new PurviewMetadataRolesClient(endpoint, credential);
+        /// 
+        /// foreach (var data in client.GetMetadataRoles())
+        /// {
+        /// }
+        /// ]]></code>
+        /// </example>
         public virtual Pageable<BinaryData> GetMetadataRoles(RequestContext context = null)
         {
             return GetMetadataRolesImplementation("PurviewMetadataRolesClient.GetMetadataRoles", context);
