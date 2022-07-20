@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     [CodeGenModel("DocumentModel")]
-    public partial class DocumentModelInfo
+    public partial class DocumentModelDetails
     {
     }
 }

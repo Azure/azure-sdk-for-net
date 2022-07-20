@@ -47,10 +47,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
             Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 #endif
             BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, trainingFileUri, DocumentBuildMode.Template);
-            DocumentModelInfo model = operation.Value;
+            DocumentModelDetails model = operation.Value;
 
             // Get the model that was just created
-            DocumentModelInfo newCreatedModel = await client.GetModelAsync(model.ModelId);
+            DocumentModelDetails newCreatedModel = await client.GetModelAsync(model.ModelId);
 
             Console.WriteLine($"Custom Model with Id {newCreatedModel.ModelId} has the following information:");
 

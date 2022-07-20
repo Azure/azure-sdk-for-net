@@ -402,19 +402,19 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             return new DocumentLine(content, boundingPolygon, spans?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DocumentModelInfo. </summary>
+        /// <summary> Initializes a new instance of DocumentModelDetails. </summary>
         /// <param name="modelId"> Unique model name. </param>
         /// <param name="description"> Model description. </param>
         /// <param name="createdOn"> Date and time (UTC) when the model was created. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the model. </param>
         /// <param name="docTypes"> Supported document types. </param>
-        /// <returns> A new <see cref="DocumentAnalysis.DocumentModelInfo"/> instance for mocking. </returns>
-        public static DocumentModelInfo DocumentModelInfo(string modelId = null, string description = null, DateTimeOffset createdOn = default, IReadOnlyDictionary<string, string> tags = null, IReadOnlyDictionary<string, DocTypeInfo> docTypes = null)
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentModelDetails"/> instance for mocking. </returns>
+        public static DocumentModelDetails DocumentModelDetails(string modelId = null, string description = null, DateTimeOffset createdOn = default, IReadOnlyDictionary<string, string> tags = null, IReadOnlyDictionary<string, DocTypeInfo> docTypes = null)
         {
             tags ??= new Dictionary<string, string>();
             docTypes ??= new Dictionary<string, DocTypeInfo>();
 
-            return new DocumentModelInfo(modelId, description, createdOn, apiVersion: null, tags, docTypes);
+            return new DocumentModelDetails(modelId, description, createdOn, apiVersion: null, tags, docTypes);
         }
 
         /// <summary> Initializes a new instance of DocumentModelSummary. </summary>
@@ -555,7 +555,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="error"> Encountered error. </param>
         /// <param name="result"> Operation result upon success. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentModelOperationInfo"/> instance for mocking. </returns>
-        public static DocumentModelOperationInfo DocumentModelOperationInfo(string operationId = null, DocumentOperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DocumentOperationKind kind = default, string resourceLocation = null, IReadOnlyDictionary<string, string> tags = null, ResponseError error = null, DocumentModelInfo result = null)
+        public static DocumentModelOperationInfo DocumentModelOperationInfo(string operationId = null, DocumentOperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DocumentOperationKind kind = default, string resourceLocation = null, IReadOnlyDictionary<string, string> tags = null, ResponseError error = null, DocumentModelDetails result = null)
         {
             tags ??= new Dictionary<string, string>();
 

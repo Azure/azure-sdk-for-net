@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    public partial class DocumentModelInfo
+    public partial class DocumentModelDetails
     {
-        internal static DocumentModelInfo DeserializeDocumentModelInfo(JsonElement element)
+        internal static DocumentModelDetails DeserializeDocumentModelDetails(JsonElement element)
         {
             Optional<IReadOnlyDictionary<string, DocTypeInfo>> docTypes = default;
             string modelId = default;
@@ -75,7 +75,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentModelInfo(modelId, description.Value, createdDateTime, apiVersion.Value, Optional.ToDictionary(tags), Optional.ToDictionary(docTypes));
+            return new DocumentModelDetails(modelId, description.Value, createdDateTime, apiVersion.Value, Optional.ToDictionary(tags), Optional.ToDictionary(docTypes));
         }
     }
 }

@@ -65,7 +65,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             Assert.IsTrue(operation.HasValue);
 
-            DocumentModelInfo model = operation.Value;
+            DocumentModelDetails model = operation.Value;
 
             ValidateDocumentModel(model);
 
@@ -98,7 +98,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             Assert.IsTrue(operation.HasValue);
 
-            DocumentModelInfo model = operation.Value;
+            DocumentModelDetails model = operation.Value;
 
             ValidateDocumentModel(model);
 
@@ -151,7 +151,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, trainingFilesUri, DocumentBuildMode.Template, modelId, options);
 
-            DocumentModelInfo model = operation.Value;
+            DocumentModelDetails model = operation.Value;
 
             CollectionAssert.AreEquivalent(TestingTags, model.Tags);
         }
@@ -188,7 +188,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         {
             var client = CreateDocumentModelAdministrationClient();
 
-            DocumentModelInfo model = await client.GetModelAsync("prebuilt-businessCard");
+            DocumentModelDetails model = await client.GetModelAsync("prebuilt-businessCard");
 
             ValidateDocumentModel(model);
             Assert.NotNull(model.Description);
@@ -216,7 +216,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             }
 
             BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, trainingFilesUri, DocumentBuildMode.Template, modelId, options);
-            DocumentModelInfo resultModel = await client.GetModelAsync(modelId);
+            DocumentModelDetails resultModel = await client.GetModelAsync(modelId);
 
             ValidateDocumentModel(resultModel, description, TestingTags);
 
@@ -332,7 +332,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             Assert.IsTrue(operation.HasValue);
 
-            DocumentModelInfo copiedModel = operation.Value;
+            DocumentModelDetails copiedModel = operation.Value;
 
             ValidateDocumentModel(copiedModel);
             Assert.AreEqual(targetAuth.TargetModelId, copiedModel.ModelId);
@@ -376,7 +376,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(targetModelId, tags: tags);
             CopyModelOperation operation = await sourceClient.CopyModelToAsync(WaitUntil.Completed, trainedModel.ModelId, targetAuth);
 
-            DocumentModelInfo copiedModel = operation.Value;
+            DocumentModelDetails copiedModel = operation.Value;
 
             CollectionAssert.AreEquivalent(TestingTags, copiedModel.Tags);
 
@@ -420,7 +420,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             Assert.IsTrue(operation.HasValue);
 
-            DocumentModelInfo composedModel = operation.Value;
+            DocumentModelDetails composedModel = operation.Value;
 
             ValidateDocumentModel(composedModel);
 
@@ -452,7 +452,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var composedModelId = Recording.GenerateId();
             BuildModelOperation operation = await client.ComposeModelAsync(WaitUntil.Completed, modelIds, composedModelId, tags: tags);
 
-            DocumentModelInfo composedModel = operation.Value;
+            DocumentModelDetails composedModel = operation.Value;
 
             CollectionAssert.AreEquivalent(TestingTags, composedModel.Tags);
 
@@ -492,7 +492,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             }
         }
 
-        private void ValidateDocumentModel(DocumentModelInfo model, string description = null, IReadOnlyDictionary<string, string> tags = null)
+        private void ValidateDocumentModel(DocumentModelDetails model, string description = null, IReadOnlyDictionary<string, string> tags = null)
         {
             ValidateDocumentModelSummary(model, description, tags);
 
