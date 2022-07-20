@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Communication.MediaComposition
 {
-    public partial class SrtStream : IUtf8JsonSerializable
+    public partial class SrtOutput : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,13 +20,16 @@ namespace Azure.Communication.MediaComposition
             writer.WriteObjectValue(Resolution);
             writer.WritePropertyName("streamUrl");
             writer.WriteStringValue(StreamUrl);
+            writer.WritePropertyName("kind");
+            writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
 
-        internal static SrtStream DeserializeSrtStream(JsonElement element)
+        internal static SrtOutput DeserializeSrtOutput(JsonElement element)
         {
             LayoutResolution resolution = default;
             string streamUrl = default;
+            MediaOutputType kind = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resolution"))
@@ -39,8 +42,13 @@ namespace Azure.Communication.MediaComposition
                     streamUrl = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("kind"))
+                {
+                    kind = new MediaOutputType(property.Value.GetString());
+                    continue;
+                }
             }
-            return new SrtStream(resolution, streamUrl);
+            return new SrtOutput(kind, resolution, streamUrl);
         }
     }
 }

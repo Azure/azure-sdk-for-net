@@ -9,5 +9,9 @@ namespace Azure.Communication.MediaComposition.Models
     [CodeGenModel("Layout")]
     public partial class MediaCompositionLayout
     {
+        /// <summary> Initializes a new instance of MediaCompositionLayout. </summary>
+        internal MediaCompositionLayout()
+        {
+        }
     }
 }

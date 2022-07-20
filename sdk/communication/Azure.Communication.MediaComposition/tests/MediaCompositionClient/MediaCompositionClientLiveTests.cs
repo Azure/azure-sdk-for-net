@@ -12,31 +12,34 @@ namespace Azure.Communication.MediaComposition.Tests
 {
     public class MediaCompositionClientLiveTests : MediaCompositionClientLiveTestBase
     {
-        private const string mediaCompositionId = "presentation";
-        private static readonly Dictionary<string, MediaInput> _presentationInputs = new()
+        private const string mediaCompositionId = "presenter";
+        private static readonly Dictionary<string, MediaInput> _presenterInputs = new()
         {
-            ["presenter"] = new()
+            ["presenter"] = new ParticipantInput(
+                    id: new() { MicrosoftTeamsUser = new("f3ba9014-6dca-4456-8ec0-fa03cfa2b7b7") },
+                    call: "teamsMeeting")
             {
-                Participant = new(
-                       id: new() { MicrosoftTeamsUser = new("f3ba9014-6dca-4456-8ec0-fa03cfa2b7b7") },
-                       call: "teamsMeeting")
-                {
-                    PlaceholderImageUri = "https://imageendpoint"
-                }
+                PlaceholderImageUri = "https://imageendpoint"
             },
-            ["support"] = new()
+            ["support"] = new ParticipantInput(
+                    id: new() { MicrosoftTeamsUser = new("fa4337b5-f13a-41c5-a34f-f2aa46699b61") },
+                    call: "teamsMeeting")
             {
-                Participant = new(
-                       id: new() { MicrosoftTeamsUser = new("fa4337b5-f13a-41c5-a34f-f2aa46699b61") },
-                       call: "teamsMeeting")
-                {
-                    PlaceholderImageUri = "https://imageendpoint"
-                }
+                PlaceholderImageUri = "https://imageendpoint"
             },
-            ["teamsMeeting"] = new()
-            {
-                TeamsMeeting = new("https://teamsJoinUrl")
-            }
+            ["teamsMeeting"] = new TeamsMeetingInput("https://teamsJoinUrl")
+        };
+
+        private static readonly MediaCompositionLayout _presenterLayout = new PresenterLayout(presenterId: "presenter", supportId: "support")
+        {
+            SupportPosition = SupportPosition.TopLeft,
+            SupportAspectRatio = 3 / 2,
+            Resolution = new(1920, 1080)
+        };
+
+        private static readonly Dictionary<string, MediaOutput> _presenterOutputs = new()
+        {
+            ["acsGroupCall"] = new GroupCallOutput("d12d2277-ffec-4e22-9979-8c0d8c13d193")
         };
 
         public MediaCompositionClientLiveTests(bool isAsync) : base(isAsync)
@@ -52,8 +55,7 @@ namespace Azure.Communication.MediaComposition.Tests
         {
             var mediaCompositionClient = CreateClient(authMethod);
             var response = await CreateMediaCompositionHelper(mediaCompositionClient);
-            Assert.IsNotNull(response.Value.Layout.Presenter);
-            Assert.IsNull(response.Value.Layout.Grid);
+            Assert.IsInstanceOf(response.Value.Layout.GetType(), typeof(PresenterLayout));
             Assert.AreEqual(response.Value.Inputs.Count, 3);
             Assert.AreEqual(response.Value.Outputs.Count, 1);
             Assert.AreEqual(response.Value.StreamState, CompositionStreamState.NotStarted);
@@ -66,23 +68,7 @@ namespace Azure.Communication.MediaComposition.Tests
             try
             {
                 var mediaCompositionClient = CreateClient();
-                var layout = new MediaCompositionLayout()
-                {
-                    Resolution = new(1920, 1080),
-                    Presenter = new("presenter", "support")
-                };
-
-                var outputs = new Dictionary<string, MediaOutput>()
-                {
-                    {
-                        "acsGroupCall",
-                        new()
-                        {
-                            GroupCall = new("d12d2277-ffec-4e22-9979-8c0d8c13d193")
-                        }
-                    }
-                };
-                await mediaCompositionClient.CreateAsync(mediaCompositionId, layout, null, outputs);
+                await mediaCompositionClient.CreateAsync(mediaCompositionId, _presenterLayout, null, _presenterOutputs);
             }
             catch (RequestFailedException ex)
             {
@@ -100,13 +86,7 @@ namespace Azure.Communication.MediaComposition.Tests
             try
             {
                 var mediaCompositionClient = CreateClient();
-                var layout = new MediaCompositionLayout()
-                {
-                    Resolution = new(1920, 1080),
-                    Presenter = new("presenter", "support")
-                };
-
-                await mediaCompositionClient.CreateAsync(mediaCompositionId, layout, _presentationInputs, null);
+                await mediaCompositionClient.CreateAsync(mediaCompositionId, _presenterLayout, _presenterInputs, null);
             }
             catch (RequestFailedException ex)
             {
@@ -124,33 +104,12 @@ namespace Azure.Communication.MediaComposition.Tests
             try
             {
                 var mediaCompositionClient = CreateClient();
-                var gridLayoutOptions= new GridLayoutOptions(2, 2);
-                gridLayoutOptions.InputIds.Add(new List<string> { "InvalidInputId" });
-                var layout = new MediaCompositionLayout()
-                {
-                    Resolution = new(1920, 1080),
-                    Grid = gridLayoutOptions
-                };
-
+                var layout = new GridLayout(rows: 2, columns: 2, inputIds: new List<List<string>>() { new List<string>() { "invalidId" }});
                 var inputs = new Dictionary<string, MediaInput>()
                 {
-                    ["teamsMeeting"] = new()
-                    {
-                        TeamsMeeting = new("https://teamsJoinUrl")
-                    }
+                    ["teamsMeeting"] = new TeamsMeetingInput("https://teamsJoinUrl")
                 };
-
-                var outputs = new Dictionary<string, MediaOutput>()
-                {
-                    {
-                        "acsGroupCall",
-                        new()
-                        {
-                            GroupCall = new("d12d2277-ffec-4e22-9979-8c0d8c13d193")
-                        }
-                    }
-                };
-                await mediaCompositionClient.CreateAsync(mediaCompositionId, layout, inputs, outputs);
+                await mediaCompositionClient.CreateAsync(mediaCompositionId, layout, _presenterInputs, _presenterOutputs);
             }
             catch (RequestFailedException ex)
             {
@@ -168,17 +127,7 @@ namespace Azure.Communication.MediaComposition.Tests
             try
             {
                 var mediaCompositionClient = CreateClient();
-                var outputs = new Dictionary<string, MediaOutput>()
-                {
-                    {
-                        "acsGroupCall",
-                        new()
-                        {
-                            GroupCall = new("d12d2277-ffec-4e22-9979-8c0d8c13d193")
-                        }
-                    }
-                };
-                await mediaCompositionClient.CreateAsync(mediaCompositionId, null, _presentationInputs, outputs);
+                await mediaCompositionClient.CreateAsync(mediaCompositionId, null, _presenterInputs, _presenterOutputs);
             }
             catch (RequestFailedException ex)
             {
@@ -197,7 +146,7 @@ namespace Azure.Communication.MediaComposition.Tests
             await CreateMediaCompositionHelper(mediaCompositionClient);
             var response = await mediaCompositionClient.GetAsync(mediaCompositionId);
             Assert.AreEqual(response.Value.Id, mediaCompositionId);
-            Assert.IsNotNull(response.Value.Layout.Presenter);
+            Assert.IsInstanceOf(response.Value.Layout.GetType(), typeof(PresenterLayout));
             Assert.AreEqual(response.Value.Inputs.Count, 3);
             Assert.AreEqual(response.Value.Outputs.Count, 1);
             Assert.AreEqual(response.Value.StreamState, CompositionStreamState.NotStarted);
@@ -295,18 +244,12 @@ namespace Azure.Communication.MediaComposition.Tests
         {
             var mediaCompositionClient = CreateClient();
             await CreateMediaCompositionHelper(mediaCompositionClient);
-            var gridLayoutOptions = new GridLayoutOptions(2, 2);
-            gridLayoutOptions.InputIds.Add(new List<string> { "teamsMeeting" });
-            var updatedLayout = new MediaCompositionLayout()
+            var updatedLayout = new GridLayout(rows: 2, columns: 2, new List<List<string>> { new List<string>() { "teamsMeeting" } })
             {
-                Resolution = new(1920, 1080),
-                Grid = gridLayoutOptions
+                Resolution = new(1920, 1080)
             };
             var response = await mediaCompositionClient.UpdateAsync(mediaCompositionId, updatedLayout);
-            Assert.AreEqual(response.Value.Layout.Grid.Columns, updatedLayout.Grid.Columns);
-            Assert.AreEqual(response.Value.Layout.Grid.Rows, updatedLayout.Grid.Rows);
-            Assert.AreEqual(response.Value.Layout.Grid.InputIds.Count, 1);
-            Assert.IsNull(response.Value.Layout.Presenter);
+            Assert.AreEqual(response.Value.Layout.GetType(), typeof(GridLayout));
 
             // Inputs and Outputs set to null by default and should not change
             Assert.AreEqual(response.Value.Inputs.Count, 3);
@@ -364,23 +307,7 @@ namespace Azure.Communication.MediaComposition.Tests
 
         private async Task<Response<MediaCompositionBody>> CreateMediaCompositionHelper(MediaCompositionClient mediaCompositionClient)
         {
-            var layout = new MediaCompositionLayout()
-            {
-                Resolution = new(1920, 1080),
-                Presenter = new("presenter", "support")
-            };
-
-            var outputs = new Dictionary<string, MediaOutput>()
-            {
-                {
-                    "acsGroupCall",
-                    new()
-                    {
-                        GroupCall = new("d12d2277-ffec-4e22-9979-8c0d8c13d193")
-                    }
-                }
-            };
-            return await mediaCompositionClient.CreateAsync(mediaCompositionId, layout, _presentationInputs, outputs);
+            return await mediaCompositionClient.CreateAsync(mediaCompositionId, _presenterLayout, _presenterInputs, _presenterOutputs);
         }
     }
 }

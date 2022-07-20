@@ -7,11 +7,12 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Communication.MediaComposition.Models;
 using Azure.Core;
 
 namespace Azure.Communication.MediaComposition
 {
-    public partial class PresentationLayoutOptions : IUtf8JsonSerializable
+    public partial class PresentationLayout : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -30,14 +31,29 @@ namespace Azure.Communication.MediaComposition
                 writer.WritePropertyName("audiencePosition");
                 writer.WriteStringValue(AudiencePosition.Value.ToString());
             }
+            writer.WritePropertyName("kind");
+            writer.WriteStringValue(Kind.ToString());
+            if (Optional.IsDefined(Resolution))
+            {
+                writer.WritePropertyName("resolution");
+                writer.WriteObjectValue(Resolution);
+            }
+            if (Optional.IsDefined(PlaceholderImageUri))
+            {
+                writer.WritePropertyName("placeholderImageUri");
+                writer.WriteStringValue(PlaceholderImageUri);
+            }
             writer.WriteEndObject();
         }
 
-        internal static PresentationLayoutOptions DeserializePresentationLayoutOptions(JsonElement element)
+        internal static PresentationLayout DeserializePresentationLayout(JsonElement element)
         {
             string presenterId = default;
             IList<string> audienceIds = default;
             Optional<AudiencePosition> audiencePosition = default;
+            LayoutType kind = default;
+            Optional<LayoutResolution> resolution = default;
+            Optional<string> placeholderImageUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("presenterId"))
@@ -65,8 +81,28 @@ namespace Azure.Communication.MediaComposition
                     audiencePosition = new AudiencePosition(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("kind"))
+                {
+                    kind = new LayoutType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("resolution"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resolution = LayoutResolution.DeserializeLayoutResolution(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("placeholderImageUri"))
+                {
+                    placeholderImageUri = property.Value.GetString();
+                    continue;
+                }
             }
-            return new PresentationLayoutOptions(presenterId, audienceIds, Optional.ToNullable(audiencePosition));
+            return new PresentationLayout(kind, resolution.Value, placeholderImageUri.Value, presenterId, audienceIds, Optional.ToNullable(audiencePosition));
         }
     }
 }

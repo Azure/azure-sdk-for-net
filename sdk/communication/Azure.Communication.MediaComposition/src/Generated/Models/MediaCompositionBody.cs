@@ -6,10 +6,10 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Communication.MediaComposition.Models;
+using Azure.Communication.MediaComposition;
 using Azure.Core;
 
-namespace Azure.Communication.MediaComposition
+namespace Azure.Communication.MediaComposition.Models
 {
     /// <summary> Body of a media composition. </summary>
     public partial class MediaCompositionBody
@@ -23,7 +23,7 @@ namespace Azure.Communication.MediaComposition
 
         /// <summary> Initializes a new instance of MediaCompositionBody. </summary>
         /// <param name="id"> Id of the media composition. </param>
-        /// <param name="layout"> Configure a layout. </param>
+        /// <param name="layout"> Layout configuration of the composition. </param>
         /// <param name="inputs"> Inputs used in the composition. </param>
         /// <param name="outputs"> Outputs used in the composition. </param>
         /// <param name="streamState"> State of the composition stream. </param>
@@ -38,12 +38,6 @@ namespace Azure.Communication.MediaComposition
 
         /// <summary> Id of the media composition. </summary>
         public string Id { get; set; }
-        /// <summary> Configure a layout. </summary>
-        public MediaCompositionLayout Layout { get; set; }
-        /// <summary> Inputs used in the composition. </summary>
-        public IDictionary<string, MediaInput> Inputs { get; }
-        /// <summary> Outputs used in the composition. </summary>
-        public IDictionary<string, MediaOutput> Outputs { get; }
         /// <summary> State of the composition stream. </summary>
         public CompositionStreamState? StreamState { get; set; }
     }

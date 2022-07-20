@@ -70,21 +70,18 @@ namespace Azure.Communication.MediaComposition.Tests.samples
             var mediaCompositionClient = CreateClient();
             await CreateMediaCompositionHelper(mediaCompositionClient);
             #region Snippet:UpdateMediaComposition
-            var layout = new MediaCompositionLayout()
+            var layout = new PresenterLayout("jill", "jack")
             {
                 Resolution = new(720, 480),
-                Presenter = new("jill", "jack")
-                {
-                    SupportPosition = SupportPosition.BottomRight,
-                    SupportAspectRatio = 3 / 2
-                }
+                SupportPosition = SupportPosition.BottomRight,
+                SupportAspectRatio = 3 / 2
             };
             var response = await mediaCompositionClient.UpdateAsync(mediaCompositionId, layout);
             #endregion Snippet:UpdateMediaComposition
             Assert.AreEqual(response.Value.Id, mediaCompositionId);
             Assert.AreEqual(response.Value.Layout.Resolution.Width, 720);
             Assert.AreEqual(response.Value.Layout.Resolution.Height, 480);
-            Assert.IsNotNull(response.Value.Layout.Presenter);
+            Assert.IsInstanceOf(response.Value.Layout.GetType(), typeof(PresenterLayout));
             await mediaCompositionClient.DeleteAsync(mediaCompositionId);
         }
 
@@ -123,69 +120,51 @@ namespace Azure.Communication.MediaComposition.Tests.samples
         private async Task<Response<MediaCompositionBody>> CreateMediaCompositionHelper(MediaCompositionClient mediaCompositionClient)
         {
             #region Snippet:CreateMediaComposition
-            var gridLayoutOptions = new GridLayoutOptions(2, 2);
-            gridLayoutOptions.InputIds.Add(new List<string> { "jill", "jack" });
-            gridLayoutOptions.InputIds.Add(new List<string> { "jane", "jerry" });
-            var layout = new MediaCompositionLayout()
+            var layout = new GridLayout(
+                rows: 2,
+                columns: 2,
+                inputIds: new List<List<string>> {
+                    new List<string>{ "jill", "jack"},
+                    new List<string>{ "jane", "jerry"}
+                })
             {
                 Resolution = new(1920, 1080),
-                Grid = gridLayoutOptions
             };
 
             var inputs = new Dictionary<string, MediaInput>()
             {
-                ["jill"] = new()
+                ["jill"] = new ParticipantInput(
+                    id: new() { MicrosoftTeamsUser = new("f3ba9014-6dca-4456-8ec0-fa03cfa2b7b7") },
+                    call: "teamsMeeting")
                 {
-                    Participant = new(
-                        id: new() { MicrosoftTeamsUser = new("f3ba9014-6dca-4456-8ec0-fa03cfa2b7b7") },
-                        call: "teamsMeeting")
-                    {
-                        PlaceholderImageUri = "https://imageendpoint"
-                    }
+                    PlaceholderImageUri = "https://imageendpoint"
                 },
-                ["jack"] = new()
+                ["jack"] = new ParticipantInput(
+                    id: new() { MicrosoftTeamsUser = new("fa4337b5-f13a-41c5-a34f-f2aa46699b61") },
+                    call: "teamsMeeting")
                 {
-                    Participant = new(
-                        id: new() { MicrosoftTeamsUser = new("fa4337b5-f13a-41c5-a34f-f2aa46699b61") },
-                        call: "teamsMeeting")
-                    {
-                        PlaceholderImageUri = "https://imageendpoint"
-                    }
+                    PlaceholderImageUri = "https://imageendpoint"
                 },
-                ["jane"] = new()
+                ["jane"] = new ParticipantInput(
+                    id: new() { MicrosoftTeamsUser = new("2dd69470-dc25-49cf-b5c3-f562f08bf3b2") },
+                    call: "teamsMeeting")
                 {
-                    Participant = new(
-                        id: new() { MicrosoftTeamsUser = new("2dd69470-dc25-49cf-b5c3-f562f08bf3b2") },
-                        call: "teamsMeeting")
-                    {
-                        PlaceholderImageUri = "https://imageendpoint"
-                    }
+                    PlaceholderImageUri = "https://imageendpoint"
                 },
-                ["jerry"] = new()
+                ["jerry"] = new ParticipantInput(
+                    id: new() { MicrosoftTeamsUser = new("30e29fde-ac1c-448f-bb34-0f3448d5a677") },
+                    call: "teamsMeeting")
                 {
-                    Participant = new(
-                        id: new() { MicrosoftTeamsUser = new("30e29fde-ac1c-448f-bb34-0f3448d5a677") },
-                        call: "teamsMeeting")
-                    {
-                        PlaceholderImageUri = "https://imageendpoint"
-                    }
+                    PlaceholderImageUri = "https://imageendpoint"
                 },
-                ["teamsMeeting"] = new()
-                {
-                    TeamsMeeting = new("https://teamsJoinUrl")
-                }
+                ["teamsMeeting"] = new TeamsMeetingInput("https://teamsJoinUrl")
             };
 
             var outputs = new Dictionary<string, MediaOutput>()
             {
-                {
-                    "acsGroupCall",
-                    new()
-                    {
-                        GroupCall = new("d12d2277-ffec-4e22-9979-8c0d8c13d193")
-                    }
-                }
+                ["acsGroupCall"] = new GroupCallOutput("d12d2277-ffec-4e22-9979-8c0d8c13d193")
             };
+
             var response = await mediaCompositionClient.CreateAsync(mediaCompositionId, layout, inputs, outputs);
             #endregion Snippet:CreateMediaComposition
             return response;

@@ -6,20 +6,17 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Communication.MediaComposition;
 using Azure.Core;
 
-namespace Azure.Communication.MediaComposition.Models
+namespace Azure.Communication.MediaComposition
 {
-    public partial class ParticipantInput : IUtf8JsonSerializable
+    public partial class TeamsMeetingInput : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("id");
-            writer.WriteObjectValue(Id);
-            writer.WritePropertyName("call");
-            writer.WriteStringValue(Call);
+            writer.WritePropertyName("teamsJoinUrl");
+            writer.WriteStringValue(TeamsJoinUrl);
             writer.WritePropertyName("kind");
             writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(PlaceholderImageUri))
@@ -30,22 +27,16 @@ namespace Azure.Communication.MediaComposition.Models
             writer.WriteEndObject();
         }
 
-        internal static ParticipantInput DeserializeParticipantInput(JsonElement element)
+        internal static TeamsMeetingInput DeserializeTeamsMeetingInput(JsonElement element)
         {
-            CommunicationIdentifierModel id = default;
-            string call = default;
+            string teamsJoinUrl = default;
             MediaInputType kind = default;
             Optional<string> placeholderImageUri = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("teamsJoinUrl"))
                 {
-                    id = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("call"))
-                {
-                    call = property.Value.GetString();
+                    teamsJoinUrl = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("kind"))
@@ -59,7 +50,7 @@ namespace Azure.Communication.MediaComposition.Models
                     continue;
                 }
             }
-            return new ParticipantInput(kind, placeholderImageUri.Value, id, call);
+            return new TeamsMeetingInput(kind, placeholderImageUri.Value, teamsJoinUrl);
         }
     }
 }

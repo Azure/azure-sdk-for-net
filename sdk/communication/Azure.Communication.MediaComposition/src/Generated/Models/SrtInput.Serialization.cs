@@ -6,20 +6,20 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Communication.MediaComposition;
+using Azure.Communication.MediaComposition.Models;
 using Azure.Core;
 
-namespace Azure.Communication.MediaComposition.Models
+namespace Azure.Communication.MediaComposition
 {
-    public partial class ParticipantInput : IUtf8JsonSerializable
+    public partial class SrtInput : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("id");
-            writer.WriteObjectValue(Id);
-            writer.WritePropertyName("call");
-            writer.WriteStringValue(Call);
+            writer.WritePropertyName("resolution");
+            writer.WriteObjectValue(Resolution);
+            writer.WritePropertyName("streamUrl");
+            writer.WriteStringValue(StreamUrl);
             writer.WritePropertyName("kind");
             writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(PlaceholderImageUri))
@@ -30,22 +30,22 @@ namespace Azure.Communication.MediaComposition.Models
             writer.WriteEndObject();
         }
 
-        internal static ParticipantInput DeserializeParticipantInput(JsonElement element)
+        internal static SrtInput DeserializeSrtInput(JsonElement element)
         {
-            CommunicationIdentifierModel id = default;
-            string call = default;
+            LayoutResolution resolution = default;
+            string streamUrl = default;
             MediaInputType kind = default;
             Optional<string> placeholderImageUri = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("resolution"))
                 {
-                    id = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
+                    resolution = LayoutResolution.DeserializeLayoutResolution(property.Value);
                     continue;
                 }
-                if (property.NameEquals("call"))
+                if (property.NameEquals("streamUrl"))
                 {
-                    call = property.Value.GetString();
+                    streamUrl = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("kind"))
@@ -59,7 +59,7 @@ namespace Azure.Communication.MediaComposition.Models
                     continue;
                 }
             }
-            return new ParticipantInput(kind, placeholderImageUri.Value, id, call);
+            return new SrtInput(kind, placeholderImageUri.Value, resolution, streamUrl);
         }
     }
 }

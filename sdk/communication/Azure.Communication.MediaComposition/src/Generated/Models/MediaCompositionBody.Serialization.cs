@@ -7,10 +7,10 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Communication.MediaComposition.Models;
+using Azure.Communication.MediaComposition;
 using Azure.Core;
 
-namespace Azure.Communication.MediaComposition
+namespace Azure.Communication.MediaComposition.Models
 {
     public partial class MediaCompositionBody : IUtf8JsonSerializable
     {

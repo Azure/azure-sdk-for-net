@@ -11,7 +11,7 @@ using Azure.Communication.MediaComposition;
 namespace Azure.Communication.MediaComposition.Models
 {
     /// <summary> The Participant. </summary>
-    public partial class ParticipantInput
+    public partial class ParticipantInput : MediaInput
     {
         /// <summary> Initializes a new instance of ParticipantInput. </summary>
         /// <param name="id"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. </param>
@@ -30,23 +30,23 @@ namespace Azure.Communication.MediaComposition.Models
 
             Id = id;
             Call = call;
+            Kind = MediaInputType.Participant;
         }
 
         /// <summary> Initializes a new instance of ParticipantInput. </summary>
-        /// <param name="id"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. </param>
+        /// <param name="kind"> Kind of media input. </param>
         /// <param name="placeholderImageUri"> Image url to be used if participant has no video stream. </param>
+        /// <param name="id"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. </param>
         /// <param name="call"> The id of the teams meeting or call. </param>
-        internal ParticipantInput(CommunicationIdentifierModel id, string placeholderImageUri, string call)
+        internal ParticipantInput(MediaInputType kind, string placeholderImageUri, CommunicationIdentifierModel id, string call) : base(kind, placeholderImageUri)
         {
             Id = id;
-            PlaceholderImageUri = placeholderImageUri;
             Call = call;
+            Kind = kind;
         }
 
         /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. </summary>
         public CommunicationIdentifierModel Id { get; set; }
-        /// <summary> Image url to be used if participant has no video stream. </summary>
-        public string PlaceholderImageUri { get; set; }
         /// <summary> The id of the teams meeting or call. </summary>
         public string Call { get; set; }
     }

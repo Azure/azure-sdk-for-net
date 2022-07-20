@@ -13,12 +13,12 @@ using Azure.Core;
 namespace Azure.Communication.MediaComposition
 {
     /// <summary> Configure custom layout. </summary>
-    public partial class CustomLayoutOptions
+    public partial class CustomLayout : MediaCompositionLayout
     {
-        /// <summary> Initializes a new instance of CustomLayoutOptions. </summary>
+        /// <summary> Initializes a new instance of CustomLayout. </summary>
         /// <param name="inputGroups"> Configure input groups of the layout. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputGroups"/> is null. </exception>
-        public CustomLayoutOptions(IDictionary<string, InputGroup> inputGroups)
+        public CustomLayout(IDictionary<string, InputGroup> inputGroups)
         {
             if (inputGroups == null)
             {
@@ -27,15 +27,20 @@ namespace Azure.Communication.MediaComposition
 
             Layers = new ChangeTrackingDictionary<string, LayoutLayer>();
             InputGroups = inputGroups;
+            Kind = LayoutType.Custom;
         }
 
-        /// <summary> Initializes a new instance of CustomLayoutOptions. </summary>
+        /// <summary> Initializes a new instance of CustomLayout. </summary>
+        /// <param name="kind"> Kind of layout. </param>
+        /// <param name="resolution"> The dimensions of the scene or objects in the scene. </param>
+        /// <param name="placeholderImageUri"> Set global placeholder image. </param>
         /// <param name="layers"> Configure layer to control the z-position of input groups. </param>
         /// <param name="inputGroups"> Configure input groups of the layout. </param>
-        internal CustomLayoutOptions(IDictionary<string, LayoutLayer> layers, IDictionary<string, InputGroup> inputGroups)
+        internal CustomLayout(LayoutType kind, LayoutResolution resolution, string placeholderImageUri, IDictionary<string, LayoutLayer> layers, IDictionary<string, InputGroup> inputGroups) : base(kind, resolution, placeholderImageUri)
         {
             Layers = layers;
             InputGroups = inputGroups;
+            Kind = kind;
         }
 
         /// <summary> Configure layer to control the z-position of input groups. </summary>
