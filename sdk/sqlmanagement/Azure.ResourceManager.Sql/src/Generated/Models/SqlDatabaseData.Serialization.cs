@@ -214,8 +214,8 @@ namespace Azure.ResourceManager.Sql
             Optional<SecondaryType> secondaryType = default;
             Optional<SqlSku> currentSku = default;
             Optional<int> autoPauseDelay = default;
-            Optional<BackupStorageRedundancy> currentBackupStorageRedundancy = default;
-            Optional<BackupStorageRedundancy> requestedBackupStorageRedundancy = default;
+            Optional<SqlBackupStorageRedundancy> currentBackupStorageRedundancy = default;
+            Optional<SqlBackupStorageRedundancy> requestedBackupStorageRedundancy = default;
             Optional<double> minCapacity = default;
             Optional<DateTimeOffset> pausedDate = default;
             Optional<DateTimeOffset> resumedDate = default;
@@ -592,7 +592,7 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            currentBackupStorageRedundancy = new BackupStorageRedundancy(property0.Value.GetString());
+                            currentBackupStorageRedundancy = new SqlBackupStorageRedundancy(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("requestedBackupStorageRedundancy"))
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            requestedBackupStorageRedundancy = new BackupStorageRedundancy(property0.Value.GetString());
+                            requestedBackupStorageRedundancy = new SqlBackupStorageRedundancy(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("minCapacity"))

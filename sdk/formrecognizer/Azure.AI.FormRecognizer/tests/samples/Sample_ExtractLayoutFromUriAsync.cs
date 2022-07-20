@@ -25,10 +25,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
             Uri fileUri = DocumentAnalysisTestEnvironment.CreateUri("Form_1.jpg");
 #endif
 
-            AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-layout", fileUri);
-
-            await operation.WaitForCompletionAsync();
-
+            AnalyzeDocumentOperation operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-layout", fileUri);
             AnalyzeResult result = operation.Value;
 
             foreach (DocumentPage page in result.Pages)

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Tests
         private async Task<DiagnosticSettingsCollection> GetDiagnosticSettingsCollectionAsync()
         {
             var resourceGroup = await CreateResourceGroupAsync();
-            return DefaultSubscription.GetDiagnosticSettings();
+            return DefaultSubscription.GetAllDiagnosticSettings();
         }
 
         [Ignore("Need to Update cleanup")]

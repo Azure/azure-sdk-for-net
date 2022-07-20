@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Sql
             Optional<SystemData> systemData = default;
             Optional<WritableSubResource> privateEndpoint = default;
             Optional<SqlPrivateLinkServiceConnectionStateProperty> privateLinkServiceConnectionState = default;
-            Optional<PrivateEndpointProvisioningState> provisioningState = default;
+            Optional<SqlPrivateEndpointProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new PrivateEndpointProvisioningState(property0.Value.GetString());
+                            provisioningState = new SqlPrivateEndpointProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }

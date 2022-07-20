@@ -22,6 +22,11 @@ namespace Azure.Communication.CallingServer
                 writer.WritePropertyName("playSourceId");
                 writer.WriteStringValue(PlaySourceId);
             }
+            if (Optional.IsDefined(FileSource))
+            {
+                writer.WritePropertyName("fileSource");
+                writer.WriteObjectValue(FileSource);
+            }
             writer.WriteEndObject();
         }
     }

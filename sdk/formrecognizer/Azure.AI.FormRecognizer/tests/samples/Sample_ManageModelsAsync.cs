@@ -46,9 +46,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 #else
             Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 #endif
-            BuildModelOperation operation = await client.StartBuildModelAsync(trainingFileUri, DocumentBuildMode.Template);
-            Response<DocumentModel> operationResponse = await operation.WaitForCompletionAsync();
-            DocumentModel model = operationResponse.Value;
+            BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, trainingFileUri, DocumentBuildMode.Template);
+            DocumentModel model = operation.Value;
 
             // Get the model that was just created
             DocumentModel newCreatedModel = await client.GetModelAsync(model.ModelId);

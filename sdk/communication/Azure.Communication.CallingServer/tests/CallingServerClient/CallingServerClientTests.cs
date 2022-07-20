@@ -16,7 +16,7 @@ namespace Azure.Communication.CallingServer.Tests
         public void DeleteRecording_Returns200Ok()
         {
             CallingServerClient callingServerClient = CreateMockCallingServerClient(200);
-            var response = callingServerClient.GetCallRecordingClient().DeleteRecording(new Uri(AmsDeleteUrl));
+            var response = callingServerClient.GetCallRecording().DeleteRecording(new Uri(AmsDeleteUrl));
             Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
         }
 
@@ -24,7 +24,7 @@ namespace Azure.Communication.CallingServer.Tests
         public async Task DeleteRecordingAsync_Returns200Ok()
         {
             CallingServerClient callingServerClient = CreateMockCallingServerClient(200);
-            var response = await callingServerClient.GetCallRecordingClient().DeleteRecordingAsync(new Uri(AmsDeleteUrl)).ConfigureAwait(false);
+            var response = await callingServerClient.GetCallRecording().DeleteRecordingAsync(new Uri(AmsDeleteUrl)).ConfigureAwait(false);
             Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
         }
 
@@ -33,7 +33,7 @@ namespace Azure.Communication.CallingServer.Tests
         {
             CallingServerClient callingServerClient = CreateMockCallingServerClient(404);
 
-            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callingServerClient.GetCallRecordingClient().DeleteRecording(new Uri(AmsDeleteUrl)));
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callingServerClient.GetCallRecording().DeleteRecording(new Uri(AmsDeleteUrl)));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
@@ -42,7 +42,7 @@ namespace Azure.Communication.CallingServer.Tests
         public void DeleteRecording_Returns401Unauthorized()
         {
             CallingServerClient callingServerClient = CreateMockCallingServerClient(401);
-            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callingServerClient.GetCallRecordingClient().DeleteRecording(new Uri(AmsDeleteUrl)));
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callingServerClient.GetCallRecording().DeleteRecording(new Uri(AmsDeleteUrl)));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 401);
         }

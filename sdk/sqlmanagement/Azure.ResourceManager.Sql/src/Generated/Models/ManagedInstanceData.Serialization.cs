@@ -196,8 +196,8 @@ namespace Azure.ResourceManager.Sql
             Optional<ResourceIdentifier> maintenanceConfigurationId = default;
             Optional<IReadOnlyList<ManagedInstancePecProperty>> privateEndpointConnections = default;
             Optional<string> minimalTlsVersion = default;
-            Optional<BackupStorageRedundancy> currentBackupStorageRedundancy = default;
-            Optional<BackupStorageRedundancy> requestedBackupStorageRedundancy = default;
+            Optional<SqlBackupStorageRedundancy> currentBackupStorageRedundancy = default;
+            Optional<SqlBackupStorageRedundancy> requestedBackupStorageRedundancy = default;
             Optional<bool> zoneRedundant = default;
             Optional<ResourceIdentifier> primaryUserAssignedIdentityId = default;
             Optional<Uri> keyId = default;
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            currentBackupStorageRedundancy = new BackupStorageRedundancy(property0.Value.GetString());
+                            currentBackupStorageRedundancy = new SqlBackupStorageRedundancy(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("requestedBackupStorageRedundancy"))
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            requestedBackupStorageRedundancy = new BackupStorageRedundancy(property0.Value.GetString());
+                            requestedBackupStorageRedundancy = new SqlBackupStorageRedundancy(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("zoneRedundant"))

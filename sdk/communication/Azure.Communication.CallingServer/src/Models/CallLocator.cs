@@ -4,7 +4,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Communication.CallingServer.Models
+namespace Azure.Communication.CallingServer
 {
     /// <summary>Represents a locator for a call in Azure Communication Services, that can be handled by the Call Automation APIs</summary>
 #pragma warning disable CS0659 // Type overrides Object.Equals(object o) but does not override Object.GetHashCode()
